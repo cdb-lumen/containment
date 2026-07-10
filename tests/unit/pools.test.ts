@@ -141,6 +141,57 @@ describe('ObjectPool', () => {
     expect(pool.totalCount).toBe(1);
   });
 
+  it('reserves a new identity before activation can reenter acquisition', () => {
+    const shared: PooledItem = { serial: 1, value: '', active: false };
+    const poolRef: { current?: ObjectPool<PooledItem, Init> } = {};
+    let shouldReenter = true;
+    let concurrentActivations = 0;
+    let maxConcurrentActivations = 0;
+    const hooks: PoolHooks<PooledItem, Init> = {
+      create: vi.fn(() => shared),
+      activate: vi.fn((item, init) => {
+        concurrentActivations += 1;
+        maxConcurrentActivations = Math.max(maxConcurrentActivations, concurrentActivations);
+        try {
+          item.value = init.value;
+          item.active = true;
+          if (shouldReenter) {
+            shouldReenter = false;
+            poolRef.current!.acquire({ value: 'nested' });
+          }
+        } finally {
+          concurrentActivations -= 1;
+        }
+      }),
+      deactivate: vi.fn((item) => {
+        item.value = '';
+        item.active = false;
+      }),
+    };
+    const pool = new ObjectPool(hooks, 0, 2);
+    poolRef.current = pool;
+
+    expect(() => pool.acquire({ value: 'outer' })).toThrow(
+      'ObjectPool invariant violation: hooks.create() returned a duplicate item identity',
+    );
+    expect(maxConcurrentActivations).toBe(1);
+    expect(pool.activeCount).toBe(0);
+    expect(pool.totalCount).toBe(0);
+
+    const retried = pool.acquire({ value: 'retried' });
+    expect(retried).toBe(shared);
+    expect(pool.isActive(shared)).toBe(true);
+    expect(pool.activeCount).toBe(1);
+    expect(pool.totalCount).toBe(1);
+
+    pool.release(shared);
+    expect(pool.activeCount).toBe(0);
+    expect(pool.acquire({ value: 'reused' })).toBe(shared);
+    expect(hooks.create).toHaveBeenCalledTimes(3);
+    expect(pool.activeCount).toBe(1);
+    expect(pool.totalCount).toBe(1);
+  });
+
   it('leaves state unchanged when create throws', () => {
     const createError = new Error('create failed');
     const hooks: PoolHooks<PooledItem, Init> = {

@@ -56,6 +56,7 @@ export class ObjectPool<T, TInit> {
       if (this.#items.size >= this.maxSize) return null;
       item = this.#hooks.create();
       this.#assertUnique(item);
+      this.#items.add(item);
     }
 
     try {
@@ -76,6 +77,8 @@ export class ObjectPool<T, TInit> {
         } else {
           this.#inactive.push(item);
         }
+      } else {
+        this.#items.delete(item);
       }
       if (cleanupFailed) {
         throw new AggregateError(
@@ -87,7 +90,6 @@ export class ObjectPool<T, TInit> {
       throw activationError;
     }
 
-    if (!reused) this.#items.add(item);
     this.#active.add(item);
     return item;
   }
