@@ -4,13 +4,15 @@ import type {
   StandardEnemyId,
 } from './types';
 
-export const STANDARD_ENEMY_IDS = [
-  'crawler',
-  'brute',
-  'spitter',
-  'stalker',
-  'carrier',
-] as const satisfies readonly StandardEnemyId[];
+export const STANDARD_ENEMY_IDS = Object.freeze(
+  [
+    'crawler',
+    'brute',
+    'spitter',
+    'stalker',
+    'carrier',
+  ] as const satisfies readonly StandardEnemyId[],
+);
 
 const enemy = (definition: EnemyDefinition): Readonly<EnemyDefinition> =>
   Object.freeze(definition);

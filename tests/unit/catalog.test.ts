@@ -7,36 +7,6 @@ import {
 } from '../../src/game/enemies/catalog';
 import { UPGRADES } from '../../src/game/upgrades/catalog';
 
-const WEAPON_FIELDS = [
-  'id',
-  'label',
-  'damage',
-  'roundsPerSecond',
-  'magazine',
-  'reserve',
-  'reloadMs',
-  'pellets',
-  'spreadRadians',
-  'projectileSpeed',
-  'projectileRadius',
-  'penetration',
-  'splashRadius',
-  'knockback',
-];
-
-const ENEMY_FIELDS = [
-  'id',
-  'label',
-  'maxHealth',
-  'speed',
-  'radius',
-  'contactDamage',
-  'attackCooldownMs',
-  'creditReward',
-  'dropChance',
-  'behavior',
-];
-
 const UPGRADE_IDS = [
   'damage',
   'penetration',
@@ -59,15 +29,43 @@ describe('weapon catalog', () => {
     ]);
   });
 
-  it('provides complete, usable definitions for every weapon', () => {
+  it('provides immutable, complete, usable definitions for every weapon', () => {
+    expect(Object.isFrozen(WEAPONS)).toBe(true);
+
     for (const [id, weapon] of Object.entries(WEAPONS)) {
-      expect(Object.keys(weapon)).toEqual(WEAPON_FIELDS);
       expect(weapon.id).toBe(id);
       expect(weapon.label.length).toBeGreaterThan(0);
-      expect(weapon.damage).toBeGreaterThan(0);
-      expect(weapon.roundsPerSecond).toBeGreaterThan(0);
-      expect(weapon.projectileSpeed).toBeGreaterThan(0);
-      expect(weapon.projectileRadius).toBeGreaterThan(0);
+      expect(Object.isFrozen(weapon)).toBe(true);
+
+      for (const value of [
+        weapon.damage,
+        weapon.roundsPerSecond,
+        weapon.reloadMs,
+        weapon.projectileSpeed,
+        weapon.projectileRadius,
+      ]) {
+        expect(Number.isFinite(value)).toBe(true);
+        expect(value).toBeGreaterThan(0);
+      }
+
+      for (const value of [weapon.magazine, weapon.pellets, weapon.penetration]) {
+        expect(Number.isInteger(value)).toBe(true);
+        expect(value).toBeGreaterThan(0);
+      }
+
+      for (const value of [
+        weapon.spreadRadians,
+        weapon.splashRadius,
+        weapon.knockback,
+      ]) {
+        expect(Number.isFinite(value)).toBe(true);
+        expect(value).toBeGreaterThanOrEqual(0);
+      }
+
+      expect(weapon.reserve).toBeGreaterThanOrEqual(0);
+      expect(Number.isFinite(weapon.reserve) || weapon.reserve === Infinity).toBe(
+        true,
+      );
     }
   });
 
@@ -104,13 +102,27 @@ describe('enemy catalog', () => {
     expect(Object.keys(ENEMIES)).toEqual([...STANDARD_ENEMY_IDS, 'queen']);
   });
 
-  it('provides complete, valid gameplay definitions', () => {
+  it('freezes the standard enemy ID tuple against runtime mutation', () => {
+    expect(Object.isFrozen(STANDARD_ENEMY_IDS)).toBe(true);
+    expect(() => {
+      (STANDARD_ENEMY_IDS as unknown as string[]).push('queen');
+    }).toThrow(TypeError);
+    expect(STANDARD_ENEMY_IDS).toEqual([
+      'crawler',
+      'brute',
+      'spitter',
+      'stalker',
+      'carrier',
+    ]);
+  });
+
+  it('provides immutable, complete, valid gameplay definitions', () => {
+    expect(Object.isFrozen(ENEMIES)).toBe(true);
+
     for (const [id, enemy] of Object.entries(ENEMIES)) {
-      expect(Object.keys(enemy)).toEqual(ENEMY_FIELDS);
       expect(enemy.id).toBe(id);
       expect(enemy.label.length).toBeGreaterThan(0);
-      expect(enemy.maxHealth).toBeGreaterThan(0);
-      expect(enemy.radius).toBeGreaterThan(0);
+      expect(Object.isFrozen(enemy)).toBe(true);
 
       for (const value of [
         enemy.maxHealth,
@@ -119,12 +131,13 @@ describe('enemy catalog', () => {
         enemy.contactDamage,
         enemy.attackCooldownMs,
         enemy.creditReward,
-        enemy.dropChance,
       ]) {
         expect(Number.isFinite(value)).toBe(true);
-        expect(value).toBeGreaterThanOrEqual(0);
+        expect(value).toBeGreaterThan(0);
       }
 
+      expect(Number.isFinite(enemy.dropChance)).toBe(true);
+      expect(enemy.dropChance).toBeGreaterThanOrEqual(0);
       expect(enemy.dropChance).toBeLessThanOrEqual(1);
     }
   });
@@ -150,19 +163,13 @@ describe('upgrade catalog', () => {
     expect(Object.isFrozen(UPGRADES)).toBe(true);
 
     for (const [id, upgrade] of Object.entries(UPGRADES)) {
-      expect(Object.keys(upgrade)).toEqual([
-        'id',
-        'label',
-        'description',
-        'cost',
-        'kind',
-        'value',
-      ]);
       expect(upgrade.id).toBe(id);
       expect(upgrade.kind).toBe(id);
       expect(upgrade.label.length).toBeGreaterThan(0);
       expect(upgrade.description.length).toBeGreaterThan(0);
+      expect(Number.isFinite(upgrade.cost)).toBe(true);
       expect(upgrade.cost).toBeGreaterThan(0);
+      expect(Number.isFinite(upgrade.value)).toBe(true);
       expect(upgrade.value).toBeGreaterThan(0);
       expect(Object.isFrozen(upgrade)).toBe(true);
     }

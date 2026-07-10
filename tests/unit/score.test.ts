@@ -111,4 +111,39 @@ describe('calculateScore', () => {
       }),
     ).toBe(completedSlow);
   });
+
+  it('awards no time bonus for a negative elapsed time after boss defeat', () => {
+    const bossOnly = calculateScore({
+      ...EMPTY_RUN,
+      bossDefeated: true,
+      elapsedMs: 99_999_999,
+    });
+
+    expect(
+      calculateScore({ ...EMPTY_RUN, bossDefeated: true, elapsedMs: -1 }),
+    ).toBe(bossOnly);
+  });
+
+  it('only treats the literal boolean true as a boss defeat', () => {
+    const malformedInput = {
+      ...EMPTY_RUN,
+      bossDefeated: 'false' as unknown as boolean,
+    };
+
+    expect(calculateScore(malformedInput)).toBe(calculateScore(EMPTY_RUN));
+  });
+
+  it('keeps the theoretical maximum score within safe integer range', () => {
+    const maximumScore = calculateScore({
+      kills: Number.MAX_VALUE,
+      eliteKills: Number.MAX_VALUE,
+      bossDefeated: true,
+      wavesCleared: Number.MAX_VALUE,
+      creditsUnspent: Number.MAX_VALUE,
+      elapsedMs: 0,
+    });
+
+    expect(maximumScore).toBe(2_610_040_000);
+    expect(Number.isSafeInteger(maximumScore)).toBe(true);
+  });
 });

@@ -1,3 +1,5 @@
+import { STORAGE_KEY } from '../constants';
+
 export type SaveData = {
   version: 1;
   settings: {
@@ -14,25 +16,29 @@ export type SaveData = {
   };
 };
 
-export const SAVE_DATA_STORAGE_KEY = 'alien-shooter-containment-save';
+export type ReadonlySaveData = Readonly<{
+  version: SaveData['version'];
+  settings: Readonly<SaveData['settings']>;
+  records: Readonly<SaveData['records']>;
+}>;
 
-export const DEFAULT_SAVE_DATA: SaveData = {
+export const DEFAULT_SAVE_DATA: ReadonlySaveData = Object.freeze({
   version: 1,
-  settings: {
+  settings: Object.freeze({
     masterVolume: 0.8,
     musicVolume: 0.65,
     effectsVolume: 0.8,
     reducedShake: false,
     reducedFlash: false,
     quality: 'auto',
-  },
-  records: {
+  }),
+  records: Object.freeze({
     bestScore: 0,
     bestTimeMs: null,
-  },
-};
+  }),
+});
 
-const cloneSaveData = (data: SaveData): SaveData => ({
+const cloneSaveData = (data: ReadonlySaveData): SaveData => ({
   version: 1,
   settings: { ...data.settings },
   records: { ...data.records },
@@ -60,8 +66,8 @@ const isUnitNumber = (value: unknown): value is number =>
   value >= 0 &&
   value <= 1;
 
-const isNonnegativeFiniteNumber = (value: unknown): value is number =>
-  typeof value === 'number' && Number.isFinite(value) && value >= 0;
+const isNonnegativeSafeInteger = (value: unknown): value is number =>
+  typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
 
 const isQuality = (
   value: unknown,
@@ -99,9 +105,9 @@ const isSaveData = (value: unknown): value is SaveData => {
     typeof settings.reducedShake === 'boolean' &&
     typeof settings.reducedFlash === 'boolean' &&
     isQuality(settings.quality) &&
-    isNonnegativeFiniteNumber(records.bestScore) &&
+    isNonnegativeSafeInteger(records.bestScore) &&
     (records.bestTimeMs === null ||
-      isNonnegativeFiniteNumber(records.bestTimeMs))
+      isNonnegativeSafeInteger(records.bestTimeMs))
   );
 };
 
@@ -123,7 +129,16 @@ export const saveData = (
   data: SaveData,
 ): boolean => {
   try {
-    storage.setItem(SAVE_DATA_STORAGE_KEY, JSON.stringify(data));
+    if (!isSaveData(data)) {
+      return false;
+    }
+
+    const serialized = JSON.stringify(data);
+    if (typeof serialized !== 'string') {
+      return false;
+    }
+
+    storage.setItem(STORAGE_KEY, serialized);
     return true;
   } catch {
     return false;
