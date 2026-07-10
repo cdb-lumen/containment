@@ -4,7 +4,7 @@
 
 **Status:** Approved
 
-**Repository:** `cdb-review/alien-shooter-containment`
+**Repository:** `cdb-lumen/alien-shooter-containment`
 
 **Delivery:** Public web game hosted on GitHub Pages
 
