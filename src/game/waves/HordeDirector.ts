@@ -44,6 +44,7 @@ export class HordeDirector {
   #waveIndex = -1;
   #spawned = 0;
   #accumulatedMs = 0;
+  #elapsedWaveMs = 0;
 
   constructor(random: () => number = Math.random) {
     this.#random = random;
@@ -63,6 +64,7 @@ export class HordeDirector {
     this.#waveIndex = 0;
     this.#spawned = 0;
     this.#accumulatedMs = 0;
+    this.#elapsedWaveMs = 0;
     return [{ type: 'wave-start', wave: 1 }];
   }
 
@@ -78,8 +80,14 @@ export class HordeDirector {
     }
 
     const wave = WAVE_PLAN[this.#waveIndex];
+    this.#elapsedWaveMs = Math.min(
+      Number.MAX_SAFE_INTEGER,
+      this.#elapsedWaveMs + deltaMs,
+    );
     if (this.#spawned === wave.totalSpawns) {
-      return aliveCount === 0 ? this.#completeWave(wave) : [];
+      return aliveCount === 0 && this.#elapsedWaveMs >= wave.durationMs
+        ? this.#completeWave(wave)
+        : [];
     }
 
     this.#accumulatedMs = Math.min(
@@ -115,6 +123,7 @@ export class HordeDirector {
     this.#phase = 'combat';
     this.#spawned = 0;
     this.#accumulatedMs = 0;
+    this.#elapsedWaveMs = 0;
     return [
       { type: 'armory-end', afterWave },
       { type: 'wave-start', wave: WAVE_PLAN[this.#waveIndex].number },
@@ -138,6 +147,7 @@ export class HordeDirector {
     this.#waveIndex = -1;
     this.#spawned = 0;
     this.#accumulatedMs = 0;
+    this.#elapsedWaveMs = 0;
     return [];
   }
 
@@ -145,6 +155,7 @@ export class HordeDirector {
     const events: HordeEvent[] = [
       { type: 'wave-complete', wave: wave.number },
     ];
+    this.#elapsedWaveMs = 0;
     if (wave.number === WAVE_PLAN.length) {
       this.#phase = 'boss';
       events.push({ type: 'boss-start' });
@@ -197,7 +208,12 @@ export class HordeDirector {
   }
 
   #safeRandom(): number {
-    const value = this.#random();
+    let value: number;
+    try {
+      value = this.#random();
+    } catch {
+      return 0;
+    }
     if (Number.isNaN(value) || value === Number.NEGATIVE_INFINITY) return 0;
     if (!Number.isFinite(value)) return MAX_RANDOM;
     return Math.min(MAX_RANDOM, Math.max(0, value));

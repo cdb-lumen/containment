@@ -1,15 +1,21 @@
-type SpatialItem = { id: string; x: number; y: number };
+export type SpatialItem = { readonly id: string; x: number; y: number };
 
 type Entry<T> = {
   item: T;
   cellKey: string;
+  x: number;
+  y: number;
   order: number;
 };
+
+const MUTATED_ID_ERROR =
+  'SpatialHash invariant violation: an indexed item id was mutated';
 
 export class SpatialHash<T extends SpatialItem> {
   readonly #cellSize: number;
   readonly #entries = new Map<string, Entry<T>>();
   readonly #cells = new Map<string, Set<string>>();
+  #identityIds = new WeakMap<T, string>();
   #nextOrder = 0;
 
   constructor(cellSize = 128) {
@@ -23,13 +29,24 @@ export class SpatialHash<T extends SpatialItem> {
     return this.#entries.size;
   }
 
+  /** Coordinate mutations are not indexed until this method or update() is called. */
   insert(item: T): void {
+    this.#assertValidItem(item);
+    const stableId = this.#identityIds.get(item);
+    if (stableId !== undefined && stableId !== item.id) {
+      throw new Error(MUTATED_ID_ERROR);
+    }
+
     const existing = this.#entries.get(item.id);
     const cellKey = this.#cellKey(item.x, item.y);
     if (existing) {
       this.#removeFromCell(item.id, existing.cellKey);
+      if (existing.item !== item) this.#identityIds.delete(existing.item);
       existing.item = item;
       existing.cellKey = cellKey;
+      existing.x = item.x;
+      existing.y = item.y;
+      this.#identityIds.set(item, item.id);
       this.#addToCell(item.id, cellKey);
       return;
     }
@@ -37,22 +54,30 @@ export class SpatialHash<T extends SpatialItem> {
     this.#entries.set(item.id, {
       item,
       cellKey,
+      x: item.x,
+      y: item.y,
       order: this.#nextOrder++,
     });
+    this.#identityIds.set(item, item.id);
     this.#addToCell(item.id, cellKey);
   }
 
+  /** Re-indexes the item's current finite coordinates. */
   update(item: T): void {
     this.insert(item);
   }
 
   remove(idOrItem: string | T): void {
-    const id = typeof idOrItem === 'string' ? idOrItem : idOrItem.id;
+    const id =
+      typeof idOrItem === 'string'
+        ? idOrItem
+        : (this.#identityIds.get(idOrItem) ?? idOrItem.id);
     const entry = this.#entries.get(id);
     if (!entry) return;
 
     this.#removeFromCell(id, entry.cellKey);
     this.#entries.delete(id);
+    this.#identityIds.delete(entry.item);
   }
 
   queryRadius(x: number, y: number, radius: number): T[] {
@@ -84,14 +109,11 @@ export class SpatialHash<T extends SpatialItem> {
       }
     }
 
-    const radiusSquared = radius * radius;
     return [...candidateIds]
       .map((id) => this.#entries.get(id))
       .filter((entry): entry is Entry<T> => {
         if (!entry) return false;
-        const deltaX = entry.item.x - x;
-        const deltaY = entry.item.y - y;
-        return deltaX * deltaX + deltaY * deltaY <= radiusSquared;
+        return Math.hypot(entry.x - x, entry.y - y) <= radius;
       })
       .sort((left, right) => left.order - right.order)
       .map(({ item }) => item);
@@ -100,7 +122,17 @@ export class SpatialHash<T extends SpatialItem> {
   clear(): void {
     this.#entries.clear();
     this.#cells.clear();
+    this.#identityIds = new WeakMap<T, string>();
     this.#nextOrder = 0;
+  }
+
+  #assertValidItem(item: T): void {
+    if (typeof item.id !== 'string' || item.id.trim().length === 0) {
+      throw new RangeError('SpatialHash item id must be a nonempty, non-whitespace string');
+    }
+    if (!Number.isFinite(item.x) || !Number.isFinite(item.y)) {
+      throw new RangeError('SpatialHash item coordinates must be finite numbers');
+    }
   }
 
   #cellKey(x: number, y: number): string {

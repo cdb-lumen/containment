@@ -1,12 +1,24 @@
 import { describe, expect, it } from 'vitest';
 
-import { SpatialHash } from '../../src/game/enemies/SpatialHash';
+import {
+  SpatialHash,
+  type SpatialItem,
+} from '../../src/game/enemies/SpatialHash';
 
-type Point = { id: string; x: number; y: number; label?: string };
+type Point = { readonly id: string; x: number; y: number; label?: string };
 
 const point = (id: string, x: number, y: number): Point => ({ id, x, y });
 
 describe('SpatialHash', () => {
+  it('publishes item IDs as readonly', () => {
+    const mutateId = (item: SpatialItem): void => {
+      // @ts-expect-error SpatialHash identities must not be mutated.
+      item.id = 'changed';
+    };
+
+    expect(mutateId).toBeTypeOf('function');
+  });
+
   it('validates custom cell sizes', () => {
     expect(() => new SpatialHash<Point>(0)).toThrow(RangeError);
     expect(() => new SpatialHash<Point>(-1)).toThrow(RangeError);
@@ -56,6 +68,57 @@ describe('SpatialHash', () => {
     expect(hash.queryRadius(-300, -300, 0)).toEqual([replacement]);
   });
 
+  it('uses indexed coordinate snapshots until update relocates an item', () => {
+    const hash = new SpatialHash<Point>();
+    const moving = point('moving', 0, 0);
+    hash.insert(moving);
+
+    moving.x = 500;
+    moving.y = 500;
+    expect(hash.queryRadius(0, 0, 0)).toEqual([moving]);
+    expect(hash.queryRadius(500, 500, 0)).toEqual([]);
+
+    hash.update(moving);
+    expect(hash.queryRadius(0, 0, 0)).toEqual([]);
+    expect(hash.queryRadius(500, 500, 0)).toEqual([moving]);
+  });
+
+  it.each(['insert', 'update'] as const)(
+    'rejects mutated owned IDs during %s and removes by the original identity',
+    (method) => {
+      const hash = new SpatialHash<Point>();
+      const item = point('stable', 10, 20);
+      hash.insert(item);
+      (item as { id: string }).id = 'mutated';
+
+      expect(() => hash[method](item)).toThrow(
+        'SpatialHash invariant violation: an indexed item id was mutated',
+      );
+      expect(hash.size).toBe(1);
+      expect(hash.queryRadius(10, 20, 0)).toEqual([item]);
+
+      hash.remove(item);
+      expect(hash.size).toBe(0);
+    },
+  );
+
+  it.each([
+    ['insert', point('   ', 0, 0)],
+    ['update', point('', 0, 0)],
+    ['insert', point('bad-x', Number.NaN, 0)],
+    ['update', point('bad-x', Number.POSITIVE_INFINITY, 0)],
+    ['insert', point('bad-y', 0, Number.NEGATIVE_INFINITY)],
+    ['update', point('bad-y', 0, Number.NaN)],
+  ] as const)('rejects malformed items in %s before mutating indexes', (method, malformed) => {
+    const hash = new SpatialHash<Point>();
+    const existing = point('existing', 1, 1);
+    hash.insert(existing);
+
+    expect(() => hash[method](malformed)).toThrow(RangeError);
+    expect(hash.size).toBe(1);
+    expect(hash.queryRadius(1, 1, 0)).toEqual([existing]);
+  });
+
   it('treats update of an unknown ID as an insertion', () => {
     const hash = new SpatialHash<Point>();
     const item = point('new', 10, 20);
@@ -84,16 +147,19 @@ describe('SpatialHash', () => {
 
   it('clears every index and can be reused', () => {
     const hash = new SpatialHash<Point>();
-    hash.insert(point('a', -1_000, 1_000));
+    const first = point('a', -1_000, 1_000);
+    hash.insert(first);
     hash.insert(point('b', 1_000, -1_000));
+    (first as { id: string }).id = 'reusable-after-clear';
 
     hash.clear();
     expect(hash.size).toBe(0);
     expect(hash.queryRadius(0, 0, 10_000)).toEqual([]);
 
-    const next = point('next', 2, 2);
-    hash.insert(next);
-    expect(hash.queryRadius(2, 2, 0)).toEqual([next]);
+    first.x = 2;
+    first.y = 2;
+    hash.insert(first);
+    expect(hash.queryRadius(2, 2, 0)).toEqual([first]);
   });
 
   it('never returns duplicate IDs and preserves deterministic insertion order', () => {
@@ -120,5 +186,13 @@ describe('SpatialHash', () => {
     expect(hash.queryRadius(0, 0, -1)).toEqual([]);
     expect(hash.queryRadius(0, 0, Number.NaN)).toEqual([]);
     expect(hash.queryRadius(0, 0, Number.POSITIVE_INFINITY)).toEqual([]);
+  });
+
+  it('does not false-match huge finite opposite coordinates through overflow', () => {
+    const hash = new SpatialHash<Point>();
+    const far = point('far', Number.MAX_VALUE, 0);
+    hash.insert(far);
+
+    expect(hash.queryRadius(-Number.MAX_VALUE, 0, Number.MAX_VALUE)).toEqual([]);
   });
 });

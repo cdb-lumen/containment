@@ -27,6 +27,19 @@ const drainCurrentWave = (director: HordeDirector): HordeEvent[] => {
   return events;
 };
 
+const emitCurrentWaveBudgetAtConfiguredIntervals = (
+  director: HordeDirector,
+): number => {
+  const waveNumber = director.currentWave;
+  if (waveNumber === null) throw new Error('No active wave');
+  const wave = WAVE_PLAN[waveNumber - 1];
+  let spawned = 0;
+  while (spawned < wave.totalSpawns) {
+    spawned += spawnEvents(director.update(wave.spawnIntervalMs, 0)).length;
+  }
+  return wave.totalSpawns * wave.spawnIntervalMs;
+};
+
 describe('wave plan', () => {
   it('defines exactly eight coherent, increasingly varied standard waves', () => {
     expect(WAVE_PLAN).toHaveLength(8);
@@ -146,6 +159,63 @@ describe('HordeDirector', () => {
     ]);
   });
 
+  it('treats durationMs as the minimum observable duration after a cleared full budget', () => {
+    const director = new HordeDirector(() => 0);
+    director.start();
+    const wave = WAVE_PLAN[0];
+    const scheduledElapsed = emitCurrentWaveBudgetAtConfiguredIntervals(director);
+    expect(scheduledElapsed).toBeLessThan(wave.durationMs);
+
+    expect(director.update(0, 0)).toEqual([]);
+    expect(director.update(wave.durationMs - scheduledElapsed - 1, 0)).toEqual([]);
+    expect(director.phase).toBe('combat');
+    expect(director.update(1, 0)).toEqual([
+      { type: 'wave-complete', wave: 1 },
+      { type: 'wave-start', wave: 2 },
+    ]);
+  });
+
+  it('does not advance wave duration for invalid delta values', () => {
+    const director = new HordeDirector(() => 0);
+    director.start();
+    const wave = WAVE_PLAN[0];
+    const scheduledElapsed = emitCurrentWaveBudgetAtConfiguredIntervals(director);
+    director.update(wave.durationMs - scheduledElapsed - 1, 0);
+
+    expect(director.update(-1, 0)).toEqual([]);
+    expect(director.update(Number.NaN, 0)).toEqual([]);
+    expect(director.update(Number.POSITIVE_INFINITY, 0)).toEqual([]);
+    expect(director.update(0, 0)).toEqual([]);
+    expect(director.update(1, 0)).toContainEqual({ type: 'wave-complete', wave: 1 });
+  });
+
+  it('resets elapsed duration across next-wave, armory, and reset transitions', () => {
+    const director = new HordeDirector(() => 0);
+    director.start();
+
+    drainCurrentWave(director);
+    expect(director.currentWave).toBe(2);
+    const waveTwoScheduled = emitCurrentWaveBudgetAtConfiguredIntervals(director);
+    expect(waveTwoScheduled).toBeLessThan(WAVE_PLAN[1].durationMs);
+    expect(director.update(0, 0)).toEqual([]);
+    expect(
+      director.update(WAVE_PLAN[1].durationMs - waveTwoScheduled, 0),
+    ).toContainEqual({ type: 'armory-start', afterWave: 2 });
+
+    expect(director.completeArmory()).toContainEqual({ type: 'wave-start', wave: 3 });
+    const waveThreeScheduled = emitCurrentWaveBudgetAtConfiguredIntervals(director);
+    expect(waveThreeScheduled).toBeLessThan(WAVE_PLAN[2].durationMs);
+    expect(director.update(0, 0)).toEqual([]);
+
+    director.reset();
+    director.start();
+    const resetScheduled = emitCurrentWaveBudgetAtConfiguredIntervals(director);
+    expect(director.update(0, 0)).toEqual([]);
+    expect(
+      director.update(WAVE_PLAN[0].durationMs - resetScheduled, 0),
+    ).toContainEqual({ type: 'wave-complete', wave: 1 });
+  });
+
   it('enters and exits armory after waves 2, 4, and 6 in order', () => {
     const director = new HordeDirector(() => 0);
     director.start();
@@ -236,6 +306,23 @@ describe('HordeDirector', () => {
     expect(STANDARD_ENEMY_IDS).toContain(spawn.enemyId);
     expect(WAVE_PLAN[0].breachIds).toContain(spawn.breachId);
     expect(WAVE_PLAN[0].enemyWeights[spawn.enemyId]).toBeGreaterThan(0);
+  });
+
+  it('uses deterministic zero fallback when injected random throws', () => {
+    const director = new HordeDirector(() => {
+      throw new Error('rng failed');
+    });
+    director.start();
+
+    const events = director.update(WAVE_PLAN[0].spawnIntervalMs, 0);
+    const spawn = spawnEvents(events)[0];
+    expect(spawn).toMatchObject({
+      enemyId: 'crawler',
+      elite: true,
+      breachId: WAVE_PLAN[0].breachIds[0],
+    });
+    expect(STANDARD_ENEMY_IDS).toContain(spawn.enemyId);
+    expect(WAVE_PLAN[0].breachIds).toContain(spawn.breachId);
   });
 
   it('handles victory, defeat, terminal idempotence, and reset', () => {
