@@ -38,6 +38,14 @@ export default defineConfig({
       },
     },
     {
+      name: 'death-visuals-chromium',
+      testMatch: /deathVisuals\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
       name: 'mobile-chromium',
       testMatch: /mobile\.spec\.ts/,
       use: {

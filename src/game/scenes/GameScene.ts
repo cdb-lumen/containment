@@ -1525,6 +1525,15 @@ export class GameScene extends Phaser.Scene {
     const getPresentationTime = () => this.presentationClock.snapshot();
     const getReducedMotion = () => this.registry.get('reducedMotion') === true;
     const getReducedFlash = () => this.currentSettings().reducedFlash;
+    const getDeathVisualSnapshot = () => this.deathVisuals?.snapshot;
+    const getEffectCounts = () => Object.freeze({
+      decals: this.effects?.count('decals') ?? 0,
+      remains: this.effects?.count('remains') ?? 0,
+    });
+    const getEffectLimits = () => Object.freeze({
+      decals: this.effects?.limits.decals ?? 0,
+      remains: this.effects?.limits.remains ?? 0,
+    });
     this.cleanupDiagnostics = installDiagnostics({
       get phase(): 'arrival' | 'armory' | 'combat' | 'boss' | 'victory' | 'defeat' {
         if (getSnapshot()?.dead === true) return 'defeat';
@@ -1595,6 +1604,19 @@ export class GameScene extends Phaser.Scene {
       get playerVisualRotationOffset(): number { return getPlayer()?.visualSnapshot().rotationOffset ?? 0; },
       get playerBodyRotation(): number { return getPlayer()?.visualSnapshot().bodyRotation ?? 0; },
       get playerFallbackFramed(): boolean { return getPlayer()?.visualSnapshot().framed ?? false; },
+      get effectCounts() {
+        return getEffectCounts();
+      },
+      get effectLimits() {
+        return getEffectLimits();
+      },
+      get bloodDisplayCount(): number { return getDeathVisualSnapshot()?.blood.length ?? 0; },
+      get corpseDisplayCount(): number { return getDeathVisualSnapshot()?.corpses.length ?? 0; },
+      get activeCorpseFamilies(): readonly string[] {
+        return Object.freeze(getDeathVisualSnapshot()?.corpses.map(corpse => corpse.family) ?? []);
+      },
+      get bloodAllocatedCount(): number { return getDeathVisualSnapshot()?.bloodAllocated ?? 0; },
+      get corpseAllocatedCount(): number { return getDeathVisualSnapshot()?.corpseAllocated ?? 0; },
       startRun: (): void => this.resetRun(),
       damagePlayer: (amount?: number): void => {
         const damage =
@@ -1610,6 +1632,13 @@ export class GameScene extends Phaser.Scene {
       spawnStressWave: (): void => {
         this.missionStarted = (this.horde?.spawnStressWave() ?? 0) > 0;
       },
+      spawnStressEnemies: (count: number): number => {
+        const spawned = this.horde?.spawnEnemiesForDiagnostics(count) ?? 0;
+        this.missionStarted = spawned > 0;
+        return spawned;
+      },
+      defeatStressEnemies: (count: number): number =>
+        this.horde?.defeatEnemiesForDiagnostics(count) ?? 0,
       focusQueenArena: (): void => {
         const player = this.player;
         const arena = this.facility?.queenArena;

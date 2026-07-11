@@ -27,6 +27,13 @@ export interface DiagnosticsReadOnlyFields {
   readonly playerVisualRotationOffset: number;
   readonly playerBodyRotation: number;
   readonly playerFallbackFramed: boolean;
+  readonly effectCounts: Readonly<{ decals: number; remains: number }>;
+  readonly effectLimits: Readonly<{ decals: number; remains: number }>;
+  readonly bloodDisplayCount: number;
+  readonly corpseDisplayCount: number;
+  readonly activeCorpseFamilies: readonly string[];
+  readonly bloodAllocatedCount: number;
+  readonly corpseAllocatedCount: number;
 }
 
 export interface DiagnosticsActions {
@@ -34,6 +41,8 @@ export interface DiagnosticsActions {
   readonly damagePlayer: (amount?: number) => void;
   readonly completeWave: () => void;
   readonly spawnStressWave: () => void;
+  readonly spawnStressEnemies: (count: number) => number;
+  readonly defeatStressEnemies: (count: number) => number;
   readonly focusQueenArena: () => void;
   readonly defeatBoss: () => void;
   readonly restart: () => void;
@@ -148,10 +157,31 @@ export function installDiagnostics(
     get playerVisualRotationOffset(): number { return provider.playerVisualRotationOffset; },
     get playerBodyRotation(): number { return provider.playerBodyRotation; },
     get playerFallbackFramed(): boolean { return provider.playerFallbackFramed === true; },
+    get effectCounts() {
+      return Object.freeze({
+        decals: normalizedCount(provider.effectCounts.decals),
+        remains: normalizedCount(provider.effectCounts.remains),
+      });
+    },
+    get effectLimits() {
+      return Object.freeze({
+        decals: normalizedCount(provider.effectLimits.decals),
+        remains: normalizedCount(provider.effectLimits.remains),
+      });
+    },
+    get bloodDisplayCount(): number { return normalizedCount(provider.bloodDisplayCount); },
+    get corpseDisplayCount(): number { return normalizedCount(provider.corpseDisplayCount); },
+    get activeCorpseFamilies(): readonly string[] {
+      return Object.freeze([...provider.activeCorpseFamilies]);
+    },
+    get bloodAllocatedCount(): number { return normalizedCount(provider.bloodAllocatedCount); },
+    get corpseAllocatedCount(): number { return normalizedCount(provider.corpseAllocatedCount); },
     startRun: (): void => provider.startRun(),
     damagePlayer: (amount?: number): void => provider.damagePlayer(amount),
     completeWave: (): void => provider.completeWave(),
     spawnStressWave: (): void => provider.spawnStressWave(),
+    spawnStressEnemies: (count: number): number => provider.spawnStressEnemies(count),
+    defeatStressEnemies: (count: number): number => provider.defeatStressEnemies(count),
     focusQueenArena: (): void => provider.focusQueenArena(),
     defeatBoss: (): void => provider.defeatBoss(),
     restart: (): void => provider.restart(),

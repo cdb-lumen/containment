@@ -528,6 +528,14 @@ export class HordeRuntime {
   }
 
   spawnStressWave(): number {
+    return this.spawnEnemiesForDiagnostics(MAX_ACTIVE_ENEMIES);
+  }
+
+  spawnEnemiesForDiagnostics(count: number): number {
+    const requested = Number.isFinite(count)
+      ? Math.min(MAX_ACTIVE_ENEMIES, Math.max(0, Math.trunc(count)))
+      : 0;
+    if (requested === 0) return 0;
     if (this.#destroyed) return 0;
     if (this.#director.phase === 'idle') this.startArrival();
     this.#resumeArmoryIfNeeded();
@@ -553,7 +561,7 @@ export class HordeRuntime {
     this.clearEnemies();
     const stressTypes = STANDARD_ENEMY_IDS.filter((type) => type !== 'carrier');
     const columns = 15;
-    for (let index = 0; index < MAX_ACTIVE_ENEMIES; index += 1) {
+    for (let index = 0; index < requested; index += 1) {
       const type = stressTypes[index % stressTypes.length];
       const column = index % columns;
       const row = Math.floor(index / columns);
@@ -568,6 +576,26 @@ export class HordeRuntime {
     this.#combat.setObjective(waveObjective(8));
     this.#syncViews();
     return this.#enemySystem.activeCount;
+  }
+
+  defeatEnemiesForDiagnostics(count: number): number {
+    if (this.#destroyed || !Number.isFinite(count)) return 0;
+    const requested = Math.min(
+      MAX_ACTIVE_ENEMIES,
+      Math.max(0, Math.trunc(count)),
+    );
+    const targets = this.#enemySystem.snapshot.enemies.slice(0, requested);
+    let defeated = 0;
+    for (const enemy of targets) {
+      const result = this.#enemySystem.applyDamage(
+        enemy.id,
+        enemy.health + enemy.armor,
+      );
+      if (result.died) defeated += 1;
+      this.#processEnemyEvents(result.events);
+    }
+    this.#syncViews();
+    return defeated;
   }
 
   clearEnemies(): number {
