@@ -7,6 +7,30 @@ const addMany = (effects: EffectsSystem, kind: Parameters<EffectsSystem['add']>[
 };
 
 describe('EffectsSystem bounds and retirement', () => {
+  it('plans retirement without mutation and commits the exact projected transaction', () => {
+    const effects = new EffectsSystem('low');
+    addMany(effects, 'decals', effects.limits.decals);
+    const before = effects.snapshot('decals');
+
+    const plan = effects.planAtomic([{ kind: 'decals', input: { label: 'replacement' } }])!;
+
+    expect(effects.snapshot('decals')).toEqual(before);
+    expect(plan.retiredIds).toEqual([before[0]!.id]);
+    expect(plan.added[0]?.label).toBe('replacement');
+    expect(effects.commitAtomic(plan)).toBe(true);
+    expect(effects.snapshot('decals').at(-1)).toEqual(plan.added[0]);
+  });
+
+  it('rejects a stale atomic plan without consuming its projected IDs', () => {
+    const effects = new EffectsSystem('low');
+    const stale = effects.planAtomic([{ kind: 'decals', input: { label: 'stale' } }])!;
+    const intervening = effects.add('particles')!;
+
+    expect(effects.commitAtomic(stale)).toBe(false);
+    expect(effects.snapshot('decals')).toEqual([]);
+    expect(effects.add('shellCasings')?.id).toBe(intervening.id + 1);
+  });
+
   it('admits a batch atomically without consuming IDs or retiring records on failure', () => {
     const effects = new EffectsSystem('low');
     const first = effects.add('decals', { label: 'first' })!;

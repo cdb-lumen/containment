@@ -19,7 +19,7 @@ import {
   type EffectKind,
 } from '../effects/EffectsSystem';
 import { DeathVisualView } from '../effects/DeathVisualView';
-import { transferPlayerDeathVisual } from '../player/transferPlayerDeathVisual';
+import { retryPlayerDeathVisualTransfer } from '../player/transferPlayerDeathVisual';
 import {
   QualityController,
   resolveEffectsQuality,
@@ -660,8 +660,7 @@ export class GameScene extends Phaser.Scene {
     combat.update(deltaMs);
     const snapshot = combat.getSnapshot();
     if (snapshot.dead && !this.playerDeathVisualEmitted) {
-      this.playerDeathVisualEmitted = true;
-      transferPlayerDeathVisual(this.deathVisuals, player, { family: 'marine', x: player.sprite.x,
+      this.playerDeathVisualEmitted = retryPlayerDeathVisualTransfer(false, this.deathVisuals, player, { family: 'marine', x: player.sprite.x,
         y: player.sprite.y, rotation: player.sprite.rotation, major: true });
     }
     const armoryVisible = horde.armoryVisible;

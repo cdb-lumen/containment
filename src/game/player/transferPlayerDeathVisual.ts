@@ -12,3 +12,10 @@ export const transferPlayerDeathVisual = (
   player.hidePresentation();
   return true;
 };
+
+export const retryPlayerDeathVisualTransfer = (
+  emitted: boolean,
+  deathVisuals: DeathVisualOwner | null,
+  player: PlayerPresentationOwner,
+  request: DeathRequest,
+): boolean => emitted || transferPlayerDeathVisual(deathVisuals, player, request);

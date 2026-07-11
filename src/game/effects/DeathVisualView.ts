@@ -1,6 +1,6 @@
 import type { CharacterSkinId } from '../art/characterSkins';
 import { resolveBloodDecal, resolveCorpseSource, type BloodGroup } from '../art/deathVisualAssets';
-import type { EffectsSystem } from './EffectsSystem';
+import type { AtomicEffectPlan, EffectsSystem } from './EffectsSystem';
 
 export const MAX_CORPSE_IMAGES = 32;
 export const MAX_BLOOD_IMAGES = 128;
@@ -48,17 +48,13 @@ export class DeathVisualView {
   spawnDeath(request: DeathRequest): boolean {
     if (!this.valid(request)) return false;
     const source=this.corpseSources[request.family];
-    const records=this.effects.addAtomic([{kind:'decals',input:{label:`blood-${request.family}`}},
+    const plan=this.effects.planAtomic([{kind:'decals',input:{label:`blood-${request.family}`}},
       {kind:'remains',input:{label:request.family,major:request.major===true||request.elite===true||source.major}}]);
-    if(!records)return false;
-    const [blood,corpse]=records;
+    if(!plan || !this.hasProjectedCapacity(plan,1,1) || !this.effects.commitAtomic(plan))return false;
+    const [blood,corpse]=plan.added;
     this.syncRetainedIds(false);
     const bloodSlot=this.acquire('blood'); const corpseSlot=this.acquire('corpse');
-    if (!bloodSlot || !corpseSlot) {
-      if(bloodSlot)this.release(bloodSlot);if(corpseSlot)this.release(corpseSlot);
-      this.effects.remove(blood.id);this.effects.remove(corpse.id);this.syncRetainedIds(false);
-      this.onEffectsChanged();return false;
-    }
+    if (!bloodSlot || !corpseSlot) throw new Error('Death visual capacity invariant violated');
     this.configureBlood(bloodSlot,blood.id,request,source.bloodGroup);
     this.configureCorpse(corpseSlot,request,source);
     this.mappings.set(blood.id,bloodSlot);this.mappings.set(corpse.id,corpseSlot);
@@ -67,10 +63,12 @@ export class DeathVisualView {
 
   spawnBlood(request: DeathRequest): boolean {
     if (!this.valid(request)) return false;
-    const record=this.effects.add('decals',{label:`blood-${request.family}`});if(!record)return false;
+    const plan=this.effects.planAtomic([{kind:'decals',input:{label:`blood-${request.family}`}}]);
+    if(!plan || !this.hasProjectedCapacity(plan,1,0) || !this.effects.commitAtomic(plan))return false;
+    const record=plan.added[0]!;
     this.syncRetainedIds(false);
     const slot=this.acquire('blood');
-    if(!slot){this.effects.remove(record.id);this.syncRetainedIds(false);this.onEffectsChanged();return false;}
+    if(!slot)throw new Error('Death visual capacity invariant violated');
     this.configureBlood(slot,record.id,request,this.corpseSources[request.family].bloodGroup);this.mappings.set(record.id,slot);this.onEffectsChanged();return true;
   }
 
@@ -96,6 +94,11 @@ export class DeathVisualView {
   }
 
   private valid(r:DeathRequest){return Number.isFinite(r.x)&&Number.isFinite(r.y)&&this.corpseSources[r.family]!==undefined;}
+  private hasProjectedCapacity(plan:AtomicEffectPlan,newBlood:number,newCorpses:number):boolean {
+    const retired=new Set(plan.retiredIds);let blood=0;let corpses=0;
+    for(const [id,slot] of this.mappings){if(retired.has(id))continue;if(slot.kind==='blood')blood++;else corpses++;}
+    return blood+newBlood<=this.poolLimits.blood&&corpses+newCorpses<=this.poolLimits.corpse;
+  }
   private acquire(kind:'blood'|'corpse'):Slot|null {
     const pool=kind==='blood'?this.bloodPool:this.corpsePool;let image=pool.pop();
     if(!image){if(kind==='blood'){if(this.bloodAllocated>=this.poolLimits.blood)return null;this.bloodAllocated++;}else{if(this.corpseAllocated>=this.poolLimits.corpse)return null;this.corpseAllocated++;}image=this.createImage();}
