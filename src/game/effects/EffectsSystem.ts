@@ -21,6 +21,7 @@ export interface EffectRecord {
   readonly major: boolean;
 }
 
+export type EffectRequest = Readonly<{ kind: EffectKind; input?: EffectInput }>;
 export type EffectLimits = Readonly<Record<EffectKind, number>>;
 
 export const EFFECT_KINDS: readonly EffectKind[] = Object.freeze([
@@ -77,21 +78,35 @@ export class EffectsSystem {
   }
 
   add(kind: EffectKind, input: EffectInput = {}): EffectRecord | null {
-    const collection = this.effects[kind];
-    if (collection.length >= this.currentLimits[kind]) {
-      const retireIndex = this.retirementIndex(kind, collection);
-      if (retireIndex < 0) return null;
-      collection.splice(retireIndex, 1);
+    return this.addAtomic([{ kind, input }])?.[0] ?? null;
+  }
+
+  addAtomic(requests: readonly EffectRequest[]): readonly EffectRecord[] | null {
+    const simulated = Object.fromEntries(
+      EFFECT_KINDS.map((kind) => [kind, [...this.effects[kind]]]),
+    ) as Record<EffectKind, EffectRecord[]>;
+    let simulatedNextId = this.nextId;
+    const admitted: EffectRecord[] = [];
+    for (const { kind, input = {} } of requests) {
+      const collection = simulated[kind];
+      if (collection.length >= this.currentLimits[kind]) {
+        const retireIndex = this.retirementIndex(kind, collection);
+        if (retireIndex < 0) return null;
+        collection.splice(retireIndex, 1);
+      }
+      const effect: EffectRecord = Object.freeze({
+        id: simulatedNextId++, kind, label: input.label,
+        essential: input.essential === true,
+        major: kind === 'remains' && input.major === true,
+      });
+      collection.push(effect);
+      admitted.push(effect);
     }
-    const effect = Object.freeze({
-      id: this.nextId++,
-      kind,
-      label: input.label,
-      essential: input.essential === true,
-      major: kind === 'remains' && input.major === true,
-    });
-    collection.push(effect);
-    return effect;
+    for (const kind of EFFECT_KINDS) {
+      this.effects[kind].splice(0, this.effects[kind].length, ...simulated[kind]);
+    }
+    this.nextId = simulatedNextId;
+    return Object.freeze(admitted);
   }
 
   remove(id: number): boolean {

@@ -60,6 +60,18 @@ const createPlayer = (framed: boolean) => {
 };
 
 describe('Player presentation lifecycle', () => {
+  it('keeps real player presentation hidden across updates and stop until reset', () => {
+    const { player, sprite, art } = createPlayer(true);
+    player.hidePresentation();
+    player.updatePresentation(100, { dead: true, quality: 'high', reducedMotion: false, reducedFlash: false });
+    player.stop();
+    player.updatePresentation(200, { dead: true, quality: 'high', reducedMotion: false, reducedFlash: false });
+    expect(sprite.visible).toBe(false);
+    expect(art).toMatchObject({ visible: false, active: false });
+
+    player.reset({ x: 4, y: 5 });
+    expect(art).toMatchObject({ visible: true, active: true, x: 4, y: 5 });
+  });
   it('renders loaded follower art larger than the unchanged authoritative body and collision circle', () => {
     const { player, sprite, art } = createPlayer(true);
 

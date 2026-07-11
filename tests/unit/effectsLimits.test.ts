@@ -7,6 +7,43 @@ const addMany = (effects: EffectsSystem, kind: Parameters<EffectsSystem['add']>[
 };
 
 describe('EffectsSystem bounds and retirement', () => {
+  it('admits a batch atomically without consuming IDs or retiring records on failure', () => {
+    const effects = new EffectsSystem('low');
+    const first = effects.add('decals', { label: 'first' })!;
+    addMany(effects, 'decals', effects.limits.decals - 1);
+    for (let index = 0; index < effects.limits.remains; index += 1) {
+      effects.add('remains', { label: `protected-${index}`, essential: true });
+    }
+    const beforeDecals = effects.snapshot('decals');
+    const beforeRemains = effects.snapshot('remains');
+
+    expect(effects.addAtomic([
+      { kind: 'decals', input: { label: 'blood' } },
+      { kind: 'remains', input: { label: 'corpse' } },
+    ])).toBeNull();
+    expect(effects.snapshot('decals')).toEqual(beforeDecals);
+    expect(effects.snapshot('remains')).toEqual(beforeRemains);
+    expect(effects.add('particles')?.id).toBe(first.id + effects.limits.decals + effects.limits.remains);
+  });
+
+  it('commits all batch retirements and returns frozen records on success', () => {
+    const effects = new EffectsSystem('low');
+    addMany(effects, 'decals', effects.limits.decals);
+    addMany(effects, 'remains', effects.limits.remains);
+    const oldDecal = effects.snapshot('decals')[0]!;
+    const oldRemains = effects.snapshot('remains')[0]!;
+
+    const admitted = effects.addAtomic([
+      { kind: 'decals', input: { label: 'blood' } },
+      { kind: 'remains', input: { label: 'corpse', major: true } },
+    ]);
+
+    expect(admitted).not.toBeNull();
+    expect(Object.isFrozen(admitted)).toBe(true);
+    expect(admitted?.every(Object.isFrozen)).toBe(true);
+    expect(effects.snapshot('decals').some(({ id }) => id === oldDecal.id)).toBe(false);
+    expect(effects.snapshot('remains').some(({ id }) => id === oldRemains.id)).toBe(false);
+  });
   it('never exceeds low profile hard caps', () => {
     const effects = new EffectsSystem('low');
     for (const [kind, cap] of Object.entries(effects.limits)) {

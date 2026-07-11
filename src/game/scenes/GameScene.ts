@@ -497,7 +497,8 @@ export class GameScene extends Phaser.Scene {
     this.effects = new EffectsSystem(this.quality.activeProfile);
     this.deathVisuals = new DeathVisualView({ effects: this.effects,
       hasTexture: (key) => this.textures.exists(key),
-      createImage: () => this.add.image(0, 0, TEXTURE_KEYS.splatter) });
+      createImage: () => this.add.image(0, 0, TEXTURE_KEYS.splatter),
+      onEffectsChanged: () => this.syncEffectDisplays(false) });
     this.audio = new AudioSystem({
       master: initialSettings.masterVolume,
       music: initialSettings.musicVolume,
@@ -568,9 +569,7 @@ export class GameScene extends Phaser.Scene {
       getPresentationTime: () => this.presentationClock.snapshot(),
       onHazardAttack: this.handleHazardAttack,
       onEnemyDeath: this.handleEnemyDeath,
-      onQueenDefeated: ({ x, y }) => this.deathVisuals?.spawnBlood({
-        family: 'queen', x, y, major: true,
-      }),
+      onQueenDefeated: ({ x, y }) => this.deathVisuals?.spawnQueenBlood({ x, y, major: true }),
       onPickupCollected: this.handlePickupCollected,
     });
     this.horde = horde;
@@ -1306,7 +1305,7 @@ export class GameScene extends Phaser.Scene {
     this.effectDisplayPool.push(display);
   }
 
-  private syncEffectDisplays(): void {
+  private syncEffectDisplays(reconcileDeathVisuals=true): void {
     const effects = this.effects;
     if (!effects) return;
     const retained = new Set<number>();
@@ -1318,7 +1317,7 @@ export class GameScene extends Phaser.Scene {
       this.effectDisplays.delete(id);
       this.releaseEffectDisplay(display);
     }
-    this.deathVisuals?.syncRetainedIds();
+    if(reconcileDeathVisuals)this.deathVisuals?.syncRetainedIds(false);
   }
 
   private clearBlastEffects(): void {

@@ -14,7 +14,7 @@ type ImageSlot = {
 };
 type Slot = { readonly image: ImageSlot; readonly kind: 'blood'|'corpse'; family: CharacterSkinId; texture: string; frame?: number; tint?: number };
 export type DeathRequest = Readonly<{family: CharacterSkinId; x:number; y:number; elite?:boolean; major?:boolean; rotation?:number}>;
-export type DeathVisualOptions = Readonly<{effects: EffectsSystem; hasTexture:(key:string)=>boolean; createImage:()=>ImageSlot}>;
+export type DeathVisualOptions = Readonly<{effects: EffectsSystem; hasTexture:(key:string)=>boolean; createImage:()=>ImageSlot; poolLimits?:Readonly<{blood:number;corpse:number}>; onEffectsChanged?:()=>void}>;
 
 const FALLBACK_TINT: Readonly<Record<BloodGroup, number>> = Object.freeze({human:0x9b2027, alien:0x58a832, acid:0xd8d94a});
 const BLOOD_FAMILIES = ['small','medium','large','streak'] as const;
@@ -29,9 +29,13 @@ export class DeathVisualView {
   private readonly corpsePool: ImageSlot[]=[];
   private readonly bloodPool: ImageSlot[]=[];
   private corpseAllocated=0; private bloodAllocated=0;
+  private readonly poolLimits: Readonly<{blood:number;corpse:number}>;
+  private readonly onEffectsChanged: () => void;
 
   constructor(options: DeathVisualOptions) {
     this.effects=options.effects; this.createImage=options.createImage;
+    this.poolLimits=options.poolLimits ?? {blood:MAX_BLOOD_IMAGES,corpse:MAX_CORPSE_IMAGES};
+    this.onEffectsChanged=options.onEffectsChanged ?? (()=>{});
     const families: CharacterSkinId[]=['marine','crawler','brute','spitter','stalker','carrier','queen'];
     this.corpseSources=Object.fromEntries(families.map(f=>[f,resolveCorpseSource(options.hasTexture,f)])) as typeof this.corpseSources;
     this.bloodSources={
@@ -43,30 +47,36 @@ export class DeathVisualView {
 
   spawnDeath(request: DeathRequest): boolean {
     if (!this.valid(request)) return false;
-    const blood=this.effects.add('decals',{label:`blood-${request.family}`}); this.syncRetainedIds();
-    if (!blood) return false;
     const source=this.corpseSources[request.family];
-    const corpse=this.effects.add('remains',{label:request.family,major:request.major===true||request.elite===true||source.major}); this.syncRetainedIds();
-    if (!corpse) { this.effects.remove(blood.id); this.syncRetainedIds(); return false; }
     const bloodSlot=this.acquire('blood'); const corpseSlot=this.acquire('corpse');
-    if (!bloodSlot || !corpseSlot) { this.effects.remove(blood.id);this.effects.remove(corpse.id);this.syncRetainedIds();return false; }
+    if (!bloodSlot || !corpseSlot) {if(bloodSlot)this.release(bloodSlot);if(corpseSlot)this.release(corpseSlot);return false;}
+    const records=this.effects.addAtomic([{kind:'decals',input:{label:`blood-${request.family}`}},
+      {kind:'remains',input:{label:request.family,major:request.major===true||request.elite===true||source.major}}]);
+    if(!records){this.release(bloodSlot);this.release(corpseSlot);return false;}
+    const [blood,corpse]=records;
+    this.syncRetainedIds(false);
     this.configureBlood(bloodSlot,blood.id,request,source.bloodGroup);
     this.configureCorpse(corpseSlot,request,source);
     this.mappings.set(blood.id,bloodSlot);this.mappings.set(corpse.id,corpseSlot);
-    return true;
+    this.onEffectsChanged();return true;
   }
 
   spawnBlood(request: DeathRequest): boolean {
     if (!this.valid(request)) return false;
-    const record=this.effects.add('decals',{label:`blood-${request.family}`});this.syncRetainedIds();if(!record)return false;
-    const slot=this.acquire('blood');if(!slot){this.effects.remove(record.id);return false;}
-    this.configureBlood(slot,record.id,request,this.corpseSources[request.family].bloodGroup);this.mappings.set(record.id,slot);return true;
+    const slot=this.acquire('blood');if(!slot)return false;
+    const record=this.effects.add('decals',{label:`blood-${request.family}`});if(!record){this.release(slot);return false;}
+    this.syncRetainedIds(false);
+    this.configureBlood(slot,record.id,request,this.corpseSources[request.family].bloodGroup);this.mappings.set(record.id,slot);this.onEffectsChanged();return true;
   }
 
-  syncRetainedIds(): void {
+  /** QueenBossView intentionally retains the corpse; this view owns blood only. */
+  spawnQueenBlood(request: Omit<DeathRequest,'family'>): boolean {return this.spawnBlood({...request,family:'queen'});}
+
+  syncRetainedIds(notify=true): void {
     const retained=new Set<number>();
     for(const kind of ['dynamicLights','particles','decals','remains','shellCasings'] as const) for(const effect of this.effects.snapshot(kind))retained.add(effect.id);
     for(const [id,slot] of this.mappings) if(!retained.has(id)){this.mappings.delete(id);this.release(slot);}
+    if(notify)this.onEffectsChanged();
   }
 
   clear(recycle=true): void {
@@ -83,7 +93,7 @@ export class DeathVisualView {
   private valid(r:DeathRequest){return Number.isFinite(r.x)&&Number.isFinite(r.y)&&this.corpseSources[r.family]!==undefined;}
   private acquire(kind:'blood'|'corpse'):Slot|null {
     const pool=kind==='blood'?this.bloodPool:this.corpsePool;let image=pool.pop();
-    if(!image){if(kind==='blood'){if(this.bloodAllocated>=MAX_BLOOD_IMAGES)return null;this.bloodAllocated++;}else{if(this.corpseAllocated>=MAX_CORPSE_IMAGES)return null;this.corpseAllocated++;}image=this.createImage();}
+    if(!image){if(kind==='blood'){if(this.bloodAllocated>=this.poolLimits.blood)return null;this.bloodAllocated++;}else{if(this.corpseAllocated>=this.poolLimits.corpse)return null;this.corpseAllocated++;}image=this.createImage();}
     return {image,kind,family:'marine',texture:''};
   }
   private reset(slot:Slot,r:DeathRequest){slot.family=r.family;slot.tint=undefined;slot.frame=undefined;slot.image.setTexture(this.corpseSources[r.family].texture).clearTint().setAlpha(1).setScale(1,1).setRotation(0).setFlip(false,false).setPosition(r.x,r.y).setDepth(0).setActive(true).setVisible(true);}
