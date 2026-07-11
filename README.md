@@ -56,6 +56,8 @@ Animation is a deterministic presentation layer kept separate from gameplay simu
 
 Characters use crisp nearest-neighbor scaling, stable ground pivots, readable silhouettes, and bounded flashes. Controls remain keyboard/touch accessible, reduced-motion and reduced-flash preferences are supported, and presentation quality can adapt without changing gameplay.
 
+Defeated characters leave family-specific bodies using the authored death frames, while a local 12-frame blood sheet supplies matte human, alien, and acid splatters. Corpses and blood are static presentation objects with no collision or gameplay authority. They share the existing effects budget—up to 32 bodies and 128 decals on High, with immediate Medium/Low trimming—and rotate through bounded pools rather than accumulating indefinitely. Missing authored textures fall back to procedural remains and splatters; player and queen deaths retain exactly one body owner.
+
 ## Local development
 
 Requirements: a current Node.js release supported by Vite 8 and npm.
@@ -76,7 +78,7 @@ npm run verify
 
 The canonical gate runs:
 
-1. Seven-sheet character asset validation
+1. Strict validation of seven character sheets and the 12-frame blood-decal sheet
 2. ESLint
 3. Deterministic Vitest unit coverage
 4. TypeScript checking and a production Vite build
@@ -90,7 +92,7 @@ npm run test:e2e
 npm run build
 ```
 
-Browser tests verify observable behavior: deployment, pause/settings, quality transitions, restart isolation, accessible menu/results actions, touch actions, portrait inertness and suspension, browser errors, sustained input, the 150-enemy runtime cap, and the built artifact mounted at the GitHub Pages repository subpath. Unit tests deterministically cover projectile/effect pools and retirement limits that normal weapon cooldowns cannot saturate in real time.
+Browser tests verify observable behavior: deployment, pause/settings, quality transitions, restart isolation, accessible menu/results actions, touch actions, portrait inertness and suspension, browser errors, sustained input, the 150-enemy runtime cap, authoritative corpse/blood saturation and retirement, and the built artifact mounted at the GitHub Pages repository subpath. Unit tests deterministically cover projectile/effect pools and retirement limits that normal weapon cooldowns cannot saturate in real time.
 
 ## Architecture
 
