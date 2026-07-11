@@ -13,6 +13,7 @@ type ImageSlot = {
   setFlip(x: boolean, y: boolean): ImageSlot; setDepth(depth: number): ImageSlot; setActive(active: boolean): ImageSlot; setVisible(visible: boolean): ImageSlot;
 };
 type Slot = { readonly image: ImageSlot; readonly kind: 'blood'|'corpse'; family: CharacterSkinId; texture: string; frame?: number; tint?: number };
+type Reservation = { readonly slot: Slot; readonly detachedId?: number };
 export type DeathRequest = Readonly<{family: CharacterSkinId; x:number; y:number; elite?:boolean; major?:boolean; rotation?:number}>;
 export type DeathVisualOptions = Readonly<{effects: EffectsSystem; hasTexture:(key:string)=>boolean; createImage:()=>ImageSlot; poolLimits?:Readonly<{blood:number;corpse:number}>; onEffectsChanged?:()=>void}>;
 
@@ -50,26 +51,28 @@ export class DeathVisualView {
     const source=this.corpseSources[request.family];
     const plan=this.effects.planAtomic([{kind:'decals',input:{label:`blood-${request.family}`}},
       {kind:'remains',input:{label:request.family,major:request.major===true||request.elite===true||source.major}}]);
-    if(!plan || !this.hasProjectedCapacity(plan,1,1) || !this.effects.commitAtomic(plan))return false;
+    if(!plan || !this.hasProjectedCapacity(plan,1,1))return false;
     const [blood,corpse]=plan.added;
+    const reservations: Reservation[]=[];
+    const bloodReservation=this.reserve('blood',plan);if(!bloodReservation)return false;reservations.push(bloodReservation);
+    const corpseReservation=this.reserve('corpse',plan);if(!corpseReservation){this.abortReservations(reservations);return false;}reservations.push(corpseReservation);
+    if(!this.effects.commitAtomic(plan)){this.abortReservations(reservations);return false;}
     this.syncRetainedIds(false);
-    const bloodSlot=this.acquire('blood'); const corpseSlot=this.acquire('corpse');
-    if (!bloodSlot || !corpseSlot) throw new Error('Death visual capacity invariant violated');
-    this.configureBlood(bloodSlot,blood.id,request,source.bloodGroup);
-    this.configureCorpse(corpseSlot,request,source);
-    this.mappings.set(blood.id,bloodSlot);this.mappings.set(corpse.id,corpseSlot);
+    this.configureBlood(bloodReservation.slot,blood.id,request,source.bloodGroup);
+    this.configureCorpse(corpseReservation.slot,request,source);
+    this.mappings.set(blood.id,bloodReservation.slot);this.mappings.set(corpse.id,corpseReservation.slot);
     this.onEffectsChanged();return true;
   }
 
   spawnBlood(request: DeathRequest): boolean {
     if (!this.valid(request)) return false;
     const plan=this.effects.planAtomic([{kind:'decals',input:{label:`blood-${request.family}`}}]);
-    if(!plan || !this.hasProjectedCapacity(plan,1,0) || !this.effects.commitAtomic(plan))return false;
+    if(!plan || !this.hasProjectedCapacity(plan,1,0))return false;
     const record=plan.added[0]!;
+    const reservation=this.reserve('blood',plan);if(!reservation)return false;
+    if(!this.effects.commitAtomic(plan)){this.abortReservations([reservation]);return false;}
     this.syncRetainedIds(false);
-    const slot=this.acquire('blood');
-    if(!slot)throw new Error('Death visual capacity invariant violated');
-    this.configureBlood(slot,record.id,request,this.corpseSources[request.family].bloodGroup);this.mappings.set(record.id,slot);this.onEffectsChanged();return true;
+    this.configureBlood(reservation.slot,record.id,request,this.corpseSources[request.family].bloodGroup);this.mappings.set(record.id,reservation.slot);this.onEffectsChanged();return true;
   }
 
   /** QueenBossView intentionally retains the corpse; this view owns blood only. */
@@ -101,8 +104,18 @@ export class DeathVisualView {
   }
   private acquire(kind:'blood'|'corpse'):Slot|null {
     const pool=kind==='blood'?this.bloodPool:this.corpsePool;let image=pool.pop();
-    if(!image){if(kind==='blood'){if(this.bloodAllocated>=this.poolLimits.blood)return null;this.bloodAllocated++;}else{if(this.corpseAllocated>=this.poolLimits.corpse)return null;this.corpseAllocated++;}image=this.createImage();}
+    if(!image){if(kind==='blood'){if(this.bloodAllocated>=this.poolLimits.blood)return null;}else if(this.corpseAllocated>=this.poolLimits.corpse)return null;
+      try{image=this.createImage();}catch{return null;}if(!image)return null;if(kind==='blood')this.bloodAllocated++;else this.corpseAllocated++;}
     return {image,kind,family:'marine',texture:''};
+  }
+  private reserve(kind:'blood'|'corpse',plan:AtomicEffectPlan):Reservation|null {
+    const acquired=this.acquire(kind);if(acquired)return {slot:acquired};
+    const retired=new Set(plan.retiredIds);
+    for(const [id,slot] of this.mappings)if(retired.has(id)&&slot.kind===kind){this.mappings.delete(id);return {slot,detachedId:id};}
+    return null;
+  }
+  private abortReservations(reservations:readonly Reservation[]):void {
+    for(const reservation of reservations){if(reservation.detachedId!==undefined)this.mappings.set(reservation.detachedId,reservation.slot);else this.release(reservation.slot);}
   }
   private reset(slot:Slot,r:DeathRequest){slot.family=r.family;slot.tint=undefined;slot.frame=undefined;slot.image.setTexture(this.corpseSources[r.family].texture).clearTint().setAlpha(1).setScale(1,1).setRotation(0).setFlip(false,false).setPosition(r.x,r.y).setDepth(0).setActive(true).setVisible(true);}
   private configureBlood(slot:Slot,id:number,r:DeathRequest,group:BloodGroup){this.reset(slot,r);const index=(id+r.family.length+(r.major?1:0))%4;const source=this.bloodSources[group][index]!;slot.texture=source.texture;slot.frame=source.frame;slot.image.setTexture(source.texture,source.frame);if(!source.framed){slot.tint=FALLBACK_TINT[group];slot.image.setTint(slot.tint);}const scale=(r.major||r.elite?1.3:0.72)+(id%3)*0.08;slot.image.setScale(scale).setRotation(quarterRotation(id)).setDepth(Math.max(-20,r.y-30));}
