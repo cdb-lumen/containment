@@ -165,28 +165,39 @@ describe('EnemyView pooled follower integration', () => {
     expect(follower.displayWidth).toBeLessThan(68 * 1.14);
   });
 
-  it('propagates active quality and applies accessibility policies on the next pooled follower sync', () => {
+  it('propagates reduced motion and reduced flash immediately, independently, and without rebuilding the pool', () => {
     const loaded = new Set([CHARACTER_SKINS.spitter.texture]);
-    const high = createScene(loaded, { reducedMotion: false, settings: { reducedFlash: false } });
-    const highView = new EnemyView(high.scene as never, () => 137);
-    highView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
-    highView.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
-    const highFollower = high.art.find(({ active }) => active)!;
-    expect(highFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: 0xffffff });
-    expect(highFollower.scaleX).not.toBeCloseTo(52 / 96);
-
     const policies = { reducedMotion: false, settings: { reducedFlash: false } };
-    const accessible = createScene(loaded, policies);
-    const accessibleView = new EnemyView(accessible.scene as never, () => 137);
-    accessibleView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
-    const pooledFollower = accessible.art.find(({ active }) => active);
+    const { scene, art, textureExists } = createScene(loaded, policies);
+    const view = new EnemyView(scene as never, () => 137);
+    view.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
+    const pooledFollower = art.find(({ active }) => active)!;
+    const followerCount = art.length;
+    const textureCheckCount = textureExists.mock.calls.length;
+
+    view.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
+    expect(pooledFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: 0xffffff });
+    expect(pooledFollower.scaleX).not.toBeCloseTo(52 / 96);
+
     policies.reducedMotion = true;
-    policies.settings.reducedFlash = true;
-    accessibleView.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
-    expect(accessible.art.find(({ active }) => active)).toBe(pooledFollower);
-    expect(pooledFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: undefined,
+    view.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
+    expect(art.find(({ active }) => active)).toBe(pooledFollower);
+    expect(pooledFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: 0xffffff,
       x: 100, y: 200, rotation: 0, displayWidth: 52, displayHeight: 52 });
 
+    policies.reducedMotion = false;
+    policies.settings.reducedFlash = true;
+    view.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
+    expect(pooledFollower.frame).toBe(CHARACTER_SKINS.spitter.frames.hit);
+    expect(pooledFollower.scaleX).not.toBeCloseTo(52 / 96);
+    expect(pooledFollower.tint).toBeUndefined();
+    expect(view.count).toBe(1);
+    expect(art).toHaveLength(followerCount);
+    expect(textureExists).toHaveBeenCalledTimes(textureCheckCount);
+  });
+
+  it('keeps semantic movement while low quality suppresses optional deformation', () => {
+    const loaded = new Set([CHARACTER_SKINS.spitter.texture]);
     const low = createScene(loaded);
     const lowView = new EnemyView(low.scene as never, () => 137);
     lowView.setQuality('low');

@@ -66,6 +66,28 @@ test('deploys, pauses, applies quality live, and resets run isolation', async ({
   expect(errors).toEqual([]);
 });
 
+test('reports reduced motion and reduced flash from their independent canonical sources', async ({ browser }) => {
+  const reducedContext = await browser.newContext();
+  const reducedPage = await reducedContext.newPage();
+  await reducedPage.emulateMedia({ reducedMotion: 'reduce' });
+  await openGame(reducedPage);
+  await deploy(reducedPage);
+  await expect.poll(() => reducedPage.evaluate(() => window.__ALIEN_GAME__?.reducedMotion)).toBe(true);
+  await expect.poll(() => reducedPage.evaluate(() => window.__ALIEN_GAME__?.reducedFlash)).toBe(false);
+  await reducedContext.close();
+
+  const normalContext = await browser.newContext();
+  const normalPage = await normalContext.newPage();
+  await openGame(normalPage);
+  await deploy(normalPage);
+  await expect.poll(() => normalPage.evaluate(() => window.__ALIEN_GAME__?.reducedMotion)).toBe(false);
+  await normalPage.keyboard.press('Escape');
+  await normalPage.getByLabel('Reduce bright flashes').check();
+  await expect.poll(() => normalPage.evaluate(() => window.__ALIEN_GAME__?.reducedFlash)).toBe(true);
+  await expect.poll(() => normalPage.evaluate(() => window.__ALIEN_GAME__?.reducedMotion)).toBe(false);
+  await normalContext.close();
+});
+
 test('stops the marine presentation immediately at idle while preserving aim', async ({ page }) => {
   await openGame(page);
   await deploy(page);
