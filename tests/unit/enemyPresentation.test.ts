@@ -86,19 +86,31 @@ const createImage = (physics: boolean) => {
 const createScene = (loaded: Set<string>, registryValues: Record<string, unknown> = {}) => {
   const bodies: ReturnType<typeof createImage>[] = [];
   const art: ReturnType<typeof createImage>[] = [];
-  const graphics = { setDepth() { return this; }, clear() { return this; }, fillStyle() { return this; }, fillRect() { return this; }, lineStyle() { return this; }, beginPath() { return this; }, moveTo() { return this; }, lineTo() { return this; }, closePath() { return this; }, strokePath() { return this; }, setVisible() { return this; } };
+  const graphicsCalls: Array<readonly [string, ...unknown[]]> = [];
+  const graphics = {
+    setDepth(value: number) { graphicsCalls.push(['setDepth', value]); return this; },
+    clear() { graphicsCalls.push(['clear']); return this; },
+    fillStyle() { return this; }, fillRect() { return this; },
+    lineStyle(...args: unknown[]) { graphicsCalls.push(['lineStyle', ...args]); return this; },
+    beginPath() { graphicsCalls.push(['beginPath']); return this; },
+    moveTo(...args: unknown[]) { graphicsCalls.push(['moveTo', ...args]); return this; },
+    lineTo(...args: unknown[]) { graphicsCalls.push(['lineTo', ...args]); return this; },
+    closePath() { graphicsCalls.push(['closePath']); return this; },
+    strokePath() { graphicsCalls.push(['strokePath']); return this; }, setVisible() { return this; },
+  };
+  const graphicsFactory = vi.fn(() => graphics);
   const textureExists = vi.fn((key: string) => loaded.has(key));
   const requestedArtTextures: string[] = [];
   const scene = {
     time: { now: 250 }, textures: { exists: textureExists },
     registry: { get: (key: string) => registryValues[key] }, events: { once() {}, off() {} },
     physics: { add: { group: () => ({ add() {} }), image: () => { const value = createImage(true); bodies.push(value); return value; } } },
-    add: { graphics: () => graphics, image: (_x: number, _y: number, texture: string) => {
+    add: { graphics: graphicsFactory, image: (_x: number, _y: number, texture: string) => {
       requestedArtTextures.push(texture);
       const value = createImage(false); value.texture = texture; art.push(value); return value;
     } },
   };
-  return { scene, bodies, art, textureExists, requestedArtTextures };
+  return { scene, bodies, art, graphicsCalls, graphicsFactory, textureExists, requestedArtTextures };
 };
 
 describe('EnemyView pooled follower integration', () => {
@@ -204,6 +216,40 @@ describe('EnemyView pooled follower integration', () => {
     lowView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
     expect(low.art.find(({ active }) => active)).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.moveA,
       displayWidth: 52, displayHeight: 52 });
+  });
+
+  it('draws one bounded stalker contrast cue with a low-quality baseline and no crawler cue', () => {
+    const loaded = new Set([CHARACTER_SKINS.stalker.texture, CHARACTER_SKINS.crawler.texture]);
+    const low = createScene(loaded);
+    const view = new EnemyView(low.scene as never, () => 137);
+    view.setQuality('low');
+    low.graphicsCalls.length = 0;
+    view.sync([snapshot(1, 'stalker'), snapshot(2, 'crawler', { x: 300 })]);
+    const cueStyles = low.graphicsCalls.filter(([name]) => name === 'lineStyle');
+    expect(cueStyles).toHaveLength(1);
+    expect(cueStyles[0]?.[3]).toBeGreaterThan(0);
+    expect(low.graphicsCalls.filter(([name]) => name === 'strokePath')).toHaveLength(1);
+    expect(low.graphicsFactory).toHaveBeenCalledTimes(2);
+    expect(view.visualCount).toBeLessThanOrEqual(150);
+    const graphicsCount = low.graphicsFactory.mock.calls.length;
+    view.sync([snapshot(1, 'stalker'), snapshot(2, 'crawler', { x: 300 })]);
+    expect(low.graphicsFactory).toHaveBeenCalledTimes(graphicsCount);
+  });
+
+  it('modulates stalker emissive contrast in high quality but keeps reduced motion static', () => {
+    const loaded = new Set([CHARACTER_SKINS.stalker.texture]);
+    const animated = createScene(loaded);
+    const animatedView = new EnemyView(animated.scene as never, () => 137);
+    animated.graphicsCalls.length = 0;
+    animatedView.sync([snapshot(1, 'stalker')]);
+    const animatedAlpha = animated.graphicsCalls.find(([name]) => name === 'lineStyle')?.[3] as number;
+    const reduced = createScene(loaded, { reducedMotion: true });
+    const reducedView = new EnemyView(reduced.scene as never, () => 137);
+    reduced.graphicsCalls.length = 0;
+    reducedView.sync([snapshot(1, 'stalker')]);
+    const reducedAlpha = reduced.graphicsCalls.find(([name]) => name === 'lineStyle')?.[3] as number;
+    expect(animatedAlpha).toBeGreaterThan(reducedAlpha);
+    expect(reducedAlpha).toBeGreaterThan(0);
   });
 });
 

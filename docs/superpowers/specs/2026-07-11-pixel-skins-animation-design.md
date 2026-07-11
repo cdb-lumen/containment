@@ -1,7 +1,7 @@
 # Alien Shooter: Containment — Pixel Skins and Animation Design
 
-**Date:** 2026-07-11  
-**Status:** Approved for planning  
+**Date:** 2026-07-11
+**Status:** Approved for planning
 **Branch:** `feat/pixel-skins-animation`
 
 ## Objective

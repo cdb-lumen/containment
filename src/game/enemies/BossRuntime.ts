@@ -77,16 +77,6 @@ const stableTargetId = (target: QueenDamageTarget): string =>
 const isObject = (value: unknown): value is object =>
   value !== null && (typeof value === 'object' || typeof value === 'function');
 
-type QueenDurability = Readonly<{ armor?: number; health: number }>;
-
-export const didQueenDurabilityDecrease = (
-  before: QueenDurability,
-  after: QueenDurability,
-): boolean =>
-  (typeof before.armor === 'number' && typeof after.armor === 'number' &&
-    Number.isFinite(before.armor) && Number.isFinite(after.armor) && after.armor < before.armor) ||
-  (Number.isFinite(before.health) && Number.isFinite(after.health) && after.health < before.health);
-
 export const routeQueenBossEventPresentation = (
   event: QueenBossEvent,
   signal: (event: QueenBossEvent) => void,
@@ -204,14 +194,8 @@ export class BossRuntime {
       });
     }
 
-    const before = this.#system.snapshot;
     const damage = this.#system.applyDamage(target, request.damage);
-    const after = this.#system.snapshot;
-    this.#view.handleAppliedDamage(
-      target,
-      target.type === 'queen' && before.active && didQueenDurabilityDecrease(before, after),
-    );
-    if (damage.blockedByArmor) this.#view.handleShieldBlocked(target);
+    this.#routeDamagePresentation(target, damage);
     this.#processDamage(damage);
     this.#syncView();
     return Object.freeze({
@@ -271,18 +255,10 @@ export class BossRuntime {
       const amount = calculateSplashDamage(baseDamage, distance, radius);
       if (amount <= 0) continue;
 
-      const before = this.#system.snapshot;
       const damage = this.#system.applyDamage(candidate.target, amount);
-      const after = this.#system.snapshot;
-      this.#view.handleAppliedDamage(
-        candidate.target,
-        candidate.target.type === 'queen' && before.active && didQueenDurabilityDecrease(before, after),
-      );
+      this.#routeDamagePresentation(candidate.target, damage);
       if (damage.applied) appliedCount += 1;
-      if (damage.blockedByArmor) {
-        blockedCount += 1;
-        this.#view.handleShieldBlocked(candidate.target);
-      }
+      if (damage.blockedByArmor) blockedCount += 1;
       if (damage.destroyed) destroyedCount += 1;
       if (damage.defeated) defeated = true;
       this.#processDamage(damage);
@@ -350,6 +326,16 @@ export class BossRuntime {
 
   destroy(): void {
     this.#dispose(true);
+  }
+
+  #routeDamagePresentation(target: QueenDamageTarget, damage: QueenDamageResult): void {
+    if (target.type !== 'queen') return;
+    if (damage.blockedByArmor) {
+      this.#view.handleAppliedDamage(target, true);
+      this.#view.handleShieldBlocked(target);
+    } else if (damage.applied) {
+      this.#view.handleAppliedDamage(target, true);
+    }
   }
 
   #playerPoint(): Readonly<{ x: number; y: number; radius: number }> {

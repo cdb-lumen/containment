@@ -25,6 +25,9 @@ const HEALTH_DAMAGED_COLOR = 0xe58a28;
 const ARMOR_COLOR = 0x69d8e7;
 const BAR_BACKGROUND = 0x070a0f;
 const OVERLAY_DEPTH = 4_096;
+const STALKER_CONTRAST_DEPTH = 1;
+const STALKER_CONTRAST_COLOR = 0x69d8e7;
+const STALKER_CONTRAST_BASE_ALPHA = 0.52;
 const STANDARD_ENEMY_IDS: readonly StandardEnemyId[] = [
   'crawler', 'brute', 'spitter', 'stalker', 'carrier',
 ];
@@ -37,6 +40,7 @@ type EnemySlot = {
   presentation: EnemyPresentationState;
   framed: boolean;
   skinKey: string;
+  emissiveAlpha: number;
 };
 
 export type EnemyViewPosition = Readonly<{ id: number; x: number; y: number }>;
@@ -64,6 +68,7 @@ export class EnemyView {
 
   private readonly scene: Phaser.Scene;
   private readonly getPresentationTime: () => number;
+  private readonly stalkerContrast: Phaser.GameObjects.Graphics;
   private readonly overlay: Phaser.GameObjects.Graphics;
   private readonly slotsById = new Map<number, EnemySlot>();
   private readonly idsBySprite = new Map<object, number>();
@@ -91,6 +96,7 @@ export class EnemyView {
     this.scene = scene;
     this.getPresentationTime = getPresentationTime;
     this.group = scene.physics.add.group({ allowGravity: false, immovable: true });
+    this.stalkerContrast = scene.add.graphics().setDepth(STALKER_CONTRAST_DEPTH);
     this.overlay = scene.add.graphics().setDepth(OVERLAY_DEPTH);
     this.activePositions = this.mutableActivePositions;
     const hasTexture = (key: string): boolean => this.scene.textures?.exists?.(key) === true;
@@ -159,6 +165,7 @@ export class EnemyView {
   clear(): void {
     if (this.destroyed || this.pool === null) return;
     this.pool.clear();
+    this.stalkerContrast.clear();
     this.overlay.clear();
     this.seenIds.clear();
   }
@@ -167,6 +174,7 @@ export class EnemyView {
     if (this.destroyed) return;
     this.scene.events.off(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneShutdown);
     this.clear();
+    this.stalkerContrast.setVisible(false);
     this.overlay.setVisible(false);
     this.pool = null;
     this.destroyed = true;
@@ -185,7 +193,7 @@ export class EnemyView {
           ? this.scene.add.image(0, 0, this.initialFollowerTexture).setActive(false).setVisible(false)
           : null;
         return {
-          body, art, presentation: new EnemyPresentationState(), framed: false, skinKey: 'unknown',
+          body, art, presentation: new EnemyPresentationState(), framed: false, skinKey: 'unknown', emissiveAlpha: 0,
         };
       },
       activate: (slot, enemy): void => {
@@ -205,6 +213,7 @@ export class EnemyView {
         slot.presentation.release();
         slot.framed = false;
         slot.skinKey = 'unknown';
+        slot.emissiveAlpha = 0;
         slot.body.body.enable = false;
         slot.body.setActive(false).setVisible(false).setPosition(0, 0).setRotation(0).setAlpha(1)
           .setScale(1).setFlipX(false).setFlipY(false).clearTint().setFrame(0);
@@ -245,6 +254,7 @@ export class EnemyView {
       this.scene.registry.get('reducedMotion') === true,
       settings?.reducedFlash === true,
     );
+    slot.emissiveAlpha = output.emissiveAlpha;
     slot.art.setTexture(resolved.texture).setFrame(CHARACTER_SKINS[enemy.type].frames[output.frame])
       .setPosition(enemy.x + output.offsetX, enemy.y + output.offsetY)
       .setDisplaySize(displaySize * output.scaleX, displaySize * output.scaleY)
@@ -274,6 +284,7 @@ export class EnemyView {
   }
 
   private redrawOverlay(enemies: readonly EnemySnapshot[]): void {
+    this.redrawStalkerContrast(enemies);
     this.overlay.clear();
     for (const enemy of enemies) {
       if (!this.slotsById.has(enemy.id)) continue;
@@ -296,6 +307,24 @@ export class EnemyView {
         this.overlay.fillStyle(ARMOR_COLOR, alpha).fillRect(left, armorY, width * armorRatio, ARMOR_BAR_HEIGHT);
       }
       if (enemy.elite) this.drawEliteMarker(enemy.x, healthY - 8, alpha);
+    }
+  }
+
+  private redrawStalkerContrast(enemies: readonly EnemySnapshot[]): void {
+    this.stalkerContrast.clear();
+    const reducedMotion = this.scene.registry.get('reducedMotion') === true;
+    for (const enemy of enemies) {
+      const slot = this.slotsById.get(enemy.id);
+      if (!slot?.framed || enemy.type !== 'stalker') continue;
+      const modulation = this.quality === 'low' || reducedMotion ? 0 : slot.emissiveAlpha * 0.3;
+      const alpha = clampUnit(STALKER_CONTRAST_BASE_ALPHA + modulation);
+      const radius = Math.max(27, enemy.radius + 8);
+      this.stalkerContrast.lineStyle(2, STALKER_CONTRAST_COLOR, alpha).beginPath();
+      this.stalkerContrast.moveTo(enemy.x, enemy.y - radius)
+        .lineTo(enemy.x + radius, enemy.y)
+        .lineTo(enemy.x, enemy.y + radius)
+        .lineTo(enemy.x - radius, enemy.y)
+        .closePath().strokePath();
     }
   }
 

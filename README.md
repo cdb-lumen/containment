@@ -78,7 +78,7 @@ The canonical gate runs:
 
 1. Seven-sheet character asset validation
 2. ESLint
-3. 283 deterministic Vitest unit tests
+3. 284 deterministic Vitest unit tests
 4. TypeScript checking and a production Vite build
 5. Playwright behavior and bounded-stress tests in desktop and iPhone-sized Chromium
 

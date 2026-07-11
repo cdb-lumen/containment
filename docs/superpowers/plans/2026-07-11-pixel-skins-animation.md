@@ -80,7 +80,7 @@ describe('character skin manifest', () => {
 
 - [ ] **Step 2: Verify RED**
 
-Run: `npm test -- --run tests/unit/characterAnimation.test.ts`  
+Run: `npm test -- --run tests/unit/characterAnimation.test.ts`
 Expected: FAIL because `characterSkins.ts` does not exist.
 
 - [ ] **Step 3: Implement the frozen manifest**
@@ -93,7 +93,7 @@ Do not remove existing definitions from `createTextures.ts`. Add `pixelArt: true
 
 - [ ] **Step 5: Verify GREEN**
 
-Run: `npm test -- --run tests/unit/characterAnimation.test.ts`  
+Run: `npm test -- --run tests/unit/characterAnimation.test.ts`
 Expected: manifest tests PASS.
 
 - [ ] **Step 6: Commit**
@@ -162,12 +162,12 @@ It must exit nonzero for missing, non-PNG, or wrong-sized assets and print one c
 
 - [ ] **Step 4: Verify validator failure before final normalization**
 
-Run: `node scripts/validate-character-assets.mjs`  
+Run: `node scripts/validate-character-assets.mjs`
 Expected: FAIL until every expected asset exists at the exact size.
 
 - [ ] **Step 5: Verify all assets**
 
-Run: `node scripts/validate-character-assets.mjs`  
+Run: `node scripts/validate-character-assets.mjs`
 Expected: seven `valid character sheet:` lines and exit 0.
 
 - [ ] **Step 6: Add validation to scripts**
@@ -221,7 +221,7 @@ expect(Number.isFinite(result.offsetY)).toBe(true);
 
 - [ ] **Step 2: Verify RED**
 
-Run: `npm test -- --run tests/unit/characterAnimation.test.ts`  
+Run: `npm test -- --run tests/unit/characterAnimation.test.ts`
 Expected: FAIL because policy exports do not exist.
 
 - [ ] **Step 3: Implement immutable inputs and outputs**
@@ -263,9 +263,9 @@ Use frozen profiles for idle/move cadence and amplitudes. Brute cadence is slowe
 
 - [ ] **Step 5: Verify GREEN and full unit baseline**
 
-Run: `npm test -- --run tests/unit/characterAnimation.test.ts`  
-Expected: PASS.  
-Run: `npm test`  
+Run: `npm test -- --run tests/unit/characterAnimation.test.ts`
+Expected: PASS.
+Run: `npm test`
 Expected: all existing 226 tests plus new policy tests PASS.
 
 - [ ] **Step 6: Commit**
@@ -293,7 +293,7 @@ Extract a pure `resolveLoadedCharacterTexture(textures, skin)` helper or test a 
 
 - [ ] **Step 2: Verify RED**
 
-Run: `npm test -- --run tests/unit/shell.test.ts`  
+Run: `npm test -- --run tests/unit/shell.test.ts`
 Expected: new tests FAIL.
 
 - [ ] **Step 3: Preload sheets in BootScene**
@@ -315,9 +315,9 @@ Export a pure resolver returning `{ texture, framed }`; consumers use frame indi
 
 - [ ] **Step 5: Verify GREEN and production build**
 
-Run: `npm test -- --run tests/unit/shell.test.ts`  
-Expected: PASS.  
-Run: `npm run build`  
+Run: `npm test -- --run tests/unit/shell.test.ts`
+Expected: PASS.
+Run: `npm run build`
 Expected: build succeeds and `dist/assets/characters/` contains all seven PNGs.
 
 - [ ] **Step 6: Commit**
@@ -347,7 +347,7 @@ Extract `PlayerAnimationState` if necessary. Prove:
 
 - [ ] **Step 2: Verify RED**
 
-Run: `npm test -- --run tests/unit/restart.test.ts`  
+Run: `npm test -- --run tests/unit/restart.test.ts`
 Expected: FAIL for missing animation API.
 
 - [ ] **Step 3: Resolve player skin on construction**
@@ -375,9 +375,9 @@ Expose a frozen animation summary: `playerFrame`, `playerAnimating`, and current
 
 - [ ] **Step 7: Verify GREEN and restart browser behavior**
 
-Run: `npm test -- --run tests/unit/restart.test.ts`  
-Expected: PASS.  
-Run: `npx playwright test tests/e2e/desktop.spec.ts --project=desktop-chromium --grep "restart isolation"`  
+Run: `npm test -- --run tests/unit/restart.test.ts`
+Expected: PASS.
+Run: `npx playwright test tests/e2e/desktop.spec.ts --project=desktop-chromium --grep "restart isolation"`
 Expected: PASS.
 
 - [ ] **Step 8: Commit**
@@ -408,7 +408,7 @@ Test a pure slot state or exported reset helper. On release/reacquire assert:
 
 - [ ] **Step 2: Verify RED**
 
-Run: `npm test -- --run tests/unit/enemyBehavior.test.ts tests/unit/pools.test.ts`  
+Run: `npm test -- --run tests/unit/enemyBehavior.test.ts tests/unit/pools.test.ts`
 Expected: new tests FAIL.
 
 - [ ] **Step 3: Add bounded slot presentation state**
@@ -437,9 +437,9 @@ If bob/scale offsets would affect the Arcade body, split each slot into an autho
 
 - [ ] **Step 7: Verify GREEN and stress**
 
-Run: `npm test -- --run tests/unit/enemyBehavior.test.ts tests/unit/pools.test.ts`  
-Expected: PASS.  
-Run: `npx playwright test tests/e2e/desktop.spec.ts --project=desktop-chromium --grep "horde cap" --repeat-each=5`  
+Run: `npm test -- --run tests/unit/enemyBehavior.test.ts tests/unit/pools.test.ts`
+Expected: PASS.
+Run: `npx playwright test tests/e2e/desktop.spec.ts --project=desktop-chromium --grep "horde cap" --repeat-each=5`
 Expected: five PASS results, capacity ≤150, no browser errors.
 
 - [ ] **Step 8: Commit**
@@ -462,7 +462,7 @@ Cover frame/secondary motion by phase, armor/core hit independence, reduced moti
 
 - [ ] **Step 2: Verify RED**
 
-Run: `npm test -- --run tests/unit/boss.test.ts`  
+Run: `npm test -- --run tests/unit/boss.test.ts`
 Expected: new tests FAIL.
 
 - [ ] **Step 3: Resolve queen sheet and semantic frames**
@@ -479,9 +479,9 @@ On reset/death/shutdown restore frame, alpha, tint, scale, rotation offset, and 
 
 - [ ] **Step 6: Verify GREEN**
 
-Run: `npm test -- --run tests/unit/boss.test.ts`  
-Expected: PASS.  
-Run: `npm test -- --run tests/unit/restart.test.ts`  
+Run: `npm test -- --run tests/unit/boss.test.ts`
+Expected: PASS.
+Run: `npm test -- --run tests/unit/restart.test.ts`
 Expected: PASS.
 
 - [ ] **Step 7: Commit**
@@ -511,7 +511,7 @@ Unit tests prove reduced motion and reduced flash remain independent. Browser te
 
 - [ ] **Step 2: Verify RED**
 
-Run focused unit and mobile Playwright commands.  
+Run focused unit and mobile Playwright commands.
 Expected: new assertions FAIL before lifecycle wiring.
 
 - [ ] **Step 3: Use gameplay elapsed time, not wall time**
@@ -524,9 +524,9 @@ Read canonical registry settings and active quality. Apply reduced motion, reduc
 
 - [ ] **Step 5: Verify GREEN**
 
-Run: `npm test -- --run tests/unit/characterAnimation.test.ts`  
-Expected: PASS.  
-Run: `npx playwright test tests/e2e/mobile.spec.ts --project=mobile-chromium`  
+Run: `npm test -- --run tests/unit/characterAnimation.test.ts`
+Expected: PASS.
+Run: `npx playwright test tests/e2e/mobile.spec.ts --project=mobile-chromium`
 Expected: all mobile tests PASS.
 
 - [ ] **Step 6: Commit**
@@ -573,7 +573,7 @@ Add a `character-visuals-chromium` project or include the spec in the existing d
 
 - [ ] **Step 4: Verify tests**
 
-Run: `npm run test:e2e`  
+Run: `npm run test:e2e`
 Expected: all prior tests plus character visual tests PASS.
 
 - [ ] **Step 5: Commit**

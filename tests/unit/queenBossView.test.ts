@@ -9,7 +9,7 @@ vi.mock('phaser', () => ({
 
 import { CHARACTER_SKINS } from '../../src/game/art/characterSkins';
 import { TEXTURE_KEYS } from '../../src/game/art/createTextures';
-import { BossRuntime, didQueenDurabilityDecrease, routeQueenBossEventPresentation } from '../../src/game/enemies/BossRuntime';
+import { BossRuntime, routeQueenBossEventPresentation } from '../../src/game/enemies/BossRuntime';
 import type { BossRuntimeOptions } from '../../src/game/enemies/BossRuntime';
 import type { QueenBossEvent, QueenBossSnapshot } from '../../src/game/enemies/QueenBossSystem';
 import { QueenBossSystem } from '../../src/game/enemies/QueenBossSystem';
@@ -17,7 +17,7 @@ import { QueenBossView } from '../../src/game/enemies/QueenBossView';
 
 const snapshot = (overrides: Partial<QueenBossSnapshot> = {}): QueenBossSnapshot => ({
   active: true, defeated: false, phase: 'armored', stage: 1, x: 400, y: 300,
-  rotation: 0.25, armor: 100, health: 5_000, maxHealth: 5_000, vulnerable: false,
+  rotation: 0.25, health: 5_000, maxHealth: 5_000, vulnerable: false,
   phaseRemainingMs: 1_000, nests: [], pendingTelegraph: null, ...overrides,
 });
 
@@ -89,14 +89,7 @@ const runtimeFor = (
   getOccupiedEnemyCapacity: () => 50, spawnMinion: () => false, onQueenDefeated,
 });
 
-describe('queen durability presentation routing', () => {
-  it('detects strict armor or health decreases and rejects no-op/malformed values', () => {
-    expect(didQueenDurabilityDecrease({ armor: 10, health: 50 }, { armor: 9, health: 50 })).toBe(true);
-    expect(didQueenDurabilityDecrease({ armor: 0, health: 50 }, { armor: 0, health: 49 })).toBe(true);
-    expect(didQueenDurabilityDecrease({ armor: 10, health: 50 }, { armor: 10, health: 50 })).toBe(false);
-    expect(didQueenDurabilityDecrease({ armor: 10, health: 50 }, { armor: 11, health: 51 })).toBe(false);
-  });
-
+describe('queen damage-result presentation routing', () => {
   it('routes real system attack event types but not unrelated nest events', () => {
     const system = new QueenBossSystem();
     system.start(100, 100);
@@ -107,7 +100,7 @@ describe('queen durability presentation routing', () => {
     expect(routed).toEqual([telegraph]);
   });
 
-  it('signals hits through actual area damage only for queen durability decreases', () => {
+  it('signals blocked and applied queen hits, but not no-op or nest-only damage', () => {
     const { scene } = createScene(true);
     const signals: Array<[unknown, boolean]> = [];
     const spy = vi.spyOn(QueenBossView.prototype, 'handleAppliedDamage')
@@ -129,7 +122,7 @@ describe('queen durability presentation routing', () => {
 
     const nest = runtime.snapshot.nests[0];
     runtime.applyAreaDamage(nest.x, nest.y, 10, 25);
-    expect(signals).toEqual([[{ type: 'nest', id: nest.id }, false]]);
+    expect(signals).toEqual([]);
     signals.length = 0;
 
     runtime.update(4_000);
@@ -231,11 +224,11 @@ describe('QueenBossView integration', () => {
     const view = new QueenBossView(scene as never);
     view.sync(snapshot({ x: 321, y: 654 }));
     view.handleEvent({ type: 'queen-defeated', eventId: 7, x: 321, y: 654, reward: 1 });
-    view.sync(snapshot({ active: false, defeated: true, phase: 'defeated', health: 0, armor: 0, x: 321, y: 654 }));
+    view.sync(snapshot({ active: false, defeated: true, phase: 'defeated', health: 0, x: 321, y: 654 }));
     expect(bodies.every(({ body }) => body?.enable === false)).toBe(true);
     expect(art[0]).toMatchObject({ active: true, visible: true, frame: CHARACTER_SKINS.queen.frames.death });
 
-    const active = snapshot({ x: 10, y: 20, rotation: 0, phase: 'vulnerable', vulnerable: true, armor: 0 });
+    const active = snapshot({ x: 10, y: 20, rotation: 0, phase: 'vulnerable', vulnerable: true });
     const baselineScene = createScene(true, { reducedMotion: true, settings: { reducedFlash: true } });
     new QueenBossView(baselineScene.scene as never).sync(active);
     const baselineArt = baselineScene.art[0];
@@ -286,7 +279,7 @@ describe('QueenBossView integration', () => {
     view.handleAppliedDamage({ type: 'queen' }, true);
     view.sync(snapshot({ health: 4_999, nests: [{ id: 1, x: 50, y: 60, health: 100, maxHealth: 100, spawnCooldownRemainingMs: 0 }] }));
     expect(art).toHaveLength(1);
-    expect(art[0]).toMatchObject({ frame: CHARACTER_SKINS.queen.frames.hit, tint: undefined, x: 400, y: 300, rotation: 0.25 });
+    expect(art[0]).toMatchObject({ tint: undefined, x: 400, y: 300, rotation: 0.25 });
     expect(bodies.filter(({ active }) => active)).toHaveLength(2);
   });
 });

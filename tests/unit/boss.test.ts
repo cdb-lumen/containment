@@ -50,7 +50,7 @@ const finishVulnerableCycle = (system: QueenBossSystem): void => {
 describe('queen presentation state', () => {
   const snapshot = (overrides: Record<string, unknown> = {}) => ({
     active: true, defeated: false, phase: 'armored' as const, stage: 1 as const,
-    x: 500, y: 400, rotation: 0, armor: 1_000, health: ENEMIES.queen.maxHealth,
+    x: 500, y: 400, rotation: 0, health: ENEMIES.queen.maxHealth,
     maxHealth: ENEMIES.queen.maxHealth, vulnerable: false,
     phaseRemainingMs: QUEEN_ARMORED_DURATION_MS, nests: [], pendingTelegraph: null,
     ...overrides,
@@ -183,7 +183,6 @@ describe('QueenBossSystem phases and damage gates', () => {
       defeated: false,
       events: [],
     });
-    expect(system.snapshot.armor).toBeLessThan(1_000);
     expect(system.snapshot.health).toBe(ENEMIES.queen.maxHealth);
 
     enterVulnerable(system);
@@ -553,7 +552,6 @@ describe('QueenBossSystem state boundary and malformed input', () => {
       x: 0,
       y: 0,
       rotation: 0,
-      armor: 0,
       health: ENEMIES.queen.maxHealth,
       maxHealth: ENEMIES.queen.maxHealth,
       vulnerable: false,
