@@ -48,13 +48,17 @@ export class DeathVisualView {
   spawnDeath(request: DeathRequest): boolean {
     if (!this.valid(request)) return false;
     const source=this.corpseSources[request.family];
-    const bloodSlot=this.acquire('blood'); const corpseSlot=this.acquire('corpse');
-    if (!bloodSlot || !corpseSlot) {if(bloodSlot)this.release(bloodSlot);if(corpseSlot)this.release(corpseSlot);return false;}
     const records=this.effects.addAtomic([{kind:'decals',input:{label:`blood-${request.family}`}},
       {kind:'remains',input:{label:request.family,major:request.major===true||request.elite===true||source.major}}]);
-    if(!records){this.release(bloodSlot);this.release(corpseSlot);return false;}
+    if(!records)return false;
     const [blood,corpse]=records;
     this.syncRetainedIds(false);
+    const bloodSlot=this.acquire('blood'); const corpseSlot=this.acquire('corpse');
+    if (!bloodSlot || !corpseSlot) {
+      if(bloodSlot)this.release(bloodSlot);if(corpseSlot)this.release(corpseSlot);
+      this.effects.remove(blood.id);this.effects.remove(corpse.id);this.syncRetainedIds(false);
+      this.onEffectsChanged();return false;
+    }
     this.configureBlood(bloodSlot,blood.id,request,source.bloodGroup);
     this.configureCorpse(corpseSlot,request,source);
     this.mappings.set(blood.id,bloodSlot);this.mappings.set(corpse.id,corpseSlot);
@@ -63,9 +67,10 @@ export class DeathVisualView {
 
   spawnBlood(request: DeathRequest): boolean {
     if (!this.valid(request)) return false;
-    const slot=this.acquire('blood');if(!slot)return false;
-    const record=this.effects.add('decals',{label:`blood-${request.family}`});if(!record){this.release(slot);return false;}
+    const record=this.effects.add('decals',{label:`blood-${request.family}`});if(!record)return false;
     this.syncRetainedIds(false);
+    const slot=this.acquire('blood');
+    if(!slot){this.effects.remove(record.id);this.syncRetainedIds(false);this.onEffectsChanged();return false;}
     this.configureBlood(slot,record.id,request,this.corpseSources[request.family].bloodGroup);this.mappings.set(record.id,slot);this.onEffectsChanged();return true;
   }
 

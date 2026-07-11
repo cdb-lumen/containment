@@ -19,6 +19,7 @@ import {
   type EffectKind,
 } from '../effects/EffectsSystem';
 import { DeathVisualView } from '../effects/DeathVisualView';
+import { transferPlayerDeathVisual } from '../player/transferPlayerDeathVisual';
 import {
   QualityController,
   resolveEffectsQuality,
@@ -445,7 +446,6 @@ export class GameScene extends Phaser.Scene {
     // Drop bookkeeping only and let Phaser finish destroying Scene ownership.
     this.clearHazardPools(false);
     this.clearBattleEffects(false);
-    this.deathVisuals?.clear(false);
     this.deathVisuals = null;
     this.effects = null;
     this.quality = null;
@@ -661,9 +661,8 @@ export class GameScene extends Phaser.Scene {
     const snapshot = combat.getSnapshot();
     if (snapshot.dead && !this.playerDeathVisualEmitted) {
       this.playerDeathVisualEmitted = true;
-      this.deathVisuals?.spawnDeath({ family: 'marine', x: player.sprite.x,
+      transferPlayerDeathVisual(this.deathVisuals, player, { family: 'marine', x: player.sprite.x,
         y: player.sprite.y, rotation: player.sprite.rotation, major: true });
-      player.hidePresentation();
     }
     const armoryVisible = horde.armoryVisible;
     const canAct = !snapshot.dead && !armoryVisible;
