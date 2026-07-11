@@ -16,7 +16,17 @@ import {
   type EnemySpawnRequestEvent,
   type HazardAttackEvent,
 } from '../enemies/EnemySystem';
-import { EnemyView, type EnemyViewPosition } from '../enemies/EnemyView';
+import {
+  BossRuntime,
+  type BossProjectileHitResult,
+} from '../enemies/BossRuntime';
+import { EnemyView } from '../enemies/EnemyView';
+import type {
+  MinionSpawnRequestEvent,
+  QueenBossSnapshot,
+  QueenDamageTarget,
+  QueenDefeatedEvent,
+} from '../enemies/QueenBossSystem';
 import { STANDARD_ENEMY_IDS } from '../enemies/catalog';
 import {
   PICKUP_RADIUS,
@@ -25,6 +35,7 @@ import {
 } from '../pickups/PickupSystem';
 import { PickupView } from '../pickups/PickupView';
 import type { Player } from '../player/Player';
+import { RunState, type RunResult } from '../run/RunState';
 import { ArmoryOverlay } from '../upgrades/ArmoryOverlay';
 import {
   UpgradeSystem,
@@ -145,8 +156,10 @@ export class HordeRuntime {
   readonly #enemySystem: EnemySystem;
   readonly #pickupSystem: PickupSystem;
   readonly #upgradeSystem: UpgradeSystem;
+  readonly #runState: RunState;
   readonly #enemyView: EnemyView;
   readonly #pickupView: PickupView;
+  readonly #bossRuntime: BossRuntime;
   readonly #armoryOverlay: ArmoryOverlay;
   readonly #breachEffects = new Set<Phaser.GameObjects.Graphics>();
   readonly #breachTweens = new Set<Phaser.Tweens.Tween>();
@@ -160,6 +173,8 @@ export class HordeRuntime {
   #randomState: number;
   #arrivalStarted = false;
   #defeatReported = false;
+  #queenDefeatHandled = false;
+  #lastBossPhase: QueenBossSnapshot['phase'] = 'idle';
   #destroyed = false;
 
   readonly #handleSceneShutdown = (): void => {
@@ -180,8 +195,17 @@ export class HordeRuntime {
     });
     this.#pickupSystem = new PickupSystem(this.#initialSeed);
     this.#upgradeSystem = new UpgradeSystem();
+    this.#runState = new RunState();
     this.#enemyView = new EnemyView(this.#scene);
     this.#pickupView = new PickupView(this.#scene);
+    this.#bossRuntime = new BossRuntime({
+      scene: this.#scene,
+      combat: this.#combat,
+      player: this.#player,
+      getOccupiedEnemyCapacity: (): number => this.#occupiedEnemyCapacity(),
+      spawnMinion: (event): boolean => this.#spawnBossMinion(event),
+      onQueenDefeated: (event): void => this.#handleQueenDefeated(event),
+    });
     this.#armoryOverlay = new ArmoryOverlay(
       this.#scene,
       (offer, index): void => this.#purchaseArmoryOffer(offer, index),
@@ -196,20 +220,35 @@ export class HordeRuntime {
     return this.#enemyView.group;
   }
 
+  get bossGroup(): Phaser.Physics.Arcade.Group {
+    return this.#bossRuntime.group;
+  }
+
   enemyIdFor(gameObject: unknown): number | null {
     return this.#enemyView.enemyIdFor(gameObject);
   }
 
+  bossTargetFor(gameObject: unknown): QueenDamageTarget | null {
+    return this.#bossRuntime.targetFor(gameObject);
+  }
+
+  get bossSnapshot(): QueenBossSnapshot {
+    return this.#bossRuntime.snapshot;
+  }
+
   get activeEnemies(): number {
-    return this.#enemySystem.activeCount;
+    return this.#enemySystem.activeCount + this.#bossRuntime.activeCount;
   }
 
   get activePickups(): number {
     return this.#pickupSystem.snapshot.length;
   }
 
-  get radarPositions(): readonly EnemyViewPosition[] {
-    return this.#enemyView.activePositions;
+  get radarPositions(): readonly Readonly<{ x: number; y: number }>[] {
+    return Object.freeze([
+      ...this.#enemyView.activePositions,
+      ...this.#bossRuntime.radarPositions,
+    ]);
   }
 
   get phase(): HordePhase {
@@ -236,10 +275,19 @@ export class HordeRuntime {
     return this.currentUpgradeModifiers;
   }
 
+  get runResult(): RunResult {
+    return this.#runState.snapshot(
+      this.#upgradeSystem.levels,
+      this.#combat.snapshot.credits,
+    );
+  }
+
   startArrival(): boolean {
     if (this.#destroyed || this.#arrivalStarted) return false;
     this.#arrivalStarted = true;
-    this.#processHordeEvents(this.#director.start());
+    const events = this.#director.start();
+    this.#runState.start();
+    this.#processHordeEvents(events);
     this.#syncViews();
     return true;
   }
@@ -248,14 +296,18 @@ export class HordeRuntime {
     if (this.#destroyed) return;
     const delta = safeDelta(deltaMs);
     const playerPoint = this.#playerPoint();
+    this.#runState.update(delta);
     this.#retryPendingSpawns();
 
     if (this.#director.phase === 'combat') {
-      const occupiedCount =
-        this.#enemySystem.activeCount +
-        this.#enemySystem.reservedCount +
-        this.#pendingSpawnRequests.length;
-      this.#processHordeEvents(this.#director.update(delta, occupiedCount));
+      this.#processHordeEvents(
+        this.#director.update(delta, this.#occupiedEnemyCapacity()),
+      );
+    }
+
+    if (this.#director.phase === 'boss') {
+      this.#bossRuntime.update(delta);
+      this.#updateBossObjective();
     }
 
     this.#processEnemyEvents(this.#enemySystem.update(delta, playerPoint));
@@ -299,6 +351,14 @@ export class HordeRuntime {
       exhausted: tracked.exhausted,
       died: damage.died,
     });
+  }
+
+  handleBossProjectileHit(
+    target: QueenDamageTarget,
+    request: ProjectileRequest,
+    tracker: ProjectileHitTracker,
+  ): BossProjectileHitResult {
+    return this.#bossRuntime.handleProjectileHit(target, request, tracker);
   }
 
   applyAreaDamage(
@@ -352,12 +412,24 @@ export class HordeRuntime {
       this.#processEnemyEvents(result.events);
     }
 
+    const bossDamage = this.#bossRuntime.applyAreaDamage(
+      centerX,
+      centerY,
+      boundedDamage,
+      boundedRadius,
+    );
+
     this.#syncViews();
     return Object.freeze({
-      appliedCount: enemyIds.length,
-      deathCount,
+      appliedCount: enemyIds.length + bossDamage.appliedCount,
+      deathCount: deathCount + bossDamage.destroyedCount,
       enemyIds: Object.freeze(enemyIds),
     });
+  }
+
+  forceBossDefeatForDiagnostics(): boolean {
+    if (this.#destroyed || this.#director.phase !== 'boss') return false;
+    return this.#bossRuntime.forceDefeatForDiagnostics();
   }
 
   selectArmoryIndex(index: number): boolean {
@@ -468,8 +540,12 @@ export class HordeRuntime {
     this.#enemySystem.reset();
     this.#pickupSystem.reset(this.#initialSeed);
     this.#upgradeSystem.reset();
+    this.#bossRuntime.reset();
+    this.#runState.reset();
     this.#arrivalStarted = false;
     this.#defeatReported = false;
+    this.#queenDefeatHandled = false;
+    this.#lastBossPhase = 'idle';
     this.#armoryOverlay.hide();
     this.#enemyView.clear();
     this.#pickupView.clear();
@@ -508,6 +584,7 @@ export class HordeRuntime {
           }
           break;
         case 'wave-complete': {
+          this.#runState.recordWaveCleared(event.wave);
           const bonus = event.wave * WAVE_BONUS_MULTIPLIER;
           this.#addCredits(bonus);
           this.#combat.setObjective(
@@ -529,11 +606,15 @@ export class HordeRuntime {
         case 'armory-end':
           this.#armoryOverlay.hide();
           break;
-        case 'boss-start':
+        case 'boss-start': {
+          const { x, y } = FACILITY_LAYOUT.queenArena.safeCenter;
+          this.#bossRuntime.start(x, y);
+          this.#facility.setWaveAccess(8);
           this.#combat.setObjective(
-            'QUEEN SIGNAL ACQUIRED // ENTER CONTAINMENT',
+            'QUEEN ARMORED // DESTROY NESTS // AWAIT CORE EXPOSURE',
           );
           break;
+        }
         case 'victory':
           this.#combat.setObjective('CONTAINMENT SECURED');
           break;
@@ -610,6 +691,7 @@ export class HordeRuntime {
   }
 
   #processDeath(event: EnemyDeathEvent): void {
+    this.#runState.recordEnemyDefeated(event.elite, event.enemyId);
     this.#addCredits(event.reward);
     this.#pickupSystem.rollEnemyDrop(event.enemyType, event.x, event.y);
   }
@@ -621,6 +703,69 @@ export class HordeRuntime {
       event.y,
       event.elite,
     );
+  }
+
+  #occupiedEnemyCapacity(): number {
+    const counts = [
+      this.#enemySystem.activeCount,
+      this.#enemySystem.reservedCount,
+      this.#pendingSpawnRequests.length,
+    ];
+    if (counts.some((count) => !Number.isSafeInteger(count) || count < 0)) {
+      return MAX_ACTIVE_ENEMIES;
+    }
+    return Math.min(
+      MAX_ACTIVE_ENEMIES,
+      counts.reduce((sum, count) => sum + count, 0),
+    );
+  }
+
+  #spawnBossMinion(event: MinionSpawnRequestEvent): boolean {
+    return this.#enemySystem.spawn(
+      event.enemyType,
+      event.x,
+      event.y,
+      false,
+    ).spawned;
+  }
+
+  #updateBossObjective(): void {
+    const phase = this.#bossRuntime.snapshot.phase;
+    if (phase === this.#lastBossPhase) return;
+    this.#lastBossPhase = phase;
+    switch (phase) {
+      case 'armored':
+        this.#combat.setObjective('QUEEN ARMORED // HOLD FIRE // BREAK NESTS');
+        break;
+      case 'nest-spawn':
+        this.#combat.setObjective('NEST SURGE // DESTROY TELEPORTER PODS');
+        break;
+      case 'vulnerable':
+        this.#combat.setObjective('CORE EXPOSED // FOCUS FIRE');
+        break;
+      case 'idle':
+      case 'defeated':
+        break;
+    }
+  }
+
+  #handleQueenDefeated(event: QueenDefeatedEvent): void {
+    if (
+      this.#queenDefeatHandled ||
+      this.#defeatReported ||
+      this.#combat.snapshot.dead ||
+      this.#director.phase !== 'boss'
+    ) {
+      return;
+    }
+    this.#queenDefeatHandled = true;
+    this.#addCredits(event.reward);
+    this.#pendingSpawnRequests.length = 0;
+    this.#runState.finishVictory(
+      this.#upgradeSystem.levels,
+      this.#combat.snapshot.credits,
+    );
+    this.#processHordeEvents(this.#director.reportBossDefeated());
   }
 
   #updatePickups(
@@ -725,10 +870,20 @@ export class HordeRuntime {
   }
 
   #reportDefeatIfNeeded(): void {
-    if (this.#defeatReported || !this.#combat.snapshot.dead) return;
+    if (
+      this.#defeatReported ||
+      !this.#combat.snapshot.dead ||
+      !['combat', 'armory', 'boss'].includes(this.#director.phase)
+    ) {
+      return;
+    }
     this.#defeatReported = true;
     this.#pendingSpawnRequests.length = 0;
     if (this.#upgradeSystem.cancelArmory()) this.#armoryOverlay.hide();
+    this.#runState.finishDefeat(
+      this.#upgradeSystem.levels,
+      this.#combat.snapshot.credits,
+    );
     const events = this.#director.reportPlayerDefeated();
     this.#processHordeEvents(events);
     if (events.length === 0) {
@@ -874,6 +1029,7 @@ export class HordeRuntime {
       this.#handleSceneShutdown,
     );
     this.#clearBreachEffects(destroyDisplayObjects);
+    this.#bossRuntime.destroy();
     this.#enemyView.destroy();
     this.#pickupView.destroy();
     if (destroyDisplayObjects) this.#armoryOverlay.destroy();

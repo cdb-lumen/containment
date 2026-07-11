@@ -3,6 +3,7 @@ export type DiagnosticsPhase = string;
 export interface DiagnosticsReadOnlyFields {
   readonly phase: DiagnosticsPhase;
   readonly playerHealth: number;
+  readonly bossHealth: number;
   readonly activeEnemies: number;
   readonly activeProjectiles: number;
   readonly wave: number;
@@ -14,6 +15,7 @@ export interface DiagnosticsActions {
   readonly damagePlayer: (amount?: number) => void;
   readonly completeWave: () => void;
   readonly spawnStressWave: () => void;
+  readonly defeatBoss: () => void;
   readonly restart: () => void;
 }
 
@@ -72,6 +74,9 @@ export function installDiagnostics(
     get playerHealth(): number {
       return normalizedNumber(provider.playerHealth);
     },
+    get bossHealth(): number {
+      return normalizedNumber(provider.bossHealth);
+    },
     get activeEnemies(): number {
       return normalizedCount(provider.activeEnemies);
     },
@@ -88,6 +93,7 @@ export function installDiagnostics(
     damagePlayer: (amount?: number): void => provider.damagePlayer(amount),
     completeWave: (): void => provider.completeWave(),
     spawnStressWave: (): void => provider.spawnStressWave(),
+    defeatBoss: (): void => provider.defeatBoss(),
     restart: (): void => provider.restart(),
   });
 

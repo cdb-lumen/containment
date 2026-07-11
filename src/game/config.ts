@@ -4,6 +4,7 @@ import { GAME_HEIGHT, GAME_WIDTH } from './constants';
 import { BootScene } from './scenes/BootScene';
 import { GameScene } from './scenes/GameScene';
 import { MenuScene } from './scenes/MenuScene';
+import { ResultsScene } from './scenes/ResultsScene';
 
 const BACKGROUND_COLOR = '#05070b';
 
@@ -19,7 +20,7 @@ export function createGameConfig(
     transparent: false,
     antialias: true,
     pixelArt: false,
-    scene: [BootScene, MenuScene, GameScene],
+    scene: [BootScene, MenuScene, GameScene, ResultsScene],
     physics: {
       default: 'arcade',
       arcade: {

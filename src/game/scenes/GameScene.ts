@@ -16,6 +16,7 @@ import { DesktopInput } from '../input/DesktopInput';
 import { Player } from '../player/Player';
 import { HordeRuntime } from '../waves/HordeRuntime';
 import { FacilityWorld } from '../world/FacilityWorld';
+import type { ResultsSceneData } from './ResultsScene';
 import { SCENE_KEYS } from './sceneKeys';
 
 const CAMERA_BACKGROUND = '#070a0f';
@@ -31,6 +32,7 @@ const HAZARD_POOL_LIFETIME_MS = 4_000;
 const HAZARD_POOL_TICK_MS = 700;
 const HAZARD_POOL_DAMAGE_FRACTION = 0.35;
 const MAX_HAZARD_POOLS = 20;
+const RESULTS_TRANSITION_DELAY_MS = 700;
 
 type ProjectileImage = Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
@@ -119,6 +121,7 @@ export class GameScene extends Phaser.Scene {
   private playerCollider: Phaser.Physics.Arcade.Collider | null = null;
   private projectileCollider: Phaser.Physics.Arcade.Collider | null = null;
   private projectileEnemyOverlap: Phaser.Physics.Arcade.Collider | null = null;
+  private projectileBossOverlap: Phaser.Physics.Arcade.Collider | null = null;
   private projectilePlayerOverlap: Phaser.Physics.Arcade.Collider | null = null;
   private muzzleFlash: Phaser.GameObjects.Image | null = null;
   private muzzleTimer: Phaser.Time.TimerEvent | null = null;
@@ -132,6 +135,8 @@ export class GameScene extends Phaser.Scene {
   private readonly hazardPools = new Set<HazardPoolState>();
   private missionStarted = false;
   private shuttingDown = false;
+  private resultTransitionRemainingMs: number | null = null;
+  private resultSceneStarted = false;
 
   private readonly handleProjectileBlockerCollision: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
     first,
@@ -177,6 +182,33 @@ export class GameScene extends Phaser.Scene {
         x: Number.isFinite(knockbackX) ? knockbackX : 0,
         y: Number.isFinite(knockbackY) ? knockbackY : 0,
       },
+    );
+    if (hit.exhausted) this.releaseProjectile(projectile);
+  };
+
+  private readonly handleProjectileBossOverlap: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
+    first,
+    second,
+  ): void => {
+    const projectile = this.asActiveProjectile(first);
+    const horde = this.horde;
+    if (projectile === null || horde === null) return;
+
+    const runtime = this.projectileRuntime.get(projectile);
+    if (!runtime || runtime.kind === 'enemy-hazard') return;
+
+    const target = horde.bossTargetFor(second);
+    if (target === null) return;
+
+    if (runtime.request.splashRadius > 0) {
+      this.detonateProjectile(projectile, projectile.x, projectile.y);
+      return;
+    }
+
+    const hit = horde.handleBossProjectileHit(
+      target,
+      runtime.request,
+      runtime.hitTracker,
     );
     if (hit.exhausted) this.releaseProjectile(projectile);
   };
@@ -239,6 +271,7 @@ export class GameScene extends Phaser.Scene {
   private readonly handleShutdown = (): void => {
     if (this.shuttingDown) return;
     this.shuttingDown = true;
+    this.resetResultTransition();
 
     this.cleanupDiagnostics?.();
     this.cleanupDiagnostics = null;
@@ -268,6 +301,8 @@ export class GameScene extends Phaser.Scene {
 
     this.projectileEnemyOverlap?.destroy();
     this.projectileEnemyOverlap = null;
+    this.projectileBossOverlap?.destroy();
+    this.projectileBossOverlap = null;
     this.projectilePlayerOverlap?.destroy();
     this.projectilePlayerOverlap = null;
     this.projectileCollider?.destroy();
@@ -305,6 +340,7 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     this.shuttingDown = false;
     this.missionStarted = false;
+    this.resetResultTransition();
     this.activeProjectiles.clear();
     this.projectileRuntime.clear();
     this.hazardPools.clear();
@@ -354,6 +390,13 @@ export class GameScene extends Phaser.Scene {
       horde.enemyGroup,
       this.handleProjectileEnemyOverlap,
     );
+    if (this.projectileBossOverlap === null) {
+      this.projectileBossOverlap = this.physics.add.overlap(
+        this.projectileGroup,
+        horde.bossGroup,
+        this.handleProjectileBossOverlap,
+      );
+    }
     this.projectilePlayerOverlap = this.physics.add.overlap(
       this.projectileGroup,
       player.sprite,
@@ -386,6 +429,15 @@ export class GameScene extends Phaser.Scene {
     if (this.shuttingDown || !combat || !player || !desktopInput || !horde) return;
 
     const deltaMs = safeDelta(delta);
+    if (this.resultTransitionRemainingMs !== null || this.resultSceneStarted) {
+      this.advanceResultTransition(deltaMs, horde);
+      return;
+    }
+    if (this.beginResultTransition(horde, player)) {
+      this.hud?.setRadarState(player.sprite.x, player.sprite.y, horde.radarPositions);
+      return;
+    }
+
     combat.update(deltaMs);
 
     const input = desktopInput.read(this.cameras.main, player.sprite);
@@ -446,11 +498,49 @@ export class GameScene extends Phaser.Scene {
     }
 
     horde.update(deltaMs);
+    if (this.beginResultTransition(horde, player)) {
+      this.hud?.setRadarState(player.sprite.x, player.sprite.y, horde.radarPositions);
+      return;
+    }
     const armoryOpenAfterUpdate = horde.armoryVisible;
     if (armoryOpenAfterUpdate) this.clearHostileEffects();
     this.updateProjectiles(deltaMs);
     if (!armoryOpenAfterUpdate) this.updateHazardPools(deltaMs);
     this.hud?.setRadarState(player.sprite.x, player.sprite.y, horde.radarPositions);
+  }
+
+  private beginResultTransition(horde: HordeRuntime, player: Player): boolean {
+    if (horde.phase !== 'victory' && horde.phase !== 'defeat') return false;
+    if (this.resultTransitionRemainingMs === null && !this.resultSceneStarted) {
+      this.resultTransitionRemainingMs = RESULTS_TRANSITION_DELAY_MS;
+      player.stop();
+      this.hideMuzzleFlash();
+      this.clearProjectiles();
+      this.clearHazardPools(true);
+    }
+    return true;
+  }
+
+  private advanceResultTransition(deltaMs: number, horde: HordeRuntime): void {
+    this.player?.stop();
+    if (this.resultSceneStarted) return;
+
+    const remainingMs = this.resultTransitionRemainingMs;
+    if (remainingMs === null) return;
+    this.resultTransitionRemainingMs = Math.max(0, remainingMs - deltaMs);
+    if (this.resultTransitionRemainingMs > 0) return;
+
+    this.resultTransitionRemainingMs = null;
+    this.resultSceneStarted = true;
+    this.scene.start(
+      SCENE_KEYS.results,
+      { result: horde.runResult } satisfies ResultsSceneData,
+    );
+  }
+
+  private resetResultTransition(): void {
+    this.resultTransitionRemainingMs = null;
+    this.resultSceneStarted = false;
   }
 
   private createProjectilePool(): ProjectilePool<ProjectileImage, ProjectileInit> {
@@ -807,6 +897,7 @@ export class GameScene extends Phaser.Scene {
     const player = this.player;
     if (!combat || !facility || !player || this.shuttingDown) return;
 
+    this.resetResultTransition();
     this.clearProjectiles();
     this.clearHazardPools(true);
     this.hideMuzzleFlash();
@@ -833,12 +924,19 @@ export class GameScene extends Phaser.Scene {
     const getHorde = () => this.horde;
     const getActiveProjectileCount = () => this.activeProjectiles.size;
     this.cleanupDiagnostics = installDiagnostics({
-      get phase(): 'armory' | 'combat' | 'defeat' {
+      get phase(): 'arrival' | 'armory' | 'combat' | 'boss' | 'victory' | 'defeat' {
         if (getSnapshot()?.dead === true) return 'defeat';
-        return getHorde()?.armoryVisible === true ? 'armory' : 'combat';
+        const horde = getHorde();
+        if (horde?.armoryVisible === true) return 'armory';
+        const phase = horde?.phase;
+        return phase === undefined || phase === 'idle' ? 'arrival' : phase;
       },
       get playerHealth(): number {
         return getSnapshot()?.health ?? 0;
+      },
+      get bossHealth(): number {
+        const snapshot = getHorde()?.bossSnapshot;
+        return snapshot && (snapshot.active || snapshot.defeated) ? snapshot.health : 0;
       },
       get activeEnemies(): number {
         return getHorde()?.activeEnemies ?? 0;
@@ -866,6 +964,9 @@ export class GameScene extends Phaser.Scene {
       },
       spawnStressWave: (): void => {
         this.missionStarted = (this.horde?.spawnStressWave() ?? 0) > 0;
+      },
+      defeatBoss: (): void => {
+        this.horde?.forceBossDefeatForDiagnostics();
       },
       restart: (): void => {
         this.scene.restart();
