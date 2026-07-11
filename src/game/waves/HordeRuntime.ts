@@ -272,6 +272,7 @@ export class HordeRuntime {
   }
 
   setEffectsProfile(profile: QualityProfileName): void {
+    this.#enemyView.setQuality(profile);
     this.#breachEffectLimit = Math.min(
       MAX_BREACH_EFFECTS,
       QUALITY_PROFILES[profile].dynamicLights,
@@ -699,9 +700,11 @@ export class HordeRuntime {
     for (const event of events) {
       switch (event.type) {
         case 'contact-attack':
+          this.#enemyView.triggerAttack(event.enemyId);
           this.#combat.applyDamage(event.damage);
           break;
         case 'hazard-attack':
+          this.#enemyView.triggerAttack(event.enemyId);
           try {
             this.#onHazardAttack(event);
           } catch {
