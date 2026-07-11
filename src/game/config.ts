@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 import { GAME_HEIGHT, GAME_WIDTH } from './constants';
+import { BootScene } from './scenes/BootScene';
+import { MenuScene } from './scenes/MenuScene';
 
 const BACKGROUND_COLOR = '#05070b';
 
@@ -16,6 +18,13 @@ export function createGameConfig(
     transparent: false,
     antialias: true,
     pixelArt: false,
+    scene: [BootScene, MenuScene],
+    physics: {
+      default: 'arcade',
+      arcade: {
+        debug: false,
+      },
+    },
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
