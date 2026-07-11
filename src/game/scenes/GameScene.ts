@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 
+import { PresentationClock } from '../art/PresentationClock';
 import { TEXTURE_KEYS } from '../art/createTextures';
 import { AudioSystem } from '../audio/AudioSystem';
 import {
@@ -187,6 +188,7 @@ export class GameScene extends Phaser.Scene {
   private resultSceneStarted = false;
   private portraitBlocked = false;
   private pauseRequested = false;
+  private readonly presentationClock = new PresentationClock();
 
   private readonly handlePauseKey = (): void => {
     this.requestPause('manual');
@@ -250,6 +252,7 @@ export class GameScene extends Phaser.Scene {
     this.touchInput?.setModalBlocked(false);
     this.touchInput?.suspend();
     this.updatePortraitBlock();
+    if (!this.portraitBlocked) this.presentationClock.resume();
     if (!this.portraitBlocked) this.audio?.resumeAll();
   };
 
@@ -486,6 +489,7 @@ export class GameScene extends Phaser.Scene {
     this.effectDisplayPool.length = 0;
     this.qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
     this.lastAlienSoundAt = Number.NEGATIVE_INFINITY;
+    this.presentationClock.reset();
 
     const initialSettings = this.currentSettings();
     this.qualitySelection = initialSettings.quality;
@@ -558,6 +562,7 @@ export class GameScene extends Phaser.Scene {
       combat,
       player,
       facility,
+      getPresentationTime: () => this.presentationClock.snapshot(),
       onHazardAttack: this.handleHazardAttack,
       onEnemyDeath: this.handleEnemyDeath,
       onPickupCollected: this.handlePickupCollected,
@@ -645,6 +650,8 @@ export class GameScene extends Phaser.Scene {
       return;
     }
 
+    const presentationTimeMs = this.presentationClock.advance(deltaMs);
+
     combat.update(deltaMs);
     const snapshot = combat.getSnapshot();
     const armoryVisible = horde.armoryVisible;
@@ -654,7 +661,7 @@ export class GameScene extends Phaser.Scene {
     else player.stop();
 
     const settings = this.currentSettings();
-    player.updatePresentation(this.time.now, {
+    player.updatePresentation(presentationTimeMs, {
       dead: snapshot.dead,
       quality: this.quality?.activeProfile ?? 'high',
       reducedMotion: this.registry.get('reducedMotion') === true,
@@ -687,7 +694,7 @@ export class GameScene extends Phaser.Scene {
           projectileSpawned = spawned || projectileSpawned;
         }
         if (firedThisFrame && requests[0]) {
-          player.triggerRecoil(this.time.now);
+          player.triggerRecoil(presentationTimeMs);
           this.playWeaponSound(requests[0].weaponId);
           if (['pistol', 'rifle', 'shotgun'].includes(requests[0].weaponId)) {
             this.addBattleEffect(
@@ -745,7 +752,8 @@ export class GameScene extends Phaser.Scene {
   private requestPause(reason: 'manual' | 'focus'): void {
     if (this.shuttingDown || this.pauseRequested || !this.sys.isActive()) return;
     this.pauseRequested = true;
-    this.player?.stop();
+    this.presentationClock.suspend();
+    this.player?.freezeMotion();
     this.physics.world.pause();
     this.audio?.pauseAll();
     this.audio?.playUI();
@@ -770,12 +778,14 @@ export class GameScene extends Phaser.Scene {
     this.portraitBlocked = blocked;
     this.touchInput?.setBlocked(blocked);
     if (blocked) {
-      this.player?.stop();
+      this.presentationClock.suspend();
+      this.player?.freezeMotion();
       this.physics.world.pause();
       this.time.paused = true;
       this.tweens.pauseAll();
       this.audio?.pauseAll();
     } else if (!this.pauseRequested) {
+      this.presentationClock.resume();
       this.physics.world.resume();
       this.time.paused = false;
       this.tweens.resumeAll();
@@ -1334,7 +1344,7 @@ export class GameScene extends Phaser.Scene {
     combat.applyDamage(amount);
     if (combat.getSnapshot().health >= healthBefore) return;
 
-    this.player?.triggerHit(this.time.now);
+    this.player?.triggerHit(this.presentationClock.snapshot());
 
     const settings = this.currentSettings();
     const quality = resolveEffectsQuality(
@@ -1464,6 +1474,7 @@ export class GameScene extends Phaser.Scene {
     if (!combat || !facility || !player || this.shuttingDown) return;
 
     this.resetResultTransition();
+    this.presentationClock.reset();
     this.clearProjectiles();
     this.clearHazardPools(true);
     this.clearBattleEffects(true);
@@ -1499,7 +1510,9 @@ export class GameScene extends Phaser.Scene {
     const getActiveQuality = () => this.quality?.activeProfile ?? 'unknown';
     const getTouchControlsVisible = () => this.touchInput?.enabled ?? false;
     const getPlayer = () => this.player;
-    const getPresentationTime = () => this.time.now;
+    const getPresentationTime = () => this.presentationClock.snapshot();
+    const getReducedMotion = () => this.registry.get('reducedMotion') === true;
+    const getReducedFlash = () => this.currentSettings().reducedFlash;
     this.cleanupDiagnostics = installDiagnostics({
       get phase(): 'arrival' | 'armory' | 'combat' | 'boss' | 'victory' | 'defeat' {
         if (getSnapshot()?.dead === true) return 'defeat';
@@ -1526,6 +1539,15 @@ export class GameScene extends Phaser.Scene {
       },
       get activeQuality(): string {
         return getActiveQuality();
+      },
+      get presentationTimeMs(): number {
+        return getPresentationTime();
+      },
+      get reducedMotion(): boolean {
+        return getReducedMotion();
+      },
+      get reducedFlash(): boolean {
+        return getReducedFlash();
       },
       get touchControlsVisible(): boolean {
         return getTouchControlsVisible();

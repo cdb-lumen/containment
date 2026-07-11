@@ -125,23 +125,33 @@ test('freezes observable progression while rotated to portrait', async ({ page }
   await page.evaluate(() => window.__ALIEN_GAME__?.spawnStressWave());
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeEnemies ?? 0)).toBeGreaterThan(0);
 
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole('status')).toBeVisible();
+  await expect(page.locator('#game-root')).toHaveJSProperty('inert', true);
   const before = await page.evaluate(() => ({
     enemies: window.__ALIEN_GAME__?.activeEnemies,
     phase: window.__ALIEN_GAME__?.phase,
     wave: window.__ALIEN_GAME__?.wave,
     health: window.__ALIEN_GAME__?.playerHealth,
+    presentationTime: window.__ALIEN_GAME__?.presentationTimeMs,
+    frame: window.__ALIEN_GAME__?.playerFrame,
   }));
-  await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByRole('status')).toBeVisible();
-  await expect(page.locator('#game-root')).toHaveJSProperty('inert', true);
   await page.waitForTimeout(750);
   const after = await page.evaluate(() => ({
     enemies: window.__ALIEN_GAME__?.activeEnemies,
     phase: window.__ALIEN_GAME__?.phase,
     wave: window.__ALIEN_GAME__?.wave,
     health: window.__ALIEN_GAME__?.playerHealth,
+    presentationTime: window.__ALIEN_GAME__?.presentationTimeMs,
+    frame: window.__ALIEN_GAME__?.playerFrame,
   }));
 
   expect(after).toEqual(before);
+  await page.setViewportSize({ width: 844, height: 390 });
+  await expect(page.getByRole('status')).toBeHidden();
+  const resumedAt = await page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0);
+  expect(resumedAt - (before.presentationTime ?? 0)).toBeLessThan(100);
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0))
+    .toBeGreaterThan(resumedAt);
   expect(errors).toEqual([]);
 });

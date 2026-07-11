@@ -84,6 +84,7 @@ export class QueenBossView {
   readonly group: Phaser.Physics.Arcade.Group;
 
   readonly #scene: Phaser.Scene;
+  readonly #getPresentationTime: () => number;
   readonly #statusLayer: Phaser.GameObjects.Graphics;
   readonly #telegraphLayer: Phaser.GameObjects.Graphics;
   readonly #spritesByKey = new Map<string, QueenBossImage>();
@@ -121,8 +122,9 @@ export class QueenBossView {
     this.#queenDeathRetained = false;
   };
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, getPresentationTime: () => number = () => 0) {
     this.#scene = scene;
+    this.#getPresentationTime = getPresentationTime;
     this.group = scene.physics.add.group({
       allowGravity: false,
       immovable: true,
@@ -202,7 +204,7 @@ export class QueenBossView {
   handleEvent(event: QueenBossEvent): void {
     if (this.#destroyed || this.#handledEventIds.has(event.eventId)) return;
     this.#handledEventIds.add(event.eventId);
-    this.#queenPresentation.handleEvent(event, this.#scene.time.now);
+    this.#queenPresentation.handleEvent(event, this.#getPresentationTime());
 
     switch (event.type) {
       case 'area-telegraph':
@@ -230,7 +232,7 @@ export class QueenBossView {
   /** Hit communication is accepted only after the domain reports a real decrease. */
   handleAppliedDamage(target: QueenDamageTarget, appliedDecrease: boolean): void {
     if (this.#destroyed || target.type !== 'queen') return;
-    this.#queenPresentation.triggerHit(this.#scene.time.now, appliedDecrease);
+    this.#queenPresentation.triggerHit(this.#getPresentationTime(), appliedDecrease);
   }
 
   /** Provides restrained cyan shield feedback for a consumed armored hit. */
@@ -388,7 +390,7 @@ export class QueenBossView {
     }
     const settings = this.#scene.registry.get('settings') as { reducedFlash?: boolean } | undefined;
     const output = this.#queenPresentation.update(
-      snapshot, this.#scene.time.now, this.#quality,
+      snapshot, this.#getPresentationTime(), this.#quality,
       this.#scene.registry.get('reducedMotion') === true,
       settings?.reducedFlash === true,
     );

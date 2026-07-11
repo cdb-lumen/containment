@@ -62,6 +62,7 @@ export class EnemyView {
   readonly activePositions: readonly EnemyViewPosition[];
 
   private readonly scene: Phaser.Scene;
+  private readonly getPresentationTime: () => number;
   private readonly overlay: Phaser.GameObjects.Graphics;
   private readonly slotsById = new Map<number, EnemySlot>();
   private readonly idsBySprite = new Map<object, number>();
@@ -85,8 +86,9 @@ export class EnemyView {
     this.seenIds.clear();
   };
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, getPresentationTime: () => number = () => 0) {
     this.scene = scene;
+    this.getPresentationTime = getPresentationTime;
     this.group = scene.physics.add.group({ allowGravity: false, immovable: true });
     this.overlay = scene.add.graphics().setDepth(OVERLAY_DEPTH);
     this.activePositions = this.mutableActivePositions;
@@ -112,7 +114,7 @@ export class EnemyView {
   triggerAttack(enemyId: number): boolean {
     const slot = this.slotsById.get(enemyId);
     if (!slot) return false;
-    slot.presentation.triggerAttack(this.scene.time.now);
+    slot.presentation.triggerAttack(this.getPresentationTime());
     return true;
   }
 
@@ -224,7 +226,7 @@ export class EnemyView {
 
     const settings = this.scene.registry.get('settings') as { reducedFlash?: boolean } | undefined;
     const output = slot.presentation.update(
-      enemy, this.scene.time.now, this.quality,
+      enemy, this.getPresentationTime(), this.quality,
       this.scene.registry.get('reducedMotion') === true,
       settings?.reducedFlash === true,
     );

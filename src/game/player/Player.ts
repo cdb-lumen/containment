@@ -187,6 +187,11 @@ export class Player {
       .clearTint();
   }
 
+  /** Stops gameplay movement without changing the current presentation frame/state. */
+  freezeMotion(): void {
+    if (!this.isDestroyed) this.sprite.setVelocity(0, 0);
+  }
+
   destroy(): void {
     if (this.isDestroyed) return;
     this.stop();

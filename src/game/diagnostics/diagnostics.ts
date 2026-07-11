@@ -8,6 +8,9 @@ export interface DiagnosticsReadOnlyFields {
   readonly activeProjectiles: number;
   readonly wave: number;
   readonly activeQuality: string;
+  readonly presentationTimeMs: number;
+  readonly reducedMotion: boolean;
+  readonly reducedFlash: boolean;
   readonly touchControlsVisible: boolean;
   readonly playerSkinKey: string;
   readonly playerFrame: string;
@@ -102,6 +105,11 @@ export function installDiagnostics(
     get activeQuality(): string {
       return normalizedPhase(provider.activeQuality);
     },
+    get presentationTimeMs(): number {
+      return normalizedNumber(provider.presentationTimeMs);
+    },
+    get reducedMotion(): boolean { return provider.reducedMotion === true; },
+    get reducedFlash(): boolean { return provider.reducedFlash === true; },
     get touchControlsVisible(): boolean {
       return provider.touchControlsVisible === true;
     },

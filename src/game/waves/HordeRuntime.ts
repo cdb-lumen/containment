@@ -110,6 +110,7 @@ export type HordeRuntimeOptions = Readonly<{
   combat: CombatSystem;
   player: Player;
   facility: FacilityWorld;
+  getPresentationTime?: () => number;
   onHazardAttack: HordeHazardAttackHandler;
   onEnemyDeath?: HordeEnemyDeathHandler;
   onPickupCollected?: HordePickupHandler;
@@ -224,12 +225,14 @@ export class HordeRuntime {
     this.#pickupSystem = new PickupSystem(this.#initialSeed);
     this.#upgradeSystem = new UpgradeSystem();
     this.#runState = new RunState();
-    this.#enemyView = new EnemyView(this.#scene);
+    const getPresentationTime = options.getPresentationTime ?? (() => 0);
+    this.#enemyView = new EnemyView(this.#scene, getPresentationTime);
     this.#pickupView = new PickupView(this.#scene);
     this.#bossRuntime = new BossRuntime({
       scene: this.#scene,
       combat: this.#combat,
       player: this.#player,
+      getPresentationTime,
       getOccupiedEnemyCapacity: (): number => this.#occupiedEnemyCapacity(),
       spawnMinion: (event): boolean => this.#spawnBossMinion(event),
       onQueenDefeated: (event): void => this.#handleQueenDefeated(event),

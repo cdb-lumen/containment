@@ -47,8 +47,19 @@ test('deploys, pauses, applies quality live, and resets run isolation', async ({
   await expect
     .poll(() => page.evaluate(() => window.__ALIEN_GAME__?.playerHealth ?? 100))
     .toBeLessThan(100);
+  await expect.poll(
+    () => page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0),
+  ).toBeGreaterThan(250);
+  const priorPresentationTime = await page.evaluate(
+    () => window.__ALIEN_GAME__?.presentationTimeMs ?? 0,
+  );
   await page.evaluate(() => window.__ALIEN_GAME__?.restart());
   await page.waitForFunction(() => window.__ALIEN_GAME__?.playerHealth === 100);
+  const restartedPresentationTime = await page.evaluate(
+    () => window.__ALIEN_GAME__?.presentationTimeMs ?? Number.POSITIVE_INFINITY,
+  );
+  expect(restartedPresentationTime).toBeLessThan(100);
+  expect(restartedPresentationTime).toBeLessThan(priorPresentationTime);
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeQuality)).toBe('high');
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeEnemies)).toBe(0);
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeProjectiles)).toBe(0);
@@ -71,16 +82,20 @@ test('stops the marine presentation immediately at idle while preserving aim', a
   await page.keyboard.up('KeyD');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Mission paused' })).toBeVisible();
+  const moving = await page.evaluate(() => ({
+    frame: window.__ALIEN_GAME__?.playerFrame,
+    time: window.__ALIEN_GAME__?.presentationTimeMs,
+  }));
+  await page.waitForTimeout(600);
   await expect.poll(() => page.evaluate(() => ({
     frame: window.__ALIEN_GAME__?.playerFrame,
-    animating: window.__ALIEN_GAME__?.playerAnimating,
-    recoil: window.__ALIEN_GAME__?.playerRecoil,
-    x: window.__ALIEN_GAME__?.playerVisualOffsetX,
-    y: window.__ALIEN_GAME__?.playerVisualOffsetY,
-    sx: window.__ALIEN_GAME__?.playerVisualScaleX,
-    sy: window.__ALIEN_GAME__?.playerVisualScaleY,
-    rotation: window.__ALIEN_GAME__?.playerVisualRotationOffset,
-  }))).toEqual({ frame: 'idleA', animating: false, recoil: false, x: 0, y: 0, sx: 1, sy: 1, rotation: 0 });
+    time: window.__ALIEN_GAME__?.presentationTimeMs,
+  }))).toEqual(moving);
+  await page.getByRole('button', { name: 'Resume mission' }).click();
+  const resumedAt = await page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0);
+  expect(resumedAt - (moving.time ?? 0)).toBeLessThan(100);
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0))
+    .toBeGreaterThan(resumedAt);
   expect(Math.abs(await page.evaluate(() => window.__ALIEN_GAME__?.playerBodyRotation ?? 0))).toBeGreaterThan(0.01);
   expect(await page.evaluate(() => window.__ALIEN_GAME__?.playerFallbackFramed)).toBe(true);
 });

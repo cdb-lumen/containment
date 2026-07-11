@@ -35,6 +35,7 @@ export type BossRuntimeOptions = Readonly<{
   scene: Phaser.Scene;
   combat: CombatSystem;
   player: Player;
+  getPresentationTime?: () => number;
   getOccupiedEnemyCapacity(): number;
   spawnMinion(event: MinionSpawnRequestEvent): boolean;
   onQueenDefeated(event: QueenDefeatedEvent): void;
@@ -129,7 +130,7 @@ export class BossRuntime {
     this.#getOccupiedEnemyCapacity = options.getOccupiedEnemyCapacity;
     this.#spawnMinion = options.spawnMinion;
     this.#onQueenDefeated = options.onQueenDefeated;
-    this.#view = new QueenBossView(options.scene);
+    this.#view = new QueenBossView(options.scene, options.getPresentationTime);
     this.#scene.events.once(
       Phaser.Scenes.Events.SHUTDOWN,
       this.#handleSceneShutdown,

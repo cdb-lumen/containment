@@ -165,28 +165,30 @@ describe('EnemyView pooled follower integration', () => {
     expect(follower.displayWidth).toBeLessThan(68 * 1.14);
   });
 
-  it('propagates active quality and accessibility registry values through actual follower sync', () => {
+  it('propagates active quality and applies accessibility policies on the next pooled follower sync', () => {
     const loaded = new Set([CHARACTER_SKINS.spitter.texture]);
     const high = createScene(loaded, { reducedMotion: false, settings: { reducedFlash: false } });
-    high.scene.time.now = 137;
-    const highView = new EnemyView(high.scene as never);
+    const highView = new EnemyView(high.scene as never, () => 137);
     highView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
     highView.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
     const highFollower = high.art.find(({ active }) => active)!;
     expect(highFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: 0xffffff });
     expect(highFollower.scaleX).not.toBeCloseTo(52 / 96);
 
-    const accessible = createScene(loaded, { reducedMotion: true, settings: { reducedFlash: true } });
-    accessible.scene.time.now = 137;
-    const accessibleView = new EnemyView(accessible.scene as never);
+    const policies = { reducedMotion: false, settings: { reducedFlash: false } };
+    const accessible = createScene(loaded, policies);
+    const accessibleView = new EnemyView(accessible.scene as never, () => 137);
     accessibleView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
+    const pooledFollower = accessible.art.find(({ active }) => active);
+    policies.reducedMotion = true;
+    policies.settings.reducedFlash = true;
     accessibleView.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
-    expect(accessible.art.find(({ active }) => active)).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: undefined,
+    expect(accessible.art.find(({ active }) => active)).toBe(pooledFollower);
+    expect(pooledFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: undefined,
       x: 100, y: 200, rotation: 0, displayWidth: 52, displayHeight: 52 });
 
     const low = createScene(loaded);
-    low.scene.time.now = 137;
-    const lowView = new EnemyView(low.scene as never);
+    const lowView = new EnemyView(low.scene as never, () => 137);
     lowView.setQuality('low');
     lowView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
     expect(low.art.find(({ active }) => active)).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.moveA,

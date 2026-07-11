@@ -33,6 +33,7 @@ test('serves the production artifact from the GitHub Pages subpath', async ({ pa
     'playerVisualOffsetX',
     'playerVisualRotationOffset',
     'playerFallbackFramed',
+    'presentationTimeMs',
   ]) {
     expect(productionBundle).not.toContain(diagnosticName);
   }
