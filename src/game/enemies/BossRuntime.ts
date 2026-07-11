@@ -410,6 +410,9 @@ export class BossRuntime {
           }
           break;
         case 'queen-defeated':
+          // Death art is routed above. Release the snapshot-authoritative overlap
+          // body before observers can transition or inspect the defeated scene.
+          this.#syncView();
           try {
             this.#onQueenDefeated(event);
           } catch {

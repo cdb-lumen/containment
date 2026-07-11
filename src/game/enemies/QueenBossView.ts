@@ -119,7 +119,6 @@ export class QueenBossView {
     this.#mutableRadarPositions.length = 0;
     this.#queenPresentation.release();
     this.#queenDeathRetained = false;
-    this.#queenArt?.setActive(false).setVisible(false);
   };
 
   constructor(scene: Phaser.Scene) {
