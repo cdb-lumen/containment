@@ -12,6 +12,7 @@ import { EnemyPresentationState } from '../../src/game/enemies/EnemyPresentation
 import type { EnemySnapshot } from '../../src/game/enemies/EnemySystem';
 import { EnemyView } from '../../src/game/enemies/EnemyView';
 import type { StandardEnemyId } from '../../src/game/enemies/types';
+import { routeEnemyAttackPresentation } from '../../src/game/waves/HordeRuntime';
 
 const snapshot = (id: number, type: StandardEnemyId, overrides: Partial<EnemySnapshot> = {}): EnemySnapshot => ({
   id, type, elite: false, x: 100, y: 200, velocityX: 0, velocityY: 0,
@@ -53,6 +54,7 @@ const createImage = (physics: boolean) => {
     x: 0, y: 0, width: 96, scaleX: 1, scaleY: 1, displayWidth: 0, displayHeight: 0,
     rotation: 0, alpha: 1, depth: 0, active: true, visible: true, texture: '',
     frame: undefined as number | undefined, tint: undefined as number | undefined,
+    flipX: false, flipY: false,
     body: physics ? {
       enable: true,
       setAllowGravity() { return this; }, setImmovable() { return this; },
@@ -65,19 +67,20 @@ const createImage = (physics: boolean) => {
     setScale(v: number) { image.scaleX = v; image.scaleY = v; return image; },
     setDepth(v: number) { image.depth = v; return image; }, setActive(v: boolean) { image.active = v; return image; },
     setVisible(v: boolean) { image.visible = v; return image; }, setFrame(v: number) { image.frame = v; return image; },
-    setFlipX() { return image; }, setTint(v: number) { image.tint = v; return image; }, clearTint() { image.tint = undefined; return image; },
+    setFlipX(v: boolean) { image.flipX = v; return image; }, setFlipY(v: boolean) { image.flipY = v; return image; },
+    setTint(v: number) { image.tint = v; return image; }, clearTint() { image.tint = undefined; return image; },
     setCircle() { return image; },
   };
   return image;
 };
 
-const createScene = (loaded: Set<string>) => {
+const createScene = (loaded: Set<string>, registryValues: Record<string, unknown> = {}) => {
   const bodies: ReturnType<typeof createImage>[] = [];
   const art: ReturnType<typeof createImage>[] = [];
   const graphics = { setDepth() { return this; }, clear() { return this; }, fillStyle() { return this; }, fillRect() { return this; }, lineStyle() { return this; }, beginPath() { return this; }, moveTo() { return this; }, lineTo() { return this; }, closePath() { return this; }, strokePath() { return this; }, setVisible() { return this; } };
   const scene = {
     time: { now: 250 }, textures: { exists: (key: string) => loaded.has(key) },
-    registry: { get: () => false }, events: { once() {}, off() {} },
+    registry: { get: (key: string) => registryValues[key] }, events: { once() {}, off() {} },
     physics: { add: { group: () => ({ add() {} }), image: () => { const value = createImage(true); bodies.push(value); return value; } } },
     add: { graphics: () => graphics, image: () => { const value = createImage(false); art.push(value); return value; } },
   };
@@ -109,15 +112,74 @@ describe('EnemyView pooled follower integration', () => {
     expect(bodies.filter(({ active }) => active).every(({ visible, frame }) => visible && frame === undefined)).toBe(true);
   });
 
-  it('reuses bounded body+art slots without stale frame, tint, alpha, rotation, or scale', () => {
+  it('fully resets a released body+follower slot before elite-to-normal reuse', () => {
     const { scene, bodies, art } = createScene(new Set([CHARACTER_SKINS.crawler.texture, CHARACTER_SKINS.brute.texture]));
     const view = new EnemyView(scene as never);
-    view.sync(Array.from({ length: 150 }, (_, i) => snapshot(i + 1, 'crawler', { elite: true, health: 50, velocityX: 10, alpha: 0.4 })));
-    expect(bodies.filter(({ active }) => active)).toHaveLength(150);
-    expect(art.filter(({ active }) => active)).toHaveLength(150);
+    view.sync([snapshot(1, 'crawler', { elite: true, health: 50, velocityX: 10, alpha: 0.4 })]);
+    const body = bodies.find(({ active }) => active)!;
+    const follower = art.find(({ active }) => active)!;
+    body.frame = 4; body.flipX = true; body.flipY = true;
+    follower.flipX = true; follower.flipY = true;
+    view.triggerAttack(1);
+    view.sync([]);
+    expect(body).toMatchObject({ active: false, visible: false, x: 0, y: 0, scaleX: 1, scaleY: 1,
+      flipX: false, flipY: false, frame: 0, tint: undefined, alpha: 1, rotation: 0 });
+    expect(follower).toMatchObject({ active: false, visible: false, x: 0, y: 0, scaleX: 1, scaleY: 1,
+      flipX: false, flipY: false, frame: 0, tint: undefined, alpha: 1, rotation: 0 });
+    expect(view.enemyIdFor(body)).toBeNull();
     view.sync([snapshot(999, 'brute')]);
     expect(view.count).toBe(1);
-    expect(art.filter(({ active }) => active)).toHaveLength(1);
-    expect(art.find(({ active }) => active)).toMatchObject({ frame: CHARACTER_SKINS.brute.frames.idleA, tint: undefined, alpha: 1, rotation: 0 });
+    expect(view.enemyIdFor(body)).toBe(999);
+    expect(body).toMatchObject({ displayWidth: 68, displayHeight: 68 });
+    expect(follower).toMatchObject({ frame: CHARACTER_SKINS.brute.frames.idleA, tint: undefined, alpha: 1, rotation: 0,
+      flipX: false, flipY: false });
+    expect(follower.displayWidth).toBeLessThan(68 * 1.14);
+  });
+
+  it('propagates active quality and accessibility registry values through actual follower sync', () => {
+    const loaded = new Set([CHARACTER_SKINS.spitter.texture]);
+    const high = createScene(loaded, { reducedMotion: false, settings: { reducedFlash: false } });
+    high.scene.time.now = 137;
+    const highView = new EnemyView(high.scene as never);
+    highView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
+    highView.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
+    const highFollower = high.art.find(({ active }) => active)!;
+    expect(highFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: 0xffffff });
+    expect(highFollower.scaleX).not.toBeCloseTo(52 / 96);
+
+    const accessible = createScene(loaded, { reducedMotion: true, settings: { reducedFlash: true } });
+    accessible.scene.time.now = 137;
+    const accessibleView = new EnemyView(accessible.scene as never);
+    accessibleView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
+    accessibleView.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
+    expect(accessible.art.find(({ active }) => active)).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: undefined,
+      x: 100, y: 200, rotation: 0, displayWidth: 52, displayHeight: 52 });
+
+    const low = createScene(loaded);
+    low.scene.time.now = 137;
+    const lowView = new EnemyView(low.scene as never);
+    lowView.setQuality('low');
+    lowView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
+    expect(low.art.find(({ active }) => active)).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.moveA,
+      displayWidth: 52, displayHeight: 52 });
+  });
+});
+
+describe('HordeRuntime attack-event presentation routing', () => {
+  it('signals only active IDs for explicit contact/hazard attacks and ignores all other events', () => {
+    const active = new Set([7, 8]);
+    const signaled: number[] = [];
+    const signal = (id: number) => active.has(id) ? (signaled.push(id), true) : false;
+    expect(routeEnemyAttackPresentation({ type: 'contact-attack', enemyId: 7, enemyType: 'crawler', damage: 1 }, signal)).toBe(true);
+    expect(routeEnemyAttackPresentation({ type: 'hazard-attack', enemyId: 8, enemyType: 'spitter', sourceX: 0, sourceY: 0,
+      targetX: 1, targetY: 1, damage: 1 }, signal)).toBe(true);
+    expect(routeEnemyAttackPresentation({ type: 'contact-attack', enemyId: 99, enemyType: 'crawler', damage: 1 }, signal)).toBe(false);
+    expect(routeEnemyAttackPresentation({ type: 'contact-attack', enemyId: Number.NaN,
+      enemyType: 'crawler', damage: 1 }, signal)).toBe(false);
+    expect(routeEnemyAttackPresentation({ type: 'death', enemyId: 7, enemyType: 'crawler', elite: false,
+      x: 0, y: 0, reward: 1, dropChance: 0 }, signal)).toBe(false);
+    active.delete(7);
+    expect(routeEnemyAttackPresentation({ type: 'contact-attack', enemyId: 7, enemyType: 'crawler', damage: 1 }, signal)).toBe(false);
+    expect(signaled).toEqual([7, 8]);
   });
 });

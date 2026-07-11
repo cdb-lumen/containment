@@ -90,8 +90,11 @@ export class EnemyView {
 
   setQuality(profile: QualityProfileName): void { this.quality = profile; }
 
-  triggerAttack(enemyId: number): void {
-    this.slotsById.get(enemyId)?.presentation.triggerAttack(this.scene.time.now);
+  triggerAttack(enemyId: number): boolean {
+    const slot = this.slotsById.get(enemyId);
+    if (!slot) return false;
+    slot.presentation.triggerAttack(this.scene.time.now);
+    return true;
   }
 
   sync(enemies: readonly EnemySnapshot[]): void {
@@ -170,8 +173,10 @@ export class EnemyView {
         slot.presentation.release();
         slot.framed = false;
         slot.body.body.enable = false;
-        slot.body.setActive(false).setVisible(false).setPosition(0, 0).setRotation(0).setAlpha(1).setScale(1).clearTint();
-        slot.art?.setActive(false).setVisible(false).setPosition(0, 0).setRotation(0).setAlpha(1).setScale(1).setFlipX(false).clearTint().setFrame(0);
+        slot.body.setActive(false).setVisible(false).setPosition(0, 0).setRotation(0).setAlpha(1)
+          .setScale(1).setFlipX(false).setFlipY(false).clearTint().setFrame(0);
+        slot.art?.setActive(false).setVisible(false).setPosition(0, 0).setRotation(0).setAlpha(1)
+          .setScale(1).setFlipX(false).setFlipY(false).clearTint().setFrame(0);
       },
     }, INITIAL_POOL_SIZE, MAX_POOL_SIZE);
   }

@@ -93,6 +93,18 @@ export type HordePickupHandler = (
   position: Readonly<{ x: number; y: number }>,
 ) => void;
 
+export type EnemyAttackPresentationSignal = (enemyId: number) => boolean;
+
+/** Routes only explicit attack events; the signal decides whether the ID is still active. */
+export const routeEnemyAttackPresentation = (
+  event: EnemyEvent,
+  signal: EnemyAttackPresentationSignal,
+): boolean => {
+  if (event.type !== 'contact-attack' && event.type !== 'hazard-attack') return false;
+  if (!Number.isSafeInteger(event.enemyId) || event.enemyId < 0) return false;
+  return signal(event.enemyId);
+};
+
 export type HordeRuntimeOptions = Readonly<{
   scene: Phaser.Scene;
   combat: CombatSystem;
@@ -698,13 +710,12 @@ export class HordeRuntime {
 
   #processEnemyEvents(events: readonly EnemyEvent[]): void {
     for (const event of events) {
+      routeEnemyAttackPresentation(event, (enemyId) => this.#enemyView.triggerAttack(enemyId));
       switch (event.type) {
         case 'contact-attack':
-          this.#enemyView.triggerAttack(event.enemyId);
           this.#combat.applyDamage(event.damage);
           break;
         case 'hazard-attack':
-          this.#enemyView.triggerAttack(event.enemyId);
           try {
             this.#onHazardAttack(event);
           } catch {
