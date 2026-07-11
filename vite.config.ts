@@ -1,6 +1,7 @@
 import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  base: './',
   build: {
     chunkSizeWarningLimit: 1_500,
   },

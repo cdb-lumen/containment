@@ -1,7 +1,20 @@
 {
   "name": "alien-shooter-containment",
   "version": "0.1.0",
+  "description": "An original browser survival shooter built with Phaser, TypeScript, and procedural audiovisuals.",
   "private": true,
+  "license": "MIT",
+  "homepage": "https://cdb-lumen.github.io/alien-shooter-containment/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cdb-lumen/alien-shooter-containment.git"
+  },
+  "keywords": [
+    "phaser",
+    "typescript",
+    "browser-game",
+    "survival-shooter"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
