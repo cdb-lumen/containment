@@ -4,15 +4,26 @@ import { GAME_HEIGHT, GAME_WIDTH } from './constants';
 import { BootScene } from './scenes/BootScene';
 import { GameScene } from './scenes/GameScene';
 import { MenuScene } from './scenes/MenuScene';
+import { PauseScene } from './scenes/PauseScene';
 import { ResultsScene } from './scenes/ResultsScene';
 
 const BACKGROUND_COLOR = '#05070b';
+
+const rendererType = (): number => {
+  try {
+    return new URLSearchParams(window.location.search).get('renderer') === 'canvas'
+      ? Phaser.CANVAS
+      : Phaser.AUTO;
+  } catch {
+    return Phaser.AUTO;
+  }
+};
 
 export function createGameConfig(
   parent: HTMLElement,
 ): Phaser.Types.Core.GameConfig {
   return {
-    type: Phaser.AUTO,
+    type: rendererType(),
     parent,
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
@@ -20,7 +31,7 @@ export function createGameConfig(
     transparent: false,
     antialias: true,
     pixelArt: false,
-    scene: [BootScene, MenuScene, GameScene, ResultsScene],
+    scene: [BootScene, MenuScene, GameScene, PauseScene, ResultsScene],
     physics: {
       default: 'arcade',
       arcade: {

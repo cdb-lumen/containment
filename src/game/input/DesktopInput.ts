@@ -69,7 +69,11 @@ export class DesktopInput {
     this.weaponFiveKey = this.addKey(keyCodes.FIVE);
   }
 
-  read(camera: Phaser.Cameras.Scene2D.Camera, origin?: AimOrigin): InputState {
+  read(
+    camera: Phaser.Cameras.Scene2D.Camera,
+    origin?: AimOrigin,
+    allowPointerInput = true,
+  ): InputState {
     if (this.isDestroyed) return Object.freeze({ ...EMPTY_INPUT_STATE });
 
     const pointer = this.scene.input.activePointer;
@@ -100,6 +104,7 @@ export class DesktopInput {
 
     if (
       !this.isDestroyed &&
+      allowPointerInput &&
       Number.isFinite(pointer.x) &&
       Number.isFinite(pointer.y)
     ) {
@@ -144,7 +149,8 @@ export class DesktopInput {
       else if (weaponFivePressed) weaponPressed = 'rocket';
     }
 
-    const rightButtonDown = !this.isDestroyed && pointer.rightButtonDown();
+    const rightButtonDown =
+      !this.isDestroyed && allowPointerInput && pointer.rightButtonDown();
     const rightButtonPressed = rightButtonDown && !this.previousRightButtonDown;
     this.previousRightButtonDown = rightButtonDown;
 
@@ -153,7 +159,7 @@ export class DesktopInput {
       movementY,
       aimWorldX,
       aimWorldY,
-      fireHeld: !this.isDestroyed && pointer.primaryDown,
+      fireHeld: !this.isDestroyed && allowPointerInput && pointer.primaryDown,
       reloadPressed,
       grenadePressed: keyboardGrenadePressed || rightButtonPressed,
       interactPressed,

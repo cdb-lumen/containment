@@ -296,7 +296,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private drawControlsAndRecords(): void {
-    this.add.text(64, 486, 'DESKTOP CONTROLS', {
+    this.add.text(64, 486, 'DESKTOP / TOUCH CONTROLS', {
       color: CSS_COLORS.cyan,
       fontFamily: UTILITY_FONT,
       fontSize: '18px',
@@ -305,11 +305,11 @@ export class MenuScene extends Phaser.Scene {
     });
 
     const controls = [
-      ['MOVE', 'WASD / ARROWS'],
-      ['AIM + FIRE', 'MOUSE / LEFT CLICK'],
-      ['GRENADE', 'RIGHT CLICK / G'],
-      ['RELOAD / INTERACT', 'R / E'],
-      ['PAUSE', 'ESC'],
+      ['MOVE', 'WASD / LEFT STICK'],
+      ['AIM + FIRE', 'MOUSE / RIGHT STICK'],
+      ['GRENADE', 'G / TOUCH G'],
+      ['MEDKIT', 'Q / TOUCH +'],
+      ['PAUSE', 'ESC / TOUCH II'],
     ] as const;
 
     controls.forEach(([action, binding], index) => {

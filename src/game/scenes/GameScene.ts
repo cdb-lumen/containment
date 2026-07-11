@@ -8,11 +8,14 @@ import {
 } from '../combat/CombatSystem';
 import { ProjectilePool } from '../combat/ProjectilePool';
 import type { WeaponId } from '../combat/types';
-import { WORLD_HEIGHT, WORLD_WIDTH } from '../constants';
+import { GAME_HEIGHT, GAME_WIDTH, WORLD_HEIGHT, WORLD_WIDTH } from '../constants';
 import { installDiagnostics, type DiagnosticsCleanup } from '../diagnostics/diagnostics';
 import type { HazardAttackEvent } from '../enemies/EnemySystem';
 import { Hud } from '../hud/Hud';
 import { DesktopInput } from '../input/DesktopInput';
+import { EMPTY_INPUT_STATE, type InputState } from '../input/InputState';
+import { TouchInput } from '../input/TouchInput';
+import { DEFAULT_SAVE_DATA, type SaveData } from '../persistence/saveData';
 import { Player } from '../player/Player';
 import { HordeRuntime } from '../waves/HordeRuntime';
 import { FacilityWorld } from '../world/FacilityWorld';
@@ -109,10 +112,33 @@ const projectilePresentation = (
 const safeDelta = (delta: number): number =>
   Number.isFinite(delta) ? Phaser.Math.Clamp(delta, 0, MAX_DELTA_MS) : 0;
 
+const mergeInputStates = (
+  desktop: InputState,
+  touch: InputState,
+  touchPointerActive: boolean,
+): InputState => {
+  const touchMoving = touch.movementX !== 0 || touch.movementY !== 0;
+  const touchAiming = touch.fireHeld;
+  return Object.freeze({
+    movementX: touchMoving ? touch.movementX : desktop.movementX,
+    movementY: touchMoving ? touch.movementY : desktop.movementY,
+    aimWorldX: touchAiming ? touch.aimWorldX : desktop.aimWorldX,
+    aimWorldY: touchAiming ? touch.aimWorldY : desktop.aimWorldY,
+    fireHeld: touch.fireHeld || (!touchPointerActive && desktop.fireHeld),
+    reloadPressed: touch.reloadPressed || desktop.reloadPressed,
+    grenadePressed: touch.grenadePressed || desktop.grenadePressed,
+    interactPressed: touch.interactPressed || desktop.interactPressed,
+    medkitPressed: touch.medkitPressed || desktop.medkitPressed,
+    pausePressed: touch.pausePressed || desktop.pausePressed,
+    weaponPressed: touch.weaponPressed ?? desktop.weaponPressed,
+  });
+};
+
 export class GameScene extends Phaser.Scene {
   private facility: FacilityWorld | null = null;
   private player: Player | null = null;
   private desktopInput: DesktopInput | null = null;
+  private touchInput: TouchInput | null = null;
   private combat: CombatSystem | null = null;
   private hud: Hud | null = null;
   private horde: HordeRuntime | null = null;
@@ -137,6 +163,32 @@ export class GameScene extends Phaser.Scene {
   private shuttingDown = false;
   private resultTransitionRemainingMs: number | null = null;
   private resultSceneStarted = false;
+  private portraitBlocked = false;
+  private pauseRequested = false;
+
+  private readonly handlePauseKey = (): void => {
+    this.requestPause('manual');
+  };
+
+  private readonly handleVisibilityChange = (): void => {
+    if (document.visibilityState === 'hidden') this.requestPause('focus');
+  };
+
+  private readonly handleWindowBlur = (): void => {
+    this.requestPause('focus');
+  };
+
+  private readonly handleViewportChange = (): void => {
+    this.updatePortraitBlock();
+  };
+
+  private readonly handleSceneResume = (): void => {
+    this.pauseRequested = false;
+    this.registry.set('gamePaused', false);
+    this.desktopInput?.clearEdges();
+    this.touchInput?.suspend();
+    this.updatePortraitBlock();
+  };
 
   private readonly handleProjectileBlockerCollision: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
     first,
@@ -222,7 +274,7 @@ export class GameScene extends Phaser.Scene {
     const runtime = this.projectileRuntime.get(projectile);
     if (!runtime || runtime.kind !== 'enemy-hazard') return;
 
-    this.combat?.applyDamage(runtime.request.damage);
+    this.applyPlayerDamage(runtime.request.damage);
     this.createHazardPool(projectile.x, projectile.y, runtime.request.damage);
     this.releaseProjectile(projectile);
   };
@@ -272,6 +324,12 @@ export class GameScene extends Phaser.Scene {
     if (this.shuttingDown) return;
     this.shuttingDown = true;
     this.resetResultTransition();
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    this.input.keyboard?.off('keydown-ESC', this.handlePauseKey);
+    window.removeEventListener('blur', this.handleWindowBlur);
+    window.removeEventListener('resize', this.handleViewportChange);
+    window.removeEventListener('orientationchange', this.handleViewportChange);
+    this.events.off(Phaser.Scenes.Events.RESUME, this.handleSceneResume);
 
     this.cleanupDiagnostics?.();
     this.cleanupDiagnostics = null;
@@ -328,6 +386,9 @@ export class GameScene extends Phaser.Scene {
     this.hud = null;
     this.desktopInput?.destroy();
     this.desktopInput = null;
+    this.touchInput?.destroy();
+    this.touchInput = null;
+    this.portraitBlocked = false;
     this.player = null;
     this.facility = null;
     this.combat = null;
@@ -339,6 +400,7 @@ export class GameScene extends Phaser.Scene {
 
   create(): void {
     this.shuttingDown = false;
+    this.pauseRequested = false;
     this.missionStarted = false;
     this.resetResultTransition();
     this.activeProjectiles.clear();
@@ -369,6 +431,21 @@ export class GameScene extends Phaser.Scene {
     this.combat = combat;
 
     this.desktopInput = new DesktopInput(this);
+    const gameParent = this.game.canvas.parentElement;
+    if (gameParent !== null) {
+      this.touchInput = new TouchInput({
+        canvas: this.game.canvas,
+        parent: gameParent,
+      });
+    }
+    this.updatePortraitBlock();
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+    this.input.keyboard?.on('keydown-ESC', this.handlePauseKey);
+    window.addEventListener('blur', this.handleWindowBlur);
+    window.addEventListener('resize', this.handleViewportChange);
+    window.addEventListener('orientationchange', this.handleViewportChange);
+    this.events.on(Phaser.Scenes.Events.RESUME, this.handleSceneResume);
+
     this.projectileGroup = this.physics.add.group({ allowGravity: false });
     this.projectilePool = this.createProjectilePool();
     this.projectileCollider = this.physics.add.collider(
@@ -425,8 +502,16 @@ export class GameScene extends Phaser.Scene {
     const combat = this.combat;
     const player = this.player;
     const desktopInput = this.desktopInput;
+    const touchInput = this.touchInput;
     const horde = this.horde;
     if (this.shuttingDown || !combat || !player || !desktopInput || !horde) return;
+
+    if (this.portraitBlocked) {
+      player.stop();
+      touchInput?.setBlocked(true);
+      return;
+    }
+    touchInput?.setBlocked(false);
 
     const deltaMs = safeDelta(delta);
     if (this.resultTransitionRemainingMs !== null || this.resultSceneStarted) {
@@ -438,12 +523,23 @@ export class GameScene extends Phaser.Scene {
       return;
     }
 
-    combat.update(deltaMs);
+    const touchPointerActive = touchInput?.hasActivePointers ?? false;
+    const desktopState = desktopInput.read(
+      this.cameras.main,
+      player.sprite,
+      !touchPointerActive,
+    );
+    const touchState = touchInput?.read(player.sprite) ?? EMPTY_INPUT_STATE;
+    const input = mergeInputStates(desktopState, touchState, touchPointerActive);
+    if (input.pausePressed) {
+      this.requestPause('manual');
+      return;
+    }
 
-    const input = desktopInput.read(this.cameras.main, player.sprite);
+    combat.update(deltaMs);
     const snapshot = combat.getSnapshot();
     const armoryVisible = horde.armoryVisible;
-    const canAct = !snapshot.dead && !input.pausePressed && !armoryVisible;
+    const canAct = !snapshot.dead && !armoryVisible;
 
     if (canAct) player.applyInput(input);
     else player.stop();
@@ -507,6 +603,39 @@ export class GameScene extends Phaser.Scene {
     this.updateProjectiles(deltaMs);
     if (!armoryOpenAfterUpdate) this.updateHazardPools(deltaMs);
     this.hud?.setRadarState(player.sprite.x, player.sprite.y, horde.radarPositions);
+  }
+
+  private requestPause(reason: 'manual' | 'focus'): void {
+    if (this.shuttingDown || this.pauseRequested || !this.sys.isActive()) return;
+    this.pauseRequested = true;
+    this.player?.stop();
+    this.physics.world.pause();
+    this.hideMuzzleFlash();
+    this.touchInput?.suspend();
+    this.desktopInput?.clearEdges();
+    this.registry.set('gamePaused', true);
+    this.scene.launch(SCENE_KEYS.pause, { reason });
+    this.scene.pause(SCENE_KEYS.game);
+  }
+
+  private updatePortraitBlock(): void {
+    const blocked = (() => {
+      try {
+        return window.matchMedia(
+          '(orientation: portrait) and (pointer: coarse)',
+        ).matches;
+      } catch {
+        return false;
+      }
+    })();
+    this.portraitBlocked = blocked;
+    this.touchInput?.setBlocked(blocked);
+    if (blocked) {
+      this.player?.stop();
+      this.physics.world.pause();
+    } else if (!this.pauseRequested) {
+      this.physics.world.resume();
+    }
   }
 
   private beginResultTransition(horde: HordeRuntime, player: Player): boolean {
@@ -764,6 +893,12 @@ export class GameScene extends Phaser.Scene {
 
   private createBlast(x: number, y: number, requestedRadius: number): void {
     if (this.shuttingDown) return;
+    if (
+      !this.currentSettings().reducedShake &&
+      !this.cameras.main.shakeEffect.isRunning
+    ) {
+      this.cameras.main.shake(110, 0.0035);
+    }
     const radius = Phaser.Math.Clamp(
       Number.isFinite(requestedRadius) && requestedRadius > 0 ? requestedRadius : 72,
       56,
@@ -789,6 +924,46 @@ export class GameScene extends Phaser.Scene {
         this.blastTweens.delete(tween);
         this.blastEffects.delete(effect);
         effect.destroy();
+      },
+    });
+    this.blastTweens.add(tween);
+  }
+
+  private currentSettings(): SaveData['settings'] {
+    const settings = this.registry.get('settings') as
+      | SaveData['settings']
+      | undefined;
+    return settings ?? DEFAULT_SAVE_DATA.settings;
+  }
+
+  private applyPlayerDamage(amount: number): void {
+    const combat = this.combat;
+    if (combat === null) return;
+    const healthBefore = combat.getSnapshot().health;
+    combat.applyDamage(amount);
+    if (combat.getSnapshot().health >= healthBefore) return;
+
+    if (!this.currentSettings().reducedFlash) {
+      this.cameras.main.flash(80, 244, 239, 230, false);
+      return;
+    }
+
+    const edgePulse = this.add
+      .graphics()
+      .setScrollFactor(0)
+      .setDepth(12_000);
+    edgePulse.lineStyle(10, 0xf39237, 0.78);
+    edgePulse.strokeRect(5, 5, GAME_WIDTH - 10, GAME_HEIGHT - 10);
+    this.blastEffects.add(edgePulse);
+    const tween = this.tweens.add({
+      targets: edgePulse,
+      alpha: 0,
+      duration: 130,
+      ease: 'Quad.Out',
+      onComplete: (): void => {
+        this.blastTweens.delete(tween);
+        this.blastEffects.delete(edgePulse);
+        edgePulse.destroy();
       },
     });
     this.blastTweens.add(tween);
@@ -867,7 +1042,7 @@ export class GameScene extends Phaser.Scene {
         continue;
       }
 
-      combat.applyDamage(pool.baseDamage * pool.damageFraction);
+      this.applyPlayerDamage(pool.baseDamage * pool.damageFraction);
       pool.tickCooldownMs = HAZARD_POOL_TICK_MS;
     }
   }
@@ -910,6 +1085,8 @@ export class GameScene extends Phaser.Scene {
     combat.setObjective(INITIAL_OBJECTIVE);
     combat.setWave(0);
     this.desktopInput?.clearEdges();
+    this.touchInput?.suspend();
+    this.updatePortraitBlock();
     this.missionStarted = false;
     this.cameras.main.centerOn(player.sprite.x, player.sprite.y);
     this.hud?.setRadarState(
@@ -923,6 +1100,7 @@ export class GameScene extends Phaser.Scene {
     const getSnapshot = () => this.combat?.getSnapshot();
     const getHorde = () => this.horde;
     const getActiveProjectileCount = () => this.activeProjectiles.size;
+    const getTouchControlsVisible = () => this.touchInput?.enabled ?? false;
     this.cleanupDiagnostics = installDiagnostics({
       get phase(): 'arrival' | 'armory' | 'combat' | 'boss' | 'victory' | 'defeat' {
         if (getSnapshot()?.dead === true) return 'defeat';
@@ -948,7 +1126,7 @@ export class GameScene extends Phaser.Scene {
         return getSnapshot()?.wave ?? 0;
       },
       get touchControlsVisible(): boolean {
-        return false;
+        return getTouchControlsVisible();
       },
       startRun: (): void => this.resetRun(),
       damagePlayer: (amount?: number): void => {
