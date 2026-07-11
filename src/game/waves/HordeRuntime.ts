@@ -285,6 +285,7 @@ export class HordeRuntime {
 
   setEffectsProfile(profile: QualityProfileName): void {
     this.#enemyView.setQuality(profile);
+    this.#bossRuntime.setQuality(profile);
     this.#breachEffectLimit = Math.min(
       MAX_BREACH_EFFECTS,
       QUALITY_PROFILES[profile].dynamicLights,

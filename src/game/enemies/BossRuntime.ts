@@ -7,6 +7,7 @@ import {
   type ProjectileRequest,
 } from '../combat/CombatSystem';
 import { MAX_ACTIVE_ENEMIES } from '../constants';
+import type { QualityProfileName } from '../effects/quality';
 import type { Player } from '../player/Player';
 import {
   AREA_ATTACK_RANGE,
@@ -129,6 +130,10 @@ export class BossRuntime {
     return this.#system.snapshot;
   }
 
+  setQuality(profile: QualityProfileName): void {
+    this.#view.setQuality(profile);
+  }
+
   start(x: number, y: number): boolean {
     if (this.#destroyed) return false;
     const started = this.#system.start(x, y);
@@ -173,6 +178,7 @@ export class BossRuntime {
     }
 
     const damage = this.#system.applyDamage(target, request.damage);
+    this.#view.handleAppliedDamage(target, damage.applied && damage.damage > 0);
     if (damage.blockedByArmor) this.#view.handleShieldBlocked(target);
     this.#processDamage(damage);
     this.#syncView();
@@ -234,6 +240,10 @@ export class BossRuntime {
       if (amount <= 0) continue;
 
       const damage = this.#system.applyDamage(candidate.target, amount);
+      this.#view.handleAppliedDamage(
+        candidate.target,
+        damage.applied && damage.damage > 0,
+      );
       if (damage.applied) appliedCount += 1;
       if (damage.blockedByArmor) {
         blockedCount += 1;
