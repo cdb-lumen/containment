@@ -146,6 +146,22 @@ describe('character animation policy', () => {
     expect(new Set(cadences)).toHaveLength(IDS.length);
   });
 
+  it('advances crawler movement at 200ms before slower families while brute stays put', () => {
+    const movingFrame = (skin: CharacterSkinId, nowMs: number) => characterAnimation(animationInput({
+      skin, entityId: 12, nowMs, velocityX: 1,
+    })).frame;
+
+    expect([0, 199, 200, 399, 400].map((nowMs) => movingFrame('crawler', nowMs))).toEqual([
+      'moveA', 'moveA', 'moveB', 'moveB', 'moveA',
+    ]);
+    expect(IDS.filter((skin) => skin !== 'crawler').map((skin) => movingFrame(skin, 200))).toEqual([
+      'moveA', 'moveA', 'moveA', 'moveA', 'moveA', 'moveA',
+    ]);
+    expect([199, 200].map((nowMs) => movingFrame('brute', nowMs))).toEqual([
+      'moveA', 'moveA',
+    ]);
+  });
+
   it('deeply freezes every typed family animation profile', () => {
     expect(Object.isFrozen(CHARACTER_ANIMATION_PROFILES)).toBe(true);
     for (const profile of Object.values(CHARACTER_ANIMATION_PROFILES)) {
