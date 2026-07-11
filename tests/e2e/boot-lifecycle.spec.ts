@@ -1,17 +1,17 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const browserErrors = (page: Page): string[] => {
-  const errors: string[] = [];
-  page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
+type ConsoleError = { text: string; url: string };
+
+const browserErrors = (page: Page): { consoleErrors: ConsoleError[]; pageErrors: string[] } => {
+  const consoleErrors: ConsoleError[] = [];
+  const pageErrors: string[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
   page.on('console', (message) => {
-    if (
-      message.type() === 'error' &&
-      !message.text().includes('Failed to load resource: net::ERR_FAILED')
-    ) {
-      errors.push(`console: ${message.text()}`);
+    if (message.type() === 'error') {
+      consoleErrors.push({ text: message.text(), url: message.location().url });
     }
   });
-  return errors;
+  return { consoleErrors, pageErrors };
 };
 
 test('keeps optional skin failure nonfatal and re-enters boot without duplicate successful loads', async ({ page }) => {
@@ -60,7 +60,8 @@ test('keeps optional skin failure nonfatal and re-enters boot without duplicate 
 
   const second = await page.evaluate(() => window.__ALIEN_BOOT__?.report);
   expect(second).toEqual({ ...first, preloadRuns: 2, createRuns: 2 });
-  expect(requests.get('crawler-sheet.png')).toBeGreaterThan(0);
+  // Phaser deterministically makes three attempts for a failed file on each BootScene preload.
+  expect(requests.get('crawler-sheet.png')).toBe(6);
   expect(Object.fromEntries([...requests].filter(([fileName]) => fileName !== 'crawler-sheet.png'))).toEqual({
     'marine-sheet.png': 1,
     'brute-sheet.png': 1,
@@ -69,5 +70,11 @@ test('keeps optional skin failure nonfatal and re-enters boot without duplicate 
     'carrier-sheet.png': 1,
     'queen-sheet.png': 1,
   });
-  expect(errors).toEqual([]);
+  const unexpectedConsoleErrors = errors.consoleErrors.filter(
+    ({ text, url }) =>
+      text !== 'Failed to load resource: net::ERR_FAILED' ||
+      !new URL(url).pathname.endsWith('/assets/characters/crawler-sheet.png'),
+  );
+  expect(unexpectedConsoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
 });
