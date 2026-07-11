@@ -1534,6 +1534,15 @@ export class GameScene extends Phaser.Scene {
       get activeProjectiles(): number {
         return getActiveProjectileCount();
       },
+      get activeEnemySkinKeys(): readonly string[] {
+        return getHorde()?.presentationSkinKeys ?? Object.freeze([]);
+      },
+      get framedEnemyCount(): number {
+        return getHorde()?.framedPresentationCount ?? 0;
+      },
+      get enemyVisualCount(): number {
+        return getHorde()?.presentationObjectCount ?? 0;
+      },
       get wave(): number {
         return getSnapshot()?.wave ?? 0;
       },

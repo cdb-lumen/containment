@@ -6,6 +6,9 @@ export interface DiagnosticsReadOnlyFields {
   readonly bossHealth: number;
   readonly activeEnemies: number;
   readonly activeProjectiles: number;
+  readonly activeEnemySkinKeys: readonly string[];
+  readonly framedEnemyCount: number;
+  readonly enemyVisualCount: number;
   readonly wave: number;
   readonly activeQuality: string;
   readonly presentationTimeMs: number;
@@ -98,6 +101,15 @@ export function installDiagnostics(
     },
     get activeProjectiles(): number {
       return normalizedCount(provider.activeProjectiles);
+    },
+    get activeEnemySkinKeys(): readonly string[] {
+      return Object.freeze([...provider.activeEnemySkinKeys]);
+    },
+    get framedEnemyCount(): number {
+      return normalizedCount(provider.framedEnemyCount);
+    },
+    get enemyVisualCount(): number {
+      return normalizedCount(provider.enemyVisualCount);
     },
     get wave(): number {
       return normalizedCount(provider.wave);

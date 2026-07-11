@@ -36,6 +36,7 @@ type EnemySlot = {
   art: Phaser.GameObjects.Image | null;
   presentation: EnemyPresentationState;
   framed: boolean;
+  skinKey: string;
 };
 
 export type EnemyViewPosition = Readonly<{ id: number; x: number; y: number }>;
@@ -108,6 +109,16 @@ export class EnemyView {
 
   get count(): number { return this.slotsById.size; }
   get visualCount(): number { return this.pool?.totalCount ?? 0; }
+  get framedCount(): number {
+    let count = 0;
+    for (const slot of this.slotsById.values()) if (slot.framed) count += 1;
+    return count;
+  }
+  get activeSkinKeys(): readonly string[] {
+    const keys = new Set<string>();
+    for (const slot of this.slotsById.values()) if (slot.framed) keys.add(slot.skinKey);
+    return Object.freeze([...keys].sort());
+  }
 
   setQuality(profile: QualityProfileName): void { this.quality = profile; }
 
@@ -173,7 +184,9 @@ export class EnemyView {
         const art = this.initialFollowerTexture !== null
           ? this.scene.add.image(0, 0, this.initialFollowerTexture).setActive(false).setVisible(false)
           : null;
-        return { body, art, presentation: new EnemyPresentationState(), framed: false };
+        return {
+          body, art, presentation: new EnemyPresentationState(), framed: false, skinKey: 'unknown',
+        };
       },
       activate: (slot, enemy): void => {
         slot.presentation.acquire(enemy);
@@ -191,6 +204,7 @@ export class EnemyView {
         }
         slot.presentation.release();
         slot.framed = false;
+        slot.skinKey = 'unknown';
         slot.body.body.enable = false;
         slot.body.setActive(false).setVisible(false).setPosition(0, 0).setRotation(0).setAlpha(1)
           .setScale(1).setFlipX(false).setFlipY(false).clearTint().setFrame(0);
@@ -207,6 +221,7 @@ export class EnemyView {
     const radius = Math.max(1, Number.isFinite(enemy.radius) ? enemy.radius : 1);
     const resolved = this.resolvedTextures[enemy.type];
     slot.framed = resolved.framed && slot.art !== null;
+    slot.skinKey = resolved.texture;
 
     body.setTexture(presentation.texture).setDisplaySize(displaySize, displaySize)
       .setPosition(enemy.x, enemy.y).setAlpha(clampUnit(enemy.alpha)).setDepth(enemy.y)

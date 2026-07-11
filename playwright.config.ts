@@ -30,6 +30,14 @@ export default defineConfig({
       },
     },
     {
+      name: 'character-visuals-chromium',
+      testMatch: /characterVisuals\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
       name: 'mobile-chromium',
       testMatch: /mobile\.spec\.ts/,
       use: {

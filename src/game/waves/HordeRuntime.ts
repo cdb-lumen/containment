@@ -271,6 +271,10 @@ export class HordeRuntime {
     return this.#enemySystem.activeCount + this.#bossRuntime.activeCount;
   }
 
+  get presentationSkinKeys(): readonly string[] { return this.#enemyView.activeSkinKeys; }
+  get framedPresentationCount(): number { return this.#enemyView.framedCount; }
+  get presentationObjectCount(): number { return this.#enemyView.visualCount; }
+
   get activePickups(): number {
     return this.#pickupSystem.snapshot.length;
   }
