@@ -70,6 +70,8 @@ export class Hud {
   private readonly creditsValue: Phaser.GameObjects.Text;
   private readonly waveValue: Phaser.GameObjects.Text;
   private readonly objectiveValue: Phaser.GameObjects.Text;
+  private readonly tacticalLabel: Phaser.GameObjects.Text;
+  private readonly tacticalState: Phaser.GameObjects.Text;
   private readonly criticalCue: Phaser.GameObjects.Container;
   private unsubscribe: (() => void) | null = null;
   private criticalTween: Phaser.Tweens.Tween | null = null;
@@ -139,6 +141,8 @@ export class Hud {
         letterSpacing: 0.7,
       })
       .setOrigin(1, 0);
+    this.tacticalLabel = tacticalLabel;
+    this.tacticalState = tacticalState;
 
     const criticalIcon = scene.add.graphics();
     criticalIcon.fillStyle(COLORS.critical, 1);
@@ -192,6 +196,12 @@ export class Hud {
       if (!this.destroyed) this.render(snapshot);
     });
     scene.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneShutdown);
+  }
+
+  setTouchLayout(enabled: boolean): void {
+    if (this.destroyed) return;
+    this.tacticalLabel.setVisible(!enabled);
+    this.tacticalState.setVisible(!enabled);
   }
 
   /** Redraws the existing radar surface; it never creates display objects. */

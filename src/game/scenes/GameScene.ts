@@ -596,6 +596,7 @@ export class GameScene extends Phaser.Scene {
     });
 
     this.hud = new Hud(this, combat);
+    this.hud.setTouchLayout(this.touchInput?.enabled === true);
     this.createMissionBanner();
     this.installSceneDiagnostics();
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleShutdown);
