@@ -181,7 +181,7 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
       offsetY = moving ? step * family.motion.movingBobAmplitude : wave * family.motion.bobAmplitude;
       rotationOffset = moving ? step * family.motion.rotationAmplitude : 0;
       emissiveAlpha = family.secondary.emissiveBase + family.secondary.emissiveAmplitude
-        * Math.sin(nowMs / family.secondary.shimmerPeriodMs + phase * TAU);
+        * Math.sin((nowMs / family.secondary.shimmerPeriodMs + phase) * TAU);
       break;
     case 'carrier':
       offsetX = moving ? step * family.motion.lateralAmplitude : 0;

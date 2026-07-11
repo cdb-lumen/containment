@@ -240,17 +240,25 @@ describe('character animation policy', () => {
     }
   });
 
-  it('uses deterministic stable-phase stalker shimmer with restrained quality effects', () => {
+  it('uses the configured full stalker shimmer period with restrained quality effects', () => {
     const at = (nowMs: number, entityId = 12, quality: 'high' | 'medium' | 'low' = 'high') =>
       characterAnimation(animationInput({ skin: 'stalker', nowMs, entityId, quality }));
-    const high = at(333);
-    expect(at(333)).toEqual(high);
-    expect(at(523).emissiveAlpha).not.toBe(high.emissiveAlpha);
-    expect(at(333, 13).emissiveAlpha).not.toBe(high.emissiveAlpha);
+    const period = CHARACTER_ANIMATION_PROFILES.stalker.secondary.shimmerPeriodMs;
+    const nowMs = 333;
+    const high = at(nowMs);
+    const nextPeriod = at(nowMs + period);
+    const quarterPeriod = at(nowMs + period / 4);
+    const low = at(nowMs, 12, 'low');
+
+    expect(at(nowMs).emissiveAlpha).toBeCloseTo(high.emissiveAlpha, 10);
+    expect(nextPeriod.emissiveAlpha).toBeCloseTo(high.emissiveAlpha, 10);
+    expect(Math.abs(quarterPeriod.emissiveAlpha - high.emissiveAlpha)).toBeGreaterThan(0.05);
+    expect(at(nowMs, 13).emissiveAlpha).not.toBeCloseTo(high.emissiveAlpha, 5);
     expect(high.emissiveAlpha).toBeGreaterThan(0);
-    expect(at(333, 12, 'medium').emissiveAlpha).toBeLessThan(high.emissiveAlpha);
-    expect(at(333, 12, 'low').emissiveAlpha).toBe(0);
-    expect(at(333, 12, 'low').frame).toBe(high.frame);
+    expect(at(nowMs, 12, 'medium').emissiveAlpha).toBeLessThan(high.emissiveAlpha);
+    expect(low.emissiveAlpha).toBeCloseTo(0, 10);
+    expect(at(nowMs, 12, 'low').emissiveAlpha).toBeCloseTo(low.emissiveAlpha, 10);
+    expect(low.frame).toBe(high.frame);
   });
 
   it('keeps reduced motion and reduced flash independent from frame communication', () => {
