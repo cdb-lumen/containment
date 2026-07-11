@@ -18,10 +18,7 @@ export class BootScene extends Phaser.Scene {
     const saveData = parseSaveData(serializedSave);
     const prefersReducedMotion = this.prefersReducedMotion();
 
-    const reducedMotion =
-      prefersReducedMotion ||
-      saveData.settings.reducedShake ||
-      saveData.settings.reducedFlash;
+    const reducedMotion = prefersReducedMotion;
 
     this.registry.set('saveData', saveData);
     this.registry.set('settings', saveData.settings);

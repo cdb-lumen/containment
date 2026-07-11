@@ -67,8 +67,10 @@ describe('TouchInputState', () => {
     const input = new TouchInputState(VIEWPORT);
 
     expect(input.pointerDown(11, 100, 500)).toBe(true);
+    expect(input.hasActiveAimPointer).toBe(false);
     expect(input.pointerDown(12, 200, 500)).toBe(false);
     expect(input.pointerDown(21, 1_100, 500)).toBe(true);
+    expect(input.hasActiveAimPointer).toBe(true);
     input.pointerMove(11, 20, 500);
     input.pointerMove(21, 1_180, 500);
 

@@ -151,6 +151,10 @@ export class TouchInputState {
     return this.#left.pointerId !== null || this.#right.pointerId !== null;
   }
 
+  get hasActiveAimPointer(): boolean {
+    return this.#right.pointerId !== null;
+  }
+
   setViewport(viewport: Viewport): void {
     this.#width = finitePositive(viewport.width, this.#width);
     this.#height = finitePositive(viewport.height, this.#height);
@@ -357,6 +361,7 @@ export class TouchInput {
     this.#bindAction(grenade, 'grenade');
     this.#bindAction(medkit, 'medkit');
     weapon.addEventListener('pointerdown', this.#handleWeaponPress);
+    weapon.addEventListener('click', this.#handleWeaponClick);
 
     root.append(leftBase, rightBase, pause, grenade, medkit, weapon);
     host.parent.append(root);
@@ -386,6 +391,10 @@ export class TouchInput {
     return this.#state.hasActivePointers;
   }
 
+  get hasActiveAimPointer(): boolean {
+    return this.#state.hasActiveAimPointer;
+  }
+
   get enabled(): boolean {
     return shouldEnableTouchControls({
       coarsePointer: queryCoarsePointer(),
@@ -406,6 +415,12 @@ export class TouchInput {
     this.#renderSticks();
   }
 
+  setModalBlocked(blocked: boolean): void {
+    this.#root.inert = blocked;
+    this.#root.setAttribute('aria-hidden', String(blocked));
+    if (blocked) this.suspend();
+  }
+
   suspend(): void {
     this.#state.suspend();
     this.#renderSticks();
@@ -421,6 +436,7 @@ export class TouchInput {
     this.#host.canvas.removeEventListener('pointercancel', this.#handlePointerCancel);
     window.removeEventListener('resize', this.#handleResize);
     this.#weaponButton.removeEventListener('pointerdown', this.#handleWeaponPress);
+    this.#weaponButton.removeEventListener('click', this.#handleWeaponClick);
     this.#root.remove();
   }
 
@@ -442,18 +458,35 @@ export class TouchInput {
       this.#observeTouch(event);
       this.#state.press(action);
     });
+    button.addEventListener('click', (event) => {
+      if (event.detail !== 0) return;
+      event.preventDefault();
+      event.stopPropagation();
+      this.#state.press(action);
+    });
   }
 
   #handleWeaponPress = (event: PointerEvent): void => {
     event.preventDefault();
     event.stopPropagation();
     this.#observeTouch(event);
+    this.#advanceWeapon();
+  };
+
+  #handleWeaponClick = (event: MouseEvent): void => {
+    if (event.detail !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.#advanceWeapon();
+  };
+
+  #advanceWeapon(): void {
     this.#weaponIndex = (this.#weaponIndex + 1) % WEAPON_ORDER.length;
     const weapon = WEAPON_ORDER[this.#weaponIndex];
     this.#state.pressWeapon(weapon);
     this.#weaponButton.textContent = `W${this.#weaponIndex + 1}`;
     this.#weaponButton.setAttribute('aria-label', `Switch weapon: ${weapon}`);
-  };
+  }
 
   #handlePointerDown = (event: PointerEvent): void => {
     if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
@@ -493,6 +526,7 @@ export class TouchInput {
       height: this.#host.canvas.height,
     });
     this.#syncBounds();
+    this.#syncVisibility();
     this.#renderSticks();
   };
 

@@ -115,7 +115,7 @@ const safeDelta = (delta: number): number =>
 const mergeInputStates = (
   desktop: InputState,
   touch: InputState,
-  touchPointerActive: boolean,
+  touchAimPointerActive: boolean,
 ): InputState => {
   const touchMoving = touch.movementX !== 0 || touch.movementY !== 0;
   const touchAiming = touch.fireHeld;
@@ -124,7 +124,7 @@ const mergeInputStates = (
     movementY: touchMoving ? touch.movementY : desktop.movementY,
     aimWorldX: touchAiming ? touch.aimWorldX : desktop.aimWorldX,
     aimWorldY: touchAiming ? touch.aimWorldY : desktop.aimWorldY,
-    fireHeld: touch.fireHeld || (!touchPointerActive && desktop.fireHeld),
+    fireHeld: touch.fireHeld || (!touchAimPointerActive && desktop.fireHeld),
     reloadPressed: touch.reloadPressed || desktop.reloadPressed,
     grenadePressed: touch.grenadePressed || desktop.grenadePressed,
     interactPressed: touch.interactPressed || desktop.interactPressed,
@@ -186,6 +186,7 @@ export class GameScene extends Phaser.Scene {
     this.pauseRequested = false;
     this.registry.set('gamePaused', false);
     this.desktopInput?.clearEdges();
+    this.touchInput?.setModalBlocked(false);
     this.touchInput?.suspend();
     this.updatePortraitBlock();
   };
@@ -523,14 +524,18 @@ export class GameScene extends Phaser.Scene {
       return;
     }
 
-    const touchPointerActive = touchInput?.hasActivePointers ?? false;
+    const touchAimPointerActive = touchInput?.hasActiveAimPointer ?? false;
     const desktopState = desktopInput.read(
       this.cameras.main,
       player.sprite,
-      !touchPointerActive,
+      !touchAimPointerActive,
     );
     const touchState = touchInput?.read(player.sprite) ?? EMPTY_INPUT_STATE;
-    const input = mergeInputStates(desktopState, touchState, touchPointerActive);
+    const input = mergeInputStates(
+      desktopState,
+      touchState,
+      touchAimPointerActive,
+    );
     if (input.pausePressed) {
       this.requestPause('manual');
       return;
@@ -611,7 +616,7 @@ export class GameScene extends Phaser.Scene {
     this.player?.stop();
     this.physics.world.pause();
     this.hideMuzzleFlash();
-    this.touchInput?.suspend();
+    this.touchInput?.setModalBlocked(true);
     this.desktopInput?.clearEdges();
     this.registry.set('gamePaused', true);
     this.scene.launch(SCENE_KEYS.pause, { reason });
@@ -633,8 +638,12 @@ export class GameScene extends Phaser.Scene {
     if (blocked) {
       this.player?.stop();
       this.physics.world.pause();
+      this.time.paused = true;
+      this.tweens.pauseAll();
     } else if (!this.pauseRequested) {
       this.physics.world.resume();
+      this.time.paused = false;
+      this.tweens.resumeAll();
     }
   }
 
@@ -952,21 +961,13 @@ export class GameScene extends Phaser.Scene {
       .graphics()
       .setScrollFactor(0)
       .setDepth(12_000);
-    edgePulse.lineStyle(10, 0xf39237, 0.78);
+    edgePulse.lineStyle(4, 0xf39237, 0.3);
     edgePulse.strokeRect(5, 5, GAME_WIDTH - 10, GAME_HEIGHT - 10);
     this.blastEffects.add(edgePulse);
-    const tween = this.tweens.add({
-      targets: edgePulse,
-      alpha: 0,
-      duration: 130,
-      ease: 'Quad.Out',
-      onComplete: (): void => {
-        this.blastTweens.delete(tween);
-        this.blastEffects.delete(edgePulse);
-        edgePulse.destroy();
-      },
+    this.time.delayedCall(220, () => {
+      this.blastEffects.delete(edgePulse);
+      if (edgePulse.active) edgePulse.destroy();
     });
-    this.blastTweens.add(tween);
   }
 
   private createHazardPool(x: number, y: number, baseDamage: number): void {

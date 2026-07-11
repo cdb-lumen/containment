@@ -186,23 +186,23 @@ body {
 }
 
 .touch-controls__pause {
-  top: max(12px, env(safe-area-inset-top));
-  right: max(12px, env(safe-area-inset-right));
+  top: 12px;
+  right: 12px;
 }
 
 .touch-controls__grenade {
-  right: max(18px, calc(env(safe-area-inset-right) + 8px));
-  bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px));
+  right: 18px;
+  bottom: 18px;
 }
 
 .touch-controls__medkit {
-  right: max(78px, calc(env(safe-area-inset-right) + 68px));
-  bottom: max(18px, calc(env(safe-area-inset-bottom) + 8px));
+  right: 78px;
+  bottom: 18px;
 }
 
 .touch-controls__weapon {
-  right: max(18px, calc(env(safe-area-inset-right) + 8px));
-  bottom: max(78px, calc(env(safe-area-inset-bottom) + 68px));
+  right: 18px;
+  bottom: 78px;
 }
 
 .pause-overlay {
@@ -212,11 +212,7 @@ body {
   display: grid;
   place-items: center;
   overflow: auto;
-  padding:
-    max(16px, env(safe-area-inset-top))
-    max(16px, env(safe-area-inset-right))
-    max(16px, env(safe-area-inset-bottom))
-    max(16px, env(safe-area-inset-left));
+  padding: 16px;
   color: #f4efe6;
   background: rgb(3 5 8 / 18%);
   touch-action: pan-y;
@@ -346,13 +342,13 @@ body {
 .pause-field input[type="range"] {
   grid-column: 1 / -1;
   width: 100%;
-  min-height: 24px;
+  min-height: 48px;
   accent-color: #f39237;
 }
 
 .pause-field--select select {
   min-width: 128px;
-  min-height: 44px;
+  min-height: 48px;
   border: 1px solid #81909e;
   border-radius: 3px;
   padding: 0 10px;
@@ -414,7 +410,7 @@ body {
 @media (max-width: 700px), (max-height: 520px) {
   .pause-overlay {
     place-items: start center;
-    padding: 10px;
+    padding: 16px;
   }
 
   .pause-panel {

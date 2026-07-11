@@ -48,17 +48,42 @@ export class PauseScene extends Phaser.Scene {
   private resumeButton: HTMLButtonElement | null = null;
   private shutdownRegistered = false;
   private reason: PauseReason = 'manual';
+  private transitioned = false;
+  private previousFocus: HTMLElement | null = null;
 
-  private readonly handleEscape = (): void => {
-    this.resumeGame();
+  private readonly handleDialogKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.resumeGame();
+      return;
+    }
+    if (event.key !== 'Tab' || this.root === null) return;
+    const focusable = [...this.root.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled]), select:not([disabled])',
+    )];
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   };
 
   private readonly handleShutdown = (): void => {
-    this.input.keyboard?.off('keydown-ESC', this.handleEscape);
+    this.root?.removeEventListener('keydown', this.handleDialogKeyDown);
     this.root?.remove();
     this.root = null;
     this.resumeButton = null;
     this.shutdownRegistered = false;
+    const focusTarget = this.previousFocus?.isConnected
+      ? this.previousFocus
+      : this.game.canvas;
+    focusTarget.focus();
+    this.previousFocus = null;
   };
 
   constructor() {
@@ -66,11 +91,14 @@ export class PauseScene extends Phaser.Scene {
   }
 
   create(data: PauseSceneData = {}): void {
+    this.transitioned = false;
+    this.previousFocus =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.reason = data.reason === 'focus' ? 'focus' : 'manual';
     this.registry.set('gamePaused', true);
     this.drawBackdrop();
     this.createDialog();
-    this.input.keyboard?.on('keydown-ESC', this.handleEscape);
+
     if (!this.shutdownRegistered) {
       this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleShutdown);
       this.shutdownRegistered = true;
@@ -150,6 +178,7 @@ export class PauseScene extends Phaser.Scene {
     `;
     parent.append(root);
     this.root = root;
+    root.addEventListener('keydown', this.handleDialogKeyDown);
 
     this.resumeButton = root.querySelector<HTMLButtonElement>('.pause-panel__resume');
     this.resumeButton?.addEventListener('click', () => this.resumeGame());
@@ -230,12 +259,7 @@ export class PauseScene extends Phaser.Scene {
     };
     this.registry.set('settings', nextSettings);
     this.registry.set('saveData', nextSave);
-    this.registry.set(
-      'reducedMotion',
-      this.prefersReducedMotion() ||
-        nextSettings.reducedShake ||
-        nextSettings.reducedFlash,
-    );
+    this.registry.set('reducedMotion', this.prefersReducedMotion());
     try {
       persistSaveData(window.localStorage, nextSave);
     } catch {
@@ -257,13 +281,14 @@ export class PauseScene extends Phaser.Scene {
   }
 
   private resumeGame(): void {
-    if (document.visibilityState === 'hidden') return;
+    if (document.visibilityState === 'hidden' || !this.beginTransition()) return;
     this.registry.set('gamePaused', false);
     this.scene.resume(SCENE_KEYS.game);
     this.scene.stop();
   }
 
   private restartGame(): void {
+    if (!this.beginTransition()) return;
     this.registry.set('gamePaused', false);
     this.scene.stop(SCENE_KEYS.game);
     this.scene.start(SCENE_KEYS.game);
@@ -271,9 +296,20 @@ export class PauseScene extends Phaser.Scene {
   }
 
   private returnToMenu(): void {
+    if (!this.beginTransition()) return;
     this.registry.set('gamePaused', false);
     this.scene.stop(SCENE_KEYS.game);
     this.scene.start(SCENE_KEYS.menu);
     this.scene.stop();
+  }
+
+  private beginTransition(): boolean {
+    if (this.transitioned) return false;
+    this.transitioned = true;
+    if (this.root !== null) {
+      this.root.inert = true;
+      this.root.setAttribute('aria-busy', 'true');
+    }
+    return true;
   }
 }

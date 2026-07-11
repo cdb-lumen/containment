@@ -494,7 +494,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private activateStart(): void {
-    if (this.activated) return;
+    if (this.activated || this.isPortraitBlocked()) return;
     this.activated = true;
 
     this.drawButton('locked');
@@ -506,5 +506,15 @@ export class MenuScene extends Phaser.Scene {
       this.gameTransition = null;
       this.scene.start(SCENE_KEYS.game);
     });
+  }
+
+  private isPortraitBlocked(): boolean {
+    try {
+      return window.matchMedia(
+        '(orientation: portrait) and (pointer: coarse)',
+      ).matches;
+    } catch {
+      return false;
+    }
   }
 }
