@@ -100,6 +100,13 @@ test('observable character animation, mixed skins, and restart state remain boun
   expect(horde.visuals).toBeLessThanOrEqual(150);
 
   await page.evaluate(() => {
+    window.__ALIEN_GAME__?.completeWave();
+    window.__ALIEN_GAME__?.focusQueenArena();
+  });
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.phase)).toBe('boss');
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.bossHealth ?? 0)).toBeGreaterThan(0);
+
+  await page.evaluate(() => {
     const testWindow = window as Window & {
       __ALIEN_GAME_BEFORE_RESTART__?: typeof window.__ALIEN_GAME__;
     };

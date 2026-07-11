@@ -11,7 +11,7 @@ An original, mobile-ready browser survival shooter built with **Phaser 4**, **Ty
 - Deterministic combat, scoring, upgrades, wave planning, and restart behavior
 - Multiple enemy roles, hazards, pickups, facility breaches, and a queen boss encounter
 - Pistol, rifle, shotgun, rocket/grenade, reload, armor, and medkit systems
-- Procedurally drawn environment, characters, effects, and UI—no downloaded art assets
+- Original pixel characters, procedurally drawn environment, effects, and UI—no downloaded art assets
 - Gesture-unlocked Web Audio music and sound synthesis—no downloaded audio assets
 - Desktop mouse/keyboard and landscape touch controls
 - Pause menu with live volume, quality, shake, and flash settings
@@ -48,6 +48,14 @@ Play in landscape orientation. The left stick moves; the right stick aims and fi
 - Adaptive High/Medium/Low presentation profiles
 - Capped enemies, projectiles, lights, particles, decals, remains, and shell casings
 
+## Original art and animation
+
+All character art was created and finished for this project; no original *Alien Shooter* assets are included. Seven local sprite sheets cover the marine, five standard alien roles, and the queen, with procedural character rendering retained as a safe fallback when a sheet cannot load.
+
+Animation is a deterministic presentation layer kept separate from gameplay simulation and physics, so visual frame changes, recoil, hit feedback, and reduced-motion behavior do not alter combat outcomes. `npm run verify` validates the sprite sheets and runs visual-behavior tests alongside lint, unit, build, and browser checks.
+
+Characters use crisp nearest-neighbor scaling, stable ground pivots, readable silhouettes, and bounded flashes. Controls remain keyboard/touch accessible, reduced-motion and reduced-flash preferences are supported, and presentation quality can adapt without changing gameplay.
+
 ## Local development
 
 Requirements: a current Node.js release supported by Vite 8 and npm.
@@ -68,10 +76,11 @@ npm run verify
 
 The canonical gate runs:
 
-1. ESLint
-2. 226 deterministic Vitest unit tests
-3. TypeScript checking and a production Vite build
-4. Playwright behavior and bounded-stress tests in desktop and iPhone-sized Chromium
+1. Seven-sheet character asset validation
+2. ESLint
+3. 283 deterministic Vitest unit tests
+4. TypeScript checking and a production Vite build
+5. Playwright behavior and bounded-stress tests in desktop and iPhone-sized Chromium
 
 Useful focused commands:
 

@@ -1598,6 +1598,15 @@ export class GameScene extends Phaser.Scene {
       spawnStressWave: (): void => {
         this.missionStarted = (this.horde?.spawnStressWave() ?? 0) > 0;
       },
+      focusQueenArena: (): void => {
+        const player = this.player;
+        const arena = this.facility?.queenArena;
+        if (!player || !arena || this.horde?.phase !== 'boss') return;
+        const playerX = arena.safeCenter.x - arena.safeRadius * 0.55;
+        const playerY = arena.safeCenter.y + arena.safeRadius * 0.35;
+        player.sprite.setPosition(playerX, playerY);
+        this.cameras.main.centerOn(arena.safeCenter.x, arena.safeCenter.y);
+      },
       defeatBoss: (): void => {
         this.horde?.forceBossDefeatForDiagnostics();
       },

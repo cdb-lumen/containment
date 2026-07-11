@@ -34,6 +34,7 @@ export interface DiagnosticsActions {
   readonly damagePlayer: (amount?: number) => void;
   readonly completeWave: () => void;
   readonly spawnStressWave: () => void;
+  readonly focusQueenArena: () => void;
   readonly defeatBoss: () => void;
   readonly restart: () => void;
 }
@@ -151,6 +152,7 @@ export function installDiagnostics(
     damagePlayer: (amount?: number): void => provider.damagePlayer(amount),
     completeWave: (): void => provider.completeWave(),
     spawnStressWave: (): void => provider.spawnStressWave(),
+    focusQueenArena: (): void => provider.focusQueenArena(),
     defeatBoss: (): void => provider.defeatBoss(),
     restart: (): void => provider.restart(),
   });
