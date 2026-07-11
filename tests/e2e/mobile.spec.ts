@@ -44,6 +44,38 @@ test('blocks portrait deployment and exposes usable landscape touch controls', a
   await page.waitForFunction(() => window.__ALIEN_GAME__ !== undefined);
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.touchControlsVisible)).toBe(true);
 
+  const canvas = page.locator('canvas');
+  const canvasBounds = await canvas.boundingBox();
+  expect(canvasBounds).not.toBeNull();
+  const projectilesBeforeMovement = await page.evaluate(
+    () => window.__ALIEN_GAME__?.activeProjectiles ?? 0,
+  );
+  const client = await page.context().newCDPSession(page);
+  const movementStart = {
+    x: (canvasBounds?.x ?? 0) + (canvasBounds?.width ?? 0) * 0.2,
+    y: (canvasBounds?.y ?? 0) + (canvasBounds?.height ?? 0) * 0.72,
+  };
+  const movementEnd = {
+    x: (canvasBounds?.x ?? 0) + (canvasBounds?.width ?? 0) * 0.14,
+    y: movementStart.y,
+  };
+  await client.send('Input.dispatchTouchEvent', {
+    type: 'touchStart',
+    touchPoints: [{ ...movementStart, id: 31 }],
+  });
+  await client.send('Input.dispatchTouchEvent', {
+    type: 'touchMove',
+    touchPoints: [{ ...movementEnd, id: 31 }],
+  });
+  await page.waitForTimeout(300);
+  expect(await page.evaluate(() => window.__ALIEN_GAME__?.activeProjectiles ?? 0)).toBe(
+    projectilesBeforeMovement,
+  );
+  await client.send('Input.dispatchTouchEvent', {
+    type: 'touchEnd',
+    touchPoints: [],
+  });
+
   const touchActions: Array<{ name: string | RegExp; label: string }> = [
     { name: 'Pause game', label: 'Pause game' },
     { name: 'Throw grenade', label: 'Throw grenade' },

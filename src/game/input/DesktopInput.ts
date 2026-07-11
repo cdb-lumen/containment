@@ -77,6 +77,7 @@ export class DesktopInput {
     if (this.isDestroyed) return Object.freeze({ ...EMPTY_INPUT_STATE });
 
     const pointer = this.scene.input.activePointer;
+    const allowMousePointerInput = allowPointerInput && !pointer.wasTouch;
     let movementX = 0;
     let movementY = 0;
 
@@ -104,7 +105,7 @@ export class DesktopInput {
 
     if (
       !this.isDestroyed &&
-      allowPointerInput &&
+      allowMousePointerInput &&
       Number.isFinite(pointer.x) &&
       Number.isFinite(pointer.y)
     ) {
@@ -150,7 +151,7 @@ export class DesktopInput {
     }
 
     const rightButtonDown =
-      !this.isDestroyed && allowPointerInput && pointer.rightButtonDown();
+      !this.isDestroyed && allowMousePointerInput && pointer.rightButtonDown();
     const rightButtonPressed = rightButtonDown && !this.previousRightButtonDown;
     this.previousRightButtonDown = rightButtonDown;
 
@@ -159,7 +160,7 @@ export class DesktopInput {
       movementY,
       aimWorldX,
       aimWorldY,
-      fireHeld: !this.isDestroyed && allowPointerInput && pointer.primaryDown,
+      fireHeld: !this.isDestroyed && allowMousePointerInput && pointer.primaryDown,
       reloadPressed,
       grenadePressed: keyboardGrenadePressed || rightButtonPressed,
       interactPressed,
