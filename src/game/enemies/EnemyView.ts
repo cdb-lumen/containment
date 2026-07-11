@@ -1,7 +1,11 @@
 import Phaser from 'phaser';
 
 import { TEXTURE_KEYS } from '../art/createTextures';
-import { CHARACTER_SKINS, resolveCharacterSkinTexture } from '../art/characterSkins';
+import {
+  CHARACTER_SKINS,
+  resolveCharacterSkinTexture,
+  type ResolvedCharacterSkinTexture,
+} from '../art/characterSkins';
 import type { QualityProfileName } from '../effects/quality';
 import type { EnemySnapshot } from './EnemySystem';
 import { EnemyPool } from './EnemyPool';
@@ -21,6 +25,9 @@ const HEALTH_DAMAGED_COLOR = 0xe58a28;
 const ARMOR_COLOR = 0x69d8e7;
 const BAR_BACKGROUND = 0x070a0f;
 const OVERLAY_DEPTH = 4_096;
+const STANDARD_ENEMY_IDS: readonly StandardEnemyId[] = [
+  'crawler', 'brute', 'spitter', 'stalker', 'carrier',
+];
 
 export type EnemyImage = Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
@@ -61,6 +68,8 @@ export class EnemyView {
   private readonly positionsById = new Map<number, MutableEnemyViewPosition>();
   private readonly mutableActivePositions: MutableEnemyViewPosition[] = [];
   private readonly seenIds = new Set<number>();
+  private readonly resolvedTextures: Readonly<Record<StandardEnemyId, ResolvedCharacterSkinTexture>>;
+  private readonly initialFollowerTexture: string | null;
   private pool: EnemyPool<EnemySlot, EnemySnapshot> | null;
   private quality: QualityProfileName = 'high';
   private destroyed = false;
@@ -81,6 +90,16 @@ export class EnemyView {
     this.group = scene.physics.add.group({ allowGravity: false, immovable: true });
     this.overlay = scene.add.graphics().setDepth(OVERLAY_DEPTH);
     this.activePositions = this.mutableActivePositions;
+    const hasTexture = (key: string): boolean => this.scene.textures?.exists?.(key) === true;
+    const resolvedTextures = {} as Record<StandardEnemyId, ResolvedCharacterSkinTexture>;
+    let initialFollowerTexture: string | null = null;
+    for (const id of STANDARD_ENEMY_IDS) {
+      const resolved = resolveCharacterSkinTexture(hasTexture, id);
+      resolvedTextures[id] = resolved;
+      if (initialFollowerTexture === null && resolved.framed) initialFollowerTexture = resolved.texture;
+    }
+    this.resolvedTextures = resolvedTextures;
+    this.initialFollowerTexture = initialFollowerTexture;
     this.pool = this.createPool();
     scene.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleSceneShutdown);
   }
@@ -141,8 +160,6 @@ export class EnemyView {
   }
 
   private createPool(): EnemyPool<EnemySlot, EnemySnapshot> {
-    const anyAuthoredSheet = Object.values(CHARACTER_SKINS)
-      .some(({ texture }) => this.scene.textures?.exists?.(texture) === true);
     return new EnemyPool({
       create: (): EnemySlot => {
         const body = this.scene.physics.add.image(0, 0, TEXTURE_KEYS.alienRunner);
@@ -151,8 +168,8 @@ export class EnemyView {
         body.body.setImmovable(true);
         body.body.enable = false;
         body.setActive(false).setVisible(false);
-        const art = anyAuthoredSheet
-          ? this.scene.add.image(0, 0, CHARACTER_SKINS.crawler.texture).setActive(false).setVisible(false)
+        const art = this.initialFollowerTexture !== null
+          ? this.scene.add.image(0, 0, this.initialFollowerTexture).setActive(false).setVisible(false)
           : null;
         return { body, art, presentation: new EnemyPresentationState(), framed: false };
       },
@@ -186,7 +203,7 @@ export class EnemyView {
     const presentation = ENEMY_PRESENTATION[enemy.type];
     const displaySize = presentation.displaySize * (enemy.elite ? ELITE_SCALE : 1);
     const radius = Math.max(1, Number.isFinite(enemy.radius) ? enemy.radius : 1);
-    const resolved = resolveCharacterSkinTexture((key) => this.scene.textures?.exists?.(key) === true, enemy.type);
+    const resolved = this.resolvedTextures[enemy.type];
     slot.framed = resolved.framed && slot.art !== null;
 
     body.setTexture(presentation.texture).setDisplaySize(displaySize, displaySize)

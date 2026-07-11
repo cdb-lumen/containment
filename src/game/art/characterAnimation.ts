@@ -14,6 +14,10 @@ export type CharacterAnimationInput = Readonly<{
   reducedFlash: boolean;
 }>;
 
+export type MutableCharacterAnimationInput = {
+  -readonly [Key in keyof CharacterAnimationInput]: CharacterAnimationInput[Key];
+};
+
 export type CharacterAnimationOutput = Readonly<{
   frame: CharacterFrameName;
   offsetX: number;
@@ -24,6 +28,15 @@ export type CharacterAnimationOutput = Readonly<{
   emissiveAlpha: number;
   hitBrightness: number;
 }>;
+
+export type MutableCharacterAnimationOutput = {
+  -readonly [Key in keyof CharacterAnimationOutput]: CharacterAnimationOutput[Key];
+};
+
+export const createCharacterAnimationOutput = (): MutableCharacterAnimationOutput => ({
+  frame: 'idleA', offsetX: 0, offsetY: 0, scaleX: 1, scaleY: 1,
+  rotationOffset: 0, emissiveAlpha: 0, hitBrightness: 0,
+});
 
 const finite = (value: number): number => (Number.isFinite(value) ? value : 0);
 const TAU = Math.PI * 2;
@@ -122,7 +135,10 @@ const alternatingFrame = (
   cadenceMs: number,
 ): CharacterFrameName => `${prefix}${Math.floor(nowMs / cadenceMs) % 2 === 0 ? 'A' : 'B'}`;
 
-export const characterAnimation = (input: CharacterAnimationInput): CharacterAnimationOutput => {
+export const writeCharacterAnimation = (
+  target: MutableCharacterAnimationOutput,
+  input: CharacterAnimationInput,
+): MutableCharacterAnimationOutput => {
   const nowMs = Math.max(0, finite(input.nowMs));
   const velocityX = finite(input.velocityX);
   const velocityY = finite(input.velocityY);
@@ -132,10 +148,10 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
   const family = CHARACTER_ANIMATION_PROFILES[input.skin];
 
   if (input.dead) {
-    return Object.freeze({
-      frame: 'death', offsetX: 0, offsetY: 0, scaleX: 1, scaleY: 1,
-      rotationOffset: 0, emissiveAlpha: 0, hitBrightness: 0,
-    });
+    target.frame = 'death'; target.offsetX = 0; target.offsetY = 0;
+    target.scaleX = 1; target.scaleY = 1; target.rotationOffset = 0;
+    target.emissiveAlpha = 0; target.hitBrightness = 0;
+    return target;
   }
 
   let frame: CharacterFrameName;
@@ -223,14 +239,16 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
     rotationOffset = 0;
   }
 
-  return Object.freeze({
-    frame,
-    offsetX: finite(offsetX),
-    offsetY: finite(offsetY),
-    scaleX: finite(scaleX),
-    scaleY: finite(scaleY),
-    rotationOffset: finite(rotationOffset),
-    emissiveAlpha: Math.max(0, finite(emissiveAlpha)),
-    hitBrightness: frame === 'hit' && !input.reducedFlash ? 1 : 0,
-  });
+  target.frame = frame;
+  target.offsetX = finite(offsetX);
+  target.offsetY = finite(offsetY);
+  target.scaleX = finite(scaleX);
+  target.scaleY = finite(scaleY);
+  target.rotationOffset = finite(rotationOffset);
+  target.emissiveAlpha = Math.max(0, finite(emissiveAlpha));
+  target.hitBrightness = frame === 'hit' && !input.reducedFlash ? 1 : 0;
+  return target;
 };
+
+export const characterAnimation = (input: CharacterAnimationInput): CharacterAnimationOutput =>
+  Object.freeze(writeCharacterAnimation(createCharacterAnimationOutput(), input));

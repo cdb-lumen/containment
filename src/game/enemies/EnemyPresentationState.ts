@@ -1,4 +1,9 @@
-import { characterAnimation, type CharacterAnimationOutput } from '../art/characterAnimation';
+import {
+  createCharacterAnimationOutput,
+  writeCharacterAnimation,
+  type CharacterAnimationOutput,
+  type MutableCharacterAnimationInput,
+} from '../art/characterAnimation';
 import type { QualityProfileName } from '../effects/quality';
 import type { EnemySnapshot } from './EnemySystem';
 
@@ -20,6 +25,12 @@ export class EnemyPresentationState {
   private previousHealth = 0;
   private hitUntilMs = 0;
   private attackUntilMs = 0;
+  private readonly animationInput: MutableCharacterAnimationInput = {
+    skin: 'crawler', entityId: 0, nowMs: 0, velocityX: 0, velocityY: 0,
+    attackUntilMs: 0, hitUntilMs: 0, dead: false, quality: 'high',
+    reducedMotion: false, reducedFlash: false,
+  };
+  private readonly animationOutput = createCharacterAnimationOutput();
 
   get snapshot(): EnemyPresentationSnapshot {
     return Object.freeze({
@@ -64,18 +75,18 @@ export class EnemyPresentationState {
     }
     this.previousHealth = Number.isFinite(enemy.health) ? enemy.health : this.previousHealth;
 
-    return characterAnimation({
-      skin: enemy.type,
-      entityId: enemy.id,
-      nowMs: now,
-      velocityX: enemy.velocityX,
-      velocityY: enemy.velocityY,
-      attackUntilMs: this.attackUntilMs,
-      hitUntilMs: this.hitUntilMs,
-      dead: false,
-      quality,
-      reducedMotion,
-      reducedFlash,
-    });
+    const input = this.animationInput;
+    input.skin = enemy.type;
+    input.entityId = enemy.id;
+    input.nowMs = now;
+    input.velocityX = enemy.velocityX;
+    input.velocityY = enemy.velocityY;
+    input.attackUntilMs = this.attackUntilMs;
+    input.hitUntilMs = this.hitUntilMs;
+    input.dead = false;
+    input.quality = quality;
+    input.reducedMotion = reducedMotion;
+    input.reducedFlash = reducedFlash;
+    return writeCharacterAnimation(this.animationOutput, input);
   }
 }

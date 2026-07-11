@@ -47,6 +47,15 @@ describe('EnemyPresentationState', () => {
     expect(a.update(snapshot(3, 'carrier'), 125, 'high', false, false).offsetY)
       .not.toBe(b.update(snapshot(4, 'carrier'), 125, 'high', false, false).offsetY);
   });
+
+  it('reuses one mutable animation output across repeated updates', () => {
+    const state = new EnemyPresentationState();
+    const enemy = snapshot(7, 'crawler');
+    const first = state.update(enemy, 100, 'high', false, false);
+    const second = state.update(enemy, 200, 'high', false, false);
+    expect(second).toBe(first);
+    expect(Object.isFrozen(second)).toBe(false);
+  });
 });
 
 const createImage = (physics: boolean) => {
@@ -78,13 +87,18 @@ const createScene = (loaded: Set<string>, registryValues: Record<string, unknown
   const bodies: ReturnType<typeof createImage>[] = [];
   const art: ReturnType<typeof createImage>[] = [];
   const graphics = { setDepth() { return this; }, clear() { return this; }, fillStyle() { return this; }, fillRect() { return this; }, lineStyle() { return this; }, beginPath() { return this; }, moveTo() { return this; }, lineTo() { return this; }, closePath() { return this; }, strokePath() { return this; }, setVisible() { return this; } };
+  const textureExists = vi.fn((key: string) => loaded.has(key));
+  const requestedArtTextures: string[] = [];
   const scene = {
-    time: { now: 250 }, textures: { exists: (key: string) => loaded.has(key) },
+    time: { now: 250 }, textures: { exists: textureExists },
     registry: { get: (key: string) => registryValues[key] }, events: { once() {}, off() {} },
     physics: { add: { group: () => ({ add() {} }), image: () => { const value = createImage(true); bodies.push(value); return value; } } },
-    add: { graphics: () => graphics, image: () => { const value = createImage(false); art.push(value); return value; } },
+    add: { graphics: () => graphics, image: (_x: number, _y: number, texture: string) => {
+      requestedArtTextures.push(texture);
+      const value = createImage(false); value.texture = texture; art.push(value); return value;
+    } },
   };
-  return { scene, bodies, art };
+  return { scene, bodies, art, textureExists, requestedArtTextures };
 };
 
 describe('EnemyView pooled follower integration', () => {
@@ -110,6 +124,21 @@ describe('EnemyView pooled follower integration', () => {
     expect(art).toHaveLength(0);
     expect(bodies.filter(({ active }) => active)).toHaveLength(5);
     expect(bodies.filter(({ active }) => active).every(({ visible, frame }) => visible && frame === undefined)).toBe(true);
+  });
+
+  it('initializes a partial-load follower pool from an available authored sheet and caches resolutions', () => {
+    const loaded = new Set<string>([CHARACTER_SKINS.spitter.texture]);
+    const { scene, requestedArtTextures, textureExists } = createScene(loaded);
+    const view = new EnemyView(scene as never);
+    expect(requestedArtTextures.length).toBeGreaterThan(0);
+    expect(requestedArtTextures.every((key) => loaded.has(key))).toBe(true);
+    expect(new Set(requestedArtTextures)).toEqual(loaded);
+    const resolutionChecks = textureExists.mock.calls.length;
+    const enemy = snapshot(5, 'spitter');
+    view.sync([enemy]);
+    view.sync([enemy]);
+    view.sync([enemy]);
+    expect(textureExists).toHaveBeenCalledTimes(resolutionChecks);
   });
 
   it('fully resets a released body+follower slot before elite-to-normal reuse', () => {
