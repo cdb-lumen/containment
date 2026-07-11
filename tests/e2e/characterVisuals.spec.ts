@@ -43,6 +43,12 @@ test('production Pages artifact serves every character sheet without development
     expect(body.byteLength, id).toBeGreaterThan(8);
     expect([...body.subarray(0, 8)], id).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
   }
+  const blood = await request.get(
+    `${PAGES_ORIGIN}${PAGES_BASE}assets/effects/blood-decals-sheet.png`,
+  );
+  expect(blood.status()).toBe(200);
+  expect(blood.headers()['content-type']).toMatch(/^image\/png\b/);
+  expect([...(await blood.body()).subarray(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
   expect(errors).toEqual([]);
 });
 

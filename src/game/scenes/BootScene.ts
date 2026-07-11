@@ -5,6 +5,10 @@ import {
   characterSkinLoadDescriptors,
 } from '../art/characterSkins';
 import { createTextures } from '../art/createTextures';
+import {
+  applyToAvailableBloodDecals,
+  bloodDecalLoadDescriptor,
+} from '../art/deathVisualAssets';
 import { STORAGE_KEY } from '../constants';
 import {
   installBootLifecycleDiagnostics,
@@ -23,6 +27,13 @@ export class BootScene extends Phaser.Scene {
     for (const { key, url, frameWidth, frameHeight } of characterSkinLoadDescriptors()) {
       this.load.spritesheet(key, url, { frameWidth, frameHeight });
     }
+    const blood = bloodDecalLoadDescriptor();
+    if (!this.textures.exists(blood.key)) {
+      this.load.spritesheet(blood.key, blood.url, {
+        frameWidth: blood.frameWidth,
+        frameHeight: blood.frameHeight,
+      });
+    }
   }
 
   create(): void {
@@ -39,6 +50,10 @@ export class BootScene extends Phaser.Scene {
         this.textures.get(key).setFilter(Phaser.Textures.FilterMode.NEAREST);
         nearestFilteredSheets.push(key);
       },
+    );
+    applyToAvailableBloodDecals(
+      (key) => this.textures.exists(key),
+      (key) => this.textures.get(key).setFilter(Phaser.Textures.FilterMode.NEAREST),
     );
     installBootLifecycleDiagnostics(
       loadedSheets,

@@ -1,0 +1,41 @@
+import { describe, expect, it, vi } from 'vitest';
+
+import { retryPlayerDeathVisualTransfer, transferPlayerDeathVisual } from '../../src/game/player/transferPlayerDeathVisual';
+
+describe('player death visual ownership transfer', () => {
+  it('hides player art only after the corpse view accepts ownership', () => {
+    const hidePresentation = vi.fn();
+    const request = { family: 'marine' as const, x: 10, y: 20, rotation: 1, major: true };
+
+    expect(transferPlayerDeathVisual({ spawnDeath: () => false }, { hidePresentation }, request)).toBe(false);
+    expect(hidePresentation).not.toHaveBeenCalled();
+
+    expect(transferPlayerDeathVisual({ spawnDeath: () => true }, { hidePresentation }, request)).toBe(true);
+    expect(hidePresentation).toHaveBeenCalledTimes(1);
+  });
+
+  it('retries a rejected transfer on the next update and latches after one accepted corpse', () => {
+    let playerVisible = true;
+    let attempts = 0;
+    let corpses = 0;
+    const view = { spawnDeath: () => {
+      attempts += 1;
+      if (attempts === 1) return false;
+      corpses += 1;
+      return true;
+    } };
+    const player = { hidePresentation: () => { playerVisible = false; } };
+    const request = { family: 'marine' as const, x: 10, y: 20, major: true };
+
+    let emitted = retryPlayerDeathVisualTransfer(false, view, player, request);
+    expect(emitted).toBe(false);
+    expect(playerVisible).toBe(true);
+    emitted = retryPlayerDeathVisualTransfer(emitted, view, player, request);
+    expect(emitted).toBe(true);
+    expect(playerVisible).toBe(false);
+    emitted = retryPlayerDeathVisualTransfer(emitted, view, player, request);
+    expect(emitted).toBe(true);
+    expect(attempts).toBe(2);
+    expect(corpses).toBe(1);
+  });
+});

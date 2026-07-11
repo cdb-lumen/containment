@@ -18,6 +18,8 @@ import {
   EffectsSystem,
   type EffectKind,
 } from '../effects/EffectsSystem';
+import { DeathVisualView } from '../effects/DeathVisualView';
+import { retryPlayerDeathVisualTransfer } from '../player/transferPlayerDeathVisual';
 import {
   QualityController,
   resolveEffectsQuality,
@@ -159,6 +161,7 @@ export class GameScene extends Phaser.Scene {
   private horde: HordeRuntime | null = null;
   private audio: AudioSystem | null = null;
   private effects: EffectsSystem | null = null;
+  private deathVisuals: DeathVisualView | null = null;
   private quality: QualityController | null = null;
   private qualitySelection: QualitySelection = 'auto';
   private qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
@@ -186,6 +189,7 @@ export class GameScene extends Phaser.Scene {
   private shuttingDown = false;
   private resultTransitionRemainingMs: number | null = null;
   private resultSceneStarted = false;
+  private playerDeathVisualEmitted = false;
   private portraitBlocked = false;
   private pauseRequested = false;
   private readonly presentationClock = new PresentationClock();
@@ -211,14 +215,8 @@ export class GameScene extends Phaser.Scene {
   };
 
   private readonly handleEnemyDeath = (event: EnemyDeathEvent): void => {
-    this.addBattleEffect('decals', event.x, event.y, false, 'splatter');
-    this.addBattleEffect(
-      'remains',
-      event.x,
-      event.y,
-      event.elite || event.enemyType === 'brute' || event.enemyType === 'carrier',
-      event.enemyType,
-    );
+    this.deathVisuals?.spawnDeath({ family: event.enemyType, x: event.x, y: event.y,
+      elite: event.elite, major: event.enemyType === 'brute' || event.enemyType === 'carrier' });
     if (this.time.now - this.lastAlienSoundAt >= 240) {
       this.lastAlienSoundAt = this.time.now;
       this.audio?.playAlien();
@@ -448,6 +446,7 @@ export class GameScene extends Phaser.Scene {
     // Drop bookkeeping only and let Phaser finish destroying Scene ownership.
     this.clearHazardPools(false);
     this.clearBattleEffects(false);
+    this.deathVisuals = null;
     this.effects = null;
     this.quality = null;
     this.audio?.destroy();
@@ -487,6 +486,7 @@ export class GameScene extends Phaser.Scene {
     this.hazardPools.clear();
     this.effectDisplays.clear();
     this.effectDisplayPool.length = 0;
+    this.playerDeathVisualEmitted = false;
     this.qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
     this.lastAlienSoundAt = Number.NEGATIVE_INFINITY;
     this.presentationClock.reset();
@@ -495,6 +495,10 @@ export class GameScene extends Phaser.Scene {
     this.qualitySelection = initialSettings.quality;
     this.quality = new QualityController({ selection: initialSettings.quality });
     this.effects = new EffectsSystem(this.quality.activeProfile);
+    this.deathVisuals = new DeathVisualView({ effects: this.effects,
+      hasTexture: (key) => this.textures.exists(key),
+      createImage: () => this.add.image(0, 0, TEXTURE_KEYS.splatter),
+      onEffectsChanged: () => this.syncEffectDisplays(false) });
     this.audio = new AudioSystem({
       master: initialSettings.masterVolume,
       music: initialSettings.musicVolume,
@@ -565,6 +569,7 @@ export class GameScene extends Phaser.Scene {
       getPresentationTime: () => this.presentationClock.snapshot(),
       onHazardAttack: this.handleHazardAttack,
       onEnemyDeath: this.handleEnemyDeath,
+      onQueenDefeated: ({ x, y }) => this.deathVisuals?.spawnQueenBlood({ x, y, major: true }),
       onPickupCollected: this.handlePickupCollected,
     });
     this.horde = horde;
@@ -654,6 +659,10 @@ export class GameScene extends Phaser.Scene {
 
     combat.update(deltaMs);
     const snapshot = combat.getSnapshot();
+    if (snapshot.dead && !this.playerDeathVisualEmitted) {
+      this.playerDeathVisualEmitted = retryPlayerDeathVisualTransfer(false, this.deathVisuals, player, { family: 'marine', x: player.sprite.x,
+        y: player.sprite.y, rotation: player.sprite.rotation, major: true });
+    }
     const armoryVisible = horde.armoryVisible;
     const canAct = !snapshot.dead && !armoryVisible;
 
@@ -1294,7 +1303,7 @@ export class GameScene extends Phaser.Scene {
     this.effectDisplayPool.push(display);
   }
 
-  private syncEffectDisplays(): void {
+  private syncEffectDisplays(reconcileDeathVisuals=true): void {
     const effects = this.effects;
     if (!effects) return;
     const retained = new Set<number>();
@@ -1306,6 +1315,7 @@ export class GameScene extends Phaser.Scene {
       this.effectDisplays.delete(id);
       this.releaseEffectDisplay(display);
     }
+    if(reconcileDeathVisuals)this.deathVisuals?.syncRetainedIds(false);
   }
 
   private clearBlastEffects(): void {
@@ -1320,6 +1330,7 @@ export class GameScene extends Phaser.Scene {
 
   private clearBattleEffects(recycleDisplays: boolean): void {
     this.effects?.clear();
+    this.deathVisuals?.clear(recycleDisplays);
     if (recycleDisplays) {
       for (const display of this.effectDisplays.values()) {
         this.releaseEffectDisplay(display);
@@ -1484,6 +1495,7 @@ export class GameScene extends Phaser.Scene {
     facility.reset();
     facility.setWaveAccess(0);
     player.reset(facility.playerSpawn);
+    this.playerDeathVisualEmitted = false;
     player.stop();
     this.horde?.reset();
     combat.setObjective(INITIAL_OBJECTIVE);
@@ -1513,6 +1525,15 @@ export class GameScene extends Phaser.Scene {
     const getPresentationTime = () => this.presentationClock.snapshot();
     const getReducedMotion = () => this.registry.get('reducedMotion') === true;
     const getReducedFlash = () => this.currentSettings().reducedFlash;
+    const getDeathVisualSnapshot = () => this.deathVisuals?.snapshot;
+    const getEffectCounts = () => Object.freeze({
+      decals: this.effects?.count('decals') ?? 0,
+      remains: this.effects?.count('remains') ?? 0,
+    });
+    const getEffectLimits = () => Object.freeze({
+      decals: this.effects?.limits.decals ?? 0,
+      remains: this.effects?.limits.remains ?? 0,
+    });
     this.cleanupDiagnostics = installDiagnostics({
       get phase(): 'arrival' | 'armory' | 'combat' | 'boss' | 'victory' | 'defeat' {
         if (getSnapshot()?.dead === true) return 'defeat';
@@ -1583,6 +1604,22 @@ export class GameScene extends Phaser.Scene {
       get playerVisualRotationOffset(): number { return getPlayer()?.visualSnapshot().rotationOffset ?? 0; },
       get playerBodyRotation(): number { return getPlayer()?.visualSnapshot().bodyRotation ?? 0; },
       get playerFallbackFramed(): boolean { return getPlayer()?.visualSnapshot().framed ?? false; },
+      get effectCounts() {
+        return getEffectCounts();
+      },
+      get effectLimits() {
+        return getEffectLimits();
+      },
+      get bloodDisplayCount(): number { return getDeathVisualSnapshot()?.blood.length ?? 0; },
+      get corpseDisplayCount(): number { return getDeathVisualSnapshot()?.corpses.length ?? 0; },
+      get activeCorpseFamilies(): readonly string[] {
+        return Object.freeze(getDeathVisualSnapshot()?.corpses.map(corpse => corpse.family) ?? []);
+      },
+      get activeCorpseIds(): readonly number[] {
+        return Object.freeze(getDeathVisualSnapshot()?.corpses.map(corpse => corpse.id) ?? []);
+      },
+      get bloodAllocatedCount(): number { return getDeathVisualSnapshot()?.bloodAllocated ?? 0; },
+      get corpseAllocatedCount(): number { return getDeathVisualSnapshot()?.corpseAllocated ?? 0; },
       startRun: (): void => this.resetRun(),
       damagePlayer: (amount?: number): void => {
         const damage =
@@ -1598,6 +1635,13 @@ export class GameScene extends Phaser.Scene {
       spawnStressWave: (): void => {
         this.missionStarted = (this.horde?.spawnStressWave() ?? 0) > 0;
       },
+      spawnStressEnemies: (count: number): number => {
+        const spawned = this.horde?.spawnEnemiesForDiagnostics(count) ?? 0;
+        this.missionStarted = spawned > 0;
+        return spawned;
+      },
+      defeatStressEnemies: (count: number): number =>
+        this.horde?.defeatEnemiesForDiagnostics(count) ?? 0,
       focusQueenArena: (): void => {
         const player = this.player;
         const arena = this.facility?.queenArena;

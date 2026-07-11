@@ -35,6 +35,7 @@ export class Player {
   private readonly art: Phaser.GameObjects.Image | null;
   private readonly presentation = new PlayerPresentationState();
   private isDestroyed = false;
+  private presentationHidden = false;
   private speedMultiplier = 1;
   private aimRotation = 0;
 
@@ -100,7 +101,7 @@ export class Player {
       velocityY: velocity.y,
       ...options,
     });
-    if (!this.art) return;
+    if (!this.art || this.presentationHidden) return;
 
     this.art
       .setPosition(this.sprite.x + output.offsetX, this.sprite.y + output.offsetY)
@@ -143,11 +144,13 @@ export class Player {
   reset(point: PlayerPoint): void {
     if (this.isDestroyed || !Number.isFinite(point.x) || !Number.isFinite(point.y)) return;
 
+    this.presentationHidden = false;
     this.speedMultiplier = 1;
     this.aimRotation = 0;
     this.presentation.reset();
     this.sprite.body.reset(point.x, point.y);
     this.sprite.setRotation(0).setDepth(point.y);
+    this.sprite.setVisible?.(true);
     this.art
       ?.setPosition(point.x, point.y)
       .setRotation(0)
@@ -191,6 +194,14 @@ export class Player {
   /** Stops gameplay movement without changing the current presentation frame/state. */
   freezeMotion(): void {
     if (!this.isDestroyed) this.sprite.setVelocity(0, 0);
+  }
+
+  /** Transfers dead-body visual ownership to the static corpse pool. */
+  hidePresentation(): void {
+    if (this.isDestroyed) return;
+    this.presentationHidden = true;
+    this.art?.setVisible(false).setActive(false);
+    this.sprite.setVisible(false);
   }
 
   destroy(): void {

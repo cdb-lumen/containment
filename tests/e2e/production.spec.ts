@@ -38,6 +38,16 @@ test('serves the production artifact from the GitHub Pages subpath', async ({ pa
     'enemyVisualCount',
     'presentationTimeMs',
     'focusQueenArena',
+    'effectCounts',
+    'effectLimits',
+    'bloodDisplayCount',
+    'corpseDisplayCount',
+    'activeCorpseFamilies',
+    'activeCorpseIds',
+    'bloodAllocatedCount',
+    'corpseAllocatedCount',
+    'spawnStressEnemies',
+    'defeatStressEnemies',
   ]) {
     expect(productionBundle).not.toContain(diagnosticName);
   }

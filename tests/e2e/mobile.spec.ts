@@ -122,7 +122,10 @@ test('freezes observable progression while rotated to portrait', async ({ page }
   await page.setViewportSize({ width: 844, height: 390 });
   await page.keyboard.press('Enter');
   await page.waitForFunction(() => window.__ALIEN_GAME__ !== undefined);
-  await page.evaluate(() => window.__ALIEN_GAME__?.spawnStressWave());
+  await page.evaluate(() => {
+    window.__ALIEN_GAME__?.spawnStressEnemies(16);
+    window.__ALIEN_GAME__?.defeatStressEnemies(8);
+  });
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeEnemies ?? 0)).toBeGreaterThan(0);
 
   await page.setViewportSize({ width: 390, height: 844 });
@@ -135,6 +138,10 @@ test('freezes observable progression while rotated to portrait', async ({ page }
     health: window.__ALIEN_GAME__?.playerHealth,
     presentationTime: window.__ALIEN_GAME__?.presentationTimeMs,
     frame: window.__ALIEN_GAME__?.playerFrame,
+    effectCounts: window.__ALIEN_GAME__?.effectCounts,
+    bloodDisplayCount: window.__ALIEN_GAME__?.bloodDisplayCount,
+    corpseDisplayCount: window.__ALIEN_GAME__?.corpseDisplayCount,
+    corpseFamilies: window.__ALIEN_GAME__?.activeCorpseFamilies,
   }));
   await page.waitForTimeout(750);
   const after = await page.evaluate(() => ({
@@ -144,9 +151,14 @@ test('freezes observable progression while rotated to portrait', async ({ page }
     health: window.__ALIEN_GAME__?.playerHealth,
     presentationTime: window.__ALIEN_GAME__?.presentationTimeMs,
     frame: window.__ALIEN_GAME__?.playerFrame,
+    effectCounts: window.__ALIEN_GAME__?.effectCounts,
+    bloodDisplayCount: window.__ALIEN_GAME__?.bloodDisplayCount,
+    corpseDisplayCount: window.__ALIEN_GAME__?.corpseDisplayCount,
+    corpseFamilies: window.__ALIEN_GAME__?.activeCorpseFamilies,
   }));
 
   expect(after).toEqual(before);
+  expect(before.effectCounts).toEqual({ decals: 8, remains: 8 });
   await page.setViewportSize({ width: 844, height: 390 });
   await expect(page.getByRole('status')).toBeHidden();
   const resumedAt = await page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0);

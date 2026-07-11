@@ -21,7 +21,18 @@ export interface EffectRecord {
   readonly major: boolean;
 }
 
+export type EffectRequest = Readonly<{ kind: EffectKind; input?: EffectInput }>;
 export type EffectLimits = Readonly<Record<EffectKind, number>>;
+export type AtomicEffectPlan = Readonly<{
+  added: readonly EffectRecord[];
+  retiredIds: readonly number[];
+}>;
+
+type PlanState = Readonly<{
+  revision: number;
+  nextId: number;
+  effects: Record<EffectKind, EffectRecord[]>;
+}>;
 
 export const EFFECT_KINDS: readonly EffectKind[] = Object.freeze([
   'dynamicLights',
@@ -42,6 +53,8 @@ export class EffectsSystem {
   private currentProfile: QualityProfileName;
   private currentLimits: EffectLimits;
   private nextId = 1;
+  private revision = 0;
+  private readonly plans = new WeakMap<AtomicEffectPlan, PlanState>();
   private readonly effects: Record<EffectKind, EffectRecord[]> = {
     dynamicLights: [],
     particles: [],
@@ -74,24 +87,63 @@ export class EffectsSystem {
         collection.splice(retirement >= 0 ? retirement : 0, 1);
       }
     }
+    this.revision += 1;
   }
 
   add(kind: EffectKind, input: EffectInput = {}): EffectRecord | null {
-    const collection = this.effects[kind];
-    if (collection.length >= this.currentLimits[kind]) {
-      const retireIndex = this.retirementIndex(kind, collection);
-      if (retireIndex < 0) return null;
-      collection.splice(retireIndex, 1);
+    return this.addAtomic([{ kind, input }])?.[0] ?? null;
+  }
+
+  addAtomic(requests: readonly EffectRequest[]): readonly EffectRecord[] | null {
+    const plan = this.planAtomic(requests);
+    if (!plan || !this.commitAtomic(plan)) return null;
+    return plan.added;
+  }
+
+  planAtomic(requests: readonly EffectRequest[]): AtomicEffectPlan | null {
+    const simulated = Object.fromEntries(
+      EFFECT_KINDS.map((kind) => [kind, [...this.effects[kind]]]),
+    ) as Record<EffectKind, EffectRecord[]>;
+    let simulatedNextId = this.nextId;
+    const admitted: EffectRecord[] = [];
+    const retiredIds: number[] = [];
+    for (const { kind, input = {} } of requests) {
+      const collection = simulated[kind];
+      if (collection.length >= this.currentLimits[kind]) {
+        const retireIndex = this.retirementIndex(kind, collection);
+        if (retireIndex < 0) return null;
+        retiredIds.push(collection.splice(retireIndex, 1)[0]!.id);
+      }
+      const effect: EffectRecord = Object.freeze({
+        id: simulatedNextId++, kind, label: input.label,
+        essential: input.essential === true,
+        major: kind === 'remains' && input.major === true,
+      });
+      collection.push(effect);
+      admitted.push(effect);
     }
-    const effect = Object.freeze({
-      id: this.nextId++,
-      kind,
-      label: input.label,
-      essential: input.essential === true,
-      major: kind === 'remains' && input.major === true,
+    const plan: AtomicEffectPlan = Object.freeze({
+      added: Object.freeze(admitted),
+      retiredIds: Object.freeze(retiredIds),
     });
-    collection.push(effect);
-    return effect;
+    this.plans.set(plan, {
+      revision: this.revision,
+      nextId: simulatedNextId,
+      effects: simulated,
+    });
+    return plan;
+  }
+
+  commitAtomic(plan: AtomicEffectPlan): boolean {
+    const state = this.plans.get(plan);
+    if (!state || state.revision !== this.revision) return false;
+    for (const kind of EFFECT_KINDS) {
+      this.effects[kind].splice(0, this.effects[kind].length, ...state.effects[kind]);
+    }
+    this.nextId = state.nextId;
+    this.revision += 1;
+    this.plans.delete(plan);
+    return true;
   }
 
   remove(id: number): boolean {
@@ -101,6 +153,7 @@ export class EffectsSystem {
       const index = collection.findIndex((effect) => effect.id === id);
       if (index < 0) continue;
       collection.splice(index, 1);
+      this.revision += 1;
       return true;
     }
     return false;
@@ -109,6 +162,7 @@ export class EffectsSystem {
   clear(): void {
     for (const kind of EFFECT_KINDS) this.effects[kind].length = 0;
     this.nextId = 1;
+    this.revision += 1;
   }
 
   count(kind: EffectKind): number {
