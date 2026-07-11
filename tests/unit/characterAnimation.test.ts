@@ -7,6 +7,7 @@ import {
   type CharacterSkinId,
 } from '../../src/game/art/characterSkins';
 import {
+  CHARACTER_ANIMATION_PROFILES,
   animationPhaseForId,
   characterAnimation,
   type CharacterAnimationInput,
@@ -113,9 +114,17 @@ describe('character animation policy', () => {
     expect(animationPhaseForId(Number.NaN)).toBe(animationPhaseForId(0));
   });
 
-  it('alternates deterministic idle and locomotion frames', () => {
-    expect(characterAnimation(animationInput({ nowMs: 0 })).frame).toBe('idleA');
-    expect(characterAnimation(animationInput({ nowMs: 1_000 })).frame).toBe('idleB');
+  it('alternates every idle frame at exact 400ms boundaries for every family', () => {
+    for (const skin of IDS) {
+      const frames = [0, 399, 400, 799, 800, 1_199, 1_200].map((nowMs) =>
+        characterAnimation(animationInput({ skin, entityId: 0, nowMs })).frame);
+      expect(frames, skin).toEqual([
+        'idleA', 'idleA', 'idleB', 'idleB', 'idleA', 'idleA', 'idleB',
+      ]);
+    }
+  });
+
+  it('alternates deterministic locomotion frames', () => {
     expect(characterAnimation(animationInput({ velocityX: 1, nowMs: 0 })).frame).toBe('moveA');
     expect(characterAnimation(animationInput({ velocityY: -1, nowMs: 500 })).frame).toBe('moveB');
   });
@@ -129,11 +138,23 @@ describe('character animation policy', () => {
     expect(characterAnimation(animationInput({ nowMs: 100, attackUntilMs: Infinity })).frame).toMatch(/^idle/);
   });
 
-  it('gives crawlers a faster movement frame cadence than brutes', () => {
-    const frames = (skin: CharacterSkinId, times: readonly number[]) => times.map((nowMs) =>
-      characterAnimation(animationInput({ skin, nowMs, velocityX: 1 })).frame);
-    expect(frames('crawler', [0, 200, 400, 600])).toEqual(['moveA', 'moveB', 'moveA', 'moveB']);
-    expect(frames('brute', [0, 200, 400, 600])).toEqual(['moveA', 'moveA', 'moveA', 'moveB']);
+  it('makes crawler cadence the fastest and brute cadence the slowest across every family', () => {
+    const cadences = IDS.map((skin) => CHARACTER_ANIMATION_PROFILES[skin].cadence.moveMs);
+    expect(cadences.every((cadence) => cadence > 0)).toBe(true);
+    expect(CHARACTER_ANIMATION_PROFILES.crawler.cadence.moveMs).toBe(Math.min(...cadences));
+    expect(CHARACTER_ANIMATION_PROFILES.brute.cadence.moveMs).toBe(Math.max(...cadences));
+    expect(new Set(cadences)).toHaveLength(IDS.length);
+  });
+
+  it('deeply freezes every typed family animation profile', () => {
+    expect(Object.isFrozen(CHARACTER_ANIMATION_PROFILES)).toBe(true);
+    for (const profile of Object.values(CHARACTER_ANIMATION_PROFILES)) {
+      expect(Object.isFrozen(profile)).toBe(true);
+      expect(Object.isFrozen(profile.cadence)).toBe(true);
+      expect(Object.isFrozen(profile.motion)).toBe(true);
+      expect(Object.isFrozen(profile.secondary)).toBe(true);
+      expect(profile.cadence.idleMs).toBe(400);
+    }
   });
 
   it('gives brutes slow, heavy compression over their gait', () => {

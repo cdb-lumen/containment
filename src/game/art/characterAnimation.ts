@@ -28,6 +28,87 @@ export type CharacterAnimationOutput = Readonly<{
 const finite = (value: number): number => (Number.isFinite(value) ? value : 0);
 const TAU = Math.PI * 2;
 
+type FamilyAnimationProfile = Readonly<{
+  cadence: Readonly<{ idleMs: number; moveMs: number }>;
+  motion: Readonly<{
+    bobAmplitude: number;
+    movingBobAmplitude: number;
+    lateralAmplitude: number;
+    baseScaleX: number;
+    baseScaleY: number;
+    scaleAmplitude: number;
+    scaleWeightX: number;
+    scaleWeightY: number;
+    rotationAmplitude: number;
+  }>;
+  secondary: Readonly<{
+    wavePeriodMs: number;
+    emissiveBase: number;
+    emissiveAmplitude: number;
+    shimmerPeriodMs: number;
+  }>;
+}>;
+
+const profile = (
+  moveMs: number,
+  motion: FamilyAnimationProfile['motion'],
+  secondary: FamilyAnimationProfile['secondary'],
+): FamilyAnimationProfile => Object.freeze({
+  cadence: Object.freeze({ idleMs: 400, moveMs }),
+  motion: Object.freeze(motion),
+  secondary: Object.freeze(secondary),
+});
+
+const noSecondary = Object.freeze({
+  wavePeriodMs: 1_000, emissiveBase: 0, emissiveAmplitude: 0, shimmerPeriodMs: 0,
+});
+
+/** Public for policy verification; all profile levels are immutable at runtime. */
+export const CHARACTER_ANIMATION_PROFILES: Readonly<Record<CharacterSkinId, FamilyAnimationProfile>> =
+  Object.freeze({
+    marine: profile(360, {
+      bobAmplitude: 0.12, movingBobAmplitude: -0.45, lateralAmplitude: 0,
+      baseScaleX: 1, baseScaleY: 1, scaleAmplitude: 0,
+      scaleWeightX: 0, scaleWeightY: 0, rotationAmplitude: 0.008,
+    }, noSecondary),
+    crawler: profile(200, {
+      bobAmplitude: 0.35, movingBobAmplitude: -2.2, lateralAmplitude: 0,
+      baseScaleX: 1, baseScaleY: 1, scaleAmplitude: 0.012,
+      scaleWeightX: 0.035, scaleWeightY: -0.025, rotationAmplitude: 0.035,
+    }, noSecondary),
+    brute: profile(600, {
+      bobAmplitude: 0, movingBobAmplitude: -0.8, lateralAmplitude: 0,
+      baseScaleX: 1.06, baseScaleY: 0.92, scaleAmplitude: 1,
+      scaleWeightX: -0.025, scaleWeightY: 0.025, rotationAmplitude: 0.012,
+    }, noSecondary),
+    spitter: profile(320, {
+      bobAmplitude: 0.7, movingBobAmplitude: 0, lateralAmplitude: 0,
+      baseScaleX: 1, baseScaleY: 1, scaleAmplitude: 1,
+      scaleWeightX: 0.025, scaleWeightY: -0.025, rotationAmplitude: 0,
+    }, {
+      wavePeriodMs: 1_000, emissiveBase: 0.3, emissiveAmplitude: 0.1, shimmerPeriodMs: 0,
+    }),
+    stalker: profile(280, {
+      bobAmplitude: 0.25, movingBobAmplitude: -0.8, lateralAmplitude: 0,
+      baseScaleX: 1, baseScaleY: 1, scaleAmplitude: 0,
+      scaleWeightX: 0, scaleWeightY: 0, rotationAmplitude: 0.018,
+    }, {
+      wavePeriodMs: 1_000, emissiveBase: 0.18, emissiveAmplitude: 0.14, shimmerPeriodMs: 190,
+    }),
+    carrier: profile(420, {
+      bobAmplitude: 1.35, movingBobAmplitude: -0.5, lateralAmplitude: 0.45,
+      baseScaleX: 1, baseScaleY: 1, scaleAmplitude: 0,
+      scaleWeightX: 0, scaleWeightY: 0, rotationAmplitude: 0.018,
+    }, noSecondary),
+    queen: profile(500, {
+      bobAmplitude: 0.45, movingBobAmplitude: 0, lateralAmplitude: 0,
+      baseScaleX: 1, baseScaleY: 1, scaleAmplitude: 1,
+      scaleWeightX: 0.009, scaleWeightY: -0.009, rotationAmplitude: 0,
+    }, {
+      wavePeriodMs: 4_000, emissiveBase: 0.12, emissiveAmplitude: 0.03, shimmerPeriodMs: 0,
+    }),
+  });
+
 /** Stable multiplicative hash, deliberately normalizing fractional and invalid ids. */
 export const animationPhaseForId = (id: number): number => {
   const normalized = Number.isFinite(id) ? Math.trunc(id) : 0;
@@ -41,15 +122,6 @@ const alternatingFrame = (
   cadenceMs: number,
 ): CharacterFrameName => `${prefix}${Math.floor(nowMs / cadenceMs) % 2 === 0 ? 'A' : 'B'}`;
 
-const moveCadence = (skin: CharacterSkinId): number => {
-  if (skin === 'crawler') return 200;
-  if (skin === 'brute') return 600;
-  if (skin === 'carrier') return 420;
-  if (skin === 'queen') return 800;
-  if (skin === 'marine') return 360;
-  return 320;
-};
-
 export const characterAnimation = (input: CharacterAnimationInput): CharacterAnimationOutput => {
   const nowMs = Math.max(0, finite(input.nowMs));
   const velocityX = finite(input.velocityX);
@@ -57,6 +129,7 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
   const moving = Math.abs(velocityX) + Math.abs(velocityY) > 0.001;
   const attackUntilMs = finite(input.attackUntilMs);
   const hitUntilMs = finite(input.hitUntilMs);
+  const family = CHARACTER_ANIMATION_PROFILES[input.skin];
 
   if (input.dead) {
     return Object.freeze({
@@ -68,12 +141,12 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
   let frame: CharacterFrameName;
   if (hitUntilMs > nowMs) frame = 'hit';
   else if (attackUntilMs > nowMs) frame = 'attack';
-  else if (moving) frame = alternatingFrame('move', nowMs, moveCadence(input.skin));
-  else frame = alternatingFrame('idle', nowMs, 1_000);
+  else if (moving) frame = alternatingFrame('move', nowMs, family.cadence.moveMs);
+  else frame = alternatingFrame('idle', nowMs, family.cadence.idleMs);
 
   const phase = animationPhaseForId(input.entityId);
-  const wave = Math.sin((nowMs / 1_000 + phase) * TAU);
-  const step = Math.sin((nowMs / moveCadence(input.skin)) * Math.PI);
+  const wave = Math.sin((nowMs / family.secondary.wavePeriodMs + phase) * TAU);
+  const step = Math.sin((nowMs / family.cadence.moveMs) * Math.PI);
   let offsetX = 0;
   let offsetY = 0;
   let scaleX = 1;
@@ -83,45 +156,52 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
 
   switch (input.skin) {
     case 'crawler':
-      offsetY = moving ? Math.abs(step) * -2.2 : wave * 0.35;
-      scaleX = 1 + (moving ? step * 0.035 : wave * 0.012);
-      scaleY = 1 - (moving ? step * 0.025 : wave * 0.012);
-      rotationOffset = moving ? step * 0.035 : 0;
+      offsetY = moving ? Math.abs(step) * family.motion.movingBobAmplitude : wave * family.motion.bobAmplitude;
+      scaleX = family.motion.baseScaleX + (moving
+        ? step * family.motion.scaleWeightX
+        : wave * family.motion.scaleAmplitude);
+      scaleY = family.motion.baseScaleY + (moving
+        ? step * family.motion.scaleWeightY
+        : wave * -family.motion.scaleAmplitude);
+      rotationOffset = moving ? step * family.motion.rotationAmplitude : 0;
       break;
     case 'brute':
-      offsetY = moving ? Math.abs(step) * -0.8 : 0;
-      scaleX = 1.06 - step * 0.025;
-      scaleY = 0.92 + step * 0.025;
-      rotationOffset = moving ? step * 0.012 : 0;
+      offsetY = moving ? Math.abs(step) * family.motion.movingBobAmplitude : 0;
+      scaleX = family.motion.baseScaleX + step * family.motion.scaleWeightX;
+      scaleY = family.motion.baseScaleY + step * family.motion.scaleWeightY;
+      rotationOffset = moving ? step * family.motion.rotationAmplitude : 0;
       break;
     case 'spitter':
-      offsetY = wave * 0.7;
-      scaleX = 1 + wave * 0.025;
-      scaleY = 1 - wave * 0.025;
-      emissiveAlpha = 0.3 + wave * 0.1;
+      offsetY = wave * family.motion.bobAmplitude;
+      scaleX = family.motion.baseScaleX + wave * family.motion.scaleWeightX;
+      scaleY = family.motion.baseScaleY + wave * family.motion.scaleWeightY;
+      emissiveAlpha = family.secondary.emissiveBase + wave * family.secondary.emissiveAmplitude;
       break;
     case 'stalker':
-      offsetY = moving ? step * -0.8 : wave * 0.25;
-      rotationOffset = moving ? step * 0.018 : 0;
-      emissiveAlpha = 0.18 + 0.14 * Math.sin(nowMs / 190 + phase * TAU);
+      offsetY = moving ? step * family.motion.movingBobAmplitude : wave * family.motion.bobAmplitude;
+      rotationOffset = moving ? step * family.motion.rotationAmplitude : 0;
+      emissiveAlpha = family.secondary.emissiveBase + family.secondary.emissiveAmplitude
+        * Math.sin(nowMs / family.secondary.shimmerPeriodMs + phase * TAU);
       break;
     case 'carrier':
-      offsetX = moving ? step * 0.45 : 0;
-      offsetY = wave * 1.35 + (moving ? Math.abs(step) * -0.5 : 0);
-      rotationOffset = wave * 0.018;
+      offsetX = moving ? step * family.motion.lateralAmplitude : 0;
+      offsetY = wave * family.motion.bobAmplitude
+        + (moving ? Math.abs(step) * family.motion.movingBobAmplitude : 0);
+      rotationOffset = wave * family.motion.rotationAmplitude;
       break;
     case 'queen':
       {
-        const breath = Math.sin((nowMs / 4_000 + phase) * TAU);
-        offsetY = breath * 0.45;
-        scaleX = 1 + breath * 0.009;
-        scaleY = 1 - breath * 0.009;
-        emissiveAlpha = 0.12 + breath * 0.03;
+        const breath = wave;
+        offsetY = breath * family.motion.bobAmplitude;
+        scaleX = family.motion.baseScaleX + breath * family.motion.scaleWeightX;
+        scaleY = family.motion.baseScaleY + breath * family.motion.scaleWeightY;
+        emissiveAlpha = family.secondary.emissiveBase
+          + breath * family.secondary.emissiveAmplitude;
       }
       break;
     case 'marine':
-      offsetY = moving ? Math.abs(step) * -0.45 : wave * 0.12;
-      rotationOffset = moving ? step * 0.008 : 0;
+      offsetY = moving ? Math.abs(step) * family.motion.movingBobAmplitude : wave * family.motion.bobAmplitude;
+      rotationOffset = moving ? step * family.motion.rotationAmplitude : 0;
       break;
   }
 
