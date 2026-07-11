@@ -6,6 +6,15 @@ const CHARACTER_IDS = [
 const PAGES_ORIGIN = 'http://127.0.0.1:4175';
 const PAGES_BASE = '/alien-shooter-containment/';
 
+const collectBrowserErrors = (page: Page): string[] => {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(`console: ${message.text()}`);
+  });
+  return errors;
+};
+
 const deploy = async (page: Page): Promise<void> => {
   await page.addInitScript(() => window.localStorage.clear());
   await page.goto('/?renderer=canvas');
@@ -15,6 +24,7 @@ const deploy = async (page: Page): Promise<void> => {
 };
 
 test('production Pages artifact serves every character sheet without development diagnostics', async ({ page, request }) => {
+  const errors = collectBrowserErrors(page);
   const response = await page.goto(`${PAGES_ORIGIN}${PAGES_BASE}`);
   expect(response?.status()).toBe(200);
   await expect(page.locator('canvas')).toBeVisible();
@@ -33,9 +43,11 @@ test('production Pages artifact serves every character sheet without development
     expect(body.byteLength, id).toBeGreaterThan(8);
     expect([...body.subarray(0, 8)], id).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
   }
+  expect(errors).toEqual([]);
 });
 
 test('observable character animation, mixed skins, and restart state remain bounded', async ({ page }) => {
+  const errors = collectBrowserErrors(page);
   await deploy(page);
   const canvas = page.locator('canvas');
   const bounds = await canvas.boundingBox();
@@ -87,7 +99,26 @@ test('observable character animation, mixed skins, and restart state remain boun
   expect(horde.active).toBeGreaterThan(0);
   expect(horde.visuals).toBeLessThanOrEqual(150);
 
-  await page.evaluate(() => window.__ALIEN_GAME__?.restart());
+  await page.evaluate(() => {
+    const testWindow = window as Window & {
+      __ALIEN_GAME_BEFORE_RESTART__?: typeof window.__ALIEN_GAME__;
+    };
+    testWindow.__ALIEN_GAME_BEFORE_RESTART__ = window.__ALIEN_GAME__;
+    window.__ALIEN_GAME__?.restart();
+  });
+  await page.waitForFunction(() => {
+    const testWindow = window as Window & {
+      __ALIEN_GAME_BEFORE_RESTART__?: typeof window.__ALIEN_GAME__;
+    };
+    return window.__ALIEN_GAME__ !== undefined
+      && window.__ALIEN_GAME__ !== testWindow.__ALIEN_GAME_BEFORE_RESTART__;
+  });
+  await page.evaluate(() => {
+    const testWindow = window as Window & {
+      __ALIEN_GAME_BEFORE_RESTART__?: typeof window.__ALIEN_GAME__;
+    };
+    delete testWindow.__ALIEN_GAME_BEFORE_RESTART__;
+  });
   await page.waitForFunction(() => window.__ALIEN_GAME__?.playerHealth === 100);
   const reset = await page.evaluate(() => ({
     frame: window.__ALIEN_GAME__?.playerFrame,
@@ -105,4 +136,5 @@ test('observable character animation, mixed skins, and restart state remain boun
     skin: 'skin-marine', framed: true, active: 0, keys: [],
   });
   expect(reset.time).toBeLessThan(100);
+  expect(errors).toEqual([]);
 });
