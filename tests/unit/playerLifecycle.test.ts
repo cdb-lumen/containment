@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { CHARACTER_SKINS } from '../../src/game/art/characterSkins';
+import { ACTOR_VISUAL_SCALE } from '../../src/game/art/visualSystem';
 import { EMPTY_INPUT_STATE } from '../../src/game/input/InputState';
 import { Player } from '../../src/game/player/Player';
 
@@ -77,7 +78,7 @@ describe('Player presentation lifecycle', () => {
 
     expect(sprite.displaySize).toEqual([54, 54]);
     expect(sprite.circle).toEqual([24, 8, 8]);
-    expect(art.displaySize).toEqual([78, 78]);
+    expect(art.displaySize).toEqual([ACTOR_VISUAL_SCALE.marine, ACTOR_VISUAL_SCALE.marine]);
     expect(art.displaySize[0]).toBeGreaterThan(sprite.displaySize[0]);
 
     player.updatePresentation(100, {
@@ -112,7 +113,7 @@ describe('Player presentation lifecycle', () => {
     expect(art.frame).toBe(CHARACTER_SKINS.marine.frames.idleA);
     expect(art.x).toBe(sprite.x);
     expect(art.y).toBe(sprite.y);
-    expect(art.displaySize).toEqual([78, 78]);
+    expect(art.displaySize).toEqual([ACTOR_VISUAL_SCALE.marine, ACTOR_VISUAL_SCALE.marine]);
     expect(player.presentationSnapshot(100)).toEqual({ frame: 'idleA', animating: false, recoil: false, hit: false });
   });
 
@@ -124,7 +125,7 @@ describe('Player presentation lifecycle', () => {
 
     player.reset({ x: 12, y: 34 });
 
-    expect(art).toMatchObject({ x: 12, y: 34, rotation: 0, frame: CHARACTER_SKINS.marine.frames.idleA, displaySize: [78, 78] });
+    expect(art).toMatchObject({ x: 12, y: 34, rotation: 0, frame: CHARACTER_SKINS.marine.frames.idleA, displaySize: [ACTOR_VISUAL_SCALE.marine, ACTOR_VISUAL_SCALE.marine] });
     expect(player.presentationSnapshot(100)).toEqual({ frame: 'idleA', animating: false, recoil: false, hit: false });
   });
 });

@@ -8,6 +8,7 @@ import {
 } from '../art/characterSkins';
 import type { QualityProfileName } from '../effects/quality';
 import type { EnemySnapshot } from './EnemySystem';
+import { ACTOR_VISUAL_SCALE } from '../art/visualSystem';
 import { EnemyPool } from './EnemyPool';
 import { EnemyPresentationState } from './EnemyPresentationState';
 import type { StandardEnemyId } from './types';
@@ -49,11 +50,11 @@ type EnemyPresentation = Readonly<{ texture: string; displaySize: number }>;
 
 /** Runtime enemy IDs already match authored family IDs. Procedural names are fallback textures only. */
 const ENEMY_PRESENTATION: Readonly<Record<StandardEnemyId, EnemyPresentation>> = Object.freeze({
-  crawler: Object.freeze({ texture: TEXTURE_KEYS.alienRunner, displaySize: 44 }),
-  brute: Object.freeze({ texture: TEXTURE_KEYS.alienBrute, displaySize: 68 }),
-  spitter: Object.freeze({ texture: TEXTURE_KEYS.alienSpitter, displaySize: 52 }),
-  stalker: Object.freeze({ texture: TEXTURE_KEYS.alienStalker, displaySize: 50 }),
-  carrier: Object.freeze({ texture: TEXTURE_KEYS.alienDrone, displaySize: 62 }),
+  crawler: Object.freeze({ texture: TEXTURE_KEYS.alienRunner, displaySize: ACTOR_VISUAL_SCALE.crawler }),
+  brute: Object.freeze({ texture: TEXTURE_KEYS.alienBrute, displaySize: ACTOR_VISUAL_SCALE.brute }),
+  spitter: Object.freeze({ texture: TEXTURE_KEYS.alienSpitter, displaySize: ACTOR_VISUAL_SCALE.spitter }),
+  stalker: Object.freeze({ texture: TEXTURE_KEYS.alienStalker, displaySize: ACTOR_VISUAL_SCALE.stalker }),
+  carrier: Object.freeze({ texture: TEXTURE_KEYS.alienDrone, displaySize: ACTOR_VISUAL_SCALE.carrier }),
 });
 
 const clampUnit = (value: number): number => Number.isFinite(value) ? Phaser.Math.Clamp(value, 0, 1) : 0;

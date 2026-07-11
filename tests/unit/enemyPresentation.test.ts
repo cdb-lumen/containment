@@ -8,6 +8,7 @@ vi.mock('phaser', () => ({
 }));
 
 import { CHARACTER_SKINS } from '../../src/game/art/characterSkins';
+import { ACTOR_VISUAL_SCALE } from '../../src/game/art/visualSystem';
 import { EnemyPresentationState } from '../../src/game/enemies/EnemyPresentationState';
 import type { EnemySnapshot } from '../../src/game/enemies/EnemySystem';
 import { EnemyView } from '../../src/game/enemies/EnemyView';
@@ -171,10 +172,10 @@ describe('EnemyView pooled follower integration', () => {
     view.sync([snapshot(999, 'brute')]);
     expect(view.count).toBe(1);
     expect(view.enemyIdFor(body)).toBe(999);
-    expect(body).toMatchObject({ displayWidth: 68, displayHeight: 68 });
+    expect(body).toMatchObject({ displayWidth: ACTOR_VISUAL_SCALE.brute, displayHeight: ACTOR_VISUAL_SCALE.brute });
     expect(follower).toMatchObject({ frame: CHARACTER_SKINS.brute.frames.idleA, tint: undefined, alpha: 1, rotation: 0,
       flipX: false, flipY: false });
-    expect(follower.displayWidth).toBeLessThan(68 * 1.14);
+    expect(follower.displayWidth).toBeLessThan(ACTOR_VISUAL_SCALE.brute * 1.14);
   });
 
   it('propagates reduced motion and reduced flash immediately, independently, and without rebuilding the pool', () => {
@@ -195,7 +196,7 @@ describe('EnemyView pooled follower integration', () => {
     view.sync([snapshot(5, 'spitter', { velocityX: 10, health: 90 })]);
     expect(art.find(({ active }) => active)).toBe(pooledFollower);
     expect(pooledFollower).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.hit, tint: 0xffffff,
-      x: 100, y: 200, rotation: 0, displayWidth: 52, displayHeight: 52 });
+      x: 100, y: 200, rotation: 0, displayWidth: ACTOR_VISUAL_SCALE.spitter, displayHeight: ACTOR_VISUAL_SCALE.spitter });
 
     policies.reducedMotion = false;
     policies.settings.reducedFlash = true;
@@ -215,7 +216,7 @@ describe('EnemyView pooled follower integration', () => {
     lowView.setQuality('low');
     lowView.sync([snapshot(5, 'spitter', { velocityX: 10 })]);
     expect(low.art.find(({ active }) => active)).toMatchObject({ frame: CHARACTER_SKINS.spitter.frames.moveA,
-      displayWidth: 52, displayHeight: 52 });
+      displayWidth: ACTOR_VISUAL_SCALE.spitter, displayHeight: ACTOR_VISUAL_SCALE.spitter });
   });
 
   it('draws one bounded stalker contrast cue with a low-quality baseline and no crawler cue', () => {
