@@ -45,18 +45,24 @@ test('blocks portrait deployment and exposes usable landscape touch controls', a
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.touchControlsVisible)).toBe(true);
 
   const canvas = page.locator('canvas');
-  const canvasBounds = await canvas.boundingBox();
-  expect(canvasBounds).not.toBeNull();
+  const movementCanvasBounds = await canvas.boundingBox();
+  expect(movementCanvasBounds).not.toBeNull();
   const projectilesBeforeMovement = await page.evaluate(
     () => window.__ALIEN_GAME__?.activeProjectiles ?? 0,
   );
   const client = await page.context().newCDPSession(page);
   const movementStart = {
-    x: (canvasBounds?.x ?? 0) + (canvasBounds?.width ?? 0) * 0.2,
-    y: (canvasBounds?.y ?? 0) + (canvasBounds?.height ?? 0) * 0.72,
+    x:
+      (movementCanvasBounds?.x ?? 0) +
+      (movementCanvasBounds?.width ?? 0) * 0.2,
+    y:
+      (movementCanvasBounds?.y ?? 0) +
+      (movementCanvasBounds?.height ?? 0) * 0.72,
   };
   const movementEnd = {
-    x: (canvasBounds?.x ?? 0) + (canvasBounds?.width ?? 0) * 0.14,
+    x:
+      (movementCanvasBounds?.x ?? 0) +
+      (movementCanvasBounds?.width ?? 0) * 0.14,
     y: movementStart.y,
   };
   await client.send('Input.dispatchTouchEvent', {
