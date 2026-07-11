@@ -22,6 +22,14 @@ export default defineConfig({
       },
     },
     {
+      name: 'production-chromium',
+      testMatch: /production\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
       name: 'mobile-chromium',
       testMatch: /mobile\.spec\.ts/,
       use: {
@@ -30,10 +38,18 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: 'npm run dev -- --host 127.0.0.1 --port 4173',
-    url: 'http://127.0.0.1:4173',
-    reuseExistingServer: false,
-    timeout: 120_000,
-  },
+  webServer: [
+    {
+      command: 'npm run dev -- --host 127.0.0.1 --port 4173',
+      url: 'http://127.0.0.1:4173',
+      reuseExistingServer: false,
+      timeout: 120_000,
+    },
+    {
+      command: 'node scripts/serve-pages.mjs',
+      url: 'http://127.0.0.1:4175/alien-shooter-containment/',
+      reuseExistingServer: false,
+      timeout: 120_000,
+    },
+  ],
 });

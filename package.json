@@ -21,9 +21,9 @@
     "preview": "vite preview",
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "npm run build && playwright test",
     "lint": "eslint .",
-    "verify": "npm run lint && npm run test && npm run build && npm run test:e2e"
+    "verify": "npm run lint && npm run test && npm run test:e2e"
   },
   "dependencies": {
     "phaser": "4.2.1"

@@ -304,8 +304,18 @@ export class PauseScene extends Phaser.Scene {
     this.scene.stop();
   }
 
+  private isPortraitBlocked(): boolean {
+    try {
+      return window.matchMedia(
+        '(orientation: portrait) and (pointer: coarse)',
+      ).matches;
+    } catch {
+      return false;
+    }
+  }
+
   private beginTransition(): boolean {
-    if (this.transitioned) return false;
+    if (this.transitioned || this.isPortraitBlocked()) return false;
     this.transitioned = true;
     if (this.root !== null) {
       this.root.inert = true;

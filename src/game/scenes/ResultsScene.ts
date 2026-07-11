@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 
+import { createAccessibleSceneActions } from '../accessibility/domActions';
 import { GAME_HEIGHT, GAME_WIDTH } from '../constants';
 import {
   parseSaveData,
@@ -112,6 +113,7 @@ export class ResultsScene extends Phaser.Scene {
   private result: RunResult = cloneFallbackResult();
   private buttons: ResultButton[] = [];
   private pulseTween: Phaser.Tweens.Tween | null = null;
+  private removeAccessibleActions: (() => void) | null = null;
   private transitioned = false;
   private shutdownRegistered = false;
 
@@ -145,6 +147,8 @@ export class ResultsScene extends Phaser.Scene {
       this.tweens.remove(this.pulseTween);
       this.pulseTween = null;
     }
+    this.removeAccessibleActions?.();
+    this.removeAccessibleActions = null;
 
     this.transitioned = false;
     this.shutdownRegistered = false;
@@ -191,6 +195,19 @@ export class ResultsScene extends Phaser.Scene {
     this.drawRecords(recordUpdate);
     this.createActions();
     this.bindControls();
+    const parent = this.game.canvas.parentElement;
+    if (parent) {
+      const outcome = this.result.outcome === 'victory' ? 'Mission complete' : 'Mission failed';
+      this.removeAccessibleActions = createAccessibleSceneActions(
+        parent,
+        'Mission results',
+        `${outcome}. Score ${Math.max(0, Math.trunc(this.result.score)).toLocaleString('en-US')}. Choose an action.`,
+        [
+          { label: 'Restart run', activate: () => this.transitionTo('restart') },
+          { label: 'Return to menu', activate: () => this.transitionTo('menu') },
+        ],
+      );
+    }
 
     if (!this.shutdownRegistered) {
       this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleShutdown);
@@ -641,8 +658,18 @@ export class ResultsScene extends Phaser.Scene {
     keyboard?.on('keydown-M', this.handleMenuKey);
   }
 
+  private isPortraitBlocked(): boolean {
+    try {
+      return window.matchMedia(
+        '(orientation: portrait) and (pointer: coarse)',
+      ).matches;
+    } catch {
+      return false;
+    }
+  }
+
   private transitionTo(action: ResultAction): void {
-    if (this.transitioned) return;
+    if (this.transitioned || this.isPortraitBlocked()) return;
     this.transitioned = true;
     this.input.setDefaultCursor('default');
 

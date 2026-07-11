@@ -426,13 +426,7 @@ export class GameScene extends Phaser.Scene {
     this.missionBanner?.destroy();
     this.missionBanner = null;
 
-    for (const tween of [...this.blastTweens]) {
-      tween.stop();
-      this.tweens.remove(tween);
-    }
-    this.blastTweens.clear();
-    for (const effect of this.blastEffects) effect.destroy();
-    this.blastEffects.clear();
+    this.clearBlastEffects();
 
     this.projectileEnemyOverlap?.destroy();
     this.projectileEnemyOverlap = null;
@@ -533,10 +527,15 @@ export class GameScene extends Phaser.Scene {
     this.desktopInput = new DesktopInput(this);
     const gameParent = this.game.canvas.parentElement;
     if (gameParent !== null) {
-      this.touchInput = new TouchInput({
-        canvas: this.game.canvas,
-        parent: gameParent,
-      });
+      this.touchInput = new TouchInput(
+        {
+          canvas: this.game.canvas,
+          parent: gameParent,
+        },
+        {
+          onEnabledChange: (enabled) => this.hud?.setTouchLayout(enabled),
+        },
+      );
     }
     this.updatePortraitBlock();
     document.addEventListener('visibilitychange', this.handleVisibilityChange);
@@ -1290,6 +1289,16 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  private clearBlastEffects(): void {
+    for (const tween of [...this.blastTweens]) {
+      tween.stop();
+      this.tweens.remove(tween);
+    }
+    this.blastTweens.clear();
+    for (const effect of this.blastEffects) effect.destroy();
+    this.blastEffects.clear();
+  }
+
   private clearBattleEffects(recycleDisplays: boolean): void {
     this.effects?.clear();
     if (recycleDisplays) {
@@ -1447,6 +1456,7 @@ export class GameScene extends Phaser.Scene {
     this.clearProjectiles();
     this.clearHazardPools(true);
     this.clearBattleEffects(true);
+    this.clearBlastEffects();
     this.hideMuzzleFlash();
     combat.reset();
     facility.reset();

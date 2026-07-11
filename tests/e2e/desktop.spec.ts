@@ -55,6 +55,25 @@ test('deploys, pauses, applies quality live, and resets run isolation', async ({
   expect(errors).toEqual([]);
 });
 
+test('exposes accessible results actions and restarts a fresh run', async ({ page }) => {
+  const errors = browserErrors(page);
+  await openGame(page);
+  await deploy(page);
+  await page.keyboard.down('KeyW');
+  await page.waitForTimeout(350);
+  await page.keyboard.up('KeyW');
+
+  await page.evaluate(() => window.__ALIEN_GAME__?.damagePlayer(1_000));
+  const restart = page.getByRole('button', { name: 'Restart run' });
+  await expect(restart).toBeAttached({ timeout: 10_000 });
+  await expect(page.getByRole('button', { name: 'Return to menu' })).toBeAttached();
+  await restart.focus();
+  await expect(restart).toBeVisible();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => window.__ALIEN_GAME__?.playerHealth === 100);
+  expect(errors).toEqual([]);
+});
+
 test('reaches the horde cap and survives a sustained firing-input burst', async ({ page }) => {
   const errors = browserErrors(page);
   await openGame(page);

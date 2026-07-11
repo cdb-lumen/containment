@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 
+import { createAccessibleSceneActions } from '../accessibility/domActions';
 import { TEXTURE_KEYS } from '../art/createTextures';
 import { GAME_HEIGHT, GAME_WIDTH } from '../constants';
 import { GAME_EVENTS } from '../events';
@@ -49,6 +50,7 @@ export class MenuScene extends Phaser.Scene {
   private deploymentStatus: Phaser.GameObjects.Text | null = null;
   private scannerTween: Phaser.Tweens.Tween | null = null;
   private gameTransition: Phaser.Time.TimerEvent | null = null;
+  private removeAccessibleActions: (() => void) | null = null;
   private activated = false;
   private shutdownRegistered = false;
 
@@ -101,6 +103,8 @@ export class MenuScene extends Phaser.Scene {
       this.gameTransition.remove(false);
       this.gameTransition = null;
     }
+    this.removeAccessibleActions?.();
+    this.removeAccessibleActions = null;
 
     this.startButton = null;
     this.startButtonBackground = null;
@@ -121,6 +125,15 @@ export class MenuScene extends Phaser.Scene {
     this.drawCommandPanel();
     this.drawContainmentMap();
     this.bindStartControls();
+    const parent = this.game.canvas.parentElement;
+    if (parent) {
+      this.removeAccessibleActions = createAccessibleSceneActions(
+        parent,
+        'Containment command menu',
+        'Alien Shooter: Containment. Deploy to begin the survival mission.',
+        [{ label: 'Deploy', activate: () => this.activateStart() }],
+      );
+    }
 
     if (!this.shutdownRegistered) {
       this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleShutdown);

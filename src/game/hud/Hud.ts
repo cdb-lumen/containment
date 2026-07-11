@@ -370,6 +370,11 @@ export class Hud {
     }
 
     this.criticalCue.setVisible(true);
+    if (this.scene.registry.get('reducedMotion') === true) {
+      this.stopCriticalPulse();
+      this.criticalCue.setAlpha(1);
+      return;
+    }
     if (this.criticalTween) return;
 
     this.criticalTween = this.scene.tweens.add({

@@ -22,6 +22,8 @@ test('blocks portrait deployment and exposes usable landscape touch controls', a
   const portraitBlocker = page.getByRole('status');
   await expect(portraitBlocker).toBeVisible();
   await expect(portraitBlocker).toContainText('Rotate your device');
+  await expect(page.locator('#game-root')).toHaveJSProperty('inert', true);
+  await expect(page.locator('#game-root')).toHaveAttribute('aria-hidden', 'true');
 
   await page.keyboard.press('Enter');
   await page.waitForTimeout(250);
@@ -29,6 +31,9 @@ test('blocks portrait deployment and exposes usable landscape touch controls', a
 
   await page.setViewportSize({ width: 844, height: 390 });
   await expect(portraitBlocker).toBeHidden();
+  await expect(page.locator('#game-root')).toHaveJSProperty('inert', false);
+  await page.getByRole('button', { name: 'Deploy' }).focus();
+  await expect(page.getByRole('button', { name: 'Deploy' })).toBeVisible();
   await page.keyboard.press('Enter');
   await page.waitForFunction(() => window.__ALIEN_GAME__ !== undefined);
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.touchControlsVisible)).toBe(true);
@@ -78,6 +83,39 @@ test('blocks portrait deployment and exposes usable landscape touch controls', a
   expect(errors).toEqual([]);
 });
 
+test('blocks results shortcuts in portrait and restores them in landscape', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.locator('canvas')).toBeVisible();
+  await expect(page.getByRole('status')).toBeVisible();
+  await page.setViewportSize({ width: 844, height: 390 });
+  await expect(page.getByRole('status')).toBeHidden();
+  await page.getByRole('button', { name: 'Deploy' }).focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => window.__ALIEN_GAME__ !== undefined);
+  await page.keyboard.down('KeyW');
+  await page.waitForTimeout(350);
+  await page.keyboard.up('KeyW');
+  await page.evaluate(() => window.__ALIEN_GAME__?.damagePlayer(1_000));
+
+  const restart = page.getByRole('button', { name: 'Restart run' });
+  await expect(restart).toBeAttached({ timeout: 10_000 });
+  const restartDom = page.locator('button').filter({ hasText: 'Restart run' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole('status')).toBeVisible();
+  await expect(page.locator('#game-root')).toHaveJSProperty('inert', true);
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(500);
+  await expect(restartDom).toBeAttached();
+
+  await page.setViewportSize({ width: 844, height: 390 });
+  await expect(page.getByRole('status')).toBeHidden();
+  const visibleRestart = page.getByRole('button', { name: 'Restart run' });
+  await visibleRestart.focus();
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => window.__ALIEN_GAME__?.playerHealth === 100);
+});
+
 test('freezes observable progression while rotated to portrait', async ({ page }) => {
   const errors = browserErrors(page);
   await openGame(page);
@@ -95,6 +133,7 @@ test('freezes observable progression while rotated to portrait', async ({ page }
   }));
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole('status')).toBeVisible();
+  await expect(page.locator('#game-root')).toHaveJSProperty('inert', true);
   await page.waitForTimeout(750);
   const after = await page.evaluate(() => ({
     enemies: window.__ALIEN_GAME__?.activeEnemies,

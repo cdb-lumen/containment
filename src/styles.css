@@ -205,6 +205,51 @@ body {
   bottom: 78px;
 }
 
+.scene-accessibility-actions {
+  position: absolute;
+  z-index: 45;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.scene-accessibility-actions:focus-within {
+  width: min(360px, calc(100% - 24px));
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  padding: 16px;
+  border: 1px solid var(--control-cyan, #69d8e7);
+  background: rgb(7 10 15 / 96%);
+  color: #f4efe6;
+  box-shadow: 0 12px 36px rgb(0 0 0 / 60%);
+}
+
+.scene-accessibility-actions p {
+  margin: 0 0 12px;
+  font: 700 14px/1.5 "Courier New", monospace;
+}
+
+.scene-accessibility-actions button {
+  min-width: 48px;
+  min-height: 48px;
+  margin: 4px 8px 4px 0;
+  border: 1px solid var(--control-cyan, #69d8e7);
+  background: #111923;
+  color: #f4efe6;
+  font: 700 14px "Courier New", monospace;
+}
+
+.scene-accessibility-actions button:focus-visible {
+  outline: 3px solid #f39237;
+  outline-offset: 2px;
+}
+
 .pause-overlay {
   position: absolute;
   z-index: 50;

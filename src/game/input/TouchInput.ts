@@ -285,6 +285,7 @@ type TouchInputHost = Readonly<{
 
 type TouchInputAdapterOptions = Readonly<{
   override?: boolean;
+  onEnabledChange?: (enabled: boolean) => void;
 }>;
 
 const queryCoarsePointer = (): boolean => {
@@ -319,6 +320,7 @@ const createButton = (
 export class TouchInput {
   readonly #host: TouchInputHost;
   readonly #state: TouchInputState;
+  readonly #onEnabledChange: ((enabled: boolean) => void) | undefined;
   readonly #root: HTMLDivElement;
   readonly #leftBase: HTMLDivElement;
   readonly #leftKnob: HTMLDivElement;
@@ -329,10 +331,12 @@ export class TouchInput {
   #observedTouch = false;
   #destroyed = false;
   #weaponIndex = 0;
+  #lastEnabled: boolean | null = null;
 
   constructor(host: TouchInputHost, options: TouchInputAdapterOptions = {}) {
     this.#host = host;
     this.#override = options.override;
+    this.#onEnabledChange = options.onEnabledChange;
     this.#state = new TouchInputState({
       width: host.canvas.width,
       height: host.canvas.height,
@@ -556,7 +560,12 @@ export class TouchInput {
   }
 
   #syncVisibility(): void {
-    this.#root.classList.toggle('touch-controls--visible', this.enabled);
+    const enabled = this.enabled;
+    this.#root.classList.toggle('touch-controls--visible', enabled);
+    if (enabled !== this.#lastEnabled) {
+      this.#lastEnabled = enabled;
+      this.#onEnabledChange?.(enabled);
+    }
   }
 
   #renderSticks(): void {

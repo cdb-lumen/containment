@@ -81,7 +81,7 @@ npm run test:e2e
 npm run build
 ```
 
-Browser tests verify observable behavior: deployment, pause/settings, quality transitions, restart isolation, touch actions, portrait suspension, browser errors, sustained input, and the 150-enemy runtime cap. Unit tests deterministically cover projectile/effect pools and retirement limits that normal weapon cooldowns cannot saturate in real time.
+Browser tests verify observable behavior: deployment, pause/settings, quality transitions, restart isolation, accessible menu/results actions, touch actions, portrait inertness and suspension, browser errors, sustained input, the 150-enemy runtime cap, and the built artifact mounted at the GitHub Pages repository subpath. Unit tests deterministically cover projectile/effect pools and retirement limits that normal weapon cooldowns cannot saturate in real time.
 
 ## Architecture
 
