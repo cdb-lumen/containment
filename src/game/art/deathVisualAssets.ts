@@ -2,8 +2,13 @@ import { CHARACTER_SKINS, type CharacterSkinId } from './characterSkins';
 import { TEXTURE_KEYS, type TextureKey } from './createTextures';
 
 export type BloodGroup = 'human' | 'alien' | 'acid';
-export type BloodDecalFamily = 'small' | 'medium' | 'large' | 'streak';
-export type BloodDecalFrameName = `${BloodGroup}-${BloodDecalFamily}`;
+export type BloodDecalFamily = 'small' | 'medium' | 'large' | 'streak' | 'scorch';
+export type BloodDecalFamilyFor<Group extends BloodGroup> = Group extends 'acid'
+  ? Exclude<BloodDecalFamily, 'streak'>
+  : Exclude<BloodDecalFamily, 'scorch'>;
+export type BloodDecalFrameName =
+  | `${Exclude<BloodGroup, 'acid'>}-${BloodDecalFamilyFor<'human'>}`
+  | `acid-${BloodDecalFamilyFor<'acid'>}`;
 
 export type CorpseFamily = Readonly<{
   character: CharacterSkinId;
@@ -72,7 +77,7 @@ export const resolveCorpseSource = (
 export const BLOOD_DECAL_FRAME_NAMES: readonly BloodDecalFrameName[] = Object.freeze([
   'human-small', 'human-medium', 'human-large', 'human-streak',
   'alien-small', 'alien-medium', 'alien-large', 'alien-streak',
-  'acid-small', 'acid-medium', 'acid-large', 'acid-streak',
+  'acid-small', 'acid-medium', 'acid-large', 'acid-scorch',
 ]);
 
 const bloodFrames = Object.freeze(Object.fromEntries(
@@ -102,15 +107,15 @@ export const bloodDecalLoadDescriptor = (): BloodDecalLoadDescriptor => ({
   frameHeight: BLOOD_DECALS.frameHeight,
 });
 
-export const bloodDecalFrameName = (
-  group: BloodGroup,
-  family: BloodDecalFamily,
-): BloodDecalFrameName => `${group}-${family}`;
+export const bloodDecalFrameName = <Group extends BloodGroup>(
+  group: Group,
+  family: BloodDecalFamilyFor<Group>,
+): BloodDecalFrameName => `${group}-${family}` as BloodDecalFrameName;
 
-export const resolveBloodDecal = (
+export const resolveBloodDecal = <Group extends BloodGroup>(
   hasTexture: (key: string) => boolean,
-  group: BloodGroup,
-  family: BloodDecalFamily,
+  group: Group,
+  family: BloodDecalFamilyFor<Group>,
 ): Readonly<{ texture: typeof BLOOD_DECALS.texture | TextureKey; framed: boolean; frame: number | undefined }> => {
   const framed = hasTexture(BLOOD_DECALS.texture);
   return Object.freeze({

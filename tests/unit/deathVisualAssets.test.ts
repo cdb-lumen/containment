@@ -15,7 +15,7 @@ const IDS = ['marine', 'crawler', 'brute', 'spitter', 'stalker', 'carrier', 'que
 const FRAME_NAMES = [
   'human-small', 'human-medium', 'human-large', 'human-streak',
   'alien-small', 'alien-medium', 'alien-large', 'alien-streak',
-  'acid-small', 'acid-medium', 'acid-large', 'acid-streak',
+  'acid-small', 'acid-medium', 'acid-large', 'acid-scorch',
 ] as const;
 
 describe('corpse visual assets', () => {
@@ -62,7 +62,7 @@ describe('blood decal assets', () => {
     expect(resolveBloodDecal(() => true, 'human', 'large')).toEqual({
       texture: 'blood-decals', framed: true, frame: 2,
     });
-    expect(resolveBloodDecal(() => true, 'acid', 'streak')).toEqual({
+    expect(resolveBloodDecal(() => true, 'acid', 'scorch')).toEqual({
       texture: 'blood-decals', framed: true, frame: 11,
     });
     expect(resolveBloodDecal(() => false, 'alien', 'medium')).toEqual({
