@@ -42,12 +42,20 @@ const overlapsRect = (left: FacilityRect, right: FacilityRect): boolean =>
   left.y < right.y + right.height &&
   left.y + left.height > right.y;
 
+const expandedRect = (rect: FacilityRect, padding: number): FacilityRect => ({
+  x: rect.x - padding,
+  y: rect.y - padding,
+  width: rect.width + padding * 2,
+  height: rect.height + padding * 2,
+});
+
 const allIds = (layout: FacilityLayout): string[] => [
   ...layout.rooms.map(({ id }) => id),
   ...layout.walls.map(({ id }) => id),
   ...layout.doors.map(({ id }) => id),
   ...layout.props.map(({ id }) => id),
   ...layout.breaches.map(({ id }) => id),
+  ...layout.hazardZones.map(({ id }) => id),
 ];
 
 const expectDeepFrozen = (value: unknown): void => {
@@ -120,6 +128,38 @@ describe('FACILITY_LAYOUT', () => {
     const ids = allIds(FACILITY_LAYOUT);
     expect(ids.every((id) => id.trim().length > 0)).toBe(true);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('defines immutable hazard strips at distinct door approaches', () => {
+    const hazards = FACILITY_LAYOUT.hazardZones;
+    const hazardIds = hazards.map(({ id }) => id);
+
+    expect(hazards.length).toBeGreaterThanOrEqual(4);
+    expect(hazards.length).toBeLessThanOrEqual(8);
+    expect(hazards.every(isValidRect)).toBe(true);
+    expect(hazardIds.every((id) => id.trim().length > 0)).toBe(true);
+    expect(new Set(hazardIds).size).toBe(hazardIds.length);
+    expect(new Set(hazards.map(({ approachDoorId }) => approachDoorId)).size).toBe(
+      hazards.length,
+    );
+
+    for (const hazard of hazards) {
+      const door = FACILITY_LAYOUT.doors.find(({ id }) => id === hazard.approachDoorId);
+      expect(door, `${hazard.id} must identify an existing door approach`).toBeDefined();
+      expect(
+        overlapsRect(hazard, expandedRect(door!, 96)),
+        `${hazard.id} must mark the nearby threshold`,
+      ).toBe(true);
+      expect(containsPoint(hazard, FACILITY_LAYOUT.playerSpawn)).toBe(false);
+    }
+
+    expect(Object.isFrozen(hazards)).toBe(true);
+    expect(hazards.every(Object.isFrozen)).toBe(true);
+    const mutable = hazards as unknown as Array<{ id: string }>;
+    expect(() => mutable.push({ id: 'hazard-mutation' })).toThrow(TypeError);
+    expect(() => {
+      mutable[0].id = 'hazard-mutation';
+    }).toThrow(TypeError);
   });
 
   it('supports staged traversal with valid door state and wave thresholds', () => {

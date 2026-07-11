@@ -152,6 +152,20 @@ export class FacilityWorld {
       );
     }
 
+    for (const hazard of FACILITY_LAYOUT.hazardZones) {
+      this.track(
+        this.scene.add
+          .tileSprite(
+            hazard.x + hazard.width / 2,
+            hazard.y + hazard.height / 2,
+            hazard.width,
+            hazard.height,
+            TEXTURE_KEYS.hazard,
+          )
+          .setDepth(-6),
+      );
+    }
+
     this.buildZoneMarkings();
 
     for (const wall of FACILITY_LAYOUT.walls) {

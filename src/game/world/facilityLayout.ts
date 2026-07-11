@@ -47,6 +47,12 @@ export type FacilityBreach = FacilityPoint &
     facing: 'north' | 'south' | 'east' | 'west';
   }>;
 
+export type FacilityHazardZone = FacilityRect &
+  Readonly<{
+    id: string;
+    approachDoorId: string;
+  }>;
+
 export type QueenArena = FacilityRect &
   Readonly<{
     roomId: string;
@@ -65,6 +71,7 @@ export type FacilityLayout = Readonly<{
   doors: readonly FacilityDoor[];
   props: readonly FacilityProp[];
   breaches: readonly FacilityBreach[];
+  hazardZones: readonly FacilityHazardZone[];
 }>;
 
 const deepFreeze = <T>(value: T): T => {
@@ -310,6 +317,48 @@ const layout: FacilityLayout = {
     { id: 'breach-south-storage', x: 460, y: 1376, unlockWave: 2, facing: 'north' },
     { id: 'breach-south-armory', x: 1440, y: 1376, unlockWave: 5, facing: 'north' },
     { id: 'breach-south-queen', x: 2140, y: 1376, unlockWave: 8, facing: 'north' },
+  ],
+  hazardZones: [
+    {
+      id: 'hazard-loading-processing',
+      approachDoorId: 'door-loading-processing',
+      x: 620,
+      y: 264,
+      width: 80,
+      height: 32,
+    },
+    {
+      id: 'hazard-processing-armory',
+      approachDoorId: 'door-processing-armory',
+      x: 1400,
+      y: 692,
+      width: 80,
+      height: 48,
+    },
+    {
+      id: 'hazard-processing-transit',
+      approachDoorId: 'door-processing-transit',
+      x: 1512,
+      y: 344,
+      width: 80,
+      height: 32,
+    },
+    {
+      id: 'hazard-armory-containment',
+      approachDoorId: 'door-armory-queen',
+      x: 1512,
+      y: 984,
+      width: 80,
+      height: 32,
+    },
+    {
+      id: 'hazard-transit-queen',
+      approachDoorId: 'door-transit-queen',
+      x: 1996,
+      y: 640,
+      width: 128,
+      height: 32,
+    },
   ],
 };
 
