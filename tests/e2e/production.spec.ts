@@ -14,6 +14,7 @@ test('serves the production artifact from the GitHub Pages subpath', async ({ pa
   await expect(page.locator('canvas')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Deploy' })).toBeAttached();
   expect(await page.evaluate(() => window.__ALIEN_GAME__)).toBeUndefined();
+  expect(await page.evaluate(() => window.__ALIEN_BOOT__)).toBeUndefined();
 
   const assetChecks = await page.evaluate(async () => {
     const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.href;
