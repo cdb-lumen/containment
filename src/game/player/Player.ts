@@ -13,6 +13,7 @@ import {
 } from './PlayerPresentationState';
 
 const PLAYER_DISPLAY_SIZE = 54;
+const PLAYER_ART_DISPLAY_SIZE = 78;
 const PLAYER_BODY_RADIUS = 24;
 const PLAYER_BODY_OFFSET = 8;
 const PLAYER_SPEED = 260;
@@ -56,7 +57,7 @@ export class Player {
     this.art = resolved.framed
       ? scene.add
           .image(spawnX, spawnY, resolved.texture, CHARACTER_SKINS.marine.frames.idleA)
-          .setDisplaySize(PLAYER_DISPLAY_SIZE, PLAYER_DISPLAY_SIZE)
+          .setDisplaySize(PLAYER_ART_DISPLAY_SIZE, PLAYER_ART_DISPLAY_SIZE)
           .setDepth(spawnY)
       : null;
     if (this.art) this.sprite.setVisible(false);
@@ -104,7 +105,7 @@ export class Player {
     this.art
       .setPosition(this.sprite.x + output.offsetX, this.sprite.y + output.offsetY)
       .setRotation(this.aimRotation + output.rotationOffset)
-      .setDisplaySize(PLAYER_DISPLAY_SIZE * output.scaleX, PLAYER_DISPLAY_SIZE * output.scaleY)
+      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE * output.scaleX, PLAYER_ART_DISPLAY_SIZE * output.scaleY)
       .setDepth(this.sprite.depth)
       .setActive(this.sprite.active)
       .setVisible(this.sprite.active);
@@ -131,8 +132,8 @@ export class Player {
     return Object.freeze({
       offsetX: normalizedDelta(art ? art.x - this.sprite.x : 0),
       offsetY: normalizedDelta(art ? art.y - this.sprite.y : 0),
-      scaleX: art ? art.displayWidth / PLAYER_DISPLAY_SIZE : 1,
-      scaleY: art ? art.displayHeight / PLAYER_DISPLAY_SIZE : 1,
+      scaleX: art ? art.displayWidth / PLAYER_ART_DISPLAY_SIZE : 1,
+      scaleY: art ? art.displayHeight / PLAYER_ART_DISPLAY_SIZE : 1,
       rotationOffset: normalizedDelta(art ? art.rotation - this.aimRotation : 0),
       bodyRotation: this.sprite.rotation,
       framed: art !== null,
@@ -150,7 +151,7 @@ export class Player {
     this.art
       ?.setPosition(point.x, point.y)
       .setRotation(0)
-      .setDisplaySize(PLAYER_DISPLAY_SIZE, PLAYER_DISPLAY_SIZE)
+      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE, PLAYER_ART_DISPLAY_SIZE)
       .setFrame(CHARACTER_SKINS.marine.frames.idleA)
       .clearTint()
       .setDepth(point.y)
@@ -182,7 +183,7 @@ export class Player {
     this.art
       ?.setPosition(this.sprite.x, this.sprite.y)
       .setRotation(this.aimRotation)
-      .setDisplaySize(PLAYER_DISPLAY_SIZE, PLAYER_DISPLAY_SIZE)
+      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE, PLAYER_ART_DISPLAY_SIZE)
       .setFrame(CHARACTER_SKINS.marine.frames.idleA)
       .clearTint();
   }

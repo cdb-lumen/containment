@@ -37,6 +37,7 @@ test('serves the production artifact from the GitHub Pages subpath', async ({ pa
     'framedEnemyCount',
     'enemyVisualCount',
     'presentationTimeMs',
+    'focusQueenArena',
   ]) {
     expect(productionBundle).not.toContain(diagnosticName);
   }

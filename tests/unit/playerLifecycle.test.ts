@@ -14,6 +14,9 @@ const createImage = (x = 0, y = 0) => {
     rotation: 0,
     frame: undefined as number | undefined,
     displaySize: [0, 0] as [number, number],
+    displayWidth: 0,
+    displayHeight: 0,
+    circle: [] as number[],
     body: {
       velocity: { x: 0, y: 0 },
       reset(nextX: number, nextY: number) {
@@ -23,8 +26,13 @@ const createImage = (x = 0, y = 0) => {
         image.body.velocity.y = 0;
       },
     },
-    setDisplaySize(width: number, height: number) { image.displaySize = [width, height]; return image; },
-    setCircle() { return image; },
+    setDisplaySize(width: number, height: number) {
+      image.displaySize = [width, height];
+      image.displayWidth = width;
+      image.displayHeight = height;
+      return image;
+    },
+    setCircle(...args: number[]) { image.circle = args; return image; },
     setCollideWorldBounds() { return image; },
     setDepth(depth: number) { image.depth = depth; return image; },
     setRotation(rotation: number) { image.rotation = rotation; return image; },
@@ -52,6 +60,20 @@ const createPlayer = (framed: boolean) => {
 };
 
 describe('Player presentation lifecycle', () => {
+  it('renders loaded follower art larger than the unchanged authoritative body and collision circle', () => {
+    const { player, sprite, art } = createPlayer(true);
+
+    expect(sprite.displaySize).toEqual([54, 54]);
+    expect(sprite.circle).toEqual([24, 8, 8]);
+    expect(art.displaySize).toEqual([78, 78]);
+    expect(art.displaySize[0]).toBeGreaterThan(sprite.displaySize[0]);
+
+    player.updatePresentation(100, {
+      dead: false, quality: 'high', reducedMotion: false, reducedFlash: false,
+    });
+    expect(player.visualSnapshot()).toMatchObject({ scaleX: 1, scaleY: 1 });
+  });
+
   it('uses authored follower art only when the external marine sheet is available', () => {
     const authored = createPlayer(true);
     const fallback = createPlayer(false);
@@ -78,7 +100,7 @@ describe('Player presentation lifecycle', () => {
     expect(art.frame).toBe(CHARACTER_SKINS.marine.frames.idleA);
     expect(art.x).toBe(sprite.x);
     expect(art.y).toBe(sprite.y);
-    expect(art.displaySize).toEqual([54, 54]);
+    expect(art.displaySize).toEqual([78, 78]);
     expect(player.presentationSnapshot(100)).toEqual({ frame: 'idleA', animating: false, recoil: false, hit: false });
   });
 
@@ -90,7 +112,7 @@ describe('Player presentation lifecycle', () => {
 
     player.reset({ x: 12, y: 34 });
 
-    expect(art).toMatchObject({ x: 12, y: 34, rotation: 0, frame: CHARACTER_SKINS.marine.frames.idleA, displaySize: [54, 54] });
+    expect(art).toMatchObject({ x: 12, y: 34, rotation: 0, frame: CHARACTER_SKINS.marine.frames.idleA, displaySize: [78, 78] });
     expect(player.presentationSnapshot(100)).toEqual({ frame: 'idleA', animating: false, recoil: false, hit: false });
   });
 });
