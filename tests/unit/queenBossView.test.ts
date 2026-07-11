@@ -8,6 +8,7 @@ vi.mock('phaser', () => ({
 }));
 
 import { CHARACTER_SKINS } from '../../src/game/art/characterSkins';
+import { TEXTURE_KEYS } from '../../src/game/art/createTextures';
 import { BossRuntime, didQueenDurabilityDecrease, routeQueenBossEventPresentation } from '../../src/game/enemies/BossRuntime';
 import type { QueenBossEvent, QueenBossSnapshot } from '../../src/game/enemies/QueenBossSystem';
 import { QueenBossSystem } from '../../src/game/enemies/QueenBossSystem';
@@ -25,10 +26,11 @@ const createImage = (physics: boolean) => {
     rotation: 0, alpha: 1, depth: 0, active: true, visible: true, texture: '', frame: 0,
     tint: undefined as number | undefined,
     body: physics ? {
-      enable: true, isCircle: false, radius: 0, velocity: { x: 0, y: 0 },
+      enable: true, isCircle: false, radius: 0, offset: { x: 0, y: 0 },
+      position: { x: 0, y: 0 }, velocity: { x: 0, y: 0 },
       setAllowGravity() { return this; }, setImmovable() { return this; },
       setVelocity(x: number, y: number) { this.velocity = { x, y }; return this; },
-      reset(x: number, y: number) { image.x = x; image.y = y; return this; },
+      reset(x: number, y: number) { image.x = x; image.y = y; this.position = { x, y }; return this; },
     } : undefined,
     setTexture(v: string) { image.texture = v; return image; },
     setDisplaySize(w: number, h: number) { image.displayWidth = w; image.displayHeight = h; image.scaleX = w / image.width; image.scaleY = h / image.width; return image; },
@@ -38,28 +40,49 @@ const createImage = (physics: boolean) => {
     setActive(v: boolean) { image.active = v; return image; }, setVisible(v: boolean) { image.visible = v; return image; },
     setFrame(v: number) { image.frame = v; return image; }, setTint(v: number) { image.tint = v; return image; },
     clearTint() { image.tint = undefined; return image; },
-    setCircle(radius: number) { if (image.body) { image.body.isCircle = true; image.body.radius = radius; } return image; },
+    setCircle(radius: number, offsetX = 0, offsetY = 0) {
+      if (image.body) { image.body.isCircle = true; image.body.radius = radius; image.body.offset = { x: offsetX, y: offsetY }; }
+      return image;
+    },
     destroy: vi.fn(),
   };
   return image;
 };
 
+type FakeImage = ReturnType<typeof createImage>;
+const bodyInvariant = (image: FakeImage) => ({
+  x: image.x, y: image.y, texture: image.texture, active: image.active,
+  body: image.body && {
+    enable: image.body.enable, isCircle: image.body.isCircle, radius: image.body.radius,
+    offset: { ...image.body.offset }, position: { ...image.body.position }, velocity: { ...image.body.velocity },
+  },
+});
+
 const createScene = (sheetLoaded: boolean, registry: Record<string, unknown> = {}) => {
-  const bodies: ReturnType<typeof createImage>[] = [];
-  const art: ReturnType<typeof createImage>[] = [];
-  const listeners = new Map<string, () => void>();
+  const bodies: FakeImage[] = [];
+  const art: FakeImage[] = [];
+  const listeners = new Map<string, Array<() => void>>();
   const graphics = () => ({ active: true, alpha: 1, setDepth() { return this; }, clear() { return this; }, fillStyle() { return this; }, fillRect() { return this; }, strokeRect() { return this; }, lineStyle() { return this; }, beginPath() { return this; }, moveTo() { return this; }, lineTo() { return this; }, closePath() { return this; }, strokePath() { return this; }, fillCircle() { return this; }, strokeCircle() { return this; }, lineBetween() { return this; }, arc() { return this; }, setScale() { return this; }, destroy() { this.active = false; } });
   const group = { add() {}, destroy: vi.fn() };
   const scene = {
     time: { now: 250 }, textures: { exists: (key: string) => sheetLoaded && key === CHARACTER_SKINS.queen.texture },
     registry: { get: (key: string) => registry[key] },
-    events: { once: (name: string, fn: () => void) => listeners.set(name, fn), off: vi.fn() },
+    events: {
+      once: (name: string, fn: () => void) => listeners.set(name, [...(listeners.get(name) ?? []), fn]),
+      off: vi.fn(),
+    },
     physics: { add: { group: () => group, image: () => { const value = createImage(true); bodies.push(value); return value; } } },
     add: { graphics: () => graphics(), image: (_x: number, _y: number, texture: string) => { const value = createImage(false); value.texture = texture; art.push(value); return value; } },
     tweens: { add: () => ({ stop() {} }), remove() {} },
   };
-  return { scene, bodies, art, group, shutdown: () => listeners.get('shutdown')?.() };
+  return { scene, bodies, art, group, shutdown: () => listeners.get('shutdown')?.forEach((listener) => listener()) };
 };
+
+const runtimeFor = (scene: ReturnType<typeof createScene>['scene'], player = { x: 10_000, y: 10_000 }) => new BossRuntime({
+  scene: scene as never, combat: { applyDamage: vi.fn() } as never,
+  player: { sprite: { ...player, body: { isCircle: true, halfWidth: 24 } } } as never,
+  getOccupiedEnemyCapacity: () => 50, spawnMinion: () => false, onQueenDefeated: () => {},
+});
 
 describe('queen durability presentation routing', () => {
   it('detects strict armor or health decreases and rejects no-op/malformed values', () => {
@@ -79,43 +102,81 @@ describe('queen durability presentation routing', () => {
     expect(routed).toEqual([telegraph]);
   });
 
-  it('uses the runtime signal seam for armor and core decreases, but not no-ops or nests', () => {
+  it('signals hits through actual area damage only for queen durability decreases', () => {
     const { scene } = createScene(true);
-    const hitSignals: Array<[unknown, boolean]> = [];
-    const signal = vi.spyOn(QueenBossView.prototype, 'handleAppliedDamage')
-      .mockImplementation((target, decreased) => { hitSignals.push([target, decreased]); });
-    const runtime = new BossRuntime({
-      scene: scene as never,
-      combat: { applyDamage: vi.fn() } as never,
-      player: { sprite: { x: 10_000, y: 10_000, body: { isCircle: true, halfWidth: 24 } } } as never,
-      getOccupiedEnemyCapacity: () => 0, spawnMinion: () => true, onQueenDefeated: () => {},
-    });
+    const signals: Array<[unknown, boolean]> = [];
+    const spy = vi.spyOn(QueenBossView.prototype, 'handleAppliedDamage')
+      .mockImplementation((target, decreased) => { signals.push([target, decreased]); });
+    const runtime = runtimeFor(scene);
     runtime.start(100, 100);
-    const request = { damage: 10 } as never;
-    runtime.handleProjectileHit({ type: 'queen' }, request, { hit: () => ({ applied: true, exhausted: false }) } as never);
-    expect(hitSignals.at(-1)).toEqual([{ type: 'queen' }, true]);
-    runtime.handleProjectileHit({ type: 'queen' }, request, { hit: () => ({ applied: false, exhausted: false }) } as never);
-    expect(hitSignals).toHaveLength(1);
+
+    runtime.applyAreaDamage(100, 100, 10, 50);
+    expect(signals).toEqual([[{ type: 'queen' }, true]]);
+    signals.length = 0;
+    runtime.applyAreaDamage(10_000, 10_000, 10, 50);
+    runtime.applyAreaDamage(100, 100, 0, 50);
+    expect(signals).toEqual([]);
+
     runtime.update(2_000); runtime.update(1_000);
-    runtime.handleProjectileHit({ type: 'queen' }, request, { hit: () => ({ applied: true, exhausted: false }) } as never);
-    expect(hitSignals.at(-1)).toEqual([{ type: 'queen' }, true]);
-    const nestId = runtime.snapshot.nests[0].id;
-    runtime.handleProjectileHit({ type: 'nest', id: nestId }, request, { hit: () => ({ applied: true, exhausted: false }) } as never);
-    expect(hitSignals.at(-1)).toEqual([{ type: 'nest', id: nestId }, false]);
-    signal.mockRestore();
+    runtime.applyAreaDamage(100, 100, 10, 50);
+    expect(signals).toEqual([[{ type: 'queen' }, true]]);
+    signals.length = 0;
+
+    const nest = runtime.snapshot.nests[0];
+    runtime.applyAreaDamage(nest.x, nest.y, 10, 25);
+    expect(signals).toEqual([[{ type: 'nest', id: nest.id }, false]]);
+    signals.length = 0;
+
+    runtime.update(4_000);
+    runtime.applyAreaDamage(100, 100, 10, 50);
+    expect(signals).toEqual([[{ type: 'queen' }, true]]);
+    spy.mockRestore();
+  });
+
+  it('routes production runtime attack and defeat events into attack/death presentation', () => {
+    const { scene, art } = createScene(true);
+    const routed: QueenBossEvent[] = [];
+    const original = QueenBossView.prototype.handleEvent;
+    const spy = vi.spyOn(QueenBossView.prototype, 'handleEvent').mockImplementation(function (this: QueenBossView, event) {
+      routed.push(event); original.call(this, event);
+    });
+    const runtime = runtimeFor(scene, { x: 100, y: 100 });
+    runtime.start(100, 100);
+    runtime.update(0);
+    routed.length = 0;
+    runtime.update(900);
+    expect(routed.map(({ type }) => type)).toContain('area-attack');
+    expect(art[0].frame).toBe(CHARACTER_SKINS.queen.frames.attack);
+
+    routed.length = 0;
+    expect(runtime.forceDefeatForDiagnostics()).toBe(true);
+    expect(routed.map(({ type }) => type)).toContain('queen-defeated');
+    expect(art[0]).toMatchObject({ frame: CHARACTER_SKINS.queen.frames.death, active: true, visible: true });
+    spy.mockRestore();
   });
 });
 
 describe('QueenBossView integration', () => {
-  it('uses one framed follower while the authoritative circular body stays invisible and untransformed', () => {
+  it('keeps complete queen/nest body state authoritative through follower animation and feedback', () => {
     const { scene, bodies, art } = createScene(true);
     const view = new QueenBossView(scene as never);
-    view.sync(snapshot()); view.sync(snapshot({ x: 410 }));
+    const state = snapshot({ nests: [{ id: 1, x: 50, y: 60, health: 100, maxHealth: 100, spawnCooldownRemainingMs: 0 }] });
+    view.sync(state);
+    const queen = bodies.find(({ texture }) => texture === TEXTURE_KEYS.alienQueen)!;
+    const nest = bodies.find(({ texture }) => texture === TEXTURE_KEYS.alienDrone)!;
+    const before = [bodyInvariant(queen), bodyInvariant(nest)];
+
+    view.handleEvent({ type: 'area-telegraph', eventId: 1, telegraphId: 1, x: 400, y: 300, radius: 120, delayMs: 900, damage: 10 });
+    view.handleEvent({ type: 'area-attack', eventId: 2, telegraphId: 1, x: 400, y: 300, radius: 120, damage: 10 });
+    view.handleAppliedDamage({ type: 'queen' }, true);
+    view.sync(state);
+
+    expect([bodyInvariant(queen), bodyInvariant(nest)]).toEqual(before);
+    expect(queen.body?.velocity).toEqual({ x: 0, y: 0 });
+    expect(nest.body?.velocity).toEqual({ x: 0, y: 0 });
     expect(art).toHaveLength(1);
-    expect(art[0]).toMatchObject({ active: true, visible: true, texture: CHARACTER_SKINS.queen.texture });
-    expect(art[0].frame).toBe(CHARACTER_SKINS.queen.frames.idleA);
-    expect(bodies.find(({ active }) => active)).toMatchObject({ visible: false, rotation: 0.25, alpha: 1 });
-    expect(bodies.find(({ active }) => active)!.body).toMatchObject({ enable: true, isCircle: true });
+    expect(nest.texture).toBe(TEXTURE_KEYS.alienDrone);
+    expect(art[0].texture).toBe(CHARACTER_SKINS.queen.texture);
   });
 
   it('keeps procedural body visible with no follower when the sheet is unavailable', () => {
@@ -126,23 +187,37 @@ describe('QueenBossView integration', () => {
     expect(bodies.find(({ active }) => active)).toMatchObject({ visible: true, body: { enable: true } });
   });
 
-  it('retains death art after the inactive snapshot, disables overlap immediately, then resets and reacquires cleanly', () => {
-    const { scene, bodies, art } = createScene(true);
+  it('reacquires cleanly after retained death and scene shutdown hides retained scene-owned art', () => {
+    const { scene, bodies, art, group, shutdown } = createScene(true, { reducedMotion: true, settings: { reducedFlash: true } });
     const view = new QueenBossView(scene as never);
     view.sync(snapshot({ x: 321, y: 654 }));
     view.handleEvent({ type: 'queen-defeated', eventId: 7, x: 321, y: 654, reward: 1 });
     view.sync(snapshot({ active: false, defeated: true, phase: 'defeated', health: 0, armor: 0, x: 321, y: 654 }));
     expect(bodies.every(({ body }) => body?.enable === false)).toBe(true);
-    expect(art[0]).toMatchObject({ active: true, visible: true, x: 321, y: 654, frame: CHARACTER_SKINS.queen.frames.death });
-    view.clear();
-    expect(art[0]).toMatchObject({ active: false, visible: false, x: 0, y: 0, frame: 0 });
-    view.sync(snapshot({ x: 10, y: 20, rotation: 0 }));
+    expect(art[0]).toMatchObject({ active: true, visible: true, frame: CHARACTER_SKINS.queen.frames.death });
+
+    const active = snapshot({ x: 10, y: 20, rotation: 0, phase: 'vulnerable', vulnerable: true, armor: 0 });
+    const baselineScene = createScene(true, { reducedMotion: true, settings: { reducedFlash: true } });
+    new QueenBossView(baselineScene.scene as never).sync(active);
+    const baselineArt = baselineScene.art[0];
+    view.sync(active);
     expect(art).toHaveLength(1);
-    expect(art[0]).toMatchObject({ active: true, visible: true, frame: CHARACTER_SKINS.queen.frames.idleA, tint: undefined });
+    expect(art[0]).toMatchObject({
+      active: true, visible: true, x: baselineArt.x, y: baselineArt.y,
+      rotation: baselineArt.rotation, alpha: baselineArt.alpha,
+      frame: CHARACTER_SKINS.queen.frames.idleA, tint: undefined,
+    });
+    expect(bodies.filter(({ active }) => active)).toHaveLength(1);
+
+    view.handleEvent({ type: 'queen-defeated', eventId: 8, x: 10, y: 20, reward: 1 });
+    shutdown();
+    expect(art[0]).toMatchObject({ active: false, visible: false });
+    expect(group.destroy).not.toHaveBeenCalled();
+    expect(art[0].destroy).not.toHaveBeenCalled();
   });
 
-  it('honors reduced policies, keeps nests procedural, and does not destroy scene groups on shutdown', () => {
-    const { scene, bodies, art, group, shutdown } = createScene(true, { reducedMotion: true, settings: { reducedFlash: true } });
+  it('honors reduced policies and keeps nests procedural', () => {
+    const { scene, bodies, art } = createScene(true, { reducedMotion: true, settings: { reducedFlash: true } });
     const view = new QueenBossView(scene as never);
     view.setQuality('low');
     view.sync(snapshot({ nests: [{ id: 1, x: 50, y: 60, health: 100, maxHealth: 100, spawnCooldownRemainingMs: 0 }] }));
@@ -151,8 +226,5 @@ describe('QueenBossView integration', () => {
     expect(art).toHaveLength(1);
     expect(art[0]).toMatchObject({ frame: CHARACTER_SKINS.queen.frames.hit, tint: undefined, x: 400, y: 300, rotation: 0.25 });
     expect(bodies.filter(({ active }) => active)).toHaveLength(2);
-    shutdown();
-    expect(group.destroy).not.toHaveBeenCalled();
-    expect(art[0].destroy).not.toHaveBeenCalled();
   });
 });
