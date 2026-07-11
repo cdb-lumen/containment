@@ -61,6 +61,10 @@ export class PlayerPresentationState {
     });
   }
 
+  stop(): void {
+    this.reset();
+  }
+
   reset(): void {
     this.recoilUntilMs = 0;
     this.hitUntilMs = 0;

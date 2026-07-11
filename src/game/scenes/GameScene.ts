@@ -597,7 +597,7 @@ export class GameScene extends Phaser.Scene {
     this.hud = new Hud(this, combat);
     this.hud.setTouchLayout(this.touchInput?.enabled === true);
     this.createMissionBanner();
-    this.installSceneDiagnostics();
+    if (import.meta.env.DEV) this.installSceneDiagnostics();
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.handleShutdown);
   }
 
@@ -1492,6 +1492,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private installSceneDiagnostics(): void {
+    if (!import.meta.env.DEV) return;
     const getSnapshot = () => this.combat?.getSnapshot();
     const getHorde = () => this.horde;
     const getActiveProjectileCount = () => this.activeProjectiles.size;
@@ -1544,6 +1545,13 @@ export class GameScene extends Phaser.Scene {
       get playerHit(): boolean {
         return getPlayer()?.presentationSnapshot(getPresentationTime()).hit ?? false;
       },
+      get playerVisualOffsetX(): number { return getPlayer()?.visualSnapshot().offsetX ?? 0; },
+      get playerVisualOffsetY(): number { return getPlayer()?.visualSnapshot().offsetY ?? 0; },
+      get playerVisualScaleX(): number { return getPlayer()?.visualSnapshot().scaleX ?? 1; },
+      get playerVisualScaleY(): number { return getPlayer()?.visualSnapshot().scaleY ?? 1; },
+      get playerVisualRotationOffset(): number { return getPlayer()?.visualSnapshot().rotationOffset ?? 0; },
+      get playerBodyRotation(): number { return getPlayer()?.visualSnapshot().bodyRotation ?? 0; },
+      get playerFallbackFramed(): boolean { return getPlayer()?.visualSnapshot().framed ?? false; },
       startRun: (): void => this.resetRun(),
       damagePlayer: (amount?: number): void => {
         const damage =

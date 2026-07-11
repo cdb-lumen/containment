@@ -55,6 +55,36 @@ test('deploys, pauses, applies quality live, and resets run isolation', async ({
   expect(errors).toEqual([]);
 });
 
+test('stops the marine presentation immediately at idle while preserving aim', async ({ page }) => {
+  await openGame(page);
+  await deploy(page);
+  const canvas = page.locator('canvas');
+  const bounds = await canvas.boundingBox();
+  expect(bounds).not.toBeNull();
+  if (!bounds) return;
+  await page.mouse.move(bounds.x + bounds.width * 0.8, bounds.y + bounds.height * 0.35);
+  await page.keyboard.down('KeyD');
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.playerAnimating)).toBe(true);
+  await page.mouse.down();
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.playerRecoil)).toBe(true);
+  await page.mouse.up();
+  await page.keyboard.up('KeyD');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog', { name: 'Mission paused' })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => ({
+    frame: window.__ALIEN_GAME__?.playerFrame,
+    animating: window.__ALIEN_GAME__?.playerAnimating,
+    recoil: window.__ALIEN_GAME__?.playerRecoil,
+    x: window.__ALIEN_GAME__?.playerVisualOffsetX,
+    y: window.__ALIEN_GAME__?.playerVisualOffsetY,
+    sx: window.__ALIEN_GAME__?.playerVisualScaleX,
+    sy: window.__ALIEN_GAME__?.playerVisualScaleY,
+    rotation: window.__ALIEN_GAME__?.playerVisualRotationOffset,
+  }))).toEqual({ frame: 'idleA', animating: false, recoil: false, x: 0, y: 0, sx: 1, sy: 1, rotation: 0 });
+  expect(Math.abs(await page.evaluate(() => window.__ALIEN_GAME__?.playerBodyRotation ?? 0))).toBeGreaterThan(0.01);
+  expect(await page.evaluate(() => window.__ALIEN_GAME__?.playerFallbackFramed)).toBe(true);
+});
+
 test('exposes accessible results actions and restarts a fresh run', async ({ page }) => {
   const errors = browserErrors(page);
   await openGame(page);

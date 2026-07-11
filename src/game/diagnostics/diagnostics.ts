@@ -14,6 +14,13 @@ export interface DiagnosticsReadOnlyFields {
   readonly playerAnimating: boolean;
   readonly playerRecoil: boolean;
   readonly playerHit: boolean;
+  readonly playerVisualOffsetX: number;
+  readonly playerVisualOffsetY: number;
+  readonly playerVisualScaleX: number;
+  readonly playerVisualScaleY: number;
+  readonly playerVisualRotationOffset: number;
+  readonly playerBodyRotation: number;
+  readonly playerFallbackFramed: boolean;
 }
 
 export interface DiagnosticsActions {
@@ -113,6 +120,13 @@ export function installDiagnostics(
     get playerHit(): boolean {
       return provider.playerHit === true;
     },
+    get playerVisualOffsetX(): number { return provider.playerVisualOffsetX; },
+    get playerVisualOffsetY(): number { return provider.playerVisualOffsetY; },
+    get playerVisualScaleX(): number { return provider.playerVisualScaleX; },
+    get playerVisualScaleY(): number { return provider.playerVisualScaleY; },
+    get playerVisualRotationOffset(): number { return provider.playerVisualRotationOffset; },
+    get playerBodyRotation(): number { return provider.playerBodyRotation; },
+    get playerFallbackFramed(): boolean { return provider.playerFallbackFramed === true; },
     startRun: (): void => provider.startRun(),
     damagePlayer: (amount?: number): void => provider.damagePlayer(amount),
     completeWave: (): void => provider.completeWave(),

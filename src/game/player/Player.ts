@@ -125,6 +125,20 @@ export class Player {
     return this.presentation.snapshot(nowMs);
   }
 
+  visualSnapshot(): Readonly<{ offsetX: number; offsetY: number; scaleX: number; scaleY: number; rotationOffset: number; bodyRotation: number; framed: boolean }> {
+    const art = this.art;
+    const normalizedDelta = (value: number): number => Math.abs(value) < 1e-9 ? 0 : value;
+    return Object.freeze({
+      offsetX: normalizedDelta(art ? art.x - this.sprite.x : 0),
+      offsetY: normalizedDelta(art ? art.y - this.sprite.y : 0),
+      scaleX: art ? art.displayWidth / PLAYER_DISPLAY_SIZE : 1,
+      scaleY: art ? art.displayHeight / PLAYER_DISPLAY_SIZE : 1,
+      rotationOffset: normalizedDelta(art ? art.rotation - this.aimRotation : 0),
+      bodyRotation: this.sprite.rotation,
+      framed: art !== null,
+    });
+  }
+
   reset(point: PlayerPoint): void {
     if (this.isDestroyed || !Number.isFinite(point.x) || !Number.isFinite(point.y)) return;
 
@@ -164,6 +178,13 @@ export class Player {
   stop(): void {
     if (this.isDestroyed) return;
     this.sprite.setVelocity(0, 0);
+    this.presentation.stop();
+    this.art
+      ?.setPosition(this.sprite.x, this.sprite.y)
+      .setRotation(this.aimRotation)
+      .setDisplaySize(PLAYER_DISPLAY_SIZE, PLAYER_DISPLAY_SIZE)
+      .setFrame(CHARACTER_SKINS.marine.frames.idleA)
+      .clearTint();
   }
 
   destroy(): void {
