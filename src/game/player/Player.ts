@@ -148,6 +148,7 @@ export class Player {
     this.presentation.reset();
     this.sprite.body.reset(point.x, point.y);
     this.sprite.setRotation(0).setDepth(point.y);
+    this.sprite.setVisible?.(true);
     this.art
       ?.setPosition(point.x, point.y)
       .setRotation(0)
@@ -191,6 +192,13 @@ export class Player {
   /** Stops gameplay movement without changing the current presentation frame/state. */
   freezeMotion(): void {
     if (!this.isDestroyed) this.sprite.setVelocity(0, 0);
+  }
+
+  /** Transfers dead-body visual ownership to the static corpse pool. */
+  hidePresentation(): void {
+    if (this.isDestroyed) return;
+    this.art?.setVisible(false).setActive(false);
+    this.sprite.setVisible(false);
   }
 
   destroy(): void {

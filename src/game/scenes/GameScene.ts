@@ -18,6 +18,7 @@ import {
   EffectsSystem,
   type EffectKind,
 } from '../effects/EffectsSystem';
+import { DeathVisualView } from '../effects/DeathVisualView';
 import {
   QualityController,
   resolveEffectsQuality,
@@ -159,6 +160,7 @@ export class GameScene extends Phaser.Scene {
   private horde: HordeRuntime | null = null;
   private audio: AudioSystem | null = null;
   private effects: EffectsSystem | null = null;
+  private deathVisuals: DeathVisualView | null = null;
   private quality: QualityController | null = null;
   private qualitySelection: QualitySelection = 'auto';
   private qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
@@ -186,6 +188,7 @@ export class GameScene extends Phaser.Scene {
   private shuttingDown = false;
   private resultTransitionRemainingMs: number | null = null;
   private resultSceneStarted = false;
+  private playerDeathVisualEmitted = false;
   private portraitBlocked = false;
   private pauseRequested = false;
   private readonly presentationClock = new PresentationClock();
@@ -211,14 +214,8 @@ export class GameScene extends Phaser.Scene {
   };
 
   private readonly handleEnemyDeath = (event: EnemyDeathEvent): void => {
-    this.addBattleEffect('decals', event.x, event.y, false, 'splatter');
-    this.addBattleEffect(
-      'remains',
-      event.x,
-      event.y,
-      event.elite || event.enemyType === 'brute' || event.enemyType === 'carrier',
-      event.enemyType,
-    );
+    this.deathVisuals?.spawnDeath({ family: event.enemyType, x: event.x, y: event.y,
+      elite: event.elite, major: event.enemyType === 'brute' || event.enemyType === 'carrier' });
     if (this.time.now - this.lastAlienSoundAt >= 240) {
       this.lastAlienSoundAt = this.time.now;
       this.audio?.playAlien();
@@ -448,6 +445,8 @@ export class GameScene extends Phaser.Scene {
     // Drop bookkeeping only and let Phaser finish destroying Scene ownership.
     this.clearHazardPools(false);
     this.clearBattleEffects(false);
+    this.deathVisuals?.clear(false);
+    this.deathVisuals = null;
     this.effects = null;
     this.quality = null;
     this.audio?.destroy();
@@ -487,6 +486,7 @@ export class GameScene extends Phaser.Scene {
     this.hazardPools.clear();
     this.effectDisplays.clear();
     this.effectDisplayPool.length = 0;
+    this.playerDeathVisualEmitted = false;
     this.qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
     this.lastAlienSoundAt = Number.NEGATIVE_INFINITY;
     this.presentationClock.reset();
@@ -495,6 +495,9 @@ export class GameScene extends Phaser.Scene {
     this.qualitySelection = initialSettings.quality;
     this.quality = new QualityController({ selection: initialSettings.quality });
     this.effects = new EffectsSystem(this.quality.activeProfile);
+    this.deathVisuals = new DeathVisualView({ effects: this.effects,
+      hasTexture: (key) => this.textures.exists(key),
+      createImage: () => this.add.image(0, 0, TEXTURE_KEYS.splatter) });
     this.audio = new AudioSystem({
       master: initialSettings.masterVolume,
       music: initialSettings.musicVolume,
@@ -565,6 +568,9 @@ export class GameScene extends Phaser.Scene {
       getPresentationTime: () => this.presentationClock.snapshot(),
       onHazardAttack: this.handleHazardAttack,
       onEnemyDeath: this.handleEnemyDeath,
+      onQueenDefeated: ({ x, y }) => this.deathVisuals?.spawnBlood({
+        family: 'queen', x, y, major: true,
+      }),
       onPickupCollected: this.handlePickupCollected,
     });
     this.horde = horde;
@@ -654,6 +660,12 @@ export class GameScene extends Phaser.Scene {
 
     combat.update(deltaMs);
     const snapshot = combat.getSnapshot();
+    if (snapshot.dead && !this.playerDeathVisualEmitted) {
+      this.playerDeathVisualEmitted = true;
+      this.deathVisuals?.spawnDeath({ family: 'marine', x: player.sprite.x,
+        y: player.sprite.y, rotation: player.sprite.rotation, major: true });
+      player.hidePresentation();
+    }
     const armoryVisible = horde.armoryVisible;
     const canAct = !snapshot.dead && !armoryVisible;
 
@@ -1306,6 +1318,7 @@ export class GameScene extends Phaser.Scene {
       this.effectDisplays.delete(id);
       this.releaseEffectDisplay(display);
     }
+    this.deathVisuals?.syncRetainedIds();
   }
 
   private clearBlastEffects(): void {
@@ -1320,6 +1333,7 @@ export class GameScene extends Phaser.Scene {
 
   private clearBattleEffects(recycleDisplays: boolean): void {
     this.effects?.clear();
+    this.deathVisuals?.clear(recycleDisplays);
     if (recycleDisplays) {
       for (const display of this.effectDisplays.values()) {
         this.releaseEffectDisplay(display);
@@ -1484,6 +1498,7 @@ export class GameScene extends Phaser.Scene {
     facility.reset();
     facility.setWaveAccess(0);
     player.reset(facility.playerSpawn);
+    this.playerDeathVisualEmitted = false;
     player.stop();
     this.horde?.reset();
     combat.setObjective(INITIAL_OBJECTIVE);

@@ -113,6 +113,7 @@ export type HordeRuntimeOptions = Readonly<{
   getPresentationTime?: () => number;
   onHazardAttack: HordeHazardAttackHandler;
   onEnemyDeath?: HordeEnemyDeathHandler;
+  onQueenDefeated?: (position: Readonly<{ x: number; y: number }>) => void;
   onPickupCollected?: HordePickupHandler;
   seed?: number;
 }>;
@@ -178,6 +179,7 @@ export class HordeRuntime {
   readonly #facility: FacilityWorld;
   readonly #onHazardAttack: HordeHazardAttackHandler;
   readonly #onEnemyDeath: HordeEnemyDeathHandler | undefined;
+  readonly #onQueenDefeated: HordeRuntimeOptions['onQueenDefeated'];
   readonly #onPickupCollected: HordePickupHandler | undefined;
   readonly #enemySystem: EnemySystem;
   readonly #pickupSystem: PickupSystem;
@@ -215,6 +217,7 @@ export class HordeRuntime {
     this.#facility = options.facility;
     this.#onHazardAttack = options.onHazardAttack;
     this.#onEnemyDeath = options.onEnemyDeath;
+    this.#onQueenDefeated = options.onQueenDefeated;
     this.#onPickupCollected = options.onPickupCollected;
     this.#initialSeed = normalizeSeed(options.seed ?? DEFAULT_SEED);
     this.#randomState = this.#initialSeed;
@@ -810,6 +813,7 @@ export class HordeRuntime {
       return;
     }
     this.#queenDefeatHandled = true;
+    this.#onQueenDefeated?.(Object.freeze({ x: event.x, y: event.y }));
     this.#addCredits(event.reward);
     this.#pendingSpawnRequests.length = 0;
     this.#runState.finishVictory(
