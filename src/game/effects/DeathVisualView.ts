@@ -13,7 +13,7 @@ type ImageSlot = {
   setFlip(x: boolean, y: boolean): ImageSlot; setDepth(depth: number): ImageSlot; setActive(active: boolean): ImageSlot; setVisible(visible: boolean): ImageSlot;
 };
 type Slot = { readonly image: ImageSlot; readonly kind: 'blood'|'corpse'; family: CharacterSkinId; texture: string; frame?: number; tint?: number };
-type Reservation = { readonly slot: Slot; readonly detachedId?: number };
+type Reservation = { readonly slot: Slot; readonly mappedId?: number };
 export type DeathRequest = Readonly<{family: CharacterSkinId; x:number; y:number; elite?:boolean; major?:boolean; rotation?:number}>;
 export type DeathVisualOptions = Readonly<{effects: EffectsSystem; hasTexture:(key:string)=>boolean; createImage:()=>ImageSlot; poolLimits?:Readonly<{blood:number;corpse:number}>; onEffectsChanged?:()=>void}>;
 
@@ -57,6 +57,7 @@ export class DeathVisualView {
     const bloodReservation=this.reserve('blood',plan);if(!bloodReservation)return false;reservations.push(bloodReservation);
     const corpseReservation=this.reserve('corpse',plan);if(!corpseReservation){this.abortReservations(reservations);return false;}reservations.push(corpseReservation);
     if(!this.effects.commitAtomic(plan)){this.abortReservations(reservations);return false;}
+    this.commitReservations(reservations);
     this.syncRetainedIds(false);
     this.configureBlood(bloodReservation.slot,blood.id,request,source.bloodGroup);
     this.configureCorpse(corpseReservation.slot,request,source);
@@ -71,6 +72,7 @@ export class DeathVisualView {
     const record=plan.added[0]!;
     const reservation=this.reserve('blood',plan);if(!reservation)return false;
     if(!this.effects.commitAtomic(plan)){this.abortReservations([reservation]);return false;}
+    this.commitReservations([reservation]);
     this.syncRetainedIds(false);
     this.configureBlood(reservation.slot,record.id,request,this.corpseSources[request.family].bloodGroup);this.mappings.set(record.id,reservation.slot);this.onEffectsChanged();return true;
   }
@@ -111,11 +113,14 @@ export class DeathVisualView {
   private reserve(kind:'blood'|'corpse',plan:AtomicEffectPlan):Reservation|null {
     const acquired=this.acquire(kind);if(acquired)return {slot:acquired};
     const retired=new Set(plan.retiredIds);
-    for(const [id,slot] of this.mappings)if(retired.has(id)&&slot.kind===kind){this.mappings.delete(id);return {slot,detachedId:id};}
+    for(const [id,slot] of this.mappings)if(retired.has(id)&&slot.kind===kind)return {slot,mappedId:id};
     return null;
   }
+  private commitReservations(reservations:readonly Reservation[]):void {
+    for(const reservation of reservations)if(reservation.mappedId!==undefined)this.mappings.delete(reservation.mappedId);
+  }
   private abortReservations(reservations:readonly Reservation[]):void {
-    for(const reservation of reservations){if(reservation.detachedId!==undefined)this.mappings.set(reservation.detachedId,reservation.slot);else this.release(reservation.slot);}
+    for(const reservation of reservations)if(reservation.mappedId===undefined)this.release(reservation.slot);
   }
   private reset(slot:Slot,r:DeathRequest){slot.family=r.family;slot.tint=undefined;slot.frame=undefined;slot.image.setTexture(this.corpseSources[r.family].texture).clearTint().setAlpha(1).setScale(1,1).setRotation(0).setFlip(false,false).setPosition(r.x,r.y).setDepth(0).setActive(true).setVisible(true);}
   private configureBlood(slot:Slot,id:number,r:DeathRequest,group:BloodGroup){this.reset(slot,r);const index=(id+r.family.length+(r.major?1:0))%4;const source=this.bloodSources[group][index]!;slot.texture=source.texture;slot.frame=source.frame;slot.image.setTexture(source.texture,source.frame);if(!source.framed){slot.tint=FALLBACK_TINT[group];slot.image.setTint(slot.tint);}const scale=(r.major||r.elite?1.3:0.72)+(id%3)*0.08;slot.image.setScale(scale).setRotation(quarterRotation(id)).setDepth(Math.max(-20,r.y-30));}
