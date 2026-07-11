@@ -47,18 +47,29 @@ function validatePng(file, expectedWidth, expectedHeight) {
   let ihdr = null;
   let ihdrCount = 0;
   let sawIend = false;
+  let sawIdat = false;
+  let idatSequenceEnded = false;
   const idatParts = [];
+  const knownCriticalChunks = new Set(['IHDR', 'PLTE', 'IDAT', 'IEND']);
 
   while (offset < file.length) {
     if (file.length - offset < 12) throw new Error('truncated PNG chunk header');
     const length = file.readUInt32BE(offset);
     const chunkEnd = offset + 12 + length;
     if (chunkEnd > file.length || chunkEnd < offset) throw new Error('truncated PNG chunk data');
-    const type = file.subarray(offset + 4, offset + 8).toString('ascii');
+    const typeBytes = file.subarray(offset + 4, offset + 8);
+    if (![...typeBytes].every((byte) => (byte >= 0x41 && byte <= 0x5a) || (byte >= 0x61 && byte <= 0x7a))) {
+      throw new Error('PNG chunk type must contain only ASCII letters');
+    }
+    if ((typeBytes[2] & 0x20) !== 0) throw new Error('PNG chunk type has an invalid reserved bit');
+    const type = typeBytes.toString('ascii');
     const data = file.subarray(offset + 8, offset + 8 + length);
     const storedCrc = file.readUInt32BE(offset + 8 + length);
     const actualCrc = crc32(file.subarray(offset + 4, offset + 8 + length));
     if (storedCrc !== actualCrc) throw new Error(`${type} chunk has an invalid CRC`);
+    if ((typeBytes[0] & 0x20) === 0 && !knownCriticalChunks.has(type)) {
+      throw new Error(`unknown critical PNG chunk ${type}`);
+    }
 
     if (chunkIndex === 0 && type !== 'IHDR') throw new Error('IHDR must be the first chunk');
     if (type === 'IHDR') {
@@ -71,6 +82,8 @@ function validatePng(file, expectedWidth, expectedHeight) {
       };
     } else if (type === 'IDAT') {
       if (!ihdr) throw new Error('IDAT encountered before IHDR');
+      if (idatSequenceEnded) throw new Error('IDAT chunks must be consecutive');
+      sawIdat = true;
       idatParts.push(data);
     } else if (type === 'IEND') {
       if (length !== 0) throw new Error('IEND must be empty');
@@ -79,6 +92,7 @@ function validatePng(file, expectedWidth, expectedHeight) {
       if (offset !== file.length) throw new Error('trailing data after IEND');
       break;
     }
+    if (sawIdat && type !== 'IDAT') idatSequenceEnded = true;
     offset = chunkEnd;
     chunkIndex += 1;
   }
@@ -92,14 +106,26 @@ function validatePng(file, expectedWidth, expectedHeight) {
   if (ihdr.bitDepth !== 8 || ihdr.colorType !== 6 || ihdr.compression !== 0 || ihdr.filter !== 0 || ihdr.interlace !== 0) {
     throw new Error('IHDR must specify 8-bit RGBA, compression 0, filter 0, and no interlace');
   }
+  const expectedBytes = ihdr.height * (1 + ihdr.width * 4);
+  const compressed = Buffer.concat(idatParts);
   let inflated;
-  try { inflated = inflateSync(Buffer.concat(idatParts)); }
+  try {
+    const result = inflateSync(compressed, { info: true, maxOutputLength: expectedBytes });
+    inflated = result.buffer;
+    if (result.engine.bytesWritten !== compressed.length) {
+      throw new Error('trailing data in IDAT zlib stream');
+    }
+  }
   catch (error) {
     throw new Error(`IDAT zlib stream is invalid (${error.message})`, { cause: error });
   }
-  const expectedBytes = ihdr.height * (1 + ihdr.width * 4);
   if (inflated.length !== expectedBytes) {
     throw new Error(`expected ${expectedBytes} decompressed scanline bytes, found ${inflated.length}`);
+  }
+  const rowBytes = 1 + ihdr.width * 4;
+  for (let y = 0; y < ihdr.height; y += 1) {
+    const filterByte = inflated[y * rowBytes];
+    if (filterByte > 4) throw new Error(`invalid PNG filter byte ${filterByte} in row ${y}`);
   }
   return ihdr;
 }
