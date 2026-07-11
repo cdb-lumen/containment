@@ -99,6 +99,7 @@ export class QueenBossView {
   readonly #queenFramed: boolean;
   #pool: ObjectPool<QueenBossImage, BossViewInit> | null;
   #quality: QualityProfileName = 'high';
+  #queenDeathRetained = false;
   #destroyed = false;
 
   readonly #handleSceneShutdown = (): void => {
@@ -117,6 +118,8 @@ export class QueenBossView {
     this.#effectTweens.clear();
     this.#mutableRadarPositions.length = 0;
     this.#queenPresentation.release();
+    this.#queenDeathRetained = false;
+    this.#queenArt?.setActive(false).setVisible(false);
   };
 
   constructor(scene: Phaser.Scene) {
@@ -154,6 +157,8 @@ export class QueenBossView {
   /** Matches the seven pooled overlap images to stable queen/nest target keys. */
   sync(snapshot: QueenBossSnapshot): void {
     if (this.#destroyed || this.#pool === null) return;
+
+    if (snapshot.active && this.#queenDeathRetained) this.#resetQueenArt();
 
     const inits = this.#snapshotInits(snapshot);
     this.#seenKeys.clear();
@@ -211,7 +216,10 @@ export class QueenBossView {
         this.#createPulse(event.x, event.y, NEST_BODY_RADIUS * 1.4, COLORS.orange, 0.8);
         break;
       case 'queen-defeated':
-        this.#queenArt?.setFrame(CHARACTER_SKINS.queen.frames.death)
+        this.#queenDeathRetained = true;
+        this.#queenArt?.setPosition(event.x, event.y)
+          .setActive(true).setVisible(true)
+          .setFrame(CHARACTER_SKINS.queen.frames.death)
           .setAlpha(0.65).setScale(0.9).setRotation(0.08);
         this.#createPulse(event.x, event.y, QUEEN_BODY_RADIUS * 1.35, COLORS.cyan, 0.85);
         break;
@@ -294,7 +302,7 @@ export class QueenBossView {
         },
         deactivate: (sprite): void => {
           const target = this.#targetBySprite.get(sprite);
-          if (target?.type === 'queen') this.#resetQueenArt();
+          if (target?.type === 'queen' && !this.#queenDeathRetained) this.#resetQueenArt();
           if (target) this.#spritesByKey.delete(targetKey(target));
           this.#targetBySprite.delete(sprite);
           sprite.body.setVelocity(0, 0);
@@ -376,7 +384,7 @@ export class QueenBossView {
     const art = this.#queenArt;
     if (!body || !art || !this.#queenFramed || !snapshot.active) {
       if (body) body.setVisible(true);
-      if (!snapshot.active) this.#resetQueenArt();
+      if (!snapshot.active && !this.#queenDeathRetained) this.#resetQueenArt();
       return;
     }
     const settings = this.#scene.registry.get('settings') as { reducedFlash?: boolean } | undefined;
@@ -398,6 +406,7 @@ export class QueenBossView {
   }
 
   #resetQueenArt(): void {
+    this.#queenDeathRetained = false;
     this.#queenPresentation.release();
     this.#queenArt?.setActive(false).setVisible(false).setPosition(0, 0)
       .setRotation(0).setAlpha(1).setScale(1).clearTint().setFrame(0);

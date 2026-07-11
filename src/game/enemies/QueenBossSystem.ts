@@ -11,6 +11,7 @@ export const NEST_DISTANCE = 210;
 export const AREA_ATTACK_RANGE = 900;
 export const AREA_ATTACK_RADIUS = 120;
 export const AREA_ATTACK_DELAY_MS = 900;
+export const QUEEN_MAX_ARMOR = 1_000;
 
 export type QueenStage = 1 | 2 | 3;
 export type QueenBossPhase =
@@ -76,6 +77,7 @@ export type QueenBossSnapshot = Readonly<{
   x: number;
   y: number;
   rotation: number;
+  armor: number;
   health: number;
   maxHealth: number;
   vulnerable: boolean;
@@ -212,6 +214,7 @@ export class QueenBossSystem {
   #x = 0;
   #y = 0;
   #rotation = 0;
+  #armor = 0;
   #health = ENEMIES.queen.maxHealth;
   #phaseRemainingMs = 0;
   #pendingTelegraph: AreaTelegraphState | null = null;
@@ -257,6 +260,7 @@ export class QueenBossSystem {
       x: this.#x,
       y: this.#y,
       rotation: this.#rotation,
+      armor: this.#armor,
       health: this.#health,
       maxHealth: ENEMIES.queen.maxHealth,
       vulnerable: this.#phase === 'vulnerable',
@@ -274,6 +278,7 @@ export class QueenBossSystem {
     this.#x = x;
     this.#y = y;
     this.#rotation = 0;
+    this.#armor = QUEEN_MAX_ARMOR;
     this.#health = ENEMIES.queen.maxHealth;
     this.#phase = 'armored';
     this.#phaseRemainingMs = QUEEN_ARMORED_DURATION_MS;
@@ -334,6 +339,7 @@ export class QueenBossSystem {
     this.#x = 0;
     this.#y = 0;
     this.#rotation = 0;
+    this.#armor = 0;
     this.#health = ENEMIES.queen.maxHealth;
     this.#phaseRemainingMs = 0;
     this.#pendingTelegraph = null;
@@ -375,11 +381,13 @@ export class QueenBossSystem {
     }
     if (this.#phase === 'nest-spawn') {
       this.#phase = 'vulnerable';
+      this.#armor = 0;
       this.#phaseRemainingMs = QUEEN_VULNERABLE_DURATION_MS;
       return;
     }
     if (this.#phase === 'vulnerable') {
       this.#phase = 'armored';
+      this.#armor = QUEEN_MAX_ARMOR;
       this.#phaseRemainingMs = QUEEN_ARMORED_DURATION_MS;
     }
   }
@@ -530,6 +538,7 @@ export class QueenBossSystem {
   #damageQueen(amount: number): QueenDamageResult {
     if (this.#phase !== 'vulnerable') {
       const blocked = this.#phase === 'armored' || this.#phase === 'nest-spawn';
+      if (blocked) this.#armor = Math.max(0, this.#armor - Math.min(this.#armor, amount));
       return damageResult(false, blocked, 0, false, false);
     }
 

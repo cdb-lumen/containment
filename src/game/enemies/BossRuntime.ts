@@ -76,6 +76,32 @@ const stableTargetId = (target: QueenDamageTarget): string =>
 const isObject = (value: unknown): value is object =>
   value !== null && (typeof value === 'object' || typeof value === 'function');
 
+type QueenDurability = Readonly<{ armor?: number; health: number }>;
+
+export const didQueenDurabilityDecrease = (
+  before: QueenDurability,
+  after: QueenDurability,
+): boolean =>
+  (typeof before.armor === 'number' && typeof after.armor === 'number' &&
+    Number.isFinite(before.armor) && Number.isFinite(after.armor) && after.armor < before.armor) ||
+  (Number.isFinite(before.health) && Number.isFinite(after.health) && after.health < before.health);
+
+export const routeQueenBossEventPresentation = (
+  event: QueenBossEvent,
+  signal: (event: QueenBossEvent) => void,
+): boolean => {
+  switch (event.type) {
+    case 'area-telegraph':
+    case 'area-attack':
+    case 'queen-defeated':
+      signal(event);
+      return true;
+    case 'minion-spawn-request':
+    case 'nest-destroyed':
+      return false;
+  }
+};
+
 /**
  * Phaser runtime seam over QueenBossSystem. The pure system remains authoritative;
  * this adapter routes callbacks, player damage, projectile dedupe, and its view.
@@ -177,8 +203,13 @@ export class BossRuntime {
       });
     }
 
+    const before = this.#system.snapshot;
     const damage = this.#system.applyDamage(target, request.damage);
-    this.#view.handleAppliedDamage(target, damage.applied && damage.damage > 0);
+    const after = this.#system.snapshot;
+    this.#view.handleAppliedDamage(
+      target,
+      target.type === 'queen' && before.active && didQueenDurabilityDecrease(before, after),
+    );
     if (damage.blockedByArmor) this.#view.handleShieldBlocked(target);
     this.#processDamage(damage);
     this.#syncView();
@@ -239,10 +270,12 @@ export class BossRuntime {
       const amount = calculateSplashDamage(baseDamage, distance, radius);
       if (amount <= 0) continue;
 
+      const before = this.#system.snapshot;
       const damage = this.#system.applyDamage(candidate.target, amount);
+      const after = this.#system.snapshot;
       this.#view.handleAppliedDamage(
         candidate.target,
-        damage.applied && damage.damage > 0,
+        candidate.target.type === 'queen' && before.active && didQueenDurabilityDecrease(before, after),
       );
       if (damage.applied) appliedCount += 1;
       if (damage.blockedByArmor) {
@@ -359,7 +392,9 @@ export class BossRuntime {
     for (const event of events) {
       if (this.#processedEventIds.has(event.eventId)) continue;
       this.#processedEventIds.add(event.eventId);
-      this.#view.handleEvent(event);
+      if (!routeQueenBossEventPresentation(event, (routed) => this.#view.handleEvent(routed))) {
+        this.#view.handleEvent(event);
+      }
 
       switch (event.type) {
         case 'minion-spawn-request':
