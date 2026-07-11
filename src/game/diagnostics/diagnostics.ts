@@ -7,6 +7,7 @@ export interface DiagnosticsReadOnlyFields {
   readonly activeEnemies: number;
   readonly activeProjectiles: number;
   readonly wave: number;
+  readonly activeQuality: string;
   readonly touchControlsVisible: boolean;
 }
 
@@ -85,6 +86,9 @@ export function installDiagnostics(
     },
     get wave(): number {
       return normalizedCount(provider.wave);
+    },
+    get activeQuality(): string {
+      return normalizedPhase(provider.activeQuality);
     },
     get touchControlsVisible(): boolean {
       return provider.touchControlsVisible === true;

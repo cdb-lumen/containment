@@ -9,6 +9,10 @@ import {
 } from '../combat/CombatSystem';
 import { MAX_ACTIVE_ENEMIES, WORLD_HEIGHT, WORLD_WIDTH } from '../constants';
 import {
+  QUALITY_PROFILES,
+  type QualityProfileName,
+} from '../effects/quality';
+import {
   EnemySystem,
   type CollisionSteeringContext,
   type EnemyDeathEvent,
@@ -83,6 +87,11 @@ const EMPTY_AREA_DAMAGE_RESULT: HordeAreaDamageResult = Object.freeze({
 });
 
 export type HordeHazardAttackHandler = (attack: HazardAttackEvent) => void;
+export type HordeEnemyDeathHandler = (event: EnemyDeathEvent) => void;
+export type HordePickupHandler = (
+  reward: PickupReward,
+  position: Readonly<{ x: number; y: number }>,
+) => void;
 
 export type HordeRuntimeOptions = Readonly<{
   scene: Phaser.Scene;
@@ -90,6 +99,8 @@ export type HordeRuntimeOptions = Readonly<{
   player: Player;
   facility: FacilityWorld;
   onHazardAttack: HordeHazardAttackHandler;
+  onEnemyDeath?: HordeEnemyDeathHandler;
+  onPickupCollected?: HordePickupHandler;
   seed?: number;
 }>;
 
@@ -153,6 +164,8 @@ export class HordeRuntime {
   readonly #player: Player;
   readonly #facility: FacilityWorld;
   readonly #onHazardAttack: HordeHazardAttackHandler;
+  readonly #onEnemyDeath: HordeEnemyDeathHandler | undefined;
+  readonly #onPickupCollected: HordePickupHandler | undefined;
   readonly #enemySystem: EnemySystem;
   readonly #pickupSystem: PickupSystem;
   readonly #upgradeSystem: UpgradeSystem;
@@ -175,6 +188,7 @@ export class HordeRuntime {
   #defeatReported = false;
   #queenDefeatHandled = false;
   #lastBossPhase: QueenBossSnapshot['phase'] = 'idle';
+  #breachEffectLimit = MAX_BREACH_EFFECTS;
   #destroyed = false;
 
   readonly #handleSceneShutdown = (): void => {
@@ -187,6 +201,8 @@ export class HordeRuntime {
     this.#player = options.player;
     this.#facility = options.facility;
     this.#onHazardAttack = options.onHazardAttack;
+    this.#onEnemyDeath = options.onEnemyDeath;
+    this.#onPickupCollected = options.onPickupCollected;
     this.#initialSeed = normalizeSeed(options.seed ?? DEFAULT_SEED);
     this.#randomState = this.#initialSeed;
     this.#director = new HordeDirector(() => this.#random());
@@ -253,6 +269,18 @@ export class HordeRuntime {
 
   get phase(): HordePhase {
     return this.#director.phase;
+  }
+
+  setEffectsProfile(profile: QualityProfileName): void {
+    this.#breachEffectLimit = Math.min(
+      MAX_BREACH_EFFECTS,
+      QUALITY_PROFILES[profile].dynamicLights,
+    );
+    while (this.#breachEffects.size > this.#breachEffectLimit) {
+      const oldest = this.#breachEffects.values().next().value;
+      if (!oldest) break;
+      this.#retireBreachEffect(oldest, true);
+    }
   }
 
   get armoryVisible(): boolean {
@@ -694,6 +722,7 @@ export class HordeRuntime {
     this.#runState.recordEnemyDefeated(event.elite, event.enemyId);
     this.#addCredits(event.reward);
     this.#pickupSystem.rollEnemyDrop(event.enemyType, event.x, event.y);
+    this.#onEnemyDeath?.(event);
   }
 
   #processChildSpawn(event: EnemySpawnRequestEvent): void {
@@ -785,7 +814,13 @@ export class HordeRuntime {
       const collection = this.#pickupSystem.collect(pickup.id, player, {
         pickupEfficiency: modifiers.pickupValueMultiplier,
       });
-      if (collection.collected) this.#applyPickupReward(collection.reward);
+      if (collection.collected) {
+        this.#applyPickupReward(collection.reward);
+        this.#onPickupCollected?.(
+          collection.reward,
+          Object.freeze({ x: pickup.x, y: pickup.y }),
+        );
+      }
     }
   }
 
@@ -946,7 +981,7 @@ export class HordeRuntime {
 
   #createBreachEffect(breach: FacilityBreach): void {
     if (this.#destroyed) return;
-    while (this.#breachEffects.size >= MAX_BREACH_EFFECTS) {
+    while (this.#breachEffects.size >= this.#breachEffectLimit) {
       const oldest = this.#breachEffects.values().next().value;
       if (!oldest) break;
       this.#retireBreachEffect(oldest, true);

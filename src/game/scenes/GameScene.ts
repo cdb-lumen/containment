@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import { TEXTURE_KEYS } from '../art/createTextures';
+import { AudioSystem } from '../audio/AudioSystem';
 import {
   CombatSystem,
   ProjectileHitTracker,
@@ -10,12 +11,24 @@ import { ProjectilePool } from '../combat/ProjectilePool';
 import type { WeaponId } from '../combat/types';
 import { GAME_HEIGHT, GAME_WIDTH, WORLD_HEIGHT, WORLD_WIDTH } from '../constants';
 import { installDiagnostics, type DiagnosticsCleanup } from '../diagnostics/diagnostics';
-import type { HazardAttackEvent } from '../enemies/EnemySystem';
+import type { EnemyDeathEvent, HazardAttackEvent } from '../enemies/EnemySystem';
+import {
+  EFFECT_KINDS,
+  EffectsSystem,
+  type EffectKind,
+} from '../effects/EffectsSystem';
+import {
+  QualityController,
+  resolveEffectsQuality,
+  type QualityProfileName,
+  type QualitySelection,
+} from '../effects/quality';
 import { Hud } from '../hud/Hud';
 import { DesktopInput } from '../input/DesktopInput';
 import { EMPTY_INPUT_STATE, type InputState } from '../input/InputState';
 import { TouchInput } from '../input/TouchInput';
 import { DEFAULT_SAVE_DATA, type SaveData } from '../persistence/saveData';
+import type { PickupReward } from '../pickups/PickupSystem';
 import { Player } from '../player/Player';
 import { HordeRuntime } from '../waves/HordeRuntime';
 import { FacilityWorld } from '../world/FacilityWorld';
@@ -36,6 +49,7 @@ const HAZARD_POOL_TICK_MS = 700;
 const HAZARD_POOL_DAMAGE_FRACTION = 0.35;
 const MAX_HAZARD_POOLS = 20;
 const RESULTS_TRANSITION_DELAY_MS = 700;
+const QUALITY_WARMUP_MS = 2_000;
 
 type ProjectileImage = Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
@@ -142,6 +156,14 @@ export class GameScene extends Phaser.Scene {
   private combat: CombatSystem | null = null;
   private hud: Hud | null = null;
   private horde: HordeRuntime | null = null;
+  private audio: AudioSystem | null = null;
+  private effects: EffectsSystem | null = null;
+  private quality: QualityController | null = null;
+  private qualitySelection: QualitySelection = 'auto';
+  private qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
+  private readonly effectDisplays = new Map<number, Phaser.GameObjects.Graphics>();
+  private readonly effectDisplayPool: Phaser.GameObjects.Graphics[] = [];
+  private lastAlienSoundAt = Number.NEGATIVE_INFINITY;
   private projectileGroup: Phaser.Physics.Arcade.Group | null = null;
   private projectilePool: ProjectilePool<ProjectileImage, ProjectileInit> | null = null;
   private playerCollider: Phaser.Physics.Arcade.Collider | null = null;
@@ -170,6 +192,45 @@ export class GameScene extends Phaser.Scene {
     this.requestPause('manual');
   };
 
+  private readonly handleAudioGesture = (): void => {
+    const audio = this.audio;
+    if (audio === null) return;
+    void audio.unlock();
+  };
+
+  private readonly handleSettingsChanged = (
+    settings: SaveData['settings'],
+  ): void => {
+    this.applyRuntimeSettings(settings);
+  };
+
+  private readonly handleUiSound = (): void => {
+    this.audio?.playUI();
+  };
+
+  private readonly handleEnemyDeath = (event: EnemyDeathEvent): void => {
+    this.addBattleEffect('decals', event.x, event.y, false, 'splatter');
+    this.addBattleEffect(
+      'remains',
+      event.x,
+      event.y,
+      event.elite || event.enemyType === 'brute' || event.enemyType === 'carrier',
+      event.enemyType,
+    );
+    if (this.time.now - this.lastAlienSoundAt >= 240) {
+      this.lastAlienSoundAt = this.time.now;
+      this.audio?.playAlien();
+    }
+  };
+
+  private readonly handlePickupCollected = (
+    _reward: PickupReward,
+    position: Readonly<{ x: number; y: number }>,
+  ): void => {
+    this.addBattleEffect('particles', position.x, position.y, false, 'pickup');
+    this.audio?.playPickup();
+  };
+
   private readonly handleVisibilityChange = (): void => {
     if (document.visibilityState === 'hidden') this.requestPause('focus');
   };
@@ -189,6 +250,7 @@ export class GameScene extends Phaser.Scene {
     this.touchInput?.setModalBlocked(false);
     this.touchInput?.suspend();
     this.updatePortraitBlock();
+    if (!this.portraitBlocked) this.audio?.resumeAll();
   };
 
   private readonly handleProjectileBlockerCollision: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
@@ -199,6 +261,10 @@ export class GameScene extends Phaser.Scene {
 
     const runtime = this.projectileRuntime.get(projectile);
     if (!runtime) return;
+    this.addBattleEffect('particles', projectile.x, projectile.y, false, 'impact');
+    if (runtime.request.weaponId === 'rocket') {
+      this.addBattleEffect('decals', projectile.x, projectile.y, false, 'scorch');
+    }
     this.endProjectileAt(projectile, projectile.x, projectile.y);
   };
 
@@ -236,6 +302,9 @@ export class GameScene extends Phaser.Scene {
         y: Number.isFinite(knockbackY) ? knockbackY : 0,
       },
     );
+    if (hit.applied) {
+      this.addBattleEffect('particles', projectile.x, projectile.y, false, 'impact');
+    }
     if (hit.exhausted) this.releaseProjectile(projectile);
   };
 
@@ -263,6 +332,9 @@ export class GameScene extends Phaser.Scene {
       runtime.request,
       runtime.hitTracker,
     );
+    if (hit.applied) {
+      this.addBattleEffect('particles', projectile.x, projectile.y, false, 'boss-impact');
+    }
     if (hit.exhausted) this.releaseProjectile(projectile);
   };
 
@@ -330,6 +402,10 @@ export class GameScene extends Phaser.Scene {
     window.removeEventListener('blur', this.handleWindowBlur);
     window.removeEventListener('resize', this.handleViewportChange);
     window.removeEventListener('orientationchange', this.handleViewportChange);
+    window.removeEventListener('pointerdown', this.handleAudioGesture, true);
+    window.removeEventListener('keydown', this.handleAudioGesture, true);
+    this.game.events.off('settings-changed', this.handleSettingsChanged);
+    this.game.events.off('ui-sound', this.handleUiSound);
     this.events.off(Phaser.Scenes.Events.RESUME, this.handleSceneResume);
 
     this.cleanupDiagnostics?.();
@@ -374,6 +450,11 @@ export class GameScene extends Phaser.Scene {
     // Scene shutdown may already have detached these world-space Graphics.
     // Drop bookkeeping only and let Phaser finish destroying Scene ownership.
     this.clearHazardPools(false);
+    this.clearBattleEffects(false);
+    this.effects = null;
+    this.quality = null;
+    this.audio?.destroy();
+    this.audio = null;
 
     // Phaser has already begun dismantling scene-owned groups, bodies, and
     // display objects when SHUTDOWN is emitted. Drop our pool bookkeeping and
@@ -407,6 +488,24 @@ export class GameScene extends Phaser.Scene {
     this.activeProjectiles.clear();
     this.projectileRuntime.clear();
     this.hazardPools.clear();
+    this.effectDisplays.clear();
+    this.effectDisplayPool.length = 0;
+    this.qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
+    this.lastAlienSoundAt = Number.NEGATIVE_INFINITY;
+
+    const initialSettings = this.currentSettings();
+    this.qualitySelection = initialSettings.quality;
+    this.quality = new QualityController({ selection: initialSettings.quality });
+    this.effects = new EffectsSystem(this.quality.activeProfile);
+    this.audio = new AudioSystem({
+      master: initialSettings.masterVolume,
+      music: initialSettings.musicVolume,
+      effects: initialSettings.effectsVolume,
+    });
+    window.addEventListener('pointerdown', this.handleAudioGesture, true);
+    window.addEventListener('keydown', this.handleAudioGesture, true);
+    this.game.events.on('settings-changed', this.handleSettingsChanged);
+    this.game.events.on('ui-sound', this.handleUiSound);
 
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.cameras.main
@@ -461,8 +560,11 @@ export class GameScene extends Phaser.Scene {
       player,
       facility,
       onHazardAttack: this.handleHazardAttack,
+      onEnemyDeath: this.handleEnemyDeath,
+      onPickupCollected: this.handlePickupCollected,
     });
     this.horde = horde;
+    horde.setEffectsProfile(this.quality?.activeProfile ?? 'high');
     this.projectileEnemyOverlap = this.physics.add.overlap(
       this.projectileGroup,
       horde.enemyGroup,
@@ -515,6 +617,8 @@ export class GameScene extends Phaser.Scene {
     touchInput?.setBlocked(false);
 
     const deltaMs = safeDelta(delta);
+    this.updateAdaptiveQuality(deltaMs);
+    this.updateAudioIntensity(horde);
     if (this.resultTransitionRemainingMs !== null || this.resultSceneStarted) {
       this.advanceResultTransition(deltaMs, horde);
       return;
@@ -567,11 +671,26 @@ export class GameScene extends Phaser.Scene {
 
       const aimAngle = this.getAimAngle(input.aimWorldX, input.aimWorldY);
       if (input.fireHeld) {
-        for (const request of combat.fire(aimAngle)) {
-          projectileSpawned =
-            this.spawnProjectile({ request, kind: 'player' }) || projectileSpawned;
+        const requests = combat.fire(aimAngle);
+        let firedThisFrame = false;
+        for (const request of requests) {
+          const spawned = this.spawnProjectile({ request, kind: 'player' });
+          firedThisFrame = spawned || firedThisFrame;
+          projectileSpawned = spawned || projectileSpawned;
         }
-        if (projectileSpawned) this.showMuzzleFlash(aimAngle);
+        if (firedThisFrame && requests[0]) {
+          this.playWeaponSound(requests[0].weaponId);
+          if (['pistol', 'rifle', 'shotgun'].includes(requests[0].weaponId)) {
+            this.addBattleEffect(
+              'shellCasings',
+              player.sprite.x,
+              player.sprite.y,
+              false,
+              requests[0].weaponId,
+            );
+          }
+          this.showMuzzleFlash(aimAngle);
+        }
       }
 
       if (input.grenadePressed) {
@@ -587,8 +706,12 @@ export class GameScene extends Phaser.Scene {
             splashRadius: grenade.splashRadius,
             knockback: grenade.knockback,
           });
-          projectileSpawned =
-            this.spawnProjectile({ request, kind: 'grenade' }) || projectileSpawned;
+          const grenadeSpawned = this.spawnProjectile({
+            request,
+            kind: 'grenade',
+          });
+          projectileSpawned = grenadeSpawned || projectileSpawned;
+          if (grenadeSpawned) this.audio?.playRocket();
         }
       }
 
@@ -615,6 +738,8 @@ export class GameScene extends Phaser.Scene {
     this.pauseRequested = true;
     this.player?.stop();
     this.physics.world.pause();
+    this.audio?.pauseAll();
+    this.audio?.playUI();
     this.hideMuzzleFlash();
     this.touchInput?.setModalBlocked(true);
     this.desktopInput?.clearEdges();
@@ -640,10 +765,12 @@ export class GameScene extends Phaser.Scene {
       this.physics.world.pause();
       this.time.paused = true;
       this.tweens.pauseAll();
+      this.audio?.pauseAll();
     } else if (!this.pauseRequested) {
       this.physics.world.resume();
       this.time.paused = false;
       this.tweens.resumeAll();
+      this.audio?.resumeAll();
     }
   }
 
@@ -902,12 +1029,18 @@ export class GameScene extends Phaser.Scene {
 
   private createBlast(x: number, y: number, requestedRadius: number): void {
     if (this.shuttingDown) return;
-    if (
-      !this.currentSettings().reducedShake &&
-      !this.cameras.main.shakeEffect.isRunning
-    ) {
-      this.cameras.main.shake(110, 0.0035);
+    const settings = this.currentSettings();
+    const quality = resolveEffectsQuality(
+      this.quality?.activeProfile ?? 'high',
+      settings,
+    );
+    if (quality.shake > 0 && !this.cameras.main.shakeEffect.isRunning) {
+      this.cameras.main.shake(110, 0.0035 * quality.shake);
     }
+    this.audio?.playExplosion();
+    this.addBattleEffect('dynamicLights', x, y, false, 'blast');
+    this.addBattleEffect('particles', x, y, false, 'blast');
+    this.addBattleEffect('decals', x, y, false, 'scorch');
     const radius = Phaser.Math.Clamp(
       Number.isFinite(requestedRadius) && requestedRadius > 0 ? requestedRadius : 72,
       56,
@@ -938,6 +1071,236 @@ export class GameScene extends Phaser.Scene {
     this.blastTweens.add(tween);
   }
 
+  private applyRuntimeSettings(settings: SaveData['settings']): void {
+    this.audio?.setVolumes({
+      master: settings.masterVolume,
+      music: settings.musicVolume,
+      effects: settings.effectsVolume,
+    });
+    if (settings.quality === this.qualitySelection) return;
+    const currentProfile = this.quality?.activeProfile ?? 'high';
+    this.qualitySelection = settings.quality;
+    this.quality = new QualityController({
+      selection: settings.quality,
+      initialAutoProfile:
+        settings.quality === 'auto' ? currentProfile : undefined,
+    });
+    this.qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
+    this.setEffectsProfile(this.quality.activeProfile);
+  }
+
+  private updateAdaptiveQuality(deltaMs: number): void {
+    const quality = this.quality;
+    const effects = this.effects;
+    if (!quality || !effects || !this.missionStarted) return;
+    if (this.qualityWarmupRemainingMs > 0) {
+      this.qualityWarmupRemainingMs = Math.max(
+        0,
+        this.qualityWarmupRemainingMs - deltaMs,
+      );
+      return;
+    }
+    const previous = quality.activeProfile;
+    const active = quality.recordFrame(deltaMs);
+    if (active === previous) return;
+    this.setEffectsProfile(active);
+  }
+
+  private setEffectsProfile(profile: QualityProfileName): void {
+    const effects = this.effects;
+    if (!effects) return;
+    effects.setProfile(profile);
+    if (profile === 'low') {
+      for (const light of effects.snapshot('dynamicLights')) {
+        effects.remove(light.id);
+      }
+    }
+    this.horde?.setEffectsProfile(profile);
+    this.syncEffectDisplays();
+  }
+
+  private resetQualityForRun(): void {
+    this.qualityWarmupRemainingMs = QUALITY_WARMUP_MS;
+    if (this.qualitySelection !== 'auto') return;
+    this.quality = new QualityController({ selection: 'auto' });
+    this.setEffectsProfile(this.quality.activeProfile);
+  }
+
+  private updateAudioIntensity(horde: HordeRuntime): void {
+    const wave = this.combat?.getSnapshot().wave ?? 0;
+    const intensity =
+      horde.phase === 'boss'
+        ? 1
+        : horde.phase === 'combat'
+          ? Math.min(0.95, 0.32 + wave * 0.075)
+          : horde.phase === 'idle'
+            ? 0.18
+            : 0.08;
+    this.audio?.setMusicIntensity(intensity);
+  }
+
+  private playWeaponSound(weaponId: WeaponId): void {
+    switch (weaponId) {
+      case 'pistol':
+        this.audio?.playPistol();
+        break;
+      case 'rifle':
+        this.audio?.playRifle();
+        break;
+      case 'shotgun':
+        this.audio?.playShotgun();
+        break;
+      case 'plasma':
+        this.audio?.playPlasma();
+        break;
+      case 'rocket':
+        this.audio?.playRocket();
+        break;
+    }
+  }
+
+  private addBattleEffect(
+    kind: EffectKind,
+    x: number,
+    y: number,
+    major: boolean,
+    label: string,
+  ): void {
+    const effects = this.effects;
+    if (
+      !effects ||
+      !Number.isFinite(x) ||
+      !Number.isFinite(y) ||
+      this.shuttingDown
+    ) {
+      return;
+    }
+    const record = effects.add(kind, { label, major });
+    if (record === null) return;
+    this.syncEffectDisplays();
+    if (kind === 'dynamicLights' && effects.profile === 'low') {
+      effects.remove(record.id);
+      return;
+    }
+    const display = this.createEffectDisplay(record.id, kind, x, y, major, label);
+    this.effectDisplays.set(record.id, display);
+  }
+
+  private createEffectDisplay(
+    id: number,
+    kind: EffectKind,
+    x: number,
+    y: number,
+    major: boolean,
+    label: string,
+  ): Phaser.GameObjects.Graphics {
+    const graphics = this.effectDisplayPool.pop() ?? this.add.graphics();
+    graphics
+      .clear()
+      .setPosition(x, y)
+      .setAlpha(1)
+      .setScale(1)
+      .setRotation(0)
+      .setBlendMode(Phaser.BlendModes.NORMAL)
+      .setVisible(true)
+      .setActive(true);
+    const rotation = ((id * 47) % 360) * (Math.PI / 180);
+    switch (kind) {
+      case 'dynamicLights':
+        graphics.fillStyle(0xf39237, 0.14);
+        graphics.fillCircle(0, 0, 54);
+        graphics.setBlendMode(Phaser.BlendModes.ADD).setDepth(y + 5);
+        break;
+      case 'particles':
+        graphics.lineStyle(2, label === 'pickup' ? 0x69d8e7 : 0xf39237, 0.9);
+        for (let index = 0; index < 6; index += 1) {
+          const angle = rotation + (index / 6) * Math.PI * 2;
+          graphics.lineBetween(
+            Math.cos(angle) * 5,
+            Math.sin(angle) * 5,
+            Math.cos(angle) * 18,
+            Math.sin(angle) * 18,
+          );
+        }
+        graphics.setDepth(y + 8);
+        break;
+      case 'decals':
+        graphics.fillStyle(label === 'scorch' ? 0x17120f : 0x6f171b, 0.62);
+        graphics.fillEllipse(
+          0,
+          0,
+          label === 'scorch' ? 38 : 26,
+          label === 'scorch' ? 24 : 18,
+        );
+        graphics.setRotation(rotation).setDepth(Math.max(-10, y - 24));
+        break;
+      case 'remains':
+        graphics.fillStyle(major ? 0x35582c : 0x294425, major ? 0.88 : 0.72);
+        graphics.fillEllipse(0, 0, major ? 42 : 28, major ? 24 : 16);
+        graphics.lineStyle(2, 0x7ebf43, major ? 0.5 : 0.3);
+        graphics.strokeEllipse(0, 0, major ? 42 : 28, major ? 24 : 16);
+        graphics.setRotation(rotation).setDepth(Math.max(-9, y - 20));
+        break;
+      case 'shellCasings':
+        graphics.fillStyle(0xc68b39, 0.9);
+        graphics.fillRect(-4, -1, 8, 3);
+        graphics.setRotation(rotation).setDepth(Math.max(-8, y - 14));
+        break;
+    }
+
+    if (kind === 'particles' || kind === 'dynamicLights') {
+      this.tweens.add({
+        targets: graphics,
+        alpha: 0,
+        scale: kind === 'particles' ? 1.45 : 1.25,
+        duration: kind === 'particles' ? 190 : 150,
+        ease: 'Quad.Out',
+        onComplete: (): void => this.removeBattleEffect(id),
+      });
+    }
+    return graphics;
+  }
+
+  private removeBattleEffect(id: number): void {
+    this.effects?.remove(id);
+    const display = this.effectDisplays.get(id);
+    this.effectDisplays.delete(id);
+    if (display) this.releaseEffectDisplay(display);
+  }
+
+  private releaseEffectDisplay(display: Phaser.GameObjects.Graphics): void {
+    if (!display.active) return;
+    this.tweens.killTweensOf(display);
+    display.clear().setVisible(false).setActive(false);
+    this.effectDisplayPool.push(display);
+  }
+
+  private syncEffectDisplays(): void {
+    const effects = this.effects;
+    if (!effects) return;
+    const retained = new Set<number>();
+    for (const kind of EFFECT_KINDS) {
+      for (const effect of effects.snapshot(kind)) retained.add(effect.id);
+    }
+    for (const [id, display] of this.effectDisplays) {
+      if (retained.has(id)) continue;
+      this.effectDisplays.delete(id);
+      this.releaseEffectDisplay(display);
+    }
+  }
+
+  private clearBattleEffects(recycleDisplays: boolean): void {
+    this.effects?.clear();
+    if (recycleDisplays) {
+      for (const display of this.effectDisplays.values()) {
+        this.releaseEffectDisplay(display);
+      }
+    } else {
+      this.effectDisplayPool.length = 0;
+    }
+    this.effectDisplays.clear();
+  }
+
   private currentSettings(): SaveData['settings'] {
     const settings = this.registry.get('settings') as
       | SaveData['settings']
@@ -952,7 +1315,12 @@ export class GameScene extends Phaser.Scene {
     combat.applyDamage(amount);
     if (combat.getSnapshot().health >= healthBefore) return;
 
-    if (!this.currentSettings().reducedFlash) {
+    const settings = this.currentSettings();
+    const quality = resolveEffectsQuality(
+      this.quality?.activeProfile ?? 'high',
+      settings,
+    );
+    if (!settings.reducedFlash && quality.flash >= 0.5) {
       this.cameras.main.flash(80, 244, 239, 230, false);
       return;
     }
@@ -1064,6 +1432,7 @@ export class GameScene extends Phaser.Scene {
   private initiateLockdown(): void {
     if (this.missionStarted) return;
     this.missionStarted = true;
+    this.audio?.playAlarm();
     this.horde?.startArrival();
   }
 
@@ -1076,6 +1445,7 @@ export class GameScene extends Phaser.Scene {
     this.resetResultTransition();
     this.clearProjectiles();
     this.clearHazardPools(true);
+    this.clearBattleEffects(true);
     this.hideMuzzleFlash();
     combat.reset();
     facility.reset();
@@ -1089,6 +1459,8 @@ export class GameScene extends Phaser.Scene {
     this.touchInput?.suspend();
     this.updatePortraitBlock();
     this.missionStarted = false;
+    this.resetQualityForRun();
+    this.audio?.setMusicIntensity(0.08);
     this.cameras.main.centerOn(player.sprite.x, player.sprite.y);
     this.hud?.setRadarState(
       player.sprite.x,
@@ -1101,6 +1473,7 @@ export class GameScene extends Phaser.Scene {
     const getSnapshot = () => this.combat?.getSnapshot();
     const getHorde = () => this.horde;
     const getActiveProjectileCount = () => this.activeProjectiles.size;
+    const getActiveQuality = () => this.quality?.activeProfile ?? 'unknown';
     const getTouchControlsVisible = () => this.touchInput?.enabled ?? false;
     this.cleanupDiagnostics = installDiagnostics({
       get phase(): 'arrival' | 'armory' | 'combat' | 'boss' | 'victory' | 'defeat' {
@@ -1125,6 +1498,9 @@ export class GameScene extends Phaser.Scene {
       },
       get wave(): number {
         return getSnapshot()?.wave ?? 0;
+      },
+      get activeQuality(): string {
+        return getActiveQuality();
       },
       get touchControlsVisible(): boolean {
         return getTouchControlsVisible();

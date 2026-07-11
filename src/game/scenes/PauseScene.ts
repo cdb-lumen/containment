@@ -259,6 +259,7 @@ export class PauseScene extends Phaser.Scene {
     };
     this.registry.set('settings', nextSettings);
     this.registry.set('saveData', nextSave);
+    this.game.events.emit('settings-changed', nextSettings);
     this.registry.set('reducedMotion', this.prefersReducedMotion());
     try {
       persistSaveData(window.localStorage, nextSave);
@@ -310,6 +311,7 @@ export class PauseScene extends Phaser.Scene {
       this.root.inert = true;
       this.root.setAttribute('aria-busy', 'true');
     }
+    this.game.events.emit('ui-sound');
     return true;
   }
 }
