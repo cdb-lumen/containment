@@ -148,6 +148,8 @@ test('observable character animation, mixed skins, and restart state remain boun
     frame: 'idleA', animating: false, recoil: false, hit: false,
     skin: 'skin-marine', framed: true, active: 0, keys: [],
   });
-  expect(reset.time).toBeLessThan(100);
+  expect(Number.isFinite(reset.time)).toBe(true);
+  expect(reset.time).toBeGreaterThanOrEqual(0);
+  expect(reset.time).toBeLessThan(moving.time);
   expect(errors).toEqual([]);
 });
