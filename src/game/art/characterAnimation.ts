@@ -111,10 +111,13 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
       rotationOffset = wave * 0.018;
       break;
     case 'queen':
-      offsetY = wave * 0.45;
-      scaleX = 1 + wave * 0.009;
-      scaleY = 1 - wave * 0.009;
-      emissiveAlpha = 0.12 + wave * 0.03;
+      {
+        const breath = Math.sin((nowMs / 4_000 + phase) * TAU);
+        offsetY = breath * 0.45;
+        scaleX = 1 + breath * 0.009;
+        scaleY = 1 - breath * 0.009;
+        emissiveAlpha = 0.12 + breath * 0.03;
+      }
       break;
     case 'marine':
       offsetY = moving ? Math.abs(step) * -0.45 : wave * 0.12;
@@ -123,9 +126,11 @@ export const characterAnimation = (input: CharacterAnimationInput): CharacterAni
   }
 
   // Quality only controls optional secondary effects; semantic frames remain intact.
+  // The spitter's scale pulse is optional, while the queen's slow breathing is
+  // required family communication and is disabled only by reduced motion.
   const qualityFactor = input.quality === 'high' ? 1 : input.quality === 'medium' ? 0.5 : 0;
   emissiveAlpha *= qualityFactor;
-  if (input.quality === 'low' && (input.skin === 'spitter' || input.skin === 'queen')) {
+  if (input.quality === 'low' && input.skin === 'spitter') {
     scaleX = 1;
     scaleY = 1;
   }
