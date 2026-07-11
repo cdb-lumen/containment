@@ -14,6 +14,33 @@ test('serves the production artifact from the GitHub Pages subpath', async ({ pa
   await expect(page.locator('canvas')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Deploy' })).toBeAttached();
   expect(await page.evaluate(() => window.__ALIEN_GAME__)).toBeUndefined();
+  expect(await page.evaluate(() => window.__ALIEN_BOOT__)).toBeUndefined();
+  const productionScripts = await page.evaluate(async () =>
+    Promise.all(
+      [...document.scripts]
+        .map((script) => script.src)
+        .filter(Boolean)
+        .map(async (source) => fetch(source).then((response) => response.text())),
+    ),
+  );
+  const productionBundle = productionScripts.join('\n');
+  for (const diagnosticName of [
+    'playerSkinKey',
+    'playerFrame',
+    'playerAnimating',
+    'playerRecoil',
+    'playerHit',
+    'playerVisualOffsetX',
+    'playerVisualRotationOffset',
+    'playerFallbackFramed',
+    'activeEnemySkinKeys',
+    'framedEnemyCount',
+    'enemyVisualCount',
+    'presentationTimeMs',
+    'focusQueenArena',
+  ]) {
+    expect(productionBundle).not.toContain(diagnosticName);
+  }
 
   const assetChecks = await page.evaluate(async () => {
     const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.href;

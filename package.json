@@ -23,7 +23,8 @@
     "test": "vitest run",
     "test:e2e": "npm run build && playwright test",
     "lint": "eslint .",
-    "verify": "npm run lint && npm run test && npm run test:e2e"
+    "validate:assets": "node scripts/validate-character-assets.mjs",
+    "verify": "npm run validate:assets && npm run lint && npm run test && npm run test:e2e"
   },
   "dependencies": {
     "phaser": "4.2.1"

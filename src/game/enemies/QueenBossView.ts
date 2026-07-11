@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 import { TEXTURE_KEYS } from '../art/createTextures';
+import { CHARACTER_SKINS, resolveCharacterSkinTexture } from '../art/characterSkins';
+import type { QualityProfileName } from '../effects/quality';
 import { ObjectPool } from '../pools/ObjectPool';
 import {
   AREA_ATTACK_DELAY_MS,
@@ -9,6 +11,7 @@ import {
   type QueenDamageTarget,
   type QueenNestSnapshot,
 } from './QueenBossSystem';
+import { QueenPresentationState } from './QueenPresentationState';
 
 const POOL_SIZE = 7;
 const QUEEN_KEY = 'queen';
@@ -81,6 +84,7 @@ export class QueenBossView {
   readonly group: Phaser.Physics.Arcade.Group;
 
   readonly #scene: Phaser.Scene;
+  readonly #getPresentationTime: () => number;
   readonly #statusLayer: Phaser.GameObjects.Graphics;
   readonly #telegraphLayer: Phaser.GameObjects.Graphics;
   readonly #spritesByKey = new Map<string, QueenBossImage>();
@@ -91,7 +95,12 @@ export class QueenBossView {
   readonly #eventEffects = new Set<Phaser.GameObjects.Graphics>();
   readonly #effectTweens = new Map<Phaser.GameObjects.Graphics, Phaser.Tweens.Tween>();
   readonly #mutableRadarPositions: MutableRadarPosition[] = [];
+  readonly #queenPresentation = new QueenPresentationState();
+  readonly #queenArt: Phaser.GameObjects.Image | null;
+  readonly #queenFramed: boolean;
   #pool: ObjectPool<QueenBossImage, BossViewInit> | null;
+  #quality: QualityProfileName = 'high';
+  #queenDeathRetained = false;
   #destroyed = false;
 
   readonly #handleSceneShutdown = (): void => {
@@ -109,16 +118,27 @@ export class QueenBossView {
     this.#eventEffects.clear();
     this.#effectTweens.clear();
     this.#mutableRadarPositions.length = 0;
+    this.#queenPresentation.release();
+    this.#queenDeathRetained = false;
   };
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, getPresentationTime: () => number = () => 0) {
     this.#scene = scene;
+    this.#getPresentationTime = getPresentationTime;
     this.group = scene.physics.add.group({
       allowGravity: false,
       immovable: true,
     });
     this.#telegraphLayer = scene.add.graphics().setDepth(TELEGRAPH_DEPTH);
     this.#statusLayer = scene.add.graphics().setDepth(STATUS_DEPTH);
+    const queenTexture = resolveCharacterSkinTexture(
+      (key): boolean => scene.textures?.exists?.(key) === true,
+      'queen',
+    );
+    this.#queenFramed = queenTexture.framed;
+    this.#queenArt = queenTexture.framed
+      ? scene.add.image(0, 0, queenTexture.texture).setActive(false).setVisible(false)
+      : null;
     this.#pool = this.#createPool();
     scene.events.once(Phaser.Scenes.Events.SHUTDOWN, this.#handleSceneShutdown);
   }
@@ -131,9 +151,15 @@ export class QueenBossView {
     return this.#mutableRadarPositions;
   }
 
+  setQuality(profile: QualityProfileName): void {
+    this.#quality = profile;
+  }
+
   /** Matches the seven pooled overlap images to stable queen/nest target keys. */
   sync(snapshot: QueenBossSnapshot): void {
     if (this.#destroyed || this.#pool === null) return;
+
+    if (snapshot.active && this.#queenDeathRetained) this.#resetQueenArt();
 
     const inits = this.#snapshotInits(snapshot);
     this.#seenKeys.clear();
@@ -158,6 +184,7 @@ export class QueenBossView {
     }
 
     this.#updateRadar(snapshot);
+    this.#updateQueenArt(snapshot);
     this.#redrawStatus(snapshot);
     this.#redrawTelegraph(snapshot);
   }
@@ -177,6 +204,7 @@ export class QueenBossView {
   handleEvent(event: QueenBossEvent): void {
     if (this.#destroyed || this.#handledEventIds.has(event.eventId)) return;
     this.#handledEventIds.add(event.eventId);
+    this.#queenPresentation.handleEvent(event, this.#getPresentationTime());
 
     switch (event.type) {
       case 'area-telegraph':
@@ -189,11 +217,22 @@ export class QueenBossView {
         this.#createPulse(event.x, event.y, NEST_BODY_RADIUS * 1.4, COLORS.orange, 0.8);
         break;
       case 'queen-defeated':
+        this.#queenDeathRetained = true;
+        this.#queenArt?.setPosition(event.x, event.y)
+          .setActive(true).setVisible(true)
+          .setFrame(CHARACTER_SKINS.queen.frames.death)
+          .setAlpha(0.65).setScale(0.9).setRotation(0.08);
         this.#createPulse(event.x, event.y, QUEEN_BODY_RADIUS * 1.35, COLORS.cyan, 0.85);
         break;
       case 'minion-spawn-request':
         break;
     }
+  }
+
+  /** Hit communication is accepted only after the domain reports a real decrease. */
+  handleAppliedDamage(target: QueenDamageTarget, appliedDecrease: boolean): void {
+    if (this.#destroyed || target.type !== 'queen') return;
+    this.#queenPresentation.triggerHit(this.#getPresentationTime(), appliedDecrease);
   }
 
   /** Provides restrained cyan shield feedback for a consumed armored hit. */
@@ -215,6 +254,7 @@ export class QueenBossView {
     this.#handledEventIds.clear();
     this.#mutableRadarPositions.length = 0;
     this.#clearEffects(true);
+    this.#resetQueenArt();
   }
 
   /** Idempotent manual teardown. Scene shutdown uses the reference-only path. */
@@ -229,6 +269,7 @@ export class QueenBossView {
     this.#destroyed = true;
     this.#statusLayer.destroy();
     this.#telegraphLayer.destroy();
+    this.#queenArt?.destroy();
     this.group.destroy(true, true);
     this.#ownedSprites.clear();
     this.#spritesByKey.clear();
@@ -262,6 +303,7 @@ export class QueenBossView {
         },
         deactivate: (sprite): void => {
           const target = this.#targetBySprite.get(sprite);
+          if (target?.type === 'queen' && !this.#queenDeathRetained) this.#resetQueenArt();
           if (target) this.#spritesByKey.delete(targetKey(target));
           this.#targetBySprite.delete(sprite);
           sprite.body.setVelocity(0, 0);
@@ -336,6 +378,39 @@ export class QueenBossView {
     sprite.body.setImmovable(true);
     sprite.body.setVelocity(0, 0);
     sprite.setCircle(sourceRadius, offset, offset);
+  }
+
+  #updateQueenArt(snapshot: QueenBossSnapshot): void {
+    const body = this.#spritesByKey.get(QUEEN_KEY);
+    const art = this.#queenArt;
+    if (!body || !art || !this.#queenFramed || !snapshot.active) {
+      if (body) body.setVisible(true);
+      if (!snapshot.active && !this.#queenDeathRetained) this.#resetQueenArt();
+      return;
+    }
+    const settings = this.#scene.registry.get('settings') as { reducedFlash?: boolean } | undefined;
+    const output = this.#queenPresentation.update(
+      snapshot, this.#getPresentationTime(), this.#quality,
+      this.#scene.registry.get('reducedMotion') === true,
+      settings?.reducedFlash === true,
+    );
+    body.setVisible(false);
+    art.setTexture(CHARACTER_SKINS.queen.texture)
+      .setFrame(CHARACTER_SKINS.queen.frames[output.frame])
+      .setPosition(snapshot.x + output.offsetX, snapshot.y + output.offsetY)
+      .setDisplaySize(QUEEN_DISPLAY_SIZE * output.scaleX, QUEEN_DISPLAY_SIZE * output.scaleY)
+      .setRotation(snapshot.rotation + output.rotationOffset)
+      .setAlpha(Math.min(1, 0.78 + output.emissiveAlpha))
+      .setDepth(snapshot.y + 2).setActive(true).setVisible(true);
+    if (output.hitBrightness > 0) art.setTint(0xffffff);
+    else art.clearTint();
+  }
+
+  #resetQueenArt(): void {
+    this.#queenDeathRetained = false;
+    this.#queenPresentation.release();
+    this.#queenArt?.setActive(false).setVisible(false).setPosition(0, 0)
+      .setRotation(0).setAlpha(1).setScale(1).clearTint().setFrame(0);
   }
 
   #updateRadar(snapshot: QueenBossSnapshot): void {

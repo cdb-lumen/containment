@@ -7,6 +7,7 @@ import {
   type ProjectileRequest,
 } from '../combat/CombatSystem';
 import { MAX_ACTIVE_ENEMIES } from '../constants';
+import type { QualityProfileName } from '../effects/quality';
 import type { Player } from '../player/Player';
 import {
   AREA_ATTACK_RANGE,
@@ -34,6 +35,7 @@ export type BossRuntimeOptions = Readonly<{
   scene: Phaser.Scene;
   combat: CombatSystem;
   player: Player;
+  getPresentationTime?: () => number;
   getOccupiedEnemyCapacity(): number;
   spawnMinion(event: MinionSpawnRequestEvent): boolean;
   onQueenDefeated(event: QueenDefeatedEvent): void;
@@ -75,6 +77,22 @@ const stableTargetId = (target: QueenDamageTarget): string =>
 const isObject = (value: unknown): value is object =>
   value !== null && (typeof value === 'object' || typeof value === 'function');
 
+export const routeQueenBossEventPresentation = (
+  event: QueenBossEvent,
+  signal: (event: QueenBossEvent) => void,
+): boolean => {
+  switch (event.type) {
+    case 'area-telegraph':
+    case 'area-attack':
+    case 'queen-defeated':
+      signal(event);
+      return true;
+    case 'minion-spawn-request':
+    case 'nest-destroyed':
+      return false;
+  }
+};
+
 /**
  * Phaser runtime seam over QueenBossSystem. The pure system remains authoritative;
  * this adapter routes callbacks, player damage, projectile dedupe, and its view.
@@ -102,7 +120,7 @@ export class BossRuntime {
     this.#getOccupiedEnemyCapacity = options.getOccupiedEnemyCapacity;
     this.#spawnMinion = options.spawnMinion;
     this.#onQueenDefeated = options.onQueenDefeated;
-    this.#view = new QueenBossView(options.scene);
+    this.#view = new QueenBossView(options.scene, options.getPresentationTime);
     this.#scene.events.once(
       Phaser.Scenes.Events.SHUTDOWN,
       this.#handleSceneShutdown,
@@ -127,6 +145,10 @@ export class BossRuntime {
 
   get snapshot(): QueenBossSnapshot {
     return this.#system.snapshot;
+  }
+
+  setQuality(profile: QualityProfileName): void {
+    this.#view.setQuality(profile);
   }
 
   start(x: number, y: number): boolean {
@@ -173,7 +195,7 @@ export class BossRuntime {
     }
 
     const damage = this.#system.applyDamage(target, request.damage);
-    if (damage.blockedByArmor) this.#view.handleShieldBlocked(target);
+    this.#routeDamagePresentation(target, damage);
     this.#processDamage(damage);
     this.#syncView();
     return Object.freeze({
@@ -234,11 +256,9 @@ export class BossRuntime {
       if (amount <= 0) continue;
 
       const damage = this.#system.applyDamage(candidate.target, amount);
+      this.#routeDamagePresentation(candidate.target, damage);
       if (damage.applied) appliedCount += 1;
-      if (damage.blockedByArmor) {
-        blockedCount += 1;
-        this.#view.handleShieldBlocked(candidate.target);
-      }
+      if (damage.blockedByArmor) blockedCount += 1;
       if (damage.destroyed) destroyedCount += 1;
       if (damage.defeated) defeated = true;
       this.#processDamage(damage);
@@ -308,6 +328,16 @@ export class BossRuntime {
     this.#dispose(true);
   }
 
+  #routeDamagePresentation(target: QueenDamageTarget, damage: QueenDamageResult): void {
+    if (target.type !== 'queen') return;
+    if (damage.blockedByArmor) {
+      this.#view.handleAppliedDamage(target, true);
+      this.#view.handleShieldBlocked(target);
+    } else if (damage.applied) {
+      this.#view.handleAppliedDamage(target, true);
+    }
+  }
+
   #playerPoint(): Readonly<{ x: number; y: number; radius: number }> {
     const sprite = this.#player.sprite;
     const radius =
@@ -349,7 +379,9 @@ export class BossRuntime {
     for (const event of events) {
       if (this.#processedEventIds.has(event.eventId)) continue;
       this.#processedEventIds.add(event.eventId);
-      this.#view.handleEvent(event);
+      if (!routeQueenBossEventPresentation(event, (routed) => this.#view.handleEvent(routed))) {
+        this.#view.handleEvent(event);
+      }
 
       switch (event.type) {
         case 'minion-spawn-request':
@@ -365,6 +397,9 @@ export class BossRuntime {
           }
           break;
         case 'queen-defeated':
+          // Death art is routed above. Release the snapshot-authoritative overlap
+          // body before observers can transition or inspect the defeated scene.
+          this.#syncView();
           try {
             this.#onQueenDefeated(event);
           } catch {

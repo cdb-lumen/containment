@@ -47,12 +47,79 @@ test('deploys, pauses, applies quality live, and resets run isolation', async ({
   await expect
     .poll(() => page.evaluate(() => window.__ALIEN_GAME__?.playerHealth ?? 100))
     .toBeLessThan(100);
+  await expect.poll(
+    () => page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0),
+  ).toBeGreaterThan(250);
+  const priorPresentationTime = await page.evaluate(
+    () => window.__ALIEN_GAME__?.presentationTimeMs ?? 0,
+  );
   await page.evaluate(() => window.__ALIEN_GAME__?.restart());
   await page.waitForFunction(() => window.__ALIEN_GAME__?.playerHealth === 100);
+  const restartedPresentationTime = await page.evaluate(
+    () => window.__ALIEN_GAME__?.presentationTimeMs ?? Number.POSITIVE_INFINITY,
+  );
+  expect(restartedPresentationTime).toBeLessThan(100);
+  expect(restartedPresentationTime).toBeLessThan(priorPresentationTime);
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeQuality)).toBe('high');
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeEnemies)).toBe(0);
   await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.activeProjectiles)).toBe(0);
   expect(errors).toEqual([]);
+});
+
+test('reports reduced motion and reduced flash from their independent canonical sources', async ({ browser }) => {
+  const reducedContext = await browser.newContext();
+  const reducedPage = await reducedContext.newPage();
+  await reducedPage.emulateMedia({ reducedMotion: 'reduce' });
+  await openGame(reducedPage);
+  await deploy(reducedPage);
+  await expect.poll(() => reducedPage.evaluate(() => window.__ALIEN_GAME__?.reducedMotion)).toBe(true);
+  await expect.poll(() => reducedPage.evaluate(() => window.__ALIEN_GAME__?.reducedFlash)).toBe(false);
+  await reducedContext.close();
+
+  const normalContext = await browser.newContext();
+  const normalPage = await normalContext.newPage();
+  await openGame(normalPage);
+  await deploy(normalPage);
+  await expect.poll(() => normalPage.evaluate(() => window.__ALIEN_GAME__?.reducedMotion)).toBe(false);
+  await normalPage.keyboard.press('Escape');
+  await normalPage.getByLabel('Reduce bright flashes').check();
+  await expect.poll(() => normalPage.evaluate(() => window.__ALIEN_GAME__?.reducedFlash)).toBe(true);
+  await expect.poll(() => normalPage.evaluate(() => window.__ALIEN_GAME__?.reducedMotion)).toBe(false);
+  await normalContext.close();
+});
+
+test('stops the marine presentation immediately at idle while preserving aim', async ({ page }) => {
+  await openGame(page);
+  await deploy(page);
+  const canvas = page.locator('canvas');
+  const bounds = await canvas.boundingBox();
+  expect(bounds).not.toBeNull();
+  if (!bounds) return;
+  await page.mouse.move(bounds.x + bounds.width * 0.8, bounds.y + bounds.height * 0.35);
+  await page.keyboard.down('KeyD');
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.playerAnimating)).toBe(true);
+  await page.mouse.down();
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.playerRecoil)).toBe(true);
+  await page.mouse.up();
+  await page.keyboard.up('KeyD');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog', { name: 'Mission paused' })).toBeVisible();
+  const moving = await page.evaluate(() => ({
+    frame: window.__ALIEN_GAME__?.playerFrame,
+    time: window.__ALIEN_GAME__?.presentationTimeMs,
+  }));
+  await page.waitForTimeout(600);
+  await expect.poll(() => page.evaluate(() => ({
+    frame: window.__ALIEN_GAME__?.playerFrame,
+    time: window.__ALIEN_GAME__?.presentationTimeMs,
+  }))).toEqual(moving);
+  await page.getByRole('button', { name: 'Resume mission' }).click();
+  const resumedAt = await page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0);
+  expect(resumedAt - (moving.time ?? 0)).toBeLessThan(100);
+  await expect.poll(() => page.evaluate(() => window.__ALIEN_GAME__?.presentationTimeMs ?? 0))
+    .toBeGreaterThan(resumedAt);
+  expect(Math.abs(await page.evaluate(() => window.__ALIEN_GAME__?.playerBodyRotation ?? 0))).toBeGreaterThan(0.01);
+  expect(await page.evaluate(() => window.__ALIEN_GAME__?.playerFallbackFramed)).toBe(true);
 });
 
 test('exposes accessible results actions and restarts a fresh run', async ({ page }) => {

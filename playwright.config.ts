@@ -15,7 +15,7 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop-chromium',
-      testMatch: /desktop\.spec\.ts/,
+      testMatch: /(?:desktop|boot-lifecycle)\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 720 },
@@ -24,6 +24,14 @@ export default defineConfig({
     {
       name: 'production-chromium',
       testMatch: /production\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
+      name: 'character-visuals-chromium',
+      testMatch: /characterVisuals\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 720 },

@@ -93,11 +93,24 @@ export type HordePickupHandler = (
   position: Readonly<{ x: number; y: number }>,
 ) => void;
 
+export type EnemyAttackPresentationSignal = (enemyId: number) => boolean;
+
+/** Routes only explicit attack events; the signal decides whether the ID is still active. */
+export const routeEnemyAttackPresentation = (
+  event: EnemyEvent,
+  signal: EnemyAttackPresentationSignal,
+): boolean => {
+  if (event.type !== 'contact-attack' && event.type !== 'hazard-attack') return false;
+  if (!Number.isSafeInteger(event.enemyId) || event.enemyId < 0) return false;
+  return signal(event.enemyId);
+};
+
 export type HordeRuntimeOptions = Readonly<{
   scene: Phaser.Scene;
   combat: CombatSystem;
   player: Player;
   facility: FacilityWorld;
+  getPresentationTime?: () => number;
   onHazardAttack: HordeHazardAttackHandler;
   onEnemyDeath?: HordeEnemyDeathHandler;
   onPickupCollected?: HordePickupHandler;
@@ -212,12 +225,14 @@ export class HordeRuntime {
     this.#pickupSystem = new PickupSystem(this.#initialSeed);
     this.#upgradeSystem = new UpgradeSystem();
     this.#runState = new RunState();
-    this.#enemyView = new EnemyView(this.#scene);
+    const getPresentationTime = options.getPresentationTime ?? (() => 0);
+    this.#enemyView = new EnemyView(this.#scene, getPresentationTime);
     this.#pickupView = new PickupView(this.#scene);
     this.#bossRuntime = new BossRuntime({
       scene: this.#scene,
       combat: this.#combat,
       player: this.#player,
+      getPresentationTime,
       getOccupiedEnemyCapacity: (): number => this.#occupiedEnemyCapacity(),
       spawnMinion: (event): boolean => this.#spawnBossMinion(event),
       onQueenDefeated: (event): void => this.#handleQueenDefeated(event),
@@ -256,6 +271,10 @@ export class HordeRuntime {
     return this.#enemySystem.activeCount + this.#bossRuntime.activeCount;
   }
 
+  get presentationSkinKeys(): readonly string[] { return this.#enemyView.activeSkinKeys; }
+  get framedPresentationCount(): number { return this.#enemyView.framedCount; }
+  get presentationObjectCount(): number { return this.#enemyView.visualCount; }
+
   get activePickups(): number {
     return this.#pickupSystem.snapshot.length;
   }
@@ -272,6 +291,8 @@ export class HordeRuntime {
   }
 
   setEffectsProfile(profile: QualityProfileName): void {
+    this.#enemyView.setQuality(profile);
+    this.#bossRuntime.setQuality(profile);
     this.#breachEffectLimit = Math.min(
       MAX_BREACH_EFFECTS,
       QUALITY_PROFILES[profile].dynamicLights,
@@ -697,6 +718,7 @@ export class HordeRuntime {
 
   #processEnemyEvents(events: readonly EnemyEvent[]): void {
     for (const event of events) {
+      routeEnemyAttackPresentation(event, (enemyId) => this.#enemyView.triggerAttack(enemyId));
       switch (event.type) {
         case 'contact-attack':
           this.#combat.applyDamage(event.damage);
