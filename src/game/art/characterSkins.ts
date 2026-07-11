@@ -73,3 +73,39 @@ export const CHARACTER_SKINS: Readonly<Record<CharacterSkinId, CharacterSkinDefi
     carrier: defineSkin('carrier', TEXTURE_KEYS.alienDrone),
     queen: defineSkin('queen', TEXTURE_KEYS.alienQueen, 160),
   });
+
+export type CharacterSkinLoadDescriptor = Readonly<{
+  key: CharacterSkinDefinition['texture'];
+  url: CharacterSkinDefinition['url'];
+  frameWidth: number;
+  frameHeight: number;
+}>;
+
+export type ResolvedCharacterSkinTexture = Readonly<{
+  texture: CharacterSkinDefinition['texture'] | TextureKey;
+  framed: boolean;
+}>;
+
+export const characterSkinLoadDescriptors = (): readonly CharacterSkinLoadDescriptor[] =>
+  Object.values(CHARACTER_SKINS).map(({ texture: key, url, frameWidth, frameHeight }) => ({
+    key, url, frameWidth, frameHeight,
+  }));
+
+export const resolveCharacterSkinTexture = (
+  hasTexture: (key: string) => boolean,
+  skin: CharacterSkinId | CharacterSkinDefinition,
+): ResolvedCharacterSkinTexture => {
+  const definition = typeof skin === 'string' ? CHARACTER_SKINS[skin] : skin;
+  return hasTexture(definition.texture)
+    ? { texture: definition.texture, framed: true }
+    : { texture: definition.fallbackTexture, framed: false };
+};
+
+export const applyToAvailableCharacterSheets = (
+  hasTexture: (key: string) => boolean,
+  apply: (key: CharacterSkinDefinition['texture']) => void,
+): void => {
+  for (const { key } of characterSkinLoadDescriptors()) {
+    if (hasTexture(key)) apply(key);
+  }
+};

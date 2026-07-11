@@ -3,6 +3,9 @@ import { describe, expect, it } from 'vitest';
 import {
   CHARACTER_FRAME_NAMES,
   CHARACTER_SKINS,
+  applyToAvailableCharacterSheets,
+  characterSkinLoadDescriptors,
+  resolveCharacterSkinTexture,
   type CharacterFrameName,
   type CharacterSkinId,
 } from '../../src/game/art/characterSkins';
@@ -92,6 +95,46 @@ describe('character skin manifest', () => {
       expect(Object.isFrozen(skin)).toBe(true);
       expect(Object.isFrozen(skin.frames)).toBe(true);
     }
+  });
+
+  it('provides one spritesheet preload descriptor for every skin', () => {
+    expect(characterSkinLoadDescriptors()).toEqual(
+      IDS.map((id) => ({
+        key: `skin-${id}`,
+        url: `assets/characters/${id}-sheet.png`,
+        frameWidth: id === 'queen' ? 160 : 96,
+        frameHeight: id === 'queen' ? 160 : 96,
+      })),
+    );
+  });
+
+  it('resolves loaded sheets before procedural fallbacks for ids and definitions', () => {
+    expect(resolveCharacterSkinTexture((key) => key === 'skin-marine', 'marine')).toEqual({
+      texture: 'skin-marine', framed: true,
+    });
+    expect(resolveCharacterSkinTexture(() => false, CHARACTER_SKINS.brute)).toEqual({
+      texture: 'alien-brute', framed: false,
+    });
+  });
+
+  it('resolves repeatedly without registering or duplicating anything', () => {
+    const seen: string[] = [];
+    const hasTexture = (key: string) => {
+      seen.push(key);
+      return true;
+    };
+    expect(resolveCharacterSkinTexture(hasTexture, 'crawler')).toEqual(
+      resolveCharacterSkinTexture(hasTexture, 'crawler'),
+    );
+    expect(seen).toEqual(['skin-crawler', 'skin-crawler']);
+  });
+
+  it('applies sheet work only to unique, available external textures', () => {
+    const touched: string[] = [];
+    const available = new Set(['skin-marine', 'skin-queen']);
+    applyToAvailableCharacterSheets((key) => available.has(key), (key) => touched.push(key));
+    applyToAvailableCharacterSheets(() => false, (key) => touched.push(key));
+    expect(touched).toEqual(['skin-marine', 'skin-queen']);
   });
 });
 
