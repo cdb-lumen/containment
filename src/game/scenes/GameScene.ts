@@ -653,6 +653,14 @@ export class GameScene extends Phaser.Scene {
     if (canAct) player.applyInput(input);
     else player.stop();
 
+    const settings = this.currentSettings();
+    player.updatePresentation(this.time.now, {
+      dead: snapshot.dead,
+      quality: this.quality?.activeProfile ?? 'high',
+      reducedMotion: this.registry.get('reducedMotion') === true,
+      reducedFlash: settings.reducedFlash,
+    });
+
     let projectileSpawned = false;
     if (armoryVisible) {
       const armoryIndex =
@@ -679,6 +687,7 @@ export class GameScene extends Phaser.Scene {
           projectileSpawned = spawned || projectileSpawned;
         }
         if (firedThisFrame && requests[0]) {
+          player.triggerRecoil(this.time.now);
           this.playWeaponSound(requests[0].weaponId);
           if (['pistol', 'rifle', 'shotgun'].includes(requests[0].weaponId)) {
             this.addBattleEffect(
@@ -1325,6 +1334,8 @@ export class GameScene extends Phaser.Scene {
     combat.applyDamage(amount);
     if (combat.getSnapshot().health >= healthBefore) return;
 
+    this.player?.triggerHit(this.time.now);
+
     const settings = this.currentSettings();
     const quality = resolveEffectsQuality(
       this.quality?.activeProfile ?? 'high',
@@ -1486,6 +1497,8 @@ export class GameScene extends Phaser.Scene {
     const getActiveProjectileCount = () => this.activeProjectiles.size;
     const getActiveQuality = () => this.quality?.activeProfile ?? 'unknown';
     const getTouchControlsVisible = () => this.touchInput?.enabled ?? false;
+    const getPlayer = () => this.player;
+    const getPresentationTime = () => this.time.now;
     this.cleanupDiagnostics = installDiagnostics({
       get phase(): 'arrival' | 'armory' | 'combat' | 'boss' | 'victory' | 'defeat' {
         if (getSnapshot()?.dead === true) return 'defeat';
@@ -1516,13 +1529,28 @@ export class GameScene extends Phaser.Scene {
       get touchControlsVisible(): boolean {
         return getTouchControlsVisible();
       },
+      get playerSkinKey(): string {
+        return getPlayer()?.skinKey ?? 'unknown';
+      },
+      get playerFrame(): string {
+        return getPlayer()?.presentationSnapshot(getPresentationTime()).frame ?? 'idleA';
+      },
+      get playerAnimating(): boolean {
+        return getPlayer()?.presentationSnapshot(getPresentationTime()).animating ?? false;
+      },
+      get playerRecoil(): boolean {
+        return getPlayer()?.presentationSnapshot(getPresentationTime()).recoil ?? false;
+      },
+      get playerHit(): boolean {
+        return getPlayer()?.presentationSnapshot(getPresentationTime()).hit ?? false;
+      },
       startRun: (): void => this.resetRun(),
       damagePlayer: (amount?: number): void => {
         const damage =
           typeof amount === 'number' && Number.isFinite(amount) && amount > 0
             ? Math.min(amount, 10_000)
             : 25;
-        this.combat?.applyDamage(damage);
+        this.applyPlayerDamage(damage);
       },
       completeWave: (): void => {
         const phase = this.horde?.completeWaveForDiagnostics();

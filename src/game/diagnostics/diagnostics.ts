@@ -9,6 +9,11 @@ export interface DiagnosticsReadOnlyFields {
   readonly wave: number;
   readonly activeQuality: string;
   readonly touchControlsVisible: boolean;
+  readonly playerSkinKey: string;
+  readonly playerFrame: string;
+  readonly playerAnimating: boolean;
+  readonly playerRecoil: boolean;
+  readonly playerHit: boolean;
 }
 
 export interface DiagnosticsActions {
@@ -92,6 +97,21 @@ export function installDiagnostics(
     },
     get touchControlsVisible(): boolean {
       return provider.touchControlsVisible === true;
+    },
+    get playerSkinKey(): string {
+      return normalizedPhase(provider.playerSkinKey);
+    },
+    get playerFrame(): string {
+      return normalizedPhase(provider.playerFrame);
+    },
+    get playerAnimating(): boolean {
+      return provider.playerAnimating === true;
+    },
+    get playerRecoil(): boolean {
+      return provider.playerRecoil === true;
+    },
+    get playerHit(): boolean {
+      return provider.playerHit === true;
     },
     startRun: (): void => provider.startRun(),
     damagePlayer: (amount?: number): void => provider.damagePlayer(amount),
