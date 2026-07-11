@@ -32,6 +32,7 @@ export interface DiagnosticsReadOnlyFields {
   readonly bloodDisplayCount: number;
   readonly corpseDisplayCount: number;
   readonly activeCorpseFamilies: readonly string[];
+  readonly activeCorpseIds: readonly number[];
   readonly bloodAllocatedCount: number;
   readonly corpseAllocatedCount: number;
 }
@@ -173,6 +174,9 @@ export function installDiagnostics(
     get corpseDisplayCount(): number { return normalizedCount(provider.corpseDisplayCount); },
     get activeCorpseFamilies(): readonly string[] {
       return Object.freeze([...provider.activeCorpseFamilies]);
+    },
+    get activeCorpseIds(): readonly number[] {
+      return Object.freeze([...provider.activeCorpseIds]);
     },
     get bloodAllocatedCount(): number { return normalizedCount(provider.bloodAllocatedCount); },
     get corpseAllocatedCount(): number { return normalizedCount(provider.corpseAllocatedCount); },

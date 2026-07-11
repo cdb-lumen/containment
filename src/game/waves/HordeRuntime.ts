@@ -532,6 +532,11 @@ export class HordeRuntime {
   }
 
   spawnEnemiesForDiagnostics(count: number): number {
+    if (!import.meta.env.DEV) return 0;
+    return this.#spawnEnemyBatch(count);
+  }
+
+  #spawnEnemyBatch(count: number): number {
     const requested = Number.isFinite(count)
       ? Math.min(MAX_ACTIVE_ENEMIES, Math.max(0, Math.trunc(count)))
       : 0;
@@ -579,6 +584,11 @@ export class HordeRuntime {
   }
 
   defeatEnemiesForDiagnostics(count: number): number {
+    if (!import.meta.env.DEV) return 0;
+    return this.#defeatEnemyBatch(count);
+  }
+
+  #defeatEnemyBatch(count: number): number {
     if (this.#destroyed || !Number.isFinite(count)) return 0;
     const requested = Math.min(
       MAX_ACTIVE_ENEMIES,

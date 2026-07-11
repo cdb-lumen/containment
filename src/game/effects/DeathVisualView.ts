@@ -94,8 +94,9 @@ export class DeathVisualView {
   }
 
   get snapshot() {
-    const describe=(slot:Slot)=>Object.freeze({family:slot.family,texture:slot.texture,frame:slot.frame,tint:slot.tint,x:slot.image.x,y:slot.image.y,rotation:slot.image.rotation,scaleX:slot.image.scaleX,scaleY:slot.image.scaleY,depth:slot.image.depth});
-    return Object.freeze({corpses:Object.freeze([...this.mappings.values()].filter(s=>s.kind==='corpse').map(describe)),blood:Object.freeze([...this.mappings.values()].filter(s=>s.kind==='blood').map(describe)),corpseAllocated:this.corpseAllocated,bloodAllocated:this.bloodAllocated});
+    const describe=([id,slot]:readonly [number,Slot])=>Object.freeze({id,family:slot.family,texture:slot.texture,frame:slot.frame,tint:slot.tint,x:slot.image.x,y:slot.image.y,rotation:slot.image.rotation,scaleX:slot.image.scaleX,scaleY:slot.image.scaleY,depth:slot.image.depth});
+    const entries=[...this.mappings.entries()];
+    return Object.freeze({corpses:Object.freeze(entries.filter(([,s])=>s.kind==='corpse').map(describe)),blood:Object.freeze(entries.filter(([,s])=>s.kind==='blood').map(describe)),corpseAllocated:this.corpseAllocated,bloodAllocated:this.bloodAllocated});
   }
 
   private valid(r:DeathRequest){return Number.isFinite(r.x)&&Number.isFinite(r.y)&&this.corpseSources[r.family]!==undefined;}

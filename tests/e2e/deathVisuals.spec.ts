@@ -7,6 +7,7 @@ type DeathDiagnostics = Readonly<{
   bloodDisplayCount: number;
   corpseDisplayCount: number;
   activeCorpseFamilies: readonly string[];
+  activeCorpseIds: readonly number[];
   bloodAllocatedCount: number;
   corpseAllocatedCount: number;
   spawnStressEnemies(count: number): number;
@@ -22,14 +23,35 @@ const diagnostics = (page: Page) => page.evaluate(() => {
     bloodDisplayCount: value.bloodDisplayCount,
     corpseDisplayCount: value.corpseDisplayCount,
     activeCorpseFamilies: value.activeCorpseFamilies,
+    activeCorpseIds: value.activeCorpseIds,
     bloodAllocatedCount: value.bloodAllocatedCount,
     corpseAllocatedCount: value.corpseAllocatedCount,
     facadeFrozen: Object.isFrozen(value),
     countsFrozen: Object.isFrozen(value.effectCounts),
     limitsFrozen: Object.isFrozen(value.effectLimits),
     familiesFrozen: Object.isFrozen(value.activeCorpseFamilies),
+    corpseIdsFrozen: Object.isFrozen(value.activeCorpseIds),
   };
 });
+
+const pageErrors = new WeakMap<Page, string[]>();
+
+const watchErrors = (page: Page): string[] => {
+  const existing = pageErrors.get(page);
+  if (existing) return existing;
+  const errors: string[] = [];
+  pageErrors.set(page, errors);
+  page.on('pageerror', error => errors.push(`page: ${error.message}`));
+  page.on('console', message => {
+    if (message.type() === 'error') errors.push(`console: ${message.text()}`);
+  });
+  page.on('requestfailed', request =>
+    errors.push(`request: ${request.url()} ${request.failure()?.errorText}`));
+  page.on('response', response => {
+    if (response.status() >= 400) errors.push(`response: ${response.status()} ${response.url()}`);
+  });
+  return errors;
+};
 
 const invoke = (page: Page, action: 'spawn' | 'defeat', count: number) =>
   page.evaluate(({ action, count }) => {
@@ -40,6 +62,7 @@ const invoke = (page: Page, action: 'spawn' | 'defeat', count: number) =>
   }, { action, count });
 
 test.beforeEach(async ({ page }) => {
+  watchErrors(page);
   await page.goto('/');
   await expect(page.locator('canvas')).toBeVisible();
   const deploy = page.getByRole('button', { name: 'Deploy' });
@@ -49,17 +72,14 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('real enemy deaths saturate retained blood and corpse pools through authoritative runtime paths', async ({ page }) => {
-  const errors: string[] = [];
-  page.on('pageerror', error => errors.push(`page: ${error.message}`));
-  page.on('console', message => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
-  page.on('requestfailed', request => errors.push(`request: ${request.url()} ${request.failure()?.errorText}`));
-
   expect(await invoke(page, 'spawn', 150)).toBe(150);
   let before = await diagnostics(page);
   expect(before.activeEnemies).toBe(150);
   expect(await invoke(page, 'defeat', 150)).toBe(150);
   let after = await diagnostics(page);
   expect(after.activeEnemies).toBeLessThan(before.activeEnemies);
+  const firstCorpseIds = after.activeCorpseIds;
+  expect(firstCorpseIds).toHaveLength(32);
 
   expect(await invoke(page, 'spawn', 150)).toBe(150);
   before = await diagnostics(page);
@@ -70,11 +90,15 @@ test('real enemy deaths saturate retained blood and corpse pools through authori
   expect(after.effectLimits).toEqual(expect.objectContaining({ decals: 128, remains: 32 }));
   expect(after.bloodDisplayCount).toBe(128);
   expect(after.corpseDisplayCount).toBe(32);
+  expect(after.activeCorpseIds).toHaveLength(32);
+  expect(after.activeCorpseIds).not.toEqual(firstCorpseIds);
+  expect(after.activeCorpseIds.every(id => !firstCorpseIds.includes(id))).toBe(true);
+  expect(Math.max(...after.activeCorpseIds)).toBeGreaterThan(Math.max(...firstCorpseIds));
   expect(new Set(after.activeCorpseFamilies).size).toBeGreaterThan(1);
   expect(after.bloodAllocatedCount).toBeLessThanOrEqual(128);
   expect(after.corpseAllocatedCount).toBeLessThanOrEqual(32);
-  expect(after.facadeFrozen && after.countsFrozen && after.limitsFrozen && after.familiesFrozen).toBe(true);
-  expect(errors).toEqual([]);
+  expect(after.facadeFrozen && after.countsFrozen && after.limitsFrozen && after.familiesFrozen && after.corpseIdsFrozen).toBe(true);
+  expect(watchErrors(page)).toEqual([]);
 });
 
 // Counts are intentionally bounded before they reach the runtime.
@@ -83,6 +107,7 @@ test('stress actions normalize invalid and oversized counts', async ({ page }) =
   expect(await invoke(page, 'spawn', -4)).toBe(0);
   expect(await invoke(page, 'spawn', 999)).toBe(150);
   expect(await invoke(page, 'defeat', 999)).toBe(150);
+  expect(watchErrors(page)).toEqual([]);
 });
 
 test('live quality trim, pause, comfort settings, and restart reconcile death visuals', async ({ page }) => {
@@ -128,11 +153,13 @@ test('live quality trim, pause, comfort settings, and restart reconcile death vi
   await invoke(page, 'spawn', 1);
   await invoke(page, 'defeat', 1);
   expect((await diagnostics(page)).effectCounts).toEqual({ decals: 1, remains: 1 });
+  expect(watchErrors(page)).toEqual([]);
 });
 
 test('reduced motion preserves static corpse and blood aftermath', async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
+  const errors = watchErrors(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await expect(page.locator('canvas')).toBeVisible();
@@ -148,6 +175,7 @@ test('reduced motion preserves static corpse and blood aftermath', async ({ brow
   expect(aftermath.bloodDisplayCount).toBe(12);
   expect(aftermath.corpseDisplayCount).toBe(12);
   expect(aftermath.activeCorpseFamilies.length).toBeGreaterThan(1);
+  expect(errors).toEqual([]);
   await context.close();
 });
 

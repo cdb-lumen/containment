@@ -1615,6 +1615,9 @@ export class GameScene extends Phaser.Scene {
       get activeCorpseFamilies(): readonly string[] {
         return Object.freeze(getDeathVisualSnapshot()?.corpses.map(corpse => corpse.family) ?? []);
       },
+      get activeCorpseIds(): readonly number[] {
+        return Object.freeze(getDeathVisualSnapshot()?.corpses.map(corpse => corpse.id) ?? []);
+      },
       get bloodAllocatedCount(): number { return getDeathVisualSnapshot()?.bloodAllocated ?? 0; },
       get corpseAllocatedCount(): number { return getDeathVisualSnapshot()?.corpseAllocated ?? 0; },
       startRun: (): void => this.resetRun(),

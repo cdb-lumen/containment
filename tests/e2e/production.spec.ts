@@ -43,6 +43,7 @@ test('serves the production artifact from the GitHub Pages subpath', async ({ pa
     'bloodDisplayCount',
     'corpseDisplayCount',
     'activeCorpseFamilies',
+    'activeCorpseIds',
     'bloodAllocatedCount',
     'corpseAllocatedCount',
     'spawnStressEnemies',
