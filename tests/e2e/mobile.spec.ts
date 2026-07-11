@@ -32,6 +32,12 @@ test('blocks portrait deployment and exposes usable landscape touch controls', a
   await page.setViewportSize({ width: 844, height: 390 });
   await expect(portraitBlocker).toBeHidden();
   await expect(page.locator('#game-root')).toHaveJSProperty('inert', false);
+  const canvasBounds = await page.locator('canvas').boundingBox();
+  expect(canvasBounds).not.toBeNull();
+  expect(canvasBounds?.x).toBeCloseTo(0, 0);
+  expect(canvasBounds?.y).toBeCloseTo(0, 0);
+  expect(canvasBounds?.width).toBeCloseTo(844, 0);
+  expect(canvasBounds?.height).toBeCloseTo(390, 0);
   await page.getByRole('button', { name: 'Deploy' }).focus();
   await expect(page.getByRole('button', { name: 'Deploy' })).toBeVisible();
   await page.keyboard.press('Enter');
