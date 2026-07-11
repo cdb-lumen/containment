@@ -10,34 +10,60 @@ import { ProjectilePool } from '../combat/ProjectilePool';
 import type { WeaponId } from '../combat/types';
 import { WORLD_HEIGHT, WORLD_WIDTH } from '../constants';
 import { installDiagnostics, type DiagnosticsCleanup } from '../diagnostics/diagnostics';
+import type { HazardAttackEvent } from '../enemies/EnemySystem';
 import { Hud } from '../hud/Hud';
 import { DesktopInput } from '../input/DesktopInput';
 import { Player } from '../player/Player';
+import { HordeRuntime } from '../waves/HordeRuntime';
 import { FacilityWorld } from '../world/FacilityWorld';
 import { SCENE_KEYS } from './sceneKeys';
 
 const CAMERA_BACKGROUND = '#070a0f';
 const INITIAL_OBJECTIVE = 'MOVE OR FIRE TO INITIATE LOCKDOWN';
-const ACTIVE_OBJECTIVE = 'SECURE THE LOADING DOCK';
 const PROJECTILE_INITIAL_SIZE = 180;
 const PROJECTILE_MAX_SIZE = 300;
 const MAX_DELTA_MS = 100;
 const MUZZLE_DISTANCE = 38;
 const MUZZLE_FLASH_MS = 48;
-const MAX_WAVE = 8;
+const ACID_PROJECTILE_SPEED = 340;
+const HAZARD_POOL_RADIUS = 54;
+const HAZARD_POOL_LIFETIME_MS = 4_000;
+const HAZARD_POOL_TICK_MS = 700;
+const HAZARD_POOL_DAMAGE_FRACTION = 0.35;
+const MAX_HAZARD_POOLS = 20;
 
 type ProjectileImage = Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
-type ProjectileInit = Readonly<{
-  request: ProjectileRequest;
-  isGrenade: boolean;
-}>;
+type ProjectileKind = 'player' | 'grenade' | 'enemy-hazard';
+
+type ProjectileInit =
+  | Readonly<{
+      request: ProjectileRequest;
+      kind: 'player' | 'grenade';
+    }>
+  | Readonly<{
+      request: ProjectileRequest;
+      kind: 'enemy-hazard';
+      originX: number;
+      originY: number;
+    }>;
 
 type ProjectileRuntime = {
   lifetimeMs: number;
   request: ProjectileRequest;
   hitTracker: ProjectileHitTracker;
-  isGrenade: boolean;
+  kind: ProjectileKind;
+};
+
+type HazardPoolState = {
+  effect: Phaser.GameObjects.Graphics;
+  x: number;
+  y: number;
+  radius: number;
+  remainingMs: number;
+  tickCooldownMs: number;
+  baseDamage: number;
+  damageFraction: number;
 };
 
 type ProjectilePresentation = Readonly<{
@@ -48,13 +74,13 @@ type ProjectilePresentation = Readonly<{
 
 const projectilePresentation = (
   weaponId: WeaponId,
-  isGrenade: boolean,
+  kind: ProjectileKind,
 ): ProjectilePresentation => {
-  if (isGrenade) {
+  if (kind === 'enemy-hazard' || kind === 'grenade') {
     return {
       texture: TEXTURE_KEYS.projectileAcid,
-      width: 18,
-      height: 18,
+      width: kind === 'enemy-hazard' ? 16 : 18,
+      height: kind === 'enemy-hazard' ? 16 : 18,
     };
   }
   if (weaponId === 'plasma') {
@@ -87,10 +113,13 @@ export class GameScene extends Phaser.Scene {
   private desktopInput: DesktopInput | null = null;
   private combat: CombatSystem | null = null;
   private hud: Hud | null = null;
+  private horde: HordeRuntime | null = null;
   private projectileGroup: Phaser.Physics.Arcade.Group | null = null;
   private projectilePool: ProjectilePool<ProjectileImage, ProjectileInit> | null = null;
   private playerCollider: Phaser.Physics.Arcade.Collider | null = null;
   private projectileCollider: Phaser.Physics.Arcade.Collider | null = null;
+  private projectileEnemyOverlap: Phaser.Physics.Arcade.Collider | null = null;
+  private projectilePlayerOverlap: Phaser.Physics.Arcade.Collider | null = null;
   private muzzleFlash: Phaser.GameObjects.Image | null = null;
   private muzzleTimer: Phaser.Time.TimerEvent | null = null;
   private missionBanner: Phaser.GameObjects.Container | null = null;
@@ -100,6 +129,7 @@ export class GameScene extends Phaser.Scene {
   private readonly projectileRuntime = new Map<ProjectileImage, ProjectileRuntime>();
   private readonly blastEffects = new Set<Phaser.GameObjects.Graphics>();
   private readonly blastTweens = new Set<Phaser.Tweens.Tween>();
+  private readonly hazardPools = new Set<HazardPoolState>();
   private missionStarted = false;
   private shuttingDown = false;
 
@@ -110,10 +140,95 @@ export class GameScene extends Phaser.Scene {
     if (projectile === null) return;
 
     const runtime = this.projectileRuntime.get(projectile);
-    if (runtime && (runtime.isGrenade || runtime.request.weaponId === 'rocket')) {
-      this.createBlast(projectile.x, projectile.y, runtime.request.splashRadius);
+    if (!runtime) return;
+    this.endProjectileAt(projectile, projectile.x, projectile.y);
+  };
+
+  private readonly handleProjectileEnemyOverlap: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
+    first,
+    second,
+  ): void => {
+    const projectile = this.asActiveProjectile(first);
+    const horde = this.horde;
+    if (projectile === null || horde === null) return;
+
+    const runtime = this.projectileRuntime.get(projectile);
+    if (!runtime || runtime.kind === 'enemy-hazard') return;
+
+    const enemyId = horde.enemyIdFor(second);
+    if (enemyId === null) return;
+
+    if (runtime.request.splashRadius > 0) {
+      this.detonateProjectile(projectile, projectile.x, projectile.y);
+      return;
     }
+
+    const angle = Number.isFinite(runtime.request.angle) ? runtime.request.angle : 0;
+    const magnitude = Number.isFinite(runtime.request.knockback)
+      ? Math.max(0, runtime.request.knockback)
+      : 0;
+    const knockbackX = Math.cos(angle) * magnitude;
+    const knockbackY = Math.sin(angle) * magnitude;
+    const hit = horde.handleProjectileHit(
+      enemyId,
+      runtime.request,
+      runtime.hitTracker,
+      {
+        x: Number.isFinite(knockbackX) ? knockbackX : 0,
+        y: Number.isFinite(knockbackY) ? knockbackY : 0,
+      },
+    );
+    if (hit.exhausted) this.releaseProjectile(projectile);
+  };
+
+  private readonly handleProjectilePlayerOverlap: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
+    first,
+  ): void => {
+    const projectile = this.asActiveProjectile(first);
+    if (projectile === null) return;
+
+    const runtime = this.projectileRuntime.get(projectile);
+    if (!runtime || runtime.kind !== 'enemy-hazard') return;
+
+    this.combat?.applyDamage(runtime.request.damage);
+    this.createHazardPool(projectile.x, projectile.y, runtime.request.damage);
     this.releaseProjectile(projectile);
+  };
+
+  private readonly handleHazardAttack = (attack: HazardAttackEvent): void => {
+    if (
+      this.shuttingDown ||
+      !Number.isFinite(attack.sourceX) ||
+      !Number.isFinite(attack.sourceY) ||
+      !Number.isFinite(attack.targetX) ||
+      !Number.isFinite(attack.targetY) ||
+      !Number.isFinite(attack.damage) ||
+      attack.damage <= 0
+    ) {
+      return;
+    }
+
+    const offsetX = attack.targetX - attack.sourceX;
+    const offsetY = attack.targetY - attack.sourceY;
+    const angle = offsetX === 0 && offsetY === 0 ? 0 : Math.atan2(offsetY, offsetX);
+    const request: ProjectileRequest = Object.freeze({
+      weaponId: 'plasma',
+      damage: attack.damage,
+      speed: ACID_PROJECTILE_SPEED,
+      radius: 8,
+      angle: Number.isFinite(angle) ? angle : 0,
+      penetration: 1,
+      splashRadius: 0,
+      knockback: 0,
+    });
+    this.spawnProjectile(
+      Object.freeze({
+        request,
+        kind: 'enemy-hazard',
+        originX: attack.sourceX,
+        originY: attack.sourceY,
+      }),
+    );
   };
 
   private readonly hideMuzzleFlash = (): void => {
@@ -151,15 +266,24 @@ export class GameScene extends Phaser.Scene {
     for (const effect of this.blastEffects) effect.destroy();
     this.blastEffects.clear();
 
+    this.projectileEnemyOverlap?.destroy();
+    this.projectileEnemyOverlap = null;
+    this.projectilePlayerOverlap?.destroy();
+    this.projectilePlayerOverlap = null;
     this.projectileCollider?.destroy();
     this.projectileCollider = null;
     this.playerCollider?.destroy();
     this.playerCollider = null;
 
-    this.clearProjectiles();
-    // Phaser has already begun dismantling scene-owned groups and display objects
-    // when SHUTDOWN is emitted. Drop our references and let the Scene own their
-    // destruction rather than clearing already-detached Physics groups.
+    this.horde?.destroy();
+    this.horde = null;
+    // Scene shutdown may already have detached these world-space Graphics.
+    // Drop bookkeeping only and let Phaser finish destroying Scene ownership.
+    this.clearHazardPools(false);
+
+    // Phaser has already begun dismantling scene-owned groups, bodies, and
+    // display objects when SHUTDOWN is emitted. Drop our pool bookkeeping and
+    // let the Scene own destruction; manual run resets still call clearProjectiles.
     this.projectileGroup = null;
     this.projectilePool = null;
     this.activeProjectiles.clear();
@@ -183,6 +307,7 @@ export class GameScene extends Phaser.Scene {
     this.missionStarted = false;
     this.activeProjectiles.clear();
     this.projectileRuntime.clear();
+    this.hazardPools.clear();
 
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     this.cameras.main
@@ -216,6 +341,25 @@ export class GameScene extends Phaser.Scene {
       this.handleProjectileBlockerCollision,
     );
 
+    const horde = new HordeRuntime({
+      scene: this,
+      combat,
+      player,
+      facility,
+      onHazardAttack: this.handleHazardAttack,
+    });
+    this.horde = horde;
+    this.projectileEnemyOverlap = this.physics.add.overlap(
+      this.projectileGroup,
+      horde.enemyGroup,
+      this.handleProjectileEnemyOverlap,
+    );
+    this.projectilePlayerOverlap = this.physics.add.overlap(
+      this.projectileGroup,
+      player.sprite,
+      this.handleProjectilePlayerOverlap,
+    );
+
     this.muzzleFlash = this.add
       .image(player.sprite.x, player.sprite.y, TEXTURE_KEYS.muzzleFlash)
       .setDepth(player.sprite.y + 6)
@@ -238,23 +382,32 @@ export class GameScene extends Phaser.Scene {
     const combat = this.combat;
     const player = this.player;
     const desktopInput = this.desktopInput;
-    if (this.shuttingDown || !combat || !player || !desktopInput) return;
+    const horde = this.horde;
+    if (this.shuttingDown || !combat || !player || !desktopInput || !horde) return;
 
     const deltaMs = safeDelta(delta);
     combat.update(deltaMs);
 
     const input = desktopInput.read(this.cameras.main, player.sprite);
     const snapshot = combat.getSnapshot();
-    const canAct = !snapshot.dead && !input.pausePressed;
+    const armoryVisible = horde.armoryVisible;
+    const canAct = !snapshot.dead && !input.pausePressed && !armoryVisible;
 
-    if (canAct) {
-      player.applyInput(input);
-    } else {
-      player.stop();
-    }
+    if (canAct) player.applyInput(input);
+    else player.stop();
 
     let projectileSpawned = false;
-    if (canAct) {
+    if (armoryVisible) {
+      const armoryIndex =
+        input.weaponPressed === 'pistol'
+          ? 0
+          : input.weaponPressed === 'rifle'
+            ? 1
+            : input.weaponPressed === 'shotgun'
+              ? 2
+              : null;
+      if (armoryIndex !== null) horde.selectArmoryIndex(armoryIndex);
+    } else if (canAct) {
       if (input.weaponPressed !== null) combat.switchWeapon(input.weaponPressed);
       if (input.reloadPressed) combat.startReload();
       if (input.medkitPressed) combat.consumeMedkit();
@@ -262,7 +415,8 @@ export class GameScene extends Phaser.Scene {
       const aimAngle = this.getAimAngle(input.aimWorldX, input.aimWorldY);
       if (input.fireHeld) {
         for (const request of combat.fire(aimAngle)) {
-          projectileSpawned = this.spawnProjectile(request, false) || projectileSpawned;
+          projectileSpawned =
+            this.spawnProjectile({ request, kind: 'player' }) || projectileSpawned;
         }
         if (projectileSpawned) this.showMuzzleFlash(aimAngle);
       }
@@ -280,7 +434,8 @@ export class GameScene extends Phaser.Scene {
             splashRadius: grenade.splashRadius,
             knockback: grenade.knockback,
           });
-          projectileSpawned = this.spawnProjectile(request, true) || projectileSpawned;
+          projectileSpawned =
+            this.spawnProjectile({ request, kind: 'grenade' }) || projectileSpawned;
         }
       }
 
@@ -290,8 +445,12 @@ export class GameScene extends Phaser.Scene {
       }
     }
 
+    horde.update(deltaMs);
+    const armoryOpenAfterUpdate = horde.armoryVisible;
+    if (armoryOpenAfterUpdate) this.clearHostileEffects();
     this.updateProjectiles(deltaMs);
-    this.hud?.setRadarState(player.sprite.x, player.sprite.y, []);
+    if (!armoryOpenAfterUpdate) this.updateHazardPools(deltaMs);
+    this.hud?.setRadarState(player.sprite.x, player.sprite.y, horde.radarPositions);
   }
 
   private createProjectilePool(): ProjectilePool<ProjectileImage, ProjectileInit> {
@@ -308,32 +467,45 @@ export class GameScene extends Phaser.Scene {
           return projectile;
         },
         activate: (projectile, init): void => {
-          const { request, isGrenade } = init;
-          const player = this.player;
-          if (!player || !Number.isFinite(request.angle) || !Number.isFinite(request.speed)) {
+          const { request, kind } = init;
+          if (!Number.isFinite(request.angle) || !Number.isFinite(request.speed)) {
             throw new Error('Cannot activate projectile without a finite launch state');
           }
 
-          const presentation = projectilePresentation(request.weaponId, isGrenade);
+          const player = this.player;
+          if (kind !== 'enemy-hazard' && player === null) {
+            throw new Error('Cannot activate a player projectile without its owner');
+          }
+          const originX =
+            kind === 'enemy-hazard'
+              ? init.originX
+              : player!.sprite.x + Math.cos(request.angle) * MUZZLE_DISTANCE;
+          const originY =
+            kind === 'enemy-hazard'
+              ? init.originY
+              : player!.sprite.y + Math.sin(request.angle) * MUZZLE_DISTANCE;
+          if (!Number.isFinite(originX) || !Number.isFinite(originY)) {
+            throw new Error('Cannot activate projectile without a finite origin');
+          }
+
+          const presentation = projectilePresentation(request.weaponId, kind);
           const radius = Phaser.Math.Clamp(
             Number.isFinite(request.radius) ? request.radius : 4,
             2,
             12,
           );
-          const muzzleX = player.sprite.x + Math.cos(request.angle) * MUZZLE_DISTANCE;
-          const muzzleY = player.sprite.y + Math.sin(request.angle) * MUZZLE_DISTANCE;
           const speed = Math.max(0, request.speed);
 
           projectile
             .setTexture(presentation.texture)
             .setDisplaySize(presentation.width, presentation.height)
-            .setPosition(muzzleX, muzzleY)
+            .setPosition(originX, originY)
             .setRotation(request.angle)
-            .setDepth(muzzleY + 4)
+            .setDepth(originY + 4)
             .setActive(true)
             .setVisible(true);
           projectile.body.enable = true;
-          projectile.body.reset(muzzleX, muzzleY);
+          projectile.body.reset(originX, originY);
           projectile.setCircle(radius);
           projectile.setVelocity(
             Math.cos(request.angle) * speed,
@@ -341,10 +513,11 @@ export class GameScene extends Phaser.Scene {
           );
 
           this.projectileRuntime.set(projectile, {
-            lifetimeMs: isGrenade ? 1_600 : request.weaponId === 'rocket' ? 3_400 : 2_800,
+            lifetimeMs:
+              kind === 'grenade' ? 1_600 : request.weaponId === 'rocket' ? 3_400 : 2_800,
             request,
             hitTracker: new ProjectileHitTracker(request.penetration),
-            isGrenade,
+            kind,
           });
           this.activeProjectiles.add(projectile);
         },
@@ -361,13 +534,49 @@ export class GameScene extends Phaser.Scene {
     );
   }
 
-  private spawnProjectile(request: ProjectileRequest, isGrenade: boolean): boolean {
+  private spawnProjectile(init: ProjectileInit): boolean {
     const pool = this.projectilePool;
-    return pool !== null && pool.acquire({ request, isGrenade }) !== null;
+    return pool !== null && pool.acquire(init) !== null;
   }
 
   private releaseProjectile(projectile: ProjectileImage): void {
     this.projectilePool?.release(projectile);
+  }
+
+  private detonateProjectile(projectile: ProjectileImage, x: number, y: number): void {
+    const runtime = this.projectileRuntime.get(projectile);
+    if (!runtime || !this.activeProjectiles.has(projectile)) return;
+
+    const blastX = Phaser.Math.Clamp(Number.isFinite(x) ? x : projectile.x, 0, WORLD_WIDTH);
+    const blastY = Phaser.Math.Clamp(Number.isFinite(y) ? y : projectile.y, 0, WORLD_HEIGHT);
+    const knockback = Number.isFinite(runtime.request.knockback)
+      ? Math.max(0, runtime.request.knockback)
+      : 0;
+    this.horde?.applyAreaDamage(
+      blastX,
+      blastY,
+      runtime.request.damage,
+      runtime.request.splashRadius,
+      knockback,
+    );
+    this.createBlast(blastX, blastY, runtime.request.splashRadius);
+    this.releaseProjectile(projectile);
+  }
+
+  private endProjectileAt(projectile: ProjectileImage, x: number, y: number): void {
+    const runtime = this.projectileRuntime.get(projectile);
+    if (!runtime || !this.activeProjectiles.has(projectile)) return;
+
+    const endX = Phaser.Math.Clamp(Number.isFinite(x) ? x : projectile.x, 0, WORLD_WIDTH);
+    const endY = Phaser.Math.Clamp(Number.isFinite(y) ? y : projectile.y, 0, WORLD_HEIGHT);
+    if (runtime.kind !== 'enemy-hazard' && runtime.request.splashRadius > 0) {
+      this.detonateProjectile(projectile, endX, endY);
+      return;
+    }
+    if (runtime.kind === 'enemy-hazard') {
+      this.createHazardPool(endX, endY, runtime.request.damage);
+    }
+    this.releaseProjectile(projectile);
   }
 
   private updateProjectiles(deltaMs: number): void {
@@ -386,12 +595,7 @@ export class GameScene extends Phaser.Scene {
         projectile.y < 0 ||
         projectile.y > WORLD_HEIGHT;
       if (runtime.lifetimeMs <= 0 || outsideWorld) {
-        if (runtime.isGrenade || runtime.request.weaponId === 'rocket') {
-          const blastX = Phaser.Math.Clamp(projectile.x, 0, WORLD_WIDTH);
-          const blastY = Phaser.Math.Clamp(projectile.y, 0, WORLD_HEIGHT);
-          this.createBlast(blastX, blastY, runtime.request.splashRadius);
-        }
-        this.releaseProjectile(projectile);
+        this.endProjectileAt(projectile, projectile.x, projectile.y);
       }
     }
   }
@@ -500,12 +704,101 @@ export class GameScene extends Phaser.Scene {
     this.blastTweens.add(tween);
   }
 
+  private createHazardPool(x: number, y: number, baseDamage: number): void {
+    if (
+      this.shuttingDown ||
+      !Number.isFinite(x) ||
+      !Number.isFinite(y) ||
+      !Number.isFinite(baseDamage) ||
+      baseDamage <= 0
+    ) {
+      return;
+    }
+    while (this.hazardPools.size >= MAX_HAZARD_POOLS) {
+      const oldest = this.hazardPools.values().next().value;
+      if (!oldest) break;
+      this.retireHazardPool(oldest, true);
+    }
+
+    const poolX = Phaser.Math.Clamp(x, 0, WORLD_WIDTH);
+    const poolY = Phaser.Math.Clamp(y, 0, WORLD_HEIGHT);
+    const effect = this.add
+      .graphics({ x: poolX, y: poolY })
+      .setDepth(Math.max(-5, poolY - HAZARD_POOL_RADIUS - 1));
+    effect.fillStyle(0x91be61, 0.13);
+    effect.fillCircle(0, 0, HAZARD_POOL_RADIUS);
+    effect.fillStyle(0xb6e35f, 0.08);
+    effect.fillCircle(0, 0, HAZARD_POOL_RADIUS * 0.66);
+    effect.lineStyle(2, 0x6f9c3c, 0.72);
+    effect.strokeCircle(0, 0, HAZARD_POOL_RADIUS);
+    effect.lineStyle(1, 0xb6e35f, 0.5);
+    effect.strokeCircle(0, 0, HAZARD_POOL_RADIUS * 0.68);
+
+    this.hazardPools.add({
+      effect,
+      x: poolX,
+      y: poolY,
+      radius: HAZARD_POOL_RADIUS,
+      remainingMs: HAZARD_POOL_LIFETIME_MS,
+      tickCooldownMs: HAZARD_POOL_TICK_MS,
+      baseDamage,
+      damageFraction: HAZARD_POOL_DAMAGE_FRACTION,
+    });
+  }
+
+  private clearHostileEffects(): void {
+    for (const projectile of [...this.activeProjectiles]) {
+      if (this.projectileRuntime.get(projectile)?.kind === 'enemy-hazard') {
+        this.releaseProjectile(projectile);
+      }
+    }
+    this.clearHazardPools(true);
+  }
+
+  private updateHazardPools(deltaMs: number): void {
+    const combat = this.combat;
+    const player = this.player;
+    if (!combat || !player) return;
+
+    for (const pool of [...this.hazardPools]) {
+      pool.remainingMs = Math.max(0, pool.remainingMs - deltaMs);
+      pool.tickCooldownMs = Math.max(0, pool.tickCooldownMs - deltaMs);
+      const lifeRatio = pool.remainingMs / HAZARD_POOL_LIFETIME_MS;
+      pool.effect.setAlpha(0.18 + lifeRatio * 0.64);
+      if (pool.remainingMs === 0) {
+        this.retireHazardPool(pool, true);
+        continue;
+      }
+      if (
+        combat.getSnapshot().dead ||
+        pool.tickCooldownMs > 0 ||
+        Math.hypot(player.sprite.x - pool.x, player.sprite.y - pool.y) > pool.radius
+      ) {
+        continue;
+      }
+
+      combat.applyDamage(pool.baseDamage * pool.damageFraction);
+      pool.tickCooldownMs = HAZARD_POOL_TICK_MS;
+    }
+  }
+
+  private retireHazardPool(pool: HazardPoolState, destroyDisplayObject: boolean): void {
+    this.hazardPools.delete(pool);
+    if (destroyDisplayObject && pool.effect.active) pool.effect.destroy();
+  }
+
+  private clearHazardPools(destroyDisplayObjects: boolean): void {
+    if (!destroyDisplayObjects) {
+      this.hazardPools.clear();
+      return;
+    }
+    for (const pool of [...this.hazardPools]) this.retireHazardPool(pool, true);
+  }
+
   private initiateLockdown(): void {
     if (this.missionStarted) return;
     this.missionStarted = true;
-    this.combat?.setWave(1);
-    this.combat?.setObjective(ACTIVE_OBJECTIVE);
-    this.facility?.setWaveAccess(1);
+    this.horde?.startArrival();
   }
 
   private resetRun(): void {
@@ -515,44 +808,40 @@ export class GameScene extends Phaser.Scene {
     if (!combat || !facility || !player || this.shuttingDown) return;
 
     this.clearProjectiles();
+    this.clearHazardPools(true);
     this.hideMuzzleFlash();
     combat.reset();
-    combat.setWave(0);
-    combat.setObjective(INITIAL_OBJECTIVE);
     facility.reset();
     facility.setWaveAccess(0);
     player.reset(facility.playerSpawn);
     player.stop();
+    this.horde?.reset();
+    combat.setObjective(INITIAL_OBJECTIVE);
+    combat.setWave(0);
     this.desktopInput?.clearEdges();
     this.missionStarted = false;
     this.cameras.main.centerOn(player.sprite.x, player.sprite.y);
-    this.hud?.setRadarState(player.sprite.x, player.sprite.y, []);
-  }
-
-  private completeWave(): void {
-    const combat = this.combat;
-    if (!combat || this.shuttingDown) return;
-    const wave = Math.min(MAX_WAVE, combat.getSnapshot().wave + 1);
-    combat.setWave(wave);
-    this.facility?.setWaveAccess(wave);
-    this.missionStarted = wave > 0;
-    combat.setObjective(
-      wave >= MAX_WAVE ? 'REACH QUEEN CONTAINMENT' : 'ADVANCE TO THE NEXT CONTAINMENT SECTOR',
+    this.hud?.setRadarState(
+      player.sprite.x,
+      player.sprite.y,
+      this.horde?.radarPositions ?? [],
     );
   }
 
   private installSceneDiagnostics(): void {
     const getSnapshot = () => this.combat?.getSnapshot();
+    const getHorde = () => this.horde;
     const getActiveProjectileCount = () => this.activeProjectiles.size;
     this.cleanupDiagnostics = installDiagnostics({
-      get phase(): 'combat' | 'defeat' {
-        return getSnapshot()?.dead === true ? 'defeat' : 'combat';
+      get phase(): 'armory' | 'combat' | 'defeat' {
+        if (getSnapshot()?.dead === true) return 'defeat';
+        return getHorde()?.armoryVisible === true ? 'armory' : 'combat';
       },
       get playerHealth(): number {
         return getSnapshot()?.health ?? 0;
       },
       get activeEnemies(): number {
-        return 0;
+        return getHorde()?.activeEnemies ?? 0;
       },
       get activeProjectiles(): number {
         return getActiveProjectileCount();
@@ -571,12 +860,12 @@ export class GameScene extends Phaser.Scene {
             : 25;
         this.combat?.applyDamage(damage);
       },
-      completeWave: (): void => this.completeWave(),
+      completeWave: (): void => {
+        const phase = this.horde?.completeWaveForDiagnostics();
+        this.missionStarted = phase !== undefined && phase !== 'idle';
+      },
       spawnStressWave: (): void => {
-        this.combat?.setWave(MAX_WAVE);
-        this.facility?.setWaveAccess(MAX_WAVE);
-        this.combat?.setObjective('REACH QUEEN CONTAINMENT');
-        this.missionStarted = true;
+        this.missionStarted = (this.horde?.spawnStressWave() ?? 0) > 0;
       },
       restart: (): void => {
         this.scene.restart();

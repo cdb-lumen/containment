@@ -4,11 +4,40 @@ import type { WeaponId } from './types';
 const WEAPON_IDS = Object.freeze(Object.keys(WEAPONS) as WeaponId[]);
 const INITIAL_WEAPON: WeaponId = 'pistol';
 const INITIAL_GRENADES = 3;
+const MAX_GRENADES = 6;
 const GRENADE_COOLDOWN_MS = 1_200;
 const INITIAL_MEDKITS = 2;
 const MEDKIT_HEALING = 50;
 const INITIAL_HEALTH = 100;
 const INITIAL_ARMOR = 50;
+const INITIAL_MAX_ARMOR = 100;
+
+export type CombatModifiers = Readonly<{
+  damageMultiplier: number;
+  penetrationBonus: number;
+  spreadMultiplier: number;
+  reloadMultiplier: number;
+  magazineMultiplier: number;
+  maxArmorBonus: number;
+}>;
+
+export const DEFAULT_COMBAT_MODIFIERS: CombatModifiers = Object.freeze({
+  damageMultiplier: 1,
+  penetrationBonus: 0,
+  spreadMultiplier: 1,
+  reloadMultiplier: 1,
+  magazineMultiplier: 1,
+  maxArmorBonus: 0,
+});
+
+const MODIFIER_BOUNDS = Object.freeze({
+  damageMultiplier: Object.freeze([0.1, 10] as const),
+  penetrationBonus: Object.freeze([0, 100] as const),
+  spreadMultiplier: Object.freeze([0.05, 10] as const),
+  reloadMultiplier: Object.freeze([0.05, 10] as const),
+  magazineMultiplier: Object.freeze([0.1, 10] as const),
+  maxArmorBonus: Object.freeze([0, 1_000] as const),
+});
 
 export type ProjectileRequest = Readonly<{
   weaponId: WeaponId;
@@ -44,8 +73,10 @@ export type ProjectileHitResult = Readonly<{
 export type CombatSnapshot = Readonly<{
   weaponId: WeaponId;
   magazine: number;
+  magazineCapacity: number;
   reserve: number;
   reloading: boolean;
+  reloadDurationMs: number;
   reloadRemainingMs: number;
   fireCooldownRemainingMs: number;
   grenades: number;
@@ -53,6 +84,7 @@ export type CombatSnapshot = Readonly<{
   medkits: number;
   health: number;
   armor: number;
+  maxArmor: number;
   dead: boolean;
   credits: number;
   wave: number;
@@ -64,6 +96,7 @@ export type ProjectileTargetId = string | number;
 
 type WeaponAmmoState = {
   magazine: number;
+  capacity: number;
   reserve: number;
   cooldownRemainingMs: number;
 };
@@ -84,12 +117,35 @@ const hitResult = (
 const isWeaponId = (value: unknown): value is WeaponId =>
   typeof value === 'string' && Object.hasOwn(WEAPONS, value);
 
+const isBounded = (value: number, minimum: number, maximum: number): boolean =>
+  Number.isFinite(value) && value >= minimum && value <= maximum;
+
+const isValidModifiers = (modifiers: CombatModifiers): boolean =>
+  isBounded(modifiers.damageMultiplier, ...MODIFIER_BOUNDS.damageMultiplier) &&
+  Number.isInteger(modifiers.penetrationBonus) &&
+  isBounded(modifiers.penetrationBonus, ...MODIFIER_BOUNDS.penetrationBonus) &&
+  isBounded(modifiers.spreadMultiplier, ...MODIFIER_BOUNDS.spreadMultiplier) &&
+  isBounded(modifiers.reloadMultiplier, ...MODIFIER_BOUNDS.reloadMultiplier) &&
+  isBounded(modifiers.magazineMultiplier, ...MODIFIER_BOUNDS.magazineMultiplier) &&
+  Number.isInteger(modifiers.maxArmorBonus) &&
+  isBounded(modifiers.maxArmorBonus, ...MODIFIER_BOUNDS.maxArmorBonus);
+
+const magazineCapacity = (weaponId: WeaponId, multiplier: number): number =>
+  Math.ceil(WEAPONS[weaponId].magazine * multiplier);
+
+const positiveInteger = (amount: number): number => {
+  if (!Number.isFinite(amount) || amount <= 0) return 0;
+  const integer = Math.floor(amount);
+  return Number.isSafeInteger(integer) && integer > 0 ? integer : 0;
+};
+
 const createAmmoState = (): Record<WeaponId, WeaponAmmoState> =>
   Object.fromEntries(
     WEAPON_IDS.map((weaponId) => [
       weaponId,
       {
         magazine: WEAPONS[weaponId].magazine,
+        capacity: WEAPONS[weaponId].magazine,
         reserve: WEAPONS[weaponId].reserve,
         cooldownRemainingMs: 0,
       },
@@ -155,12 +211,14 @@ export class CombatSystem {
   #weaponId: WeaponId = INITIAL_WEAPON;
   #ammo = createAmmoState();
   #reloading = false;
+  #reloadDurationMs = 0;
   #reloadRemainingMs = 0;
   #grenades = INITIAL_GRENADES;
   #grenadeCooldownRemainingMs = 0;
   #medkits = INITIAL_MEDKITS;
   #health = INITIAL_HEALTH;
   #armor = INITIAL_ARMOR;
+  #modifiers = DEFAULT_COMBAT_MODIFIERS;
   #dead = false;
   #credits = 0;
   #wave = 0;
@@ -171,13 +229,19 @@ export class CombatSystem {
     return this.getSnapshot();
   }
 
+  get modifiers(): CombatModifiers {
+    return this.#modifiers;
+  }
+
   getSnapshot(): CombatSnapshot {
     const ammo = this.#ammo[this.#weaponId];
     return Object.freeze({
       weaponId: this.#weaponId,
       magazine: ammo.magazine,
+      magazineCapacity: ammo.capacity,
       reserve: ammo.reserve,
       reloading: this.#reloading,
+      reloadDurationMs: this.#reloadDurationMs,
       reloadRemainingMs: this.#reloadRemainingMs,
       fireCooldownRemainingMs: ammo.cooldownRemainingMs,
       grenades: this.#grenades,
@@ -185,6 +249,7 @@ export class CombatSystem {
       medkits: this.#medkits,
       health: this.#health,
       armor: this.#armor,
+      maxArmor: this.#maxArmor,
       dead: this.#dead,
       credits: this.#credits,
       wave: this.#wave,
@@ -200,6 +265,62 @@ export class CombatSystem {
       subscribed = false;
       this.#listeners.delete(listener);
     };
+  }
+
+  setModifiers(modifiers: Partial<CombatModifiers>): boolean {
+    if (
+      typeof modifiers !== 'object' ||
+      modifiers === null ||
+      Array.isArray(modifiers)
+    ) {
+      return false;
+    }
+
+    const next: CombatModifiers = {
+      damageMultiplier: Object.hasOwn(modifiers, 'damageMultiplier')
+        ? modifiers.damageMultiplier!
+        : this.#modifiers.damageMultiplier,
+      penetrationBonus: Object.hasOwn(modifiers, 'penetrationBonus')
+        ? modifiers.penetrationBonus!
+        : this.#modifiers.penetrationBonus,
+      spreadMultiplier: Object.hasOwn(modifiers, 'spreadMultiplier')
+        ? modifiers.spreadMultiplier!
+        : this.#modifiers.spreadMultiplier,
+      reloadMultiplier: Object.hasOwn(modifiers, 'reloadMultiplier')
+        ? modifiers.reloadMultiplier!
+        : this.#modifiers.reloadMultiplier,
+      magazineMultiplier: Object.hasOwn(modifiers, 'magazineMultiplier')
+        ? modifiers.magazineMultiplier!
+        : this.#modifiers.magazineMultiplier,
+      maxArmorBonus: Object.hasOwn(modifiers, 'maxArmorBonus')
+        ? modifiers.maxArmorBonus!
+        : this.#modifiers.maxArmorBonus,
+    };
+    if (!isValidModifiers(next)) return false;
+
+    const keys = Object.keys(DEFAULT_COMBAT_MODIFIERS) as (keyof CombatModifiers)[];
+    if (keys.every((key) => next[key] === this.#modifiers[key])) return true;
+
+    for (const weaponId of WEAPON_IDS) {
+      const ammo = this.#ammo[weaponId];
+      const nextCapacity = magazineCapacity(weaponId, next.magazineMultiplier);
+      const gainedCapacity = Math.max(0, nextCapacity - ammo.capacity);
+      ammo.magazine =
+        gainedCapacity > 0
+          ? Math.min(nextCapacity, ammo.magazine + gainedCapacity)
+          : Math.min(nextCapacity, ammo.magazine);
+      ammo.capacity = nextCapacity;
+    }
+
+    const previousMaxArmor = this.#maxArmor;
+    const nextMaxArmor = INITIAL_MAX_ARMOR + next.maxArmorBonus;
+    this.#armor =
+      nextMaxArmor > previousMaxArmor
+        ? Math.min(nextMaxArmor, this.#armor + nextMaxArmor - previousMaxArmor)
+        : Math.min(nextMaxArmor, this.#armor);
+    this.#modifiers = Object.freeze(next);
+    this.#emit();
+    return true;
   }
 
   update(deltaMs: number): void {
@@ -247,6 +368,7 @@ export class CombatSystem {
     }
 
     const weapon = WEAPONS[this.#weaponId];
+    const spreadRadians = weapon.spreadRadians * this.#modifiers.spreadMultiplier;
     ammo.magazine -= 1;
     ammo.cooldownRemainingMs = 1_000 / weapon.roundsPerSecond;
 
@@ -254,15 +376,15 @@ export class CombatSystem {
       const spreadOffset =
         weapon.pellets === 1
           ? 0
-          : -weapon.spreadRadians / 2 +
-            (weapon.spreadRadians * index) / (weapon.pellets - 1);
+          : -spreadRadians / 2 +
+            (spreadRadians * index) / (weapon.pellets - 1);
       return Object.freeze({
         weaponId: this.#weaponId,
-        damage: weapon.damage,
+        damage: weapon.damage * this.#modifiers.damageMultiplier,
         speed: weapon.projectileSpeed,
         radius: weapon.projectileRadius,
         angle: aimAngle + spreadOffset,
-        penetration: weapon.penetration,
+        penetration: weapon.penetration + this.#modifiers.penetrationBonus,
         splashRadius: weapon.splashRadius,
         knockback: weapon.knockback,
       });
@@ -278,14 +400,15 @@ export class CombatSystem {
     if (
       this.#dead ||
       this.#reloading ||
-      ammo.magazine >= weapon.magazine ||
+      ammo.magazine >= ammo.capacity ||
       ammo.reserve <= 0
     ) {
       return false;
     }
 
     this.#reloading = true;
-    this.#reloadRemainingMs = weapon.reloadMs;
+    this.#reloadDurationMs = weapon.reloadMs * this.#modifiers.reloadMultiplier;
+    this.#reloadRemainingMs = this.#reloadDurationMs;
     this.#emit();
     return true;
   }
@@ -355,6 +478,53 @@ export class CombatSystem {
     return true;
   }
 
+  restoreHealth(amount: number): number {
+    const reward = positiveInteger(amount);
+    if (this.#dead || reward === 0 || this.#health >= INITIAL_HEALTH) return 0;
+
+    const restored = Math.min(reward, INITIAL_HEALTH - this.#health);
+    this.#health += restored;
+    this.#emit();
+    return restored;
+  }
+
+  restoreArmor(amount: number): number {
+    const reward = positiveInteger(amount);
+    if (this.#dead || reward === 0 || this.#armor >= this.#maxArmor) return 0;
+
+    const restored = Math.min(reward, this.#maxArmor - this.#armor);
+    this.#armor += restored;
+    this.#emit();
+    return restored;
+  }
+
+  addReserveAmmo(amount: number): number {
+    const reward = positiveInteger(amount);
+    const ammo = this.#ammo[this.#weaponId];
+    if (
+      this.#dead ||
+      reward === 0 ||
+      ammo.reserve === Number.POSITIVE_INFINITY ||
+      !Number.isSafeInteger(ammo.reserve + reward)
+    ) {
+      return 0;
+    }
+
+    ammo.reserve += reward;
+    this.#emit();
+    return reward;
+  }
+
+  addGrenades(amount: number): number {
+    const reward = positiveInteger(amount);
+    if (this.#dead || reward === 0 || this.#grenades >= MAX_GRENADES) return 0;
+
+    const added = Math.min(reward, MAX_GRENADES - this.#grenades);
+    this.#grenades += added;
+    this.#emit();
+    return added;
+  }
+
   setCredits(credits: number): boolean {
     const nextCredits = Math.floor(credits);
     if (credits < 0 || !Number.isSafeInteger(nextCredits)) return false;
@@ -389,12 +559,14 @@ export class CombatSystem {
     this.#weaponId = INITIAL_WEAPON;
     this.#ammo = createAmmoState();
     this.#reloading = false;
+    this.#reloadDurationMs = 0;
     this.#reloadRemainingMs = 0;
     this.#grenades = INITIAL_GRENADES;
     this.#grenadeCooldownRemainingMs = 0;
     this.#medkits = INITIAL_MEDKITS;
     this.#health = INITIAL_HEALTH;
     this.#armor = INITIAL_ARMOR;
+    this.#modifiers = DEFAULT_COMBAT_MODIFIERS;
     this.#dead = false;
     this.#credits = 0;
     this.#wave = 0;
@@ -402,9 +574,13 @@ export class CombatSystem {
     this.#emit();
   }
 
+  get #maxArmor(): number {
+    return INITIAL_MAX_ARMOR + this.#modifiers.maxArmorBonus;
+  }
+
   #completeReload(): void {
     const ammo = this.#ammo[this.#weaponId];
-    const missingRounds = WEAPONS[this.#weaponId].magazine - ammo.magazine;
+    const missingRounds = ammo.capacity - ammo.magazine;
     const transferred =
       ammo.reserve === Number.POSITIVE_INFINITY
         ? missingRounds
@@ -412,11 +588,13 @@ export class CombatSystem {
     ammo.magazine += transferred;
     if (ammo.reserve !== Number.POSITIVE_INFINITY) ammo.reserve -= transferred;
     this.#reloading = false;
+    this.#reloadDurationMs = 0;
     this.#reloadRemainingMs = 0;
   }
 
   #cancelReload(): void {
     this.#reloading = false;
+    this.#reloadDurationMs = 0;
     this.#reloadRemainingMs = 0;
   }
 

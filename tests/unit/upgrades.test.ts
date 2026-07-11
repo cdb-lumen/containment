@@ -146,6 +146,17 @@ describe('UpgradeSystem armory', () => {
     expect(locked.armory.open).toBe(false);
   });
 
+  it('can cancel an open armory without spending credits or applying an upgrade', () => {
+    const system = new UpgradeSystem();
+    const before = system.beginArmory(500, 'cancel-on-defeat');
+
+    expect(system.cancelArmory()).toBe(true);
+    expect(system.armory).toMatchObject({ open: false, credits: 500, offers: [] });
+    expect(system.levels).toEqual(Object.fromEntries(IDS.map((id) => [id, 0])));
+    expect(system.cancelArmory()).toBe(false);
+    expect(before.open).toBe(true);
+  });
+
   it('rejects unknown ids and malformed credit/time inputs safely', () => {
     const system = new UpgradeSystem();
     system.beginArmory(Number.NaN, 'bad-credits');

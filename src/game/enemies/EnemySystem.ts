@@ -4,6 +4,7 @@ import {
   WORLD_WIDTH,
 } from '../constants';
 import { ENEMIES, STANDARD_ENEMY_IDS } from './catalog';
+import { SpatialHash } from './SpatialHash';
 import type { StandardEnemyId } from './types';
 
 const ELITE_MULTIPLIER = 2;
@@ -26,6 +27,7 @@ const STALKER_CAMOUFLAGED_MS = 2_000;
 const STALKER_REVEALED_MS = 1_000;
 const CAMOUFLAGED_ALPHA = 0.35;
 const MAX_KNOCKBACK = 120;
+const SEPARATION_QUERY_RADIUS = 64;
 
 export type EnemyPlayerState = {
   readonly x: number;
@@ -178,6 +180,13 @@ type EnemyState = {
 
 type Vector = { x: number; y: number };
 
+type SpatialEnemy = {
+  readonly id: string;
+  x: number;
+  y: number;
+  enemy: EnemyState;
+};
+
 const freezeEvent = <T extends EnemyEvent>(event: T): T => Object.freeze(event);
 
 const freezeEvents = (events: EnemyEvent[]): readonly EnemyEvent[] =>
@@ -197,6 +206,8 @@ const isStandardEnemyId = (value: unknown): value is StandardEnemyId =>
 
 export class EnemySystem {
   readonly #enemies = new Map<number, EnemyState>();
+  readonly #spatialHash = new SpatialHash<SpatialEnemy>(96);
+  readonly #spatialEnemies = new Map<number, SpatialEnemy>();
   readonly #listeners = new Set<(event: EnemyEvent) => void>();
   readonly #canMove?: (context: CollisionSteeringContext) => boolean;
   #nextId = 1;
@@ -287,6 +298,14 @@ export class EnemySystem {
     };
 
     this.#enemies.set(state.id, state);
+    const spatialEnemy: SpatialEnemy = {
+      id: String(state.id),
+      x: state.x,
+      y: state.y,
+      enemy: state,
+    };
+    this.#spatialEnemies.set(state.id, spatialEnemy);
+    this.#spatialHash.insert(spatialEnemy);
     this.#reservedCount += reservedChildren;
     return Object.freeze({ spawned: true, enemy: this.#snapshotEnemy(state) });
   }
@@ -299,6 +318,8 @@ export class EnemySystem {
     const timerDelta = Math.min(deltaMs, MAX_TIMER_DELTA_MS);
     const movementDelta = Math.min(deltaMs, MAX_MOVEMENT_DELTA_MS);
     const events: EnemyEvent[] = [];
+
+    this.#rebuildSpatialHash();
 
     for (const enemy of this.#enemies.values()) {
       enemy.contactCooldownRemainingMs = Math.max(
@@ -381,6 +402,9 @@ export class EnemySystem {
       }
       this.#reservedCount -= enemy.reservedChildren;
       this.#enemies.delete(enemy.id);
+      const spatialEnemy = this.#spatialEnemies.get(enemy.id);
+      if (spatialEnemy) this.#spatialHash.remove(spatialEnemy);
+      this.#spatialEnemies.delete(enemy.id);
     }
 
     const result = this.#damageResult(
@@ -401,11 +425,16 @@ export class EnemySystem {
     if (!enemy) return false;
     this.#reservedCount -= enemy.reservedChildren;
     this.#enemies.delete(id);
+    const spatialEnemy = this.#spatialEnemies.get(id);
+    if (spatialEnemy) this.#spatialHash.remove(spatialEnemy);
+    this.#spatialEnemies.delete(id);
     return true;
   }
 
   reset(): void {
     this.#enemies.clear();
+    this.#spatialHash.clear();
+    this.#spatialEnemies.clear();
     this.#reservedCount = 0;
     this.#nextId = 1;
   }
@@ -530,7 +559,12 @@ export class EnemySystem {
   #separation(enemy: EnemyState): Vector {
     let separationX = 0;
     let separationY = 0;
-    for (const other of this.#enemies.values()) {
+    for (const nearby of this.#spatialHash.queryRadius(
+      enemy.x,
+      enemy.y,
+      enemy.radius + SEPARATION_QUERY_RADIUS,
+    )) {
+      const other = nearby.enemy;
       if (other.id === enemy.id) continue;
       const offsetX = enemy.x - other.x;
       const offsetY = enemy.y - other.y;
@@ -546,6 +580,26 @@ export class EnemySystem {
       }
     }
     return normalized(separationX, separationY);
+  }
+
+  #rebuildSpatialHash(): void {
+    this.#spatialHash.clear();
+    for (const enemy of this.#enemies.values()) {
+      let spatialEnemy = this.#spatialEnemies.get(enemy.id);
+      if (!spatialEnemy) {
+        spatialEnemy = {
+          id: String(enemy.id),
+          x: enemy.x,
+          y: enemy.y,
+          enemy,
+        };
+        this.#spatialEnemies.set(enemy.id, spatialEnemy);
+      } else {
+        spatialEnemy.x = enemy.x;
+        spatialEnemy.y = enemy.y;
+      }
+      this.#spatialHash.insert(spatialEnemy);
+    }
   }
 
   #integrate(enemy: EnemyState, deltaMs: number): void {
@@ -653,8 +707,25 @@ export class EnemySystem {
     const appliedY = (knockback.y / magnitude) * clampedMagnitude * resistance;
     const previousX = enemy.x;
     const previousY = enemy.y;
-    enemy.x = clamp(enemy.x + appliedX, 0, WORLD_WIDTH);
-    enemy.y = clamp(enemy.y + appliedY, 0, WORLD_HEIGHT);
+    const candidates = [
+      {
+        x: clamp(previousX + appliedX, 0, WORLD_WIDTH),
+        y: clamp(previousY + appliedY, 0, WORLD_HEIGHT),
+      },
+      { x: clamp(previousX + appliedX, 0, WORLD_WIDTH), y: previousY },
+      { x: previousX, y: clamp(previousY + appliedY, 0, WORLD_HEIGHT) },
+    ];
+    for (const candidate of candidates) {
+      if (
+        (candidate.x === previousX && candidate.y === previousY) ||
+        !this.#movementAllowed(enemy, candidate.x, candidate.y)
+      ) {
+        continue;
+      }
+      enemy.x = candidate.x;
+      enemy.y = candidate.y;
+      break;
+    }
     return Object.freeze({ x: enemy.x - previousX, y: enemy.y - previousY });
   }
 

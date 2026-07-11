@@ -246,6 +246,18 @@ describe('EnemySystem combat, reservations, and boundaries', () => {
     });
   });
 
+  it('routes knockback through collision steering and slides along blocked geometry', () => {
+    const system = new EnemySystem({
+      canMove: ({ toX }) => toX <= 120,
+    });
+    const crawler = requireSpawn(system, 'crawler', 100, 200);
+
+    const result = system.applyDamage(crawler.id, 1, { x: 80, y: 20 });
+
+    expect(result.appliedKnockback).toEqual({ x: 0, y: 20 });
+    expect(system.getSnapshot(crawler.id)).toMatchObject({ x: 100, y: 220 });
+  });
+
   it('enforces finite-range contact attacks and per-enemy cooldowns', () => {
     const system = new EnemySystem();
     const crawler = requireSpawn(system, 'crawler', 100, 100);

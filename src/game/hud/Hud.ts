@@ -273,12 +273,13 @@ export class Hud {
 
   private render(snapshot: CombatSnapshot): void {
     const health = Math.max(0, Math.min(100, finiteNumber(snapshot.health)));
-    const armor = Math.max(0, Math.min(100, finiteNumber(snapshot.armor)));
+    const maxArmor = Math.max(1, finiteNumber(snapshot.maxArmor, 100));
+    const armor = Math.max(0, Math.min(maxArmor, finiteNumber(snapshot.armor)));
     const critical = health <= 25;
 
     this.healthValue.setText(String(Math.round(health)));
     this.armorValue.setText(String(Math.round(armor)));
-    this.drawVitals(health, armor, critical);
+    this.drawVitals(health, armor, maxArmor, critical);
     this.setCriticalState(critical);
 
     const weapon = WEAPONS[snapshot.weaponId];
@@ -295,7 +296,12 @@ export class Hud {
     this.objectiveValue.setText(objectiveText(snapshot.objective).toUpperCase());
   }
 
-  private drawVitals(health: number, armor: number, critical: boolean): void {
+  private drawVitals(
+    health: number,
+    armor: number,
+    maxArmor: number,
+    critical: boolean,
+  ): void {
     const graphics = this.vitalsGraphics;
     graphics.clear();
 
@@ -306,7 +312,7 @@ export class Hud {
     graphics.fillStyle(critical ? COLORS.critical : COLORS.cyan, 1);
     graphics.fillRect(107, 24, 220 * (health / 100), 8);
     graphics.fillStyle(COLORS.steel, 0.9);
-    graphics.fillRect(107, 66, 220 * (armor / 100), 8);
+    graphics.fillRect(107, 66, 220 * (armor / maxArmor), 8);
 
     graphics.lineStyle(1, critical ? COLORS.critical : COLORS.cyan, 0.72);
     graphics.strokeRect(104, 21, 226, 14);
@@ -323,7 +329,10 @@ export class Hud {
       return;
     }
 
-    const duration = Math.max(1, finiteNumber(reloadMs, 1));
+    const duration = Math.max(
+      1,
+      finiteNumber(snapshot.reloadDurationMs, finiteNumber(reloadMs, 1)),
+    );
     const remaining = Math.max(
       0,
       Math.min(duration, finiteNumber(snapshot.reloadRemainingMs)),

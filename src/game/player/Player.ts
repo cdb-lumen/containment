@@ -7,6 +7,7 @@ const PLAYER_DISPLAY_SIZE = 54;
 const PLAYER_BODY_RADIUS = 24;
 const PLAYER_BODY_OFFSET = 8;
 const PLAYER_SPEED = 260;
+const MAX_SPEED_MULTIPLIER = 4;
 
 type PlayerPoint = Readonly<Phaser.Types.Math.Vector2Like>;
 
@@ -14,6 +15,7 @@ export class Player {
   readonly sprite: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   private isDestroyed = false;
+  private speedMultiplier = 1;
 
   constructor(scene: Phaser.Scene, spawn: PlayerPoint) {
     const spawnX = Number.isFinite(spawn.x) ? spawn.x : 0;
@@ -42,7 +44,7 @@ export class Player {
       movementY *= inverseMagnitude;
     }
 
-    this.sprite.setVelocity(movementX * PLAYER_SPEED, movementY * PLAYER_SPEED);
+    this.sprite.setVelocity(movementX * this.currentSpeed, movementY * this.currentSpeed);
 
     if (Number.isFinite(input.aimWorldX) && Number.isFinite(input.aimWorldY)) {
       const aimX = input.aimWorldX - this.sprite.x;
@@ -58,8 +60,26 @@ export class Player {
   reset(point: PlayerPoint): void {
     if (this.isDestroyed || !Number.isFinite(point.x) || !Number.isFinite(point.y)) return;
 
+    this.speedMultiplier = 1;
     this.sprite.body.reset(point.x, point.y);
     this.sprite.setRotation(0).setDepth(point.y);
+  }
+
+  get currentSpeed(): number {
+    return PLAYER_SPEED * this.speedMultiplier;
+  }
+
+  setSpeedMultiplier(multiplier: number): boolean {
+    if (
+      this.isDestroyed ||
+      !Number.isFinite(multiplier) ||
+      multiplier <= 0 ||
+      multiplier > MAX_SPEED_MULTIPLIER
+    ) {
+      return false;
+    }
+    this.speedMultiplier = multiplier;
+    return true;
   }
 
   stop(): void {
@@ -70,6 +90,7 @@ export class Player {
   destroy(): void {
     if (this.isDestroyed) return;
     this.stop();
+    this.speedMultiplier = 1;
     this.isDestroyed = true;
     this.sprite.destroy();
   }

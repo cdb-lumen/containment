@@ -353,6 +353,13 @@ export class UpgradeSystem {
     return Object.freeze({ ...purchased, automatic: true });
   }
 
+  cancelArmory(): boolean {
+    if (!this.#armory.open) return false;
+    this.#armory = this.#closedArmory(this.#armory.credits);
+    this.#notify();
+    return true;
+  }
+
   reset(): void {
     this.#levels = createZeroLevels();
     this.#creditsValid = true;
