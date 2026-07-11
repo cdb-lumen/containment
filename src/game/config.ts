@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import { GAME_HEIGHT, GAME_WIDTH } from './constants';
 import { BootScene } from './scenes/BootScene';
+import { GameScene } from './scenes/GameScene';
 import { MenuScene } from './scenes/MenuScene';
 
 const BACKGROUND_COLOR = '#05070b';
@@ -18,7 +19,7 @@ export function createGameConfig(
     transparent: false,
     antialias: true,
     pixelArt: false,
-    scene: [BootScene, MenuScene],
+    scene: [BootScene, MenuScene, GameScene],
     physics: {
       default: 'arcade',
       arcade: {

@@ -48,6 +48,7 @@ export class MenuScene extends Phaser.Scene {
   private startButtonLabel: Phaser.GameObjects.Text | null = null;
   private deploymentStatus: Phaser.GameObjects.Text | null = null;
   private scannerTween: Phaser.Tweens.Tween | null = null;
+  private gameTransition: Phaser.Time.TimerEvent | null = null;
   private activated = false;
   private shutdownRegistered = false;
 
@@ -86,7 +87,6 @@ export class MenuScene extends Phaser.Scene {
       this.startButton.off('pointerout', this.handlePointerOut);
       this.startButton.off('pointerdown', this.handlePointerDown);
       this.startButton.off('pointerup', this.handlePointerUp);
-      this.startButton.removeInteractive(true);
     }
 
     this.input.setDefaultCursor('default');
@@ -95,6 +95,11 @@ export class MenuScene extends Phaser.Scene {
       this.scannerTween.stop();
       this.tweens.remove(this.scannerTween);
       this.scannerTween = null;
+    }
+
+    if (this.gameTransition) {
+      this.gameTransition.remove(false);
+      this.gameTransition = null;
     }
 
     this.startButton = null;
@@ -497,5 +502,9 @@ export class MenuScene extends Phaser.Scene {
     this.input.setDefaultCursor('default');
     this.deploymentStatus?.setVisible(true);
     this.game.events.emit(GAME_EVENTS.startRun);
+    this.gameTransition = this.time.delayedCall(50, () => {
+      this.gameTransition = null;
+      this.scene.start(SCENE_KEYS.game);
+    });
   }
 }
