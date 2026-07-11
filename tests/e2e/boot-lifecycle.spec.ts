@@ -17,6 +17,12 @@ const browserErrors = (page: Page): { consoleErrors: ConsoleError[]; pageErrors:
 test('keeps optional skin failure nonfatal and re-enters boot without duplicate successful loads', async ({ page }) => {
   const errors = browserErrors(page);
   const requests = new Map<string, number>();
+  let bloodRequests = 0;
+
+  await page.route('**/assets/effects/blood-decals-sheet.png', async (route) => {
+    bloodRequests += 1;
+    await route.continue();
+  });
 
   await page.route('**/assets/characters/*-sheet.png', async (route) => {
     const fileName = new URL(route.request().url()).pathname.split('/').at(-1) ?? '';
@@ -70,6 +76,7 @@ test('keeps optional skin failure nonfatal and re-enters boot without duplicate 
     'carrier-sheet.png': 1,
     'queen-sheet.png': 1,
   });
+  expect(bloodRequests).toBe(1);
   const unexpectedConsoleErrors = errors.consoleErrors.filter(
     ({ text, url }) =>
       text !== 'Failed to load resource: net::ERR_FAILED' ||

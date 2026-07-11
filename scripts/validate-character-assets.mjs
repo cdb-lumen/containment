@@ -20,6 +20,9 @@ const EXPECTED_SHEETS = new Map([
   ['carrier-sheet.png', [672, 96]],
   ['queen-sheet.png', [1120, 160]],
 ]);
+const bloodAsset = process.env.BLOOD_DECAL_ASSET_FILE
+  ? pathToFileURL(resolve(process.env.BLOOD_DECAL_ASSET_FILE))
+  : new URL('../public/assets/effects/blood-decals-sheet.png', import.meta.url);
 
 function makeCrcTable() {
   return Array.from({ length: 256 }, (_, index) => {
@@ -35,6 +38,13 @@ function crc32(buffer) {
   let crc = 0xffffffff;
   for (const byte of buffer) crc = CRC_TABLE[(crc ^ byte) & 0xff] ^ (crc >>> 8);
   return (crc ^ 0xffffffff) >>> 0;
+}
+
+function paeth(left, above, upperLeft) {
+  const estimate = left + above - upperLeft;
+  const distances = [Math.abs(estimate - left), Math.abs(estimate - above), Math.abs(estimate - upperLeft)];
+  return distances[0] <= distances[1] && distances[0] <= distances[2]
+    ? left : distances[1] <= distances[2] ? above : upperLeft;
 }
 
 function validatePng(file, expectedWidth, expectedHeight) {
@@ -127,7 +137,46 @@ function validatePng(file, expectedWidth, expectedHeight) {
     const filterByte = inflated[y * rowBytes];
     if (filterByte > 4) throw new Error(`invalid PNG filter byte ${filterByte} in row ${y}`);
   }
-  return ihdr;
+  const pixels = Buffer.alloc(ihdr.width * ihdr.height * 4);
+  const stride = ihdr.width * 4;
+  for (let y = 0; y < ihdr.height; y += 1) {
+    const filterByte = inflated[y * rowBytes];
+    const sourceOffset = y * rowBytes + 1;
+    const targetOffset = y * stride;
+    for (let x = 0; x < stride; x += 1) {
+      const raw = inflated[sourceOffset + x];
+      const left = x >= 4 ? pixels[targetOffset + x - 4] : 0;
+      const above = y > 0 ? pixels[targetOffset + x - stride] : 0;
+      const upperLeft = y > 0 && x >= 4 ? pixels[targetOffset + x - stride - 4] : 0;
+      const predictor = filterByte === 1 ? left
+        : filterByte === 2 ? above
+          : filterByte === 3 ? Math.floor((left + above) / 2)
+            : filterByte === 4 ? paeth(left, above, upperLeft) : 0;
+      pixels[targetOffset + x] = (raw + predictor) & 0xff;
+    }
+  }
+  return { ...ihdr, pixels };
+}
+
+function validateBloodCells(pixels) {
+  const allowedAlpha = new Set([0, 224, 255]);
+  for (let cell = 0; cell < 12; cell += 1) {
+    let visible = 0;
+    let transparent = 0;
+    for (let y = 0; y < 64; y += 1) {
+      for (let localX = 0; localX < 64; localX += 1) {
+        const alpha = pixels[(y * 768 + cell * 64 + localX) * 4 + 3];
+        if (!allowedAlpha.has(alpha)) throw new Error(`cell ${cell} has unsupported alpha ${alpha}`);
+        if (alpha === 0) transparent += 1;
+        else visible += 1;
+        if ((localX === 0 || localX === 63 || y === 0 || y === 63) && alpha !== 0) {
+          throw new Error(`cell ${cell} lacks transparent edge padding`);
+        }
+      }
+    }
+    if (visible === 0) throw new Error(`cell ${cell} is empty`);
+    if (transparent === 0) throw new Error(`cell ${cell} has no transparent pixels`);
+  }
 }
 
 const errors = [];
@@ -142,8 +191,18 @@ for (const [fileName, [expectedWidth, expectedHeight]] of EXPECTED_SHEETS) {
       : `${fileName}: ${error.message}`);
   }
 }
+try {
+  const file = await readFile(bloodAsset);
+  const { width, height, pixels } = validatePng(file, 768, 64);
+  validateBloodCells(pixels);
+  console.log(`valid blood decal sheet: blood-decals-sheet.png (${width}x${height}, 12 padded cells)`);
+} catch (error) {
+  errors.push(error?.code === 'ENOENT'
+    ? 'blood-decals-sheet.png: missing expected file'
+    : `blood-decals-sheet.png: ${error.message}`);
+}
 if (errors.length > 0) {
-  console.error('Character asset validation failed:');
+  console.error('Asset validation failed:');
   for (const error of errors) console.error(`- ${error}`);
   process.exitCode = 1;
 }
