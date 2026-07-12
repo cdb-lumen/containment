@@ -17,6 +17,15 @@ export const TEXTURE_KEYS = Object.freeze({
   wall: 'facility-wall',
   floor: 'facility-floor',
   grate: 'facility-grate',
+  floorA: 'facility-floor-a',
+  floorB: 'facility-floor-b',
+  floorC: 'facility-floor-c',
+  floorHeavyA: 'facility-floor-heavy-a',
+  floorHeavyB: 'facility-floor-heavy-b',
+  floorHeavyC: 'facility-floor-heavy-c',
+  grateA: 'facility-grate-a',
+  grateB: 'facility-grate-b',
+  grateC: 'facility-grate-c',
   hazard: 'facility-hazard',
   console: 'facility-console',
   crate: 'facility-crate',
@@ -70,6 +79,37 @@ const polygon = (
   }
   graphics.closePath();
   graphics.fillPath();
+};
+
+const floorPlate = (g: Phaser.GameObjects.Graphics, variant: number, heavy = false): void => {
+  const base = heavy ? 0x151719 : 0x0b1117;
+  const seam = heavy ? 0x38352f : 0x25313a;
+  g.fillStyle(base, 1).fillRect(0, 0, 96, 96);
+  g.fillStyle(heavy ? 0x1d2020 : 0x101922, 1).fillRect(4, 4, 88, 88);
+  g.lineStyle(2, seam, 1).strokeRect(3, 3, 90, 90);
+  g.lineStyle(1, heavy ? 0x565046 : 0x334450, 0.65);
+  if (variant === 0) {
+    g.lineBetween(48, 4, 48, 92); g.lineBetween(4, 48, 92, 48);
+  } else if (variant === 1) {
+    g.strokeRect(18, 18, 60, 60); g.lineBetween(18, 18, 78, 78); g.lineBetween(78, 18, 18, 78);
+  } else {
+    g.lineBetween(32, 4, 32, 92); g.lineBetween(64, 4, 64, 92);
+    g.lineBetween(4, 32, 92, 32); g.lineBetween(4, 64, 92, 64);
+  }
+  g.fillStyle(0x65717a, 1);
+  for (const [x, y] of [[9, 9], [87, 9], [9, 87], [87, 87]] as const) g.fillCircle(x, y, 2);
+  g.fillStyle(heavy ? 0x8b6236 : 0x17303a, 0.7).fillRect(8 + variant * 7, 80 - variant * 9, 22, 3);
+};
+
+const floorGrate = (g: Phaser.GameObjects.Graphics, variant: number): void => {
+  g.fillStyle(0x070d12, 1).fillRect(0, 0, 64, 64);
+  g.fillStyle(0x101a21, 1).fillRect(3, 3, 58, 58);
+  g.lineStyle(3, 0x293943, 1).strokeRect(2, 2, 60, 60);
+  g.lineStyle(2, 0x334751, 0.9);
+  for (let x = 7 + variant * 2; x < 64; x += 9) g.lineBetween(x, 4, x, 60);
+  g.lineStyle(1, 0x05090c, 1);
+  for (let y = 10; y < 64; y += 12) g.lineBetween(4, y, 60, y);
+  g.lineStyle(1, 0x69d8e7, 0.12 + variant * 0.04).lineBetween(4, 16 + variant * 12, 60, 16 + variant * 12);
 };
 
 const alienBody = (
@@ -280,6 +320,15 @@ const DEFINITIONS: readonly TextureDefinition[] = [
       g.lineBetween(0, 48, 64, 48);
     },
   },
+  ...([TEXTURE_KEYS.floorA, TEXTURE_KEYS.floorB, TEXTURE_KEYS.floorC] as const).map((key, variant) => ({
+    key, width: 96, height: 96, draw: (g: Phaser.GameObjects.Graphics) => floorPlate(g, variant),
+  })),
+  ...([TEXTURE_KEYS.floorHeavyA, TEXTURE_KEYS.floorHeavyB, TEXTURE_KEYS.floorHeavyC] as const).map((key, variant) => ({
+    key, width: 96, height: 96, draw: (g: Phaser.GameObjects.Graphics) => floorPlate(g, variant, true),
+  })),
+  ...([TEXTURE_KEYS.grateA, TEXTURE_KEYS.grateB, TEXTURE_KEYS.grateC] as const).map((key, variant) => ({
+    key, width: 64, height: 64, draw: (g: Phaser.GameObjects.Graphics) => floorGrate(g, variant),
+  })),
   {
     key: TEXTURE_KEYS.hazard,
     width: 64,

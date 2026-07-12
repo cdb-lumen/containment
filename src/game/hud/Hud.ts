@@ -91,15 +91,15 @@ export class Hud {
     this.reloadGraphics = scene.add.graphics();
     this.radarGraphics = scene.add.graphics();
 
-    const healthLabel = this.createLabel(28, 15, 'HEALTH');
-    const armorLabel = this.createLabel(28, 57, 'ARMOR');
-    this.healthValue = this.createValue(357, 11, '100', 22).setOrigin(1, 0);
-    this.armorValue = this.createValue(357, 53, '50', 22).setOrigin(1, 0);
+    const healthLabel = this.createLabel(28, 10, 'HEALTH');
+    const armorLabel = this.createLabel(28, 43, 'ARMOR');
+    this.healthValue = this.createValue(357, 6, '100', 20).setOrigin(1, 0);
+    this.armorValue = this.createValue(357, 39, '50', 20).setOrigin(1, 0);
 
-    const weaponHeader = this.createLabel(404, 15, 'CURRENT WEAPON');
-    this.weaponValue = this.createValue(404, 35, 'SERVICE PISTOL', 22);
-    this.ammoValue = this.createValue(684, 23, '12 / ∞', 32).setOrigin(1, 0);
-    this.reloadValue = scene.add.text(404, 76, '', {
+    const weaponHeader = this.createLabel(404, 10, 'CURRENT WEAPON');
+    this.weaponValue = this.createValue(404, 28, 'SERVICE PISTOL', 21);
+    this.ammoValue = this.createValue(684, 18, '12 / ∞', 29).setOrigin(1, 0);
+    this.reloadValue = scene.add.text(404, 54, '', {
       color: CSS_COLORS.orange,
       fontFamily: UTILITY_FONT,
       fontSize: '16px',
@@ -107,33 +107,33 @@ export class Hud {
       letterSpacing: 0.8,
     });
 
-    const waveHeader = this.createLabel(746, 15, 'INCURSION');
-    this.waveValue = this.createValue(746, 34, 'WAVE 0', 23);
-    const objectiveHeader = this.createLabel(856, 15, 'OBJECTIVE');
-    this.objectiveValue = scene.add.text(856, 36, 'AWAITING BREACH ORDERS', {
+    const waveHeader = this.createLabel(746, 10, 'INCURSION');
+    this.waveValue = this.createValue(746, 29, 'WAVE 0', 22);
+    const objectiveHeader = this.createLabel(856, 10, 'OBJECTIVE');
+    this.objectiveValue = scene.add.text(856, 31, 'AWAITING BREACH ORDERS', {
       color: CSS_COLORS.bone,
       fontFamily: DISPLAY_FONT,
-      fontSize: '18px',
+      fontSize: '16px',
       fontStyle: 'bold',
       wordWrap: { width: 280, useAdvancedWrap: true },
       lineSpacing: 2,
     });
 
-    const grenadeLabel = this.createLabel(34, 670, 'GRENADES');
-    this.grenadesValue = this.createValue(148, 662, '3', 28);
-    const medkitLabel = this.createLabel(234, 670, 'MEDKITS');
-    this.medkitsValue = this.createValue(334, 662, '2', 28);
-    const creditsLabel = this.createLabel(428, 670, 'CREDITS');
-    this.creditsValue = this.createValue(532, 662, '0', 28);
+    const grenadeLabel = this.createLabel(34, 691, 'GRENADES');
+    this.grenadesValue = this.createValue(148, 684, '3', 25);
+    const medkitLabel = this.createLabel(234, 691, 'MEDKITS');
+    this.medkitsValue = this.createValue(334, 684, '2', 25);
+    const creditsLabel = this.createLabel(428, 691, 'CREDITS');
+    this.creditsValue = this.createValue(532, 684, '0', 25);
 
-    const tacticalLabel = scene.add.text(759, 670, 'TACTICAL LINK', {
+    const tacticalLabel = scene.add.text(759, 691, 'TACTICAL LINK', {
       color: CSS_COLORS.steel,
       fontFamily: UTILITY_FONT,
       fontSize: '16px',
       letterSpacing: 1,
     });
     const tacticalState = scene.add
-      .text(1117, 668, 'PROXIMITY ACTIVE', {
+      .text(1117, 689, 'PROXIMITY ACTIVE', {
         color: CSS_COLORS.cyan,
         fontFamily: UTILITY_FONT,
         fontSize: '16px',
@@ -158,7 +158,7 @@ export class Hud {
       letterSpacing: 1.4,
     });
     this.criticalCue = scene.add
-      .container(215, 79, [criticalIcon, criticalText])
+      .container(215, 48, [criticalIcon, criticalText])
       .setVisible(false);
 
     this.root = scene.add.container(0, 0, [
@@ -256,22 +256,22 @@ export class Hud {
 
   private drawChrome(graphics: Phaser.GameObjects.Graphics): void {
     graphics.fillStyle(COLORS.void, 0.9);
-    graphics.fillRect(0, 0, 1280, 112);
-    graphics.fillRect(0, 650, 1280, 70);
+    graphics.fillRect(0, 0, 1280, 78);
+    graphics.fillRect(0, 678, 1280, 42);
 
     graphics.fillStyle(COLORS.panel, 0.72);
-    graphics.fillRect(12, 8, 1256, 94);
-    graphics.fillRect(12, 658, 1256, 54);
+    graphics.fillRect(12, 8, 1256, 62);
+    graphics.fillRect(12, 682, 1256, 30);
 
     graphics.lineStyle(1, COLORS.steel, 0.42);
-    graphics.strokeRect(12, 8, 1256, 94);
-    graphics.strokeRect(12, 658, 1256, 54);
-    graphics.lineBetween(382, 8, 382, 102);
-    graphics.lineBetween(714, 8, 714, 102);
-    graphics.lineBetween(1148, 8, 1148, 102);
-    graphics.lineBetween(204, 658, 204, 712);
-    graphics.lineBetween(398, 658, 398, 712);
-    graphics.lineBetween(700, 658, 700, 712);
+    graphics.strokeRect(12, 8, 1256, 62);
+    graphics.strokeRect(12, 682, 1256, 30);
+    graphics.lineBetween(382, 8, 382, 70);
+    graphics.lineBetween(714, 8, 714, 70);
+    graphics.lineBetween(1148, 8, 1148, 70);
+    graphics.lineBetween(204, 682, 204, 712);
+    graphics.lineBetween(398, 682, 398, 712);
+    graphics.lineBetween(700, 682, 700, 712);
 
     graphics.fillStyle(COLORS.cyan, 1);
     graphics.fillRect(12, 8, 126, 3);
@@ -316,18 +316,18 @@ export class Hud {
     graphics.clear();
 
     graphics.fillStyle(COLORS.void, 0.9);
-    graphics.fillRect(104, 21, 226, 14);
-    graphics.fillRect(104, 63, 226, 14);
+    graphics.fillRect(104, 16, 226, 12);
+    graphics.fillRect(104, 49, 226, 12);
 
     graphics.fillStyle(critical ? COLORS.critical : COLORS.cyan, 1);
-    graphics.fillRect(107, 24, 220 * (health / 100), 8);
+    graphics.fillRect(107, 19, 220 * (health / 100), 6);
     graphics.fillStyle(COLORS.steel, 0.9);
-    graphics.fillRect(107, 66, 220 * (armor / maxArmor), 8);
+    graphics.fillRect(107, 52, 220 * (armor / maxArmor), 6);
 
     graphics.lineStyle(1, critical ? COLORS.critical : COLORS.cyan, 0.72);
-    graphics.strokeRect(104, 21, 226, 14);
+    graphics.strokeRect(104, 16, 226, 12);
     graphics.lineStyle(1, COLORS.steel, 0.62);
-    graphics.strokeRect(104, 63, 226, 14);
+    graphics.strokeRect(104, 49, 226, 12);
   }
 
   private drawReload(snapshot: CombatSnapshot, reloadMs: number): void {
@@ -355,11 +355,11 @@ export class Hud {
       .setVisible(true);
 
     graphics.fillStyle(COLORS.void, 0.95);
-    graphics.fillRect(564, 81, 120, 8);
+    graphics.fillRect(564, 57, 120, 8);
     graphics.fillStyle(COLORS.orange, 1);
-    graphics.fillRect(566, 83, 116 * progress, 4);
+    graphics.fillRect(566, 59, 116 * progress, 4);
     graphics.lineStyle(1, COLORS.orange, 0.8);
-    graphics.strokeRect(564, 81, 120, 8);
+    graphics.strokeRect(564, 57, 120, 8);
   }
 
   private setCriticalState(critical: boolean): void {

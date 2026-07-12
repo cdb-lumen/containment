@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import { createTextures, TEXTURE_KEYS } from '../art/createTextures';
+import { roomMaterialVariant } from '../art/visualSystem';
 import {
   FACILITY_LAYOUT,
   type FacilityBreach,
@@ -121,7 +122,7 @@ export class FacilityWorld {
     backdrop.setStrokeStyle(4, 0x263640, 1);
 
     for (const room of FACILITY_LAYOUT.rooms) {
-      const texture = room.floor === 'grate' ? TEXTURE_KEYS.grate : TEXTURE_KEYS.floor;
+      const texture = roomMaterialVariant(room.id, room.floor);
       const floor = this.track(
         this.scene.add.tileSprite(
           room.x + room.width / 2,
@@ -139,14 +140,20 @@ export class FacilityWorld {
       roomFrame.strokeRect(room.x, room.y, room.width, room.height);
       roomFrame.lineStyle(1, 0x69d8e7, 0.12);
       roomFrame.strokeRect(room.x + 10, room.y + 10, room.width - 20, room.height - 20);
+      roomFrame.fillStyle(0x05080b, 0.28);
+      roomFrame.fillRect(room.x + 14, room.y + 14, room.width - 28, 28);
+      roomFrame.lineStyle(2, room.floor === 'reinforced' ? 0xf39237 : 0x69d8e7, 0.32);
+      roomFrame.lineBetween(room.x + 20, room.y + room.height - 22, room.x + room.width - 20, room.y + room.height - 22);
 
       this.track(
         this.scene.add
           .text(room.x + 24, room.y + 20, room.label, {
             fontFamily: 'Consolas, ui-monospace, monospace',
-            fontSize: '18px',
-            color: '#81909e',
-            letterSpacing: 2,
+            fontSize: '16px',
+            color: '#b8c4c9',
+            backgroundColor: '#070a0fcc',
+            padding: { x: 8, y: 4 },
+            letterSpacing: 2.4,
           })
           .setDepth(3),
       );
@@ -167,6 +174,7 @@ export class FacilityWorld {
     }
 
     this.buildZoneMarkings();
+    this.buildAtmosphere();
 
     for (const wall of FACILITY_LAYOUT.walls) {
       const wallSprite = this.staticBlockers.create(
@@ -271,6 +279,29 @@ export class FacilityWorld {
         .setDepth(2),
     );
     turretIcon.setAlpha(0.75);
+  }
+
+  private buildAtmosphere(): void {
+    const pools = this.track(this.scene.add.graphics().setDepth(-4));
+    const fixtures = this.track(this.scene.add.graphics().setDepth(1));
+    for (const [index, room] of FACILITY_LAYOUT.rooms.entries()) {
+      const centerX = room.x + room.width / 2;
+      const centerY = room.y + room.height / 2;
+      const warning = room.floor === 'reinforced';
+      const color = warning ? 0xf39237 : 0x69d8e7;
+      pools.fillStyle(color, warning ? 0.035 : 0.025);
+      pools.fillEllipse(centerX, centerY, Math.min(420, room.width * 0.7), Math.min(260, room.height * 0.52));
+      fixtures.fillStyle(0x05080b, 0.72);
+      fixtures.fillRect(room.x + 34, room.y + 54, 48, 10);
+      fixtures.fillRect(room.x + room.width - 82, room.y + 54, 48, 10);
+      fixtures.fillStyle(color, 0.8);
+      fixtures.fillRect(room.x + 38, room.y + 57, 40, 3);
+      fixtures.fillRect(room.x + room.width - 78, room.y + 57, 40, 3);
+      if (index % 2 === 0) {
+        fixtures.lineStyle(3, 0x05080b, 0.8).strokeCircle(centerX, centerY, 32);
+        fixtures.lineStyle(1, color, 0.32).strokeCircle(centerX, centerY, 27);
+      }
+    }
   }
 
   private setDoorOpen(runtime: DoorRuntime, isOpen: boolean): void {

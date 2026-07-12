@@ -7,13 +7,14 @@ import {
 } from '../art/characterSkins';
 import type { QualityProfileName } from '../effects/quality';
 import type { InputState } from '../input/InputState';
+import { ACTOR_VISUAL_SCALE } from '../art/visualSystem';
 import {
   PlayerPresentationState,
   type PlayerPresentationSnapshot,
 } from './PlayerPresentationState';
 
 const PLAYER_DISPLAY_SIZE = 54;
-const PLAYER_ART_DISPLAY_SIZE = 78;
+const PLAYER_ART_DISPLAY_SIZE = ACTOR_VISUAL_SCALE.marine;
 const PLAYER_BODY_RADIUS = 24;
 const PLAYER_BODY_OFFSET = 8;
 const PLAYER_SPEED = 260;
