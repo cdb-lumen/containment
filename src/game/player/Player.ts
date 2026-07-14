@@ -7,14 +7,14 @@ import {
 } from '../art/characterSkins';
 import type { QualityProfileName } from '../effects/quality';
 import type { InputState } from '../input/InputState';
-import { ACTOR_VISUAL_SCALE } from '../art/visualSystem';
+import { ACTOR_PRESENTATION_SIZE } from '../art/visualSystem';
 import {
   PlayerPresentationState,
   type PlayerPresentationSnapshot,
 } from './PlayerPresentationState';
 
 const PLAYER_DISPLAY_SIZE = 54;
-const PLAYER_ART_DISPLAY_SIZE = ACTOR_VISUAL_SCALE.marine;
+const PLAYER_ART_DISPLAY_SIZE = ACTOR_PRESENTATION_SIZE.marine;
 const PLAYER_BODY_RADIUS = 24;
 const PLAYER_BODY_OFFSET = 8;
 const PLAYER_SPEED = 260;
@@ -59,7 +59,7 @@ export class Player {
     this.art = resolved.framed
       ? scene.add
           .image(spawnX, spawnY, resolved.texture, CHARACTER_SKINS.marine.frames.idleA)
-          .setDisplaySize(PLAYER_ART_DISPLAY_SIZE, PLAYER_ART_DISPLAY_SIZE)
+          .setDisplaySize(PLAYER_ART_DISPLAY_SIZE.width, PLAYER_ART_DISPLAY_SIZE.height)
           .setDepth(spawnY)
       : null;
     if (this.art) this.sprite.setVisible(false);
@@ -107,7 +107,10 @@ export class Player {
     this.art
       .setPosition(this.sprite.x + output.offsetX, this.sprite.y + output.offsetY)
       .setRotation(this.aimRotation + output.rotationOffset)
-      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE * output.scaleX, PLAYER_ART_DISPLAY_SIZE * output.scaleY)
+      .setDisplaySize(
+        PLAYER_ART_DISPLAY_SIZE.width * output.scaleX,
+        PLAYER_ART_DISPLAY_SIZE.height * output.scaleY,
+      )
       .setDepth(this.sprite.depth)
       .setActive(this.sprite.active)
       .setVisible(this.sprite.active);
@@ -134,8 +137,8 @@ export class Player {
     return Object.freeze({
       offsetX: normalizedDelta(art ? art.x - this.sprite.x : 0),
       offsetY: normalizedDelta(art ? art.y - this.sprite.y : 0),
-      scaleX: art ? art.displayWidth / PLAYER_ART_DISPLAY_SIZE : 1,
-      scaleY: art ? art.displayHeight / PLAYER_ART_DISPLAY_SIZE : 1,
+      scaleX: art ? art.displayWidth / PLAYER_ART_DISPLAY_SIZE.width : 1,
+      scaleY: art ? art.displayHeight / PLAYER_ART_DISPLAY_SIZE.height : 1,
       rotationOffset: normalizedDelta(art ? art.rotation - this.aimRotation : 0),
       bodyRotation: this.sprite.rotation,
       framed: art !== null,
@@ -151,11 +154,11 @@ export class Player {
     this.presentation.reset();
     this.sprite.body.reset(point.x, point.y);
     this.sprite.setRotation(0).setDepth(point.y);
-    this.sprite.setVisible?.(true);
+    this.sprite.setVisible?.(this.art === null);
     this.art
       ?.setPosition(point.x, point.y)
       .setRotation(0)
-      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE, PLAYER_ART_DISPLAY_SIZE)
+      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE.width, PLAYER_ART_DISPLAY_SIZE.height)
       .setFrame(CHARACTER_SKINS.marine.frames.idleA)
       .clearTint()
       .setDepth(point.y)
@@ -187,7 +190,7 @@ export class Player {
     this.art
       ?.setPosition(this.sprite.x, this.sprite.y)
       .setRotation(this.aimRotation)
-      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE, PLAYER_ART_DISPLAY_SIZE)
+      .setDisplaySize(PLAYER_ART_DISPLAY_SIZE.width, PLAYER_ART_DISPLAY_SIZE.height)
       .setFrame(CHARACTER_SKINS.marine.frames.idleA)
       .clearTint();
   }

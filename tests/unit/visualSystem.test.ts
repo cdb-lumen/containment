@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  ACTOR_PRESENTATION_SIZE,
   ACTOR_VISUAL_SCALE,
   AMBIENT_VISUAL_BUDGET,
   HUD_LAYOUT,
@@ -19,6 +20,20 @@ describe('visual system contracts', () => {
     expect(ACTOR_VISUAL_SCALE.marine).toBeGreaterThanOrEqual(88);
     expect(ACTOR_VISUAL_SCALE.brute).toBeGreaterThan(ACTOR_VISUAL_SCALE.crawler);
     expect(ACTOR_VISUAL_SCALE.carrier).toBeGreaterThan(ACTOR_VISUAL_SCALE.spitter);
+  });
+
+  it('sizes painted follower art by visible silhouette rather than square source cells', () => {
+    expect(ACTOR_PRESENTATION_SIZE.marine.width).toBeGreaterThanOrEqual(144);
+    expect(ACTOR_PRESENTATION_SIZE.marine.height).toBeGreaterThanOrEqual(112);
+    expect(ACTOR_PRESENTATION_SIZE.marine.width).toBeGreaterThan(ACTOR_PRESENTATION_SIZE.marine.height);
+    expect(ACTOR_PRESENTATION_SIZE.brute.width).toBeGreaterThan(ACTOR_PRESENTATION_SIZE.crawler.width);
+    expect(ACTOR_PRESENTATION_SIZE.carrier.height).toBeGreaterThan(ACTOR_PRESENTATION_SIZE.spitter.height);
+    for (const size of Object.values(ACTOR_PRESENTATION_SIZE)) {
+      expect(size.width).toBeGreaterThan(0);
+      expect(size.height).toBeGreaterThan(0);
+      expect(Object.isFrozen(size)).toBe(true);
+    }
+    expect(Object.isFrozen(ACTOR_PRESENTATION_SIZE)).toBe(true);
   });
 
   it('selects stable material variants per room and floor family', () => {

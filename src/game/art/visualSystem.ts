@@ -13,6 +13,25 @@ export const ACTOR_VISUAL_SCALE = Object.freeze({
   brute: 86,
 });
 
+export type ActorPresentationSize = Readonly<{
+  width: number;
+  height: number;
+}>;
+
+/**
+ * Authored sheets use padded square cells even though their painted silhouettes
+ * are wider than they are tall. These follower-only sizes preserve readable
+ * painted occupancy while the authoritative physics bodies stay unchanged.
+ */
+export const ACTOR_PRESENTATION_SIZE = Object.freeze({
+  marine: Object.freeze({ width: 150, height: 120 }),
+  crawler: Object.freeze({ width: 84, height: 72 }),
+  stalker: Object.freeze({ width: 92, height: 78 }),
+  spitter: Object.freeze({ width: 96, height: 82 }),
+  carrier: Object.freeze({ width: 114, height: 98 }),
+  brute: Object.freeze({ width: 122, height: 104 }),
+} satisfies Readonly<Record<keyof typeof ACTOR_VISUAL_SCALE, ActorPresentationSize>>);
+
 export const AMBIENT_VISUAL_BUDGET = Object.freeze({
   maxLightPools: 10,
   maxDustMotes: 24,
