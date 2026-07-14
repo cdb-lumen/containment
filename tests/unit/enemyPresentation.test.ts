@@ -67,7 +67,7 @@ const createImage = (physics: boolean) => {
     x: 0, y: 0, width: 96, scaleX: 1, scaleY: 1, displayWidth: 0, displayHeight: 0,
     rotation: 0, alpha: 1, depth: 0, active: true, visible: true, texture: '',
     frame: undefined as number | undefined, tint: undefined as number | undefined,
-    flipX: false, flipY: false,
+    flipX: false, flipY: false, circle: [] as number[],
     body: physics ? {
       enable: true,
       setAllowGravity() { return this; }, setImmovable() { return this; },
@@ -82,7 +82,7 @@ const createImage = (physics: boolean) => {
     setVisible(v: boolean) { image.visible = v; return image; }, setFrame(v: number) { image.frame = v; return image; },
     setFlipX(v: boolean) { image.flipX = v; return image; }, setFlipY(v: boolean) { image.flipY = v; return image; },
     setTint(v: number) { image.tint = v; return image; }, clearTint() { image.tint = undefined; return image; },
-    setCircle() { return image; },
+    setCircle(...args: number[]) { image.circle = args; return image; },
   };
   return image;
 };
@@ -127,7 +127,12 @@ describe('EnemyView pooled follower integration', () => {
     expect(art.filter(({ active }) => active)).toHaveLength(5);
     expect(new Set(art.filter(({ active }) => active).map(({ texture }) => texture)))
       .toEqual(new Set(types.map((type) => CHARACTER_SKINS[type].texture)));
-    for (const body of bodies.filter(({ active }) => active)) expect(body).toMatchObject({ visible: false, rotation: 0, scaleX: expect.any(Number), alpha: 1 });
+    for (const body of bodies.filter(({ active }) => active)) {
+      expect(body).toMatchObject({ visible: false, rotation: 0, scaleX: expect.any(Number), alpha: 1 });
+      expect(body.circle[0]! * Math.abs(body.scaleX)).toBeCloseTo(20);
+      expect(body.circle[1]).toBeCloseTo((body.width - body.circle[0]! * 2) / 2);
+      expect(body.circle[2]).toBeCloseTo(body.circle[1]!);
+    }
     expect(view.count).toBe(5);
     expect(view.visualCount).toBeLessThanOrEqual(150);
   });
@@ -180,6 +185,29 @@ describe('EnemyView pooled follower integration', () => {
       flipX: false, flipY: false });
     expect(follower.displayWidth).toBeLessThan(ACTOR_PRESENTATION_SIZE.brute.width * 1.14);
     expect(follower.displayHeight).toBeLessThan(ACTOR_PRESENTATION_SIZE.brute.height * 1.14);
+  });
+
+  it('applies exact elite follower dimensions and restores exact normal dimensions on reduced-motion reuse', () => {
+    const { scene, art } = createScene(
+      new Set([CHARACTER_SKINS.brute.texture]),
+      { reducedMotion: true },
+    );
+    const view = new EnemyView(scene as never);
+
+    view.sync([snapshot(1, 'brute', { elite: true })]);
+    const follower = art.find(({ active }) => active)!;
+    expect(follower).toMatchObject({
+      displayWidth: ACTOR_PRESENTATION_SIZE.brute.width * 1.14,
+      displayHeight: ACTOR_PRESENTATION_SIZE.brute.height * 1.14,
+    });
+
+    view.sync([]);
+    view.sync([snapshot(2, 'brute')]);
+    expect(art.find(({ active }) => active)).toBe(follower);
+    expect(follower).toMatchObject({
+      displayWidth: ACTOR_PRESENTATION_SIZE.brute.width,
+      displayHeight: ACTOR_PRESENTATION_SIZE.brute.height,
+    });
   });
 
   it('propagates reduced motion and reduced flash immediately, independently, and without rebuilding the pool', () => {
