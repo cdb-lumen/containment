@@ -4,14 +4,14 @@ type Fixture={x:number;y:number;z:number;color:number};
 /** One shadow map, four fixture pools and one shared blast light on every tier. */
 export class SceneLighting {
  readonly root=new T.Group();
- readonly ambient=new T.HemisphereLight(0xb9d4e5,0x303b46,1.25);
+ readonly ambient=new T.HemisphereLight(0xb9d4e5,0x303b46,.78);
  readonly key=new T.DirectionalLight(0xc9dfff,3.2);
  readonly fixtures=Array.from({length:4},()=>new T.PointLight(0x9edcec,0,5.5,2));
  readonly blast=new T.PointLight(0xffc18a,0,7,2);
  private blastLife=0;
  constructor(){
-  const fill=new T.DirectionalLight(0x7296b0,.55);fill.position.set(-8,8,-12);
-  this.key.castShadow=true;this.key.position.set(8,26,5);
+  const fill=new T.DirectionalLight(0x7296b0,.22);fill.position.set(-8,8,-12);
+  this.key.castShadow=true;this.key.position.set(-16,14,10);
   const shadow=this.key.shadow;shadow.mapSize.set(1024,1024);
   Object.assign(shadow.camera,{left:-24,right:24,top:24,bottom:-24,near:.5,far:70});
   shadow.normalBias=.015;shadow.bias=-.0002;
@@ -19,7 +19,7 @@ export class SceneLighting {
  }
  loadRoom(world:T.Group,width:number,height:number){
   this.blastLife=0;this.blast.intensity=0;
-  this.key.target.position.set(width/2,0,height/2);this.key.position.copy(this.key.target.position).add(new T.Vector3(8,26,5));
+  this.key.target.position.set(width/2,0,height/2);this.key.position.copy(this.key.target.position).add(new T.Vector3(-16,14,10));
   world.updateWorldMatrix(true,true);const candidates:Fixture[]=[],position=new T.Vector3();
   world.traverse(object=>{
    const authored=object.userData.lightFixtures as Fixture[]|undefined;

@@ -93,7 +93,10 @@ describe('bounded presentation lighting',()=>{
  it('uses a cool directional key and a readable, subordinate ambient fill',()=>{
   const rig=new SceneLighting();
   expect(rig.key.color.b).toBeGreaterThan(rig.key.color.r);
-  expect(rig.ambient.intensity).toBeGreaterThanOrEqual(1);
+  expect(rig.ambient.intensity).toBeGreaterThanOrEqual(.6);
+  expect(rig.ambient.intensity).toBeLessThanOrEqual(.85);
+  const offset=rig.key.position.clone().sub(rig.key.target.position);
+  expect(Math.hypot(offset.x,offset.z)).toBeGreaterThan(offset.y);
   expect(rig.ambient.intensity).toBeLessThan(rig.key.intensity/2);
   expect(rig.key.castShadow).toBe(true);
   expect(rig.key.shadow.mapSize.x).toBe(1024);
