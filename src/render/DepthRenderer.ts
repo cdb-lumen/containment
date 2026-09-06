@@ -6,6 +6,7 @@ import {shipEnvironment,environmentObstacle,environmentArchitecture,appendEnviro
 import * as T from 'three';
 import {EnemyHealthBars} from './EnemyHealthBars';
 import {AttackEffects} from './AttackEffects';
+import {AfflictionBatches} from './afflictions';
 import {WEAPON_APPEARANCE} from './weapons';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
@@ -21,7 +22,7 @@ const UNIT=32;
 type Corpse={model:ActorModel;x:number;y:number;vx:number;vy:number;height:number;lift:number;spin:number;age:number;id:number};
 export class DepthRenderer {
  readonly renderer:T.WebGLRenderer;readonly scene=new T.Scene();readonly camera=new T.OrthographicCamera();
- private healthBars=new EnemyHealthBars();private hudScene=new T.Scene();private world=new T.Group();private actors=new Map<number,ActorModel>();private nests=new Map<number,T.Group>();private queen:ActorModel|null=null;
+ private afflictions=new AfflictionBatches(new T.TextureLoader());private healthBars=new EnemyHealthBars();private hudScene=new T.Scene();private world=new T.Group();private actors=new Map<number,ActorModel>();private nests=new Map<number,T.Group>();private queen:ActorModel|null=null;
  private actorPool=new ActorPool();private player=marine();private corpses:Corpse[]=[];private effects:AttackEffects;
  private surfaces:EnvironmentMaterials;private floorMaterial:T.MeshStandardMaterial;
  private sun:T.DirectionalLight;private muzzle:T.PointLight;private muzzleLife=0;
@@ -36,7 +37,7 @@ export class DepthRenderer {
   this.renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
   this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.22;
   this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=T.PCFShadowMap;this.renderer.shadowMap.autoUpdate=false;this.renderer.info.autoReset=false;
-  this.hudScene.add(this.healthBars.root);
+  this.hudScene.add(this.healthBars.root);this.scene.add(this.afflictions.root);
   this.scene.background=new T.Color(0x081014);this.scene.fog=new T.FogExp2(0x102027,.014);
   const pmrem=new T.PMREMGenerator(this.renderer),room=new RoomEnvironment();this.scene.environment=pmrem.fromScene(room,.04).texture;this.scene.environmentIntensity=.85;room.dispose();pmrem.dispose();
   this.scene.add(new T.HemisphereLight(0xbadbdc,0x485557,2.5));
@@ -100,7 +101,7 @@ export class DepthRenderer {
  loadRoom(node:RunNode,environment:ShipEnvironment|undefined=shipEnvironment(node.templateId)){
   this.roomKey=node.id;this.shadowsDirty=true;disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.temporaryMaterials=[];this.world=new T.Group();this.scene.add(this.world);
   for(const m of this.actors.values())this.actorPool.release(m);this.actors.clear();for(const n of this.nests.values())disposeModel(n);this.nests.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;
-  for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];for(const p of this.pickupMeshes.values())disposeModel(p);this.pickupMeshes.clear();this.effects.clear();this.pendingShots=[];this.muzzleLife=0;this.recoil=0;
+  for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];for(const p of this.pickupMeshes.values())disposeModel(p);this.pickupMeshes.clear();this.effects.clear();this.afflictions.clear();this.pendingShots=[];this.muzzleLife=0;this.recoil=0;
   const t=ROOM_TEMPLATES[node.templateId],w=t.width/UNIT,h=t.height/UNIT;
   const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
   box(this.world,w/2,-.57,h/2,w+.6,.5,h+.6,MAT.black);
@@ -212,9 +213,9 @@ export class DepthRenderer {
   for(const[id,model]of this.pickupMeshes)if(!pickupIds.has(id)){disposeModel(model);this.pickupMeshes.delete(id);}
   this.shadowTime+=dt;this.renderer.shadowMap.needsUpdate=this.shadowsDirty||this.shadowTime>=1/30;
   if(this.renderer.shadowMap.needsUpdate){this.shadowTime=0;this.shadowsDirty=false;}
-  this.renderer.info.reset();
+  this.afflictions.update(this.scene.children,this.camera,this.time);this.renderer.info.reset();
   if(this.tier==='high')this.composer.render();else this.renderer.render(this.scene,this.camera);
   const autoClear=this.renderer.autoClear;this.renderer.autoClear=false;this.renderer.render(this.hudScene,this.camera);this.renderer.autoClear=autoClear;
  }
- dispose(){this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
+ dispose(){this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
 }
