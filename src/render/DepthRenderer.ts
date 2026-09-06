@@ -1,4 +1,5 @@
 import {roomFocus} from './roomFraming';
+import {authoredRoom} from './AuthoredRooms';
 import {ActorPool} from './ActorPool';
 import {FrameBudget,type GraphicsTier} from './FrameBudget';
 import {EnvironmentMaterials} from './EnvironmentMaterials';
@@ -103,7 +104,10 @@ export class DepthRenderer {
   for(const m of this.actors.values())this.actorPool.release(m);this.actors.clear();for(const n of this.nests.values())disposeModel(n);this.nests.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;
   for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];for(const p of this.pickupMeshes.values())disposeModel(p);this.pickupMeshes.clear();this.effects.clear();this.afflictions.clear();this.pendingShots=[];this.muzzleLife=0;this.recoil=0;
   const t=ROOM_TEMPLATES[node.templateId],w=t.width/UNIT,h=t.height/UNIT;
-  const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
+  const bespoke=authoredRoom(node.templateId,t);
+  const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);
+  if(bespoke){this.world.add(bespoke);}else{
+  const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
   box(this.world,w/2,-.57,h/2,w+.6,.5,h+.6,MAT.black);
   // Low foreground parapets and tall rear bulkheads keep combat readable.
   for(let x=1;x<w;x+=2){if(!environment)this.wallPanel(x,0,2.6,2,0);this.wallPanel(x,h,.65,2,0);}
@@ -140,10 +144,11 @@ export class DepthRenderer {
   for(const b of t.breaches){const x=b.x/UNIT,z=b.y/UNIT;box(this.world,x,.04,z,1.25,.06,1.1,MAT.black);for(let i=-4;i<=4;i++)box(this.world,x+i*.12,.085,z,.05,.04,.9,MAT.edge,.01);}
   if(environment)environmentArchitecture(this.world,environment,w,h);
   this.bakeWorld();
+  }
   this.exit=new T.Group();this.exit.position.set(t.exit.x/UNIT,0,t.exit.y/UNIT);this.world.add(this.exit);
   for(const side of [-1,1]){box(this.exit,0,.7,side*.7,.12,1.4,.18,MAT.steel);box(this.exit,.08,.7,side*.7,.04,1.05,.05,MAT.cyan,.01);}
   box(this.exit,0,1.5,0,.2,.2,1.6,MAT.dark);box(this.exit,0,.035,0,1.7,.02,1.55,MAT.dark);
-  if(node.kind==='boss'){
+  if(node.kind==='boss'&&!bespoke){
    const ring=new T.Mesh(new T.TorusGeometry(6.7,.045,5,80),MAT.amber);ring.rotation.x=Math.PI/2;ring.position.set(w/2,.07,h/2);this.world.add(ring);
    const inner=new T.Mesh(new T.TorusGeometry(4.9,.025,5,60),MAT.cyan);inner.rotation.x=Math.PI/2;inner.position.set(w/2,.08,h/2);this.world.add(inner);
   }
@@ -217,5 +222,5 @@ export class DepthRenderer {
   if(this.tier==='high')this.composer.render();else this.renderer.render(this.scene,this.camera);
   const autoClear=this.renderer.autoClear;this.renderer.autoClear=false;this.renderer.render(this.hudScene,this.camera);this.renderer.autoClear=autoClear;
  }
- dispose(){this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
+ dispose(){disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
 }

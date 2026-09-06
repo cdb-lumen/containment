@@ -2,9 +2,12 @@ import type { Point, Rect, RoomTemplate, RunNode } from '../roguelike/types';
 import { ROOM_TEMPLATES } from '../roguelike/roomTemplates';
 import type { FacilityBreach, QueenArena } from './facilityLayout';
 import { segmentIntersectsRect } from '../input/aimAssist';
+import {clearPolygonTopology} from './polygonGeometry';
 
 export type ExpeditionGeometry = Readonly<{
   bounds: Rect;
+  boundary?: readonly Point[];
+  voids?: readonly (readonly Point[])[];
   blockers: readonly Rect[];
   boundaryWalls: readonly Rect[];
   breaches: readonly FacilityBreach[];
@@ -34,6 +37,7 @@ export function createExpeditionGeometry(node: RunNode): ExpeditionGeometry {
   })));
   return Object.freeze({
     bounds, boundaryWalls, blockers: Object.freeze([...boundaryWalls, ...template.obstacles]),
+    boundary: template.boundary, voids: template.voids,
     breaches, playerSpawn: template.spawn, exitPoint: template.exit, bossSpawn,
     queenArena: Object.freeze({ ...bounds, roomId: node.id, safeCenter: bossSpawn, safeRadius: 180 }),
   });
@@ -41,6 +45,7 @@ export function createExpeditionGeometry(node: RunNode): ExpeditionGeometry {
 
 export function canOccupyExpedition(geometry: ExpeditionGeometry, point: Point, radius: number): boolean {
   if (!Number.isFinite(point.x)||!Number.isFinite(point.y)||!Number.isFinite(radius)||radius < 0) return false;
+  if (!clearPolygonTopology(geometry,point,point,radius)) return false;
   const bounds = geometry.bounds;
   if (point.x - radius < bounds.x || point.y - radius < bounds.y
     || point.x + radius > bounds.x + bounds.width || point.y + radius > bounds.y + bounds.height) return false;
@@ -56,7 +61,14 @@ export function hasClearExpeditionShot(geometry: ExpeditionGeometry, from: Point
     && point.x <= geometry.bounds.x + geometry.bounds.width && point.y <= geometry.bounds.y + geometry.bounds.height;
   return [from.x, from.y, to.x, to.y].every(Number.isFinite)
     && inBounds(from) && inBounds(to)
+    && clearPolygonTopology(geometry,from,to)
     && geometry.blockers.every(rect => !segmentIntersectsRect(from, to, rect));
+}
+
+export function canTraverseExpedition(geometry: ExpeditionGeometry, from: Point, to: Point, radius: number): boolean {
+  return canOccupyExpedition(geometry,from,radius) && canOccupyExpedition(geometry,to,radius)
+    && clearPolygonTopology(geometry,from,to,radius)
+    && geometry.blockers.every(rect=>!segmentIntersectsRect(from,to,{x:rect.x-radius,y:rect.y-radius,width:rect.width+radius*2,height:rect.height+radius*2}));
 }
 
 export function expeditionTemplate(node: RunNode): RoomTemplate {
