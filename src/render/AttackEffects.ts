@@ -45,6 +45,8 @@ export class AttackEffects {
   // Keep the existing pool order stable for renderer diagnostics.
   scene.remove(this.fireMesh);scene.add(this.fireMesh);
  }
+ /** Room loads replace the rendered geometry group. Never retain its disposed predecessor. */
+ setWorld(world:T.Object3D){this.world=world;}
  private particle(list:Particle[],limit:number,p:T.Vector3,color:number,size:number,life:number,v=new T.Vector3(),gravity=0,stretch=1){
   if(list.length>=limit)list.shift();list.push({p:p.clone(),v,color:new T.Color(color),age:0,life,size,stretch,spin:(Math.random()-.5)*(list===this.smoke?.9:12),rotation:Math.random()*6.28,gravity,ground:false});
  }

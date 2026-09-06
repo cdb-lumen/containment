@@ -22,6 +22,36 @@ function decal(scene:T.Scene){
 import type {GameEffect} from '../src/DepthGame';
 const hit=(i=0,shotId='shot-1'):GameEffect=>({type:'hit',weapon:'shotgun',x:100,y:100+i*2,angle:0,shotId,wall:{x:-1,y:0}} as GameEffect);
 describe('shotgun metal wall strikes',()=>{
+ it('uses the newly loaded authored room for rear-wall marks after every world replacement',()=>{
+  const random=vi.spyOn(Math,'random').mockReturnValue(.5);
+  const scene=new T.Scene(),world=new T.Group(),fx=new AttackEffects(scene,undefined,world);
+  // Exercise loadRoom itself. Only unrelated GPU/actor services are omitted.
+  const renderer=Object.assign(Object.create(DepthRenderer.prototype),{
+   scene,world,effects:fx,temporaryMaterials:[],actors:new Map(),nests:new Map(),queen:null,corpses:[],pickupMeshes:new Map(),
+   afflictions:{clear(){}},muzzle:{intensity:0},contacts:{begin(){},end(){}},surfaces:{theme(){},shipTheme(){}},
+   camera:new T.OrthographicCamera(-20,20,15,-15),focus:new T.Vector3(),lighting:{loadRoom(){}},
+  });
+  try{
+   const events:GameEffect[]=[],g=new DepthGame(e=>events.push(e));g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.switchWeapon('shotgun');
+   Object.assign(g.player,{x:760,y:180});
+   g.update(10,{x:0,y:0,fire:true,angle:-Math.PI/2,autoAim:false});
+   for(let i=0;i<20;i++)g.update(20,{x:0,y:0,fire:false,angle:-Math.PI/2,autoAim:false});
+   const hits=events.filter(e=>e.type==='hit'&&e.weapon==='shotgun');expect(hits).toHaveLength(8);
+   expect(g.node.templateId).toBe('awakening-bay');
+   for(let load=0;load<2;load++){
+    const previous=renderer.world;renderer.loadRoom(g.node);
+    expect(renderer.world).not.toBe(previous);expect(previous.parent).toBeNull();
+    for(const h of hits){expect(h.wall).toBeDefined();fx.event(h);}
+    expect(fx.counts.decals).toBe(8);
+    fx.update(.001,new T.PerspectiveCamera(),[]);
+    const mark=decal(scene),normal=new T.Vector3(-40,0,310).normalize();
+    expect(mark.normal.distanceTo(normal)).toBeLessThan(.0001);
+    expect(mark.p.clone().sub(new T.Vector3(650/32,0,40/32)).dot(normal)).toBeCloseTo(.208,3);
+    // The actual right parapet remains too low to support a mark at .8.
+    fx.clear();fx.event({...hit(),x:1160,y:440,wall:{x:-1,y:0}});expect(fx.counts.decals).toBe(0);
+   }
+  }finally{random.mockRestore();}
+ });
  it('anchors to the rendered cover at .25, not the collision plane inside the panel',()=>{
   const scene=new T.Scene(),fx=new AttackEffects(scene,undefined,panel(1.4));
   fx.event({...hit(),x:0,y:0,wall:{x:0,y:1}});fx.update(.001,new T.PerspectiveCamera(),[]);
