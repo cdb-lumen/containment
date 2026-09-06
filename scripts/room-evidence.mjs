@@ -106,7 +106,7 @@ window.evidence = {
 
     for(const room of selected) {
       const context=await browser.newContext({viewport,deviceScaleFactor:1,isMobile:viewport.width<600,hasTouch:viewport.width<600});
-      const watchdog=setTimeout(()=>void context.close().catch(()=>{}),120000);
+      const watchdog=setTimeout(()=>void context.close().catch(()=>{}),360000);
       await context.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1' ? route.continue() : route.abort('blockedbyclient'));
       const page=await context.newPage(), errors=[], abortedRequests=[], loadedUrls=new Set();
       page.setDefaultTimeout(120000);
