@@ -81,7 +81,7 @@ export class AttackEffects {
   }
   if(e.type==='boon'){
    if(this.boonBursts++>=8)return;
-   const colors={frost:0x8cdeed,arc:0xb3bbff,burn:0xf89847,impact:0xf5dab0,leech:0xbb7385,shield:0x86c9ce,overload:0xf4b96b,poison:0x5dd8b6,charge:0xd6b9f3,blast:0xffba71,shatter:0xa3eaf3,field:0x75bdcf},color=colors[e.boon??'impact'];
+   const colors={frost:0x8cdeed,arc:0xb3bbff,burn:0xf89847,impact:0xf5dab0,leech:0xbb7385,shield:0x86c9ce,overload:0xf4b96b,poison:0x5dd8b6,charge:0xd6b9f3,blast:0xcbd8dc,combustion:0xffba71,shatter:0xa3eaf3,field:0x75bdcf},color=colors[e.boon??'impact'];
    if(e.targetX!==undefined&&e.targetY!==undefined){
     if(this.arcBursts++>=2)return;const end=new T.Vector3(e.targetX/32,.8,e.targetY/32);
     if(this.arcs.length>=6)this.arcs.shift();this.arcs.push({start:p.clone(),end,age:0,seed:Math.floor(Math.random()*65536)});
@@ -92,10 +92,16 @@ export class AttackEffects {
    if(e.boon==='field'){this.pulse(new T.Vector3(p.x,.025,p.z),color,(e.radius??75)/32,(e.durationMs??2000)/1000,0,false,true);return;}
    if(e.boon==='charge'){this.particle(this.glow,EFFECT_LIMITS.glow,p,color,.25,(e.durationMs??450)/1000);return;}
    if(e.boon==='shatter'){
-    for(let i=0;i<18;i++){const a=i*2.399;this.particle(this.debris,EFFECT_LIMITS.debris,p,i%3?0x64b7d5:0xb9efff,.10+Math.random()*.08,.65+Math.random()*.3,new T.Vector3(Math.cos(a)*(2+Math.random()*3),1+Math.random()*3,Math.sin(a)*(2+Math.random()*3)),8,2.7);}
-    this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x91c4d5,.7,.35,new T.Vector3(0,.25,0));return;
+    // Fracture, not combustion: blue-white flash, radial crystals and fleeting vapor.
+    p.y=.65;const r=Math.min(3,(e.radius??60)/32);
+    this.particle(this.glow,EFFECT_LIMITS.glow,p,0xdaf7ff,r*.65,.09);
+    for(let i=0;i<18;i++){const a=i*Math.PI*2/18,s=2+Math.random()*r*2,v=new T.Vector3(Math.cos(a)*s,1+Math.random()*2,Math.sin(a)*s);
+     this.particle(this.debris,EFFECT_LIMITS.debris,p,i%3?0x64b7d5:0xb9efff,.10+Math.random()*.08,.45+Math.random()*.25,v,8,3.5);
+     if(i%2===0)this.particle(this.glow,EFFECT_LIMITS.glow,p,0xb9efff,.07,.16,v.clone().multiplyScalar(1.4));
+    }
+    for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0xa9ddec,.5,.3,new T.Vector3(Math.cos(a)*1.2,.3,Math.sin(a)*1.2));}return;
    }
-   if(e.boon==='blast'||e.boon==='overload'){this.event({type:'explosion',x:e.x,y:e.y,radius:e.radius??48});return;}
+   if(e.boon==='blast'||e.boon==='overload'||e.boon==='combustion'){this.event({type:'explosion',x:e.x,y:e.y,radius:e.radius??48,elements:e.boon==='combustion'?['fire']:[]});return;}
    const frost=e.boon==='frost',shield=e.boon==='shield'||e.boon==='leech';
    this.pulse(new T.Vector3(p.x,.05,p.z),color,e.radius?e.radius/32:frost?1.3:shield?.65:.8,frost?.45:.3);
    for(let i=0;i<(frost?7:5);i++){const a=i*6.28/7,v=new T.Vector3(Math.cos(a)*.8,shield?1.4:.5,Math.sin(a)*.8);this.particle(this.glow,EFFECT_LIMITS.glow,p,color,frost?.12:.10,.35,v,0);}
@@ -112,13 +118,18 @@ export class AttackEffects {
   const explosion=e.type==='explosion',acid=e.type==='acid',death=e.type==='corpse';
   const impactColor=acid||death?0x9ebc5e:e.weapon==='plasma'?0x69ddff:0xffc68b;
   if(explosion||(acid&&e.radius)){
-   const r=(e.radius??100)/32,color=acid?0x8dd45a:0xffb64e;
-   this.pulse(p,color,r,.24);this.particle(this.glow,EFFECT_LIMITS.glow,p,acid?color:0xffedbc,r*.65,.065);
-   if(!acid){const center=p.clone(),size=Math.min(5,r*1.5);center.y=size*.38;this.particle(this.fire,EFFECT_LIMITS.fire,center,0xffffff,size,.62,new T.Vector3(0,.65,0));this.fire[this.fire.length-1].spin=0;this.fire[this.fire.length-1].rotation=0;
+   const r=(e.radius??100)/32,fiery=e.elements?.includes('fire')??false,icy=e.elements?.includes('ice')??false,toxic=e.elements?.includes('poison')??false,color=acid||toxic?0x8dd45a:fiery?0xffb64e:icy?0xb9efff:0xcbd8dc;
+   // Mixed statuses compose local cues; no global-build tint or hidden priority.
+   if(icy)this.event({type:'boon',boon:'shatter',x:e.x,y:e.y,radius:e.radius});
+   if(toxic)for(let i=0;i<8;i++){const a=i*Math.PI/4;this.particle(this.debris,EFFECT_LIMITS.debris,p,0x76d958,.08,.55,new T.Vector3(Math.cos(a)*2,1.5,Math.sin(a)*2),6,0);}
+   if(toxic)for(let i=0;i<4;i++){const a=i*Math.PI/2;this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x76c999,.55,.45,new T.Vector3(Math.cos(a)*1.5,.5,Math.sin(a)*1.5));}
+   this.pulse(p,color,r,.24);this.particle(this.glow,EFFECT_LIMITS.glow,p,acid||!fiery?color:0xffedbc,r*.65,.065);
+   if(!acid&&fiery){const center=p.clone(),size=Math.min(5,r*1.5);center.y=size*.38;this.particle(this.fire,EFFECT_LIMITS.fire,center,0xffffff,size,.62,new T.Vector3(0,.65,0));this.fire[this.fire.length-1].spin=0;this.fire[this.fire.length-1].rotation=0;
     for(let i=0;i<9;i++){const a=i*2.399,s=1.5+Math.random()*r;this.particle(this.debris,EFFECT_LIMITS.debris,p,i%2?0x746c59:0x343a38,.055+Math.random()*.07,3.5,new T.Vector3(Math.cos(a)*s,2+Math.random()*3,Math.sin(a)*s),9.8,1.8);}}
    for(let i=0;i<16;i++){const a=Math.random()*6.28,s=1+Math.random()*r*2,v=new T.Vector3(Math.cos(a)*s,Math.random()*4+.5,Math.sin(a)*s);this.particle(this.glow,EFFECT_LIMITS.glow,p,color,.10+Math.random()*.08,.25+Math.random()*.4,v,6);}
-   for(let i=0;i<5;i++)this.particle(this.smoke,EFFECT_LIMITS.smoke,p,acid?0x758b50:0x58625e,.65+Math.random()*.5,.85+Math.random()*.4,new T.Vector3((Math.random()-.5)*r,1+Math.random(),(Math.random()-.5)*r));
-   this.particle(this.decals,EFFECT_LIMITS.decals,new T.Vector3(p.x,.008,p.z),acid?0x283f20:0x111719,r*1.4,14);
+   if(!acid&&!fiery&&!icy)for(let i=0;i<7;i++){const a=i*2.399;this.particle(this.debris,EFFECT_LIMITS.debris,p,0x9aabad,.06,1.2,new T.Vector3(Math.cos(a)*2,2,Math.sin(a)*2),9.8,1.8);}
+   if(!icy)for(let i=0;i<5;i++)this.particle(this.smoke,EFFECT_LIMITS.smoke,p,acid?0x758b50:0xb0bec0,.65+Math.random()*.5,acid||fiery?.85+Math.random()*.4:.4+Math.random()*.15,new T.Vector3((Math.random()-.5)*r,1+Math.random(),(Math.random()-.5)*r));
+   if(acid||fiery)this.particle(this.decals,EFFECT_LIMITS.decals,new T.Vector3(p.x,.008,p.z),acid?0x283f20:0x111719,r*1.4,14);
   }else{
    if(!acid&&!death)for(let i=0;i<3;i++){const a=angle+Math.PI+(Math.random()-.5)*1.1,s=1+Math.random()*2;this.particle(this.debris,EFFECT_LIMITS.debris,p,0x898477,.045,3.5,new T.Vector3(Math.cos(a)*s,1+Math.random()*1.5,Math.sin(a)*s),9.8,1.8);}
    for(let i=0;i<(death?16:acid?7:9);i++){
