@@ -1,5 +1,5 @@
 {
-  "commit": "159ee35591bcf704dc12a0daa8273b4aa19b404b",
+  "commit": "cacf6ed0bf091c4e2c98c03851c84be75d30ef8c",
   "evidence": "Built production app, seeded validated prior-room checkpoint, real Continue/route/authorization/fire/pause/resume. Short interaction smoke, not full playthrough or balance proof.",
   "results": [
     {
@@ -15,7 +15,7 @@
       "input": "real keyboard move/fire",
       "explicitFatalAuthorization": false,
       "errors": [],
-      "sha256": "5c5671ab47f09bf4b8a3cff3fe1aaba4e4c4597d382a11f6d301d90303c57d68"
+      "sha256": "b6fcc2b5859fd4c899415bd26f4051a490d61eac9ffae04235fd5053c9171981"
     },
     {
       "id": "breached-loading-bay",
@@ -30,7 +30,7 @@
       "input": "real keyboard move/fire",
       "explicitFatalAuthorization": false,
       "errors": [],
-      "sha256": "9c6265a2449bb0682dbadd3322f835281f133a020298c48811498a1b34a392f3"
+      "sha256": "d8885605e83aa034263149537792492b1e532d72c5fd4b02edc4cefbfee79ce6"
     },
     {
       "id": "overload-floor",
@@ -45,7 +45,7 @@
       "input": "real keyboard move/fire",
       "explicitFatalAuthorization": true,
       "errors": [],
-      "sha256": "08694a265d763cc765908d4ce3b7b6b98c55d73776a22fa502e594af877fa67d"
+      "sha256": "0cb5f833765eb1d448dfd220b445b3a82229387360940bfadea60bce3d01b521"
     }
   ]
 }

@@ -12,7 +12,7 @@ Boundary and void polygons are shared by collision/navigation/LOS and the render
 
 ## Images and provenance
 
-- `*-comparison.jpg`: labeled before/after overviews, same 1280×900 framing and high-quality production renderer. Before: base game geometry at `76dd34c`, captured with the new evidence tool at `02fba11`. After: gameplay/render source `159ee35`.
+- `*-comparison.jpg`: labeled before/after overviews, same 1280×900 framing and high-quality production renderer. Before: base game geometry at `76dd34c`, captured with the new evidence tool at `02fba11`. After: gameplay/render source `cacf6ed`, synchronized with main through the status-VFX changes in #15/#16.
 - `*-overview.png`: complete room, controlled live encounter fixture.
 - `*-gameplay.png`: production gameplay camera/composer and a running combat fixture with movement, shots and live enemies. **No HTML HUD**; these are not full-app interaction screenshots.
 - `hud/*-desktop-hud.png` and `hud-phone/*-phone-hud.png`: built production application at 1280×900 and 390×844. Validated prior-room checkpoint → real Continue → route or explicit fatal authorization → fire → pause/resume. Phone uses real touch fire. Desktop uses keyboard movement/fire.
@@ -30,7 +30,7 @@ node scripts/authored-room-smoke.mjs --viewport=desktop --out=docs/pr-screenshot
 node scripts/authored-room-smoke.mjs --viewport=phone --out=docs/pr-screenshots/authored-rooms/hud-phone
 ```
 
-Verified: **258 unit tests passed / 1 skipped**, 2 evidence-tool tests passed, production build, standard desktop/touch smoke and the six target-room HUD interactions. The evidence test drives the production update from spawn to exit and fires at live enemies in each of the three rooms. Additional domain tests cover walls/voids, navigation, enemy attack clearance, raycasts, drops and legacy fallback. The final-room HUD test asserts Skip cannot authorize destruction.
+Verified: **263 unit tests passed / 1 skipped**, 2 evidence-tool tests passed, production build, standard desktop/touch smoke and the six target-room HUD interactions. The evidence test drives the production update from spawn to exit and fires at live enemies in each of the three rooms. Additional domain tests cover walls/voids, navigation, enemy attack clearance, raycasts, drops and legacy fallback. The final-room HUD test asserts Skip cannot authorize destruction.
 
 ## Limits
 
