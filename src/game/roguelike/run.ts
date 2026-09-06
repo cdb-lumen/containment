@@ -125,7 +125,7 @@ export function createRun(seed: number): RunState {
   return freezeState({ version: 3, seed, currentNodeId: graph.startId, completedNodeIds: [], phase: 'combat',draftRoll:0 });
 }
 
-const PHASES: readonly RunPhase[] = ['combat', 'reward', 'route', 'complete', 'dead'];
+const PHASES: readonly RunPhase[] = ['starting-boon', 'combat', 'reward', 'route', 'complete', 'dead'];
 const STATE_KEYS = ['version', 'seed', 'currentNodeId', 'completedNodeIds', 'phase'];
 
 /** Validate an ordered path, not just membership in the generated graph.
@@ -145,6 +145,7 @@ export function isValidRunState(value: unknown): value is RunState {
   const graph = generateRun(record.seed,record.version as 1|2|3);
   const current = graph.nodes.find(node => node.id === record.currentNodeId);
   if (!current) return false;
+  if (record.phase === 'starting-boon' && (record.version !== 3 || current.id !== graph.startId)) return false;
   const completed = record.completedNodeIds as string[];
   const cleared = record.phase === 'reward' || record.phase === 'route' || record.phase === 'complete';
   if (completed.length !== current.depth + (cleared ? 1 : 0)) return false;
