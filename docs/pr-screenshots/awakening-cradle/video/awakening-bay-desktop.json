@@ -14,18 +14,18 @@
       "width": 1280,
       "height": 900
     },
-    "sourceSha": "658f80949a9108d661fc794d53a80cc973343bd7",
-    "out": "/home/chernodubv/.hermes/workspaces/containment-room-rollout/deliveries/awakening-bay/shipping-video"
+    "sourceSha": "c478261f37fd8d00321add9666b207d49643c175",
+    "out": "/home/chernodubv/.hermes/workspaces/containment-room-rollout/deliveries/awakening-bay/merge-video"
   },
   "command": [
     "/home/chernodubv/.hermes/node/bin/node",
     "/home/chernodubv/dev/.cron-worktrees/containment-rooms/awakening-bay/scripts/room-demo.mjs",
     "--room=awakening-bay",
-    "--source-sha=658f80949a9108d661fc794d53a80cc973343bd7",
-    "--out=/home/chernodubv/.hermes/workspaces/containment-room-rollout/deliveries/awakening-bay/shipping-video"
+    "--source-sha=c478261f37fd8d00321add9666b207d49643c175",
+    "--out=/home/chernodubv/.hermes/workspaces/containment-room-rollout/deliveries/awakening-bay/merge-video"
   ],
-  "pid": 1238357,
-  "startedAt": "2026-09-06T14:37:36.660Z",
+  "pid": 1245879,
+  "startedAt": "2026-09-06T14:56:04.106Z",
   "state": "verified",
   "evidenceClass": "controlled-live-gameplay",
   "staging": "Actual DepthGame.update and DepthRenderer with native gameplay camera/composer, seeded legal midpoint on a verified spawn-to-exit route. Three stationary high-health brutes with zero-damage attacks and inactive encounter director. Normal move, aim, fire and reload commands, no fabricated effect events. No campaign progression or DOM HUD. Fixed-step software WebGL capture does not measure target-device FPS.",
@@ -6514,9 +6514,9 @@
   ],
   "pixelReview": "pending; inspect decoded samples",
   "sourceBefore": {
-    "sha": "658f80949a9108d661fc794d53a80cc973343bd7",
+    "sha": "c478261f37fd8d00321add9666b207d49643c175",
     "status": "",
-    "treeSha256": "5dadf309c51b7d2f9278d0b89226062483aec79cc9e92a34c2e66358cdb5c376",
+    "treeSha256": "6cf7adad58ba90e436443a3a774a0d99d083f1f85e66acfe033b35cdc637bc99",
     "files": [
       {
         "path": "package-lock.json",
@@ -6760,7 +6760,7 @@
       },
       {
         "path": "src/DepthGame.ts",
-        "sha256": "f44d3506437093e144e93791f7889135fa2c04401763ac61f8dab4b504390677"
+        "sha256": "a80dc05c70b699ded58478ae5ed68f22ccfc6d2ddd05a066032fdfa34d73ea6b"
       },
       {
         "path": "src/InputController.ts",
@@ -6816,11 +6816,11 @@
       },
       {
         "path": "src/game/roguelike/ElementalRuntime.ts",
-        "sha256": "fb11851922d5b85e28a6411782a3512b992133178e3e4368d9dd6a46219f9c4b"
+        "sha256": "e87dce127f236d6616a1331ab9dd3238027e8a248340e98274afdb30bd9d01a2"
       },
       {
         "path": "src/game/roguelike/MutationRuntime.ts",
-        "sha256": "ab19b4075e13466ab7904aa378838d2c1546903a1e88ffb10b755947aee026f4"
+        "sha256": "9833f6fa288157c559969b969612e35f4abfe1a1e3fd93142cf7b74b2f55184d"
       },
       {
         "path": "src/game/roguelike/authoredRoomTopologies.ts",
@@ -6832,7 +6832,7 @@
       },
       {
         "path": "src/game/roguelike/builds.ts",
-        "sha256": "2de2d5757250d6b584a2bebed2ed718551a36afbf866ee2a307095595c3224d0"
+        "sha256": "34623551513b638196387063a7c1d20397ee0b2f176c9bc3f4fb083cbb8b2e8b"
       },
       {
         "path": "src/game/roguelike/checkpoints.ts",
@@ -6912,7 +6912,7 @@
       },
       {
         "path": "src/render/AttackEffects.ts",
-        "sha256": "8b898af4785e2c6814111356b89d26654069bb136077b065602b611a1731ae99"
+        "sha256": "9ef6208c62378030541bc7f4ed9587beb7c7c8f11e420f752a85a20b9965885c"
       },
       {
         "path": "src/render/AuthoredRooms.test.ts",
@@ -6980,7 +6980,7 @@
       }
     ]
   },
-  "origin": "http://127.0.0.1:5174/",
+  "origin": "http://127.0.0.1:5173/",
   "vite": {
     "root": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/awakening-bay",
     "configFile": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/awakening-bay/vite.config.ts",
@@ -7202,7 +7202,7 @@
     "seed": 1729,
     "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
   },
-  "encoderPid": 1239064,
+  "encoderPid": 1246616,
   "encoderErrors": "",
   "runtime": {
     "events": [
@@ -7759,7 +7759,7 @@
     }
   },
   "mp4": {
-    "path": "/home/chernodubv/.hermes/workspaces/containment-room-rollout/deliveries/awakening-bay/shipping-video/awakening-bay-desktop.mp4",
+    "path": "/home/chernodubv/.hermes/workspaces/containment-room-rollout/deliveries/awakening-bay/merge-video/awakening-bay-desktop.mp4",
     "sha256": "a4394cac391c4ed4901531a6384a5b737af6d0ada99eff85490dc90a7e4095f8",
     "bytes": 1224011,
     "atoms": [
@@ -8062,9 +8062,9 @@
   ],
   "decodeErrors": [],
   "sourceAfter": {
-    "sha": "658f80949a9108d661fc794d53a80cc973343bd7",
+    "sha": "c478261f37fd8d00321add9666b207d49643c175",
     "status": "",
-    "treeSha256": "5dadf309c51b7d2f9278d0b89226062483aec79cc9e92a34c2e66358cdb5c376",
+    "treeSha256": "6cf7adad58ba90e436443a3a774a0d99d083f1f85e66acfe033b35cdc637bc99",
     "files": [
       {
         "path": "package-lock.json",
@@ -8308,7 +8308,7 @@
       },
       {
         "path": "src/DepthGame.ts",
-        "sha256": "f44d3506437093e144e93791f7889135fa2c04401763ac61f8dab4b504390677"
+        "sha256": "a80dc05c70b699ded58478ae5ed68f22ccfc6d2ddd05a066032fdfa34d73ea6b"
       },
       {
         "path": "src/InputController.ts",
@@ -8364,11 +8364,11 @@
       },
       {
         "path": "src/game/roguelike/ElementalRuntime.ts",
-        "sha256": "fb11851922d5b85e28a6411782a3512b992133178e3e4368d9dd6a46219f9c4b"
+        "sha256": "e87dce127f236d6616a1331ab9dd3238027e8a248340e98274afdb30bd9d01a2"
       },
       {
         "path": "src/game/roguelike/MutationRuntime.ts",
-        "sha256": "ab19b4075e13466ab7904aa378838d2c1546903a1e88ffb10b755947aee026f4"
+        "sha256": "9833f6fa288157c559969b969612e35f4abfe1a1e3fd93142cf7b74b2f55184d"
       },
       {
         "path": "src/game/roguelike/authoredRoomTopologies.ts",
@@ -8380,7 +8380,7 @@
       },
       {
         "path": "src/game/roguelike/builds.ts",
-        "sha256": "2de2d5757250d6b584a2bebed2ed718551a36afbf866ee2a307095595c3224d0"
+        "sha256": "34623551513b638196387063a7c1d20397ee0b2f176c9bc3f4fb083cbb8b2e8b"
       },
       {
         "path": "src/game/roguelike/checkpoints.ts",
@@ -8460,7 +8460,7 @@
       },
       {
         "path": "src/render/AttackEffects.ts",
-        "sha256": "8b898af4785e2c6814111356b89d26654069bb136077b065602b611a1731ae99"
+        "sha256": "9ef6208c62378030541bc7f4ed9587beb7c7c8f11e420f752a85a20b9965885c"
       },
       {
         "path": "src/render/AuthoredRooms.test.ts",
@@ -8529,5 +8529,5 @@
     ]
   },
   "sourceStable": true,
-  "completedAt": "2026-09-06T14:43:02.699Z"
+  "completedAt": "2026-09-06T14:59:18.828Z"
 }

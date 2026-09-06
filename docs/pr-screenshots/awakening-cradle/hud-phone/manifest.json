@@ -1,5 +1,5 @@
 {
-  "commit": "658f80949a9108d661fc794d53a80cc973343bd7",
+  "commit": "c478261f37fd8d00321add9666b207d49643c175",
   "evidence": "Built production app, seeded validated prior-room checkpoint, real Continue/route/authorization/fire/pause/resume. Short interaction smoke, not full playthrough or balance proof.",
   "results": [
     {
@@ -15,7 +15,7 @@
       "input": "real touch fire",
       "explicitFatalAuthorization": false,
       "errors": [],
-      "sha256": "11950fc8f9c437d9e3a987ca05ebd432bdb7caabbea98e5d4ede62d445b51efe"
+      "sha256": "eea6f650e2bee9c0b5c6b02dff22a3182af889dcdd8a4bad5c8c2b26c9e28a34"
     }
   ]
 }
