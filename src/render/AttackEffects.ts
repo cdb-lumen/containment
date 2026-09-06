@@ -3,8 +3,9 @@ import type {WeaponId} from '../game/combat/types';
 import type {Bullet,GameEffect} from '../DepthGame';
 import {WEAPON_APPEARANCE} from './weapons';
 import {electricArc} from './electricArc';
+import {wallSurface} from './wallSurface';
 const UP=new T.Vector3(0,1,0),WHITE=new T.Color(0xffffff);
-type Particle={p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
+type Particle={wall?:T.Vector3;shotId?:string;clusterOrigin?:T.Vector3;growth?:number;p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
 type Pulse={p:T.Vector3;color:T.Color;age:number;life:number;radius:number;angle:number;slash:boolean;stable:boolean};
 export const EFFECT_LIMITS={glow:360,smoke:80,debris:80,pulses:24,decals:64,beams:320,fire:16} as const;
 const vertex=`attribute float effectFrame; varying float vFrame;attribute float effectAlpha;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
@@ -31,7 +32,7 @@ export class AttackEffects {
  private glow:Particle[]=[];private smoke:Particle[]=[];private debris:Particle[]=[];private decals:Particle[]=[];private pulses:Pulse[]=[];
  private glowMesh:T.InstancedMesh;private smokeMesh:T.InstancedMesh;private debrisMesh:T.InstancedMesh;private decalMesh:T.InstancedMesh;private pulseMesh:T.InstancedMesh;private slashMesh:T.InstancedMesh;private beamMesh:T.InstancedMesh;
  private dummy=new T.Object3D();private forward=new T.Vector3();private previous=new WeakMap<Bullet,T.Vector3>();private trailClock=0;private boonBursts=0;private arcBursts=0;
- constructor(scene:T.Scene,loader:T.TextureLoader|undefined=typeof document==='undefined'?undefined:new T.TextureLoader()){
+ constructor(scene:T.Scene,loader:T.TextureLoader|undefined=typeof document==='undefined'?undefined:new T.TextureLoader(),private world?:T.Object3D){
   const texture=(name:string,srgb=false)=>{const t=loader?.load(`${import.meta.env.BASE_URL}assets/vfx/${name}.png`)??new T.Texture();t.minFilter=t.magFilter=T.LinearFilter;t.generateMipmaps=false;t.colorSpace=srgb?T.SRGBColorSpace:T.NoColorSpace;this.textures.push(t);return t;};
   this.fireMesh=pool(scene,new T.PlaneGeometry(1,1),EFFECT_LIMITS.fire,3,false,texture('Explosion01',true),5);this.fireMesh.name='explosion-fire';
   this.glowMesh=pool(scene,new T.PlaneGeometry(1,1),EFFECT_LIMITS.glow,0,true);
@@ -72,6 +73,7 @@ export class AttackEffects {
  }
  event(e:GameEffect){
   const p=new T.Vector3(e.x/32,(e.type==='explosion'||e.radius!==undefined)? .10:.8,e.y/32);
+  if(e.type==='hit'&&e.weapon==='shotgun'&&e.wall&&e.targetId===undefined){this.metalImpact(e,p);return;}
   const angle=e.angle??0,forward=new T.Vector3(Math.cos(angle),0,Math.sin(angle));
   if(e.type==='enemy-warning'){
    p.y=.035;const life=(e.durationMs??650)/1000;
@@ -144,16 +146,44 @@ export class AttackEffects {
    }
   }
  }
+ private metalImpact(e:GameEffect,p:T.Vector3){
+  let n=new T.Vector3(e.wall!.x,0,e.wall!.y).normalize();
+  // Resolve after height variation so low obstacles never acquire floating marks.
+  p.y+=(Math.random()-.5)*.28;
+  const surface=this.world&&wallSurface(this.world,p,n);
+  if(surface){p.copy(surface.point);n=surface.normal;}
+  p.addScaledVector(n,.018);
+  const tangent=new T.Vector3(-n.z,0,n.x);
+  this.particle(this.glow,EFFECT_LIMITS.glow,p,0xfff7e5,.11,.055);
+  for(let i=0;i<3;i++){
+   const v=n.clone().multiplyScalar(2+Math.random()*1.7).addScaledVector(tangent,(Math.random()-.5)*3);v.y=(Math.random()-.3)*1.8;
+   this.particle(this.glow,EFFECT_LIMITS.glow,p,0xffedca,.035,.10+Math.random()*.07,v,4);
+  }
+  for(let i=0;i<2;i++){
+   const v=n.clone().multiplyScalar(.9+Math.random()).addScaledVector(tangent,(Math.random()-.5)*1.6);v.y=.3+Math.random();
+   this.particle(this.debris,EFFECT_LIMITS.debris,p,0x353b3e,.035,.35+Math.random()*.15,v,7,1.7);
+  }
+  if(surface?.supported){
+   this.particle(this.decals,EFFECT_LIMITS.decals,p,0x101719,.12,.95);
+   const mark=this.decals[this.decals.length-1];mark.wall=n;mark.spin=0;mark.ground=true;
+  }
+  // Use an immutable anchor, not a moving centroid, so a chain cannot bridge a room.
+  const shared=e.shotId&&this.smoke.find(s=>s.shotId===e.shotId&&s.wall&&s.wall.dot(n)>.98&&s.clusterOrigin!.distanceToSquared(p)<1.44&&Math.abs(s.clusterOrigin!.clone().sub(p).dot(n))<.04);
+  if(!shared){
+   this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x81878b,.23,.25,n.clone().multiplyScalar(.25).add(new T.Vector3(0,.12,0)));
+   const dust=this.smoke[this.smoke.length-1];dust.shotId=e.shotId;dust.wall=n;dust.clusterOrigin=p.clone();dust.growth=.6;
+  }
+ }
  private drawParticles(list:Particle[],mesh:T.InstancedMesh,dt:number,camera:T.Camera,mode:'glow'|'smoke'|'debris'|'decal'|'fire'){
   const alpha=mesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute;let index=0;
   for(const s of list){
    s.age+=dt;if(s.age>=s.life)continue;const t=s.age/s.life;
    if(!s.ground){s.v.y-=s.gravity*dt;s.p.addScaledVector(s.v,dt);s.rotation+=s.spin*dt;if(mode==='debris'&&s.p.y<.035){s.p.y=.035;s.v.y=Math.abs(s.v.y)*.23;s.v.x*=.65;s.v.z*=.65;s.spin*=.55;if(s.v.y<.35&&Math.hypot(s.v.x,s.v.z)<.3){s.ground=true;s.v.set(0,0,0);s.spin=0;}}}
    this.dummy.position.copy(s.p);this.dummy.quaternion.copy(camera.quaternion);
-   if(mode==='decal')this.dummy.rotation.set(-Math.PI/2,0,s.rotation);
+   if(mode==='decal'){if(s.wall){this.dummy.quaternion.setFromUnitVectors(new T.Vector3(0,0,1),s.wall);this.dummy.rotateZ(s.rotation);}else this.dummy.rotation.set(-Math.PI/2,0,s.rotation);}
    else if(mode==='debris')this.dummy.rotation.set(s.rotation,s.rotation*.7,s.rotation*.4);
    else this.dummy.rotateZ(s.rotation);
-   const size=s.size*(mode==='smoke'?1+t*2.5:mode==='glow'?1-t*.4:mode==='fire'?1+t*.25:1);
+   const size=s.size*(mode==='smoke'?1+t*(s.growth??2.5):mode==='glow'?1-t*.4:mode==='fire'?1+t*.25:1);
    (mesh.geometry.getAttribute('effectFrame') as T.InstancedBufferAttribute).setX(index,Math.min(mode==='fire'?24:63,Math.floor(t*(mode==='fire'?25:64))));
    this.dummy.scale.set(size,mode==='debris'?size*.5:size,size*s.stretch);this.dummy.updateMatrix();mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,s.color);alpha.setX(index,mode==='decal'?.75*(1-t*t):mode==='debris'?Math.min(1,(1-t)*4):mode==='fire'?Math.min(1,(1-t)*4):(1-t)*(mode==='smoke'?Math.min(1,t*10):1));index++;
   }

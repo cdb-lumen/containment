@@ -46,7 +46,7 @@ export class DepthRenderer {
   this.surfaces=new EnvironmentMaterials(this.renderer.capabilities.getMaxAnisotropy());this.floorMaterial=this.surfaces.floor;
   this.scene.add(this.world,this.player.root);
   this.muzzle=new T.PointLight(0xffc679,0,3,2);this.scene.add(this.muzzle);
-  this.effects=new AttackEffects(this.scene);
+  this.effects=new AttackEffects(this.scene,undefined,this.world);
   this.spotlight=new T.SpotLight(0xbbe7ee,5,14,.38,.9,1.4);this.spotlight.position.set(0,2,0);this.scene.add(this.spotlight,this.spotlight.target);
 
   this.bulletMesh=new T.InstancedMesh(new T.SphereGeometry(1,6,4),new T.MeshBasicMaterial({color:0xffffff}),320);this.bulletMesh.instanceMatrix.setUsage(T.DynamicDrawUsage);this.bulletMesh.frustumCulled=false;this.scene.add(this.bulletMesh);
