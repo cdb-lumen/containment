@@ -1,0 +1,71 @@
+{
+  "captures": [
+    {
+      "label": "before",
+      "sha": "73a055adf03d33d87641b81593cc03e863e9c7af",
+      "frames": 90,
+      "damage": [
+        {
+          "frame": 11,
+          "id": 1,
+          "amount": 24,
+          "secondary": true,
+          "applied": true,
+          "died": false,
+          "absorbedByArmor": 0
+        },
+        {
+          "frame": 11,
+          "id": 1,
+          "amount": 24.816078163014616,
+          "secondary": true,
+          "applied": true,
+          "died": true,
+          "absorbedByArmor": 0
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "sha": "55dd3e9fb118143b29f476eb63bdfedb5d37ff0d",
+      "frames": 90,
+      "damage": [
+        {
+          "frame": 11,
+          "id": 1,
+          "amount": 24,
+          "secondary": true,
+          "applied": true,
+          "died": false,
+          "absorbedByArmor": 0
+        },
+        {
+          "frame": 11,
+          "id": 1,
+          "amount": 24.816078163014616,
+          "secondary": true,
+          "applied": true,
+          "died": true,
+          "absorbedByArmor": 0
+        }
+      ]
+    }
+  ],
+  "comparison": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 960,
+        "height": 600,
+        "pix_fmt": "yuv420p",
+        "nb_frames": "359"
+      }
+    ],
+    "format": {
+      "duration": "11.966667"
+    }
+  },
+  "sha256": "f93bb184e8df12b860a6160ad8f7a2396db1b3f36e238aeecf619815af3874eb",
+  "description": "Real controlled shotgun -> launched spitter -> wall collision -> seismic + Breacher damage. Six seconds native before/after, then labelled half-speed detail. Silent image capture."
+}
