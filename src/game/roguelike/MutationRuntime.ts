@@ -190,9 +190,9 @@ export class MutationRuntime {
     const live = this.#host.targets().find((target) => target.id === targetId && target.health > 0);
     if (live) this.#remember(live);
     if (command.type === 'chill') {
-      if (!live) return;
       if (command.stacks === 0) {this.#chill.delete(targetId);this.#elements.clearFreeze(targetId);}
-      else this.#chill.set(targetId, { stacks: command.stacks, expiresAt: this.#time + command.durationMs });
+      if (!live) return;
+      if (command.stacks > 0) this.#chill.set(targetId, { stacks: command.stacks, expiresAt: this.#time + command.durationMs });
       this.#host.setSlow(targetId, 1 - command.slowFraction);this.#slow.set(targetId,1-command.slowFraction);
       if(command.stacks>0)this.#host.boonEffect?.('frost',live.x,live.y);
     } else if (command.type === 'impulse') {

@@ -22,7 +22,8 @@ Keep the existing 48 saved boon IDs, combat event ledger, launch solver and elem
 
 ## Verification and evidence
 
-- `npm run verify`: 179 tests passed, one optional benchmark skipped; TypeScript and production build passed; desktop and touch production browser smoke passed with no page or asset errors. Build retains the existing large-chunk warning.
+- `npm run verify`: 180 tests passed, one optional benchmark skipped; TypeScript and production build passed; desktop and touch production browser smoke passed with no page or asset errors. Build retains the existing large-chunk warning.
+- Independent review found base-lethal shatter could also trigger Thermal Shock. Chill consumption now clears chill and freeze before the live-target guard. The regression reproduces the pre-damage snapshot, base kill, hit, then kill ordering: it failed with neighbor damage 16 + 32 before the fix and passes with only 16 afterward.
 - `boon-desktop-combat.png` and `boon-touch-combat.png`: actual game renderer and runtime in the opening encounter, with a seeded three-boon build and three runtime hits on a repositioned enemy. Simulation was held for capture. Both report burning, three chill stacks and frozen simultaneously. These are controlled integration captures, not natural-play or dense-horde proof.
 - `boon-desktop-offers.png` and `boon-touch-offers.png`: actual reward UI after controlled room completion. Three cards fit without horizontal overflow. Click and touch selection of Glacial Wake both updated the combat build and reached the route screen without page errors.
 - `boon-vfx-fixture-before.png` and `boon-vfx-fixture-after.png`: enlarged actor-model fixtures only, reproducible with `node tests/render-afflictions.mjs`. They do not prove gameplay readability or performance.

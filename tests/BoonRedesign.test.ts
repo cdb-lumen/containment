@@ -41,6 +41,18 @@ describe('composed combat paths',()=>{
   const w=world(['cryogenic','shattershot','incendiary']);w.hit('a');w.hit('b');w.hit('c');w.combat.setBuild({mutations:['cryogenic','shattershot','incendiary','thermal-shock']});w.hit('d');
   expect(w.hits.some(h=>h.amount===32)).toBe(false);expect(w.runtime.statuses(1)).toMatchObject({chilled:false,burning:true});
  });
+ it('consumes chill before Thermal Shock when base projectile damage is lethal',()=>{
+  const w=world(['cryogenic','absolute-zero','shattershot','incendiary']);
+  w.hit('a');w.hit('b');w.hit('c');w.advance(50);
+  expect(w.runtime.statuses(1)).toMatchObject({chillStacks:3,frozen:true,burning:true});
+  w.combat.setBuild({mutations:['cryogenic','absolute-zero','shattershot','incendiary','thermal-shock']});
+  // DepthGame.updateBullets snapshots the target before base damage, then dispatches hit and kill.
+  const snapshot={...w.targets[0]};w.targets[0].health=0;
+  w.runtime.hit('base-lethal','rifle',snapshot,{x:1,y:0});
+  expect(w.runtime.statuses(1)).toMatchObject({chilled:false,frozen:false});
+  w.runtime.kill(snapshot,'direct',{chainId:'base-lethal',depth:0});
+  expect(w.hits.filter(h=>h.id===2)).toEqual([{id:2,amount:16}]);
+ });
  it('registers empowerment before shatter kills and excludes later burn kills',()=>{
   const w=world(['cryogenic','shattershot','hot-reload','reactor-cascade']);w.hit('a');w.hit('b');w.hit('c');w.targets[0].health=20;
   w.combat.switchWeapon('plasma');w.runtime.hit('empowered','rifle',{...w.targets[0]},{x:1,y:0},true);
