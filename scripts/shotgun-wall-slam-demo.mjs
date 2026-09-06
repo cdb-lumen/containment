@@ -25,21 +25,21 @@ try{
  await page.route('**/src/main.ts*',async route=>{const response=await route.fetch();await route.fulfill({response,body:(await response.text())+'\nwindow.__metalDemo={game,renderer,hud,syncScreen};\n'});});
  await page.goto(`http://127.0.0.1:${port}/`);await page.waitForFunction(()=>window.__metalDemo&&document.body.dataset.state==='menu');
  await page.evaluate(()=>{window.__metalGate=true;document.querySelector('#start').click();});
- const setup=await page.evaluate(async ({quality,north})=>{
+ const setup=await page.evaluate(async ({quality,north,family})=>{
   const d=window.__metalDemo,g=d.game,r=d.renderer;
   const {expeditionRewardOffers}=await import('/src/game/roguelike/expedition.ts');const {canOccupyExpedition}=await import('/src/game/world/expeditionGeometry.ts');
   g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.skipStory();
   // Remove encounter scheduling only. Fire, projectile motion and collisions stay authoritative.
-  g.pending=[];g.director.update=()=>[];g.switchWeapon('shotgun');g.enemies.reset();g.combat.setBuild({mutations:['breacher','seismic-impact','heavy-pellets']});Object.assign(g.player,{x:760,y:205,angle:-Math.PI/2});
-  const spawn=g.enemies.spawn('brute',760,88,true);if(!spawn.spawned)throw Error('Spawn rejected');d.targetId=spawn.enemy.id;d.initial=spawn.enemy;
+  g.pending=[];g.director.update=()=>[];g.switchWeapon('shotgun');g.enemies.reset();g.combat.setBuild({mutations:['breacher','seismic-impact','heavy-pellets']});Object.assign(g.player,{x:500,y:300,angle:-Math.PI/2});
+  const spawn=g.enemies.spawn(family,500,172,true);if(!spawn.spawned)throw Error('Spawn rejected');d.targetId=spawn.enemy.id;d.initial=spawn.enemy;
   if(!canOccupyExpedition(g.geometry,spawn.enemy,spawn.enemy.radius))throw Error('Invalid enemy position');
   if(!canOccupyExpedition(g.geometry,g.player,g.player.radius))throw Error('Invalid demo position');
   let seed=1729;Math.random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
-  r.setQuality(quality);r.loadRoom(g.node);r.render(g,1,false);d.hud();d.syncScreen(true);d.events=[];d.frame=0;
+  r.setQuality(quality);r.loadRoom(g.node);r.render(g,1,false);d.hud();d.syncScreen(true);d.events=[];d.frame=0;d.damage=[];const damage=g.damage.bind(g);g.damage=(id,amount,impulse)=>{const result=damage(id,amount,impulse);d.damage.push({frame:d.frame,id,amount,secondary:impulse===undefined,...result});return result;};
   const original=r.effect.bind(r);r.effect=e=>{const p=r.camera.position.clone().set(e.x/32,.8,e.y/32).project(r.camera);d.events.push({...e,frame:d.frame,pixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}});original(e);};
   const caption=document.createElement('div');caption.id='metal-caption';caption.style.cssText='position:fixed;left:12px;bottom:78px;z-index:999;padding:7px 10px;background:#061116df;color:#eff5ef;font:13px sans-serif;pointer-events:none';document.body.append(caption);
   return {enemy:d.initial,build:g.combat.build,player:{...g.player},room:g.node.templateId,quality:r.qualityTier,controlled:true,nativeZoom:r.camera.zoom};
- },{quality:process.env.DEMO_QUALITY||'low',north:!!process.env.DEMO_NORTH});
+ },{quality:process.env.DEMO_QUALITY||'high',north:!!process.env.DEMO_NORTH,family:process.env.DEMO_FAMILY||'spitter'});
  await page.screenshot({path:join(out,`${label}-setup.png`)});console.log('SETUP',JSON.stringify(setup));
  const fps=30,total=process.env.DEMO_PROBE?25:90,mp4=join(out,`${label}.mp4`);
  encoder=spawn('ffmpeg',['-y','-loglevel','error','-f','image2pipe','-framerate',String(fps),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',mp4],{stdio:['pipe','inherit','inherit']});encoder.stdin.on('error',()=>{});const finished=once(encoder,'exit');
@@ -58,13 +58,13 @@ try{
  }
  encoder.stdin.end();assert.equal((await finished)[0],0);
  assertSource();
- const events=await page.evaluate(()=>window.__metalDemo.events);assert.deepEqual(errors,[]);assert(samples.every(s=>s.counts&&Number.isFinite(s.counts.glow)));
+ const {events,damage}=await page.evaluate(()=>({events:window.__metalDemo.events,damage:window.__metalDemo.damage}));assert(damage.some(d=>d.secondary&&d.applied&&d.amount>0),'No actual skill damage');assert.deepEqual(errors,[]);assert(samples.every(s=>s.counts&&Number.isFinite(s.counts.glow)));
  const hits=events.filter(e=>e.type==='hit'&&e.weapon==='shotgun');
  assert(events.some(e=>e.contact));
  const slams=events.filter(e=>e.type==='wall-slam'||e.type==='explosion');assert(slams.length>0,'No actual wall collision effect');
- assert(samples.some(s=>s.enemy&&s.enemy.y<setup.enemy.y-2),'No native launch displacement');
+ assert(samples.some((s,i)=>i>0&&s.enemy&&samples[i-1].enemy&&s.enemy.y<samples[i-1].enemy.y-2),'No native launch displacement');
  assert(samples.some(s=>s.enemy&&s.enemy.health+s.enemy.armor<setup.enemy.health+setup.enemy.armor),'No damage');
  const probe=JSON.parse(execFileSync('ffprobe',['-v','error','-show_entries','stream=codec_name,pix_fmt,width,height,nb_frames:format=duration','-of','json',mp4],{encoding:'utf8'}));assert.equal(probe.streams[0].codec_name,'h264');assert.equal(Number(probe.streams[0].nb_frames),total);assert.equal(probe.streams[0].pix_fmt,'yuv420p');
  execFileSync('ffmpeg',['-v','error','-i',mp4,'-f','null','-']);
- await writeFile(join(out,`${label}.json`),JSON.stringify({root,sha,setup,fps,total,events,samples,errors,probe},null,2));console.log('PASS',JSON.stringify({mp4,hits:hits.length,total,errors}));
+ await writeFile(join(out,`${label}.json`),JSON.stringify({root,sha,setup,fps,total,events,damage,samples,errors,probe},null,2));console.log('PASS',JSON.stringify({mp4,hits:hits.length,total,errors}));
 }finally{if(encoder&&encoder.exitCode===null)encoder.kill('SIGTERM');await browser?.close();await server.close();}
