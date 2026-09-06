@@ -1,0 +1,1748 @@
+{
+  "commit": "ea0446a5970e567305ffbc9477eba63ebcc2b9b4",
+  "source": "ROOM_STORY_ROUTE",
+  "seed": 1729,
+  "templateCount": 36,
+  "roomCount": 20,
+  "environmentCount": 10,
+  "runLength": 20,
+  "graphNodeCount": 20,
+  "rooms": [
+    {
+      "templateId": "awakening-bay",
+      "name": "Awakening bay",
+      "environment": "cryogenics",
+      "objective": "Restore communications.",
+      "story": "AI: Purge the infestation.",
+      "roomId": "01-awakening-bay",
+      "index": 0,
+      "node": {
+        "id": "evidence-0-awakening-bay",
+        "depth": 0,
+        "templateId": "awakening-bay",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r1"
+        ]
+      }
+    },
+    {
+      "templateId": "passenger-vault",
+      "name": "Passenger vault",
+      "environment": "cryogenics",
+      "objective": "Clear the occupied pod rows.",
+      "roomId": "02-passenger-vault",
+      "index": 1,
+      "node": {
+        "id": "evidence-1-passenger-vault",
+        "depth": 1,
+        "templateId": "passenger-vault",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r2"
+        ]
+      }
+    },
+    {
+      "templateId": "residential-gallery",
+      "name": "Residential gallery",
+      "environment": "habitation",
+      "objective": "Fight through the residential doorways.",
+      "story": "Packed belongings. Arrival labels for New Earth.",
+      "roomId": "03-residential-gallery",
+      "index": 2,
+      "node": {
+        "id": "evidence-2-residential-gallery",
+        "depth": 2,
+        "templateId": "residential-gallery",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r3"
+        ]
+      }
+    },
+    {
+      "templateId": "communal-atrium",
+      "name": "Communal atrium",
+      "environment": "habitation",
+      "objective": "Clear the atrium and reach security.",
+      "story": "WELCOME TO NEW EARTH. The display still runs.",
+      "roomId": "04-communal-atrium",
+      "index": 3,
+      "node": {
+        "id": "evidence-3-communal-atrium",
+        "depth": 3,
+        "templateId": "communal-atrium",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r4"
+        ]
+      }
+    },
+    {
+      "templateId": "crew-checkpoint",
+      "name": "Crew checkpoint",
+      "environment": "security",
+      "objective": "Break through the fortified checkpoint.",
+      "story": "The crew held this line. Their weapons remain.",
+      "roomId": "05-crew-checkpoint",
+      "index": 4,
+      "node": {
+        "id": "evidence-4-crew-checkpoint",
+        "depth": 4,
+        "templateId": "crew-checkpoint",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r5"
+        ]
+      }
+    },
+    {
+      "templateId": "armory",
+      "name": "Armory",
+      "environment": "security",
+      "objective": "Defeat the armory elite. Choose combat equipment.",
+      "roomId": "06-armory",
+      "index": 5,
+      "node": {
+        "id": "evidence-5-armory",
+        "depth": 5,
+        "templateId": "armory",
+        "kind": "elite",
+        "reward": "rare-upgrade",
+        "next": [
+          "1729:v3-r6"
+        ]
+      }
+    },
+    {
+      "templateId": "freight-hold",
+      "name": "Freight hold",
+      "environment": "cargo",
+      "objective": "Clear a path through the colony supplies.",
+      "roomId": "07-freight-hold",
+      "index": 6,
+      "node": {
+        "id": "evidence-6-freight-hold",
+        "depth": 6,
+        "templateId": "freight-hold",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r7"
+        ]
+      }
+    },
+    {
+      "templateId": "breached-loading-bay",
+      "name": "Breached loading bay",
+      "environment": "cargo",
+      "objective": "Fight around the sealed breach.",
+      "story": "Alien growth follows the boarding scar. Hull seal intact.",
+      "roomId": "08-breached-loading-bay",
+      "index": 7,
+      "node": {
+        "id": "evidence-7-breached-loading-bay",
+        "depth": 7,
+        "templateId": "breached-loading-bay",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r8"
+        ]
+      }
+    },
+    {
+      "templateId": "relay-racks",
+      "name": "Relay racks",
+      "environment": "communications",
+      "objective": "Clear the equipment aisles to restore the local relay.",
+      "roomId": "09-relay-racks",
+      "index": 8,
+      "node": {
+        "id": "evidence-8-relay-racks",
+        "depth": 8,
+        "templateId": "relay-racks",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r9"
+        ]
+      }
+    },
+    {
+      "templateId": "transmission-chamber",
+      "name": "Transmission chamber",
+      "environment": "communications",
+      "objective": "Defend the uplink until the war warning is received.",
+      "roomId": "10-transmission-chamber",
+      "index": 9,
+      "node": {
+        "id": "evidence-9-transmission-chamber",
+        "depth": 9,
+        "templateId": "transmission-chamber",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r10"
+        ]
+      }
+    },
+    {
+      "templateId": "diagnostic-gallery",
+      "name": "Diagnostic gallery",
+      "environment": "engineering",
+      "objective": "Read the independent service display while clearing the gallery.",
+      "story": "PHYSICAL SERVICE DISPLAY: Purge destroys every deck, including occupied cryopods.",
+      "roomId": "11-diagnostic-gallery",
+      "index": 10,
+      "node": {
+        "id": "evidence-10-diagnostic-gallery",
+        "depth": 10,
+        "templateId": "diagnostic-gallery",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r11"
+        ]
+      }
+    },
+    {
+      "templateId": "safety-interlock-station",
+      "name": "Safety-interlock station",
+      "environment": "engineering",
+      "objective": "Clear the interlock station. Review the pre-awakening safety record.",
+      "story": "LOCAL RECORD, BEFORE AWAKENING: Rescue impossible. AI acknowledged. Survival promise issued afterward.",
+      "roomId": "12-safety-interlock-station",
+      "index": 11,
+      "node": {
+        "id": "evidence-11-safety-interlock-station",
+        "depth": 11,
+        "templateId": "safety-interlock-station",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r12"
+        ]
+      }
+    },
+    {
+      "templateId": "coolant-plant",
+      "name": "Coolant plant",
+      "environment": "maintenance",
+      "objective": "Descend through the coolant pumps, knowing the fatal cost.",
+      "roomId": "13-coolant-plant",
+      "index": 12,
+      "node": {
+        "id": "evidence-12-coolant-plant",
+        "depth": 12,
+        "templateId": "coolant-plant",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r13"
+        ]
+      }
+    },
+    {
+      "templateId": "service-shaft-landing",
+      "name": "Service shaft landing",
+      "environment": "maintenance",
+      "objective": "Cross the connected service platforms. Reach the lower decks.",
+      "story": "LOCAL ACCESS ONLY. AI connection lost below this landing.",
+      "roomId": "14-service-shaft-landing",
+      "index": 13,
+      "node": {
+        "id": "evidence-13-service-shaft-landing",
+        "depth": 13,
+        "templateId": "service-shaft-landing",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r14"
+        ]
+      }
+    },
+    {
+      "templateId": "infested-workshop",
+      "name": "Infested workshop",
+      "environment": "infested",
+      "objective": "Clear the converted workshop and its converging attackers.",
+      "roomId": "15-infested-workshop",
+      "index": 14,
+      "node": {
+        "id": "evidence-14-infested-workshop",
+        "depth": 14,
+        "templateId": "infested-workshop",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r15"
+        ]
+      }
+    },
+    {
+      "templateId": "swarm-junction",
+      "name": "Swarm junction",
+      "environment": "infested",
+      "objective": "Break the concentrated swarm guarding reactor access.",
+      "roomId": "16-swarm-junction",
+      "index": 15,
+      "node": {
+        "id": "evidence-15-swarm-junction",
+        "depth": 15,
+        "templateId": "swarm-junction",
+        "kind": "elite",
+        "reward": "rare-upgrade",
+        "next": [
+          "1729:v3-r16"
+        ]
+      }
+    },
+    {
+      "templateId": "shielding-gate",
+      "name": "Shielding gate",
+      "environment": "containment",
+      "objective": "Clear the last defensive line before the reactor.",
+      "roomId": "17-shielding-gate",
+      "index": 16,
+      "node": {
+        "id": "evidence-16-shielding-gate",
+        "depth": 16,
+        "templateId": "shielding-gate",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r17"
+        ]
+      }
+    },
+    {
+      "templateId": "containment-annulus",
+      "name": "Containment annulus",
+      "environment": "containment",
+      "objective": "Circle the shielding. Reach manual controls. Overload is NOT armed.",
+      "story": "PASSENGERS ALIVE. Manual authorization still required.",
+      "roomId": "18-containment-annulus",
+      "index": 17,
+      "node": {
+        "id": "evidence-17-containment-annulus",
+        "depth": 17,
+        "templateId": "containment-annulus",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r18"
+        ]
+      }
+    },
+    {
+      "templateId": "manual-control-chamber",
+      "name": "Manual-control chamber",
+      "environment": "reactor",
+      "objective": "Clear threats. PASSENGERS ALIVE. Overload kills everyone aboard. Explicitly choose Destroy ship.",
+      "roomId": "19-manual-control-chamber",
+      "index": 18,
+      "node": {
+        "id": "evidence-18-manual-control-chamber",
+        "depth": 18,
+        "templateId": "manual-control-chamber",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r19"
+        ]
+      }
+    },
+    {
+      "templateId": "overload-floor",
+      "name": "Overload floor",
+      "environment": "reactor",
+      "objective": "Defend the overload sequence. No escape. Everyone aboard will die.",
+      "roomId": "20-overload-floor",
+      "index": 19,
+      "node": {
+        "id": "evidence-19-overload-floor",
+        "depth": 19,
+        "templateId": "overload-floor",
+        "kind": "combat",
+        "reward": "victory",
+        "next": []
+      }
+    }
+  ],
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "quality": "high",
+  "evidenceClass": "C\u2192I",
+  "staging": "Controlled actual DepthGame/DepthRenderer scene. Overview camera fits room. Gameplay uses production camera without HUD. Not organic play or reachability evidence.",
+  "results": [
+    {
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/node_modules/three/build/three.core.js"
+      ],
+      "roomId": "01-awakening-bay",
+      "templateId": "awakening-bay",
+      "environment": "cryogenics",
+      "mode": "overview",
+      "file": "01-awakening-bay-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 50,
+        "triangles": 82818,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "4ba60b298ee0ed0366a9dbcee4b773daf24a63af440b074c447d609049813b96",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/node_modules/three/build/three.core.js"
+      ],
+      "roomId": "01-awakening-bay",
+      "templateId": "awakening-bay",
+      "environment": "cryogenics",
+      "mode": "gameplay",
+      "file": "01-awakening-bay-gameplay.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 44,
+        "triangles": 82170,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "3da1217d53f38772e6a5f7e16c25dd9a02fe36ef58d361412ebd6971e3499e37",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "02-passenger-vault",
+      "templateId": "passenger-vault",
+      "environment": "cryogenics",
+      "mode": "overview",
+      "file": "02-passenger-vault-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 50,
+        "triangles": 94842,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "9651134528aa4ed59814efd2bb76aa7571db21a24cbc1eec0449c439936f974a",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "03-residential-gallery",
+      "templateId": "residential-gallery",
+      "environment": "habitation",
+      "mode": "overview",
+      "file": "03-residential-gallery-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 50,
+        "triangles": 86938,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "3ebe0a9387024b9f3bacf048c0bb0922a1cc63a311cddc1c07017867bf91d21f",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "04-communal-atrium",
+      "templateId": "communal-atrium",
+      "environment": "habitation",
+      "mode": "overview",
+      "file": "04-communal-atrium-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 50,
+        "triangles": 93558,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "3f71c2f6ab780531543c0bb2b57183a3ec92c9ede4a9b1fbd7aefd379ab5a8cc",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "05-crew-checkpoint",
+      "templateId": "crew-checkpoint",
+      "environment": "security",
+      "mode": "overview",
+      "file": "05-crew-checkpoint-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 46,
+        "triangles": 85618,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "2de9b665c8111713bcb954845ecd635074ae112d443b44f9700a9fd9b62a6dde",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "06-armory",
+      "templateId": "armory",
+      "environment": "security",
+      "mode": "overview",
+      "file": "06-armory-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 89410,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "5ad2b4be7dd436e20e42739b29db4c204b6fc51f2adc95f112a3d711214e4f62",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "07-freight-hold",
+      "templateId": "freight-hold",
+      "environment": "cargo",
+      "mode": "overview",
+      "file": "07-freight-hold-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 116326,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "aff24695b3858c7f7d041abf372debdc53fe8643ecf4a8ce5ade2b805888f666",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "08-breached-loading-bay",
+      "templateId": "breached-loading-bay",
+      "environment": "cargo",
+      "mode": "overview",
+      "file": "08-breached-loading-bay-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 100486,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "0bc1036be6958288318a04381e258799fdcb175f9a3ec9236cce0247ea3f7399",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "09-relay-racks",
+      "templateId": "relay-racks",
+      "environment": "communications",
+      "mode": "overview",
+      "file": "09-relay-racks-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 2,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 44,
+        "triangles": 105728,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 2
+      },
+      "errors": [],
+      "sha256": "32cfdeb1de6e20411cc81fcd6280a91910dfbf29e2139cbc72c0cc672fdc9fa3",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "10-transmission-chamber",
+      "templateId": "transmission-chamber",
+      "environment": "communications",
+      "mode": "overview",
+      "file": "10-transmission-chamber-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 97774,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "3e42a9789a4b85935db105afe74130dfd47239f1ac334429aa33ba452fef1941",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/node_modules/three/build/three.core.js"
+      ],
+      "roomId": "11-diagnostic-gallery",
+      "templateId": "diagnostic-gallery",
+      "environment": "engineering",
+      "mode": "overview",
+      "file": "11-diagnostic-gallery-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 46,
+        "triangles": 92914,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "1e196c564bf3953ddc3a3898a3b18531d15a3a9676db4d2ef633475317c206aa",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/node_modules/three/build/three.core.js"
+      ],
+      "roomId": "11-diagnostic-gallery",
+      "templateId": "diagnostic-gallery",
+      "environment": "engineering",
+      "mode": "gameplay",
+      "file": "11-diagnostic-gallery-gameplay.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 40,
+        "triangles": 92266,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "485d127d513e91a91f52f10e20432806bcf11a7fc27e2351184d2bb265f0e1eb",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "12-safety-interlock-station",
+      "templateId": "safety-interlock-station",
+      "environment": "engineering",
+      "mode": "overview",
+      "file": "12-safety-interlock-station-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 46,
+        "triangles": 86146,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "d9241484ca1b6042b1ca3937f14c9208fe019597a764631a91532445255047b7",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "13-coolant-plant",
+      "templateId": "coolant-plant",
+      "environment": "maintenance",
+      "mode": "overview",
+      "file": "13-coolant-plant-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 93730,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "b3be04fce40e906c0a270976171d634ba2635a966bc488dd42a018749b2e5bcc",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "14-service-shaft-landing",
+      "templateId": "service-shaft-landing",
+      "environment": "maintenance",
+      "mode": "overview",
+      "file": "14-service-shaft-landing-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 101650,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "8aea328e2f94905c7bbc91380856774d0a72158c858c159e7aab699b0f2dc02f",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "15-infested-workshop",
+      "templateId": "infested-workshop",
+      "environment": "infested",
+      "mode": "overview",
+      "file": "15-infested-workshop-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 49,
+        "triangles": 110826,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "ecee344bdf6308fc52328cb4a6b2566c13bf8dcc367a974aba5134c7de68a54a",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "16-swarm-junction",
+      "templateId": "swarm-junction",
+      "environment": "infested",
+      "mode": "overview",
+      "file": "16-swarm-junction-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 49,
+        "triangles": 110826,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "d5716e2c99792e99f694e04498872dc2897b32ecb5b3affd2510ef48e967b1d5",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "17-shielding-gate",
+      "templateId": "shielding-gate",
+      "environment": "containment",
+      "mode": "overview",
+      "file": "17-shielding-gate-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 46,
+        "triangles": 101218,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "d3de82df97d3b748d1086f4f129293ff805dc03c73fce2b2b676bbe2863bd3e5",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "18-containment-annulus",
+      "templateId": "containment-annulus",
+      "environment": "containment",
+      "mode": "overview",
+      "file": "18-containment-annulus-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 46,
+        "triangles": 120118,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "e99b52fb9edbfa921e1ab714120d7ff2844fe60f9b99f2ff328bf12fd851440e",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "19-manual-control-chamber",
+      "templateId": "manual-control-chamber",
+      "environment": "reactor",
+      "mode": "overview",
+      "file": "19-manual-control-chamber-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 79726,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "c76bca8afc6e0e12dd950e1dee83b1b6d407c1aa7516c2a4a3e241f6f508b401",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "20-overload-floor",
+      "templateId": "overload-floor",
+      "environment": "reactor",
+      "mode": "overview",
+      "file": "20-overload-floor-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 47,
+        "triangles": 79726,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "8db6fa14de55add61e6ed1762f179f59ddf6ea0a57fda9dfd186c60025d8919a",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "20-overload-floor",
+      "templateId": "overload-floor",
+      "environment": "reactor",
+      "mode": "gameplay",
+      "file": "20-overload-floor-gameplay.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 4,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true
+      },
+      "metrics": {
+        "drawCalls": 41,
+        "triangles": 79078,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "enemies": 4
+      },
+      "errors": [],
+      "sha256": "5c8229defe74926031c13223c597c6ebd812324933930c74244d07e7d564accd",
+      "pixelReview": "passed: model-vision reviewed; recaptured bytes match reviewed screenshot exactly"
+    }
+  ]
+}
