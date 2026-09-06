@@ -61,6 +61,35 @@ describe('ship environments',()=>{
    }finally{vi.restoreAllMocks();}
   });
  }
+ it.each([32,44])('maintenance grates at width %s have no overlapping coplanar faces',w=>{
+  const world=new T.Group();environmentArchitecture(world,'maintenance',w,24);
+  const grates=meshes(world).map(mesh=>({mesh,bounds:new T.Box3().setFromObject(mesh,true)}))
+   .filter(({bounds})=>Math.abs(bounds.max.y-.002)<1e-6&&bounds.min.z>0);
+  expect(grates.length).toBeGreaterThan(0);
+  const overlaps:string[]=[];
+  for(let i=0;i<grates.length;i++)for(let j=i+1;j<grates.length;j++){
+   const a=grates[i].bounds,b=grates[j].bounds;
+   if(Math.min(a.max.x,b.max.x)-Math.max(a.min.x,b.min.x)>1e-6&&Math.min(a.max.z,b.max.z)-Math.max(a.min.z,b.min.z)>1e-6)overlaps.push(`${i}/${j}`);
+  }
+  expect(overlaps).toEqual([]);
+  // Partition the entire original two bands, retaining the dark gaps and metal bars.
+  const area=grates.reduce((sum,{bounds:b})=>sum+(b.max.x-b.min.x)*(b.max.z-b.min.z),0);
+  expect(area).toBeCloseTo(4*(w-1),4);
+  expect(new Set(grates.map(({mesh})=>mesh.material))).toEqual(new Set([MAT.black,MAT.edge]));
+ });
+ it('maintenance grates use only upward planar triangles, not hidden box faces',()=>{
+  const world=new T.Group();environmentArchitecture(world,'maintenance',32,24);
+  const grates=meshes(world).filter(mesh=>Math.abs(new T.Box3().setFromObject(mesh,true).max.y-.002)<1e-6&&mesh.position.z>0);
+  let triangles=0;
+  for(const mesh of grates){
+   const b=new T.Box3().setFromObject(mesh,true);expect(b.max.y-b.min.y).toBeLessThan(1e-6);
+   const normal=new T.Vector3().fromBufferAttribute(mesh.geometry.getAttribute('normal'),0).transformDirection(mesh.matrixWorld);
+   expect(normal.y).toBeCloseTo(1);
+   triangles+=(mesh.geometry.index?.count??mesh.geometry.getAttribute('position').count)/3;
+   expect(mesh.castShadow).toBe(false);expect(mesh.receiveShadow).toBe(true);
+  }
+  expect(triangles).toBeGreaterThan(0);expect(triangles).toBeLessThan(1000);
+ });
  it('flattening preserves every vertex transform, including nonuniform scale and rotated children',()=>{
   const model=new T.Group(),cell=new T.Group();model.position.set(8,0,9);model.rotation.y=Math.PI/2;model.add(cell);
   cell.scale.set(2,.6,3);cell.position.set(1,2,3);

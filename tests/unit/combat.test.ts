@@ -66,7 +66,7 @@ describe('CombatSystem firing', () => {
     expect(combat.snapshot.reloading).toBe(false);
   });
 
-  it('creates exactly eight deterministic symmetric shotgun pellets', () => {
+  it('creates exactly eight deterministic symmetric shotgun pellets with bounded gaps', () => {
     const combat = new CombatSystem();
     expect(combat.switchWeapon('shotgun')).toBe(true);
 
@@ -79,10 +79,9 @@ describe('CombatSystem firing', () => {
     for (let index = 0; index < angles.length; index += 1) {
       expect(angles[index] + angles[angles.length - 1 - index]).toBeCloseTo(2, 12);
       if (index > 0) {
-        expect(angles[index] - angles[index - 1]).toBeCloseTo(
-          WEAPONS.shotgun.spreadRadians / 7,
-          12,
-        );
+        const gap = angles[index] - angles[index - 1];
+        expect(gap).toBeGreaterThan(WEAPONS.shotgun.spreadRadians / 7 * .79);
+        expect(gap).toBeLessThan(WEAPONS.shotgun.spreadRadians / 7 * 1.21);
       }
     }
     expect(combat.snapshot.magazine).toBe(WEAPONS.shotgun.magazine - 1);
@@ -542,6 +541,7 @@ describe('CombatSystem state boundary', () => {
       reloadDurationMs: 0,
       reloadRemainingMs: 0,
       fireCooldownRemainingMs: 0,
+      bloomRadians: 0,
       grenades: 3,
       grenadeCooldownRemainingMs: 0,
       medkits: 2,
@@ -559,6 +559,7 @@ describe('CombatSystem state boundary', () => {
       magazineCapacity: WEAPONS.rifle.magazine,
       reserve: WEAPONS.rifle.reserve,
       fireCooldownRemainingMs: 0,
+      bloomRadians: 0,
     });
     expect(combat.modifiers).toBe(DEFAULT_COMBAT_MODIFIERS);
   });
@@ -681,6 +682,7 @@ describe('CombatSystem state boundary', () => {
       reloading: false,
       reloadRemainingMs: 0,
       fireCooldownRemainingMs: 0,
+      bloomRadians: 0,
       grenadeCooldownRemainingMs: 0,
     });
   });

@@ -14,7 +14,11 @@ export type WeaponDefinition = {
   reserve: number;
   reloadMs: number;
   pellets: number;
+  /** Full cone width, not a half-angle. */
   spreadRadians: number;
+  bloomPerShotRadians: number;
+  maxBloomRadians: number;
+  bloomRecoveryMs: number;
   projectileSpeed: number;
   projectileRadius: number;
   penetration: number;

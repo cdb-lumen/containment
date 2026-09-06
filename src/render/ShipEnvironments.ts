@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {MAT,box,ball,rod,ring,shell} from './meshParts';
+import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 
 export const SHIP_ENVIRONMENTS=['cryogenics','habitation','security','cargo','communications','engineering','maintenance','infested','containment','reactor'] as const;
 export type ShipEnvironment=typeof SHIP_ENVIRONMENTS[number];
@@ -178,7 +178,23 @@ export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:num
    for(const side of [-1,1]){inlay(x+side*1.5,z,.065,3,MAT.trim);inlay(x,z+side*1.5,3,.065,MAT.trim);}
   }
  }else if(env==='maintenance'){
-  for(const z of [h*.25,h*.75]){inlay(w/2,z,w-1,2,MAT.black);for(let x=1;x<w-1;x+=.28)inlay(x,z,.065,1.9,MAT.edge);}
+  // One upward-facing layer: dark gaps abut the bars rather than sharing
+  // the old slab's top face. The cached unit plane has no hidden box faces.
+  const grate=(x:number,z:number,width:number,depth:number,mat:T.Material)=>{
+   const mesh=new T.Mesh(geometry('maintenance-grate-plane',()=>new T.PlaneGeometry(1,1)),mat);
+   mesh.rotation.x=-Math.PI/2;mesh.scale.set(width,depth,1);mesh.position.set(x,.002,z);
+   mesh.receiveShadow=true;parent.add(mesh);
+  };
+  for(const z of [h*.25,h*.75]){
+   for(const side of [-1,1])grate(w/2,z+side*.975,w-1,.05,MAT.black);
+   let left=.5;
+   for(let x=1;x<w-1;x+=.28){
+    const edge=x-.065/2;
+    grate((left+edge)/2,z,edge-left,1.9,MAT.black);
+    grate(x,z,.065,1.9,MAT.edge);left=x+.065/2;
+   }
+   grate((left+w-.5)/2,z,w-.5-left,1.9,MAT.black);
+  }
  }else if(env==='infested'){
   for(let n=0;n<12;n++){const x=1+(w-2)*(Math.sin(n*13.7)*.5+.5),z=1+(h-2)*(Math.cos(n*5.1)*.5+.5);const stain=ball(parent,x,-.012,z,1.5,.018,.85,MAT.shellDark);stain.castShadow=false;}
  }
