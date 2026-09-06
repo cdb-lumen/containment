@@ -121,6 +121,7 @@ export class AttackEffects {
    const r=(e.radius??100)/32,fiery=e.elements?.includes('fire')??false,icy=e.elements?.includes('ice')??false,toxic=e.elements?.includes('poison')??false,color=acid||toxic?0x8dd45a:fiery?0xffb64e:icy?0xb9efff:0xcbd8dc;
    // Mixed statuses compose local cues; no global-build tint or hidden priority.
    if(icy)this.event({type:'boon',boon:'shatter',x:e.x,y:e.y,radius:e.radius});
+   if(toxic)for(let i=0;i<8;i++){const a=i*Math.PI/4;this.particle(this.debris,EFFECT_LIMITS.debris,p,0x76d958,.08,.55,new T.Vector3(Math.cos(a)*2,1.5,Math.sin(a)*2),6,0);}
    if(toxic)for(let i=0;i<4;i++){const a=i*Math.PI/2;this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x76c999,.55,.45,new T.Vector3(Math.cos(a)*1.5,.5,Math.sin(a)*1.5));}
    this.pulse(p,color,r,.24);this.particle(this.glow,EFFECT_LIMITS.glow,p,acid||!fiery?color:0xffedbc,r*.65,.065);
    if(!acid&&fiery){const center=p.clone(),size=Math.min(5,r*1.5);center.y=size*.38;this.particle(this.fire,EFFECT_LIMITS.fire,center,0xffffff,size,.62,new T.Vector3(0,.65,0));this.fire[this.fire.length-1].spin=0;this.fire[this.fire.length-1].rotation=0;
