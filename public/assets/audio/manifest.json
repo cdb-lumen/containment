@@ -1,0 +1,74 @@
+{
+  "shotgun-3.wav": {
+    "duration": 2.334,
+    "bytes": 149462
+  },
+  "alien-impact.wav": {
+    "duration": 0.278,
+    "bytes": 17838
+  },
+  "pistol-1.wav": {
+    "duration": 0.562,
+    "bytes": 36044
+  },
+  "pistol-2.wav": {
+    "duration": 0.604,
+    "bytes": 38752
+  },
+  "reload.wav": {
+    "duration": 1.591,
+    "bytes": 101876
+  },
+  "rocket.wav": {
+    "duration": 1.398,
+    "bytes": 89546
+  },
+  "ambient.mp3": {
+    "duration": 59.004,
+    "bytes": 708807
+  },
+  "rifle-1.wav": {
+    "duration": 0.519,
+    "bytes": 33288
+  },
+  "rifle-2.wav": {
+    "duration": 0.415,
+    "bytes": 26638
+  },
+  "shotgun-1.wav": {
+    "duration": 2.332,
+    "bytes": 149338
+  },
+  "tension.mp3": {
+    "duration": 47.7,
+    "bytes": 573159
+  },
+  "click.wav": {
+    "duration": 0.233,
+    "bytes": 14978
+  },
+  "pistol-3.wav": {
+    "duration": 0.672,
+    "bytes": 43092
+  },
+  "plasma.wav": {
+    "duration": 1.719,
+    "bytes": 110080
+  },
+  "switch.wav": {
+    "duration": 0.338,
+    "bytes": 21722
+  },
+  "explosion.wav": {
+    "duration": 1.395,
+    "bytes": 89358
+  },
+  "shotgun-2.wav": {
+    "duration": 2.334,
+    "bytes": 149464
+  },
+  "rifle-3.wav": {
+    "duration": 0.499,
+    "bytes": 32004
+  }
+}

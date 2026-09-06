@@ -46,6 +46,9 @@ export type CollisionSteeringContext = Readonly<{
 }>;
 
 export type EnemySystemOptions = Readonly<{
+  balance?: {health:number;damage:number;speed:number;eliteHealth:number;eliteDamage:number;specials:boolean};
+  canAttack?: (from:EnemyPlayerState,to:EnemyPlayerState)=>boolean;
+  route?: (enemy: EnemyPlayerState & {radius:number}, player:EnemyPlayerState) => EnemyPlayerState|null;
   canMove?: (context: CollisionSteeringContext) => boolean;
 }>;
 
@@ -69,6 +72,7 @@ export type HazardAttackEvent = Readonly<{
 
 export type EnemyDeathEvent = Readonly<{
   type: 'death';
+  impulse?: Readonly<{x:number;y:number}>;
   enemyId: number;
   enemyType: StandardEnemyId;
   elite: boolean;
@@ -92,7 +96,8 @@ export type EnemyEvent =
   | ContactAttackEvent
   | HazardAttackEvent
   | EnemyDeathEvent
-  | EnemySpawnRequestEvent;
+  | EnemySpawnRequestEvent
+  | Readonly<{type:'attack-warning';enemyId:number;enemyType:StandardEnemyId;x:number;y:number;targetX:number;targetY:number;durationMs:number}>;
 
 export type CamouflageState = 'camouflaged' | 'revealed' | 'none';
 
@@ -124,6 +129,8 @@ export type EnemySnapshot = Readonly<{
   camouflageRemainingMs: number;
   alpha: number;
   reservedChildren: number;
+  baseSpeed:number;champion?:'warden'|'matron';
+  windupMs:number;pendingAttack:'spit'|'charge'|null;lockX:number;lockY:number;specialCooldownMs:number;chargeMs:number;
 }>;
 
 export type EnemySystemSnapshot = Readonly<{
@@ -176,6 +183,8 @@ type EnemyState = {
   camouflageRemainingMs: number;
   alpha: number;
   reservedChildren: number;
+  baseSpeed:number;champion?:'warden'|'matron';
+  windupMs:number;pendingAttack:'spit'|'charge'|null;lockX:number;lockY:number;specialCooldownMs:number;chargeMs:number;
 };
 
 type Vector = { x: number; y: number };
@@ -210,11 +219,14 @@ export class EnemySystem {
   readonly #spatialEnemies = new Map<number, SpatialEnemy>();
   readonly #listeners = new Set<(event: EnemyEvent) => void>();
   readonly #canMove?: (context: CollisionSteeringContext) => boolean;
+  readonly #route?: EnemySystemOptions['route'];
+  readonly #balance:NonNullable<EnemySystemOptions['balance']>;readonly #canAttack?:EnemySystemOptions['canAttack'];
   #nextId = 1;
   #reservedCount = 0;
 
   constructor(options: EnemySystemOptions = {}) {
     this.#canMove = options.canMove;
+    this.#route = options.route;this.#canAttack=options.canAttack;this.#balance=options.balance??{health:1,damage:1,speed:1,eliteHealth:2,eliteDamage:2,specials:false};
   }
 
   get activeCount(): number {
@@ -229,11 +241,13 @@ export class EnemySystem {
     return this.getSystemSnapshot();
   }
 
+  #cachedSnapshot:EnemySystemSnapshot|null=null;
   getSystemSnapshot(): EnemySystemSnapshot {
+    if(this.#cachedSnapshot)return this.#cachedSnapshot;
     const enemies = Object.freeze(
       [...this.#enemies.values()].map((enemy) => this.#snapshotEnemy(enemy)),
     );
-    return Object.freeze({
+    return this.#cachedSnapshot=Object.freeze({
       activeCount: this.activeCount,
       reservedCount: this.reservedCount,
       enemies,
@@ -246,7 +260,29 @@ export class EnemySystem {
     return enemy ? this.#snapshotEnemy(enemy) : null;
   }
 
+  /** Swept movement for mutation impulses, using the same collision policy as AI. */
+  moveBy(id:number,dx:number,dy:number):{blocked:boolean} {
+    this.#cachedSnapshot=null;
+    const enemy=this.#enemies.get(id);
+    if(!enemy||!Number.isFinite(dx)||!Number.isFinite(dy))return {blocked:true};
+    const steps=Math.max(1,Math.ceil(Math.hypot(dx,dy)/8));
+    if(steps>128)return {blocked:true};
+    for(let i=0;i<steps;i++){
+      const x=enemy.x+dx/steps,y=enemy.y+dy/steps;
+      if(!this.#movementAllowed(enemy,x,y))return {blocked:true};
+      enemy.x=x;enemy.y=y;
+    }
+    return {blocked:false};
+  }
+
+  setSlow(id:number,multiplier:number):void {
+    this.#cachedSnapshot=null;
+    const enemy=this.#enemies.get(id);
+    if(enemy&&Number.isFinite(multiplier)){enemy.speed=enemy.baseSpeed*Math.max(0,Math.min(1,multiplier));enemy.decisionCooldownRemainingMs=0;if(enemy.speed===0)enemy.velocityX=enemy.velocityY=0;}
+  }
+
   spawn(type: StandardEnemyId, x: number, y: number, elite = false): SpawnResult {
+    this.#cachedSnapshot=null;
     if (!isStandardEnemyId(type)) {
       return Object.freeze({ spawned: false, reason: 'invalid-type' });
     }
@@ -258,8 +294,8 @@ export class EnemySystem {
     }
 
     const definition = ENEMIES[type];
-    const multiplier = elite === true ? ELITE_MULTIPLIER : 1;
-    const maxHealth = definition.maxHealth * multiplier;
+    const multiplier = elite === true ? this.#balance.eliteHealth : 1;
+    const maxHealth = definition.maxHealth * multiplier * this.#balance.health;
     const maxArmor = type === 'brute' ? maxHealth * BRUTE_ARMOR_RATIO : 0;
     const clampedX = clamp(x, 0, WORLD_WIDTH);
     const clampedY = clamp(y, 0, WORLD_HEIGHT);
@@ -282,9 +318,10 @@ export class EnemySystem {
       armor: maxArmor,
       maxArmor,
       radius: definition.radius,
-      speed: definition.speed,
-      contactDamage: definition.contactDamage * multiplier,
-      creditReward: definition.creditReward * multiplier,
+      speed: definition.speed*this.#balance.speed,baseSpeed:definition.speed*this.#balance.speed,
+      windupMs:0,pendingAttack:null,lockX:0,lockY:0,specialCooldownMs:1500,chargeMs:0,
+      contactDamage: definition.contactDamage * (elite?this.#balance.eliteDamage:1)*this.#balance.damage,
+      creditReward: Math.round(definition.creditReward * multiplier),
       dropChance: definition.dropChance,
       contactCooldownRemainingMs: 0,
       rangedCooldownRemainingMs: 0,
@@ -310,7 +347,13 @@ export class EnemySystem {
     return Object.freeze({ spawned: true, enemy: this.#snapshotEnemy(state) });
   }
 
+  promote(id:number,kind:'warden'|'matron'){
+    this.#cachedSnapshot=null;
+   const e=this.#enemies.get(id);if(!e)return;e.champion=kind;e.health=e.maxHealth=kind==='warden'?760:1150;e.armor=e.maxArmor=kind==='warden'?120:0;e.speed=e.baseSpeed=kind==='warden'?88:76;e.contactDamage=kind==='warden'?28:24;e.creditReward=kind==='warden'?100:150;
+  }
+
   update(deltaMs: number, player: EnemyPlayerState): readonly EnemyEvent[] {
+    this.#cachedSnapshot=null;
     if (!this.#validDelta(deltaMs) || !this.#validPlayer(player)) {
       return Object.freeze([]);
     }
@@ -334,6 +377,11 @@ export class EnemySystem {
         0,
         enemy.decisionCooldownRemainingMs - timerDelta,
       );
+      enemy.specialCooldownMs=Math.max(0,enemy.specialCooldownMs-timerDelta);enemy.chargeMs=Math.max(0,enemy.chargeMs-timerDelta);
+      if(enemy.windupMs>0){enemy.windupMs=Math.max(0,enemy.windupMs-timerDelta);if(enemy.windupMs===0){
+       if(enemy.pendingAttack==='spit')events.push(freezeEvent({type:'hazard-attack',enemyId:enemy.id,enemyType:'spitter',damage:enemy.contactDamage,sourceX:enemy.x,sourceY:enemy.y,targetX:enemy.lockX,targetY:enemy.lockY}));
+       if(enemy.pendingAttack==='charge')enemy.chargeMs=650;enemy.pendingAttack=null;enemy.decisionCooldownRemainingMs=0;
+      }}
       this.#advanceCamouflage(enemy, timerDelta);
     }
 
@@ -358,6 +406,7 @@ export class EnemySystem {
     amount: number,
     knockback?: Readonly<{ x: number; y: number }>,
   ): DamageResult {
+    this.#cachedSnapshot=null;
     const enemy = Number.isSafeInteger(id) ? this.#enemies.get(id) : undefined;
     if (!enemy || !Number.isFinite(amount) || amount <= 0) {
       return this.#damageResult(false, 0, 0, false, { x: 0, y: 0 }, []);
@@ -367,8 +416,9 @@ export class EnemySystem {
     enemy.armor -= absorbedByArmor;
     const healthDamage = Math.min(enemy.health, amount - absorbedByArmor);
     enemy.health -= healthDamage;
-    const appliedKnockback = this.#applyKnockback(enemy, knockback);
     const died = enemy.health === 0;
+    // The corpse carries the lethal impulse; do not teleport it before physics starts.
+    const appliedKnockback = died ? Object.freeze({x:0,y:0}) : this.#applyKnockback(enemy, knockback);
     const events: EnemyEvent[] = [];
 
     if (died) {
@@ -382,6 +432,7 @@ export class EnemySystem {
           y: enemy.y,
           reward: enemy.creditReward,
           dropChance: enemy.dropChance,
+          impulse: { x: Number.isFinite(knockback?.x) ? knockback!.x * 12 : 0, y: Number.isFinite(knockback?.y) ? knockback!.y * 12 : 0 },
         }),
       );
       if (enemy.type === 'carrier') {
@@ -432,6 +483,7 @@ export class EnemySystem {
   }
 
   reset(): void {
+    this.#cachedSnapshot=null;
     this.#enemies.clear();
     this.#spatialHash.clear();
     this.#spatialEnemies.clear();
@@ -466,6 +518,7 @@ export class EnemySystem {
       maxArmor: enemy.maxArmor,
       radius: enemy.radius,
       speed: enemy.speed,
+      baseSpeed:enemy.baseSpeed,champion:enemy.champion,windupMs:enemy.windupMs,pendingAttack:enemy.pendingAttack,lockX:enemy.lockX,lockY:enemy.lockY,specialCooldownMs:enemy.specialCooldownMs,chargeMs:enemy.chargeMs,
       contactDamage: enemy.contactDamage,
       creditReward: enemy.creditReward,
       dropChance: enemy.dropChance,
@@ -515,6 +568,8 @@ export class EnemySystem {
   }
 
   #decide(enemy: EnemyState, player: EnemyPlayerState): void {
+    if(enemy.speed===0||enemy.windupMs>0){enemy.velocityX=enemy.velocityY=0;return;}
+    if(enemy.chargeMs>0){const d=normalized(enemy.lockX,enemy.lockY);enemy.velocityX=d.x*330;enemy.velocityY=d.y*330;return;}
     const distanceToPlayer = Math.hypot(player.x - enemy.x, player.y - enemy.y);
     enemy.decisionIntervalMs =
       distanceToPlayer > FAR_DECISION_DISTANCE
@@ -544,6 +599,9 @@ export class EnemySystem {
       targetY = player.y + toPlayer.x * STALKER_FLANK_DISTANCE * flankSide;
       direction = normalized(targetX - enemy.x, targetY - enemy.y);
     }
+
+    const route=this.#route?.(enemy,{x:targetX,y:targetY});
+    if(route){targetX=route.x;targetY=route.y;direction=normalized(targetX-enemy.x,targetY-enemy.y);}
 
     const separation = this.#separation(enemy);
     const combined = normalized(
@@ -651,6 +709,10 @@ export class EnemySystem {
   ): void {
     const distance = Math.hypot(player.x - enemy.x, player.y - enemy.y);
     const playerRadius = player.radius ?? DEFAULT_PLAYER_RADIUS;
+    if(this.#balance.specials&&enemy.windupMs>0)return;
+    if(this.#balance.specials&&(enemy.type==='brute'&&enemy.elite||enemy.champion==='warden')&&enemy.specialCooldownMs===0&&distance>110&&distance<420&&this.#canAttack?.(enemy,player)!==false){
+     enemy.windupMs=850;enemy.pendingAttack='charge';enemy.lockX=player.x-enemy.x;enemy.lockY=player.y-enemy.y;enemy.specialCooldownMs=4600;enemy.velocityX=enemy.velocityY=0;events.push(freezeEvent({type:'attack-warning',enemyId:enemy.id,enemyType:enemy.type,x:enemy.x,y:enemy.y,targetX:player.x,targetY:player.y,durationMs:850}));return;
+    }
     if (
       distance <= enemy.radius + playerRadius &&
       enemy.contactCooldownRemainingMs === 0
@@ -670,8 +732,9 @@ export class EnemySystem {
       enemy.type === 'spitter' &&
       distance >= SPITTER_ATTACK_MIN_RANGE &&
       distance <= SPITTER_ATTACK_MAX_RANGE &&
-      enemy.rangedCooldownRemainingMs === 0
+      enemy.rangedCooldownRemainingMs === 0 && this.#canAttack?.(enemy,player)!==false
     ) {
+      if(this.#balance.specials){enemy.windupMs=500;enemy.pendingAttack='spit';enemy.lockX=player.x;enemy.lockY=player.y;enemy.rangedCooldownRemainingMs=ENEMIES.spitter.attackCooldownMs+500;enemy.velocityX=enemy.velocityY=0;events.push(freezeEvent({type:'attack-warning',enemyId:enemy.id,enemyType:enemy.type,x:enemy.x,y:enemy.y,targetX:player.x,targetY:player.y,durationMs:500}));return;}
       events.push(
         freezeEvent({
           type: 'hazard-attack',
@@ -737,6 +800,7 @@ export class EnemySystem {
     appliedKnockback: Readonly<{ x: number; y: number }>,
     events: EnemyEvent[],
   ): DamageResult {
+    this.#cachedSnapshot=null;
     return Object.freeze({
       applied,
       absorbedByArmor,

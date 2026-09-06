@@ -360,14 +360,14 @@ describe('EnemySystem combat, reservations, and boundaries', () => {
 });
 
 describe('EnemySystem state boundary', () => {
-  it('returns deeply frozen fresh snapshots that cannot corrupt simulation state', () => {
+  it('returns deeply frozen cached snapshots that cannot corrupt simulation state', () => {
     const system = new EnemySystem();
     const crawler = requireSpawn(system, 'crawler', 100, 100);
     const first = system.snapshot;
     const second = system.snapshot;
 
-    expect(first).not.toBe(second);
-    expect(first.enemies).not.toBe(second.enemies);
+    expect(first).toBe(second);
+    expect(first.enemies).toBe(second.enemies);
     expect(Object.isFrozen(first)).toBe(true);
     expect(Object.isFrozen(first.enemies)).toBe(true);
     expect(Object.isFrozen(first.enemies[0])).toBe(true);

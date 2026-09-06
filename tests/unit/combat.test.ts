@@ -8,8 +8,6 @@ import {
   ProjectileHitTracker,
 } from '../../src/game/combat/CombatSystem';
 import type { WeaponId } from '../../src/game/combat/types';
-import { EMPTY_INPUT_STATE } from '../../src/game/input/InputState';
-import { Player } from '../../src/game/player/Player';
 
 const cadenceMs = (weaponId: WeaponId): number =>
   1_000 / WEAPONS[weaponId].roundsPerSecond;
@@ -36,6 +34,7 @@ describe('CombatSystem firing', () => {
     expect(first).toEqual([
       {
         weaponId: 'pistol',
+        mutationShotId: 'shot-0',
         damage: WEAPONS.pistol.damage,
         speed: WEAPONS.pistol.projectileSpeed,
         radius: WEAPONS.pistol.projectileRadius,
@@ -684,82 +683,5 @@ describe('CombatSystem state boundary', () => {
       fireCooldownRemainingMs: 0,
       grenadeCooldownRemainingMs: 0,
     });
-  });
-});
-
-describe('Player movement upgrades', () => {
-  const createPlayer = () => {
-    const velocityCalls: Array<readonly [number, number]> = [];
-    const resetCalls: Array<readonly [number, number]> = [];
-    const sprite = {
-      x: 0,
-      y: 0,
-      body: {
-        reset: (x: number, y: number) => {
-          resetCalls.push([x, y]);
-          sprite.x = x;
-          sprite.y = y;
-        },
-      },
-      setDisplaySize: () => sprite,
-      setCircle: () => sprite,
-      setCollideWorldBounds: () => sprite,
-      setDepth: () => sprite,
-      setRotation: () => sprite,
-      setVelocity: (x: number, y: number) => {
-        velocityCalls.push([x, y]);
-        return sprite;
-      },
-      destroy: () => undefined,
-    };
-    const scene = {
-      physics: { add: { image: () => sprite } },
-    };
-    const player = new Player(scene as never, { x: 0, y: 0 });
-    return { player, resetCalls, velocityCalls };
-  };
-
-  it('applies a bounded speed multiplier while preserving normalized base movement', () => {
-    const { player, velocityCalls } = createPlayer();
-    expect(player.currentSpeed).toBe(260);
-    expect(player.setSpeedMultiplier(1.4)).toBe(true);
-    expect(player.currentSpeed).toBe(364);
-
-    player.applyInput({
-      ...EMPTY_INPUT_STATE,
-      movementX: 1,
-      movementY: 1,
-      aimWorldX: Number.NaN,
-      aimWorldY: Number.NaN,
-    });
-    expect(velocityCalls.at(-1)?.[0]).toBeCloseTo(364 / Math.sqrt(2), 12);
-    expect(velocityCalls.at(-1)?.[1]).toBeCloseTo(364 / Math.sqrt(2), 12);
-
-    for (const invalid of [0, -1, 4.1, Number.NaN, Number.POSITIVE_INFINITY]) {
-      expect(player.setSpeedMultiplier(invalid)).toBe(false);
-      expect(player.currentSpeed).toBe(364);
-    }
-  });
-
-  it('restores default speed on reset and rejects changes after destroy', () => {
-    const { player, resetCalls, velocityCalls } = createPlayer();
-    player.setSpeedMultiplier(1.4);
-
-    player.reset({ x: 10, y: 20 });
-    expect(resetCalls).toEqual([[10, 20]]);
-    expect(player.currentSpeed).toBe(260);
-    player.applyInput({
-      ...EMPTY_INPUT_STATE,
-      movementX: 1,
-      movementY: 0,
-      aimWorldX: 10,
-      aimWorldY: 20,
-    });
-    expect(velocityCalls.at(-1)).toEqual([260, 0]);
-
-    player.destroy();
-    expect(player.currentSpeed).toBe(260);
-    expect(player.setSpeedMultiplier(1.2)).toBe(false);
-    expect(player.currentSpeed).toBe(260);
   });
 });

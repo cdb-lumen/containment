@@ -14,13 +14,6 @@ import {
   QueenBossSystem,
   type QueenBossEvent,
 } from '../../src/game/enemies/QueenBossSystem';
-import {
-  QueenPresentationState,
-  QUEEN_ATTACK_ANTICIPATION_MS,
-  QUEEN_ATTACK_RECOVERY_MS,
-  QUEEN_HIT_PRESENTATION_MS,
-} from '../../src/game/enemies/QueenPresentationState';
-
 const FAR_PLAYER = Object.freeze({ x: 10_000, y: 10_000 });
 
 const eventsOf = <T extends QueenBossEvent['type']>(
@@ -46,77 +39,6 @@ const finishVulnerableCycle = (system: QueenBossSystem): void => {
   system.update(QUEEN_VULNERABLE_DURATION_MS, FAR_PLAYER, 0);
   expect(system.snapshot.phase).toBe('armored');
 };
-
-describe('queen presentation state', () => {
-  const snapshot = (overrides: Record<string, unknown> = {}) => ({
-    active: true, defeated: false, phase: 'armored' as const, stage: 1 as const,
-    x: 500, y: 400, rotation: 0, health: ENEMIES.queen.maxHealth,
-    maxHealth: ENEMIES.queen.maxHealth, vulnerable: false,
-    phaseRemainingMs: QUEEN_ARMORED_DURATION_MS, nests: [], pendingTelegraph: null,
-    ...overrides,
-  });
-
-  it('reuses phase-aware output while low quality preserves breathing and suppresses emissive', () => {
-    const state = new QueenPresentationState();
-    state.acquire(snapshot());
-    const stageOne = state.update(snapshot(), 500, 'high', false, false);
-    const sameOutput = state.update(snapshot({ stage: 3 }), 500, 'high', false, false);
-    expect(sameOutput).toBe(stageOne);
-    expect(sameOutput.frame).toMatch(/^idle[AB]$/);
-    expect(sameOutput.emissiveAlpha).toBeGreaterThan(0);
-    const low = state.update(snapshot({ stage: 3 }), 500, 'low', false, false);
-    expect(low.offsetY).not.toBe(0);
-    expect(low.scaleX).not.toBe(1);
-    expect(low.emissiveAlpha).toBe(0);
-  });
-
-  it('routes only real telegraph and attack events into anticipation and recovery', () => {
-    const state = new QueenPresentationState();
-    state.acquire(snapshot());
-    state.handleEvent({ type: 'minion-spawn-request', eventId: 1, requestId: 1,
-      nestId: 1, enemyType: 'crawler', x: 0, y: 0 }, 100);
-    expect(state.update(snapshot(), 100, 'high', false, false).frame).not.toBe('attack');
-    state.handleEvent({ type: 'area-telegraph', eventId: 2, telegraphId: 1,
-      x: 1, y: 2, radius: 3, delayMs: QUEEN_ATTACK_ANTICIPATION_MS, damage: 4 }, 100);
-    expect(state.update(snapshot(), 100, 'high', false, false).frame).toBe('attack');
-    expect(state.update(snapshot(), 100 + QUEEN_ATTACK_ANTICIPATION_MS, 'high', false, false).frame)
-      .not.toBe('attack');
-    state.handleEvent({ type: 'area-attack', eventId: 3, telegraphId: 1,
-      x: 1, y: 2, radius: 3, damage: 4 }, 1_000);
-    expect(state.update(snapshot(), 1_000 + QUEEN_ATTACK_RECOVERY_MS - 1, 'high', false, false).frame)
-      .toBe('attack');
-  });
-
-  it('shows hit only after applied decrease and obeys reduced motion and flash', () => {
-    const state = new QueenPresentationState();
-    state.acquire(snapshot());
-    state.triggerHit(100, false);
-    expect(state.update(snapshot(), 100, 'high', false, false).frame).not.toBe('hit');
-    state.triggerHit(100, true);
-    expect(state.update(snapshot({ health: ENEMIES.queen.maxHealth - 1 }), 100,
-      'high', true, true)).toMatchObject({
-      frame: 'hit', hitBrightness: 0, offsetX: 0, offsetY: 0,
-      scaleX: 1, scaleY: 1, rotationOffset: 0,
-    });
-    expect(state.update(snapshot(), 100 + QUEEN_HIT_PRESENTATION_MS, 'high', false, false).frame)
-      .not.toBe('hit');
-  });
-
-  it('selects death then resets every transient window for restart', () => {
-    const state = new QueenPresentationState();
-    state.acquire(snapshot());
-    state.triggerHit(10, true);
-    state.handleEvent({ type: 'area-telegraph', eventId: 1, telegraphId: 1,
-      x: 1, y: 2, radius: 3, delayMs: 900, damage: 4 }, 10);
-    expect(state.update(snapshot({ active: false, defeated: true, phase: 'defeated' }), 10,
-      'high', false, false).frame).toBe('death');
-    state.release();
-    state.acquire(snapshot());
-    expect(state.update(snapshot(), 10, 'high', false, false)).toMatchObject({
-      frame: 'idleA', hitBrightness: 0,
-    });
-  });
-});
 
 describe('QueenBossSystem phases and damage gates', () => {
   it('starts idempotently and follows the deterministic timed phase sequence', () => {

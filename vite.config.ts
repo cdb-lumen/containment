@@ -1,17 +1,2 @@
-import { configDefaults, defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  base: './',
-  build: {
-    chunkSizeWarningLimit: 1_500,
-  },
-  test: {
-    environment: 'node',
-    include: ['tests/unit/**/*.test.ts'],
-    exclude: [
-      ...configDefaults.exclude,
-      '**/.worktrees/**',
-      '**/dist/**',
-    ],
-  },
-});
+import {defineConfig} from 'vite';
+export default defineConfig({base:'./',server:{host:'0.0.0.0',allowedHosts:['terminal.local']},build:{target:'es2022'}});

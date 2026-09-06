@@ -1,41 +1,72 @@
-import { GameApp } from './game/GameApp';
-import './styles.css';
-
-const gameRoot = document.querySelector<HTMLElement>('#game-root');
-
-if (!gameRoot) {
-  throw new Error('The game host element #game-root is missing.');
+import {FramePacer,FrameDiagnostics} from './render/FrameBudget';
+import {familyCount} from './game/roguelike/builds';
+import './style.css';
+import {DepthGame,type GameEffect} from './DepthGame';
+import {preloadAssets} from './render/assets';
+import {DepthRenderer} from './render/DepthRenderer';
+import {InputController} from './InputController';
+import {AudioSystem} from './game/audio/AudioSystem';
+import {ROOM_TEMPLATES} from './game/roguelike/roomTemplates';
+import {generateRun,runLength,ACT_NAMES} from './game/roguelike/run';
+import {expeditionRewardOffers,rerollCost} from './game/roguelike/expedition';
+import {MUTATION_CATALOG} from './game/roguelike/mutationCatalog';
+import type {WeaponId} from './game/combat/types';
+import type {MutationId} from './game/roguelike/types';
+const app=document.getElementById('app')!;
+const icon=(name:string)=>({pause:'Ⅱ',reload:'↻',heal:'+',grenade:'◈',fire:'⊕'}[name]??name);
+app.innerHTML=`<canvas id="world" aria-label="Containment 3D game world"></canvas><div id="shade"></div><div id="hurt-flash"></div>
+<div id="hud" hidden><div class="hud-top"><div class="vitals"><div class="vital-line"><span class="health-icon">+</span><b id="health">100</b><div class="meter"><i id="hp-bar"></i></div></div><div class="armor-line"><span>ARMOR</span><div class="meter armor"><i id="armor-bar"></i></div><b id="armor">50</b></div></div><div class="room-label"><span id="depth-label"></span><b id="room-name"></b></div><button id="pause" class="icon-button" aria-label="Pause game">${icon('pause')}</button></div>
+<div id="boss-hud" hidden><div><span>THE QUEEN</span><span id="boss-phase"></span></div><div class="meter"><i id="boss-bar"></i></div></div>
+<div id="build-strip"></div><div id="run-stock"><span id="credits"></span><span id="desktop-stock"></span><span id="encounter-count"></span></div><div class="weapon-hud"><span id="weapon-name"></span><div><b id="magazine"></b><span id="reserve"></span></div><div class="reload-line"><i id="reload-bar"></i></div><small id="reload-label"></small></div>
+<div id="weapon-picker" aria-label="Weapons">${(['pistol','rifle','shotgun','plasma','rocket'] as const).map((id,i)=>`<button data-weapon="${id}" aria-label="Equip ${id}"><small>${i+1}</small><span>${id}</span></button>`).join('')}</div>
+<div id="touch-controls"><div id="move-zone" aria-label="Movement joystick"><span class="move-rest">MOVE</span></div><div id="stick"><i id="knob"></i></div><div class="actions"><button id="heal" aria-label="Use medkit"><span>+</span><small id="medkits"></small></button><button id="grenade" aria-label="Throw grenade"><span>◈</span><small id="grenades"></small></button><button id="reload" aria-label="Reload">↻</button><button id="fire" aria-label="Hold to fire; drag to aim">⊕</button></div></div>
+<div class="desktop-hint">WASD <span>MOVE</span> &nbsp; R <span>RELOAD</span> &nbsp; G <span>GRENADE</span> &nbsp; E <span>HEAL</span></div></div>
+<div id="overlay"></div><div id="signature">CONTAINMENT <span>/</span> DEPTH</div>`;
+const el=(id:string)=>document.getElementById(id)!;
+el('overlay').innerHTML='<div class="asset-loading"><span>CONTAINMENT / DEPTH</span><div><i id="asset-progress"></i></div></div>';
+try{await preloadAssets(fraction=>{el('asset-progress').style.width=`${fraction*100}%`;});}catch(error){app.innerHTML='<div class="unsupported"><h1>Download interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
+let renderer:DepthRenderer;
+try{renderer=new DepthRenderer(el('world') as HTMLCanvasElement);renderer.setQuality('auto');}catch{app.innerHTML='<div class="unsupported"><h1>3D graphics unavailable</h1><p>Open this game in a browser with WebGL 2 enabled.</p><button onclick="location.reload()">Try again</button></div>';throw new Error('WebGL renderer unavailable');}
+let storage:Storage|null=null;try{storage=localStorage;}catch{}
+const audio=new AudioSystem({music:.38,effects:.8});void AudioSystem.preload();let muted=false;
+const effect=(e:GameEffect)=>{if(e.type==='sync-corpse'){renderer.syncCorpse(e.id!,e.x,e.y);return;}renderer.effect(e);if(e.type==='shot'){const methods={pistol:()=>audio.playPistol(),rifle:()=>audio.playRifle(),shotgun:()=>audio.playShotgun(),plasma:()=>audio.playPlasma(),rocket:()=>audio.playRocket()};methods[e.weapon??'pistol']();}else if(e.type==='corpse')audio.playBodyImpact();else if(e.type==='explosion')audio.playExplosion();else if(e.type==='pickup')audio.playPickup();else if(e.type==='hurt'){el('hurt-flash').classList.remove('flash');void el('hurt-flash').offsetWidth;el('hurt-flash').classList.add('flash');}};
+const game=new DepthGame(effect,storage);const pause=()=>{if(game.status==='playing'){game.pause();input.reset();audio.pauseAll();}else if(game.status==='paused'&&!document.hidden&&!graphicsLost){game.resume();audio.resumeAll();}syncScreen();};
+game.aimVisible=(x,y)=>renderer.visible(x,y);
+try{await renderer.prepare(game.node);}catch(error){el('overlay').innerHTML='<div class="unsupported"><h1>Graphics interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
+const input=new InputController(game,renderer,(toggle)=>{if(game.status==='playing'||toggle&&game.status==='paused')pause();});let graphicsLost=false;let lastStatus='',lastRoom=-1,screenKey='',settingsOpen=false;let quality='auto';
+const start=(resume=false)=>{void audio.unlock();audio.resumeAll();input.reset();settingsOpen=false;if(resume){if(!game.continueRun())return;}else game.newRun();syncScreen(true);};
+el('pause').addEventListener('click',pause);document.querySelectorAll<HTMLButtonElement>('[data-weapon]').forEach(b=>b.addEventListener('click',()=>{game.switchWeapon(b.dataset.weapon as WeaponId);b.blur();}));
+const story=['Freight platforms. Emergency power. A lift that only goes down.','Quarantine failed here. Follow the coolant lines.','The reactor is feeding something beneath the facility.'];
+const routeCopy={combat:'Hostiles · boon',elite:'Elite hostiles · rare boon',medical:'Health + armor · recovery shop',armory:'Ammunition + grenade · recovery shop',boss:'Survive the armor cycle. Strike when exposed.'};
+const depthTotal=()=>runLength(game.expedition.run.version);
+const buildDetails=()=>`<details class="build-details"><summary>Boons · ${game.expedition.build.mutations.length}</summary>${game.expedition.build.mutations.map(id=>`<p><b>${MUTATION_CATALOG[id].name}</b> — ${MUTATION_CATALOG[id].description}</p>`).join('')}<p>Three in a family: Kinetic +12% damage · Cryo longer, stronger chill · Reactor 10% faster reload · Recovery stronger magnet and 6 armor each room.</p></details>`;
+function settings(){return `<div class="settings"><label>Graphics<select id="quality"><option value="auto" ${quality==='auto'?'selected':''}>Automatic</option><option value="high" ${quality==='high'?'selected':''}>High</option><option value="low" ${quality==='low'?'selected':''}>Performance</option></select></label><label>Sound<button id="sound" class="text-button">${muted?'Off':'On'}</button></label><p class="controls-copy"><span class="touch-copy">Left thumb moves. Hold the right control to fire with aim assist; drag it to aim manually. Reload, grenade and heal stay on the right.</span><span class="desktop-copy">WASD to move · mouse to aim and fire<br>1–5 weapons · R reload · G grenade · E heal<br>Hold Space for aim-assisted fire · Esc pause</span></p><p class="controls-copy">Weapon reserves replenish during combat and refill between rooms.</p><a href="${import.meta.env.BASE_URL}audio-credits.html" target="_blank" rel="noopener">Credits ↗</a></div>`;}
+function syncScreen(force=false){const key=`${game.status}:${game.node.id}:${settingsOpen}`;if(!force&&key===screenKey)return;screenKey=key;const status=game.status,isMenu=status==='menu';document.body.dataset.state=status;el('hud').hidden=isMenu;el('signature').hidden=!isMenu;el('shade').classList.toggle('visible',status!=='playing');el('overlay').className=isMenu?'menu-overlay':'modal-overlay';
+ if(status==='playing'){el('overlay').innerHTML='';audio.resumeAll();return;}input.reset();if(status!=='menu')audio.pauseAll();
+ let html='';
+ if(isMenu)html=`<main class="title-screen"><div class="edition"><i></i> A CONTAINMENT EXPEDITION</div><h1>CONTAINMENT<span>DEPTH</span></h1><p class="premise">Twelve rooms below the surface.<br>One way to stop what’s growing.</p><div class="menu-buttons"><button class="primary" id="start">Enter the facility <span>↗</span></button>${game.canContinue?'<button class="secondary" id="continue">Continue expedition <span>↗</span></button>':''}<button id="settings" class="quiet">${settingsOpen?'Close settings':'Settings & controls'}</button></div>${settingsOpen?settings():''}</main>`;
+ else if(status==='paused')html=`<section class="panel pause-panel"><span class="eyebrow">${ROOM_TEMPLATES[game.node.templateId].name}</span><h2>${graphicsLost?'Restoring graphics…':'Paused'}</h2><button id="resume" class="primary" ${graphicsLost?'disabled':''}>Back to the facility <span>↗</span></button>${graphicsLost?'<button id="recover" class="secondary">Reload game</button>':''}${settings()}${buildDetails()}<button id="menu" class="quiet">Return to title</button><p class="save-note">Progress saves between rooms. Leaving a fight returns to the last cleared room.</p></section>`;
+ else if(status==='reward'){
+  const offers=expeditionRewardOffers(game.expedition);html=`<section class="panel choice-panel"><span class="eyebrow">SECTOR ${String(game.node.depth+1).padStart(2,'0')} / ${depthTotal()} · CLEAR</span><h2>${offers.length?'Choose a boon':game.node.reward==='healing'?'Infirmary':'Supply cache'}</h2><p class="panel-intro">${offers.length?'Choose one. Keep it for this descent.':game.node.reward==='healing'?`Restore ${35+Math.floor(game.node.depth/4)*5} health and ${15+Math.floor(game.node.depth/4)*5} armor.`:'Rifle, shotgun, plasma and rocket ammunition. One grenade.'}</p>${offers.length?`<div class="choice-grid">${offers.map((m,i)=>`<button class="choice-card ${m.rarity}" data-family="${m.family}" data-mutation="${m.id}"><span class="card-number">0${i+1}<span>${m.family}${m.rarity==='rare'?' · RARE':''}</span></span><h3>${m.name}</h3><p>${MUTATION_CATALOG[m.id].description}</p><small>${MUTATION_CATALOG[m.id].tradeoff}</small><span class="card-arrow">↗</span></button>`).join('')}</div><div class="reward-footer"><span>${game.combat.snapshot.credits} credits</span><button id="reroll" class="secondary" ${game.expedition.run.version===1||(game.expedition.run.draftRoll??0)>=2||game.combat.snapshot.credits<rerollCost(game.expedition)?'disabled':''}>${(game.expedition.run.draftRoll??0)>=2?'No rerolls left':`Reroll · ${rerollCost(game.expedition)} credits`}</button></div>`:'<button id="claim" class="primary">Collect supplies <span>↗</span></button>'+`<div class="service-shop"><span>${game.combat.snapshot.credits} credits · add one before leaving</span>${([['heal','30 health',100],['armor','25 armor',90],['ammo','Extra ammunition',100]] as const).map(([id,label,cost])=>`<button class="secondary" data-purchase="${id}" ${game.combat.snapshot.credits<cost?'disabled':''}>Supplies + ${label} · ${cost}</button>`).join('')}</div>`}</section>`;
+ }else if(status==='route'){
+  const graph=generateRun(game.expedition.run.seed,game.expedition.run.version),choices=game.node.next.map(id=>graph.nodes.find(n=>n.id===id)!);html=`<section class="panel route-panel"><div class="progress-track">${Array.from({length:depthTotal()},(_,i)=>`<i class="${i<=game.node.depth?'done':''}"></i>`).join('')}</div><span class="eyebrow">DESCENT ${game.node.depth+2} / ${depthTotal()}</span><h2>${choices.length>1?'Choose your route.':'Keep descending.'}</h2><p class="panel-intro">${story[Math.min(2,Math.floor((game.node.depth+1)/4))]}</p><div class="route-grid">${choices.map(n=>`<button class="route-card ${n.kind==='elite'?'danger':''}" data-route="${n.id}"><span class="eyebrow">${n.kind==='elite'?'HIGH RISK':n.kind==='boss'?'REACTOR CORE':n.kind.toUpperCase()}</span><h3>${ROOM_TEMPLATES[n.templateId].name}</h3><p>${routeCopy[n.kind]}</p><span class="card-arrow">↗</span></button>`).join('')}</div></section>`;
+ }else html=`<section class="panel result-panel"><span class="eyebrow">EXPEDITION ${status==='complete'?'COMPLETE':'LOST'}</span><h2>${status==='complete'?'The core is silent.':'Still down there.'}</h2><p class="panel-intro">${status==='complete'?'The lift carries you toward daylight. Nothing follows.':'The facility keeps what it takes.'}</p><div class="result-stats"><div><b>${game.expedition.run.completedNodeIds.length}/${depthTotal()}</b><span>ROOMS</span></div><div><b>${game.expedition.build.mutations.length}</b><span>BOONS</span></div></div><button id="start" class="primary">${status==='complete'?'Descend again':'New expedition'} <span>↗</span></button><button id="menu" class="quiet">Return to title</button></section>`;
+ el('overlay').innerHTML=html;
+ el('recover')?.addEventListener('click',()=>location.reload());el('start')?.addEventListener('click',()=>start());el('continue')?.addEventListener('click',()=>start(true));el('settings')?.addEventListener('click',()=>{settingsOpen=!settingsOpen;syncScreen(true);});el('resume')?.addEventListener('click',pause);el('menu')?.addEventListener('click',()=>{game.menu();settingsOpen=false;audio.pauseAll();syncScreen(true);});el('reroll')?.addEventListener('click',()=>{if(game.reroll()){audio.playUI();syncScreen(true);}});document.querySelectorAll<HTMLButtonElement>('[data-purchase]').forEach(b=>b.addEventListener('click',()=>{game.claimResources(b.dataset.purchase as 'heal'|'armor'|'ammo');syncScreen();}));el('claim')?.addEventListener('click',()=>{game.claimResources();syncScreen();});
+ document.querySelectorAll<HTMLButtonElement>('[data-mutation]').forEach(b=>b.addEventListener('click',()=>{game.chooseMutation(b.dataset.mutation as MutationId);audio.playUI();syncScreen();}));document.querySelectorAll<HTMLButtonElement>('[data-route]').forEach(b=>b.addEventListener('click',()=>{game.route(b.dataset.route!);audio.playUI();syncScreen();}));el('quality')?.addEventListener('change',e=>{quality=(e.target as HTMLSelectElement).value;renderer.setQuality(quality as 'auto'|'high'|'low');});el('sound')?.addEventListener('click',()=>{muted=!muted;audio.setMasterVolume(muted?0:.8);el('sound').textContent=muted?'Off':'On';if(!muted)void audio.unlock();});
 }
-
-const portraitQuery = window.matchMedia(
-  '(orientation: portrait) and (pointer: coarse)',
-);
-const syncPortraitAccessibility = (): void => {
-  const blocked = portraitQuery.matches;
-  gameRoot.inert = blocked;
-  if (blocked) {
-    gameRoot.setAttribute('aria-hidden', 'true');
-  } else {
-    gameRoot.removeAttribute('aria-hidden');
-  }
-};
-portraitQuery.addEventListener('change', syncPortraitAccessibility);
-syncPortraitAccessibility();
-
-const gameApp = new GameApp();
-gameApp.mount(gameRoot);
-
-gameRoot.addEventListener('contextmenu', (event) => {
-  if (event.target instanceof HTMLCanvasElement) {
-    event.preventDefault();
-  }
-});
-
-window.addEventListener(
-  'beforeunload',
-  () => {
-    portraitQuery.removeEventListener('change', syncPortraitAccessibility);
-    gameApp.destroy();
-  },
-  { once: true },
-);
+function hud(){const s=game.combat.snapshot;el('health').textContent=String(Math.ceil(s.health));el('armor').textContent=String(Math.ceil(s.armor));el('hp-bar').style.width=`${s.health}%`;el('armor-bar').style.width=`${s.armor/s.maxArmor*100}%`;el('weapon-name').textContent=s.weaponId;el('magazine').textContent=String(s.magazine).padStart(2,'0');el('reserve').textContent=`/ ${Number.isFinite(s.reserve)?s.reserve:'∞'}`;el('reload-label').textContent=s.reloading?'RELOADING':s.magazine===0&&s.reserve===0?'EMPTY · SWITCH WEAPON':'';el('reload-bar').style.width=s.reloading?`${(1-s.reloadRemainingMs/s.reloadDurationMs)*100}%`:'0%';el('medkits').textContent=String(s.medkits);el('grenades').textContent=String(s.grenades);el('depth-label').textContent=`${ACT_NAMES[Math.min(2,Math.floor(game.node.depth/4))].toUpperCase()} · ${String(game.node.depth+1).padStart(2,'0')} / ${depthTotal()}`;el('room-name').textContent=ROOM_TEMPLATES[game.node.templateId].name;
+ document.querySelectorAll<HTMLElement>('[data-weapon]').forEach(b=>{b.classList.toggle('selected',b.dataset.weapon===s.weaponId);b.setAttribute('aria-pressed',String(b.dataset.weapon===s.weaponId));});const q=game.boss.snapshot;el('boss-hud').hidden=!q.active;el('boss-phase').textContent=`${q.vulnerable?'EXPOSED':q.phase==='nest-spawn'?'NESTS':'ARMORED'} · ${Math.ceil(q.phaseRemainingMs/1000)}s`;el('boss-bar').style.width=`${q.health/q.maxHealth*100}%`;el('boss-hud').classList.toggle('exposed',q.vulnerable);el('build-strip').textContent=['Kinetic','Cryo','Reactor','Recovery'].filter(f=>familyCount(game.expedition.build,f)>0).map(f=>`${f} ${familyCount(game.expedition.build,f)}${familyCount(game.expedition.build,f)>=3?' ◆':''}`).join(' · ');el('credits').textContent=`${s.credits} CR`;el('desktop-stock').textContent=`E ${s.medkits} medkits · G ${s.grenades} grenades`;el('encounter-count').textContent=game.status==='playing'&&game.node.kind!=='boss'?`${game.encounterRemaining} remaining`:'';
+}
+renderer.canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();graphicsLost=true;game.pause();input.reset();audio.pauseAll();syncScreen(true);});renderer.canvas.addEventListener('webglcontextrestored',()=>{graphicsLost=false;quality='low';renderer.setQuality('low');syncScreen(true);});window.addEventListener('resize',()=>renderer.resize());let hudTime=0;const pacer=new FramePacer(),diagnostics=new FrameDiagnostics();document.addEventListener('visibilitychange',()=>pacer.reset());
+Object.defineProperty(window,'__containmentPerformance',{get:()=>({...diagnostics.snapshot,quality:renderer.qualityTier,drawCalls:renderer.renderer.info.render.calls,triangles:renderer.renderer.info.render.triangles,geometries:renderer.renderer.info.memory.geometries,textures:renderer.renderer.info.memory.textures,graphicsLost})});
+function frame(now:number){
+ requestAnimationFrame(frame);if(document.hidden)return;const elapsed=pacer.sample(now);if(elapsed===null)return;const dt=Math.min(.05,elapsed),started=performance.now();
+ game.update(dt*1000,input.read());const updated=performance.now();
+ if(lastRoom!==game.roomRevision){renderer.loadRoom(game.node);lastRoom=game.roomRevision;}
+ if(!graphicsLost)renderer.render(game,dt,game.status==='menu');const rendered=performance.now();
+ if(lastStatus!==game.status){lastStatus=game.status;syncScreen();}hudTime+=dt;
+ if(hudTime>.08){hudTime=0;hud();audio.syncCombat(game.combat.snapshot);audio.setMusicIntensity(Math.min(1,game.enemies.activeCount/12+(game.boss.snapshot.active?.3:0)));}
+ diagnostics.record(elapsed*1000,updated-started,rendered-updated);renderer.observeFrame(elapsed,performance.now()-started,game.status==='playing'&&!graphicsLost);
+}
+lastRoom=game.roomRevision;syncScreen(true);requestAnimationFrame(frame);

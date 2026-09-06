@@ -1,5 +1,8 @@
 import { WEAPONS } from './catalog';
 import type { WeaponId } from './types';
+import { createBuild, BuildEventResolver, deriveBuildStats, isValidBuildState, type BuildEvent, type BuildResolution, type ResourceSnapshot } from '../roguelike/builds';
+import { isValidRunResources } from '../roguelike/checkpoints';
+import type { BuildState, RunResources } from '../roguelike/types';
 
 const WEAPON_IDS = Object.freeze(Object.keys(WEAPONS) as WeaponId[]);
 const INITIAL_WEAPON: WeaponId = 'pistol';
@@ -41,6 +44,9 @@ const MODIFIER_BOUNDS = Object.freeze({
 
 export type ProjectileRequest = Readonly<{
   weaponId: WeaponId;
+  /** Shared across pellets so mutations resolve once per shot/target. */
+  mutationShotId?: string;
+  primed?:boolean;
   damage: number;
   speed: number;
   radius: number;
@@ -224,6 +230,91 @@ export class CombatSystem {
   #wave = 0;
   #objective: string | null = null;
   readonly #listeners = new Set<CombatListener>();
+  #supplyClock=0;
+  #healListener:(()=>void)|null=null;
+  onHealing(listener:(()=>void)|null){this.#healListener=listener;}
+  hasMutation(id:import('../roguelike/types').MutationId){return this.#build.mutations.includes(id);}
+  replenishReserves(){for(const [id,amount]of Object.entries({rifle:240,shotgun:64,plasma:140,rocket:12})){const key=id as WeaponId;this.#ammo[key].reserve=Math.max(amount,this.#ammo[key].reserve);}this.#supplyClock=0;this.#rocketSupply=0;this.#emit();}
+  regenerateReserves(deltaMs:number){if(this.#dead||!Number.isFinite(deltaMs)||deltaMs<=0)return;this.#supplyClock+=deltaMs;const ticks=Math.min(5,Math.floor(this.#supplyClock/1000));if(!ticks)return;this.#supplyClock-=ticks*1000;for(const [id,rate,cap]of [['rifle',6,240],['shotgun',1,64],['plasma',3,140],['rocket',.5,12]] as const){const ammo=this.#ammo[id];if(ammo.reserve<cap){if(id==='rocket'){this.#rocketSupply+=ticks*.5;const gain=Math.floor(this.#rocketSupply);this.#rocketSupply-=gain;ammo.reserve=Math.min(cap,ammo.reserve+gain);}else ammo.reserve=Math.min(cap,ammo.reserve+ticks*rate);}}this.#emit();}
+  #rocketSupply=0;
+  collectAmmoPack(){for(const [id,n]of [['rifle',60],['shotgun',12],['plasma',30],['rocket',2]] as const)this.#ammo[id].reserve=Math.min(100000,this.#ammo[id].reserve+n);const id=this.nextMutationEventId('ammo-pack');this.resolveMutationEvent({id,cause:{chainId:id,depth:0},type:'pickup',kind:'ammo',resources:this.mutationResources()});this.#emit();}
+  #build: BuildState = createBuild();
+  #mutationState = new BuildEventResolver();
+  #mutationSequence = 0;
+
+  setBuild(build: BuildState): boolean {
+    if (!isValidBuildState(build)) return false;
+    this.#build = { mutations: [...build.mutations] };
+    this.#emit();
+    return true;
+  }
+
+  get build(): BuildState { return { mutations: [...this.#build.mutations] }; }
+
+  nextMutationEventId(prefix = 'event'): string {
+    return `${prefix.slice(0, 32)}-${this.#mutationSequence++}`;
+  }
+
+  resetMutationEncounter(): void {
+    this.#mutationState.reset();
+    // Keep IDs monotonic: in-flight requests from an old encounter cannot alias.
+  }
+
+  mutationResources(weapon: WeaponId = this.#weaponId): ResourceSnapshot {
+    const ammo = this.#ammo[weapon];
+    return { weapon, health: this.#health, maxHealth: INITIAL_HEALTH, armor: this.#armor,
+      maxArmor: this.#maxArmor, magazine: ammo.magazine, capacity: ammo.capacity,
+      reserve: ammo.reserve === Infinity ? -1 : ammo.reserve, maxReserve: 100_000 };
+  }
+
+  resolveMutationEvent(event: BuildEvent): Omit<BuildResolution, 'state'> {
+    const result = this.#mutationState.resolve(this.#build, event);
+    let changed = false;
+    for (const command of result.commands) {
+      if (command.type !== 'resources' || this.#dead) continue;
+      const ammo = this.#ammo[command.weapon];
+      const beforeHealth=this.#health;this.#health = Math.max(1, Math.min(INITIAL_HEALTH, this.#health + command.healthDelta));if(this.#health>beforeHealth)this.#healListener?.();
+      this.#armor = Math.max(0, Math.min(this.#maxArmor, this.#armor + command.armorDelta));
+      ammo.magazine = Math.max(0, Math.min(ammo.capacity, ammo.magazine + command.magazineDelta));
+      if (ammo.reserve !== Infinity) ammo.reserve = Math.max(0, Math.min(100_000, ammo.reserve + command.reserveDelta));
+      changed = true;
+    }
+    if (changed) this.#emit();
+    return result;
+  }
+
+  getRunResources(): RunResources {
+    return { health: this.#health, armor: this.#armor, credits: this.#credits, grenades: this.#grenades,
+      medkits: this.#medkits, weapon: this.#weaponId,
+      ammo: Object.fromEntries(WEAPON_IDS.map((weapon) => [weapon, {
+        magazine: this.#ammo[weapon].magazine,
+        reserve: this.#ammo[weapon].reserve === Infinity ? -1 : this.#ammo[weapon].reserve,
+      }])) as RunResources['ammo'] };
+  }
+
+  /** Atomic restoration: restore upgrade modifiers first if capacities were upgraded. */
+  restoreRunResources(value: unknown): boolean {
+    if (!isValidRunResources(value) || value.health > INITIAL_HEALTH || value.armor > this.#maxArmor ||
+      value.grenades > MAX_GRENADES || WEAPON_IDS.some((weapon) => value.ammo[weapon].magazine > this.#ammo[weapon].capacity)) return false;
+    this.#supplyClock=0;this.#rocketSupply=0;
+    this.#health = value.health;
+    this.#armor = value.armor;
+    this.#credits = value.credits;
+    this.#grenades = value.grenades;
+    this.#medkits = value.medkits;
+    this.#weaponId = value.weapon;
+    for (const weapon of WEAPON_IDS) {
+      this.#ammo[weapon].magazine = value.ammo[weapon].magazine;
+      this.#ammo[weapon].reserve = value.ammo[weapon].reserve === -1 ? Infinity : value.ammo[weapon].reserve;
+      this.#ammo[weapon].cooldownRemainingMs = 0;
+    }
+    this.#dead = value.health === 0;
+    this.#grenadeCooldownRemainingMs = 0;
+    this.#cancelReload();
+    this.resetMutationEncounter();
+    this.#emit();
+    return true;
+  }
 
   get snapshot(): CombatSnapshot {
     return this.getSnapshot();
@@ -369,8 +460,14 @@ export class CombatSystem {
 
     const weapon = WEAPONS[this.#weaponId];
     const spreadRadians = weapon.spreadRadians * this.#modifiers.spreadMultiplier;
+    const stats = deriveBuildStats(this.#build, this.#weaponId);
+    const mutationShotId = this.nextMutationEventId('shot');
+    const primed=this.#mutationState.isPrimed(this.#weaponId);
+    const resolution = this.resolveMutationEvent({ id: mutationShotId, cause: { chainId: mutationShotId, depth: 0 },
+      type: 'shot', weapon: this.#weaponId, magazineBefore: ammo.magazine });
+    const shotBonus = resolution.commands.reduce((factor, command) => command.type === 'shot-bonus' ? factor * command.damageMultiplier : factor, 1);
     ammo.magazine -= 1;
-    ammo.cooldownRemainingMs = 1_000 / weapon.roundsPerSecond;
+    ammo.cooldownRemainingMs = 1_000 / weapon.roundsPerSecond * stats.shotIntervalMultiplier;
 
     const requests = Array.from({ length: weapon.pellets }, (_, index) => {
       const spreadOffset =
@@ -380,11 +477,12 @@ export class CombatSystem {
             (spreadRadians * index) / (weapon.pellets - 1);
       return Object.freeze({
         weaponId: this.#weaponId,
-        damage: weapon.damage * this.#modifiers.damageMultiplier,
+        mutationShotId,...(primed?{primed:true}:{}),
+        damage: weapon.damage * this.#modifiers.damageMultiplier * stats.projectileDamageMultiplier * shotBonus,
         speed: weapon.projectileSpeed,
         radius: weapon.projectileRadius,
         angle: aimAngle + spreadOffset,
-        penetration: weapon.penetration + this.#modifiers.penetrationBonus,
+        penetration: weapon.penetration + this.#modifiers.penetrationBonus + stats.penetrationBonus,
         splashRadius: weapon.splashRadius,
         knockback: weapon.knockback,
       });
@@ -392,6 +490,11 @@ export class CombatSystem {
 
     this.#emit();
     return Object.freeze(requests);
+  }
+
+  /** Called by the play loop, so empty magazines reload even after Fire lifts. */
+  reloadIfEmpty(): boolean {
+    return this.#ammo[this.#weaponId].magazine === 0 && this.startReload();
   }
 
   startReload(): boolean {
@@ -407,7 +510,7 @@ export class CombatSystem {
     }
 
     this.#reloading = true;
-    this.#reloadDurationMs = weapon.reloadMs * this.#modifiers.reloadMultiplier;
+    this.#reloadDurationMs = weapon.reloadMs * this.#modifiers.reloadMultiplier * deriveBuildStats(this.#build, this.#weaponId).reloadDurationMultiplier;
     this.#reloadRemainingMs = this.#reloadDurationMs;
     this.#emit();
     return true;
@@ -448,6 +551,7 @@ export class CombatSystem {
   applyDamage(amount: number): DamageResult {
     if (!Number.isFinite(amount) || amount <= 0 || this.#dead) return noDamage();
 
+    amount *= deriveBuildStats(this.#build, this.#weaponId).incomingDamageMultiplier;
     const absorbedByArmor = Math.min(this.#armor, amount);
     this.#armor = Math.max(0, this.#armor - absorbedByArmor);
     const healthDamage = Math.min(this.#health, amount - absorbedByArmor);
@@ -474,16 +578,18 @@ export class CombatSystem {
 
     this.#medkits -= 1;
     this.#health = Math.min(INITIAL_HEALTH, this.#health + MEDKIT_HEALING);
+    this.#mutationHeal(MEDKIT_HEALING);
     this.#emit();
     return true;
   }
 
   restoreHealth(amount: number): number {
     const reward = positiveInteger(amount);
-    if (this.#dead || reward === 0 || this.#health >= INITIAL_HEALTH) return 0;
+    if (this.#dead || reward === 0) return 0;
 
     const restored = Math.min(reward, INITIAL_HEALTH - this.#health);
-    this.#health += restored;
+    this.#health += restored;if(restored>0)this.#healListener?.();
+    this.#mutationHeal(reward);
     this.#emit();
     return restored;
   }
@@ -504,15 +610,17 @@ export class CombatSystem {
     if (
       this.#dead ||
       reward === 0 ||
-      ammo.reserve === Number.POSITIVE_INFINITY ||
-      !Number.isSafeInteger(ammo.reserve + reward)
+      (ammo.reserve !== Infinity && !Number.isSafeInteger(ammo.reserve + reward))
     ) {
       return 0;
     }
 
-    ammo.reserve += reward;
+    const added = ammo.reserve === Infinity ? 0 : Math.min(reward, 100_000 - ammo.reserve);
+    if (ammo.reserve !== Infinity) ammo.reserve += added;
+    const id = this.nextMutationEventId('pickup');
+    this.resolveMutationEvent({ id, cause: { chainId: id, depth: 0 }, type: 'pickup', kind: 'ammo', resources: this.mutationResources() });
     this.#emit();
-    return reward;
+    return added;
   }
 
   addGrenades(amount: number): number {
@@ -556,6 +664,7 @@ export class CombatSystem {
   }
 
   reset(): void {
+    this.#supplyClock=0;this.#rocketSupply=0;
     this.#weaponId = INITIAL_WEAPON;
     this.#ammo = createAmmoState();
     this.#reloading = false;
@@ -571,6 +680,8 @@ export class CombatSystem {
     this.#credits = 0;
     this.#wave = 0;
     this.#objective = null;
+    this.#build = createBuild();
+    this.resetMutationEncounter();
     this.#emit();
   }
 
@@ -587,9 +698,16 @@ export class CombatSystem {
         : Math.min(missingRounds, ammo.reserve);
     ammo.magazine += transferred;
     if (ammo.reserve !== Number.POSITIVE_INFINITY) ammo.reserve -= transferred;
+    const id = this.nextMutationEventId('reload');
+    this.resolveMutationEvent({ id, cause: { chainId: id, depth: 0 }, type: 'reload', weapon: this.#weaponId, roundsLoaded: transferred });
     this.#reloading = false;
     this.#reloadDurationMs = 0;
     this.#reloadRemainingMs = 0;
+  }
+
+  #mutationHeal(amount: number): void {
+    const id = this.nextMutationEventId('heal');
+    this.resolveMutationEvent({ id, cause: { chainId: id, depth: 0 }, type: 'heal', amount, resources: this.mutationResources() });
   }
 
   #cancelReload(): void {
