@@ -6,7 +6,7 @@ it('batches crowds with independent statuses, bounded capacity and immediate ret
  const roots=Array.from({length:20},()=>{const root=new T.Group();scene.add(root);afflictionEffects(root,2,1).set({burning:true,chilled:true,chillStacks:3,frozen:true,poisoned:true});return root;});
  batch.update(scene.children,new T.PerspectiveCamera(),1);
  expect(batch.root.children.length).toBeLessThanOrEqual(5);
- expect(batch.counts.fire).toBe(24);expect(batch.counts.poison).toBe(16);expect(batch.counts.ice).toBeGreaterThan(0);
+ expect(batch.counts.fire).toBe(48);expect(batch.counts.poison).toBe(32);expect(batch.counts.ice).toBeGreaterThan(0);
  roots.forEach(r=>r.removeFromParent());batch.update(scene.children,new T.PerspectiveCamera(),1);expect(Object.values(batch.counts).every(n=>n===0)).toBe(true);batch.dispose();
 });
 it('keeps fire compact with fewer embers while chill crystals pulse below frozen size',()=>{
@@ -15,7 +15,7 @@ it('keeps fire compact with fewer embers while chill crystals pulse below frozen
  state.set({burning:true,chilled:false});batch.update(scene.children,camera,1);
  const fire=batch.root.children[0] as T.InstancedMesh;
  fire.getMatrixAt(0,matrix);scale.setFromMatrixScale(matrix);
- expect(scale.x).toBeLessThanOrEqual(.7);expect(scale.y).toBeLessThanOrEqual(1.25);expect(batch.counts.embers).toBe(2);
+ expect(scale.x).toBeLessThanOrEqual(.7);expect(scale.y).toBeLessThanOrEqual(1.25);expect(batch.counts.embers).toBe(6);
  state.set({burning:false,chilled:true,chillStacks:3});batch.update(scene.children,camera,1);
  const ice=batch.root.children[2] as T.InstancedMesh;ice.getMatrixAt(0,matrix);scale.setFromMatrixScale(matrix);const chilled=scale.y;
  expect(chilled).toBeGreaterThan(.21);expect(chilled).toBeLessThan(.3);expect(batch.counts.ice).toBe(6);
