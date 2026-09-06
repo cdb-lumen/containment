@@ -144,7 +144,8 @@ export class AttackEffects {
    if(!acid&&!death)this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x8b9185,.35,.45,new T.Vector3(0,.3,0));
    if(acid||death){
     this.particle(this.decals,EFFECT_LIMITS.decals,new T.Vector3(p.x,.009,p.z),0x263524,death?1.25:.5,16);
-    for(let i=0;i<(death?10:2);i++)this.particle(this.debris,EFFECT_LIMITS.debris,p,i%2?0x4c5541:0x9a9872,death?.025+Math.random()*.025:.075+Math.random()*.08,death?.55+Math.random()*.45:6,new T.Vector3((Math.random()-.5)*3,1+Math.random()*3,(Math.random()-.5)*3),9.8,1.7);
+    const target=e.targetId!==undefined,small=death||target;
+    for(let i=0;i<(death?10:target?4:2);i++)this.particle(this.debris,EFFECT_LIMITS.debris,p,i%2?0x4c5541:0x9a9872,small?.025+Math.random()*.025:.075+Math.random()*.08,death?.55+Math.random()*.45:target?.35+Math.random()*.3:6,new T.Vector3((Math.random()-.5)*3,1+Math.random()*3,(Math.random()-.5)*3),9.8,1.7);
    }
   }
  }

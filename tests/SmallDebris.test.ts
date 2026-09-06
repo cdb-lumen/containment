@@ -14,9 +14,9 @@ it('keeps monster fragments small, varied and short-lived without changing the s
   expect(fx.counts.debris).toBe(EFFECT_LIMITS.debris);expect(debris.count).toBe(EFFECT_LIMITS.debris);fx.clear();expect(debris.count).toBe(0);
  }finally{random.mockRestore();fx.dispose();}
 });
-it('retires target impact fragments quickly but preserves weapon casings',()=>{
+it.each(['hit','acid'] as const)('retires %s target fragments quickly but preserves weapon casings',type=>{
  const scene=new T.Scene(),fx=new AttackEffects(scene);
- fx.event({type:'hit',x:0,y:0,targetId:1,weapon:'pistol',angle:0});
+ fx.event({type,x:0,y:0,targetId:1,weapon:'pistol',angle:0});
  expect(fx.counts.debris).toBe(4);fx.update(.8,camera,[]);expect(fx.counts.debris).toBe(0);
  fx.shot(new T.Vector3(0,1,0),0,'pistol');fx.update(.8,camera,[]);expect(fx.counts.debris).toBe(1);
  fx.dispose();
