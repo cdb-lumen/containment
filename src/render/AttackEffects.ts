@@ -6,39 +6,46 @@ import {electricArc} from './electricArc';
 const UP=new T.Vector3(0,1,0),WHITE=new T.Color(0xffffff);
 type Particle={p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
 type Pulse={p:T.Vector3;color:T.Color;age:number;life:number;radius:number;angle:number;slash:boolean;stable:boolean};
-export const EFFECT_LIMITS={glow:360,smoke:80,debris:80,pulses:24,decals:64,beams:320} as const;
-const vertex=`attribute float effectAlpha;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
-void main(){vUv=uv;vColor=instanceColor;vAlpha=effectAlpha;gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(position,1.0);}`;
-const fragment=`uniform float style;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
+export const EFFECT_LIMITS={glow:360,smoke:80,debris:80,pulses:24,decals:64,beams:320,fire:16} as const;
+const vertex=`attribute float effectFrame; varying float vFrame;attribute float effectAlpha;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
+void main(){vFrame=effectFrame;vUv=uv;vColor=instanceColor;vAlpha=effectAlpha;gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(position,1.0);}`;
+const fragment=`uniform sampler2D map;uniform float inset;uniform float grid;uniform float textured;varying float vFrame;uniform float style;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
 void main(){vec2 p=vUv*2.0-1.0;float d=length(p);float alpha=vAlpha;vec3 color=vColor;
 if(style<0.5){alpha*=pow(max(0.0,1.0-d),1.8);color*=1.0+2.0*pow(max(0.0,1.0-d),5.0);}
 else if(style<1.5){float n=.86+.09*sin(p.x*13.0+p.y*7.0)+.05*sin(p.y*19.0-p.x*4.0);alpha*=(1.0-smoothstep(.15,1.0,d/n))*.48;}
+if(textured>.5){float frame=floor(vFrame);vec2 cell=vec2(mod(frame,grid),grid-1.0-floor(frame/grid));vec4 tex=texture2D(map,(cell+clamp(vUv,inset,1.0-inset))/grid);alpha=vAlpha*tex.a*(style>2.5?.9*smoothstep(.0,.12,vUv.y):.42);color=style>2.5?tex.rgb:vColor*(.6+tex.r*.8);}
 if(alpha<.003)discard;gl_FragColor=vec4(color,alpha);
 #include <tonemapping_fragment>
 #include <colorspace_fragment>
 }`;
-function pool(scene:T.Scene,geometry:T.BufferGeometry,count:number,style:number,additive=false){
+function pool(scene:T.Scene,geometry:T.BufferGeometry,count:number,style:number,additive=false,texture?:T.Texture,grid=1){
+ geometry.setAttribute('effectFrame',new T.InstancedBufferAttribute(new Float32Array(count),1));
  const alpha=new T.InstancedBufferAttribute(new Float32Array(count),1);alpha.setUsage(T.DynamicDrawUsage);geometry.setAttribute('effectAlpha',alpha);
- const material=new T.ShaderMaterial({vertexShader:vertex,fragmentShader:fragment,uniforms:{style:{value:style}},transparent:true,depthWrite:false,side:T.DoubleSide,blending:additive?T.AdditiveBlending:T.NormalBlending});
+ const material=new T.ShaderMaterial({vertexShader:vertex,fragmentShader:fragment,uniforms:{style:{value:style},map:{value:texture??null},grid:{value:grid},inset:{value:grid===5?.5/256:.5/128},textured:{value:texture?1:0}},transparent:true,depthWrite:false,side:T.DoubleSide,blending:additive?T.AdditiveBlending:T.NormalBlending});
  const mesh=new T.InstancedMesh(geometry,material,count);mesh.count=0;mesh.instanceMatrix.setUsage(T.DynamicDrawUsage);mesh.setColorAt(0,WHITE);mesh.frustumCulled=false;scene.add(mesh);return mesh;
 }
 /** Bounded GPU instance pools: no lights or draw call per pellet / particle. */
 export class AttackEffects {
+ private fire:Particle[]=[];private fireMesh:T.InstancedMesh;private textures:T.Texture[]=[];
  private arcs:{start:T.Vector3;end:T.Vector3;age:number;seed:number}[]=[];
  private glow:Particle[]=[];private smoke:Particle[]=[];private debris:Particle[]=[];private decals:Particle[]=[];private pulses:Pulse[]=[];
  private glowMesh:T.InstancedMesh;private smokeMesh:T.InstancedMesh;private debrisMesh:T.InstancedMesh;private decalMesh:T.InstancedMesh;private pulseMesh:T.InstancedMesh;private slashMesh:T.InstancedMesh;private beamMesh:T.InstancedMesh;
  private dummy=new T.Object3D();private forward=new T.Vector3();private previous=new WeakMap<Bullet,T.Vector3>();private trailClock=0;private boonBursts=0;private arcBursts=0;
- constructor(scene:T.Scene){
+ constructor(scene:T.Scene,loader:T.TextureLoader|undefined=typeof document==='undefined'?undefined:new T.TextureLoader()){
+  const texture=(name:string,srgb=false)=>{const t=loader?.load(`${import.meta.env.BASE_URL}assets/vfx/${name}.png`)??new T.Texture();t.minFilter=t.magFilter=T.LinearFilter;t.generateMipmaps=false;t.colorSpace=srgb?T.SRGBColorSpace:T.NoColorSpace;this.textures.push(t);return t;};
+  this.fireMesh=pool(scene,new T.PlaneGeometry(1,1),EFFECT_LIMITS.fire,3,false,texture('Explosion01',true),5);this.fireMesh.name='explosion-fire';
   this.glowMesh=pool(scene,new T.PlaneGeometry(1,1),EFFECT_LIMITS.glow,0,true);
-  this.smokeMesh=pool(scene,new T.PlaneGeometry(1,1),EFFECT_LIMITS.smoke,1);
+  this.smokeMesh=pool(scene,new T.PlaneGeometry(1,1),EFFECT_LIMITS.smoke,1,false,texture('WispySmoke02'),8);
   this.debrisMesh=pool(scene,new T.BoxGeometry(1,1,1),EFFECT_LIMITS.debris,2);
   this.decalMesh=pool(scene,new T.PlaneGeometry(1,1),EFFECT_LIMITS.decals,1);
   this.pulseMesh=pool(scene,new T.RingGeometry(.955,1,48),EFFECT_LIMITS.pulses,2,true);
   this.slashMesh=pool(scene,new T.RingGeometry(.72,1,16,1,-.65,1.3),EFFECT_LIMITS.pulses,2,true);
   this.beamMesh=pool(scene,new T.CylinderGeometry(1,1,1,5),EFFECT_LIMITS.beams,2,true);
+  // Keep the existing pool order stable for renderer diagnostics.
+  scene.remove(this.fireMesh);scene.add(this.fireMesh);
  }
  private particle(list:Particle[],limit:number,p:T.Vector3,color:number,size:number,life:number,v=new T.Vector3(),gravity=0,stretch=1){
-  if(list.length>=limit)list.shift();list.push({p:p.clone(),v,color:new T.Color(color),age:0,life,size,stretch,spin:(Math.random()-.5)*12,rotation:Math.random()*6.28,gravity,ground:false});
+  if(list.length>=limit)list.shift();list.push({p:p.clone(),v,color:new T.Color(color),age:0,life,size,stretch,spin:(Math.random()-.5)*(list===this.smoke?.9:12),rotation:Math.random()*6.28,gravity,ground:false});
  }
  private pulse(p:T.Vector3,color:number,radius:number,life:number,angle=0,slash=false,stable=false){if(this.pulses.length>=EFFECT_LIMITS.pulses)this.pulses.shift();this.pulses.push({p:p.clone(),color:new T.Color(color),radius,life,age:0,angle,slash,stable});}
  shot(p:T.Vector3,angle:number,id:WeaponId){
@@ -88,6 +95,7 @@ export class AttackEffects {
     for(let i=0;i<18;i++){const a=i*2.399;this.particle(this.debris,EFFECT_LIMITS.debris,p,i%3?0x64b7d5:0xb9efff,.10+Math.random()*.08,.65+Math.random()*.3,new T.Vector3(Math.cos(a)*(2+Math.random()*3),1+Math.random()*3,Math.sin(a)*(2+Math.random()*3)),8,2.7);}
     this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x91c4d5,.7,.35,new T.Vector3(0,.25,0));return;
    }
+   if(e.boon==='blast'||e.boon==='overload'){this.event({type:'explosion',x:e.x,y:e.y,radius:e.radius??48});return;}
    const frost=e.boon==='frost',shield=e.boon==='shield'||e.boon==='leech';
    this.pulse(new T.Vector3(p.x,.05,p.z),color,e.radius?e.radius/32:frost?1.3:shield?.65:.8,frost?.45:.3);
    for(let i=0;i<(frost?7:5);i++){const a=i*6.28/7,v=new T.Vector3(Math.cos(a)*.8,shield?1.4:.5,Math.sin(a)*.8);this.particle(this.glow,EFFECT_LIMITS.glow,p,color,frost?.12:.10,.35,v,0);}
@@ -105,13 +113,16 @@ export class AttackEffects {
   const impactColor=acid||death?0x9ebc5e:e.weapon==='plasma'?0x69ddff:0xffc68b;
   if(explosion||(acid&&e.radius)){
    const r=(e.radius??100)/32,color=acid?0x8dd45a:0xffb64e;
-   this.pulse(p,color,r,.36);this.particle(this.glow,EFFECT_LIMITS.glow,p,color,r*1.4,.18);
-   for(let i=0;i<26;i++){const a=Math.random()*6.28,s=1+Math.random()*r*2,v=new T.Vector3(Math.cos(a)*s,Math.random()*4+.5,Math.sin(a)*s);this.particle(this.glow,EFFECT_LIMITS.glow,p,color,.10+Math.random()*.08,.25+Math.random()*.4,v,6);}
-   for(let i=0;i<8;i++)this.particle(this.smoke,EFFECT_LIMITS.smoke,p,acid?0x758b50:0x58625e,.8+Math.random(),1.0+Math.random()*.5,new T.Vector3((Math.random()-.5)*r,1+Math.random(),(Math.random()-.5)*r));
+   this.pulse(p,color,r,.24);this.particle(this.glow,EFFECT_LIMITS.glow,p,acid?color:0xffedbc,r*.65,.065);
+   if(!acid){const center=p.clone(),size=Math.min(5,r*1.5);center.y=size*.38;this.particle(this.fire,EFFECT_LIMITS.fire,center,0xffffff,size,.62,new T.Vector3(0,.65,0));this.fire[this.fire.length-1].spin=0;this.fire[this.fire.length-1].rotation=0;
+    for(let i=0;i<9;i++){const a=i*2.399,s=1.5+Math.random()*r;this.particle(this.debris,EFFECT_LIMITS.debris,p,i%2?0x746c59:0x343a38,.055+Math.random()*.07,3.5,new T.Vector3(Math.cos(a)*s,2+Math.random()*3,Math.sin(a)*s),9.8,1.8);}}
+   for(let i=0;i<16;i++){const a=Math.random()*6.28,s=1+Math.random()*r*2,v=new T.Vector3(Math.cos(a)*s,Math.random()*4+.5,Math.sin(a)*s);this.particle(this.glow,EFFECT_LIMITS.glow,p,color,.10+Math.random()*.08,.25+Math.random()*.4,v,6);}
+   for(let i=0;i<5;i++)this.particle(this.smoke,EFFECT_LIMITS.smoke,p,acid?0x758b50:0x58625e,.65+Math.random()*.5,.85+Math.random()*.4,new T.Vector3((Math.random()-.5)*r,1+Math.random(),(Math.random()-.5)*r));
    this.particle(this.decals,EFFECT_LIMITS.decals,new T.Vector3(p.x,.008,p.z),acid?0x283f20:0x111719,r*1.4,14);
   }else{
+   if(!acid&&!death)for(let i=0;i<3;i++){const a=angle+Math.PI+(Math.random()-.5)*1.1,s=1+Math.random()*2;this.particle(this.debris,EFFECT_LIMITS.debris,p,0x898477,.045,3.5,new T.Vector3(Math.cos(a)*s,1+Math.random()*1.5,Math.sin(a)*s),9.8,1.8);}
    for(let i=0;i<(death?16:acid?7:9);i++){
-    const a=Math.random()*6.28,s=.8+Math.random()*3,v=new T.Vector3(Math.cos(a)*s,Math.random()*2.8,Math.sin(a)*s).addScaledVector(forward,acid?1.5:-1.5);
+    const a=acid||death?Math.random()*6.28:angle+Math.PI+(Math.random()-.5)*1.3,s=.8+Math.random()*3,v=new T.Vector3(Math.cos(a)*s,Math.random()*2.8,Math.sin(a)*s).addScaledVector(forward,acid?1.5:-1.5);
     this.particle(this.glow,EFFECT_LIMITS.glow,p,impactColor,acid?.095:.065,.15+Math.random()*.24,v,7);
    }
    this.particle(this.glow,EFFECT_LIMITS.glow,p,impactColor,acid?.3:.4,.075);
@@ -122,22 +133,23 @@ export class AttackEffects {
    }
   }
  }
- private drawParticles(list:Particle[],mesh:T.InstancedMesh,dt:number,camera:T.Camera,mode:'glow'|'smoke'|'debris'|'decal'){
+ private drawParticles(list:Particle[],mesh:T.InstancedMesh,dt:number,camera:T.Camera,mode:'glow'|'smoke'|'debris'|'decal'|'fire'){
   const alpha=mesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute;let index=0;
   for(const s of list){
    s.age+=dt;if(s.age>=s.life)continue;const t=s.age/s.life;
-   if(!s.ground){s.v.y-=s.gravity*dt;s.p.addScaledVector(s.v,dt);s.rotation+=s.spin*dt;if(mode==='debris'&&s.p.y<.035){s.p.y=.035;s.v.y=Math.abs(s.v.y)*.23;s.v.x*=.65;s.v.z*=.65;if(s.v.length()<.2)s.ground=true;}}
+   if(!s.ground){s.v.y-=s.gravity*dt;s.p.addScaledVector(s.v,dt);s.rotation+=s.spin*dt;if(mode==='debris'&&s.p.y<.035){s.p.y=.035;s.v.y=Math.abs(s.v.y)*.23;s.v.x*=.65;s.v.z*=.65;s.spin*=.55;if(s.v.y<.35&&Math.hypot(s.v.x,s.v.z)<.3){s.ground=true;s.v.set(0,0,0);s.spin=0;}}}
    this.dummy.position.copy(s.p);this.dummy.quaternion.copy(camera.quaternion);
    if(mode==='decal')this.dummy.rotation.set(-Math.PI/2,0,s.rotation);
    else if(mode==='debris')this.dummy.rotation.set(s.rotation,s.rotation*.7,s.rotation*.4);
    else this.dummy.rotateZ(s.rotation);
-   const size=s.size*(mode==='smoke'?1+t*2.5:mode==='glow'?1-t*.4:1);
-   this.dummy.scale.set(size,mode==='debris'?size*.5:size,size*s.stretch);this.dummy.updateMatrix();mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,s.color);alpha.setX(index,mode==='decal'?.75*(1-t*t):mode==='debris'?Math.min(1,(1-t)*4):(1-t)*(mode==='smoke'?Math.min(1,t*10):1));index++;
+   const size=s.size*(mode==='smoke'?1+t*2.5:mode==='glow'?1-t*.4:mode==='fire'?1+t*.25:1);
+   (mesh.geometry.getAttribute('effectFrame') as T.InstancedBufferAttribute).setX(index,Math.min(mode==='fire'?24:63,Math.floor(t*(mode==='fire'?25:64))));
+   this.dummy.scale.set(size,mode==='debris'?size*.5:size,size*s.stretch);this.dummy.updateMatrix();mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,s.color);alpha.setX(index,mode==='decal'?.75*(1-t*t):mode==='debris'?Math.min(1,(1-t)*4):mode==='fire'?Math.min(1,(1-t)*4):(1-t)*(mode==='smoke'?Math.min(1,t*10):1));index++;
   }
   for(let i=list.length-1;i>=0;i--)if(list[i].age>=list[i].life)list.splice(i,1);
   this.finish(mesh,index);
  }
- private finish(mesh:T.InstancedMesh,count:number){mesh.count=count;mesh.instanceMatrix.needsUpdate=true;if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;(mesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute).needsUpdate=true;}
+ private finish(mesh:T.InstancedMesh,count:number){mesh.count=count;(mesh.geometry.getAttribute('effectFrame') as T.InstancedBufferAttribute).needsUpdate=true;mesh.instanceMatrix.needsUpdate=true;if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;(mesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute).needsUpdate=true;}
  update(dt:number,camera:T.Camera,bullets:readonly Bullet[]){
   if(dt<=0)return;
   this.boonBursts=this.arcBursts=0;this.trailClock+=dt;const trail=this.trailClock>.04;if(trail)this.trailClock=0;
@@ -171,15 +183,25 @@ export class AttackEffects {
    }
   }
   this.arcs=this.arcs.filter(a=>a.age<.26);
+  // Short velocity-aligned spark streaks share the existing bounded beam draw.
+  for(const spark of this.glow){
+   if(beam>=EFFECT_LIMITS.beams)break;
+   const speed=spark.v.length();if(speed<2||spark.age+dt>=spark.life)continue;
+   const length=Math.min(.28,speed*.035);
+   this.forward.copy(spark.v).normalize();this.dummy.position.copy(spark.p).addScaledVector(this.forward,-length*.5);
+   this.dummy.quaternion.setFromUnitVectors(UP,this.forward);this.dummy.scale.set(.009,length,.009);this.dummy.updateMatrix();
+   this.beamMesh.setMatrixAt(beam,this.dummy.matrix);this.beamMesh.setColorAt(beam,spark.color);alpha.setX(beam++,(1-spark.age/spark.life)*.55);
+  }
   this.finish(this.beamMesh,beam);
+  this.drawParticles(this.fire,this.fireMesh,dt,camera,'fire');
   this.drawParticles(this.glow,this.glowMesh,dt,camera,'glow');this.drawParticles(this.smoke,this.smokeMesh,dt,camera,'smoke');this.drawParticles(this.debris,this.debrisMesh,dt,camera,'debris');this.drawParticles(this.decals,this.decalMesh,dt,camera,'decal');
   let ring=0,slash=0;for(const pulse of this.pulses){pulse.age+=dt;if(pulse.age>=pulse.life)continue;const t=pulse.age/pulse.life,mesh=pulse.slash?this.slashMesh:this.pulseMesh,index=pulse.slash?slash++:ring++;
    this.dummy.position.copy(pulse.p);this.dummy.rotation.set(-Math.PI/2,0,-pulse.angle);const size=pulse.radius*(pulse.stable?1:pulse.slash?.65+t*.35:.15+t*.85);this.dummy.scale.setScalar(size);this.dummy.updateMatrix();mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,pulse.color);(mesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute).setX(index,(1-t)*.8);
   }
   this.pulses=this.pulses.filter(p=>p.age<p.life);this.finish(this.pulseMesh,ring);this.finish(this.slashMesh,slash);
  }
- clear(){this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
- get counts(){return{glow:this.glow.length,smoke:this.smoke.length,debris:this.debris.length,pulses:this.pulses.length,decals:this.decals.length};}
- private meshes(){return[this.glowMesh,this.smokeMesh,this.debrisMesh,this.decalMesh,this.pulseMesh,this.slashMesh,this.beamMesh];}
- dispose(){for(const m of this.meshes()){m.geometry.dispose();(m.material as T.Material).dispose();m.removeFromParent();}}
+ clear(){this.fire=[];this.trailClock=0;this.boonBursts=this.arcBursts=0;this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
+ get counts(){return{fire:this.fire.length,glow:this.glow.length,smoke:this.smoke.length,debris:this.debris.length,pulses:this.pulses.length,decals:this.decals.length};}
+ private meshes(){return[this.fireMesh,this.glowMesh,this.smokeMesh,this.debrisMesh,this.decalMesh,this.pulseMesh,this.slashMesh,this.beamMesh];}
+ dispose(){for(const t of this.textures)t.dispose();for(const m of this.meshes()){m.geometry.dispose();(m.material as T.Material).dispose();m.removeFromParent();}}
 }

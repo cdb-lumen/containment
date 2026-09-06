@@ -1,0 +1,56 @@
+{
+  "flash": {
+    "changed_bbox": [
+      22,
+      0,
+      1270,
+      720
+    ],
+    "changed_pixels": 5753
+  },
+  "ignition": {
+    "changed_bbox": [
+      17,
+      0,
+      1270,
+      720
+    ],
+    "changed_pixels": 8063
+  },
+  "fireball": {
+    "changed_bbox": [
+      17,
+      0,
+      1270,
+      720
+    ],
+    "changed_pixels": 11075
+  },
+  "smoke": {
+    "changed_bbox": [
+      17,
+      0,
+      1271,
+      720
+    ],
+    "changed_pixels": 9226
+  },
+  "debris": {
+    "changed_bbox": [
+      17,
+      0,
+      1271,
+      720
+    ],
+    "changed_pixels": 8064
+  },
+  "impact": {
+    "changed_bbox": [
+      17,
+      0,
+      1271,
+      720
+    ],
+    "changed_pixels": 24107
+  }
+}
