@@ -29,6 +29,15 @@ describe('cryo review asset contract',()=>{
   const materials=new Set<T.Material>();let triangles=0;pod.traverse(o=>{if(o instanceof T.Mesh){materials.add(o.material);triangles+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;expect(o.geometry.attributes.normal).toBeDefined();expect(o.geometry.attributes.uv).toBeDefined();}});
   expect(materials.size).toBe(9);expect(triangles).toBeLessThan(6500);
  });
+ it('exports sleeping anatomy and visible hands without adding material batches',async()=>{
+  const pod=await asset();const components:string[]=[];
+  pod.traverse(o=>{if(o instanceof T.Mesh)components.push(...(o.userData.occupantComponents??[]));});
+  for(const part of ['Contoured face','Nose bridge','Closed eyelid left','Closed eyelid right','Neck','Left palm','Right palm','Left thumb','Right thumb','Suit collar','Shoulder restraint left','Shoulder restraint right']) expect(components).toContain(part);
+  const skin=pod.getObjectByName('cryo-passenger') as T.Mesh;
+  const bounds=new T.Box3().setFromObject(skin);
+  expect(bounds.max.x-bounds.min.x).toBeGreaterThan(.5);
+  expect(bounds.max.y).toBeGreaterThan(.49);
+ });
  it('batches all pods by material, preserves source and disposes room copies exactly once',async()=>{
   const pod=await asset(),before=new T.Box3().setFromObject(pod),snapshot=JSON.stringify(plan);
   const room=authoredRoom('passenger-vault',plan,pod)!;
