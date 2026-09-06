@@ -2,6 +2,7 @@ import {FramePacer,FrameDiagnostics} from './render/FrameBudget';
 import {familyCount} from './game/roguelike/builds';
 import {boonHint,pathFor} from './game/roguelike/boonPaths';
 import './style.css';
+import {HitConfirmation} from './render/HitConfirmation';
 import {DepthGame,type GameEffect} from './DepthGame';
 import {preloadAssets} from './render/assets';
 import {DepthRenderer} from './render/DepthRenderer';
@@ -32,8 +33,10 @@ try{await preloadAssets(fraction=>{el('asset-progress').style.width=`${fraction*
 let renderer:DepthRenderer;
 try{renderer=new DepthRenderer(el('world') as HTMLCanvasElement);renderer.setQuality('auto');}catch{app.innerHTML='<div class="unsupported"><h1>3D graphics unavailable</h1><p>Open this game in a browser with WebGL 2 enabled.</p><button onclick="location.reload()">Try again</button></div>';throw new Error('WebGL renderer unavailable');}
 let storage:Storage|null=null;try{storage=localStorage;}catch{}
+const marker=document.createElement('div');marker.id='hit-confirmation';marker.hidden=true;marker.setAttribute('aria-hidden','true');app.append(marker);
+const confirmation=new HitConfirmation(marker);for(const event of ['pointermove','pointerdown'] as const)renderer.canvas.addEventListener(event,e=>{if(e.pointerType==='mouse')confirmation.point(e.clientX,e.clientY);});
 const audio=new AudioSystem({music:.38,effects:.8});void AudioSystem.preload();let muted=false;
-const effect=(e:GameEffect)=>{if(e.type==='sync-corpse'){renderer.syncCorpse(e.id!,e.x,e.y);return;}renderer.effect(e);if(e.type==='shot'){const methods={pistol:()=>audio.playPistol(),rifle:()=>audio.playRifle(),shotgun:()=>audio.playShotgun(),plasma:()=>audio.playPlasma(),rocket:()=>audio.playRocket()};methods[e.weapon??'pistol']();}else if(e.type==='corpse')audio.playBodyImpact();else if(e.type==='explosion')audio.playExplosion();else if(e.type==='pickup')audio.playPickup();else if(e.type==='hurt'){el('hurt-flash').classList.remove('flash');void el('hurt-flash').offsetWidth;el('hurt-flash').classList.add('flash');}};
+const effect=(e:GameEffect)=>{if(e.type==='sync-corpse'){renderer.syncCorpse(e.id!,e.x,e.y);return;}renderer.effect(e);if(e.contact){audio.playConfirmedHit(e.contact!=='damage');confirmation.confirm(e.contact);}if(e.type==='shot'){const methods={pistol:()=>audio.playPistol(),rifle:()=>audio.playRifle(),shotgun:()=>audio.playShotgun(),plasma:()=>audio.playPlasma(),rocket:()=>audio.playRocket()};methods[e.weapon??'pistol']();}else if(e.type==='corpse')audio.playBodyImpact();else if(e.type==='explosion')audio.playExplosion();else if(e.type==='pickup')audio.playPickup();else if(e.type==='hurt'){el('hurt-flash').classList.remove('flash');void el('hurt-flash').offsetWidth;el('hurt-flash').classList.add('flash');}};
 const game=new DepthGame(effect,storage);const pause=()=>{if(game.status==='playing'){game.pause();input.reset();audio.pauseAll();}else if(game.status==='paused'&&!document.hidden&&!graphicsLost){game.resume();audio.resumeAll();}syncScreen();};
 game.aimVisible=(x,y)=>renderer.visible(x,y);
 try{await renderer.prepare(game.node);}catch(error){el('overlay').innerHTML='<div class="unsupported"><h1>Graphics interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
@@ -45,7 +48,7 @@ const routeCopy={combat:'Hostiles · boon',elite:'Elite hostiles · rare boon',m
 const depthTotal=()=>runLength(game.expedition.run.version);
 const buildDetails=()=>`<details class="build-details"><summary>Boons · ${game.expedition.build.mutations.length}</summary>${game.expedition.build.mutations.map(id=>`<p><b>${MUTATION_CATALOG[id].name}</b> — ${MUTATION_CATALOG[id].description}</p>`).join('')}<p>Three in a family: Kinetic +12% damage · Cryo longer, stronger chill · Reactor 10% faster reload · Recovery stronger magnet and 6 armor each room.</p></details>`;
 function settings(){return `<div class="settings"><label>Graphics<select id="quality"><option value="auto" ${quality==='auto'?'selected':''}>Automatic</option><option value="high" ${quality==='high'?'selected':''}>High</option><option value="low" ${quality==='low'?'selected':''}>Performance</option></select></label><label>Sound<button id="sound" class="text-button">${muted?'Off':'On'}</button></label><p class="controls-copy"><span class="touch-copy">Left thumb moves. Hold the right control to fire with aim assist; drag it to aim manually. Reload, grenade and heal stay on the right.</span><span class="desktop-copy">WASD to move · mouse to aim and fire<br>1–5 weapons · R reload · G grenade · E heal<br>Hold Space for aim-assisted fire · Esc pause</span></p><p class="controls-copy">Weapon reserves replenish during combat and refill between rooms.</p><a href="${import.meta.env.BASE_URL}audio-credits.html" target="_blank" rel="noopener">Credits ↗</a></div>`;}
-function syncScreen(force=false){const key=`${game.status}:${game.node.id}:${settingsOpen}`;if(!force&&key===screenKey)return;screenKey=key;const status=game.status,isMenu=status==='menu';document.body.dataset.state=status;el('hud').hidden=isMenu;el('signature').hidden=!isMenu;el('shade').classList.toggle('visible',status!=='playing');el('overlay').className=isMenu?'menu-overlay':'modal-overlay';
+function syncScreen(force=false){const key=`${game.status}:${game.node.id}:${settingsOpen}`;if(!force&&key===screenKey)return;screenKey=key;confirmation.clear();const status=game.status,isMenu=status==='menu';document.body.dataset.state=status;el('hud').hidden=isMenu;el('signature').hidden=!isMenu;el('shade').classList.toggle('visible',status!=='playing');el('overlay').className=isMenu?'menu-overlay':'modal-overlay';
  if(status==='playing'){el('overlay').innerHTML='';audio.resumeAll();return;}input.reset();if(status!=='menu')audio.pauseAll();
  let html='';
  if(isMenu)html=`<main class="title-screen"><div class="edition"><i></i> A CONTAINMENT EXPEDITION</div><h1>CONTAINMENT<span>DEPTH</span></h1><p class="premise">Twenty rooms aboard a colony ship.<br>Wake up. Restore the uplink. Warn New Earth.</p><div class="menu-buttons"><button class="primary" id="start">Wake up <span>↗</span></button>${game.canContinue?'<button class="secondary" id="continue">Continue expedition <span>↗</span></button>':''}<button id="settings" class="quiet">${settingsOpen?'Close settings':'Settings & controls'}</button></div>${settingsOpen?settings():''}</main>`;
@@ -69,7 +72,7 @@ renderer.canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();graph
 Object.defineProperty(window,'__containmentPerformance',{get:()=>({...diagnostics.snapshot,quality:renderer.qualityTier,drawCalls:renderer.renderer.info.render.calls,triangles:renderer.renderer.info.render.triangles,geometries:renderer.renderer.info.memory.geometries,textures:renderer.renderer.info.memory.textures,graphicsLost})});
 function frame(now:number){
  requestAnimationFrame(frame);if(document.hidden)return;const elapsed=pacer.sample(now);if(elapsed===null)return;const dt=Math.min(.05,elapsed),started=performance.now();
- game.update(dt*1000,input.read());const updated=performance.now();
+ game.update(dt*1000,input.read());confirmation.update(dt,game.status==='playing');const updated=performance.now();
  if(lastRoom!==game.roomRevision){renderer.loadRoom(game.node);lastRoom=game.roomRevision;}
  if(!graphicsLost)renderer.render(game,dt,game.status==='menu');const rendered=performance.now();
  if(lastStatus!==game.status){lastStatus=game.status;syncScreen();}hudTime+=dt;
