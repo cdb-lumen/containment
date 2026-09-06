@@ -1,130 +1,39 @@
-# Alien Shooter: Containment
+# Alien Shooter: Containment 2.0
 
-An original, mobile-ready browser survival shooter built with **Phaser 4**, **TypeScript**, and **Vite**. Hold a failing containment facility against escalating alien waves, assemble upgrades between assaults, and survive the queen encounter.
+Containment / Depth is version 2.0 of [Alien Shooter: Containment](https://github.com/cdb-lumen/alien-shooter-containment), replacing the 2D game with the supplied Three.js action roguelike. Descend through twelve rooms with branching routes, weapon upgrades and a Queen encounter. Version 1 remains in Git history.
 
-[Play the latest GitHub Pages build](https://cdb-lumen.github.io/alien-shooter-containment/)
+## Play
 
-> This is an unofficial fan-made survival-shooter tribute. Its source code, procedural artwork, interface, effects, and synthesized audio are original and do not use assets from the *Alien Shooter* series.
+[GitHub Pages](https://cdb-lumen.github.io/alien-shooter-containment/) updates when an approved change lands on `main`. An open PR does not replace the live game.
 
-## Features
+- Desktop: WASD / arrows move; mouse aims and fires. Hold Space for aim-assisted fire. R reloads, G throws a grenade, E uses a medkit, 1–5 select weapons, Escape pauses.
+- Touch: left movement stick and right fire control. Hold fire for aim assist; drag to aim manually. Reload, grenade and healing are right-thumb actions.
+- Progress saves between rooms, including unresolved rewards. Death deletes the checkpoint. Version 1 saves are not migrated.
 
-- Deterministic combat, scoring, upgrades, wave planning, and restart behavior
-- Multiple enemy roles, hazards, pickups, facility breaches, and a queen boss encounter
-- Pistol, rifle, shotgun, rocket/grenade, reload, armor, and medkit systems
-- Original pixel characters, procedurally drawn environment, effects, and UI—no downloaded art assets
-- Gesture-unlocked Web Audio music and sound synthesis—no downloaded audio assets
-- Desktop mouse/keyboard and landscape touch controls
-- Pause menu with live volume, quality, shake, and flash settings
-- Adaptive one-way quality degradation with explicit High/Medium/Low overrides
-- Hard runtime caps and pooled effects for bounded long-session performance
-- Local best-score and settings persistence
+## Development
 
-## Controls
+Use Node.js 22.12+ with npm. CI uses Node.js 24.
 
-### Desktop
-
-| Action | Control |
-| --- | --- |
-| Move | `WASD` or arrow keys |
-| Aim | Mouse |
-| Fire | Hold primary mouse button |
-| Reload | `R` |
-| Grenade | `G` |
-| Medkit | `Q` |
-| Interact | `E` |
-| Switch weapon | `1`–`5` |
-| Pause | `Esc` |
-
-### Touch
-
-Play in landscape orientation. The left stick moves; the right stick aims and fires. Dedicated 48px-or-larger buttons pause, throw a grenade, use a medkit, and switch weapons.
-
-## Accessibility and performance
-
-- Keyboard-operable pause controls with focus trapping and focus restoration
-- Portrait deployment blocking and automatic simulation suspension on rotation
-- Independent reduced-camera-shake and reduced-bright-flash settings
-- Live master, music, and effects volume controls
-- Adaptive High/Medium/Low presentation profiles
-- Capped enemies, projectiles, lights, particles, decals, remains, and shell casings
-
-## Original art and animation
-
-All character art was created and finished for this project; no original *Alien Shooter* assets are included. Seven local sprite sheets cover the marine, five standard alien roles, and the queen, with procedural character rendering retained as a safe fallback when a sheet cannot load.
-
-Animation is a deterministic presentation layer kept separate from gameplay simulation and physics, so visual frame changes, recoil, hit feedback, and reduced-motion behavior do not alter combat outcomes. `npm run verify` validates the sprite sheets and runs visual-behavior tests alongside lint, unit, build, and browser checks.
-
-Characters use crisp nearest-neighbor scaling, stable ground pivots, readable silhouettes, and bounded flashes. Controls remain keyboard/touch accessible, reduced-motion and reduced-flash preferences are supported, and presentation quality can adapt without changing gameplay.
-
-Defeated characters leave family-specific bodies using the authored death frames, while a local 12-frame blood sheet supplies matte human, alien, and acid splatters. Corpses and blood are static presentation objects with no collision or gameplay authority. They share the existing effects budget—up to 32 bodies and 128 decals on High, with immediate Medium/Low trimming—and rotate through bounded pools rather than accumulating indefinitely. Missing authored textures fall back to procedural remains and splatters; player and queen deaths retain exactly one body owner.
-
-## Local development
-
-Requirements: a current Node.js release supported by Vite 8 and npm.
-
-```bash
+```sh
 npm ci
-npx playwright install chromium
 npm run dev
-```
-
-Open the URL printed by Vite. To force the deterministic Canvas renderer used by browser automation, append `?renderer=canvas`.
-
-## Verification
-
-```bash
+npm test
+npm run build
+npx playwright install chromium
+npm run test:smoke
 npm run verify
 ```
 
-The canonical gate runs:
+The production output is `dist/`. Relative bundle and runtime asset URLs support both root hosting and the repository's GitHub Pages subpath. PR verification and the main-only Pages deployment run the same test, build and browser smoke gate.
 
-1. Strict validation of seven character sheets and the 12-frame blood-decal sheet
-2. ESLint
-3. Deterministic Vitest unit coverage
-4. TypeScript checking and a production Vite build
-5. Playwright behavior and bounded-stress tests in desktop and iPhone-sized Chromium
+The browser smoke serves the production build beneath `/alien-shooter-containment/`, checks local asset responses, enters gameplay, fires, switches weapons, pauses and resumes, and checks a touch viewport. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation. Set `SMOKE_SCREENSHOTS=1` to refresh committed evidence in `docs/pr-screenshots/`.
 
-Useful focused commands:
+## Source and credits
 
-```bash
-npm test
-npm run test:e2e
-npm run build
-```
+Imported from `Containment-Depth-2/source/` in the uploaded source archive. The prebuilt game and Mac launcher are not used. No standalone hosting identity is retained.
 
-Browser tests verify observable behavior: deployment, pause/settings, quality transitions, restart isolation, accessible menu/results actions, touch actions, portrait inertness and suspension, browser errors, sustained input, the 150-enemy runtime cap, authoritative corpse/blood saturation and retirement, and the built artifact mounted at the GitHub Pages repository subpath. Unit tests deterministically cover projectile/effect pools and retirement limits that normal weapon cooldowns cannot saturate in real time.
+Original game and reusable domain systems: cdb-lumen / Alien Shooter: Containment. Code remains MIT licensed, see `LICENSE`. Three.js is MIT licensed, see `THIRD_PARTY/Three-LICENSE.txt`.
 
-## Architecture
+Adapted Unvanquished models, animations and embedded textures have separate Creative Commons licenses. Preserve [model credits](public/asset-credits.html) and the asset manifests. Environment materials, sound and music attribution are in [audio and environment credits](public/audio-credits.html) and `public/assets/audio/manifest.json`. Barlow fonts by Jeremy Tribby use the SIL Open Font License and load through Google Fonts. Asset licenses are not replaced by the code's MIT license.
 
-Selected systems:
-
-```text
-src/game/
-├── audio/         synthesized Web Audio lifecycle
-├── combat/        weapons, damage, armor, ammo, projectiles
-├── diagnostics/   development-only automation facade
-├── effects/       capped effects and adaptive quality
-├── enemies/       enemy and boss simulation/view layers
-├── hud/           status, radar, and objective presentation
-├── input/         desktop and touch adapters
-├── persistence/   versioned local settings and scores
-├── pickups/       drop simulation and presentation
-├── player/        player movement and view
-├── pools/         bounded reusable runtime objects
-├── run/           run lifecycle and results
-├── scenes/        Phaser boot, menu, game, pause, results
-├── scoring/       score and combo rules
-├── upgrades/      armory offers and modifiers
-├── waves/         horde runtime and encounter direction
-└── world/         procedural facility generation
-```
-
-Simulation-heavy systems are separated from Phaser views and tested in Node. Browser-only lifecycle and interaction behavior is covered with Playwright.
-
-## Deployment
-
-Pull requests run the full verification workflow. Merges to `main` build `dist/` and deploy it through the official GitHub Pages artifact workflow. Vite uses relative asset paths so the build works under the repository subpath.
-
-## License
-
-Original code and assets in this repository are available under the [MIT License](LICENSE). Third-party dependencies retain their respective licenses. *Alien Shooter* is a trademark of its respective owner; this project is not affiliated with or endorsed by that owner.
+Automatic quality reduces effects and resolution on coarse-pointer devices and adapts under rendering load. Browser emulation does not certify physical-device Safari performance.

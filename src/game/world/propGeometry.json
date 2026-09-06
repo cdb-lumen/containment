@@ -1,0 +1,122 @@
+{
+  "console": {
+    "key": "facility-console",
+    "width": 80,
+    "height": 48,
+    "bounds": [
+      16,
+      3,
+      68,
+      45
+    ],
+    "solid": true
+  },
+  "crate": {
+    "key": "facility-crate",
+    "width": 72,
+    "height": 72,
+    "bounds": [
+      11,
+      7,
+      67,
+      64
+    ],
+    "solid": true
+  },
+  "barrel": {
+    "key": "facility-barrel",
+    "width": 48,
+    "height": 48,
+    "bounds": [
+      10,
+      3,
+      37,
+      45
+    ],
+    "solid": true
+  },
+  "generator": {
+    "key": "facility-generator",
+    "width": 120,
+    "height": 80,
+    "bounds": [
+      19,
+      5,
+      101,
+      75
+    ],
+    "solid": true
+  },
+  "teleporter": {
+    "key": "facility-teleporter",
+    "width": 120,
+    "height": 120,
+    "bounds": [
+      7,
+      10,
+      113,
+      110
+    ],
+    "solid": false
+  },
+  "specimen": {
+    "key": "facility-specimen",
+    "width": 96,
+    "height": 128,
+    "bounds": [
+      13,
+      7,
+      82,
+      120
+    ],
+    "solid": true
+  },
+  "coolant": {
+    "key": "facility-coolant",
+    "width": 120,
+    "height": 80,
+    "bounds": [
+      11,
+      5,
+      108,
+      75
+    ],
+    "solid": true
+  },
+  "wreck": {
+    "key": "facility-wreck",
+    "width": 80,
+    "height": 64,
+    "bounds": [
+      11,
+      4,
+      69,
+      60
+    ],
+    "solid": true
+  },
+  "armory": {
+    "key": "facility-armory",
+    "width": 80,
+    "height": 80,
+    "bounds": [
+      8,
+      5,
+      71,
+      75
+    ],
+    "solid": true
+  },
+  "turret": {
+    "key": "facility-turret",
+    "width": 80,
+    "height": 80,
+    "bounds": [
+      5,
+      12,
+      75,
+      68
+    ],
+    "solid": true
+  }
+}

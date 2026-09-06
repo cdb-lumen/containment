@@ -1,0 +1,36 @@
+{
+  "marine": {
+    "meshes": 22,
+    "skeletons": 1
+  },
+  "actorFrame": {
+    "median": 1.396,
+    "p95": 2.882,
+    "max": 18.889
+  },
+  "spawn": {
+    "median": 2.064,
+    "p95": 2.596,
+    "max": 2.969
+  },
+  "pooledSpawn": {
+    "median": 0.029,
+    "p95": 0.089,
+    "max": 0.095
+  },
+  "earlyBoon": {
+    "median": 0.008,
+    "p95": 0.075,
+    "max": 1.901
+  },
+  "lateBoon": {
+    "median": 0.005,
+    "p95": 0.012,
+    "max": 0.031
+  },
+  "navigation": {
+    "median": 0.143,
+    "p95": 0.394,
+    "max": 58.823
+  }
+}

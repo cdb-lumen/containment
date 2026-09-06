@@ -1,0 +1,90 @@
+{
+  "armor_chest": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_wrist.R": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_wrist.L": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_shin.L": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_knee.L": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_shoe.L": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_knee.R": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_shoe.R": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_shin.R": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_thigh.L": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_thigh.R": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_groin": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_shoulder.R": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_shoulder.L": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "armor_neck": {
+    "diffuse": "armor_medium.png",
+    "normal": "armor_n.png"
+  },
+  "body": {
+    "diffuse": "base.png",
+    "normal": "base_n.png"
+  },
+  "eye.L": {
+    "diffuse": "head.jpg",
+    "normal": "head_n.jpg"
+  },
+  "eye.R": {
+    "diffuse": "head.jpg",
+    "normal": "head_n.jpg"
+  },
+  "head": {
+    "diffuse": "head.jpg",
+    "normal": "head_n.jpg"
+  },
+  "helmet": {
+    "diffuse": "helmet_medium.png",
+    "normal": "helmet_n.png"
+  },
+  "teeth_lower": {
+    "diffuse": "head.jpg",
+    "normal": "head_n.jpg"
+  },
+  "teeth_upper": {
+    "diffuse": "head.jpg",
+    "normal": "head_n.jpg"
+  }
+}

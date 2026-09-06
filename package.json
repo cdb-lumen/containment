@@ -1,41 +1,27 @@
 {
-  "name": "alien-shooter-containment",
-  "version": "0.1.0",
-  "description": "An original browser survival shooter built with Phaser, TypeScript, and procedural audiovisuals.",
+  "name": "containment-depth",
+  "version": "2.0.0",
   "private": true,
-  "license": "MIT",
-  "homepage": "https://cdb-lumen.github.io/alien-shooter-containment/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cdb-lumen/alien-shooter-containment.git"
-  },
-  "keywords": [
-    "phaser",
-    "typescript",
-    "browser-game",
-    "survival-shooter"
-  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "preview": "vite preview",
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
-    "test:e2e": "npm run build && playwright test",
-    "lint": "eslint .",
-    "validate:assets": "node scripts/validate-character-assets.mjs",
-    "verify": "npm run validate:assets && npm run lint && npm run test && npm run test:e2e"
+    "test:smoke": "node scripts/smoke.mjs",
+    "verify": "npm test && npm run build && npm run test:smoke"
   },
   "dependencies": {
-    "phaser": "4.2.1"
+    "three": "0.185.0"
   },
   "devDependencies": {
-    "@eslint/js": "10.0.1",
-    "@playwright/test": "1.61.1",
-    "eslint": "10.6.0",
+    "@types/node": "^24.13.3",
+    "@types/three": "^0.183.0",
+    "playwright": "1.58.2",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.63.0",
     "vite": "8.1.4",
     "vitest": "4.1.10"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
