@@ -46,6 +46,11 @@ class Fabricator{
  readonly body=this.mat(0x53646b,.1,.83);readonly skin=this.mat(0xb5a48e,.1,.77);
  private mat(color:number,metalness:number,roughness:number,emissive=0,emissiveIntensity=0){const m=new T.MeshStandardMaterial({color,metalness,roughness,emissive,emissiveIntensity});m.userData.actorMaterial=true;return m;}
  add(g:T.BufferGeometry,m:T.Material,position=new T.Vector3(),rotation=new T.Euler(),scale=new T.Vector3(1,1,1)){
+  // Capture local origins before material batching erases individual fixtures.
+  if(m instanceof T.MeshStandardMaterial&&m.emissiveIntensity>=.5&&m.emissive.getHex()!==0&&position.y>=.65){
+   const fixtures=this.root.userData.lightFixtures??=[];
+   if(fixtures.length<256)fixtures.push({x:position.x,y:position.y,z:position.z,color:m.emissive.getHex()});
+  }
   const matrix=new T.Matrix4().compose(position,new T.Quaternion().setFromEuler(rotation),scale),flat=g.index?g.toNonIndexed():g.clone();g.dispose();flat.applyMatrix4(matrix);if(m===this.deck){const p=flat.getAttribute('position'),uv=flat.getAttribute('uv');for(let i=0;i<p.count;i++)uv.setXY(i,p.getX(i)/8,p.getZ(i)/8);}const parts=this.parts.get(m)??[];parts.push(flat);this.parts.set(m,parts);
  }
  box(x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material,r=.04,angle=0){this.add(r?new RoundedBoxGeometry(w,h,d,1,Math.min(r,w/3,h/3,d/3)):new T.BoxGeometry(w,h,d),m,v(x,y,z),new T.Euler(0,angle,0));}
@@ -61,7 +66,7 @@ class Fabricator{
   const material=new T.MeshStandardMaterial({map:texture,emissiveMap:texture,emissive:0xffffff,emissiveIntensity:.25,roughness:.7});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
   this.add(new T.PlaneGeometry(width-.1,.7),material,v(x,y+.052,z),new T.Euler(-Math.PI/2,0,0));
  }
- finish(){for(const [material,parts]of this.parts){const geometry=mergeGeometries(parts,false);parts.forEach(g=>g.dispose());if(geometry){const mesh=new T.Mesh(geometry,material);mesh.castShadow=true;mesh.receiveShadow=true;this.root.add(mesh);}}
+ finish(){for(const [material,parts]of this.parts){const geometry=mergeGeometries(parts,false);parts.forEach(g=>g.dispose());if(geometry){const mesh=new T.Mesh(geometry,material);mesh.userData.bakedEnvironment=true;mesh.castShadow=true;mesh.receiveShadow=true;this.root.add(mesh);}}
   // Dispose palette entries unused by this room as well.
   const used=new Set(this.parts.keys());for(const value of Object.values(this))if(value instanceof T.Material&&!used.has(value))value.dispose();this.parts.clear();return this.root;
  }
