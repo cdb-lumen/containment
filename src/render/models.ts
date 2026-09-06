@@ -39,12 +39,12 @@ export function alien(kind:string,elite=false):ActorModel{
  const color=new T.Color(kind==='queen'?0xffd3bb:elite?0xffe2b5:0xffffff);for(const m of r.materials)m.color.multiply(color);
  let flash=0,previous:number|undefined,exposed=false,dead=false,status:AfflictionStatus=NO_AFFLICTION;
  let effects:ReturnType<typeof afflictionEffects>|undefined;
- return{root:r.root,body:r.body,limbs:[],height:r.height,attack(){if(!dead&&!status.frozen)r.attack();},freeze(){dead=true;status=NO_AFFLICTION;effects?.reset();r.freeze();},stop:r.stop,prepare(){r.action('run');r.action('attack');},reset(){r.reset();flash=0;previous=undefined;exposed=dead=false;status=NO_AFFLICTION;effects?.reset();for(const m of r.materials)m.emissiveIntensity=0;},hit(strength=1){flash=strength;},setExposed(v){exposed=v;},setAffliction(v){
+ return{root:r.root,body:r.body,limbs:[],height:r.height,attack(){if(!dead&&!status.frozen)r.attack();},freeze(){dead=true;status=NO_AFFLICTION;effects?.reset();r.freeze();},stop:r.stop,prepare(){r.action('run');r.action('attack');},reset(){r.reset();flash=0;previous=undefined;exposed=dead=false;status=NO_AFFLICTION;effects?.reset();for(const m of r.materials)m.emissiveIntensity=0;},hit(strength=1){flash=Math.max(0,Math.min(1,strength));},setExposed(v){exposed=v;},setAffliction(v){
   if(dead)return;status=v;
   if(!effects&&(v.chilled||v.burning||v.poisoned||v.frozen))effects=afflictionEffects(r.root,def.span*(elite?1.12:1),r.height);
   effects?.set(v);r.mixer.timeScale=v.frozen?0:1;
  },
- animate(time,moving,aim){const dt=previous===undefined?0:Math.max(0,Math.min(.05,time-previous));previous=time;flash=Math.max(0,flash-dt*9);r.root.rotation.y=Math.PI/2-aim;r.step(time,moving);effects?.animate(time);for(const m of r.materials){m.emissive.setHex(status.frozen?0x79ddff:exposed?0x42602b:0xffdfb0);m.emissiveIntensity=flash*.85+(status.frozen?.12:exposed?.22:0);}}};
+ animate(time,moving,aim){const dt=previous===undefined?0:Math.max(0,Math.min(.05,time-previous));previous=time;flash=Math.max(0,flash-dt*9);r.root.rotation.y=Math.PI/2-aim;r.step(time,moving);effects?.animate(time);for(const m of r.materials){m.emissive.setHex(status.frozen?0x79ddff:exposed?0x42602b:0xffdfb0);m.emissiveIntensity=flash*.1+(status.frozen?.12:exposed?.22:0);}}};
 }
 export function marine():ActorModel{
  const r=rig('marine',2.05,true),weapon=new T.Group();r.root.name='marine';r.root.add(weapon);
