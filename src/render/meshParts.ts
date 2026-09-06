@@ -55,5 +55,5 @@ export function ring(parent:T.Object3D,x:number,y:number,z:number,r:number,t:num
 export function disposeModel(root:T.Object3D){
  const shared=new Set(geometries.values()),disposed=new Set<T.BufferGeometry|T.Material|T.Skeleton>();
  const dispose=(resource:T.BufferGeometry|T.Material|T.Skeleton)=>{if(!disposed.has(resource)){disposed.add(resource);resource.dispose();}};
- root.traverse(object=>{if(object instanceof T.Mesh){if(!shared.has(object.geometry)&&!object.geometry.userData.sharedAsset)dispose(object.geometry);const materials=Array.isArray(object.material)?object.material:[object.material];for(const m of materials)if(m.userData.actorMaterial)dispose(m);if(object instanceof T.SkinnedMesh)dispose(object.skeleton);}});root.removeFromParent();
+ root.traverse(object=>{if(object instanceof T.Mesh||object instanceof T.LineSegments){if(!shared.has(object.geometry)&&!object.geometry.userData.sharedAsset)dispose(object.geometry);const materials=Array.isArray(object.material)?object.material:[object.material];for(const m of materials)if(m.userData.actorMaterial)dispose(m);if(object instanceof T.SkinnedMesh)dispose(object.skeleton);}});root.removeFromParent();
 }
