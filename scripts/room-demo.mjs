@@ -76,7 +76,7 @@ async function record(options) {
  const errors=[],frames=[],encoders=new Set();
  await mkdir(out,{recursive:true});
  const name=`${options.room}-${options.viewportName}${options.provisional?'-provisional':''}`,mp4=join(out,name+'.mp4'),manifestPath=join(out,name+'.json');
- const manifest={schema:1,name,root,options,command:process.argv,pid:process.pid,startedAt:new Date().toISOString(),state:'starting',evidenceClass:'controlled-live-gameplay',staging:'Actual DepthGame.update and DepthRenderer with native gameplay camera/composer, seeded legal midpoint on a verified spawn-to-exit route. Three stationary high-health brutes, disabled enemy attacks and inactive encounter director. Normal move, aim, fire and reload commands, no fabricated effect events. No campaign progression or DOM HUD. Fixed-step software WebGL capture does not measure target-device FPS.',errors,frames,pixelReview:'pending; inspect decoded samples'};
+ const manifest={schema:1,name,root,options,command:process.argv,pid:process.pid,startedAt:new Date().toISOString(),state:'starting',evidenceClass:'controlled-live-gameplay',staging:'Actual DepthGame.update and DepthRenderer with native gameplay camera/composer, seeded legal midpoint on a verified spawn-to-exit route. Three stationary high-health brutes with zero-damage attacks and inactive encounter director. Normal move, aim, fire and reload commands, no fabricated effect events. No campaign progression or DOM HUD. Fixed-step software WebGL capture does not measure target-device FPS.',errors,frames,pixelReview:'pending; inspect decoded samples'};
  const save=()=>writeFile(manifestPath,JSON.stringify(manifest,null,2)+'\n');
  const cleanup=async()=>{for(const child of encoders){if(child.exitCode===null)child.kill('SIGKILL');}await browser?.close();await server?.close();if(temp)await rm(temp,{recursive:true,force:true});};
  const signal=()=>{if(stopping)return;stopping=true;errors.push('Interrupted by signal');manifest.state='interrupted';void save().finally(()=>cleanup()).finally(()=>process.exit(130));};
@@ -115,7 +115,7 @@ window.demo={
   const fixture=stageEvidenceGame(node,e=>{events.push({...e,frame:window.demo.frameIndex??-1});renderer.effect(e);});game=fixture.game;
   game.enemies=new EnemySystem({balance:{health:100,damage:0,speed:0,eliteHealth:1,eliteDamage:1,specials:false},canMove:()=>false,canAttack:()=>false});
   for(const p of fixture.staged){const result=game.enemies.spawn('brute',p.x,p.y,false);if(!result.spawned)throw Error('Controlled enemy spawn failed');}
-  initialHealth=game.enemies.snapshot.enemies.reduce((sum,e)=>sum+e.health,0);
+  initialHealth=game.enemies.snapshot.enemies.reduce((sum,e)=>sum+e.health+e.armor,0);
   index=Math.floor(route.length/2)+1;game.aimVisible=(x,y)=>renderer.visible(x,y);
   await renderer.prepare(game.node);renderer.resize();renderer.render(game,0,false);nativeZoom=renderer.camera.zoom;
   if(!renderer.camera.isOrthographicCamera)throw Error('Expected native orthographic camera');
@@ -139,7 +139,7 @@ window.demo={
   if(glError||gl.isContextLost()||!renderer.renderer.info.render.calls)throw Error('Invalid WebGL frame '+glError);
   return {frame,elapsed:game.elapsed,player:point(game.player),playerPixel:project(game.player.x,game.player.y),enemies:enemies.map(e=>({...point(e),id:e.id,health:e.health,armor:e.armor})),bullets:game.bullets.length,travel,legalChecks,drawCalls:renderer.renderer.info.render.calls,triangles:renderer.renderer.info.render.triangles,webglError:glError,camera:{zoom:nativeZoom,left:renderer.camera.left,right:renderer.camera.right,top:renderer.camera.top,bottom:renderer.camera.bottom,position:renderer.camera.position.toArray()}};
  },
- result(){return {events,travel,legalChecks,damage:initialHealth-game.enemies.snapshot.enemies.reduce((sum,e)=>sum+e.health,0),elapsed:game.elapsed,activeEnemies:game.enemies.activeCount};}
+ result(){return {events,travel,legalChecks,damage:initialHealth-game.enemies.snapshot.enemies.reduce((sum,e)=>sum+e.health+e.armor,0),elapsed:game.elapsed,activeEnemies:game.enemies.activeCount};}
 };
 `);
   browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
