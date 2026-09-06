@@ -1,0 +1,72 @@
+{
+  "port": 41789,
+  "samples": [
+    {
+      "age": 0,
+      "counts": {
+        "fire": 0,
+        "glow": 0,
+        "smoke": 0,
+        "debris": 0,
+        "pulses": 0,
+        "decals": 0
+      }
+    },
+    {
+      "age": 0.025,
+      "counts": {
+        "fire": 1,
+        "glow": 17,
+        "smoke": 5,
+        "debris": 9,
+        "pulses": 1,
+        "decals": 1
+      }
+    },
+    {
+      "age": 0.12,
+      "counts": {
+        "fire": 1,
+        "glow": 16,
+        "smoke": 5,
+        "debris": 9,
+        "pulses": 1,
+        "decals": 1
+      }
+    },
+    {
+      "age": 0.3,
+      "counts": {
+        "fire": 1,
+        "glow": 14,
+        "smoke": 5,
+        "debris": 9,
+        "pulses": 0,
+        "decals": 1
+      }
+    },
+    {
+      "age": 0.75,
+      "counts": {
+        "fire": 0,
+        "glow": 0,
+        "smoke": 5,
+        "debris": 9,
+        "pulses": 0,
+        "decals": 1
+      }
+    },
+    {
+      "age": 1.5,
+      "counts": {
+        "fire": 0,
+        "glow": 0,
+        "smoke": 0,
+        "debris": 9,
+        "pulses": 0,
+        "decals": 1
+      }
+    }
+  ],
+  "errors": []
+}
