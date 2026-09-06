@@ -1,10 +1,10 @@
 {
-  "sourceSha": "cf6d3450bbae50f36c87683eb97ce7ab30e96254",
+  "sourceSha": "4df52ce0ced690308b3afad15ab57ecc764af969",
   "verified_clip_count": 3,
   "debris": {
     "frames": 120,
     "unique_actor_frames": 120,
-    "motion_max": 4.895078125,
+    "motion_max": 19.004765625,
     "kills": 1,
     "hits": 6
   },
