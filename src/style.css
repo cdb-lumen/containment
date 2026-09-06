@@ -21,6 +21,12 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 @media(max-width:700px){.choice-card{padding-top:29px}.card-number>span{display:block;position:absolute;left:41px;top:-19px;white-space:nowrap;font-size:8px;padding-top:0}#build-strip{max-width:88vw}.panel{margin:auto 0}}
 @media(min-width:701px){.panel{max-height:94dvh;overflow:auto;touch-action:pan-y}}
 
+/* Local backplates keep bright cryo floors from washing out the HUD.
+   Spread adds a small gutter without moving meters or touch controls. */
+:root{--hud-backplate:#081014f2}
+.vitals,.room-label,.weapon-hud,#run-stock,.desktop-hint{background:var(--hud-backplate);box-shadow:0 0 0 6px var(--hud-backplate);border-radius:2px}
+.vitals{filter:none}
+
 /* Story is non-blocking; only optional dialogue can be dismissed. */
 #story-hud{position:fixed;top:142px;left:max(24px,env(safe-area-inset-left));width:min(360px,calc(100vw - 48px));font-size:12px;line-height:1.4;pointer-events:none;text-shadow:0 1px 3px #000;background:#081014db;padding:10px 12px;border-left:2px solid var(--cyan)}
 #story-hud p{margin:0}#story-status{color:var(--cyan);font-size:10px;letter-spacing:.03em}#room-objective{margin-top:6px!important;color:var(--cream)}#story-presentation{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--muted)}#skip-story{pointer-events:auto;flex-shrink:0;min-width:44px;min-height:44px;border:1px solid var(--line);background:#132329;color:var(--cream)}

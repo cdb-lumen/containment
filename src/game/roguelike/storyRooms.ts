@@ -1,8 +1,8 @@
 /** Stable renderer/gameplay contract. Campaign order never depends on the seed. */
 export type RoomEnvironment = 'cryogenics'|'habitation'|'security'|'cargo'|'communications'|'engineering'|'maintenance'|'infested'|'containment'|'reactor';
 const route = [
- {templateId:'awakening-bay',name:'Awakening bay',environment:'cryogenics',objective:'Mercenary awake. Take your weapon and restore communications.',story:'AI: Purge the infestation. You and the passengers will survive.'},
- {templateId:'passenger-vault',name:'Passenger vault',environment:'cryogenics',objective:'PASSENGERS ALIVE. Clear the occupied pod rows.'},
+ {templateId:'awakening-bay',name:'Awakening bay',environment:'cryogenics',objective:'Restore communications.',story:'AI: Purge the infestation.'},
+ {templateId:'passenger-vault',name:'Passenger vault',environment:'cryogenics',objective:'Clear the occupied pod rows.'},
  {templateId:'residential-gallery',name:'Residential gallery',environment:'habitation',objective:'Fight through the residential doorways.',story:'Packed belongings. Arrival labels for New Earth.'},
  {templateId:'communal-atrium',name:'Communal atrium',environment:'habitation',objective:'Clear the atrium and reach security.',story:'WELCOME TO NEW EARTH. The display still runs.'},
  {templateId:'crew-checkpoint',name:'Crew checkpoint',environment:'security',objective:'Break through the fortified checkpoint.',story:'The crew held this line. Their weapons remain.'},
@@ -27,3 +27,12 @@ export type StoryRoom = Readonly<{templateId:StoryTemplateId;name:string;environ
 export const ROOM_STORY_ROUTE:readonly StoryRoom[] = Object.freeze(route.map(room=>Object.freeze({...room})));
 export const storyRoomFor = (templateId:string):StoryRoom|undefined=>ROOM_STORY_ROUTE.find(room=>room.templateId===templateId);
 export const SACRIFICE_ENDING = 'SHIP DESTROYED / ALL ABOARD LOST / NEW EARTH WARNED';
+
+/** Compact presentation only; the game still owns milestone timing and authorization. */
+export function conciseStoryStatus(status:string):string{
+ if(status.includes('AI KNEW BEFORE AWAKENING'))return 'New Earth warned · Passengers alive · Purge kills everyone · AI knew before awakening';
+ if(status.includes('PURGE DESTROYS OCCUPIED CRYO DECKS'))return 'New Earth warned · Passengers alive · Purge kills everyone';
+ if(status.startsWith('WARNING RECEIVED'))return 'New Earth warned · Passengers alive';
+ if(status.startsWith('MERCENARY /'))return 'Passengers alive · AI promises survival';
+ return status;
+}
