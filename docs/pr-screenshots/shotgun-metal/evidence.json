@@ -1,0 +1,75 @@
+{
+  "capture": "Controlled authoritative gameplay, native camera, high quality, front and oblique shots. Detail video is a labelled crop of the native videos.",
+  "clips": {
+    "before": {
+      "sourceSha": "d4156d91e33c1e39188dde90a464b110d4e8d190",
+      "frames": 180,
+      "fps": 30,
+      "hits": 32,
+      "errors": [],
+      "maxDecals": 0,
+      "maxSmokeIncludingMuzzle": 9,
+      "setup": {
+        "player": {
+          "x": 760,
+          "y": 180,
+          "radius": 16,
+          "angle": -1.5707963267948966,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "room": "awakening-bay",
+        "quality": "high",
+        "controlled": true,
+        "nativeZoom": 1
+      }
+    },
+    "after": {
+      "sourceSha": "a87405a2b7637481c0f74304c78a69b2f36e68cd",
+      "frames": 180,
+      "fps": 30,
+      "hits": 32,
+      "errors": [],
+      "maxDecals": 8,
+      "maxSmokeIncludingMuzzle": 3,
+      "setup": {
+        "player": {
+          "x": 760,
+          "y": 180,
+          "radius": 16,
+          "angle": -1.5707963267948966,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "room": "awakening-bay",
+        "quality": "high",
+        "controlled": true,
+        "nativeZoom": 1
+      }
+    }
+  },
+  "files": {
+    "before.png": {
+      "bytes": 322946,
+      "sha256": "6029c12d38264436fac3d6fe820948181bc016e3a09881ad150f0c0ec8396a91"
+    },
+    "after.png": {
+      "bytes": 321717,
+      "sha256": "7d6c7882deff9d3c247284c57b564941fa0fc1805785c94b558ba3cb70d22bbc"
+    },
+    "detail.png": {
+      "bytes": 315365,
+      "sha256": "77d061ad99526f8b438699c01dd3920ca113f599430ebc8821aeed6214d5792a"
+    },
+    "comparison.mp4": {
+      "bytes": 754918,
+      "sha256": "780ae6852e8bb2ef82edc39e8773c621b1f037a6ad60ff2cc2bda15b4df8ff81"
+    },
+    "detail-comparison.mp4": {
+      "bytes": 347234,
+      "sha256": "07127778d4f50e153f0094b469395980f5ab48e22640ab574da90501309e7ba3"
+    }
+  }
+}
