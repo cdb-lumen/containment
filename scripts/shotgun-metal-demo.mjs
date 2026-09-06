@@ -25,31 +25,31 @@ try{
  await page.route('**/src/main.ts*',async route=>{const response=await route.fetch();await route.fulfill({response,body:(await response.text())+'\nwindow.__metalDemo={game,renderer,hud,syncScreen};\n'});});
  await page.goto(`http://127.0.0.1:${port}/`);await page.waitForFunction(()=>window.__metalDemo&&document.body.dataset.state==='menu');
  await page.evaluate(()=>{window.__metalGate=true;document.querySelector('#start').click();});
- const setup=await page.evaluate(async quality=>{
+ const setup=await page.evaluate(async ({quality,north})=>{
   const d=window.__metalDemo,g=d.game,r=d.renderer;
   const {expeditionRewardOffers}=await import('/src/game/roguelike/expedition.ts');const {canOccupyExpedition}=await import('/src/game/world/expeditionGeometry.ts');
   g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.skipStory();
   // Remove encounter scheduling only. Fire, projectile motion and collisions stay authoritative.
-  g.pending=[];g.director.update=()=>[];g.switchWeapon('shotgun');Object.assign(g.player,{x:1040,y:440,angle:0});
+  g.pending=[];g.director.update=()=>[];g.switchWeapon('shotgun');Object.assign(g.player,north?{x:760,y:180,angle:-Math.PI/2}:{x:1040,y:440,angle:0});
   if(!canOccupyExpedition(g.geometry,g.player,g.player.radius))throw Error('Invalid demo position');
   let seed=1729;Math.random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
   r.setQuality(quality);r.loadRoom(g.node);r.render(g,1,false);d.hud();d.syncScreen(true);d.events=[];d.frame=0;
   const original=r.effect.bind(r);r.effect=e=>{const p=r.camera.position.clone().set(e.x/32,.8,e.y/32).project(r.camera);d.events.push({...e,frame:d.frame,pixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}});original(e);};
   const caption=document.createElement('div');caption.id='metal-caption';caption.style.cssText='position:fixed;left:12px;bottom:78px;z-index:999;padding:7px 10px;background:#061116df;color:#eff5ef;font:13px sans-serif;pointer-events:none';document.body.append(caption);
   return {player:{...g.player},room:g.node.templateId,quality:r.qualityTier,controlled:true,nativeZoom:r.camera.zoom};
- },process.env.DEMO_QUALITY||'low');
+ },{quality:process.env.DEMO_QUALITY||'low',north:!!process.env.DEMO_NORTH});
  await page.screenshot({path:join(out,`${label}-setup.png`)});console.log('SETUP',JSON.stringify(setup));
  const fps=30,total=process.env.DEMO_PROBE?30:180,mp4=join(out,`${label}.mp4`);
  encoder=spawn('ffmpeg',['-y','-loglevel','error','-f','image2pipe','-framerate',String(fps),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',mp4],{stdio:['pipe','inherit','inherit']});encoder.stdin.on('error',()=>{});const finished=once(encoder,'exit');
  for(let frame=0;frame<total;frame++){
-  const state=await page.evaluate(({frame,fps,label})=>{
+  const state=await page.evaluate(({frame,fps,label,north})=>{
    const d=window.__metalDemo,g=d.game,r=d.renderer;d.frame=frame;
-   const oblique=frame>=90,angle=oblique?.45:0,fire=[15,55,105,145].includes(frame);
+   const oblique=frame>=90,angle=(north?-Math.PI/2:0)+(oblique?.45:0),fire=[15,55,105,145].includes(frame);
    document.querySelector('#metal-caption').textContent=`${label.toUpperCase()}  /  SHOTGUN  /  ${oblique?'OBLIQUE':'FRONT'} WALL  /  CONTROLLED GAMEPLAY`;
    g.update(1000/fps,{x:0,y:0,fire,angle,autoAim:false});r.render(g,1/fps,false);d.hud();
    if(g.status!=='playing')throw Error(`Left gameplay: ${g.status}`);
    return {frame,bullets:g.bullets.length,counts:r.effects.counts,elapsed:g.elapsed};
-  },{frame,fps,label});samples.push(state);
+  },{frame,fps,label,north:!!process.env.DEMO_NORTH});samples.push(state);
   const png=await page.screenshot();if(!encoder.stdin.write(png))await once(encoder.stdin,'drain');
   if([17,18,19,20,22,25,107,108,109,110,112,115].includes(frame))await writeFile(join(out,`${label}-${frame}.png`),png);
   if(frame%30===0){console.log('FRAME',label,frame);await writeFile(join(out,`${label}-progress.json`),JSON.stringify({sha,frame,total,pid:process.pid}));}
