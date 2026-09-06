@@ -26,6 +26,8 @@ class Fabricator{
  readonly paint=this.mat(0x34454b,.62,.66);readonly edge=this.mat(0x718184,.7,.36);
  readonly dark=this.mat(0x101b22,.5,.65);readonly deck=this.mat(0x263238,.32,.91);
  readonly ivory=this.mat(0x9dada6,.58,.4);readonly bronze=this.mat(0x91714a,.73,.42);
+ readonly cryoShell=this.mat(0x768984,.25,.68);
+
  readonly rust=this.mat(0x71452d,.56,.72);readonly chitin=this.mat(0x303b35,.25,.78);
  readonly ribs=this.mat(0x697164,.48,.64);readonly bolts=this.mat(0x69767a,.78,.47);
  readonly seam=this.mat(0x293a40,.3,.88);readonly stencil=this.mat(0x77745c,.2,.9);
@@ -206,14 +208,15 @@ function passengerVault(f:Fabricator,t:RoomPlan,pod?:T.Group){
    }
    for(const y of [-3.05,-.95]){
     if(pod){addPod(x,y+.2,z);continue;}
-    f.box(x,y,z,1.72,.62,2.8,f.ivory,.18);f.box(x,y+.34,z,1.31,.09,2.34,f.dark,.12);
+    f.box(x,y,z,1.72,.62,2.8,f.cryoShell,.18);f.box(x,y+.34,z,1.31,.09,2.34,f.dark,.12);
     // Network failure retains the same sealed-chamber direction, without people.
-    f.box(x,y+.47,z,1.4,.2,2.45,f.ivory,.1);
+    f.box(x,y+.47,z,1.4,.2,2.45,f.cryoShell,.1);
     f.box(x,y+.58,z+1,.4,.025,.2,f.dark,.01);
     f.box(x,y+.6,z+1,.18,.016,.065,f.cold,.005);
    }
   }
-  f.sign(`BANK ${String(bank+1).padStart(2,'0')} / STASIS`,b.x,-.08,b.z0+.2,3.2);
+  // Mount on the aisle-facing rail, above the liner and handrail.
+  f.sign(`BANK ${String(bank+1).padStart(2,'0')} / STASIS`,b.x,.52,bank===0?b.z1+.2:b.z0+.2,3.2);
  }
  const boundary=bounds(outline(t));f.sign('PASSENGERS / VITALS NOMINAL',boundary.x,1.36,boundary.z0+.35,7.8);
  equipment(f,t,'cryo');cryoSupport(f,t);
@@ -320,7 +323,12 @@ function cryoConsole(f:Fabricator,x:number,z:number,w:number,d:number){
  // Controls are seated on the fascia at the operator edge, not floating above it.
  const controlZ=z+d*.18,controlY=.86-d*.18*Math.sin(.18)+.075;
  f.add(new RoundedBoxGeometry(Math.min(.85,w*.48),.04,.48,1,.02),f.dark,v(x-.13,controlY,controlZ),new T.Euler(.18,0,0));
- for(let j=0;j<3;j++)f.add(new T.PlaneGeometry(.42-j*.07,.028),f.cold,v(x-.13,controlY+.023-j*.014,controlZ-.08+j*.075),new T.Euler(-Math.PI/2+.18,0,0));
+ // Apply the fascia slope to every trace. A fixed Y increment buries the
+ // lower rows in the display bezel. Keep the existing emissive material.
+ for(let j=0;j<3;j++){
+  const dz=-.12+j*.1;
+  f.add(new T.PlaneGeometry(.54-j*.1,.035),f.cold,v(x-.13,controlY+.035-dz*Math.sin(.18),controlZ+dz),new T.Euler(-Math.PI/2+.18,0,0));
+ }
  for(let j=0;j<3;j++)f.box(x+w*.27,controlY+.016,controlZ-.1+j*.1,.13,.035,.065,j===2?f.bronze:f.dark,.01);
  for(let j=0;j<5;j++)f.box(x-w*.22+j*.11,.52,z+d/2-.065,.045,.23,.03,f.dark,.005);
  for(const side of [-1,1])f.pipe(v(x+side*(w/2-.14),.37,z+d*.28),v(x+side*(w/2-.14),.73,z+d*.28),.04,f.edge);

@@ -13,6 +13,9 @@ it('exports sealed chambers without hidden passengers and within the mesh budget
  expect(gltf.nodes.flatMap((n:{extras?:{components?:string[]}})=>n.extras?.components??[])).toContain('Sealed pressure lid');
  const triangles=gltf.meshes.flatMap((m:{primitives:{indices:number}[]})=>m.primitives).reduce((sum:number,p:{indices:number})=>sum+gltf.accessors[p.indices].count/3,0);
  expect(triangles).toBeLessThan(3500);
+ const ceramic=gltf.materials.find((m:{name:string})=>m.name==='cryo-ceramic').pbrMetallicRoughness;
+ expect(Math.max(...ceramic.baseColorFactor.slice(0,3))).toBeLessThan(.3);
+ expect(ceramic.roughnessFactor).toBeGreaterThan(.6);
 });
 it('keeps the optional-asset fallback sealed too',()=>{
  const room=authoredRoom('passenger-vault',ROOM_TEMPLATES['passenger-vault'],undefined)!;

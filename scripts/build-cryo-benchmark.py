@@ -10,7 +10,7 @@ def mat(name,color,metal=0,rough=.5):
  m=bpy.data.materials.new(name);m.diffuse_color=(*color,1);m.use_nodes=True
  p=m.node_tree.nodes.get('Principled BSDF');p.inputs['Base Color'].default_value=(*color,1);p.inputs['Metallic'].default_value=metal;p.inputs['Roughness'].default_value=rough
  return m
-paint=mat('cryo-ceramic',(.52,.62,.59),.45,.35)
+paint=mat('cryo-ceramic',(.18,.25,.24),.25,.68)
 steel=mat('cryo-machined',(.26,.34,.37),.8,.28)
 rubber=mat('cryo-seal',(.025,.044,.049),0,.85)
 frost=mat('cryo-frost',(.52,.68,.68),.1,.82)
