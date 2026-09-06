@@ -95,8 +95,8 @@ export type BuildEvent = EventEnvelope & (
 type CommandBody =
   | Readonly<{ type: 'shot-bonus'; damageMultiplier: number }>
   | Readonly<{ type: 'impulse'; targetId: string; x: number; y: number }>
-  | Readonly<{ type: 'damage'; targetId: string; amount: number; source: 'secondary'; visual?: 'shatter' }>
-  | Readonly<{ type: 'explosion'; centerTargetId: string; damage: number; radius: number; maxTargets: number; source: 'secondary'; visual?: 'shatter' }>
+  | Readonly<{ type: 'damage'; targetId: string; amount: number; source: 'secondary'; visual?: 'shatter' | 'wall-slam' }>
+  | Readonly<{ type: 'explosion'; centerTargetId: string; damage: number; radius: number; maxTargets: number; source: 'secondary'; visual?: 'shatter' | 'wall-slam' }>
   | Readonly<{ type: 'chill'; targetId: string; stacks: number; durationMs: number; slowFraction: number }>
   | Readonly<{ type: 'resources'; weapon: BuildWeapon; healthDelta: number; armorDelta: number; magazineDelta: number; reserveDelta: number }>;
 export type BuildCommand = CommandBody & Readonly<{ id: string; cause: BuildCause }>;
@@ -207,8 +207,8 @@ function resolveCommands(build:BuildState,primedWeapons:readonly BuildWeapon[],e
       break;
     }
     case 'wall-hit':
-      if(canChain&&has('seismic-impact')&&event.impulse>0)emit({type:'explosion',centerTargetId:event.targetId,damage:24,radius:100,maxTargets:4,source:'secondary'});
-      if (canChain && has('breacher') && event.impulse > 0) emit({ type: 'damage', targetId: event.targetId, amount: Math.min(36, event.impulse * 0.12), source: 'secondary' });
+      if(canChain&&has('seismic-impact')&&event.impulse>0)emit({type:'explosion',centerTargetId:event.targetId,damage:24,radius:100,maxTargets:4,source:'secondary',visual:'wall-slam'});
+      if (canChain && has('breacher') && event.impulse > 0) emit({ type: 'damage', targetId: event.targetId, amount: Math.min(36, event.impulse * 0.12), source: 'secondary', visual: 'wall-slam' });
       break;
     case 'body-collision':
       if (canChain && has('chain-reaction') && event.impulse > 0) {
