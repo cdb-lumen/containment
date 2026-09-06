@@ -13,6 +13,7 @@ const root = process.cwd(), out = resolve(option('out', 'docs/pr-screenshots/roo
 const start = Number(option('start', '0')), limit = Number(option('limit', '1000'));
 assert.ok(Number.isInteger(start) && start >= 0 && Number.isInteger(limit) && limit > 0);
 const viewport = {width:1280, height:900};
+const quality=option('quality','high');assert.ok(['low','high'].includes(quality));
 let server, browser, temp;
 try {
   server = await createServer({root, configFile:false, base:'/', optimizeDeps:{noDiscovery:true,include:[]}, server:{host:'127.0.0.1', port:0}, logLevel:'error'});
@@ -51,7 +52,7 @@ import {FacilityNavigation} from '/src/game/world/FacilityNavigation';
 import {ROOM_TEMPLATES} from '/src/game/roguelike/roomTemplates';
 await preloadAssets();
 const renderer = new DepthRenderer(document.querySelector('canvas')!);
-renderer.setQuality('low');
+renderer.setQuality(${JSON.stringify(quality)});
 let game;
 window.evidence = {
  async stage(room) {
@@ -95,10 +96,11 @@ window.evidence = {
 `);
     browser = await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
     const manifestPath=resolve(out,'manifest.json');
-    let manifest={...inventory, viewport, evidenceClass:'C→I', staging:'Controlled actual DepthGame/DepthRenderer scene. Overview camera fits room. Gameplay uses production camera without HUD. Not organic play or reachability evidence.', results:[]};
+    let manifest={...inventory, viewport, quality, evidenceClass:'C→I', staging:'Controlled actual DepthGame/DepthRenderer scene. Overview camera fits room. Gameplay uses production camera without HUD. Not organic play or reachability evidence.', results:[]};
     if(args.includes('--append')) {
       const previous=JSON.parse(await readFile(manifestPath,'utf8'));
       assert.equal(previous.commit,inventory.commit,'Cannot mix commits');
+      assert.equal(previous.quality,quality,'Cannot mix quality settings');
       assert.deepEqual(previous.rooms,rooms,'Cannot mix inventories');
       manifest.results=previous.results;
     }
