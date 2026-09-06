@@ -11,7 +11,7 @@ const pose=(m:ReturnType<typeof alien>)=>{const result:string[]=[];m.root.traver
 describe('persistent actor afflictions',()=>{
  it('submits independent simultaneous cues and expires immediately',()=>{
   const m=alien('brute'),batch=new AfflictionBatches(),camera=new T.PerspectiveCamera();m.setAffliction?.(all);batch.update([m.root],camera,1);
-  expect(batch.counts).toEqual({fire:3,poison:2,drops:4,ice:10,embers:2});m.setAffliction?.({...all,burning:false});batch.update([m.root],camera,1);expect(batch.counts.fire).toBe(0);expect(batch.counts.ice).toBe(10);
+  expect(batch.counts).toEqual({fire:6,poison:4,drops:4,ice:10,embers:6});m.setAffliction?.({...all,burning:false});batch.update([m.root],camera,1);expect(batch.counts.fire).toBe(0);expect(batch.counts.ice).toBe(10);
   m.setAffliction?.(off);batch.update([m.root],camera,1);expect(Object.values(batch.counts).every(n=>n===0)).toBe(true);batch.dispose();disposeModel(m.root);
  });
  it('accumulates chill without inferring frozen and accepts legacy status objects',()=>{

@@ -135,7 +135,7 @@ export class AttackEffects {
    if(!icy)for(let i=0;i<5;i++)this.particle(this.smoke,EFFECT_LIMITS.smoke,p,acid?0x758b50:0xb0bec0,.65+Math.random()*.5,acid||fiery?.85+Math.random()*.4:.4+Math.random()*.15,new T.Vector3((Math.random()-.5)*r,1+Math.random(),(Math.random()-.5)*r));
    if(acid||fiery)this.particle(this.decals,EFFECT_LIMITS.decals,new T.Vector3(p.x,.008,p.z),acid?0x283f20:0x111719,r*1.4,14);
   }else{
-   if(!acid&&!death)for(let i=0;i<3;i++){const a=angle+Math.PI+(Math.random()-.5)*1.1,s=1+Math.random()*2;this.particle(this.debris,EFFECT_LIMITS.debris,p,0x898477,.045,3.5,new T.Vector3(Math.cos(a)*s,1+Math.random()*1.5,Math.sin(a)*s),9.8,1.8);}
+   if(!acid&&!death)for(let i=0;i<(e.targetId!==undefined?4:3);i++){const a=angle+Math.PI+(Math.random()-.5)*1.1,s=1+Math.random()*2,target=e.targetId!==undefined;this.particle(this.debris,EFFECT_LIMITS.debris,p,0x898477,target?.022+Math.random()*.012:.045,target?.35+Math.random()*.3:3.5,new T.Vector3(Math.cos(a)*s,1+Math.random()*1.5,Math.sin(a)*s),9.8,1.8);}
    for(let i=0;i<(death?16:acid?7:9);i++){
     const a=acid||death?Math.random()*6.28:angle+Math.PI+(Math.random()-.5)*1.3,s=.8+Math.random()*3,v=new T.Vector3(Math.cos(a)*s,Math.random()*2.8,Math.sin(a)*s).addScaledVector(forward,acid?1.5:-1.5);
     this.particle(this.glow,EFFECT_LIMITS.glow,p,impactColor,acid?.095:.065,.15+Math.random()*.24,v,7);
@@ -144,7 +144,7 @@ export class AttackEffects {
    if(!acid&&!death)this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x8b9185,.35,.45,new T.Vector3(0,.3,0));
    if(acid||death){
     this.particle(this.decals,EFFECT_LIMITS.decals,new T.Vector3(p.x,.009,p.z),0x263524,death?1.25:.5,16);
-    for(let i=0;i<(death?7:2);i++)this.particle(this.debris,EFFECT_LIMITS.debris,p,i%2?0x4c5541:0x9a9872,.075+Math.random()*.08,6,new T.Vector3((Math.random()-.5)*3,1+Math.random()*3,(Math.random()-.5)*3),9.8,1.7);
+    for(let i=0;i<(death?10:2);i++)this.particle(this.debris,EFFECT_LIMITS.debris,p,i%2?0x4c5541:0x9a9872,death?.025+Math.random()*.025:.075+Math.random()*.08,death?.55+Math.random()*.45:6,new T.Vector3((Math.random()-.5)*3,1+Math.random()*3,(Math.random()-.5)*3),9.8,1.7);
    }
   }
  }
