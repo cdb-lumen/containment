@@ -215,7 +215,7 @@ export class PickupSystem {
   #randomState: number;
   #nextId = 1;
 
-  constructor(seed = DEFAULT_SEED) {
+  constructor(seed = DEFAULT_SEED, private readonly canMove?: (from:PickupPoint,to:PickupPoint,radius:number)=>boolean) {
     this.#initialSeed = normalizeSeed(seed);
     this.#randomState = this.#initialSeed;
   }
@@ -256,6 +256,7 @@ export class PickupSystem {
       ageMs: 0,
       lifetimeMs: safeLifetime(safeOptions.lifetimeMs),
     };
+    if(this.canMove&&!this.canMove(pickup,pickup,PICKUP_RADIUS))return noSpawn('invalid');
     this.#active.set(pickup.id, pickup);
     return Object.freeze({ spawned: true, pickup: snapshotOf(pickup) });
   }
@@ -337,7 +338,7 @@ export class PickupSystem {
     }
 
     const distance = Math.hypot(player.x - pickup.x, player.y - pickup.y);
-    if (!Number.isFinite(distance) || distance > PICKUP_RADIUS) {
+    if (!Number.isFinite(distance) || distance > PICKUP_RADIUS || (this.canMove&&!this.canMove(pickup,player,0))) {
       return noCollection('out-of-range');
     }
 
@@ -429,8 +430,10 @@ export class PickupSystem {
     const maximumStep = speed * (deltaMs / 1_000);
     const step = Math.min(distance, Number.isFinite(maximumStep) ? maximumStep : distance);
     const scale = step / distance;
-    pickup.x = clamp(pickup.x + deltaX * scale, PICKUP_RADIUS, WORLD_WIDTH - PICKUP_RADIUS);
-    pickup.y = clamp(pickup.y + deltaY * scale, PICKUP_RADIUS, WORLD_HEIGHT - PICKUP_RADIUS);
+    const next={x:clamp(pickup.x + deltaX * scale, PICKUP_RADIUS, WORLD_WIDTH - PICKUP_RADIUS),
+      y:clamp(pickup.y + deltaY * scale, PICKUP_RADIUS, WORLD_HEIGHT - PICKUP_RADIUS)};
+    if(this.canMove&&!this.canMove(pickup,next,PICKUP_RADIUS))return;
+    pickup.x=next.x;pickup.y=next.y;
   }
 
   #rewardFor(pickup: PickupState, efficiency: number): PickupReward {

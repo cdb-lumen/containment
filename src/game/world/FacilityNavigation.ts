@@ -1,8 +1,9 @@
 import { segmentIntersectsRect } from '../input/aimAssist';
 import { circleBlocked, facilityBlockers } from './facilityGeometry';
 import type { FacilityPoint, FacilityRect } from './facilityLayout';
+import {clearPolygonTopology,type PolygonTopology} from './polygonGeometry';
 const CELL=32,COLS=80,ROWS=45,COUNT=COLS*ROWS;
-export type NavigationGeometry = Readonly<{bounds:FacilityRect;blockers:readonly FacilityRect[]}>;
+export type NavigationGeometry = Readonly<{bounds:FacilityRect;blockers:readonly FacilityRect[]}> & PolygonTopology;
 const point=(id:number):FacilityPoint=>({x:(id%COLS+.5)*CELL,y:(Math.floor(id/COLS)+.5)*CELL});
 const index=(p:FacilityPoint)=>Math.max(0,Math.min(ROWS-1,Math.floor(p.y/CELL)))*COLS+Math.max(0,Math.min(COLS-1,Math.floor(p.x/CELL)));
 const adjacency=Array.from({length:COUNT},(_,id)=>[id%COLS>0?id-1:-1,id%COLS<COLS-1?id+1:-1,id>=COLS?id-COLS:-1,id<COUNT-COLS?id+COLS:-1].filter(i=>i>=0));
@@ -14,6 +15,7 @@ export class FacilityNavigation {
   private wave=-1;private goal=-1;private playerCell=-1;private walls:readonly FacilityRect[]=[];
   private walkable=new Uint8Array(COUNT);private distance=new Int32Array(COUNT);private queue=new Int32Array(COUNT);private expanded=new Map<number,readonly FacilityRect[]>();
   private clear(a:FacilityPoint,b:FacilityPoint,radius:number):boolean {
+    if(this.geometry&&!clearPolygonTopology(this.geometry,a,b,radius))return false;
     let walls=this.expanded.get(radius);if(!walls){walls=this.walls.map(r=>({x:r.x-radius,y:r.y-radius,width:r.width+radius*2,height:r.height+radius*2}));this.expanded.set(radius,walls);}
     for(const r of walls)if(segmentIntersectsRect(a,b,r))return false;return true;
   }

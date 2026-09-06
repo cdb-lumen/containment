@@ -8,7 +8,7 @@ import type {StandardEnemyId} from './game/enemies/types';
 import {PickupSystem} from './game/pickups/PickupSystem';
 import {EncounterDirector,type EncounterEvent} from './game/waves/EncounterDirector';
 import {FacilityNavigation} from './game/world/FacilityNavigation';
-import {createExpeditionGeometry,canOccupyExpedition,hasClearExpeditionShot} from './game/world/expeditionGeometry';
+import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition,hasClearExpeditionShot} from './game/world/expeditionGeometry';
 import {rerollExpedition,createExpedition,completeExpeditionRoom,claimExpeditionMutation,claimExpeditionResources,chooseExpeditionRoute,defeatExpedition,restoreExpedition,type Expedition} from './game/roguelike/expedition';
 import {progressionFor} from './game/roguelike/progression';
 import {generateRun} from './game/roguelike/run';
@@ -24,7 +24,7 @@ export type Bullet={visualMuzzle?:{x:number;y:number;z:number;distance:number};x
 export type Pool={id:number;x:number;y:number;radius:number;life:number;warning:number;damage:number;tick:number};
 const IDLE:GameInput={x:0,y:0,fire:false,angle:null,autoAim:false};
 export class DepthGame {
- combat=new CombatSystem();boss=new QueenBossSystem();pickups=new PickupSystem();
+ combat=new CombatSystem();boss=new QueenBossSystem();pickups=new PickupSystem(0,(a,b,r)=>canTraverseExpedition(this.geometry,a,b,r));
  expedition:Expedition;node:RunNode;geometry:ReturnType<typeof createExpeditionGeometry>;navigation:FacilityNavigation;enemies:EnemySystem;
  player={x:0,y:0,radius:16,angle:0,moving:false,vx:0,vy:0};bullets:Bullet[]=[];pools:Pool[]=[];
  aimVisible:(x:number,y:number)=>boolean=()=>true;
@@ -35,7 +35,7 @@ export class DepthGame {
  }
  private findNode(){return generateRun(this.expedition.run.seed,this.expedition.run.version).nodes.find(n=>n.id===this.expedition.run.currentNodeId)!;}
  private makeDirector(){return new EncounterDirector({seed:this.expedition.run.seed,node:this.node,breachIds:this.geometry.breaches.map(b=>b.id)});}
- private makeEnemies(){return new EnemySystem({balance:progressionFor(this.node),canAttack:(a,b)=>hasClearExpeditionShot(this.geometry,a,b),canMove:c=>canOccupyExpedition(this.geometry,{x:c.toX,y:c.toY},c.radius),route:(e,p)=>hasClearExpeditionShot(this.geometry,e,p)?null:this.navigation.waypoint(e,this.player,1)});}
+ private makeEnemies(){return new EnemySystem({balance:progressionFor(this.node),canAttack:(a,b)=>hasClearExpeditionShot(this.geometry,a,b),canMove:c=>canOccupyExpedition(this.geometry,{x:c.toX,y:c.toY},c.radius),route:(e,p)=>this.navigation.waypoint(e,p,1)});}
  private makeMutations(){return new MutationRuntime(this.combat,{player:()=>this.player,targets:()=>this.targets(),damage:(id,n)=>this.damage(id,n),move:(id,x,y)=>this.enemies.moveBy(id,x,y),moveCorpse:(t,x,y)=>{const m=this.moveCorpse(t,x,y);this.emit({type:'sync-corpse',id:t.id,x:m.x,y:m.y});return m;},setSlow:(id,m)=>{if(id>0)this.enemies.setSlow(id,m);},canAffect:(a,b)=>hasClearExpeditionShot(this.geometry,a,b),boonEffect:(boon,x,y,targetX,targetY,radius,durationMs)=>this.emit({type:'boon',boon,x,y,targetX,targetY,radius,durationMs}),effect:(x,y,radius)=>this.emit({type:'explosion',x,y,radius})});}
  get encounterRemaining(){return this.director.snapshot.remaining+this.enemies.activeCount+this.enemies.reservedCount+this.pending.reduce((n,p)=>n+(p.type==='carrier'?4:1),0);}
  get canContinue(){const cp=this.suppressSave?null:loadCheckpoint(this.storage);if(!cp)return false;const c=new CombatSystem();c.setBuild(cp.build);return c.restoreRunResources(cp.resources);}
