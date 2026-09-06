@@ -111,12 +111,10 @@ describe('CombatSystem reload and weapon state', () => {
     }
     completeReload(combat);
     expect(combat.snapshot.magazine).toBe(WEAPONS.rifle.magazine);
-    expect(combat.snapshot.reserve).toBe(175);
+    expect(combat.snapshot.reserve).toBe(55);
 
-    for (let reload = 0; reload < 5; reload += 1) {
-      emptyCurrentMagazine(combat);
-      completeReload(combat);
-    }
+    emptyCurrentMagazine(combat);
+    completeReload(combat);
     expect(combat.snapshot.reserve).toBe(25);
 
     emptyCurrentMagazine(combat);

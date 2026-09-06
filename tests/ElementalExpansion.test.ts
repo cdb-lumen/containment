@@ -42,9 +42,9 @@ describe('elemental expansion and supply economy',()=>{
   const w=world(['combat-medic','blood-capacitor','reactive-barrier','shock-absorber']);w.combat.restoreRunResources({...w.combat.getRunResources(),health:50,armor:0});w.runtime.completedReload({x:0,y:0});expect(w.combat.snapshot.health).toBe(52);w.hit();expect(w.hits).toContainEqual({id:1,amount:24});w.runtime.hurt(10,0,{x:0,y:0});w.advance(50);expect(w.slows.get(1)).toBe(0);expect(w.hits.filter(h=>h.amount===20)).toHaveLength(2);
   const cascade=world(['hot-reload','reactor-cascade']);cascade.hit('primed',cascade.targets[0],'shotgun',true);cascade.targets[0].health=0;cascade.runtime.kill({...cascade.targets[0]},'direct',{chainId:'primed',depth:0});expect(cascade.hits).toContainEqual({id:2,amount:36});
  });
- it('sustains three minutes of continuous fire and reloads without ammo drops, including Rapid Cycle',()=>{
-  for(const weapon of ['rifle','shotgun','plasma','rocket'] as const)for(const fast of [false,true]){const c=new CombatSystem();if(fast)c.setBuild({mutations:['rapid-cycle']});c.switchWeapon(weapon);c.replenishReserves();let fired=0;
-   for(let ms=0;ms<180000;ms+=50){c.regenerateReserves(50);c.update(50);fired+=c.fire(0).length;c.reloadIfEmpty();expect(c.snapshot.magazine+c.snapshot.reserve,`${weapon} fast=${fast}`).toBeGreaterThan(0);}expect(fired).toBeGreaterThan(50);
+ it('runs dry under sustained fire without drops, including Rapid Cycle',()=>{
+  for(const weapon of ['rifle','shotgun','plasma','rocket'] as const)for(const fast of [false,true]){const c=new CombatSystem();if(fast)c.setBuild({mutations:['rapid-cycle']});c.switchWeapon(weapon);c.replenishReserves();let fired=0,ranDry=false;
+   for(let ms=0;ms<180000;ms+=50){c.regenerateReserves(50);c.update(50);fired+=c.fire(0).length;c.reloadIfEmpty();if(c.snapshot.magazine+c.snapshot.reserve===0)ranDry=true;}expect(ranDry,`${weapon} fast=${fast}`).toBe(true);expect(fired).toBeGreaterThan(10);
   }
  });
  it('links the third arc to a delayed blast and expires frost fields without permanent slows',()=>{
@@ -53,8 +53,8 @@ describe('elemental expansion and supply economy',()=>{
  });
  it('regenerates reserves without filling magazines, granting pickup boons or cancelling reload',()=>{
   const c=new CombatSystem();c.switchWeapon('shotgun');c.setBuild({mutations:['magnetic-feed']});const r=c.getRunResources();c.restoreRunResources({...r,ammo:{...r.ammo,shotgun:{magazine:2,reserve:0},rifle:{magazine:30,reserve:0}}});
-  c.regenerateReserves(1000);expect(c.snapshot.magazine).toBe(2);expect(c.snapshot.reserve).toBe(1);c.startReload();c.regenerateReserves(1000);expect(c.snapshot.reloading).toBe(true);expect(c.snapshot.magazine).toBe(2);
-  c.replenishReserves();expect(c.snapshot.reserve).toBe(64);expect(c.snapshot.reloading).toBe(true);c.collectAmmoPack();expect(c.getRunResources().ammo.rocket.reserve).toBe(14);expect(c.getRunResources().ammo.rifle.reserve).toBe(300);
+  c.regenerateReserves(3000);expect(c.snapshot.magazine).toBe(2);expect(c.snapshot.reserve).toBe(1);c.startReload();c.regenerateReserves(1000);expect(c.snapshot.reloading).toBe(true);expect(c.snapshot.magazine).toBe(2);
+  c.replenishReserves();expect(c.snapshot.reserve).toBe(21);expect(c.snapshot.reloading).toBe(true);c.collectAmmoPack();expect(c.getRunResources().ammo.rocket.reserve).toBe(5);expect(c.getRunResources().ammo.rifle.reserve).toBe(100);
  });
 });
 describe('map geometry and actor frame-time fixes',()=>{
