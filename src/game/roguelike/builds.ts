@@ -95,8 +95,8 @@ export type BuildEvent = EventEnvelope & (
 type CommandBody =
   | Readonly<{ type: 'shot-bonus'; damageMultiplier: number }>
   | Readonly<{ type: 'impulse'; targetId: string; x: number; y: number }>
-  | Readonly<{ type: 'damage'; targetId: string; amount: number; source: 'secondary' }>
-  | Readonly<{ type: 'explosion'; centerTargetId: string; damage: number; radius: number; maxTargets: number; source: 'secondary' }>
+  | Readonly<{ type: 'damage'; targetId: string; amount: number; source: 'secondary'; visual?: 'shatter' }>
+  | Readonly<{ type: 'explosion'; centerTargetId: string; damage: number; radius: number; maxTargets: number; source: 'secondary'; visual?: 'shatter' }>
   | Readonly<{ type: 'chill'; targetId: string; stacks: number; durationMs: number; slowFraction: number }>
   | Readonly<{ type: 'resources'; weapon: BuildWeapon; healthDelta: number; armorDelta: number; magazineDelta: number; reserveDelta: number }>;
 export type BuildCommand = CommandBody & Readonly<{ id: string; cause: BuildCause }>;
@@ -198,8 +198,8 @@ function resolveCommands(build:BuildState,primedWeapons:readonly BuildWeapon[],e
       const shattered = canChain && has('shattershot') && event.chilledStacks >= 3;
       if (shattered) {
         emit({ type: 'chill', targetId: event.targetId, stacks: 0, durationMs: 0, slowFraction: 0 });
-        emit({ type: 'damage', targetId: event.targetId, amount: 24, source: 'secondary' });
-        emit({ type: 'explosion', centerTargetId: event.targetId, damage: 16, radius: 60, maxTargets: BUILD_LIMITS.maxAreaTargets, source: 'secondary' });
+        emit({ type: 'damage', targetId: event.targetId, amount: 24, source: 'secondary', visual: 'shatter' });
+        emit({ type: 'explosion', centerTargetId: event.targetId, damage: 16, radius: 60, maxTargets: BUILD_LIMITS.maxAreaTargets, source: 'secondary', visual: 'shatter' });
       } else if (has('cryogenic')) {
         const stacks = Math.min(3, event.chilledStacks + 1);
         emit({ type: 'chill', targetId: event.targetId, stacks, durationMs: (has('permafrost')?3500:2000)+(familyBonuses(build).cryo?500:0), slowFraction: stacks * 0.15+(familyBonuses(build).cryo?.05:0) });
