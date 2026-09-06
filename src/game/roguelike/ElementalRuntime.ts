@@ -3,7 +3,7 @@ import type {MutationId} from './types';
 import type {BuildCause,BuildWeapon} from './builds';
 import type {MutationTarget} from './MutationRuntime';
 
-export type BoonEffect='frost'|'arc'|'burn'|'impact'|'leech'|'shield'|'overload'|'poison'|'charge'|'blast'|'shatter'|'field';
+export type BoonEffect='frost'|'arc'|'burn'|'impact'|'leech'|'shield'|'overload'|'poison'|'charge'|'blast'|'combustion'|'shatter'|'field';
 type Point={x:number;y:number};
 type Host={
  combat:CombatSystem;targets:()=>readonly MutationTarget[];player:()=>Point;
@@ -54,7 +54,7 @@ export class ElementalRuntime{
    thermal=true;this.h.clearChill(t.id);this.h.clearBurn(t.id);this.blast(t,32,90,4,cause,`${id}:thermal`,'shatter');
   }
   if(!thermal&&this.has('combustion')&&before.burn&&this.ready('combustion',1500)&&this.first(`combustion:${shot}`)){
-   combusted=true;this.h.clearBurn(t.id);this.blast(t,26,85,4,cause,`${id}:combustion`);
+   combusted=true;this.h.clearBurn(t.id);this.blast(t,26,85,4,cause,`${id}:combustion`,'combustion');
   }
   if(this.has('first-impact')&&this.first(`first:${t.id}`)){this.strike(t,18,cause,`${id}:first`);this.h.effect('impact',t.x,t.y);}
   if(this.has('executioner')&&t.maxHealth&&t.health/t.maxHealth<.3&&this.ready(`execute:${t.id}`,900)){this.strike(t,24,cause,`${id}:execute`);this.h.effect('impact',t.x,t.y);}

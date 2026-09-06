@@ -200,11 +200,12 @@ export class MutationRuntime {
       if (!target || target.immovable) return;
       this.#launches.set(targetId, { x: command.x, y: command.y, cause: command.cause, commandId: command.id, remainingMs: 900, touched: new Set([targetId]), ...(!live ? { ghost: { ...target, health: 0 } } : {}) });
     } else if (command.type === 'damage') {
-      if (live){this.#host.boonEffect?.('impact',live.x,live.y);this.#damage(live, command.amount, command);}
+      if (live){if(command.visual!=='shatter')this.#host.boonEffect?.('impact',live.x,live.y);this.#damage(live, command.amount, command);}
     } else if (command.type === 'explosion') {
       const center = live ?? this.#positions.get(targetId);
       if (!center) return;
-      this.#host.effect?.(center.x, center.y, command.radius);
+      if(command.visual==='shatter')this.#host.boonEffect?.('shatter',center.x,center.y,undefined,undefined,command.radius);
+      else this.#host.effect?.(center.x, center.y, command.radius);
       const targets = this.#host.targets().filter((target) => target.health > 0 && Math.hypot(target.x - center.x, target.y - center.y) <= command.radius && this.#host.canAffect?.(center,target)!==false)
         .sort((a, b) => Math.hypot(a.x - center.x, a.y - center.y) - Math.hypot(b.x - center.x, b.y - center.y) || a.id - b.id)
         .slice(0, command.maxTargets);
