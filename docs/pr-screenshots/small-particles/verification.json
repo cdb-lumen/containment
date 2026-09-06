@@ -1,0 +1,16 @@
+{
+  "sourceSha": "cf6d3450bbae50f36c87683eb97ce7ab30e96254",
+  "verified_clip_count": 3,
+  "debris": {
+    "frames": 120,
+    "unique_actor_frames": 120,
+    "motion_max": 4.895078125,
+    "kills": 1,
+    "hits": 6
+  },
+  "videos": [
+    "final-fire-desktop.mp4",
+    "final-poison-desktop.mp4",
+    "final-debris-controlled-desktop.mp4"
+  ]
+}
