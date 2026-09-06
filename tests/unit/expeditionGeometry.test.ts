@@ -66,11 +66,11 @@ describe('expedition local geometry', () => {
         expect(visited.has(key(closest))).toBe(true);
       }
     }
-    expect(seenTemplates.size).toBe(16);
+    expect(seenTemplates.size).toBe(20);
   });
 
   it('fits the real QueenBossSystem center and every stage-three nest with movement clearance', () => {
-    const node = generateRun(2).nodes.find(node => node.kind === 'boss')!;
+    const node = generateRun(2,2).nodes.find(node => node.kind === 'boss')!;
     const geometry = createExpeditionGeometry(node);
     const system = new QueenBossSystem();
     const center = geometry.bossSpawn;

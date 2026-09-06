@@ -1,4 +1,5 @@
 import type { RoomTemplate, TemplateId } from './types';
+import {STORY_ROOM_TEMPLATES} from './storyRoomTemplates';
 
 function template(value: RoomTemplate): RoomTemplate {
   return Object.freeze({
@@ -18,6 +19,7 @@ const ordinary = {
  * Shapes are solid collision footprints; decorative geometry must stay separate.
  */
 export const ROOM_TEMPLATES: Readonly<Record<TemplateId, RoomTemplate>> = Object.freeze({
+  ...STORY_ROOM_TEMPLATES,
   receiving: template({
     ...ordinary, id: 'receiving', name: 'Receiving Dock',
     // Four pallet islands leave a broad opening lane and perimeter escape route.

@@ -14,11 +14,11 @@ function clear(template: RoomTemplate, point: Point): boolean {
 }
 
 describe('roguelike room templates', () => {
-  it('provides sixteen distinct, deeply immutable industrial layouts with finite bounded footprints', () => {
+  it('provides thirty-six distinct, deeply immutable industrial layouts with finite bounded footprints', () => {
     const templates = Object.values(ROOM_TEMPLATES);
-    expect(templates).toHaveLength(16);
-    expect(new Set(templates.map(template => template.name)).size).toBe(16);
-    expect(new Set(templates.map(template => JSON.stringify(template.obstacles))).size).toBe(16);
+    expect(templates).toHaveLength(36);
+    expect(new Set(templates.map(template => template.name)).size).toBe(36);
+    expect(new Set(templates.map(template => JSON.stringify(template.obstacles))).size).toBe(36);
     expect(Object.isFrozen(ROOM_TEMPLATES)).toBe(true);
     for (const template of templates) {
       expect(Object.isFrozen(template)).toBe(true);

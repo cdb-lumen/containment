@@ -48,7 +48,7 @@ export function expeditionRewardOffers(expedition:Expedition):ReturnType<typeof 
 export function rerollCost(expedition:Expedition):number{return 75*((expedition.run.draftRoll??0)+1)+currentNode(expedition).depth*10;}
 export function rerollExpedition(expedition:Expedition):Expedition{
  const cost=rerollCost(expedition),roll=expedition.run.draftRoll??0;
- if(expedition.run.version!==2||roll>=2||!expeditionRewardOffers(expedition).length||expedition.resources.credits<cost)throw new Error('Reroll unavailable');
+ if(expedition.run.version===1||roll>=2||!expeditionRewardOffers(expedition).length||expedition.resources.credits<cost)throw new Error('Reroll unavailable');
  return snapshot({...expedition.run,draftRoll:roll+1},expedition.build,{...expedition.resources,credits:expedition.resources.credits-cost});
 }
 /** Commit a valid offered mutation and consume the reward in the same transition. */
@@ -65,6 +65,11 @@ export function claimExpeditionResources(expedition:Expedition,resources:RunReso
 }
 export function chooseExpeditionRoute(expedition:Expedition,nodeId:string):Expedition {
   assertExpedition(expedition);return snapshot(enterRoom(expedition.run,nodeId),expedition.build,expedition.resources);
+}
+/** Separate from generic routing, so skip/continue can never authorize the sacrifice. */
+export function authorizeExpeditionDestruction(expedition:Expedition):Expedition {
+ if(currentNode(expedition).templateId!=='manual-control-chamber')throw new Error('Not at manual controls');
+ return snapshot(enterRoom(expedition.run,currentNode(expedition).next[0],'destroy-ship'),expedition.build,expedition.resources);
 }
 export function defeatExpedition(expedition:Expedition):Expedition {
   assertExpedition(expedition);return snapshot(endRun(expedition.run),expedition.build,expedition.resources);

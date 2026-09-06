@@ -1,7 +1,8 @@
 import type { RoomKind, RunGraph, RunNode, RunPhase, RunState, TemplateId } from './types';
 
-export const RUN_LENGTH = 12;
-export const runLength=(version:1|2=2)=>version===1?6:RUN_LENGTH;
+import {ROOM_STORY_ROUTE} from './storyRooms';
+export const RUN_LENGTH = 20;
+export const runLength=(version:1|2|3=3)=>version===1?6:version===2?12:RUN_LENGTH;
 export const ACT_NAMES=["Cargo", "Quarantine", "The Core"] as const;
 
 export const ROOM_KIND_LABELS: Readonly<Record<RoomKind, string>> = Object.freeze({
@@ -82,7 +83,8 @@ function generateLegacyRun(seed: number): RunGraph {
 }
 
 /** New runs use three acts; version one remains byte-for-byte deterministic for old saves. */
-export function generateRun(seed:number,version:1|2=2):RunGraph{
+export function generateRun(seed:number,version:1|2|3=3):RunGraph{
+ if(version===3)return generateStoryRun(seed);
  if(version===1)return generateLegacyRun(seed);
  if(!isSeed(seed))throw new RangeError('Run seed must be an unsigned 32-bit integer.');
  const random=randomFor(seed),decks:TemplateId[][]=[
@@ -100,13 +102,27 @@ export function generateRun(seed:number,version:1|2=2):RunGraph{
  return Object.freeze({seed,nodes:Object.freeze(nodes),startId:layers[0][0].id,bossId:layers[11][0].id});
 }
 
+/** Twenty encounters, with rewards independent from encounter kind. Legacy saves keep their graphs. */
+function generateStoryRun(seed:number):RunGraph {
+ if(!isSeed(seed))throw new RangeError('Run seed must be an unsigned 32-bit integer.');
+ const id=(depth:number)=>`${seed}:v3-r${depth}`;
+ const nodes:RunNode[]=ROOM_STORY_ROUTE.map((room,depth)=>Object.freeze({
+  id:id(depth),depth,templateId:room.templateId,
+  kind:depth===5||depth===15?'elite' as const:'combat' as const,
+  reward:depth===19?'victory' as const:depth===5||depth===15?'rare-upgrade' as const:
+   [3,7,11,17].includes(depth)?'healing' as const:[6,13,18].includes(depth)?'supplies' as const:'upgrade' as const,
+  next:Object.freeze(depth===19?[]:[id(depth+1)]),
+ }));
+ return Object.freeze({seed,nodes:Object.freeze(nodes),startId:id(0),bossId:id(19)});
+}
+
 function freezeState(state: RunState): RunState {
   return Object.freeze({ ...state, completedNodeIds: Object.freeze([...state.completedNodeIds]) });
 }
 
 export function createRun(seed: number): RunState {
   const graph = generateRun(seed);
-  return freezeState({ version: 2, seed, currentNodeId: graph.startId, completedNodeIds: [], phase: 'combat',draftRoll:0 });
+  return freezeState({ version: 3, seed, currentNodeId: graph.startId, completedNodeIds: [], phase: 'combat',draftRoll:0 });
 }
 
 const PHASES: readonly RunPhase[] = ['combat', 'reward', 'route', 'complete', 'dead'];
@@ -121,12 +137,12 @@ export function isValidRunState(value: unknown): value is RunState {
   const record = value as Record<string, unknown>;
   const keys = Object.keys(record);
   if (!STATE_KEYS.every(key => Object.hasOwn(record,key)) || keys.some(key=>!STATE_KEYS.includes(key)&&key!=='draftRoll'))return false;
-  if(record.draftRoll!==undefined&&(record.version!==2||!Number.isInteger(record.draftRoll)||Number(record.draftRoll)<0||Number(record.draftRoll)>2))return false;
-  if ((record.version !== 1 && record.version !== 2) || !isSeed(record.seed) || typeof record.currentNodeId !== 'string') return false;
+  if(record.draftRoll!==undefined&&(record.version===1||!Number.isInteger(record.draftRoll)||Number(record.draftRoll)<0||Number(record.draftRoll)>2))return false;
+  if ((record.version !== 1 && record.version !== 2 && record.version !== 3) || !isSeed(record.seed) || typeof record.currentNodeId !== 'string') return false;
   if (typeof record.phase !== 'string' || !PHASES.includes(record.phase as RunPhase)) return false;
   if (!Array.isArray(record.completedNodeIds) || record.completedNodeIds.length > RUN_LENGTH) return false;
   if (!record.completedNodeIds.every(id => typeof id === 'string')) return false;
-  const graph = generateRun(record.seed,record.version as 1|2);
+  const graph = generateRun(record.seed,record.version as 1|2|3);
   const current = graph.nodes.find(node => node.id === record.currentNodeId);
   if (!current) return false;
   const completed = record.completedNodeIds as string[];
@@ -169,11 +185,12 @@ export function finishReward(state: RunState): RunState {
   return freezeState({ ...state, phase: 'route' });
 }
 
-export function enterRoom(state: RunState, nextId: string): RunState {
+export function enterRoom(state: RunState, nextId: string, action?:'destroy-ship'): RunState {
   requirePhase(state, 'route');
   const current = generateRun(state.seed,state.version).nodes.find(node => node.id === state.currentNodeId)!;
+  if (current.templateId === 'manual-control-chamber' && action !== 'destroy-ship') throw new Error('Explicit destruction authorization required.');
   if (!current.next.includes(nextId)) throw new Error('Requested room is not an available route.');
-  return freezeState({ ...state, currentNodeId: nextId, phase: 'combat',...(state.version===2?{draftRoll:0}:{}) });
+  return freezeState({ ...state, currentNodeId: nextId, phase: 'combat',...(state.version!==1?{draftRoll:0}:{}) });
 }
 
 /** Death is terminal and can occur only during an active room. */
