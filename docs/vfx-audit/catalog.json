@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "revision": "73a055adf03d33d87641b81593cc03e863e9c7af",
-  "inspection_limits": "Source audit and sampled real atlas visual inspection only. Existing screenshots/videos inventoried but not reviewed or certified for current revision. Recommendations need separate current-revision gameplay videos before approval.",
+  "inspection_limits": "Source audit and sampled real atlas visual inspection only. Existing screenshots/videos inventoried but not reviewed or certified for current revision. Recommendations need separate current-revision gameplay videos before approval. Active means implemented source path, including supported legacy save routes, not independently reproduced in the current story campaign.",
   "summary": {
     "effects": 75,
     "active_effects": 74,
@@ -476,7 +476,8 @@
       "rationale": "This dedicated warning owner is better protected than the shared warning pool.",
       "variants": [],
       "status": "active",
-      "evidence_level": "source-inspected; not runtime-verified in this audit"
+      "evidence_level": "source-inspected; not runtime-verified in this audit",
+      "campaign_availability": "Supported legacy v1/v2 boss routes only. Current v3 story generation has no boss-kind node."
     },
     {
       "id": "queen-acid-blast",
@@ -495,7 +496,8 @@
       "rationale": "Distinguish dangerous acid from neutral ordnance and fire.",
       "variants": [],
       "status": "active",
-      "evidence_level": "source-inspected; not runtime-verified in this audit"
+      "evidence_level": "source-inspected; not runtime-verified in this audit",
+      "campaign_availability": "Supported legacy v1/v2 boss routes only. Current v3 story generation has no boss-kind node."
     },
     {
       "id": "queen-acid-pool",
@@ -514,7 +516,8 @@
       "rationale": "Uniform disk looks schematic in source design; prioritize boundary honesty, not smoke covering danger.",
       "variants": [],
       "status": "active",
-      "evidence_level": "source-inspected; not runtime-verified in this audit"
+      "evidence_level": "source-inspected; not runtime-verified in this audit",
+      "campaign_availability": "Supported legacy v1/v2 boss routes only. Current v3 story generation has no boss-kind node."
     },
     {
       "id": "blast-neutral",
@@ -1252,7 +1255,8 @@
       "rationale": "Keep clearly distinct from poison; no need for a cloud.",
       "variants": [],
       "status": "active",
-      "evidence_level": "source-inspected; not runtime-verified in this audit"
+      "evidence_level": "source-inspected; not runtime-verified in this audit",
+      "campaign_availability": "Supported legacy v1/v2 boss routes only. Current v3 story generation has no boss-kind node."
     },
     {
       "id": "enemy-death-burst",
@@ -1361,7 +1365,8 @@
       "rationale": "Nest death is a separate trigger sharing explosion; it currently leaves no corpse.",
       "variants": [],
       "status": "active",
-      "evidence_level": "source-inspected; not runtime-verified in this audit"
+      "evidence_level": "source-inspected; not runtime-verified in this audit",
+      "campaign_availability": "Supported legacy v1/v2 boss routes only. Current v3 story generation has no boss-kind node."
     },
     {
       "id": "queen-death",
@@ -1380,7 +1385,8 @@
       "rationale": "Generic blast dominates a distinct boss death trigger; avoid a bigger default fireball.",
       "variants": [],
       "status": "active",
-      "evidence_level": "source-inspected; not runtime-verified in this audit"
+      "evidence_level": "source-inspected; not runtime-verified in this audit",
+      "campaign_availability": "Supported legacy v1/v2 boss routes only. Current v3 story generation has no boss-kind node."
     },
     {
       "id": "player-death",
@@ -2387,5 +2393,13 @@
     "No camera shake, chromatic aberration, screen-space shock distortion or floating damage numbers found.",
     "No dedicated persistent primed-weapon status visual for Cycle Capacitor; normal projectile appearance retained.",
     "collapseCorpse is an unused production export; freezeCorpse is the active death route."
+  ],
+  "legacy_only_components": [
+    "nest-life-death",
+    "queen-acid-blast",
+    "queen-acid-pool",
+    "queen-area-warning",
+    "queen-death",
+    "status-queen-exposed"
   ]
 }

@@ -15,7 +15,7 @@ import {verifyProbe,decodedMotion} from './room-demo.mjs';
 // Extend declaratively. Requirements are checked against forwarded runtime events.
 export const CASES = Object.freeze({
  'acid-impact': {hazard:'spitter',require:'acid'},
- 'acid-pool': {hazard:'queen',require:'acid'},
+ 'acid-pool': {hazard:'queen',require:'acid',runVersion:2},
 });
 export function options(argv) {
  const v={};for(const arg of argv){const m=/^--(case|out|root|source-sha|seconds|quality)=(.+)$/.exec(arg);if(arg==='--provisional'){assert(!v.provisional);v.provisional=true;}else{assert(m,`Unknown argument ${arg}`);assert(!(m[1] in v),`Duplicate ${m[1]}`);v[m[1]]=m[2];}}
@@ -36,6 +36,13 @@ async function stage(o) {
  const {createBuild}=await import('/src/game/roguelike/builds.ts');
  let seed=1729;Math.random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
  g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.skipStory();
+ if(o.definition.hazard==='queen'){
+  const {generateRun}=await import('/src/game/roguelike/run.ts');
+  const node=generateRun(1729,o.definition.runVersion).nodes.find(n=>n.kind==='boss');
+  if(!node)throw Error('Missing production boss room');
+  g.expedition={...g.expedition,run:{...g.expedition.run,version:o.definition.runVersion,currentNodeId:node.id}};
+  g.enterRoom(false);g.skipStory();
+ }
  const build=createBuild();g.combat.setBuild(build);g.expedition={...g.expedition,build};
  g.pending=[];g.director.update=()=>[];g.clearRequested=false;
  g.enemies=new EnemySystem({balance:{health:1,damage:1,speed:0,eliteHealth:1,eliteDamage:1,specials:true},canMove:()=>false,canAttack:(a,b)=>geometry.hasClearExpeditionShot(g.geometry,a,b)});
@@ -44,18 +51,23 @@ async function stage(o) {
  d.nativeZoom=r.camera.zoom;d.events=[];d.domainEvents=[];d.frame=-1;
  const effect=r.effect.bind(r);r.effect=e=>{const p=r.camera.position.clone().set(e.x/32,.3,e.y/32).project(r.camera);d.events.push({...e,frame:d.frame,pixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}});return effect(e);};
  for(const [owner,name] of [[g.enemies,'enemy'],[g.boss,'queen']]){const update=owner.update.bind(owner);owner.update=(...args)=>{const events=update(...args);d.domainEvents.push(...events.map(e=>({...e,owner:name,frame:d.frame})));return events;};}
- const candidates=[],radius=o.definition.hazard==='queen'?92:32;
- for(const distance of [240,210,180,270])for(let i=0;i<24;i++){
-  const angle=i*Math.PI/12,p={x:g.player.x+Math.cos(angle)*distance,y:g.player.y+Math.sin(angle)*distance};
-  if(geometry.canOccupyExpedition(g.geometry,p,radius)&&geometry.hasClearExpeditionShot(g.geometry,g.player,p)&&r.visible(p.x,p.y))candidates.push(p);
+ const {NEST_DISTANCE,MAX_QUEEN_NESTS}=await import('/src/game/enemies/QueenBossSystem.ts');
+ const candidates=[],queen=o.definition.hazard==='queen',origin=queen?g.geometry.bossSpawn:g.player,radius=queen?90:32;
+ if(queen&&!geometry.canOccupyExpedition(g.geometry,origin,76))throw Error('Production queen spawn is not occupiable');
+ for(const distance of [240,210,180,270,320,360,400])for(let i=0;i<24;i++){
+  const angle=i*Math.PI/12,p={x:origin.x+Math.cos(angle)*distance,y:origin.y+Math.sin(angle)*distance};
+  const clearOfNests=!queen||Array.from({length:MAX_QUEEN_NESTS},(_,slot)=>slot*Math.PI*2/MAX_QUEEN_NESTS).every(a=>Math.hypot(p.x-origin.x-Math.cos(a)*NEST_DISTANCE,p.y-origin.y-Math.sin(a)*NEST_DISTANCE)>150);
+  const screen=r.camera.position.clone().set(p.x/32,.3,p.y/32).project(r.camera),sy=(1-screen.y)*innerHeight/2;
+  if(clearOfNests&&geometry.canOccupyExpedition(g.geometry,p,radius)&&geometry.hasClearExpeditionShot(g.geometry,origin,p)&&r.visible(p.x,p.y)&&(!queen||(sy>190&&sy<340)))candidates.push(p);
  }
  if(!candidates.length)throw Error('No legal visible unobstructed hazard source');
- if(o.definition.hazard==='spitter'){const spawn=g.enemies.spawn('spitter',candidates[0].x,candidates[0].y);if(!spawn.spawned)throw Error('Spawn rejected');}
- else if(!g.boss.start(candidates[0].x,candidates[0].y))throw Error('Queen start failed');
+ let hazardSource=candidates[0];
+ if(!queen){const spawn=g.enemies.spawn('spitter',hazardSource.x,hazardSource.y);if(!spawn.spawned)throw Error('Spawn rejected');}
+ else{Object.assign(g.player,candidates[0]);hazardSource={...origin};if(!g.boss.start(origin.x,origin.y))throw Error('Queen start failed');}
  d.initialTotal=g.combat.snapshot.health+g.combat.snapshot.armor;
  const caption=document.createElement('div');caption.id='vfx-audit-caption';caption.style.cssText='position:fixed;left:12px;bottom:78px;z-index:999;padding:6px 9px;background:#061116ef;color:#eff5ef;font:12px monospace;pointer-events:none';
- caption.textContent=`${o.provisional?'PROVISIONAL / ':''}${o.case} / CONTROLLED REAL GAME / NATIVE CAMERA / SILENT`;document.body.append(caption);
- return {room:g.node.templateId,player:{...g.player},hazardSource:candidates[0],build,nativeZoom:d.nativeZoom,quality:r.qualityTier,controls:'Stationary player and spitter; normal damage, specials and boss timers. Encounter director disabled. Boss staged in starting room, not campaign progression. Actual DepthGame.update hazard collision/queen area attacks, unchanged danger radius and pool lifetime. No injected effects, player fire, DOM input, audio or performance evidence.'};
+ caption.textContent=`${o.provisional?'PROVISIONAL / ':''}${o.case}${queen?' / LEGACY BOSS':''} / CONTROLLED / NATIVE CAMERA / ${o.quality.toUpperCase()} / SILENT`;document.body.append(caption);
+ return {room:g.node.templateId,runVersion:g.expedition.run.version,player:{...g.player},hazardSource,build,nativeZoom:d.nativeZoom,quality:r.qualityTier,controls:'Stationary player and spitter; normal damage, specials and boss timers. Encounter director disabled. The queen case uses the supported legacy v2 Reactor Vault through production room entry, with a legal nearby player position; not current story-campaign progression. Actual DepthGame.update hazard collision/queen area attacks, unchanged danger radius and pool lifetime. No injected effects, player fire, DOM input, audio or performance evidence.'};
 }
 function step({frame,o}) {
  const d=window.__vfxAudit,g=d.game,r=d.renderer;d.frame=frame;
@@ -65,7 +77,9 @@ function step({frame,o}) {
  if(r.camera.zoom!==d.nativeZoom)throw Error('Camera zoom changed');
  const gl=r.renderer.getContext();gl.finish();const error=gl.getError();if(error||gl.isContextLost())throw Error(`WebGL error ${error}`);
  const p=r.camera.position.clone().set(g.player.x/32,.3,g.player.y/32).project(r.camera);
- return {frame,elapsed:g.elapsed,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
+ let poolShader=null;
+ if(g.pools.length){const material=r.poolMeshes.values().next().value?.material;poolShader={material:material?.constructor.name,clock:material?.surfaceTime?.value,compiled:r.renderer.info.programs.some(program=>gl.getShaderSource(program.fragmentShader)?.includes('acidWet'))};}
+ return {frame,elapsed:g.elapsed,poolShader,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
 }
 export function verifyEvents(events,frames,o,domainEvents=[]) {
  const acid=events.filter(e=>e.type==='acid'&&e.targetId===undefined&&e.contact===undefined);
@@ -116,6 +130,7 @@ async function record(o) {
   m.encoderPid=encoder.pid;m.encoderErrors='';encoder.stderr.on('data',x=>m.encoderErrors+=x);encoder.stdin.on('error',e=>m.errors.push(e.message));const finished=once(encoder,'close');m.state='recording';await save();
   for(let frame=0;frame<o.frames;frame++){
    assert.deepEqual(m.errors,[]);const s=await page.evaluate(step,{frame,o});const png=await page.screenshot({timeout:120000});m.frames.push({...s,sha256:hash(png)});
+   if(frame===0)await writeFile(join(out,`${o.case}-first-frame.png`),png);
    if(!encoder.stdin.write(png))await bounded(Promise.race([once(encoder.stdin,'drain'),finished.then(()=>{throw Error('Encoder ended early');})]),30000);
    if(frame%o.fps===0){m.events=await page.evaluate(()=>window.__vfxAudit.events);await save();console.log(JSON.stringify({case:o.case,frame,total:o.frames}));}
   }

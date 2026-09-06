@@ -6,15 +6,15 @@
 
 Baseline: `73a055adf03d33d87641b81593cc03e863e9c7af`.
 
-The source catalog contains 74 active VFX families/components and one inactive export. It maps every GameEffect type, BoonEffect type and all 48 mutations. Source hashes for 60 production files were checked against that commit. These are component counts, not 74 independently recorded gameplay clips.
+The source catalog contains 74 implemented VFX families/components and one inactive export. Six components are specific to supported legacy boss routes, including the queen pool. The current v3 story route has no boss-kind node. It maps every GameEffect type, BoonEffect type and all 48 mutations. Source hashes for 60 production files were checked against that commit. These are component counts, not 74 independently recorded gameplay clips.
 
 [Full machine-readable catalog](catalog.json) includes triggers, variants, source references, current rendering methods, recommendations and sprite/particle decisions for every entry. Recommendations are source-level judgments, not claims that every effect has failed visual QA.
 
 ## First review batch
 
 - `acid-contact`: untargeted spitter impact becomes falling liquid droplets instead of additive sparks.
-- `queen-acid-blast`: queen area attack becomes radial liquid spray instead of an explosion ring.
-- `queen-acid-pool`: lingering hazard gains restrained wet mottling and ripples. Its radius, coverage, damage and lifetime stay unchanged.
+- `queen-acid-blast`: the supported legacy queen area attack becomes radial liquid spray instead of an explosion ring.
+- `queen-acid-pool`: the supported legacy hazard gains restrained wet mottling and ripples. Its radius, coverage, damage and lifetime stay unchanged.
 
 These three catalog components appear in two demos: spitter impact and queen splash/lingering pool. Targeted weapon damage also uses the `acid` event name; the approved small target-contact effect stays unchanged.
 

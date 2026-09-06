@@ -28,7 +28,7 @@ export class AcidPoolMaterial extends T.MeshBasicMaterial {
      float life=sin(phase*3.14159265);
      // A tiny off-center glint suggests a bubble without a raised mesh.
      float glint=1.0-smoothstep(0.008,0.033,length(p-center-vec2(-radius*0.4,radius*0.55)));
-     return (ring*0.14+glint*0.12)*life*life;
+     return (ring*0.70+glint*0.35)*life*life;
     }
    `+shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
     vec2 acidP=acidPosition;
@@ -38,10 +38,10 @@ export class AcidPoolMaterial extends T.MeshBasicMaterial {
     for(int i=0;i<4;i++){acidDetail+=acidRipple(acidP,float(i));}
     // Keep the full original perimeter visible; only interior RGB varies.
     float acidInterior=1.0-smoothstep(0.82,0.98,length(acidP));
-    float acidWet=mix(1.0,clamp(0.78+acidMottle*0.28+acidFilm*0.10+acidDetail,0.78,1.24),acidInterior);
+    float acidWet=mix(1.0,clamp(0.38+acidMottle*0.85+acidFilm*0.25+acidDetail,0.38,1.60),acidInterior);
     diffuseColor.rgb *= acidWet;
    `);
   };
  }
- override customProgramCacheKey(){return 'acid-pool-surface-v1';}
+ override customProgramCacheKey(){return 'acid-pool-surface-v2';}
 }
