@@ -25,15 +25,23 @@ try{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin=`http://127.0.0.1:${server.address().port}`;
  browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});await mkdir(out,{recursive:true});
  for(const id of ids){
-  const index=nodes.findIndex(n=>n.templateId===id);assert.ok(index>0);const previous=nodes[index-1],resources=new CombatSystem().getRunResources();
-  const checkpoint=serializeCheckpoint({version:1,savedAt:0,run:{version:3,seed:1729,currentNodeId:previous.id,completedNodeIds:nodes.slice(0,index).map(n=>n.id),phase:'route'},build:{mutations:[]},resources});assert.ok(checkpoint);
+  const index=nodes.findIndex(n=>n.templateId===id);assert.ok(index>=0);const previous=nodes[index-1],resources=new CombatSystem().getRunResources();
+  const checkpoint=index===0?null:serializeCheckpoint({version:1,savedAt:0,run:{version:3,seed:1729,currentNodeId:previous.id,completedNodeIds:nodes.slice(0,index).map(n=>n.id),phase:'route'},build:{mutations:[]},resources});if(index>0)assert.ok(checkpoint);
   const context=await browser.newContext({viewport,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});const page=await context.newPage();page.setDefaultTimeout(120000);const errors=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('response',r=>{if(r.url().startsWith(origin)&&r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});page.on('requestfailed',r=>{if(r.url().startsWith(origin))errors.push(`${r.url()} ${r.failure()?.errorText}`);});
   await page.route('https://fonts.googleapis.com/**',route=>route.fulfill({status:200,contentType:'text/css',body:''}));
-  await context.addInitScript(({key,value})=>localStorage.setItem(key,value),{key:CHECKPOINT_STORAGE_KEY,value:checkpoint});
+  if(checkpoint)await context.addInitScript(({key,value})=>localStorage.setItem(key,value),{key:CHECKPOINT_STORAGE_KEY,value:checkpoint});
   try{
-   await page.goto(origin+prefix);await page.waitForFunction(()=>document.body.dataset.state==='menu');await page.locator('#continue').click();await page.waitForFunction(()=>document.body.dataset.state==='route');
-   if(id==='overload-floor'){assert.match(await page.locator('.panel-intro').innerText(),/kill them and you/);await page.locator('#destroy-ship').click();}else await page.locator(`[data-route="${nodes[index].id}"]`).click();
+   await page.goto(origin+prefix);await page.waitForFunction(()=>document.body.dataset.state==='menu');
+   if(index===0){
+    await page.locator('#start').click();await page.waitForFunction(()=>document.body.dataset.state==='reward');
+    assert.equal(await page.locator('[data-mutation]').count(),3);
+    assert.equal(await page.locator('#reroll').isDisabled(),true);
+    const card=page.locator('[data-mutation]').first();if(mobile)await card.tap();else await card.click();
+   }else{
+    await page.locator('#continue').click();await page.waitForFunction(()=>document.body.dataset.state==='route');
+    if(id==='overload-floor'){assert.match(await page.locator('.panel-intro').innerText(),/kill them and you/);await page.locator('#destroy-ship').click();}else await page.locator(`[data-route="${nodes[index].id}"]`).click();
+   }
    await page.waitForFunction(name=>document.body.dataset.state==='playing'&&document.querySelector('#room-name')?.textContent===name,ROOM_TEMPLATES[id].name);
    await page.locator('#pause').click();await page.waitForFunction(()=>document.body.dataset.state==='paused');await page.locator('#quality').selectOption('low');await page.locator('#resume').click();
    if(await page.locator('#skip-story').isVisible())await page.locator('#skip-story').click();
