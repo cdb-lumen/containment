@@ -5,16 +5,17 @@ import {WEAPON_APPEARANCE} from './weapons';
 import {electricArc} from './electricArc';
 import {wallSurface} from './wallSurface';
 const UP=new T.Vector3(0,1,0),WHITE=new T.Color(0xffffff);
-type Particle={wall?:T.Vector3;shotId?:string;clusterOrigin?:T.Vector3;growth?:number;p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
+type Particle={liquid?:boolean;wall?:T.Vector3;shotId?:string;clusterOrigin?:T.Vector3;growth?:number;p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
 type Pulse={p:T.Vector3;color:T.Color;age:number;life:number;radius:number;angle:number;slash:boolean;stable:boolean};
 export const EFFECT_LIMITS={glow:360,smoke:80,debris:80,pulses:24,decals:64,beams:320,fire:16} as const;
 const vertex=`attribute float effectFrame; varying float vFrame;attribute float effectAlpha;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
 void main(){vFrame=effectFrame;vUv=uv;vColor=instanceColor;vAlpha=effectAlpha;gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(position,1.0);}`;
 const fragment=`uniform sampler2D map;uniform float inset;uniform float grid;uniform float textured;varying float vFrame;uniform float style;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
 void main(){vec2 p=vUv*2.0-1.0;float d=length(p);float alpha=vAlpha;vec3 color=vColor;
-if(style<0.5){alpha*=pow(max(0.0,1.0-d),1.8);color*=1.0+2.0*pow(max(0.0,1.0-d),5.0);}
+if(vFrame<0.0){float drop=length(vec2(p.x/(.76-.18*p.y),p.y));alpha*=1.0-smoothstep(.82,1.0,drop);color*=.72+.28*max(0.0,1.0-drop);color=mix(color,vec3(.64,.78,.33),.35*(1.0-smoothstep(.08,.30,length(p-vec2(-.22,.28)))));}
+else if(style<0.5){alpha*=pow(max(0.0,1.0-d),1.8);color*=1.0+2.0*pow(max(0.0,1.0-d),5.0);}
 else if(style<1.5){float n=.86+.09*sin(p.x*13.0+p.y*7.0)+.05*sin(p.y*19.0-p.x*4.0);alpha*=(1.0-smoothstep(.15,1.0,d/n))*.48;}
-if(textured>.5){float frame=floor(vFrame);vec2 cell=vec2(mod(frame,grid),grid-1.0-floor(frame/grid));vec4 tex=texture2D(map,(cell+clamp(vUv,inset,1.0-inset))/grid);alpha=vAlpha*tex.a*(style>2.5?.9*smoothstep(.0,.12,vUv.y):.42);color=style>2.5?tex.rgb:vColor*(.6+tex.r*.8);}
+if(textured>.5&&vFrame>=0.0){float frame=floor(vFrame);vec2 cell=vec2(mod(frame,grid),grid-1.0-floor(frame/grid));vec4 tex=texture2D(map,(cell+clamp(vUv,inset,1.0-inset))/grid);alpha=vAlpha*tex.a*(style>2.5?.9*smoothstep(.0,.12,vUv.y):.42);color=style>2.5?tex.rgb:vColor*(.6+tex.r*.8);}
 if(alpha<.003)discard;gl_FragColor=vec4(color,alpha);
 #include <tonemapping_fragment>
 #include <colorspace_fragment>
@@ -83,6 +84,8 @@ export class AttackEffects {
    for(let i=0;i<3;i++){const a=angle+Math.PI+(i-1)*.8,v=new T.Vector3(Math.cos(a)*2,.5+i*.3,Math.sin(a)*2);this.particle(this.glow,EFFECT_LIMITS.glow,p,blocked?0x8cafbf:0xb7ba72,.045,.14,v,4);}
    return;
   }
+  // Successful bullet damage also uses "acid"; only untargeted hazards spray liquid.
+  if(e.type==='acid'&&e.targetId===undefined){this.acidSplash(e,p);return;}
   if(e.type==='enemy-warning'){
    p.y=.035;const life=(e.durationMs??650)/1000;
    this.pulse(p,0xe9a564,(e.radius??38)/32,life);
@@ -155,6 +158,17 @@ export class AttackEffects {
    }
   }
  }
+ private acidSplash(e:GameEffect,p:T.Vector3){
+  const area=e.radius!==undefined,r=area?Math.min(3,Math.max(.5,(e.radius??32)/32)):1,count=area?18:10;
+  // Normal-blended procedural drops share the smoke budget, never spark beams.
+  for(let i=0;i<count;i++){
+   const a=i*Math.PI*2/count+(Math.random()-.5)*.25,s=(.8+Math.random()*1.4)*r;
+   const v=new T.Vector3(Math.cos(a)*s,1.6+Math.random()*1.6,Math.sin(a)*s);
+   if(!area){v.x+=Math.cos(e.angle??0)*.8;v.z+=Math.sin(e.angle??0)*.8;}
+   this.particle(this.smoke,EFFECT_LIMITS.smoke,p,i%3?0x689d35:0x96bb4f,.12+Math.random()*.12,.8+Math.random()*.3,v,9.8);
+   const drop=this.smoke[this.smoke.length-1];drop.liquid=true;drop.spin=0;
+  }
+ }
  private metalImpact(e:GameEffect,p:T.Vector3){
   let n=new T.Vector3(e.wall!.x,0,e.wall!.y).normalize();
   // Resolve after height variation so low obstacles never acquire floating marks.
@@ -188,7 +202,14 @@ export class AttackEffects {
   for(const s of list){
    s.age+=dt;if(s.age>=s.life)continue;const t=s.age/s.life;
    if(!s.ground){s.v.y-=s.gravity*dt;s.p.addScaledVector(s.v,dt);s.rotation+=s.spin*dt;if(mode==='debris'&&s.p.y<.035){s.p.y=.035;s.v.y=Math.abs(s.v.y)*.23;s.v.x*=.65;s.v.z*=.65;s.spin*=.55;if(s.v.y<.35&&Math.hypot(s.v.x,s.v.z)<.3){s.ground=true;s.v.set(0,0,0);s.spin=0;}}}
+   if(s.liquid&&s.p.y<=.012){s.p.y=.012;s.ground=true;s.v.set(0,0,0);}
    this.dummy.position.copy(s.p);this.dummy.quaternion.copy(camera.quaternion);
+   if(s.liquid){
+    if(s.ground)this.dummy.rotation.set(-Math.PI/2,0,s.rotation);
+    else{this.forward.copy(s.v).applyQuaternion(this.dummy.quaternion.invert());this.dummy.quaternion.copy(camera.quaternion);this.dummy.rotateZ(Math.atan2(this.forward.y,this.forward.x)-Math.PI/2);}
+    const size=s.size*(s.ground?1.8:1);this.dummy.scale.set(size,size*(s.ground?.8:1.6),1);this.dummy.updateMatrix();
+    mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,s.color);(mesh.geometry.getAttribute('effectFrame') as T.InstancedBufferAttribute).setX(index,-1);alpha.setX(index,.9*Math.min(1,(1-t)*4));index++;continue;
+   }
    if(mode==='decal'){if(s.wall){this.dummy.quaternion.setFromUnitVectors(new T.Vector3(0,0,1),s.wall);this.dummy.rotateZ(s.rotation);}else this.dummy.rotation.set(-Math.PI/2,0,s.rotation);}
    else if(mode==='debris')this.dummy.rotation.set(s.rotation,s.rotation*.7,s.rotation*.4);
    else this.dummy.rotateZ(s.rotation);

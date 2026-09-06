@@ -1,0 +1,2391 @@
+{
+  "schema_version": 1,
+  "revision": "73a055adf03d33d87641b81593cc03e863e9c7af",
+  "inspection_limits": "Source audit and sampled real atlas visual inspection only. Existing screenshots/videos inventoried but not reviewed or certified for current revision. Recommendations need separate current-revision gameplay videos before approval.",
+  "summary": {
+    "effects": 75,
+    "active_effects": 74,
+    "inactive_source_paths": 1,
+    "mutations": 48,
+    "boon_types": 13,
+    "game_effect_types": 11,
+    "source_files_scanned": 60,
+    "assets": 3,
+    "recommendations": {
+      "refine": 36,
+      "keep": 30,
+      "replace": 9
+    },
+    "categories": {
+      "attack": 10,
+      "projectile": 4,
+      "impact": 5,
+      "explosion": 7,
+      "environmental": 7,
+      "mutation": 21,
+      "status": 6,
+      "death": 8,
+      "pickup": 2,
+      "screen-feedback": 5
+    }
+  },
+  "game_effect_types": [
+    "shot",
+    "hit",
+    "corpse",
+    "explosion",
+    "acid",
+    "hurt",
+    "pickup",
+    "sync-corpse",
+    "enemy-attack",
+    "enemy-warning",
+    "boon"
+  ],
+  "boon_effect_types": [
+    "frost",
+    "arc",
+    "burn",
+    "impact",
+    "leech",
+    "shield",
+    "overload",
+    "poison",
+    "charge",
+    "blast",
+    "combustion",
+    "shatter",
+    "field"
+  ],
+  "effects": [
+    {
+      "id": "weapon-muzzle",
+      "category": "attack",
+      "trigger": "Successful CombatSystem.fire emits shot; render resolves actual equipped barrel socket.",
+      "source_refs": [
+        "src/DepthGame.ts:112",
+        "src/render/DepthRenderer.ts:189-191",
+        "src/render/DepthRenderer.ts:211-214",
+        "src/render/AttackEffects.ts:54-74",
+        "src/render/weapons.ts:3-14"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts",
+        "src/render/DepthRenderer.ts",
+        "src/render/weapons.ts"
+      ],
+      "visual_method": "Directional additive glow lobes, hot core and velocity sparks. Plasma adds ring; ballistic weapons add smoke.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Hybrid: bounded glow particles and smoke flipbook; do not replace every gun with one fire sprite.",
+      "rationale": "Keep per-weapon shape and socket alignment; review relative size and density separately for all five guns.",
+      "variants": [
+        "pistol",
+        "rifle",
+        "shotgun",
+        "plasma",
+        "rocket"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "weapon-casings",
+      "category": "attack",
+      "trigger": "Pistol/rifle/shotgun shot; not rocket/plasma.",
+      "source_refs": [
+        "src/render/AttackEffects.ts:68-73",
+        "src/render/AttackEffects.ts:186-200"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Instanced box casing with gravity, spin, bounce and finite five-second life.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "3D mesh particles, not sprites.",
+      "rationale": "Maintain physical side ejection and bounded accumulation.",
+      "variants": [
+        "brass casing",
+        "shotgun red casing"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "weapon-muzzle-light",
+      "category": "attack",
+      "trigger": "Queued shot rendered at muzzle.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:48",
+        "src/render/DepthRenderer.ts:213",
+        "src/render/DepthRenderer.ts:236"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "One weapon-colored point light, short decay.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Light, neither sprite nor particle.",
+      "rationale": "Keep bounded light; verify shotgun energy without reintroducing actor wash.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "weapon-recoil-reload",
+      "category": "attack",
+      "trigger": "Fire recoil and combat reload progress.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:209-213",
+        "src/render/models.ts:49-67"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/models.ts"
+      ],
+      "visual_method": "Marine ribs/spine quaternion motion, weapon pose and barrel-following model.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Skeletal/procedural model animation, neither.",
+      "rationale": "Do not substitute muzzle particles for mechanical response.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "projectile-bodies",
+      "category": "projectile",
+      "trigger": "Live player/hazard/grenade bullet entries after muzzle-distance gate.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:52",
+        "src/render/DepthRenderer.ts:248",
+        "src/DepthGame.ts:100-108"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Up to 320 elongated low-poly sphere instances; hazard green, plasma cyan, others amber.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Keep mesh bodies; sprite glow only secondary.",
+      "rationale": "Rocket and grenade silhouettes share generic projectile geometry; make ordnance identifiable.",
+      "variants": [
+        "pistol",
+        "rifle",
+        "shotgun",
+        "plasma",
+        "rocket",
+        "hazard",
+        "grenade"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "projectile-tracers",
+      "category": "projectile",
+      "trigger": "Non-grenade travel, previous to current presentation position.",
+      "source_refs": [
+        "src/render/AttackEffects.ts:203-216"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Velocity-aligned cylinder beams, weapon-colored with thicker plasma/hazard.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Beam geometry rather than sprite or free particles.",
+      "rationale": "Keep sweep connection and muzzle delay; check long-frame streak lengths.",
+      "variants": [
+        "ballistic",
+        "plasma",
+        "rocket",
+        "hazard"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "projectile-energy-trails",
+      "category": "projectile",
+      "trigger": "Trail cadence for plasma/rocket/hazard.",
+      "source_refs": [
+        "src/render/AttackEffects.ts:217-220"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Small additive glow cards; rocket additionally emits smoke atlas wisps.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Hybrid glow particles plus smoke flipbook.",
+      "rationale": "Hazard should read as liquid spit, rocket as exhaust, plasma as energy.",
+      "variants": [
+        "plasma",
+        "rocket smoke",
+        "hazard slime glow"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "grenade-flight",
+      "category": "projectile",
+      "trigger": "Thrown grenade live until fuse expiry; wall collision sets speed zero.",
+      "source_refs": [
+        "src/DepthGame.ts:97-102",
+        "src/render/DepthRenderer.ts:248",
+        "src/render/AttackEffects.ts:210"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts",
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Generic projectile body follows sine-height arc; no tracer or dedicated grenade trail.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Distinct 3D grenade model and tiny optional particle cue, no large sprite.",
+      "rationale": "The source has motion but weak ordnance identity.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "contact-sparks",
+      "category": "impact",
+      "trigger": "Contact marked damage, armor or blocked, before legacy acid/hit dispatch.",
+      "source_refs": [
+        "src/DepthGame.ts:106",
+        "src/render/AttackEffects.ts:80-84"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Brief small core plus three back-scattered sparks; armor and blocked share cool palette.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Bounded procedural particles, not impact flipbook.",
+      "rationale": "Preserve restrained confirmation, distinguish armored/blocked only as needed.",
+      "variants": [
+        "damage",
+        "armor",
+        "blocked"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "actor-hit-flash",
+      "category": "impact",
+      "trigger": "Applied damage/armor projectile contact with targetId.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:193",
+        "src/render/models.ts:40-47"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/models.ts"
+      ],
+      "visual_method": "Actor material emissive overlay capped at 0.1; frozen/exposed baseline retained.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Material response, neither sprite nor particles.",
+      "rationale": "Current dim flash matches preference. Secondary damage does not automatically use this direct-contact path.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "wall-impact-generic",
+      "category": "impact",
+      "trigger": "Non-shotgun non-splash world collision, including hazard wall hit with plasma weapon id.",
+      "source_refs": [
+        "src/DepthGame.ts:101",
+        "src/DepthGame.ts:107",
+        "src/render/AttackEffects.ts:128-154"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Back-scattered glows, small box debris, smoke puff.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Mesh/spark particles and smoke sprite, not explosion atlas.",
+      "rationale": "Only shotgun gets rendered-wall normals; extend semantic contact carefully to other guns.",
+      "variants": [
+        "pistol",
+        "rifle",
+        "plasma",
+        "hazard wall uses plasma styling"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "wall-impact-shotgun-metal",
+      "category": "impact",
+      "trigger": "Shotgun pellet hits wall with normal and shotId, no targetId.",
+      "source_refs": [
+        "src/DepthGame.ts:107",
+        "src/render/AttackEffects.ts:78",
+        "src/render/AttackEffects.ts:158-184",
+        "src/render/wallSurface.ts",
+        "src/game/world/wallContact.ts"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts",
+        "src/render/wallSurface.ts"
+      ],
+      "visual_method": "Tiny sparks/chips, supported surface-normal decal, clustered same-shot smoke.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Hybrid physical sparks/chips with small smoke/decal cards.",
+      "rationale": "Keep actual surface projection and shared smoke, separate from Breacher monster slam.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "acid-contact",
+      "category": "impact",
+      "trigger": "Hazard hits player; non-contact acid events.",
+      "source_refs": [
+        "src/DepthGame.ts:102",
+        "src/render/AttackEffects.ts:128-154"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Green radial splashes, core, dark floor stain and heavier debris.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Droplet mesh particles plus irregular decal sprite.",
+      "rationale": "Box fragments and radial glow are not a strong liquid language; do not alter ordinary contact branch.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "enemy-melee-slash",
+      "category": "attack",
+      "trigger": "Standard enemy contact-attack emits enemy-attack.",
+      "source_refs": [
+        "src/DepthGame.ts:91",
+        "src/render/AttackEffects.ts:120-125"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Short floor-plane ring-sector slash aligned by attack angle.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Procedural arc mesh; sparse motion particles optional.",
+      "rationale": "One slash shared by crawler/stalker/brute/carrier; tune reach/contact to attack family.",
+      "variants": [
+        "crawler",
+        "stalker",
+        "brute",
+        "carrier"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "enemy-attack-animation",
+      "category": "attack",
+      "trigger": "Enemy or queen attack event; not while frozen/dead.",
+      "source_refs": [
+        "src/DepthGame.ts:91-92",
+        "src/render/DepthRenderer.ts:192",
+        "src/render/models.ts:23-35",
+        "src/render/models.ts:42"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/models.ts"
+      ],
+      "visual_method": "Imported attack clip with short crossfade and one-shot latch.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Skeletal animation, neither.",
+      "rationale": "Retain attack anticipation; inspect each real model before changing timings.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "spitter-launch",
+      "category": "attack",
+      "trigger": "Enemy hazard-attack emits spitter enemy-attack.",
+      "source_refs": [
+        "src/DepthGame.ts:91",
+        "src/render/AttackEffects.ts:122-124"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Seven green forward glows with vertical motion.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Liquid mesh particles, no fire sprite.",
+      "rationale": "Match the trail/contact liquid treatment.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "enemy-spawn-warning",
+      "category": "attack",
+      "trigger": "Encounter breach spawn or matron brood summon.",
+      "source_refs": [
+        "src/DepthGame.ts:88-89",
+        "src/DepthGame.ts:117",
+        "src/render/AttackEffects.ts:86-90"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Expanding amber floor ring for configured spawn delay.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Procedural ring, not particles as primary warning.",
+      "rationale": "Preserve actionable timing; carrier/queen minion pending spawns do not all emit this warning.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "enemy-aim-warning",
+      "category": "attack",
+      "trigger": "EnemySystem attack-warning with target coordinates.",
+      "source_refs": [
+        "src/DepthGame.ts:91",
+        "src/render/AttackEffects.ts:86-90"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Source ring, target ring and twelve dotted glow points along attack line.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Explicit geometry for warning, sparse particles only decorative.",
+      "rationale": "Do not let shared pulse/glow pool pressure retire necessary danger cues.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "queen-area-warning",
+      "category": "attack",
+      "trigger": "Queen pendingTelegraph exists.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:54-56",
+        "src/render/DepthRenderer.ts:224-225",
+        "src/game/enemies/QueenBossSystem.ts"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Fixed red-orange thin outer ring and low-opacity filled disk at target radius.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Geometry, neither sprite nor random particles.",
+      "rationale": "This dedicated warning owner is better protected than the shared warning pool.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "queen-acid-blast",
+      "category": "explosion",
+      "trigger": "Queen area-attack emits acid with radius.",
+      "source_refs": [
+        "src/DepthGame.ts:92",
+        "src/render/AttackEffects.ts:130-142"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Green ring/flash/sparks, smoke and dark acid decal.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Liquid particles plus vapor sprite and irregular decal.",
+      "rationale": "Distinguish dangerous acid from neutral ordnance and fire.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "queen-acid-pool",
+      "category": "environmental",
+      "trigger": "Queen area attack creates two-second damaging pool.",
+      "source_refs": [
+        "src/DepthGame.ts:92",
+        "src/render/DepthRenderer.ts:226-227"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Flat green circle at floor, opacity decays with remaining life.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Retain exact geometry boundary; add contained liquid shader/decal and sparse droplets.",
+      "rationale": "Uniform disk looks schematic in source design; prioritize boundary honesty, not smoke covering danger.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "blast-neutral",
+      "category": "explosion",
+      "trigger": "Rocket impact, grenade fuse, generic mutation explosion, nest/queen death and ending unless elements indicate fire.",
+      "source_refs": [
+        "src/DepthGame.ts:90",
+        "src/DepthGame.ts:92",
+        "src/DepthGame.ts:99",
+        "src/DepthGame.ts:108",
+        "src/game/roguelike/MutationRuntime.ts:204-208",
+        "src/render/AttackEffects.ts:130-142"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Pale ring and flash, flying sparks, neutral chips and short smoke, no fire atlas.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Hybrid particles plus smoke sprite; fire flipbook only for actual fire flavor.",
+      "rationale": "Keep neutral baseline and local target-status flavor.",
+      "variants": [
+        "rocket",
+        "grenade",
+        "volatile remains",
+        "seismic impact",
+        "nest death",
+        "queen death",
+        "story ending"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "blast-ice",
+      "category": "explosion",
+      "trigger": "Blast samples chilled/frozen targets inside reachable radius.",
+      "source_refs": [
+        "src/DepthGame.ts:99",
+        "src/render/AttackEffects.ts:131-141"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Neutral blast with shatter crystals/vapor; general smoke omitted if icy.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Mesh crystals plus short vapor sprite.",
+      "rationale": "Preserve expressive fracture; source clamps shatter radius and shares boon admission budget.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "blast-poison",
+      "category": "explosion",
+      "trigger": "Blast samples poisoned targets in radius.",
+      "source_refs": [
+        "src/DepthGame.ts:99",
+        "src/render/AttackEffects.ts:131-141"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Green flavor, extra droplets and vapor alongside neutral blast.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Spherical droplets preferable to zero-stretch box debris; smoke sprite secondary.",
+      "rationale": "Poison burst debris is created with stretch zero, a concrete geometry concern to verify in native pixels.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "blast-fire",
+      "category": "explosion",
+      "trigger": "Blast samples burning targets, or combustion boon.",
+      "source_refs": [
+        "src/DepthGame.ts:99",
+        "src/render/AttackEffects.ts:114",
+        "src/render/AttackEffects.ts:131-142"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Explosion01 5x5 flipbook lifted above floor, warm sparks/chips/smoke/scorch.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Authored fire/smoke sprite plus physical particles.",
+      "rationale": "Actual atlas has detailed expanding fire-to-smoke silhouette. Keep fire flavor local, not default.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "blast-mixed-elements",
+      "category": "explosion",
+      "trigger": "Any combination of fire, ice, poison sampled within blast.",
+      "source_refs": [
+        "src/DepthGame.ts:99",
+        "src/render/AttackEffects.ts:131-142"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Composes shatter, poison and fire cues; base ring hue uses poison then fire then ice.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Hybrid, retain each local elemental component.",
+      "rationale": "Test all combinations separately; icy suppresses general smoke even when fiery, and base hue has explicit precedence.",
+      "variants": [
+        "fire+ice",
+        "fire+poison",
+        "ice+poison",
+        "fire+ice+poison"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "blast-light",
+      "category": "explosion",
+      "trigger": "Explosion event or boon blast/overload reaches DepthRenderer.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:188",
+        "src/render/SceneLighting.ts:10",
+        "src/render/SceneLighting.ts:43-44"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/SceneLighting.ts"
+      ],
+      "visual_method": "One warm shared point light, 0.18-second quadratic decay, latest location wins.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "One bounded light, neither.",
+      "rationale": "Always warm despite neutral/ice/poison styling; combustion recursion inside AttackEffects does not invoke this lighting hook.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-impact",
+      "category": "mutation",
+      "trigger": "Pressure Point, First Impact, Executioner, Crossfire and generic build secondary damage.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:73",
+        "src/game/roguelike/MutationRuntime.ts:203",
+        "src/game/roguelike/ElementalRuntime.ts:59-62",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Warm expanding ground ring and five radial glows.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Directional impact particles, not explosion sprite.",
+      "rationale": "Shared ring undercommunicates heavy kinetic contact.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "body-launch",
+      "category": "mutation",
+      "trigger": "Breacher shotgun impulse; Concussion hit push; Chain Reaction transfers impulse.",
+      "source_refs": [
+        "src/game/roguelike/builds.ts:197",
+        "src/game/roguelike/builds.ts:214-216",
+        "src/game/roguelike/MutationRuntime.ts:198-201",
+        "src/game/roguelike/MutationRuntime.ts:224-256",
+        "src/game/roguelike/ElementalRuntime.ts:64",
+        "src/render/DepthRenderer.ts:217",
+        "src/render/DepthRenderer.ts:233-235"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Live actor positions change; dead launch uses sync-corpse routing. No dedicated launch trail.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Actor motion primary; optional tiny dust particles, no sprite blast.",
+      "rationale": "Preserve force and collision evidence; do not add smoke merely to signify movement.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "breacher-wall-slam",
+      "category": "mutation",
+      "trigger": "Launched actor/corpse collides with wall and build resolves Breacher damage.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:241-243",
+        "src/game/roguelike/builds.ts:209-211",
+        "src/game/roguelike/MutationRuntime.ts:203",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Generic boon impact ring at live target. Ghost-only damage branch requires live target.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Directional chips/dust particles and contact-local marks; no combustion sprite.",
+      "rationale": "A monster hitting metal needs wall-directed force, not generic ring. Separate user work owns this path; audit only.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "seismic-wall-slam",
+      "category": "mutation",
+      "trigger": "Wall-hit with Seismic Impact resolves area explosion.",
+      "source_refs": [
+        "src/game/roguelike/builds.ts:209-211",
+        "src/game/roguelike/MutationRuntime.ts:204-212",
+        "src/render/AttackEffects.ts:130-142"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Same neutral radial explosion as ordnance, centered on remembered actor.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Mesh fracture/chip particles, dust sprite and restrained shock geometry.",
+      "rationale": "Keep damaging area clear but remove ordnance-like visual identity. Separate wall-slam worktree must remain untouched.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "chain-body-impact",
+      "category": "mutation",
+      "trigger": "Launched body collides with another enemy with Chain Reaction.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:246-250",
+        "src/game/roguelike/builds.ts:214-216",
+        "src/game/roguelike/MutationRuntime.ts:203",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Generic impact pulse plus transferred actor movement.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Directional particles with body motion, no blast sprite.",
+      "rationale": "Show collision direction rather than a radial magic pulse.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-fragmentation",
+      "category": "mutation",
+      "trigger": "Direct kill with Fragmentation emits impact radius 115.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:79",
+        "src/game/roguelike/ElementalRuntime.ts:32-34",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Large generic impact ring and five glows; no authored fragment trajectories.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Directional mesh fragment particles.",
+      "rationale": "Source damage is fragments but renderer shows a generic radial buff cue.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-frost-onset",
+      "category": "mutation",
+      "trigger": "Cryogenic hit, Cold Snap reload, Ice Lance/cryo-conductor chill or Shock Absorber target chill.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:157-165",
+        "src/game/roguelike/MutationRuntime.ts:192-197",
+        "src/game/roguelike/ElementalRuntime.ts:66",
+        "src/game/roguelike/ElementalRuntime.ts:74",
+        "src/game/roguelike/ElementalRuntime.ts:90",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Blue ground pulse and seven radial glows.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Small mesh ice particles with subtle vapor sprite.",
+      "rationale": "Keep onset distinct from persistent stack-scaled crystals.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-burn-onset",
+      "category": "mutation",
+      "trigger": "New Incendiary burn or Kindling death spread.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:86-90",
+        "src/game/roguelike/MutationRuntime.ts:103-107",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Orange ground pulse and five glows.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Small ignition particles or brief flame sprite, not large ring.",
+      "rationale": "Persistent fire should carry state; do not stack large orange pulses.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-poison-onset-spread",
+      "category": "mutation",
+      "trigger": "Caustic new poison; Toxic Bloom death radius 100.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:36",
+        "src/game/roguelike/ElementalRuntime.ts:67",
+        "src/game/roguelike/ElementalRuntime.ts:81",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Teal-green ring and five glows; persistent green vapor on affected targets.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Droplets and short vapor sprite; larger contained spread for bloom.",
+      "rationale": "Same generic ring obscures difference between infection and death spread.",
+      "variants": [
+        "onset",
+        "toxic bloom"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-electric-link",
+      "category": "mutation",
+      "trigger": "Arc Filament every fourth hit, Conductive Shell multiple links, Cryo Conductor modifiers.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:74-78",
+        "src/game/roguelike/ElementalRuntime.ts:73-75",
+        "src/render/AttackEffects.ts:95-100",
+        "src/render/AttackEffects.ts:222-235",
+        "src/render/electricArc.ts"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts",
+        "src/render/electricArc.ts"
+      ],
+      "visual_method": "Seeded forked cylinder arc, violet corona and blue-white core, restrikes and endpoint sparks.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Beam mesh plus spark particles, no lightning sprite.",
+      "rationale": "Anchored procedural branches fit variable targets; maintain endpoint continuity and bounded cost.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-ricochet-link",
+      "category": "mutation",
+      "trigger": "Ricochet Rounds hit emits impact with target coordinates.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:63",
+        "src/render/AttackEffects.ts:95-100",
+        "src/render/AttackEffects.ts:222-235"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Same violet forked electric arc as Arc Filament; boon type not used by link branch.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Thin ballistic beam/streak plus metal-like endpoint particles.",
+      "rationale": "Confirmed source semantic collision: ricochet currently draws lightning.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-ice-lance-link",
+      "category": "mutation",
+      "trigger": "Ice Lance on chilled hit emits frost with target coordinates.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:66",
+        "src/render/AttackEffects.ts:95-100",
+        "src/render/AttackEffects.ts:222-235"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Same violet forked electric arc as electricity, despite frost boon type.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Tapered ice mesh/beam and short crystal particle trail.",
+      "rationale": "Confirmed source semantic collision: ice lance currently draws lightning.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-shatter",
+      "category": "mutation",
+      "trigger": "Shattershot three-stack consume; Thermal Shock chill+burn; Absolute Zero threshold; Shock Absorber armor break; ice blast composition.",
+      "source_refs": [
+        "src/game/roguelike/builds.ts:198-202",
+        "src/game/roguelike/MutationRuntime.ts:207",
+        "src/game/roguelike/ElementalRuntime.ts:40-43",
+        "src/game/roguelike/ElementalRuntime.ts:53-54",
+        "src/game/roguelike/ElementalRuntime.ts:90",
+        "src/render/AttackEffects.ts:104-112"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Blue-white flash, eighteen elongated box crystals, extra streaks and three vapor wisps.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Mesh crystal debris plus vapor flipbook, no fire sprite.",
+      "rationale": "Retain expressive cryo; vary fracture scale/context rather than return to fireball.",
+      "variants": [
+        "shattershot",
+        "thermal shock",
+        "absolute zero",
+        "shock absorber",
+        "ice blast"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-frost-field",
+      "category": "mutation",
+      "trigger": "Glacial Wake on chilled death, max four live fields.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:82",
+        "src/game/roguelike/ElementalRuntime.ts:98",
+        "src/render/AttackEffects.ts:102",
+        "src/render/AttackEffects.ts:249"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Stable-size fading blue thin floor ring for two seconds.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Frost decal/shader inside truthful boundary plus sparse ice meshes.",
+      "rationale": "Current field is only a ring; needs cold interior without hiding actors.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-charge",
+      "category": "mutation",
+      "trigger": "Aftershock one charge per second or Ball Lightning every third arc.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:37",
+        "src/game/roguelike/ElementalRuntime.ts:68",
+        "src/game/roguelike/ElementalRuntime.ts:75",
+        "src/render/AttackEffects.ts:103"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Single purple glow dot until configured delay.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Procedural charge core with restrained orbit/streak particles.",
+      "rationale": "Different pending attack types currently share one dot.",
+      "variants": [
+        "aftershock 450ms",
+        "ball lightning 500ms"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-aftershock-detonation",
+      "category": "mutation",
+      "trigger": "Aftershock delayed charge expires.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:97",
+        "src/render/AttackEffects.ts:114"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Boon blast recursively uses neutral explosion.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Shockwave geometry and dust particles, not fire sprite.",
+      "rationale": "Keep neutral response but distinguish delayed charge from rocket blast.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-ball-lightning-detonation",
+      "category": "mutation",
+      "trigger": "Ball Lightning charge expires and emits arc with no target.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:97",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Generic purple ring and five glows, not forked arc and not sphere discharge.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Small procedural electrical corona with bounded local forks/particles.",
+      "rationale": "No-target arc falls through generic boon branch.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-overload",
+      "category": "mutation",
+      "trigger": "Completed Hot Reload or Reactor Cascade empowered kill.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:160",
+        "src/game/roguelike/ElementalRuntime.ts:80",
+        "src/render/AttackEffects.ts:114",
+        "src/render/DepthRenderer.ts:188"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts",
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Neutral explosion and shared warm blast light; Hot Reload defaults radius 48.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Priming should be weapon-local glow; damaging cascade can use neutral particles.",
+      "rationale": "Non-damaging reload priming currently looks like a damaging explosion.",
+      "variants": [
+        "hot reload prime",
+        "reactor cascade"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-combustion",
+      "category": "mutation",
+      "trigger": "Combustion hit consumes existing burn.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:56-57",
+        "src/render/AttackEffects.ts:114",
+        "src/render/AttackEffects.ts:137-142"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Recursive fire-flavored explosion atlas/smoke/debris/scorch, without renderer blast-light callback.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Fire sprite plus physical particles.",
+      "rationale": "Good combustion-only use of atlas; audit lighting consistency before raising brightness.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-shield",
+      "category": "mutation",
+      "trigger": "Frost Armor kill, Siphon hit, Emergency Plating, Salvage Engine recovery, Reactive Barrier surviving hurt.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:100",
+        "src/game/roguelike/ElementalRuntime.ts:69",
+        "src/game/roguelike/ElementalRuntime.ts:83",
+        "src/game/roguelike/ElementalRuntime.ts:89",
+        "src/DepthGame.ts:94",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Cyan ground ring and rising glows; radius conveys barrier area but resources use same cue.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Small geometric shield/buff cue; particles only secondary.",
+      "rationale": "Resource gain at enemy position and damaging defense share one visual. Keep UI honest.",
+      "variants": [
+        "frost armor",
+        "siphon",
+        "emergency plating",
+        "salvage engine",
+        "reactive barrier"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "boon-leech",
+      "category": "mutation",
+      "trigger": "Leech Rounds direct-kill cadence, Combat Medic reload healing, Blood Capacitor charged hit.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:101",
+        "src/game/roguelike/ElementalRuntime.ts:70",
+        "src/game/roguelike/ElementalRuntime.ts:86",
+        "src/render/AttackEffects.ts:115-117"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Muted red ring with rising glows at trigger position.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Tiny sprite/particle transfer for healing, separate kinetic hit cue for capacitor.",
+      "rationale": "Healing and offensive charge spend are semantically different.",
+      "variants": [
+        "leech rounds",
+        "combat medic",
+        "blood capacitor"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "status-fire",
+      "category": "status",
+      "trigger": "Alive actor burning status from MutationRuntime.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:154",
+        "src/render/DepthRenderer.ts:217",
+        "src/render/DepthRenderer.ts:230",
+        "src/render/afflictions.ts:35-48",
+        "src/render/afflictions.ts:76-81"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/afflictions.ts"
+      ],
+      "visual_method": "Six small Flame02 atlas tongues per actor and six procedural ember cards; buoyant cycles.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Hybrid authored flame sprite particles and tiny ember particles.",
+      "rationale": "Actual flame atlas has tapering tongues and bright flat-footed core; current source feathers base and uses authored alpha. Keep subtle fire.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "status-poison",
+      "category": "status",
+      "trigger": "Alive actor poisoned status.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:154",
+        "src/render/afflictions.ts:48-50",
+        "src/render/afflictions.ts:82-84"
+      ],
+      "renderer_files": [
+        "src/render/afflictions.ts"
+      ],
+      "visual_method": "Four green smoke cards plus four falling low-poly spherical droplets.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Vapor sprite particles plus 3D droplets.",
+      "rationale": "Keep readable green after tone mapping, but avoid haze dominating smaller actors.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "status-chill",
+      "category": "status",
+      "trigger": "Alive actor chill stacks 1-3.",
+      "source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:154",
+        "src/render/afflictions.ts:7-25",
+        "src/render/afflictions.ts:85"
+      ],
+      "renderer_files": [
+        "src/render/afflictions.ts"
+      ],
+      "visual_method": "Blue albedo-preserving glaze and sparse fracture shader, two crystals per stack with mild motion.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Material glaze plus physical crystal instances; not frost billboard.",
+      "rationale": "Preserve expressive stack progression and actor albedo.",
+      "variants": [
+        "one stack",
+        "two stacks",
+        "three stacks"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "status-frozen",
+      "category": "status",
+      "trigger": "Absolute Zero or Shock Absorber root/frozen flag.",
+      "source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:40-45",
+        "src/game/roguelike/ElementalRuntime.ts:90",
+        "src/render/afflictions.ts:25",
+        "src/render/afflictions.ts:85",
+        "src/render/models.ts:43-47"
+      ],
+      "renderer_files": [
+        "src/render/afflictions.ts",
+        "src/render/models.ts"
+      ],
+      "visual_method": "Full-strength glaze, ten larger crystals, cyan baseline emissive and stopped mixer.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Mesh/material effect, not enclosing opaque ice sprite.",
+      "rationale": "Frozen differs from chill in size/count and motion; keep that contract.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "status-combinations",
+      "category": "status",
+      "trigger": "Any simultaneous burning/poison/chill/frozen flags.",
+      "source_refs": [
+        "src/render/afflictions.ts:70-85",
+        "src/render/DepthRenderer.ts:254",
+        "src/render/models.ts:47"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/afflictions.ts",
+        "src/render/models.ts"
+      ],
+      "visual_method": "Independent status batches render together; frost/frozen material baseline participates in hit flash.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Hybrid per-status methods, not a monolithic combined sprite.",
+      "rationale": "Validate native occupancy and caps for multiple afflictions on small and boss actors.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "status-queen-exposed",
+      "category": "status",
+      "trigger": "Queen phase vulnerable flag.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:230",
+        "src/render/models.ts:47",
+        "src/main.ts:76",
+        "src/style.css:3"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/render/DepthRenderer.ts",
+        "src/render/models.ts",
+        "src/style.css"
+      ],
+      "visual_method": "Green actor emissive baseline and boss HUD color/state change.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Material and UI state, neither.",
+      "rationale": "Keep clearly distinct from poison; no need for a cloud.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "enemy-death-burst",
+      "category": "death",
+      "trigger": "Standard enemy death emits corpse.",
+      "source_refs": [
+        "src/DepthGame.ts:91",
+        "src/render/AttackEffects.ts:128-154"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Green sparks/core, small fading box gore and dark floor stain.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Mesh fragments and irregular decal sprite; avoid glowing confetti.",
+      "rationale": "Keep small debris preference; distinguish soft tissue from wall chips.",
+      "variants": [
+        "crawler",
+        "stalker",
+        "spitter",
+        "brute",
+        "carrier"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "enemy-corpse",
+      "category": "death",
+      "trigger": "Corpse event transfers actor out of live map.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:194-195",
+        "src/render/DepthRenderer.ts:233-235",
+        "src/render/models.ts:76-77",
+        "src/render/ActorPool.ts"
+      ],
+      "renderer_files": [
+        "src/render/ActorPool.ts",
+        "src/render/DepthRenderer.ts",
+        "src/render/models.ts"
+      ],
+      "visual_method": "Frozen GPU-skinned death pose tumbles/bounces/slides; cap 12 desktop/6 coarse pointer.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Real actor mesh, not sprite.",
+      "rationale": "No per-death vertex baking; preserve exact pose and bounded pooled state.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "corpse-sync",
+      "category": "death",
+      "trigger": "MutationRuntime ghost body moved by launch solver.",
+      "source_refs": [
+        "src/DepthGame.ts:41",
+        "src/main.ts:41",
+        "src/render/DepthRenderer.ts:199",
+        "src/game/roguelike/MutationRuntime.ts:233-236"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Position correction of existing corpse; no new particles.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Mesh movement only.",
+      "rationale": "Important route bypasses ordinary DepthRenderer.effect; do not count as independent burst.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "legacy-collapse-corpse",
+      "category": "death",
+      "trigger": "Export exists; no production call found in src.",
+      "source_refs": [
+        "src/render/models.ts:79-89"
+      ],
+      "renderer_files": [
+        "src/render/models.ts"
+      ],
+      "visual_method": "CPU bakes skinned geometry, removes old children and replaces body.",
+      "recommendation": "replace",
+      "sprite_vs_particle": "Inactive alternative mesh path; do not introduce sprite.",
+      "rationale": "Mark unused and consider removing only in future cleanup, not this audit.",
+      "variants": [],
+      "status": "inactive-export",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "nest-life-death",
+      "category": "death",
+      "trigger": "Queen nest spawn persists, nest-destroyed emits explosion.",
+      "source_refs": [
+        "src/DepthGame.ts:92",
+        "src/render/DepthRenderer.ts:231-232",
+        "src/render/models.ts:69-73"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/models.ts"
+      ],
+      "visual_method": "Procedural flesh/chitin nest breathes via vertical scale, disappears with neutral radius-64 explosion.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Organic mesh collapse plus tissue particles instead of generic ordnance.",
+      "rationale": "Nest death is a separate trigger sharing explosion; it currently leaves no corpse.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "queen-death",
+      "category": "death",
+      "trigger": "queen-defeated event.",
+      "source_refs": [
+        "src/DepthGame.ts:92",
+        "src/render/DepthRenderer.ts:230"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Radius-240 neutral explosion; queen model tilts and sinks.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Boss mesh collapse plus restrained organic particles.",
+      "rationale": "Generic blast dominates a distinct boss death trigger; avoid a bigger default fireball.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "player-death",
+      "category": "death",
+      "trigger": "Combat reports dead after hurt.",
+      "source_refs": [
+        "src/DepthGame.ts:94",
+        "src/render/DepthRenderer.ts:209",
+        "src/main.ts:64"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Player root tilts; hurt vignette and modal result shade.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Model collapse and UI, not sprite explosion.",
+      "rationale": "No separate player corpse burst. Preserve legibility beneath result overlay.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "story-destruction",
+      "category": "death",
+      "trigger": "Authorized story ending reaches complete.",
+      "source_refs": [
+        "src/DepthGame.ts:90",
+        "src/render/AttackEffects.ts:130-142",
+        "src/main.ts:64"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "Radius-900 neutral explosion at player, forced death/resources, result modal.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Staged geometry/light/particle event; no mandatory fire atlas.",
+      "rationale": "Extreme radius can overwhelm native camera and shared pools; requires dedicated ending clip.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "pickup-idle",
+      "category": "pickup",
+      "trigger": "Pickup exists in snapshot.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:250",
+        "src/game/pickups/PickupSystem.ts"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Rotating/bobbing dark box with green health or cyan other top.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Small 3D pickup/icon, no particle cloud.",
+      "rationale": "Armor/ammo/grenade/credits share appearance. Distinguish valuable types without brightness inflation.",
+      "variants": [
+        "health",
+        "armor",
+        "ammo",
+        "grenade",
+        "credits"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "pickup-collect",
+      "category": "pickup",
+      "trigger": "PickupSystem collect succeeds, including room-clear auto-sweep.",
+      "source_refs": [
+        "src/DepthGame.ts:81",
+        "src/render/AttackEffects.ts:126"
+      ],
+      "renderer_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "visual_method": "One turquoise rising glow at original pickup position.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "Tiny sprite particle, not explosion.",
+      "rationale": "All rewards use same cue; auto-sweep can burst many at once.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "environment-fog",
+      "category": "environmental",
+      "trigger": "DepthRenderer scene construction.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:43"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "Static exponential blue-green distance fog.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Scene fog, neither sprite nor particles.",
+      "rationale": "Do not add ambient fog billboards merely to decorate every room.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "environment-fixtures",
+      "category": "environmental",
+      "trigger": "Room load extracts emissive fixtures; up to four local lights.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:108-120",
+        "src/render/DepthRenderer.ts:137-174",
+        "src/render/SceneLighting.ts:19-41",
+        "src/render/meshParts.ts:5-15",
+        "src/render/ShipEnvironments.ts",
+        "src/render/AuthoredRooms.ts:22-74"
+      ],
+      "renderer_files": [
+        "src/render/AuthoredRooms.ts",
+        "src/render/DepthRenderer.ts",
+        "src/render/SceneLighting.ts",
+        "src/render/ShipEnvironments.ts",
+        "src/render/meshParts.ts"
+      ],
+      "visual_method": "Emissive architecture/accent meshes, material-batched captured light positions; static lights.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Mesh/material/light, neither particle nor sprite.",
+      "rationale": "All room variants reuse palette/fixture owners. No continuous steam/sparks/weather emitter found.",
+      "variants": [
+        "cyan cryo/electronics",
+        "amber maintenance/security",
+        "green infestation",
+        "reactor rings",
+        "exit accents",
+        "authored cold/warm fixtures"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "environment-signage",
+      "category": "environmental",
+      "trigger": "Authored room Fabricator.sign builds floor-facing illuminated labels.",
+      "source_refs": [
+        "src/render/AuthoredRooms.ts:68-75"
+      ],
+      "renderer_files": [
+        "src/render/AuthoredRooms.ts"
+      ],
+      "visual_method": "CanvasTexture text plane and weak emissive map.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Static texture plane, not particles.",
+      "rationale": "Treat as readable environmental sign, not animated hologram.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "environment-contact-shadows",
+      "category": "environmental",
+      "trigger": "Actor/nest/corpse positions every render; authored prop construction.",
+      "source_refs": [
+        "src/render/SceneLighting.ts:48-64",
+        "src/render/DepthRenderer.ts:238-245",
+        "src/render/AuthoredRooms.ts:23-34",
+        "src/render/AuthoredRooms.ts:63"
+      ],
+      "renderer_files": [
+        "src/render/AuthoredRooms.ts",
+        "src/render/DepthRenderer.ts",
+        "src/render/SceneLighting.ts"
+      ],
+      "visual_method": "Bounded soft shader contact cards for actors; feathered DataTexture ground contacts for props.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Procedural decal planes, no particles.",
+      "rationale": "Keep grounding on low tier and after corpse movement.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "environment-infestation-stains",
+      "category": "environmental",
+      "trigger": "Infested environment architecture build.",
+      "source_refs": [
+        "src/render/ShipEnvironments.ts:198-200"
+      ],
+      "renderer_files": [
+        "src/render/ShipEnvironments.ts"
+      ],
+      "visual_method": "Static flattened dark shell-colored ellipsoids distributed over floor.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Static mesh/decal treatment, no emitter.",
+      "rationale": "Do not misreport these as live acid pools or particle VFX.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "player-flashlight",
+      "category": "environmental",
+      "trigger": "Player position/aim each frame.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:50",
+        "src/render/DepthRenderer.ts:215"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "One cool spotlight following aim direction.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Light, neither.",
+      "rationale": "Preserve aim-linked local illumination.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "screen-hit-x",
+      "category": "screen-feedback",
+      "trigger": "Confirmed damage/armor/blocked contact after mouse position activated.",
+      "source_refs": [
+        "src/main.ts:37-41",
+        "src/render/HitConfirmation.ts:3-9",
+        "src/style.css:2"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/render/HitConfirmation.ts",
+        "src/style.css"
+      ],
+      "visual_method": "10px thin open-center X, 100ms fade at max opacity 0.65 with contact colors.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "CSS UI, not sprite or particles.",
+      "rationale": "Matches thin-X preference; do not enlarge or brighten by default.",
+      "variants": [
+        "damage",
+        "armor",
+        "blocked"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "screen-hurt-vignette",
+      "category": "screen-feedback",
+      "trigger": "Player hurt event retriggers CSS animation.",
+      "source_refs": [
+        "src/main.ts:41",
+        "src/style.css:3",
+        "src/style.css:7"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/style.css"
+      ],
+      "visual_method": "Red inset shadow fading over 0.4 seconds; reduced-motion duration 0.1 seconds.",
+      "recommendation": "refine",
+      "sprite_vs_particle": "CSS overlay, not sprite/particle.",
+      "rationale": "Health and armor-only hurt share the same red cue; review tone and HUD visibility.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "screen-bloom-tonemap",
+      "category": "screen-feedback",
+      "trigger": "High graphics tier uses composer; other tiers direct renderer.",
+      "source_refs": [
+        "src/render/DepthRenderer.ts:40",
+        "src/render/DepthRenderer.ts:53",
+        "src/render/DepthRenderer.ts:255"
+      ],
+      "renderer_files": [
+        "src/render/DepthRenderer.ts"
+      ],
+      "visual_method": "ACES exposure 1.22; high-only bloom strength .38 radius .45 threshold 1.12.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "Postprocess, neither.",
+      "rationale": "Judge every VFX on low/balanced without relying on bloom.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "screen-state-shade",
+      "category": "screen-feedback",
+      "trigger": "Menu/pause/reward/route/dead/complete state.",
+      "source_refs": [
+        "src/main.ts:53-64",
+        "src/style.css:3"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/style.css"
+      ],
+      "visual_method": "DOM gradient or dark blur shade; HUD dimming and modal content.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "CSS UI, neither.",
+      "rationale": "Distinguish modal feedback from gameplay VFX; shade can obscure transient ending/death cues.",
+      "variants": [],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    },
+    {
+      "id": "screen-health-resource-feedback",
+      "category": "screen-feedback",
+      "trigger": "Periodic combat/encounter snapshot HUD sync.",
+      "source_refs": [
+        "src/main.ts:75-76",
+        "src/style.css:3",
+        "src/render/EnemyHealthBars.ts"
+      ],
+      "renderer_files": [
+        "src/main.ts",
+        "src/render/EnemyHealthBars.ts",
+        "src/style.css"
+      ],
+      "visual_method": "Health/armor/reload width changes, boss state colors; two instanced world-healthbar draws in HUD scene.",
+      "recommendation": "keep",
+      "sprite_vs_particle": "UI and billboard bar geometry, not particle effects.",
+      "rationale": "Health bars remain unoccluded; existing source lacks floating damage numbers.",
+      "variants": [
+        "player health",
+        "armor",
+        "reload",
+        "ammo/resource text",
+        "boss phase",
+        "enemy and nest bars"
+      ],
+      "status": "active",
+      "evidence_level": "source-inspected; not runtime-verified in this audit"
+    }
+  ],
+  "mutations": [
+    {
+      "id": "breacher",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:18",
+      "description": "Shotgun hits launch bodies. Wall slams deal up to 36 extra damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:197",
+        "src/game/roguelike/builds.ts:211"
+      ],
+      "effect_ids": [
+        "body-launch",
+        "breacher-wall-slam"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "heavy-pellets",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:19",
+      "description": "Shotgun projectile damage +35%; with Breacher, launch impulse also increases by 50%.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:70",
+        "src/game/roguelike/builds.ts:197"
+      ],
+      "effect_ids": [
+        "projectile-bodies",
+        "body-launch"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "chain-reaction",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:20",
+      "description": "Launched bodies damage and launch another enemy with decaying force.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:214"
+      ],
+      "effect_ids": [
+        "chain-body-impact",
+        "body-launch"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "volatile-remains",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:21",
+      "description": "Kills explode for 22 damage, hitting up to six nearby enemies.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:220"
+      ],
+      "effect_ids": [
+        "blast-neutral"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "cryogenic",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:22",
+      "description": "Hits stack chill, slowing enemies up to 45% for 2 seconds.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:203"
+      ],
+      "effect_ids": [
+        "boon-frost-onset",
+        "status-chill"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "shattershot",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:23",
+      "description": "Hits consume three chill stacks for 24 direct and 16 area damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:198"
+      ],
+      "effect_ids": [
+        "boon-shatter"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "scavenger",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:24",
+      "description": "Burning enemies spread fire to three nearby enemies on death, including burn kills.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:103"
+      ],
+      "effect_ids": [
+        "boon-burn-onset",
+        "status-fire"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "blood-price",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:25",
+      "description": "Projectile damage +35% with every weapon.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:70",
+        "src/game/roguelike/builds.ts:73"
+      ],
+      "effect_ids": [
+        "contact-sparks",
+        "screen-hurt-vignette"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "hot-reload",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:26",
+      "description": "Reloading primes your next shot for 50% extra damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:160",
+        "src/game/roguelike/builds.ts:187",
+        "src/game/roguelike/builds.ts:194"
+      ],
+      "effect_ids": [
+        "boon-overload"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "last-shell",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:27",
+      "description": "The last shotgun shell deals +60% projectile damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:189"
+      ],
+      "effect_ids": [
+        "weapon-muzzle",
+        "contact-sparks"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "magnetic-feed",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:28",
+      "description": "Fire an ordinary shot, then switch weapons to prime the next shot for +50% damage.",
+      "trigger_source_refs": [
+        "src/game/combat/CombatSystem.ts:504",
+        "src/game/combat/CombatSystem.ts:511",
+        "src/game/combat/CombatSystem.ts:570"
+      ],
+      "effect_ids": [
+        "weapon-muzzle"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "field-medic",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:29",
+      "description": "Healing adds up to 25% extra health and converts unused bonus into armor.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:228"
+      ],
+      "effect_ids": [
+        "screen-health-resource-feedback"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "piercing-rounds",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:30",
+      "description": "Rifle, pistol and plasma rounds pierce one additional enemy.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:69"
+      ],
+      "effect_ids": [
+        "projectile-tracers",
+        "contact-sparks"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "pressure-point",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:31",
+      "description": "Every fifth hit deals 24 extra damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:73"
+      ],
+      "effect_ids": [
+        "boon-impact"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "seismic-impact",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:32",
+      "description": "Wall slams send a 24-damage shockwave through nearby enemies.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:210"
+      ],
+      "effect_ids": [
+        "seismic-wall-slam"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "permafrost",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:33",
+      "description": "Chill lasts 3.5 seconds, giving you more time to set up a shatter.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:164",
+        "src/game/roguelike/builds.ts:205"
+      ],
+      "effect_ids": [
+        "status-chill"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "cold-snap",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:34",
+      "description": "Completing a reload chills the three closest visible enemies.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:161",
+        "src/game/roguelike/MutationRuntime.ts:164"
+      ],
+      "effect_ids": [
+        "boon-frost-onset",
+        "status-chill"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "frost-armor",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:35",
+      "description": "Killing a chilled enemy restores 3 armor.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:100"
+      ],
+      "effect_ids": [
+        "boon-shield"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "arc-filament",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:36",
+      "description": "Every fourth hit arcs to a nearby enemy for 16 damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:74"
+      ],
+      "effect_ids": [
+        "boon-electric-link"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "conductive-shell",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:37",
+      "description": "Arcs hit two targets and deal 40% more damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:75"
+      ],
+      "effect_ids": [
+        "boon-electric-link"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "incendiary",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:38",
+      "description": "Hits ignite enemies for 24 damage over 1.5 seconds.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:80"
+      ],
+      "effect_ids": [
+        "boon-burn-onset",
+        "status-fire"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "rapid-cycle",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:39",
+      "description": "Fire and reload 15% faster.",
+      "trigger_source_refs": [
+        "src/game/roguelike/builds.ts:71",
+        "src/game/roguelike/builds.ts:72"
+      ],
+      "effect_ids": [
+        "weapon-muzzle",
+        "weapon-recoil-reload"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "leech-rounds",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:40",
+      "description": "Every fourth direct kill restores 4 health.",
+      "trigger_source_refs": [
+        "src/game/roguelike/MutationRuntime.ts:101"
+      ],
+      "effect_ids": [
+        "boon-leech"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "emergency-plating",
+      "catalog_ref": "src/game/roguelike/mutationCatalog.ts:41",
+      "description": "Surviving a hit below 30 health grants 20 armor.",
+      "trigger_source_refs": [
+        "src/DepthGame.ts:94"
+      ],
+      "effect_ids": [
+        "boon-shield"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "ricochet-rounds",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:3",
+      "description": "Once per second, a hit ricochets to another visible enemy for 18 damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:63"
+      ],
+      "effect_ids": [
+        "boon-ricochet-link"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "concussion-rounds",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:4",
+      "description": "Hits push enemies away; nearby targets take the strongest shove.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:64"
+      ],
+      "effect_ids": [
+        "body-launch"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "executioner",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:5",
+      "description": "Hits against enemies below 30% health deal 24 extra damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:60"
+      ],
+      "effect_ids": [
+        "boon-impact"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "first-impact",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:6",
+      "description": "Your first hit against each enemy deals 18 extra damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:59"
+      ],
+      "effect_ids": [
+        "boon-impact"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "crossfire",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:7",
+      "description": "Hitting an enemy with a different weapon deals 28 extra damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:62"
+      ],
+      "effect_ids": [
+        "boon-impact"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "fragmentation",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:8",
+      "description": "Direct kills scatter fragments for 16 damage to three nearby enemies.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:79"
+      ],
+      "effect_ids": [
+        "boon-fragmentation"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "absolute-zero",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:9",
+      "description": "Reaching three chill stacks freezes normal enemies briefly and deals 18 damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:41"
+      ],
+      "effect_ids": [
+        "boon-shatter",
+        "status-frozen"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "ice-lance",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:10",
+      "description": "Hits on chilled enemies send an icy lance into a second nearby target.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:66"
+      ],
+      "effect_ids": [
+        "boon-ice-lance-link"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "frostbite",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:11",
+      "description": "Enemies at three chill stacks take 5 damage every half-second.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:96"
+      ],
+      "effect_ids": [
+        "status-chill"
+      ],
+      "dedicated_vfx": false,
+      "note": "Uses existing attack/status/UI feedback only; no dedicated mutation burst."
+    },
+    {
+      "id": "thermal-shock",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:12",
+      "description": "Hitting a burning, chilled enemy consumes both effects in a 32-damage blast.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:53"
+      ],
+      "effect_ids": [
+        "boon-shatter"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "glacial-wake",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:13",
+      "description": "Chilled enemies leave a slowing frost patch when killed.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:82"
+      ],
+      "effect_ids": [
+        "boon-frost-field"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "cryo-conductor",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:14",
+      "description": "Your arcs deal 12 extra damage to chilled targets and spread their chill.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:74"
+      ],
+      "effect_ids": [
+        "boon-electric-link",
+        "boon-frost-onset",
+        "status-chill"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "caustic-rounds",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:15",
+      "description": "Hits poison enemies for 30 damage over three seconds.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:67"
+      ],
+      "effect_ids": [
+        "boon-poison-onset-spread",
+        "status-poison"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "toxic-bloom",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:16",
+      "description": "Poisoned enemies burst on death, poisoning nearby enemies.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:81"
+      ],
+      "effect_ids": [
+        "boon-poison-onset-spread",
+        "status-poison"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "combustion",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:17",
+      "description": "Hits on burning enemies consume the burn in a 26-damage blast.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:6",
+        "src/game/roguelike/ElementalRuntime.ts:56",
+        "src/game/roguelike/ElementalRuntime.ts:57"
+      ],
+      "effect_ids": [
+        "boon-combustion"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "ball-lightning",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:18",
+      "description": "Every third arc leaves a charge that discharges after half a second.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:75"
+      ],
+      "effect_ids": [
+        "boon-charge",
+        "boon-ball-lightning-detonation"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "aftershock",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:19",
+      "description": "Once per second, a hit plants a charge that explodes after a short delay.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:68"
+      ],
+      "effect_ids": [
+        "boon-charge",
+        "boon-aftershock-detonation"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "reactor-cascade",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:20",
+      "description": "The first kill from an empowered shot or its on-hit effects releases a 36-damage discharge.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:80"
+      ],
+      "effect_ids": [
+        "boon-overload"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "siphon-shells",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:21",
+      "description": "Hitting a burning, chilled or poisoned enemy restores 2 armor.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:69"
+      ],
+      "effect_ids": [
+        "boon-shield"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "combat-medic",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:22",
+      "description": "Completing a reload restores 2 health, up to 12 each room.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:86"
+      ],
+      "effect_ids": [
+        "boon-leech"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "reactive-barrier",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:23",
+      "description": "Surviving a hit releases a defensive blast for 20 damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:89"
+      ],
+      "effect_ids": [
+        "boon-shield"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "salvage-engine",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:24",
+      "description": "Every sixth secondary kill recovers a grenade.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:83"
+      ],
+      "effect_ids": [
+        "boon-shield"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "blood-capacitor",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:25",
+      "description": "Restoring health charges your next hit for 24 extra damage.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:26",
+        "src/game/roguelike/ElementalRuntime.ts:70"
+      ],
+      "effect_ids": [
+        "boon-leech"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    },
+    {
+      "id": "shock-absorber",
+      "catalog_ref": "src/game/roguelike/elementalCatalog.ts:26",
+      "description": "When your armor breaks, freeze the three nearest threats briefly.",
+      "trigger_source_refs": [
+        "src/game/roguelike/ElementalRuntime.ts:90"
+      ],
+      "effect_ids": [
+        "boon-shatter",
+        "boon-frost-onset",
+        "status-frozen"
+      ],
+      "dedicated_vfx": true,
+      "note": "Trigger routes to canonical effects; shared visuals are not duplicate effects."
+    }
+  ],
+  "shared_pool_risks": [
+    "AttackEffects: glow 360, smoke 80, debris 80, pulses 24, decals 64, beams 320, fire 16; oldest particle/pulse retirement.",
+    "Boon bursts limited to eight and target links to two per render interval; recursive ice shatter competes for boon budget.",
+    "Beams are shared by projectiles, arcs and spark streaks in that order, so later effects can be truncated.",
+    "Glacial Wake/charge/spawn warnings share cosmetic pools; domain lifetime alone does not guarantee continued visible telegraph.",
+    "Afflictions: 128 actors maximum, five shared draws, flame/ember six per actor, poison/drop four, ice up to ten.",
+    "High-only bloom must not be required for baseline recognition."
+  ],
+  "known_absences": [
+    "No continuous environmental steam/weather/spark particle owner found in production source.",
+    "No camera shake, chromatic aberration, screen-space shock distortion or floating damage numbers found.",
+    "No dedicated persistent primed-weapon status visual for Cycle Capacitor; normal projectile appearance retained.",
+    "collapseCorpse is an unused production export; freezeCorpse is the active death route."
+  ]
+}

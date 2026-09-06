@@ -8,6 +8,7 @@ import {shipEnvironment,environmentObstacle,environmentArchitecture,appendEnviro
 import * as T from 'three';
 import {EnemyHealthBars} from './EnemyHealthBars';
 import {AttackEffects} from './AttackEffects';
+import {AcidPoolMaterial} from './acidPool';
 import {AfflictionBatches} from './afflictions';
 import {WEAPON_APPEARANCE} from './weapons';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
@@ -34,7 +35,7 @@ export class DepthRenderer {
  private time=0;private recoil=0;private roomKey='';private temporaryMaterials:T.Material[]=[];
  private bulletMesh:T.InstancedMesh;private dummy=new T.Object3D();
  private pickupMeshes=new Map<number,T.Group>();private exit:T.Group|null=null;
- private warning=new T.Group();private poolMeshes=new Map<number,T.Mesh>();private menuActors=new T.Group();private menuMarine=marine();private menuAlien=alien('brute',true);private lastMenu=false;
+ private warning=new T.Group();private poolMeshes=new Map<number,T.Mesh<T.CircleGeometry,AcidPoolMaterial>>();private menuActors=new T.Group();private menuMarine=marine();private menuAlien=alien('brute',true);private lastMenu=false;
  constructor(readonly canvas:HTMLCanvasElement){
   this.renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
   this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.22;
@@ -120,6 +121,7 @@ export class DepthRenderer {
   for(const [mat,list]of buckets){const merged=mergeGeometries(list);list.forEach(g=>g.dispose());if(merged){const mesh=new T.Mesh(merged,mat);mesh.userData.bakedEnvironment=true;mesh.castShadow=true;mesh.receiveShadow=true;this.world.add(mesh);}}
  }
  loadRoom(node:RunNode,environment:ShipEnvironment|undefined=shipEnvironment(node.templateId)){
+  this.clearPools();
   this.roomKey=node.id;this.shadowsDirty=true;disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.temporaryMaterials=[];this.world=new T.Group();this.scene.add(this.world);this.effects.setWorld(this.world);
   for(const m of this.actors.values())this.actorPool.release(m);this.actors.clear();for(const n of this.nests.values())disposeModel(n);this.nests.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;
   for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];for(const p of this.pickupMeshes.values())disposeModel(p);this.pickupMeshes.clear();this.effects.clear();this.afflictions.clear();this.pendingShots=[];this.muzzleLife=0;this.recoil=0;
@@ -223,8 +225,7 @@ export class DepthRenderer {
   const q=game.boss.snapshot;
   this.warning.visible=!!q.pendingTelegraph&&!menu;
   if(q.pendingTelegraph){const t=q.pendingTelegraph;this.warning.position.set(t.targetX/UNIT,.045,t.targetY/UNIT);this.warning.scale.setScalar(t.radius/UNIT);const material=(this.warning.children[0] as T.Mesh).material as T.MeshBasicMaterial;material.opacity=.8;}
-  const poolIds=new Set<number>();for(const p of game.pools){poolIds.add(p.id);let mesh=this.poolMeshes.get(p.id);if(!mesh){mesh=new T.Mesh(new T.CircleGeometry(1,40),new T.MeshBasicMaterial({color:0x99cf56,transparent:true,opacity:.3,depthWrite:false}));mesh.rotation.x=-Math.PI/2;this.scene.add(mesh);this.poolMeshes.set(p.id,mesh);}mesh.position.set(p.x/UNIT,.03,p.y/UNIT);mesh.scale.setScalar(p.radius/UNIT);(mesh.material as T.MeshBasicMaterial).opacity=Math.min(.3,p.life*.3);}
-  for(const[id,mesh]of this.poolMeshes)if(!poolIds.has(id)){mesh.geometry.dispose();(mesh.material as T.Material).dispose();mesh.removeFromParent();this.poolMeshes.delete(id);}
+  this.syncPools(game.pools);
 
   if(q.active&&!this.queen){this.queen=this.actorPool.take('queen');this.scene.add(this.queen.root);}
   if(this.queen){this.queen.setExposed?.(q.vulnerable);this.queen.setAffliction?.(q.defeated?{chilled:false,burning:false,poisoned:false,frozen:false}:game.boonStatuses(-1));this.queen.root.position.set(q.x/UNIT,0,q.y/UNIT);this.queen.animate(this.time,.4,q.rotation);if(q.defeated){this.queen.root.rotation.z=1.25;this.queen.root.position.y=-.35;}}
@@ -255,5 +256,16 @@ export class DepthRenderer {
   if(this.tier==='high')this.composer.render();else this.renderer.render(this.scene,this.camera);
   const autoClear=this.renderer.autoClear;this.renderer.autoClear=false;this.renderer.render(this.hudScene,this.camera);this.renderer.autoClear=autoClear;
  }
- dispose(){disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
+ private syncPools(pools:readonly {id:number;x:number;y:number;radius:number;life:number}[]){
+  const poolIds=new Set<number>();
+  for(const p of pools){
+   poolIds.add(p.id);let mesh=this.poolMeshes.get(p.id);
+   if(!mesh){mesh=new T.Mesh(new T.CircleGeometry(1,40),new AcidPoolMaterial(p.id));mesh.rotation.x=-Math.PI/2;this.scene.add(mesh);this.poolMeshes.set(p.id,mesh);}
+   mesh.position.set(p.x/UNIT,.03,p.y/UNIT);mesh.scale.setScalar(p.radius/UNIT);
+   mesh.material.opacity=Math.min(.3,p.life*.3);mesh.material.surfaceTime.value=this.time;
+  }
+  for(const[id,mesh]of this.poolMeshes)if(!poolIds.has(id)){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();this.poolMeshes.delete(id);}
+ }
+ private clearPools(){for(const mesh of this.poolMeshes.values()){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();}this.poolMeshes.clear();}
+ dispose(){this.clearPools();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
 }
