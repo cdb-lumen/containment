@@ -1,6 +1,8 @@
+import {roomFocus} from './roomFraming';
 import {ActorPool} from './ActorPool';
 import {FrameBudget,type GraphicsTier} from './FrameBudget';
 import {EnvironmentMaterials} from './EnvironmentMaterials';
+import {shipEnvironment,environmentObstacle,environmentArchitecture,appendEnvironment,type ShipEnvironment} from './ShipEnvironments';
 import * as T from 'three';
 import {EnemyHealthBars} from './EnemyHealthBars';
 import {AttackEffects} from './AttackEffects';
@@ -95,22 +97,23 @@ export class DepthRenderer {
   }
   for(const [mat,list]of buckets){const merged=mergeGeometries(list);list.forEach(g=>g.dispose());if(merged){const mesh=new T.Mesh(merged,mat);mesh.castShadow=true;mesh.receiveShadow=true;this.world.add(mesh);}}
  }
- loadRoom(node:RunNode){
+ loadRoom(node:RunNode,environment:ShipEnvironment|undefined=shipEnvironment(node.templateId)){
   this.roomKey=node.id;this.shadowsDirty=true;disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.temporaryMaterials=[];this.world=new T.Group();this.scene.add(this.world);
   for(const m of this.actors.values())this.actorPool.release(m);this.actors.clear();for(const n of this.nests.values())disposeModel(n);this.nests.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;
   for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];for(const p of this.pickupMeshes.values())disposeModel(p);this.pickupMeshes.clear();this.effects.clear();this.pendingShots=[];this.muzzleLife=0;this.recoil=0;
   const t=ROOM_TEMPLATES[node.templateId],w=t.width/UNIT,h=t.height/UNIT;
-  const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
+  const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
   box(this.world,w/2,-.57,h/2,w+.6,.5,h+.6,MAT.black);
   // Low foreground parapets and tall rear bulkheads keep combat readable.
-  for(let x=1;x<w;x+=2){this.wallPanel(x,0,2.6,2,0);this.wallPanel(x,h,.65,2,0);}
+  for(let x=1;x<w;x+=2){if(!environment)this.wallPanel(x,0,2.6,2,0);this.wallPanel(x,h,.65,2,0);}
   for(let z=1;z<h;z+=2){this.wallPanel(0,z,1.1,2,Math.PI/2);this.wallPanel(w,z,1.1,2,Math.PI/2);}
   for(let x=2;x<w-1;x+=5){
    box(this.world,x,2.2,.21,1.05,.075,.09,MAT.cyan);box(this.world,x,.07,1,.9,.02,.06,MAT.amber,.01);
    box(this.world,x,.075,h-1,.9,.02,.06,MAT.amber,.01);
   }
-  for(const r of t.obstacles){
+  for(const [obstacleIndex,r] of t.obstacles.entries()){
    const x=(r.x+r.width/2)/UNIT,z=(r.y+r.height/2)/UNIT,rw=r.width/UNIT,rh=r.height/UNIT;
+   if(environment){appendEnvironment(this.world,environmentObstacle(environment,{x:r.x/UNIT,y:r.y/UNIT,width:rw,height:rh},obstacleIndex,node.templateId));continue;}
    const tall=act===1;const height=tall?1.45:1.05;
    this.surfaces.uv(box(this.world,x,height/2,z,rw,height,rh,this.surfaces.cover,.055),2);this.surfaces.uv(box(this.world,x,height-.08,z,rw-.07,.16,rh-.07,this.surfaces.cover),2);
    for(let a=-rw/2+.25;a<rw/2;a+=.8){box(this.world,x+a,height+.02,z,.045,.02,rh-.25,MAT.edge,.01);}
@@ -134,6 +137,7 @@ export class DepthRenderer {
   for(const z of [.42,.72]){rod(this.world,new T.Vector3(.4,2.65,z),new T.Vector3(w-.4,2.65,z),.09,.09,MAT.edge);}
   for(let x=3;x<w;x+=6){box(this.world,x,2.65,.58,.12,.28,.8,MAT.dark);}
   for(const b of t.breaches){const x=b.x/UNIT,z=b.y/UNIT;box(this.world,x,.04,z,1.25,.06,1.1,MAT.black);for(let i=-4;i<=4;i++)box(this.world,x+i*.12,.085,z,.05,.04,.9,MAT.edge,.01);}
+  if(environment)environmentArchitecture(this.world,environment,w,h);
   this.bakeWorld();
   this.exit=new T.Group();this.exit.position.set(t.exit.x/UNIT,0,t.exit.y/UNIT);this.world.add(this.exit);
   for(const side of [-1,1]){box(this.exit,0,.7,side*.7,.12,1.4,.18,MAT.steel);box(this.exit,.08,.7,side*.7,.04,1.05,.05,MAT.cyan,.01);}
@@ -142,7 +146,8 @@ export class DepthRenderer {
    const ring=new T.Mesh(new T.TorusGeometry(6.7,.045,5,80),MAT.amber);ring.rotation.x=Math.PI/2;ring.position.set(w/2,.07,h/2);this.world.add(ring);
    const inner=new T.Mesh(new T.TorusGeometry(4.9,.025,5,60),MAT.cyan);inner.rotation.x=Math.PI/2;inner.position.set(w/2,.08,h/2);this.world.add(inner);
   }
-  this.focus.set(t.spawn.x/UNIT,0,t.spawn.y/UNIT);this.sun.target.position.set(w/2,0,h/2);this.sun.position.copy(this.sun.target.position).add(new T.Vector3(10,24,8));
+  const initial=roomFocus(t.spawn.x/UNIT,t.spawn.y/UNIT,w,h,this.camera.right-this.camera.left,this.camera.top-this.camera.bottom);
+  this.focus.set(initial.x,0,initial.z);this.sun.target.position.set(w/2,0,h/2);this.sun.position.copy(this.sun.target.position).add(new T.Vector3(10,24,8));
  }
  private wallPanel(x:number,z:number,height:number,length:number,rotation:number){
   const g=new T.Group();g.position.set(x,0,z);g.rotation.y=rotation;
@@ -167,7 +172,9 @@ export class DepthRenderer {
  render(game:DepthGame,delta:number,menu=false){
   if(this.roomKey!==game.node.id)this.loadRoom(game.node);
   const dt=game.status==='paused'||game.status==='reward'||game.status==='route'?0:Math.min(delta,.05);this.time+=dt;const p=game.player;
-  const desired=new T.Vector3(p.x/UNIT,0,p.y/UNIT);if(menu){desired.set(game.geometry.bounds.width/UNIT*.45,0,game.geometry.bounds.height/UNIT*.51);}
+  const bounds=game.geometry.bounds;
+  const framed=roomFocus(p.x/UNIT,p.y/UNIT,bounds.width/UNIT,bounds.height/UNIT,(this.camera.right-this.camera.left)/this.camera.zoom,(this.camera.top-this.camera.bottom)/this.camera.zoom);
+  const desired=new T.Vector3(framed.x,0,framed.z);if(menu){desired.set(bounds.width/UNIT*.45,0,bounds.height/UNIT*.51);}
   this.focus.lerp(desired,1-Math.exp(-dt*7));this.camera.position.copy(this.focus).add(new T.Vector3(0,26,19));this.camera.lookAt(this.focus);this.camera.updateMatrixWorld();
   // The shadow projection remains anchored to the room, avoiding subpixel shimmer.
   this.player.root.position.set(p.x/UNIT,0,p.y/UNIT);this.player.root.visible=!menu;this.player.root.rotation.z=game.combat.snapshot.dead?1.4:0;
