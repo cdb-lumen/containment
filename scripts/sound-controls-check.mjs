@@ -19,6 +19,12 @@ export async function observeAudio(page) {
     };
   });
 }
+// Keep real rendering enabled, but avoid software-shadow cost during repeated
+// settings interactions. Restore Automatic before the existing gameplay smoke.
+async function openSettings(page) {
+  await page.locator('#settings').click();
+  await page.locator('#quality').selectOption('low');
+}
 const slider = page => page.getByRole('slider', {name:'Master volume'});
 const mute = page => page.getByRole('button', {name:'Mute sound', exact:true});
 async function gainIs(page, volume) {
@@ -37,7 +43,7 @@ async function capture(page, name) {
 }
 export async function checkMenuSound(page, mobile) {
   const viewport = mobile ? 'touch' : 'desktop';
-  await page.locator('#settings').click();
+  await openSettings(page);
   assert.equal(await slider(page).inputValue(), '30');
   assert.equal(await mute(page).getAttribute('aria-pressed'), 'false');
   await slider(page).scrollIntoViewIfNeeded();
@@ -56,7 +62,7 @@ export async function checkMenuSound(page, mobile) {
   await savedIs(page, .31, true);
   assert.equal(await mute(page).textContent(), 'Unmute');
   await page.reload(); await page.waitForFunction(() => document.body.dataset.state === 'menu');
-  await page.locator('#settings').click();
+  await openSettings(page);
   assert.equal(await slider(page).inputValue(), '31');
   assert.equal(await mute(page).getAttribute('aria-pressed'), 'true');
   // Starting a run while muted must initialize the real gain at silence.
@@ -64,13 +70,13 @@ export async function checkMenuSound(page, mobile) {
   await page.waitForFunction(() => document.body.dataset.state === 'reward');
   await gainIs(page, 0);
   await page.reload(); await page.waitForFunction(() => document.body.dataset.state === 'menu');
-  await page.locator('#settings').click();
+  await openSettings(page);
   await mute(page).click(); await gainIs(page, .31);
   await page.waitForFunction(() => window.__soundQA.sources > 0);
   await slider(page).focus(); await page.keyboard.press('Home');
   await gainIs(page, 0); await savedIs(page, 0, false);
   await page.reload(); await page.waitForFunction(() => document.body.dataset.state === 'menu');
-  await page.locator('#settings').click();
+  await openSettings(page);
   assert.equal(await slider(page).inputValue(), '0');
   assert.equal(await mute(page).getAttribute('aria-pressed'), 'false');
   await mute(page).click(); await mute(page).click(); await gainIs(page, 0);
@@ -91,12 +97,15 @@ export async function checkMenuSound(page, mobile) {
   const selected = Number(await slider(page).inputValue()) / 100;
   assert.ok(selected > .4 && selected < .6);
   await gainIs(page, selected); await savedIs(page, selected, false);
-  await page.locator('#settings').click(); await page.locator('#settings').click();
+  await page.locator('#settings').click(); await openSettings(page);
   assert.equal(Number(await slider(page).inputValue()) / 100, selected);
   console.log(`Sound menu passed: ${viewport}, default 30%, native keyboard/touch, real gain, muted reload, zero reload, channel playback.`);
+  await page.locator('#quality').selectOption('auto');
   return selected;
 }
 export async function checkPausedSound(page, mobile, selected) {
+  const quality = await page.locator('#quality').inputValue();
+  await page.locator('#quality').selectOption('low');
   assert.equal(Number(await slider(page).inputValue()) / 100, selected);
   await mute(page).click(); await gainIs(page, 0);
   await slider(page).focus(); await page.keyboard.press('End');
@@ -118,5 +127,6 @@ export async function checkPausedSound(page, mobile, selected) {
   await page.waitForFunction(() => document.body.dataset.state === 'playing');
   await page.locator('#pause').click();
   assert.equal(await slider(page).inputValue(), '0');
+  await page.locator('#quality').selectOption(quality);
   console.log(`Sound pause passed: ${mobile?'touch':'desktop'}, retains choice, muted adjustment stays silent, unmute restores choice, live zero gain.`);
 }
