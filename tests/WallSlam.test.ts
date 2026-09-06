@@ -1,4 +1,4 @@
-import {describe,it,expect} from 'vitest';
+import {describe,it,expect,vi} from 'vitest';
 import * as T from 'three';
 import {CombatSystem} from '../src/game/combat/CombatSystem';
 import {MutationRuntime} from '../src/game/roguelike/MutationRuntime';
@@ -29,6 +29,28 @@ describe('body wall-slam presentation',()=>{
   const debris=scene.children[2] as T.InstancedMesh,m=new T.Matrix4();
   for(let i=0;i<debris.count;i++){debris.getMatrixAt(i,m);expect(m.elements[14]).toBeGreaterThan(0);}
   fx.update(4,new T.PerspectiveCamera(),[]);expect(Object.values(fx.counts).every(n=>n===0)).toBe(true);
+ });
+ it('keeps native-scale chips and body-wide gray dust wall-local at random extremes',()=>{
+  const random=vi.spyOn(Math,'random');
+  try{for(const value of [0,.999999]){
+   random.mockReturnValue(value);
+   const fx=new AttackEffects(new T.Scene());fx.event({type:'wall-slam',x:0,y:0,wall:{x:0,y:1}});
+   type Particle={p:T.Vector3;v:T.Vector3;size:number;life:number;color:T.Color;wall?:T.Vector3;growth?:number;aspect?:number};
+   const particles=fx as unknown as {glow:Particle[];debris:Particle[];smoke:Particle[]};
+   expect(particles.glow[0].size).toBeGreaterThanOrEqual(.65);expect(particles.glow[0].size).toBeLessThanOrEqual(.75);
+   expect(particles.debris.length).toBeGreaterThanOrEqual(24);expect(particles.debris.length).toBeLessThanOrEqual(28);
+   for(const chip of particles.debris){expect(chip.size).toBeGreaterThanOrEqual(.07);expect(chip.size).toBeLessThanOrEqual(.16);expect(chip.life).toBeLessThanOrEqual(1.05);expect(chip.v.z).toBeGreaterThan(0);}
+   const dust=particles.smoke,left=Math.min(...dust.map(d=>d.p.x-d.size/2)),right=Math.max(...dust.map(d=>d.p.x+d.size/2));
+   expect(right-left).toBeGreaterThanOrEqual(2);expect(right-left).toBeLessThanOrEqual(2.3);
+   expect(new Set(dust.map(d=>d.color.getHex())).size).toBeGreaterThanOrEqual(3);
+   for(const d of dust){
+    expect(d.wall?.z).toBe(1);expect(d.growth).toBeLessThanOrEqual(.5);expect(d.aspect).toBeLessThanOrEqual(.8);
+    expect(d.p.z).toBeGreaterThanOrEqual(.1);expect(d.v.z).toBeGreaterThanOrEqual(.25);expect(d.v.z).toBeLessThanOrEqual(.4);
+    expect(d.p.z+d.v.z*d.life).toBeLessThan(.4);expect(d.life).toBeLessThanOrEqual(.7);
+    expect(Math.max(d.color.r,d.color.g,d.color.b)-Math.min(d.color.r,d.color.g,d.color.b)).toBeLessThan(.1);
+   }
+   expect(fx.counts.fire).toBe(0);expect(fx.counts.pulses).toBe(0);
+  }}finally{random.mockRestore();}
  });
  it('preserves genuine explosions and confirmed target contact',()=>{
   const fx=new AttackEffects(new T.Scene());fx.event({type:'explosion',x:0,y:0,radius:100,elements:['fire']});expect(fx.counts.fire).toBe(1);expect(fx.counts.pulses).toBe(1);

@@ -163,15 +163,15 @@ export class AttackEffects {
   p.addScaledVector(n,.025);
   const tangent=new T.Vector3(-n.z,0,n.x);
   // A compact flash behind the body, with a few sheared metal glints.
-  this.particle(this.glow,EFFECT_LIMITS.glow,p,0xffe9c6,.48,.075);
+  this.particle(this.glow,EFFECT_LIMITS.glow,p,0xe8ece7,.7,.075);
   for(let i=0;i<6;i++){
    const v=n.clone().multiplyScalar(1.2+Math.random()).addScaledVector(tangent,(Math.random()-.5)*5);v.y=.4+Math.random()*2;
    this.particle(this.glow,EFFECT_LIMITS.glow,p,0xdac8a6,.055,.12+Math.random()*.09,v,5);
   }
-  for(let i=0;i<18;i++){
-   const pos=p.clone().addScaledVector(tangent,(Math.random()-.5)*.45);pos.y+=(Math.random()-.5)*.35;
+  for(let i=0;i<26;i++){
+   const pos=p.clone().addScaledVector(tangent,(Math.random()-.5)*.8);pos.y+=(Math.random()-.5)*.35;
    const v=n.clone().multiplyScalar(.8+Math.random()*1.8).addScaledVector(tangent,(Math.random()-.5)*6);v.y=.7+Math.random()*2.6;
-   this.particle(this.debris,EFFECT_LIMITS.debris,pos,i%3?0x667074:0xabb1ad,.045+Math.random()*.075,.65+Math.random()*.4,v,8,1.6+Math.random());
+   this.particle(this.debris,EFFECT_LIMITS.debris,pos,i%3===0?0xc4cbc7:i%3===1?0x8f9b9e:0x667074,.07+Math.random()*.09,.65+Math.random()*.4,v,8,1.6+Math.random());
   }
   if(surface?.supported){
    this.particle(this.decals,EFFECT_LIMITS.decals,p,0x121b1e,.48,1.15);
@@ -179,9 +179,9 @@ export class AttackEffects {
   }
   // Textured lobes spread along the wall, not out into a spherical blast cloud.
   for(let i=0;i<7;i++){
-   const side=(i-3)/3,pos=p.clone().addScaledVector(tangent,side*.3);pos.y+=(i%3-1)*.15;
-   const v=tangent.clone().multiplyScalar(side*.65).addScaledVector(n,.08);v.y=.14+Math.random()*.15;
-   this.particle(this.smoke,EFFECT_LIMITS.smoke,pos,i%2?0x849094:0xb1b5af,.5+Math.random()*.15,.45+Math.random()*.25,v);
+   const side=(i-3)/3,pos=p.clone().addScaledVector(tangent,side*.65).addScaledVector(n,.08);pos.y+=(i%3-1)*.15;
+   const v=tangent.clone().multiplyScalar(side*.65).addScaledVector(n,.25+Math.random()*.15);v.y=.14+Math.random()*.15;
+   this.particle(this.smoke,EFFECT_LIMITS.smoke,pos,i%3===0?0xc4cbc7:i%3===1?0xa3afaf:0x849094,.7+Math.random()*.2,.45+Math.random()*.25,v);
    const dust=this.smoke[this.smoke.length-1];dust.wall=n;dust.growth=.45;dust.aspect=.72;dust.spin=0;
   }
  }
