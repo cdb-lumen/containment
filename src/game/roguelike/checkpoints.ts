@@ -48,7 +48,7 @@ function boundedNumber(value: unknown, min: number, max: number, integer = false
 function validRun(value: unknown): value is RunState {
   return (exactRecord(value, RUN_KEYS)||exactRecord(value,[...RUN_KEYS,'draftRoll'])) &&
     boundedNumber(value.seed, 0, 0xffff_ffff, true) &&
-    Array.isArray(value.completedNodeIds) && value.completedNodeIds.length <= 12 &&
+    Array.isArray(value.completedNodeIds) && value.completedNodeIds.length <= 20 &&
     isValidRunState(value);
 }
 

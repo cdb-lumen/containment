@@ -23,7 +23,7 @@ export type EncounterSnapshot = Readonly<{
 }>;
 
 export function createEncounterPlan(options: EncounterOptions): EncounterPlan {
-  const canonical = generateRun(options.seed,options.node.id.includes(':v2-')?2:1).nodes.find(node => node.id === options.node.id);
+  const canonical = generateRun(options.seed,options.node.id.includes(':v3-')?3:options.node.id.includes(':v2-')?2:1).nodes.find(node => node.id === options.node.id);
   if (!canonical || canonical.kind !== options.node.kind || canonical.depth !== options.node.depth
     || canonical.templateId !== options.node.templateId) throw new Error('Encounter node does not belong to this seed.');
   const { node, breachIds } = options;
@@ -32,7 +32,8 @@ export function createEncounterPlan(options: EncounterOptions): EncounterPlan {
     || new Set(breachIds).size !== breachIds.length) throw new Error('Invalid encounter breach IDs.');
   const combat = node.kind === 'combat' || node.kind === 'elite';
   if (combat && breachIds.length === 0) throw new Error('Combat encounters need at least one breach.');
-  const totalSpawns = combat ? Math.round((12 + node.depth * 3 + (node.kind === 'elite' ? 5 : 0))*(node.id.includes(':v2-')?1.25:1)) : 0;
+  const story=node.id.includes(':v3-'),holdout=story&&(node.depth===9||node.depth===19);
+  const totalSpawns = combat ? story ? holdout ? (node.depth===9?40:48) : 12+Math.round(node.depth*.7)+(node.kind==='elite'?5:0) : Math.round((12 + node.depth * 3 + (node.kind === 'elite' ? 5 : 0))*(node.id.includes(':v2-')?1.25:1)) : 0;
   const concurrentCap = combat ? Math.min(18, 7 + Math.floor(node.depth * .8) + (node.kind === 'elite' ? 2 : 0)) : 0;
   let randomState = (options.seed ^ Math.imul(node.depth + 1, 0x9e3779b9) ^ (node.kind === 'elite' ? 0xabc123 : 0)) >>> 0;
   const random = (): number => {
@@ -47,8 +48,8 @@ export function createEncounterPlan(options: EncounterOptions): EncounterPlan {
     : ['crawler', 'crawler', 'brute', 'spitter', 'spitter', 'stalker', 'carrier'];
   const interval = Math.max(430,1050-node.depth*48-(node.kind==='elite'?120:0));
   const schedule = Array.from({ length: totalSpawns }, (_, index): EncounterSpawn => Object.freeze({
-    type: 'spawn-request', spawnId: `${node.id}:spawn-${index}`, atMs: 650 + index * interval + Math.floor(index/8)*1800, wave: node.depth + 1,
-    enemyId: node.kind === 'elite' && index === 0 ? node.id.includes(':v2-')&&node.depth===7?'carrier':'brute' : pool[Math.floor(random() * pool.length)],
+    type: 'spawn-request', spawnId: `${node.id}:spawn-${index}`, atMs: story ? 650+(holdout?index*900:Math.floor(index/6)*1100+(index%6)*100) : 650 + index * interval + Math.floor(index/8)*1800, wave: node.depth + 1,
+    enemyId: node.kind === 'elite' && index === 0 ? (story?node.depth===15:node.id.includes(':v2-')&&node.depth===7)?'carrier':'brute' : pool[Math.floor(random() * pool.length)],
     elite: node.kind === 'elite' && (index === 0 || random() < 0.10+node.depth*.008),
     breachId: breachIds[Math.floor(random() * breachIds.length)],
   }));

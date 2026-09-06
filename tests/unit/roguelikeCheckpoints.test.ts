@@ -102,12 +102,12 @@ describe('versioned room-boundary checkpoints', () => {
     saveCheckpoint(storage, checkpoint());
     const graph = generateRun(42);
     let run: RunState = createRun(42);
-    for (let room = 0; room < 12 && run.phase !== 'complete'; room += 1) {
+    for (let room = 0; room < 20 && run.phase !== 'complete'; room += 1) {
       run = clearRoom(run);
       if (run.phase === 'reward') run = finishReward(run);
       if (run.phase === 'route') {
         const next = graph.nodes.find((node) => node.id === run.currentNodeId)?.next[0];
-        if (next) run = enterRoom(run, next);
+        if (next) run = enterRoom(run, next, room===18?'destroy-ship':undefined);
       }
     }
     expect(run.phase).toBe('complete');

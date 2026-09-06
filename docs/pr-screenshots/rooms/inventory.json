@@ -1,0 +1,379 @@
+{
+  "commit": "ea0446a5970e567305ffbc9477eba63ebcc2b9b4",
+  "source": "ROOM_STORY_ROUTE",
+  "seed": 1729,
+  "templateCount": 36,
+  "roomCount": 20,
+  "environmentCount": 10,
+  "runLength": 20,
+  "graphNodeCount": 20,
+  "rooms": [
+    {
+      "templateId": "awakening-bay",
+      "name": "Awakening bay",
+      "environment": "cryogenics",
+      "objective": "Restore communications.",
+      "story": "AI: Purge the infestation.",
+      "roomId": "01-awakening-bay",
+      "index": 0,
+      "node": {
+        "id": "evidence-0-awakening-bay",
+        "depth": 0,
+        "templateId": "awakening-bay",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r1"
+        ]
+      }
+    },
+    {
+      "templateId": "passenger-vault",
+      "name": "Passenger vault",
+      "environment": "cryogenics",
+      "objective": "Clear the occupied pod rows.",
+      "roomId": "02-passenger-vault",
+      "index": 1,
+      "node": {
+        "id": "evidence-1-passenger-vault",
+        "depth": 1,
+        "templateId": "passenger-vault",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r2"
+        ]
+      }
+    },
+    {
+      "templateId": "residential-gallery",
+      "name": "Residential gallery",
+      "environment": "habitation",
+      "objective": "Fight through the residential doorways.",
+      "story": "Packed belongings. Arrival labels for New Earth.",
+      "roomId": "03-residential-gallery",
+      "index": 2,
+      "node": {
+        "id": "evidence-2-residential-gallery",
+        "depth": 2,
+        "templateId": "residential-gallery",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r3"
+        ]
+      }
+    },
+    {
+      "templateId": "communal-atrium",
+      "name": "Communal atrium",
+      "environment": "habitation",
+      "objective": "Clear the atrium and reach security.",
+      "story": "WELCOME TO NEW EARTH. The display still runs.",
+      "roomId": "04-communal-atrium",
+      "index": 3,
+      "node": {
+        "id": "evidence-3-communal-atrium",
+        "depth": 3,
+        "templateId": "communal-atrium",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r4"
+        ]
+      }
+    },
+    {
+      "templateId": "crew-checkpoint",
+      "name": "Crew checkpoint",
+      "environment": "security",
+      "objective": "Break through the fortified checkpoint.",
+      "story": "The crew held this line. Their weapons remain.",
+      "roomId": "05-crew-checkpoint",
+      "index": 4,
+      "node": {
+        "id": "evidence-4-crew-checkpoint",
+        "depth": 4,
+        "templateId": "crew-checkpoint",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r5"
+        ]
+      }
+    },
+    {
+      "templateId": "armory",
+      "name": "Armory",
+      "environment": "security",
+      "objective": "Defeat the armory elite. Choose combat equipment.",
+      "roomId": "06-armory",
+      "index": 5,
+      "node": {
+        "id": "evidence-5-armory",
+        "depth": 5,
+        "templateId": "armory",
+        "kind": "elite",
+        "reward": "rare-upgrade",
+        "next": [
+          "1729:v3-r6"
+        ]
+      }
+    },
+    {
+      "templateId": "freight-hold",
+      "name": "Freight hold",
+      "environment": "cargo",
+      "objective": "Clear a path through the colony supplies.",
+      "roomId": "07-freight-hold",
+      "index": 6,
+      "node": {
+        "id": "evidence-6-freight-hold",
+        "depth": 6,
+        "templateId": "freight-hold",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r7"
+        ]
+      }
+    },
+    {
+      "templateId": "breached-loading-bay",
+      "name": "Breached loading bay",
+      "environment": "cargo",
+      "objective": "Fight around the sealed breach.",
+      "story": "Alien growth follows the boarding scar. Hull seal intact.",
+      "roomId": "08-breached-loading-bay",
+      "index": 7,
+      "node": {
+        "id": "evidence-7-breached-loading-bay",
+        "depth": 7,
+        "templateId": "breached-loading-bay",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r8"
+        ]
+      }
+    },
+    {
+      "templateId": "relay-racks",
+      "name": "Relay racks",
+      "environment": "communications",
+      "objective": "Clear the equipment aisles to restore the local relay.",
+      "roomId": "09-relay-racks",
+      "index": 8,
+      "node": {
+        "id": "evidence-8-relay-racks",
+        "depth": 8,
+        "templateId": "relay-racks",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r9"
+        ]
+      }
+    },
+    {
+      "templateId": "transmission-chamber",
+      "name": "Transmission chamber",
+      "environment": "communications",
+      "objective": "Defend the uplink until the war warning is received.",
+      "roomId": "10-transmission-chamber",
+      "index": 9,
+      "node": {
+        "id": "evidence-9-transmission-chamber",
+        "depth": 9,
+        "templateId": "transmission-chamber",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r10"
+        ]
+      }
+    },
+    {
+      "templateId": "diagnostic-gallery",
+      "name": "Diagnostic gallery",
+      "environment": "engineering",
+      "objective": "Read the independent service display while clearing the gallery.",
+      "story": "PHYSICAL SERVICE DISPLAY: Purge destroys every deck, including occupied cryopods.",
+      "roomId": "11-diagnostic-gallery",
+      "index": 10,
+      "node": {
+        "id": "evidence-10-diagnostic-gallery",
+        "depth": 10,
+        "templateId": "diagnostic-gallery",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r11"
+        ]
+      }
+    },
+    {
+      "templateId": "safety-interlock-station",
+      "name": "Safety-interlock station",
+      "environment": "engineering",
+      "objective": "Clear the interlock station. Review the pre-awakening safety record.",
+      "story": "LOCAL RECORD, BEFORE AWAKENING: Rescue impossible. AI acknowledged. Survival promise issued afterward.",
+      "roomId": "12-safety-interlock-station",
+      "index": 11,
+      "node": {
+        "id": "evidence-11-safety-interlock-station",
+        "depth": 11,
+        "templateId": "safety-interlock-station",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r12"
+        ]
+      }
+    },
+    {
+      "templateId": "coolant-plant",
+      "name": "Coolant plant",
+      "environment": "maintenance",
+      "objective": "Descend through the coolant pumps, knowing the fatal cost.",
+      "roomId": "13-coolant-plant",
+      "index": 12,
+      "node": {
+        "id": "evidence-12-coolant-plant",
+        "depth": 12,
+        "templateId": "coolant-plant",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r13"
+        ]
+      }
+    },
+    {
+      "templateId": "service-shaft-landing",
+      "name": "Service shaft landing",
+      "environment": "maintenance",
+      "objective": "Cross the connected service platforms. Reach the lower decks.",
+      "story": "LOCAL ACCESS ONLY. AI connection lost below this landing.",
+      "roomId": "14-service-shaft-landing",
+      "index": 13,
+      "node": {
+        "id": "evidence-13-service-shaft-landing",
+        "depth": 13,
+        "templateId": "service-shaft-landing",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r14"
+        ]
+      }
+    },
+    {
+      "templateId": "infested-workshop",
+      "name": "Infested workshop",
+      "environment": "infested",
+      "objective": "Clear the converted workshop and its converging attackers.",
+      "roomId": "15-infested-workshop",
+      "index": 14,
+      "node": {
+        "id": "evidence-14-infested-workshop",
+        "depth": 14,
+        "templateId": "infested-workshop",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r15"
+        ]
+      }
+    },
+    {
+      "templateId": "swarm-junction",
+      "name": "Swarm junction",
+      "environment": "infested",
+      "objective": "Break the concentrated swarm guarding reactor access.",
+      "roomId": "16-swarm-junction",
+      "index": 15,
+      "node": {
+        "id": "evidence-15-swarm-junction",
+        "depth": 15,
+        "templateId": "swarm-junction",
+        "kind": "elite",
+        "reward": "rare-upgrade",
+        "next": [
+          "1729:v3-r16"
+        ]
+      }
+    },
+    {
+      "templateId": "shielding-gate",
+      "name": "Shielding gate",
+      "environment": "containment",
+      "objective": "Clear the last defensive line before the reactor.",
+      "roomId": "17-shielding-gate",
+      "index": 16,
+      "node": {
+        "id": "evidence-16-shielding-gate",
+        "depth": 16,
+        "templateId": "shielding-gate",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r17"
+        ]
+      }
+    },
+    {
+      "templateId": "containment-annulus",
+      "name": "Containment annulus",
+      "environment": "containment",
+      "objective": "Circle the shielding. Reach manual controls. Overload is NOT armed.",
+      "story": "PASSENGERS ALIVE. Manual authorization still required.",
+      "roomId": "18-containment-annulus",
+      "index": 17,
+      "node": {
+        "id": "evidence-17-containment-annulus",
+        "depth": 17,
+        "templateId": "containment-annulus",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r18"
+        ]
+      }
+    },
+    {
+      "templateId": "manual-control-chamber",
+      "name": "Manual-control chamber",
+      "environment": "reactor",
+      "objective": "Clear threats. PASSENGERS ALIVE. Overload kills everyone aboard. Explicitly choose Destroy ship.",
+      "roomId": "19-manual-control-chamber",
+      "index": 18,
+      "node": {
+        "id": "evidence-18-manual-control-chamber",
+        "depth": 18,
+        "templateId": "manual-control-chamber",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r19"
+        ]
+      }
+    },
+    {
+      "templateId": "overload-floor",
+      "name": "Overload floor",
+      "environment": "reactor",
+      "objective": "Defend the overload sequence. No escape. Everyone aboard will die.",
+      "roomId": "20-overload-floor",
+      "index": 19,
+      "node": {
+        "id": "evidence-19-overload-floor",
+        "depth": 19,
+        "templateId": "overload-floor",
+        "kind": "combat",
+        "reward": "victory",
+        "next": []
+      }
+    }
+  ]
+}
