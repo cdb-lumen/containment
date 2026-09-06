@@ -1,0 +1,21 @@
+{
+  "commit": "9a6cc0e6529d5f3292b843b71d5a85c8263224e5",
+  "evidence": "Built production app, seeded validated prior-room checkpoint, real Continue/route/authorization/fire/pause/resume. Short interaction smoke, not full playthrough or balance proof.",
+  "results": [
+    {
+      "id": "awakening-bay",
+      "file": "awakening-bay-desktop-hud.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "quality": "low",
+      "state": "playing",
+      "room": "Awakening bay",
+      "input": "real keyboard move/fire",
+      "explicitFatalAuthorization": false,
+      "errors": [],
+      "sha256": "7978315f18b97ac0b3358e0cdb967c1c842cc46b44924ada0604fc21324d1fd9"
+    }
+  ]
+}
