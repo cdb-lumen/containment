@@ -35,13 +35,13 @@ describe('authored story campaign',()=>{
   }
  });
  it('dismisses only optional presentation and restores it for the next authored beat',()=>{
-  const g=new DepthGame();g.newRun(137);expect(g.storyPresentation).toBeTruthy();
+  const g=new DepthGame();g.newRun(137);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);expect(g.storyPresentation).toBeTruthy();
   const status=g.storyStatus;g.skipStory();expect(g.storyPresentation).toBeUndefined();expect(g.storyStatus).toBe(status);
   clear(g);reward(g);g.route(g.node.next[0]);clear(g);reward(g);g.route(g.node.next[0]);
   expect(g.storyPresentation).toBeTruthy();
  });
  it('places the warden and carrier matron at the authored elite rooms',()=>{
-  const g=new DepthGame();g.newRun(137);
+  const g=new DepthGame();g.newRun(137);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);
   for(let depth=0;depth<=15;depth++){
    if(depth===5||depth===15){
     for(let i=0;i<30;i++)g.update(50);
@@ -69,7 +69,7 @@ describe('authored story campaign',()=>{
  });
  it('plays every room, requires a separate fatal authorization, and ends without escape',()=>{
   const saved=new Map<string,string>();const storage={getItem:(k:string)=>saved.get(k)??null,setItem:(k:string,v:string)=>{saved.set(k,v);},removeItem:(k:string)=>{saved.delete(k);}};
-  const effects:string[]=[];const g=new DepthGame(e=>effects.push(e.type),storage);g.newRun(137);
+  const effects:string[]=[];const g=new DepthGame(e=>effects.push(e.type),storage);g.newRun(137);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);
   expect(g.status).toBe('playing');expect(g.combat.snapshot.weaponId).toBe('shotgun');
   for(let depth=0;depth<20;depth++){
    expect(g.node.templateId).toBe(ids[depth]);expect(g.status).toBe('playing');
@@ -90,7 +90,7 @@ describe('authored story campaign',()=>{
   expect(g.expedition.run.completedNodeIds).toHaveLength(20);expect(g.canContinue).toBe(false);
   expect(g.storyStatus).toContain('ALL ABOARD LOST');expect(g.storyStatus).toContain('NEW EARTH WARNED');
   const completed=g.expedition;g.skipStory();g.authorizeDestruction();g.route('escape');g.update(5000);expect(g.expedition).toEqual(completed);
-  g.newRun(137);expect(g.node.templateId).toBe(ids[0]);expect(g.expedition.run.completedNodeIds).toHaveLength(0);expect(g.status).toBe('playing');
+  g.newRun(137);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);expect(g.node.templateId).toBe(ids[0]);expect(g.expedition.run.completedNodeIds).toHaveLength(0);expect(g.status).toBe('playing');
  });
  it('rejects skipping a milestone in persisted paths and retains old graph lengths',()=>{
   expect(generateRun(42,1).nodes.find(n=>n.id===generateRun(42,1).bossId)?.depth).toBe(5);

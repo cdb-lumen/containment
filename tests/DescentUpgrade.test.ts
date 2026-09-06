@@ -4,7 +4,7 @@ import {loadModels} from './loadModels';
 import {marine} from '../src/render/models';
 import {CombatSystem} from '../src/game/combat/CombatSystem';
 import {MutationRuntime,type MutationTarget} from '../src/game/roguelike/MutationRuntime';
-import {createExpedition,completeExpeditionRoom,expeditionRewardOffers,rerollExpedition,rerollCost,expeditionCheckpoint,restoreExpedition} from '../src/game/roguelike/expedition';
+import {claimExpeditionMutation,createExpedition,completeExpeditionRoom,expeditionRewardOffers,rerollExpedition,rerollCost,expeditionCheckpoint,restoreExpedition} from '../src/game/roguelike/expedition';
 import {generateRun,isValidRunState} from '../src/game/roguelike/run';
 import {progressionFor} from '../src/game/roguelike/progression';
 import {createEncounterPlan} from '../src/game/waves/EncounterDirector';
@@ -23,10 +23,11 @@ function runtime(ids:MutationId[],visible=true){
 describe('complete descent',()=>{
  it('varies opening families and persists paid, finite rerolls exactly',()=>{
   const c=new CombatSystem();c.setCredits(2000);const openings=new Set<string>();
-  for(let seed=0;seed<40;seed++){const e=completeExpeditionRoom(createExpedition(seed,c.getRunResources()),c.getRunResources());openings.add(expeditionRewardOffers(e).map(x=>x.id).join());}
+  for(let seed=0;seed<40;seed++){const e=createExpedition(seed,c.getRunResources());openings.add(expeditionRewardOffers(e).map(x=>x.id).join());}
   // Four starters give at most 24 ordered three-card drafts.
   expect(openings.size).toBeGreaterThan(12);
-  let e=completeExpeditionRoom(createExpedition(42,c.getRunResources()),c.getRunResources());
+  let e=createExpedition(42,c.getRunResources());
+  e=claimExpeditionMutation(e,expeditionRewardOffers(e)[0].id);e=completeExpeditionRoom(e,c.getRunResources());
   const first=expeditionRewardOffers(e).map(x=>x.id),cost=rerollCost(e);e=rerollExpedition(e);
   expect(e.resources.credits).toBe(2000-cost);// An opening reroll must reveal the fourth path; two starters necessarily repeat.
   expect(expeditionRewardOffers(e).some(x=>!first.includes(x.id))).toBe(true);

@@ -37,7 +37,37 @@ try {
     await page.route('https://fonts.googleapis.com/**', route => route.fulfill({status:200,contentType:'text/css',body:''}));
     await page.goto(origin + prefix);
     await page.waitForFunction(() => document.body.dataset.state === 'menu');
-    await page.locator('#start').click();
+    const chooseStartingBoon = async (capture = false) => {
+      await page.locator('#start').click();
+      await page.waitForFunction(() => document.body.dataset.state === 'reward' && Number(document.querySelector('#magazine').textContent)>0);
+      assert.equal(await page.locator('[data-mutation]').count(),3);
+      assert.equal(await page.locator('.choice-panel h2').textContent(),'Choose a boon');
+      assert.match(await page.locator('.choice-panel > .eyebrow').textContent(),/BEFORE COMBAT/);
+      assert.equal(await page.locator('#reroll').isDisabled(),true);
+      const resources = () => page.locator('#health, #armor, #magazine, #reserve, #credits, #grenades, #medkits').allTextContents();
+      const before = await resources();
+      await page.keyboard.down('d');await page.keyboard.down('Space');
+      await page.keyboard.press('g');await page.keyboard.press('Escape');
+      await page.waitForTimeout(1000);
+      await page.keyboard.up('d');await page.keyboard.up('Space');
+      assert.equal(await page.evaluate(() => document.body.dataset.state),'reward');
+      assert.deepEqual(await resources(),before);
+      assert.equal(await page.locator('#build-strip').textContent(),'');
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),false);
+      if(capture && process.env.SMOKE_SCREENSHOTS === '1') {
+        await mkdir('docs/pr-screenshots',{recursive:true});
+        await page.screenshot({path:`docs/pr-screenshots/starting-boon-${mobile?'touch':'desktop'}.png`});
+      }
+      const card=page.locator('[data-mutation]').first(),name=await card.locator('h3').textContent();
+      if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
+      await page.waitForFunction(() => document.body.dataset.state === 'playing');
+      await page.locator('#pause').click();
+      assert.equal(await page.locator('.build-details summary').textContent(),'Boons · 1');
+      assert.equal(await page.locator('.build-details b').textContent(),name);
+      await page.locator('#resume').click();
+      return name;
+    };
+    const startingBoon = await chooseStartingBoon(true);
     await page.waitForFunction(() => document.body.dataset.state === 'playing' && Number(document.querySelector('#magazine').textContent)>0);
     const ammo = await page.locator('#magazine').textContent();
     if(mobile) {
@@ -74,8 +104,11 @@ try {
     assert.equal([...assets].filter(p=>p.includes('/environment/')).length,9);
     assert.ok([...assets].some(p=>p.includes('/audio/')));
     assert.ok([...assets].every(p=>p.startsWith(prefix)));
+    await page.locator('#pause').click();
+    await page.locator('#menu').click();
+    await chooseStartingBoon();
     assert.deepEqual(errors,[]);
-    console.log(JSON.stringify({viewport:mobile?'touch 390x844':'desktop 1280x720',state:'playing',assets:assets.size,errors,performance:await page.evaluate(()=>window.__containmentPerformance)}));
+    console.log(JSON.stringify({viewport:mobile?'touch 390x844':'desktop 1280x720',startingBoon,restart:'fresh boon selected',state:'playing',assets:assets.size,errors,performance:await page.evaluate(()=>window.__containmentPerformance)}));
     await context.close();
   }
   console.log('Browser smoke passed: desktop and touch, production Pages subpath, assets, fire, weapon switch, pause/resume, credits.');

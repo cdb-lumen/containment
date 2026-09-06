@@ -1,3 +1,4 @@
+import {expeditionRewardOffers} from '../src/game/roguelike/expedition';
 import {readFileSync} from 'node:fs';
 import {describe,it,expect} from 'vitest';
 import * as story from '../src/game/roguelike/storyRooms';
@@ -30,7 +31,7 @@ describe('bright cryo floor HUD readability',()=>{
 describe('short non-blocking story HUD',()=>{
  it('separates essential status, immediate objective, and optional AI instruction',()=>{
   expect(story).toHaveProperty('conciseStoryStatus');
-  const g=new DepthGame();g.newRun(137);
+  const g=new DepthGame();g.newRun(137);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);
   expect(story.conciseStoryStatus(g.storyStatus)).toBe('Passengers alive · AI promises survival');
   expect(g.storyRoom?.objective).toBe('Restore communications.');
   expect(g.storyPresentation).toBe('AI: Purge the infestation.');

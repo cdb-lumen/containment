@@ -27,7 +27,7 @@ const offerSeed=(expedition:Expedition):number=>{
 };
 export function createExpedition(seed:number,resources:RunResources):Expedition {
   if(!isValidRunResources(resources)||resources.health<=0)throw new Error('A run must start alive');
-  return snapshot(createRun(seed),createBuild(),resources);
+  return snapshot({...createRun(seed),phase:'starting-boon'},createBuild(),resources);
 }
 /** The host supplies authoritative combat resources; changing rooms never resets them. */
 export function completeExpeditionRoom(expedition:Expedition,resources:RunResources):Expedition {
@@ -37,7 +37,7 @@ export function completeExpeditionRoom(expedition:Expedition,resources:RunResour
 }
 export function expeditionRewardOffers(expedition:Expedition):ReturnType<typeof draftMutationOffers> {
   const node=currentNode(expedition);
-  if(expedition.run.phase!=='reward'||!['upgrade','rare-upgrade'].includes(node.reward))return Object.freeze([]);
+  if(expedition.run.phase!=='starting-boon'&&(expedition.run.phase!=='reward'||!['upgrade','rare-upgrade'].includes(node.reward)))return Object.freeze([]);
   let offers:ReturnType<typeof draftMutationOffers>=[],excluded:MutationId[]=[];
   for(let roll=0;roll<=(expedition.run.draftRoll??0);roll++){
     offers=draftMutationOffers((offerSeed(expedition)+Math.imul(roll,0x9e3779b9))>>>0,expedition.build,node.reward==='rare-upgrade',excluded,node.depth);
@@ -54,7 +54,8 @@ export function rerollExpedition(expedition:Expedition):Expedition{
 /** Commit a valid offered mutation and consume the reward in the same transition. */
 export function claimExpeditionMutation(expedition:Expedition,id:MutationId):Expedition {
   if(!expeditionRewardOffers(expedition).some(offer=>offer.id===id))throw new Error('Mutation is not offered');
-  return snapshot(finishReward(expedition.run),addMutation(expedition.build,id),expedition.resources);
+  const run=expedition.run.phase==='starting-boon'?{...expedition.run,phase:'combat' as const,draftRoll:0}:finishReward(expedition.run);
+  return snapshot(run,addMutation(expedition.build,id),expedition.resources);
 }
 /** Medical/supply adapters apply their receipt first; this boundary commits it once. */
 export function claimExpeditionResources(expedition:Expedition,resources:RunResources):Expedition {
