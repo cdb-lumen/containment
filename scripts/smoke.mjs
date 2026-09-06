@@ -4,7 +4,7 @@ import {readFile, mkdir} from 'node:fs/promises';
 import {resolve, extname} from 'node:path';
 import {chromium} from 'playwright';
 
-const prefix = '/alien-shooter-containment/';
+const prefix = '/containment/';
 const root = resolve('dist');
 const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.jpg':'image/jpeg','.png':'image/png','.glb':'model/gltf-binary','.ogg':'audio/ogg','.mp3':'audio/mpeg','.wav':'audio/wav'};
 const server = createServer(async (req, res) => {
