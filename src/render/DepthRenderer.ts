@@ -1,5 +1,5 @@
 import {roomFocus} from './roomFraming';
-import {prepareCryoBenchmark} from './CryoBenchmark';
+import {prepareCryoBenchmark,cryoBenchmarkTemplate} from './CryoBenchmark';
 import {SceneLighting,ContactShadows} from './SceneLighting';
 import {authoredRoom} from './AuthoredRooms';
 import {ActorPool} from './ActorPool';
@@ -162,6 +162,18 @@ export class DepthRenderer {
   }
   const initial=roomFocus(t.spawn.x/UNIT,t.spawn.y/UNIT,w,h,this.camera.right-this.camera.left,this.camera.top-this.camera.bottom);
   this.focus.set(initial.x,0,initial.z);this.lighting.loadRoom(this.world,w,h);
+  if(node.templateId==='passenger-vault'&&!cryoBenchmarkTemplate()){
+   // Real room entry remains synchronous with procedural art while loading.
+   // Replace only the room art, never actors/effects or a later room instance.
+   const world=this.world;
+   void prepareCryoBenchmark(node.templateId).then(()=>{
+    if(this.world!==world||this.roomKey!==node.id||!cryoBenchmarkTemplate())return;
+    const replacement=authoredRoom(node.templateId,t);
+    if(!replacement)return;
+    if(bespoke)disposeModel(bespoke);
+    world.add(replacement);this.lighting.loadRoom(world,w,h);this.shadowsDirty=true;
+   });
+  }
  }
  private wallPanel(x:number,z:number,height:number,length:number,rotation:number){
   const g=new T.Group();g.position.set(x,0,z);g.rotation.y=rotation;

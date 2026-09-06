@@ -12,4 +12,8 @@ blender --background --factory-startup --python-exit-code 1 --python scripts/bui
 
 The template remains CPU-side and immutable after loading. Each passenger room copies geometry and one material per batch, then merges all 28 pods. Room disposal owns those copies. A failed optional model load retains procedural pods and may retry on later preparation. Only passenger-vault requests the model. Existing global lighting, topology and game simulation are unchanged.
 
+The real passenger-room entry loads the optional asset without blocking play. Procedural pods remain until the bounded five-second attempt succeeds, and a room-instance identity guard prevents a late replacement of another room. Direct preparation also has the five-second deadline. A later room entry may retry a failed transfer.
+
+Resource review measured 5,844 triangles per pod, 163,632 triangles across 28 pods and 15,708,672 bytes of expanded position/normal/UV attributes before room architecture, temporary merge buffers and GPU copies. Low quality currently uses the same pod geometry. The 355,028-byte GLB download is not runtime memory. Low-tier capture metrics remain required before approving or expanding this prototype.
+
 This is a review-only candidate. It does not approve the look, extend it to other rooms, alter the map-update process, or authorize merging.
