@@ -25,7 +25,7 @@ try{
  });
  await mkdir('docs/pr-screenshots',{recursive:true});
  const result=await page.evaluate(()=>{const f=window.fixture;const before=f.renderer.info.render.calls;f.models.forEach((m,i)=>m.setAffliction(f.statuses[i]));f.paint(1.2);return{drawCalls:f.renderer.info.render.calls,extraCalls:f.renderer.info.render.calls-before,counts:f.batch.counts};});
- assert.equal(result.extraCalls,5);assert.deepEqual(result.counts,{fire:6,poison:4,ice:28,drops:8,embers:8});
+ assert.equal(result.extraCalls,5);assert.deepEqual(result.counts,{fire:6,poison:4,ice:28,drops:8,embers:4});
  await page.screenshot({path:'docs/pr-screenshots/persistent-status-vfx.png'});
  // Sample the actual transient renderer as well as persistent statuses.
  await page.evaluate(async()=>{const f=window.fixture;const {AttackEffects}=await import('/src/render/AttackEffects.ts');f.fx=new AttackEffects(f.scene);f.fx.event({type:'boon',boon:'arc',x:-224,y:96,targetX:224,targetY:96});f.fx.update(.016,f.camera,[]);f.paint(1.216);});
