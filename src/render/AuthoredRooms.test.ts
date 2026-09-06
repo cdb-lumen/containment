@@ -44,5 +44,18 @@ describe('authored architecture',()=>{
   let disposed=0;map.addEventListener('dispose',()=>disposed++);rough.addEventListener('dispose',()=>disposed++);disposeModel(group);expect(disposed).toBe(2);expect(group.children.length).toBeLessThan(22);
  });
  it('adds bolted reactor clamp housings',()=>{const group=authoredRoom('overload-floor',actual('overload-floor'))!;expect(materialMesh(group,'reactor-fasteners')).toBeDefined();disposeModel(group);});
- it('does not replace other rooms',()=>expect(authoredRoom('awakening-bay',template)).toBeNull());
+ it('builds an exposed service arm and radial occupied cradles in the awakening bay',()=>{
+  const group=authoredRoom('awakening-bay',actual('awakening-bay'))!;expect(group).not.toBeNull();
+  const arm=materialMesh(group,'awakening-service-arm');expect(arm).toBeDefined();arm.geometry.computeBoundingBox();
+  expect(arm.geometry.boundingBox!.max.y).toBeGreaterThan(1.5);
+  expect(arm.geometry.boundingBox!.getSize(new T.Vector3()).x).toBeGreaterThan(7);
+  const skin=group.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0xb5a48e) as T.Mesh;
+  const p=skin.geometry.getAttribute('position');
+  for(const hole of actual('awakening-bay').voids!.slice(2)){
+   const x=hole.reduce((n,p)=>n+p.x,0)/hole.length/32,z=hole.reduce((n,p)=>n+p.y,0)/hole.length/32;
+   expect(Array.from({length:p.count},(_,i)=>i).some(i=>Math.hypot(p.getX(i)-x,p.getZ(i)-z)<1.5&&p.getY(i)>.4)).toBe(true);
+  }
+  expect(group.children.length).toBeLessThan(22);disposeModel(group);
+ });
+ it('does not replace other rooms',()=>expect(authoredRoom('residential-gallery',template)).toBeNull());
 });

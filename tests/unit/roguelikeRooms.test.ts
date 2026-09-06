@@ -19,7 +19,7 @@ describe('roguelike room templates', () => {
     const templates = Object.values(ROOM_TEMPLATES);
     expect(templates).toHaveLength(36);
     expect(new Set(templates.map(template => template.name)).size).toBe(36);
-    expect(new Set(templates.map(template => JSON.stringify(template.obstacles))).size).toBe(36);
+    expect(new Set(templates.map(template => JSON.stringify([template.boundary,template.voids,template.obstacles]))).size).toBe(36);
     expect(Object.isFrozen(ROOM_TEMPLATES)).toBe(true);
     for (const template of templates) {
       expect(Object.isFrozen(template)).toBe(true);
