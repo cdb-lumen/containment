@@ -88,7 +88,22 @@ export class DepthRenderer {
    await this.renderer.compileAsync(this.hudScene,this.camera);
   }finally{this.renderer.setRenderTarget(null);this.renderer.shadowMap.enabled=shadowEnabled;this.renderer.setScissorTest(false);this.resize();for(const m of models)this.actorPool.release(m);warm.removeFromParent();this.shadowsDirty=true;}
  }
- pointer(clientX:number,clientY:number){this.raycaster.setFromCamera(new T.Vector2(clientX/window.innerWidth*2-1,1-clientY/window.innerHeight*2),this.camera);const result=new T.Vector3();return this.raycaster.ray.intersectPlane(this.ground,result)?{x:result.x*UNIT,y:result.z*UNIT}:null;}
+ pointer(clientX:number,clientY:number,targets:readonly {id:number;x:number;y:number;radius:number}[]=[]){
+  const rect=this.canvas.getBoundingClientRect();
+  this.raycaster.setFromCamera(new T.Vector2((clientX-rect.left)/rect.width*2-1,1-(clientY-rect.top)/rect.height*2),this.camera);
+  // Only a pointer over the torso corrects the floor projection. No cone magnetism.
+  let nearest=Infinity,selected:{x:number;y:number}|null=null;
+  for(const t of targets){const model=t.id===-1?this.queen:this.actors.get(t.id);if(!model)continue;
+   const radius=t.radius/UNIT,height=model.height,center=new T.Vector3(t.x/UNIT,height*.5,t.y/UNIT);
+   const scale=new T.Vector3(radius,Math.max(.15,height*.48),radius);
+   const ray=this.raycaster.ray.clone();ray.origin.sub(center).divide(scale);ray.direction.divide(scale).normalize();
+   const contact=ray.intersectSphere(new T.Sphere(new T.Vector3(),1),new T.Vector3());if(!contact)continue;
+   const distance=contact.multiply(scale).add(center).distanceToSquared(this.raycaster.ray.origin);
+   if(distance<nearest){nearest=distance;selected={x:t.x,y:t.y};}
+  }
+  if(selected)return selected;
+  const result=new T.Vector3();return this.raycaster.ray.intersectPlane(this.ground,result)?{x:result.x*UNIT,y:result.z*UNIT}:null;
+ }
  visible(x:number,y:number){const p=new T.Vector3(x/UNIT,.6,y/UNIT).project(this.camera);return Math.abs(p.x)<.9&&Math.abs(p.y)<.8;}
  private bakeWorld(){
   this.world.updateMatrixWorld(true);const buckets=new Map<T.Material,T.BufferGeometry[]>();
@@ -175,7 +190,7 @@ export class DepthRenderer {
    this.recoil=1;if(this.pendingShots.length<4)this.pendingShots.push(effect);return;
   }
   if(effect.type==='enemy-attack'){if(effect.id===-1)this.queen?.attack?.();else this.actors.get(effect.id!)?.attack?.();}
-  if(effect.targetId!==undefined){if(effect.targetId===-1)this.queen?.hit?.();else this.actors.get(effect.targetId)?.hit?.();}
+  if((effect.contact==='damage'||effect.contact==='armor')&&effect.targetId!==undefined){if(effect.targetId===-1)this.queen?.hit?.();else this.actors.get(effect.targetId)?.hit?.();}
   if(effect.type==='corpse'){
    let existing=this.actors.get(effect.id!);if(!existing&&effect.family){existing=this.actorPool.take(effect.family);existing.root.position.set(x,0,z);this.scene.add(existing.root);}if(existing){freezeCorpse(existing);this.actors.delete(effect.id!);this.corpses.push({model:existing,id:effect.id!,x,y:z,vx:(effect.vx??0)/UNIT,vy:(effect.vy??0)/UNIT,height:.2,lift:3,spin:2.4,age:0});if(this.corpses.length>(matchMedia('(pointer:coarse)').matches?6:12)){this.actorPool.release(this.corpses.shift()!.model);}}
   }
@@ -184,6 +199,7 @@ export class DepthRenderer {
  syncCorpse(id:number,x:number,y:number){const corpse=this.corpses.find(c=>c.id===id);if(corpse){corpse.x=x/UNIT;corpse.y=y/UNIT;corpse.vx=corpse.vy=0;}}
  render(game:DepthGame,delta:number,menu=false){
   if(this.roomKey!==game.node.id)this.loadRoom(game.node);
+  if(game.status!=='playing'){for(const model of this.actors.values())model.hit?.(0);this.queen?.hit?.(0);}
   const dt=game.status==='paused'||game.status==='reward'||game.status==='route'?0:Math.min(delta,.05);this.time+=dt;const p=game.player;
   const bounds=game.geometry.bounds;
   const framed=roomFocus(p.x/UNIT,p.y/UNIT,bounds.width/UNIT,bounds.height/UNIT,(this.camera.right-this.camera.left)/this.camera.zoom,(this.camera.top-this.camera.bottom)/this.camera.zoom);
