@@ -24,10 +24,12 @@ describe('complete descent',()=>{
  it('varies opening families and persists paid, finite rerolls exactly',()=>{
   const c=new CombatSystem();c.setCredits(2000);const openings=new Set<string>();
   for(let seed=0;seed<40;seed++){const e=completeExpeditionRoom(createExpedition(seed,c.getRunResources()),c.getRunResources());openings.add(expeditionRewardOffers(e).map(x=>x.id).join());}
-  expect(openings.size).toBeGreaterThan(25);
+  // Four starters give at most 24 ordered three-card drafts.
+  expect(openings.size).toBeGreaterThan(12);
   let e=completeExpeditionRoom(createExpedition(42,c.getRunResources()),c.getRunResources());
   const first=expeditionRewardOffers(e).map(x=>x.id),cost=rerollCost(e);e=rerollExpedition(e);
-  expect(e.resources.credits).toBe(2000-cost);expect(expeditionRewardOffers(e).every(x=>!first.includes(x.id))).toBe(true);
+  expect(e.resources.credits).toBe(2000-cost);// An opening reroll must reveal the fourth path; two starters necessarily repeat.
+  expect(expeditionRewardOffers(e).some(x=>!first.includes(x.id))).toBe(true);
   const restored=restoreExpedition(expeditionCheckpoint(e,123));expect(expeditionRewardOffers(restored)).toEqual(expeditionRewardOffers(e));
   e=rerollExpedition(restored);expect(()=>rerollExpedition(e)).toThrow();
   expect(()=>rerollExpedition({...restored,resources:{...restored.resources,credits:0}})).toThrow();

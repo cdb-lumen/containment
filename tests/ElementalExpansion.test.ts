@@ -29,7 +29,7 @@ describe('elemental expansion and supply economy',()=>{
  });
  it('requires existing ingredients for thermal and combustion reactions, and consumes the correct statuses',()=>{
   const w=world(['cryogenic','incendiary','thermal-shock']);w.hit('a');expect(w.hits).toHaveLength(0);w.hit('b');expect(w.effects).toContain('shatter');expect(w.runtime.statuses(1)).toMatchObject({chilled:false,burning:false});w.advance(50);expect(w.slows.get(1)).toBe(1);
-  const fire=world(['incendiary','caustic-rounds','combustion']);fire.hit('a');fire.hit('b');expect(fire.runtime.statuses(1)).toMatchObject({burning:true,poisoned:false});expect(fire.hits.filter(h=>h.amount===26)).toHaveLength(2);
+  const fire=world(['incendiary','caustic-rounds','combustion']);fire.hit('a');fire.hit('b');expect(fire.runtime.statuses(1)).toMatchObject({burning:false,poisoned:true});expect(fire.hits.filter(h=>h.amount===26)).toHaveLength(2);
  });
  it('roots briefly, restores the stronger remaining slow and preserves three stacks on reload',()=>{
   const w=world(['cryogenic','absolute-zero','cold-snap']);w.hit('a');w.hit('b');w.hit('c');w.advance(50);expect(w.slows.get(1)).toBe(0);w.runtime.completedReload({x:0,y:0});w.advance(50);expect(w.slows.get(1)).toBe(0);w.advance(350);expect(w.slows.get(1)).toBeCloseTo(.5);w.advance(2500);expect(w.slows.get(1)).toBe(1);

@@ -61,18 +61,18 @@ describe('bounded mutation builds and deterministic offers', () => {
       }
     }
     const almostOwned = build(...MUTATION_IDS.filter((mutation) => !['breacher', 'cryogenic', 'chain-reaction', 'shattershot'].includes(mutation)));
-    expect(draftMutationOffers(7, almostOwned, true).map((offer) => offer.id).sort()).toEqual(['breacher', 'cryogenic']);
+    expect(draftMutationOffers(7, almostOwned, true).map((offer) => offer.id).sort()).toEqual(['breacher', 'cryogenic', 'shattershot']);
     const withLaunch = addMutation(almostOwned, 'breacher');
-    expect(draftMutationOffers(7, withLaunch, true).map((offer) => offer.id)).toEqual(['chain-reaction', 'cryogenic']);
+    expect(draftMutationOffers(7, withLaunch, true).map((offer) => offer.id).sort()).toEqual(['chain-reaction', 'cryogenic', 'shattershot']);
     const withBoth = addMutation(withLaunch, 'cryogenic');
     expect(draftMutationOffers(7, withBoth).map((offer) => offer.id).sort()).toEqual(['chain-reaction', 'shattershot']);
   });
   it('makes numerical tradeoffs executable in base combat stats', () => {
     const stats = deriveBuildStats(build('breacher', 'heavy-pellets', 'cryogenic', 'hot-reload', 'last-shell', 'volatile-remains'), 'shotgun');
-    expect(stats.projectileDamageMultiplier).toBeCloseTo(0.9 * 1.35 * 0.9);
-    expect(stats.shotIntervalMultiplier).toBe(1.2);
-    expect(stats.reloadDurationMultiplier).toBeCloseTo(1.15 * 1.1 * .9);
-    expect(stats.incomingDamageMultiplier).toBe(1.1);
+    expect(stats.projectileDamageMultiplier).toBeCloseTo(1.35);
+    expect(stats.shotIntervalMultiplier).toBe(1);
+    expect(stats.reloadDurationMultiplier).toBeCloseTo(.9);
+    expect(stats.incomingDamageMultiplier).toBe(1);
     expect(deriveBuildStats(createBuild(), 'pistol').projectileDamageMultiplier).toBe(1);
   });
 });
@@ -107,7 +107,7 @@ describe('pure mutation event commands', () => {
     const b = build('cryogenic', 'shattershot');
     const first = resolveBuildEvent(b, createBuildResolutionState(), hit(1));
     expect(first.commands[0]).toMatchObject({ type: 'chill', stacks: 2, slowFraction: 0.3 });
-    const shattered = resolveBuildEvent(b, first.state, { ...hit(2), id: 'shatter' });
+    const shattered = resolveBuildEvent(b, first.state, { ...hit(3), id: 'shatter' });
     expect(shattered.commands.map((command) => command.type)).toEqual(['chill', 'damage', 'explosion']);
     expect(shattered.commands[0]).toMatchObject({ stacks: 0 });
     expect(shattered.commands[2]).toMatchObject({ maxTargets: 6, damage: 16, source: 'secondary' });
@@ -141,13 +141,13 @@ describe('pure mutation event commands', () => {
     expect(resolveBuildEvent(build(), state, hit()).rejected).toBe('encounter-limit');
     expect(isValidBuildResolutionState({ ...state, chains: [] })).toBe(false);
   });
-  it('recovers ammo with proportional blood cost, preserving health floor and resource caps', () => {
+  it('legacy resource IDs no longer grant ammo or drain health', () => {
     const b = build('scavenger', 'blood-price');
     const kill = (r: ResourceSnapshot, source: 'direct' | 'secondary' = 'direct') => resolveBuildEvent(b, createBuildResolutionState(), { ...envelope(), type: 'kill', targetId: 'enemy', source, resources: r });
-    expect(kill(resources()).commands[0]).toMatchObject({ reserveDelta: 4, healthDelta: -2 });
-    expect(kill(resources({ reserve: 98 })).commands[0]).toMatchObject({ reserveDelta: 2, healthDelta: -2 / 3 });
-    expect(kill(resources({ health: 1 })).commands[0]).toMatchObject({ reserveDelta: 1, healthDelta: 0 });
-    expect(kill(resources({ health: 2 })).commands[0]).toMatchObject({ reserveDelta: 2, healthDelta: -2 / 3 });
+    expect(kill(resources()).commands).toEqual([]);
+    expect(kill(resources({ reserve: 98 })).commands).toEqual([]);
+    expect(kill(resources({ health: 1 })).commands).toEqual([]);
+    expect(kill(resources({ health: 2 })).commands).toEqual([]);
     expect(kill(resources({ reserve: 100 })).commands).toEqual([]);
     expect(kill(resources({ weapon: 'pistol', reserve: -1 })).commands).toEqual([]);
     expect(kill(resources(), 'secondary').commands).toEqual([]);
@@ -171,7 +171,7 @@ describe('pure mutation event commands', () => {
   it('bounds pickup bonuses and healing overflow using post-base snapshots', () => {
     const b = build('magnetic-feed', 'field-medic');
     const pickup: BuildEvent = { ...envelope(), type: 'pickup', kind: 'ammo', resources: resources({ magazine: 7 }) };
-    expect(resolveBuildEvent(b, createBuildResolutionState(), pickup).commands[0]).toMatchObject({ magazineDelta: 1 });
+    expect(resolveBuildEvent(b, createBuildResolutionState(), pickup).commands).toEqual([]);
     expect(resolveBuildEvent(b, createBuildResolutionState(), { ...pickup, resources: resources({ magazine: 8 }) }).commands).toEqual([]);
     const heal: BuildEvent = { ...envelope(), type: 'heal', amount: 100, resources: resources({ health: 95, armor: 98 }) };
     expect(resolveBuildEvent(b, createBuildResolutionState(), heal).commands[0]).toMatchObject({ healthDelta: 5, armorDelta: 2 });

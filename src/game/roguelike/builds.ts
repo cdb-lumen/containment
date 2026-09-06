@@ -1,5 +1,6 @@
 import type { BuildState, MutationId } from './types';
 import { MUTATION_CATALOG, MUTATION_IDS, type MutationDefinition } from './mutationCatalog';
+import {BOON_PATHS,activePaths,prerequisitesMet} from './boonPaths';
 
 const record = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
 const finite = (value: unknown, min = 0, max = 1_000_000): value is number => typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
@@ -17,22 +18,37 @@ export function isValidBuildState(value: unknown): value is BuildState {
 export const createBuild = (): BuildState => ({ mutations: [] });
 
 export function addMutation(build: BuildState, mutation: MutationId): BuildState {
-  if (!isValidBuildState(build) || !ownedId(mutation) || build.mutations.includes(mutation) || !(MUTATION_CATALOG[mutation].requires??[]).every(id=>build.mutations.includes(id))) throw new Error('Invalid or already owned mutation');
+  if (!isValidBuildState(build) || !ownedId(mutation) || build.mutations.includes(mutation) || !(MUTATION_CATALOG[mutation].requires??[]).every(id=>build.mutations.includes(id)) || !!MUTATION_CATALOG[mutation].requiresAny?.length && !MUTATION_CATALOG[mutation].requiresAny!.some(id=>build.mutations.includes(id))) throw new Error('Invalid or already owned mutation');
   return { mutations: [...build.mutations, mutation] };
 }
 
-/** Seeded weighted sampling without replacement. Synergy nudges, never locks a run. */
+/** Seeded, build-aware sampling without replacement. Rerolls prefer unseen cards. */
 export function draftMutationOffers(seed:number,build:BuildState,rare=false,exclude:readonly MutationId[]=[],depth=0):readonly MutationDefinition[]{
  if(!integer(seed,0,0xffffffff)||!isValidBuildState(build)||typeof rare!=='boolean')throw new Error('Invalid mutation draft');
  let state=seed>>>0;const next=()=>{state=(state+0x6d2b79f5)>>>0;let x=Math.imul(state^(state>>>15),1|state);x^=x+Math.imul(x^(x>>>7),61|x);return((x^(x>>>14))>>>0)/4294967296;};
- const eligible=MUTATION_IDS.filter(id=>!build.mutations.includes(id)&&(MUTATION_CATALOG[id].requires??[]).every(req=>build.mutations.includes(req)));
- let pool=eligible.filter(id=>!exclude.includes(id));if(pool.length<3)pool=eligible;
- const result:MutationDefinition[]=[];
- const pick=(candidates:MutationId[])=>{let total=0;const weights=candidates.map(id=>{const m=MUTATION_CATALOG[id],same=build.mutations.filter(x=>MUTATION_CATALOG[x].family===m.family).length;const w=(m.rarity==='rare'?.35+Math.min(11,depth)*.045:1)*(same?1.55:1)*(result.some(x=>x.family===m.family)?.45:1);total+=w;return w;});let roll=next()*total,index=0;for(;index<weights.length-1&&roll>=weights[index];index++)roll-=weights[index];const chosen=candidates[index];if(chosen){result.push(MUTATION_CATALOG[chosen]);pool=pool.filter(id=>id!==chosen);}};
- if(rare){const rares=pool.filter(id=>MUTATION_CATALOG[id].rarity==='rare');if(rares.length)pick(rares);}
- // An opening card that works with any weapon prevents three shotgun-only choices.
- const general=pool.filter(id=>!['breacher','heavy-pellets','last-shell','piercing-rounds','chain-reaction','shattershot','seismic-impact'].includes(id));
- if(general.length&&result.length<3)pick(general);
+ let pool=MUTATION_IDS.filter(id=>!build.mutations.includes(id)&&prerequisitesMet(MUTATION_CATALOG[id],build));
+ const paths=activePaths(build),result:MutationDefinition[]=[];
+ const pick=(candidates:MutationId[])=>{
+  const fresh=candidates.filter(id=>!exclude.includes(id));if(fresh.length)candidates=fresh;
+  let total=0;const weights=candidates.map(id=>{const m=MUTATION_CATALOG[id];
+   const connected=paths.some(p=>(p.boons as readonly string[]).includes(id));
+   const weight=(m.rarity==='rare'?.35+Math.max(0,Math.min(11,Number.isFinite(depth)?depth:0))*.045:1)*(connected?1.55:1)*(result.some(x=>x.family===m.family)?.65:1);
+   total+=weight;return weight;
+  });
+  let roll=next()*total,index=0;for(;index<weights.length-1&&roll>=weights[index];index++)roll-=weights[index];
+  const chosen=candidates[index];if(chosen){result.push(MUTATION_CATALOG[chosen]);pool=pool.filter(id=>id!==chosen);}
+ };
+ const starters=()=>pool.filter(id=>BOON_PATHS.some(p=>p.starter===id&&!paths.includes(p)));
+ if(!build.mutations.length&&!rare){
+  // Four paths, three choices. Reuse starters only when a reroll exhausts them.
+  while(result.length<3&&starters().length)pick(starters());
+ }else{
+  const continuations=pool.filter(id=>paths.some(p=>(p.continuations as readonly string[]).includes(id)));
+  const rareContinuations=continuations.filter(id=>MUTATION_CATALOG[id].rarity==='rare');
+  if(continuations.length)pick(rare&&rareContinuations.length?rareContinuations:continuations);
+  if(starters().length)pick(starters());
+  if(rare&&!result.some(m=>m.rarity==='rare')){const rares=pool.filter(id=>MUTATION_CATALOG[id].rarity==='rare');if(rares.length)pick(rares);}
+ }
  while(result.length<3&&pool.length)pick(pool);
  return Object.freeze(result);
 }
@@ -51,10 +67,10 @@ export function deriveBuildStats(build: BuildState, weapon: BuildWeapon) {
   const family=familyBonuses(build);
   return {
     penetrationBonus:has('piercing-rounds')&&['pistol','rifle','plasma'].includes(weapon)?1:0,
-    projectileDamageMultiplier: (family.kinetic?1.12:1) * (has('cryogenic') ? 0.9 : 1) * (weapon === 'shotgun' && has('breacher') ? 0.9 : 1) * (weapon === 'shotgun' && has('heavy-pellets') ? 1.35 : 1),
-    shotIntervalMultiplier: (has('rapid-cycle')?.85:1)*(weapon === 'shotgun' && has('heavy-pellets') ? 1.2 : 1),
-    reloadDurationMultiplier: (family.reactor?.9:1)*(has('rapid-cycle')?.85:1)*(has('hot-reload') ? 1.15 : 1) * (weapon === 'shotgun' && has('last-shell') ? 1.1 : 1),
-    incomingDamageMultiplier: has('volatile-remains') ? 1.1 : 1,
+    projectileDamageMultiplier: (family.kinetic?1.12:1) * (has('blood-price') ? 1.35 : 1) * (weapon === 'shotgun' && has('heavy-pellets') ? 1.35 : 1),
+    shotIntervalMultiplier: (has('rapid-cycle')?.85:1),
+    reloadDurationMultiplier: (family.reactor?.9:1)*(has('rapid-cycle')?.85:1),
+    incomingDamageMultiplier: has('blood-price') ? 1.2 : 1,
   } as const;
 }
 
@@ -179,7 +195,7 @@ function resolveCommands(build:BuildState,primedWeapons:readonly BuildWeapon[],e
       break;
     case 'hit': {
       if (canChain && event.weapon === 'shotgun' && has('breacher')) impulse(event.targetId, event.direction, has('heavy-pellets') ? 270 : 180);
-      const shattered = canChain && event.weapon === 'shotgun' && has('shattershot') && event.chilledStacks >= 2;
+      const shattered = canChain && has('shattershot') && event.chilledStacks >= 3;
       if (shattered) {
         emit({ type: 'chill', targetId: event.targetId, stacks: 0, durationMs: 0, slowFraction: 0 });
         emit({ type: 'damage', targetId: event.targetId, amount: 24, source: 'secondary' });
@@ -202,15 +218,11 @@ function resolveCommands(build:BuildState,primedWeapons:readonly BuildWeapon[],e
       break;
     case 'kill': {
       if (canChain && has('volatile-remains')) emit({ type: 'explosion', centerTargetId: event.targetId, damage: 22, radius: 72, maxTargets: BUILD_LIMITS.maxAreaTargets, source: 'secondary' });
-      const r = event.resources;
-      if (event.source !== 'direct' || r.reserve === -1 || r.health <= 0) break;
-      const freeRounds = has('scavenger') ? Math.min(1, r.maxReserve - r.reserve) : 0;
-      const paidRounds = has('blood-price') && r.health > 1 ? Math.min(3, r.maxReserve - r.reserve - freeRounds, Math.floor((r.health - 1) * 1.5)) : 0;
-      resource(r, paidRounds > 0 ? -paidRounds * 2 / 3 : 0, 0, 0, freeRounds + paidRounds);
+      // Legacy resource IDs now select Kindling and the explicit Blood Price risk.
       break;
     }
     case 'pickup':
-      if (has('magnetic-feed') && event.kind === 'ammo' && event.resources.health > 0) resource(event.resources, 0, 0, Math.min(2, event.resources.capacity - event.resources.magazine));
+      // Cycle Capacitor charges from ordinary shots, not ammo pickups.
       break;
     case 'heal':
       if (has('field-medic') && event.amount > 0 && event.resources.health > 0) {

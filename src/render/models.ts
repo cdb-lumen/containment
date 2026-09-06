@@ -1,13 +1,14 @@
 import * as T from 'three';
-import {MAT,shell,rod,batch} from './meshParts';
+import {MAT,shell,rod,batch,disposeModel} from './meshParts';
 import {instantiateAsset,type AssetName} from './assets';
+import {afflictionEffects,NO_AFFLICTION,type AfflictionStatus} from './afflictions';
 import {weaponModel,WEAPON_FIT,WEAPON_APPEARANCE,type GunModel} from './weapons';
 import type {WeaponId} from '../game/combat/types';
 export {MAT,box,ball,rod,disposeModel} from './meshParts';
 export type ActorModel={root:T.Group;body:T.Group;limbs:T.Group[];height:number;weapon?:T.Group;
  animate:(time:number,moving:number,aim:number,recoil?:number,reload?:number,velocity?:{x:number;y:number})=>void;
  equip?:(id:WeaponId)=>void;muzzleWorld?:(target:T.Vector3)=>T.Vector3;
- reset?:()=>void;prepare?:()=>void;setAffliction?:(status:{chilled:boolean;burning:boolean;poisoned?:boolean})=>void;freeze?:()=>void;attack?:()=>void;hit?:()=>void;setExposed?:(exposed:boolean)=>void;stop?:()=>void;};
+ reset?:()=>void;prepare?:()=>void;setAffliction?:(status:AfflictionStatus)=>void;freeze?:()=>void;attack?:()=>void;hit?:()=>void;setExposed?:(exposed:boolean)=>void;stop?:()=>void;};
 const vec=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 const species:Record<string,{asset:AssetName;span:number;height?:number}>={
  crawler:{asset:'dretch',span:1.75},stalker:{asset:'basilisk',span:2.35},spitter:{asset:'marauder',span:2.35},
@@ -35,9 +36,14 @@ function rig(name:AssetName,span:number,human=false){
 export function alien(kind:string,elite=false):ActorModel{
  const def=species[kind]??species.crawler,r=rig(def.asset,def.span*(elite?1.12:1));r.root.name=`alien-${kind}`;
  const color=new T.Color(kind==='queen'?0xffd3bb:elite?0xffe2b5:0xffffff);for(const m of r.materials)m.color.multiply(color);
- let flash=0,previous:number|undefined,exposed=false,chilled=false,burning=false,poisoned=false;
- return{root:r.root,body:r.body,limbs:[],height:r.height,attack:r.attack,freeze:r.freeze,stop:r.stop,prepare(){r.action('run');r.action('attack');},reset(){r.reset();flash=0;previous=undefined;exposed=chilled=burning=poisoned=false;for(const m of r.materials)m.emissiveIntensity=0;},hit(){flash=1;},setExposed(v){exposed=v;},setAffliction(v){chilled=v.chilled;burning=v.burning;poisoned=v.poisoned??false;},
- animate(time,moving,aim){const dt=previous===undefined?0:Math.max(0,Math.min(.05,time-previous));previous=time;flash=Math.max(0,flash-dt*9);r.root.rotation.y=Math.PI/2-aim;r.step(time,moving);for(const m of r.materials){m.emissive.setHex(chilled?0x3c9cc9:poisoned?0x258369:burning?0xbd4d13:exposed?0x42602b:0x8f3320);m.emissiveIntensity=flash*.4+(chilled||burning||poisoned?.2:exposed?.22:0);}}};
+ let flash=0,previous:number|undefined,exposed=false,dead=false,status:AfflictionStatus=NO_AFFLICTION;
+ let effects:ReturnType<typeof afflictionEffects>|undefined;
+ return{root:r.root,body:r.body,limbs:[],height:r.height,attack(){if(!dead&&!status.frozen)r.attack();},freeze(){dead=true;status=NO_AFFLICTION;effects?.reset();r.freeze();},stop:r.stop,prepare(){r.action('run');r.action('attack');},reset(){r.reset();flash=0;previous=undefined;exposed=dead=false;status=NO_AFFLICTION;effects?.reset();for(const m of r.materials)m.emissiveIntensity=0;},hit(){flash=1;},setExposed(v){exposed=v;},setAffliction(v){
+  if(dead)return;status=v;
+  if(!effects&&(v.chilled||v.burning||v.poisoned||v.frozen))effects=afflictionEffects(r.root,def.span*(elite?1.12:1),r.height);
+  effects?.set(v);r.mixer.timeScale=v.frozen?0:1;
+ },
+ animate(time,moving,aim){const dt=previous===undefined?0:Math.max(0,Math.min(.05,time-previous));previous=time;flash=Math.max(0,flash-dt*9);r.root.rotation.y=Math.PI/2-aim;r.step(time,moving);effects?.animate(time);for(const m of r.materials){m.emissive.setHex(status.frozen?0x79ddff:exposed?0x42602b:0x8f3320);m.emissiveIntensity=flash*.4+(status.frozen?.12:exposed?.22:0);}}};
 }
 export function marine():ActorModel{
  const r=rig('marine',2.05,true),weapon=new T.Group();r.root.name='marine';r.root.add(weapon);
@@ -71,6 +77,8 @@ export function freezeCorpse(model:ActorModel){model.freeze?.();model.root.updat
 
 /** Bake the deformed skin, so thrown bodies keep the exact impact pose. */
 export function collapseCorpse(model:ActorModel){
+ model.setAffliction?.(NO_AFFLICTION);
+ for(const child of [...model.root.children])if(child.userData.afflictionEffect)disposeModel(child);
  model.root.updateMatrixWorld(true);const inverse=model.root.matrixWorld.clone().invert(),baked=new T.Group(),position=new T.Vector3();
  model.root.traverseVisible(object=>{if(object instanceof T.Mesh){
   const geometry=object.geometry.clone();delete geometry.userData.sharedAsset;

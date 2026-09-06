@@ -36,13 +36,15 @@ export class MutationRuntime {
   #executing = false;
   #time = 0;
   #hitCount=0;#directKills=0;
+  #activeShot:string|undefined;
+  #shotWeapons=new Map<string,BuildWeapon>();
   #burns=new Map<number,{expiresAt:number;nextTick:number;command:BuildCommand}>();
 
   constructor(combat: CombatSystem, host: MutationHost) {
     this.#combat = combat;
     this.#host = host;
     this.#elements=new ElementalRuntime({combat,targets:host.targets,player:host.player??(()=>({x:0,y:0})),visible:(a,b)=>host.canAffect?.(a,b)!==false,
-      stacks:id=>this.#stacks(id),burning:id=>(this.#burns.get(id)?.expiresAt??0)>this.#time,clearChill:id=>{this.#chill.delete(id);},clearBurn:id=>{this.#burns.delete(id);},
+      stacks:id=>this.#stacks(id),burning:id=>(this.#burns.get(id)?.expiresAt??0)>this.#time,clearChill:id=>{this.#chill.delete(id);this.#elements.clearFreeze(id);},clearBurn:id=>{this.#burns.delete(id);},
       chill:(t,stacks,duration)=>this.#addChill(t,stacks,duration),effect:(...args)=>host.boonEffect?.(...args),
       damage:(t,n,cause,id)=>this.#damage(t,n,{type:'damage',targetId:String(t.id),amount:n,source:'secondary',cause,id}),
       push:(t,x,y,cause,id)=>{const old=this.#launches.get(t.id);if(!old||Math.hypot(x,y)>Math.hypot(old.x,old.y))this.#launches.set(t.id,{x,y,cause,commandId:id,remainingMs:700,touched:new Set([t.id])});},
@@ -54,6 +56,10 @@ export class MutationRuntime {
     const eventId=`${shotId}:hit:${target.id}`;
     if(this.#hits.has(eventId)||this.#hits.size>=BUILD_LIMITS.maxEncounterEvents)return;
     this.#hits.add(eventId);
+    this.#shotWeapons.set(shotId,weapon);
+    this.#elements.registerShot(shotId,primed);
+    this.#activeShot=shotId;
+    try {
     this.#remember(target);
     const current = this.#chill.get(target.id);
     const chilledStacks = current && current.expiresAt > this.#time ? current.stacks : 0;
@@ -72,9 +78,16 @@ export class MutationRuntime {
       for(const other of nearby){this.#host.boonEffect?.('arc',target.x,target.y,other.x,other.y);this.#damage(other,conductive?22.4:16,command);}
     }
     if(!reaction.skipBurn&&has('incendiary')&&this.#host.targets().some(t=>t.id===target.id&&t.health>0)){
-      const old=this.#burns.get(target.id);this.#burns.set(target.id,{expiresAt:this.#time+1500,nextTick:old?.nextTick??this.#time+250,command});
-      if(!old)this.#host.boonEffect?.('burn',target.x,target.y);
+      this.#ignite(target,command);
     }
+    } finally {this.#activeShot=undefined;}
+  }
+
+  #ignite(target:MutationTarget,command:BuildCommand){
+    if(command.cause.depth>BUILD_LIMITS.maxDepth||!this.#host.targets().some(t=>t.id===target.id&&t.health>0))return;
+    const old=this.#burns.get(target.id);
+    this.#burns.set(target.id,{expiresAt:this.#time+1500,nextTick:old?.nextTick??this.#time+250,command});
+    if(!old)this.#host.boonEffect?.('burn',target.x,target.y);
   }
 
   /** A direct lethal hit calls hit first, then kill using the same shot cause. */
@@ -86,10 +99,15 @@ export class MutationRuntime {
     if (launch) { launch.ghost = { ...target, health: 0 }; launch.remainingMs = Math.max(500, launch.remainingMs); }
     if(this.#stacks(target.id)>0&&this.#combat.build.mutations.includes('frost-armor')){this.#combat.restoreArmor(3);this.#host.boonEffect?.('shield',target.x,target.y);}
     if(source==='direct'&&++this.#directKills<=24&&this.#directKills%4===0&&this.#combat.build.mutations.includes('leech-rounds')){this.#combat.restoreHealth(4);this.#host.boonEffect?.('leech',target.x,target.y);}
-    this.#elements.kill(target,source,cause??{chainId:eventId??this.#combat.nextMutationEventId('kill-element'),depth:0});
+    const killCause=cause??{chainId:eventId??this.#combat.nextMutationEventId('kill-element'),depth:0};
+    if((this.#burns.get(target.id)?.expiresAt??-1)>=this.#time&&this.#combat.hasMutation('scavenger')&&killCause.depth<BUILD_LIMITS.maxDepth){
+      const nearby=this.#host.targets().filter(t=>t.id!==target.id&&t.health>0&&Math.hypot(t.x-target.x,t.y-target.y)<=100&&this.#host.canAffect?.(target,t)!==false).sort((a,b)=>Math.hypot(a.x-target.x,a.y-target.y)-Math.hypot(b.x-target.x,b.y-target.y)||a.id-b.id).slice(0,3);
+      for(const t of nearby)this.#ignite(t,{type:'damage',targetId:String(t.id),amount:4,source:'secondary',id:`${killCause.chainId}:kindling:${target.id}:${t.id}`,cause:{chainId:killCause.chainId,depth:killCause.depth+1}});
+    }
+    this.#elements.kill(target,source,killCause,this.#activeShot===killCause.chainId);
     this.#chill.delete(target.id);this.#burns.delete(target.id);
     const id = eventId ?? this.#combat.nextMutationEventId('kill');
-    this.#dispatch({ id, cause: cause ?? { chainId: id, depth: 0 }, type: 'kill', targetId: String(target.id), source, resources: this.#combat.mutationResources() });
+    this.#dispatch({ id, cause: killCause, type: 'kill', targetId: String(target.id), source, resources: this.#combat.mutationResources(this.#shotWeapons.get(killCause.chainId)) });
   }
 
   update(deltaMs: number): void {
@@ -127,12 +145,13 @@ export class MutationRuntime {
     this.#launches.clear();
     this.#killed.clear();
     this.#hits.clear();
+    this.#shotWeapons.clear();this.#activeShot=undefined;
     this.#commands.length = 0;
     this.#elements.reset();this.#slow.clear();this.secondaryBudget.clear();this.#time = 0;this.#hitCount=0;this.#directKills=0;this.#burns.clear();
     this.#combat.resetMutationEncounter();
   }
 
-  statuses(id:number){return{chilled:this.#stacks(id)>0,burning:this.#burns.has(id),poisoned:this.#elements.poisoned(id)};}
+  statuses(id:number){const alive=this.#host.targets().some(t=>t.id===id&&t.health>0),chillStacks=alive?this.#stacks(id):0;return{chilled:chillStacks>0,chillStacks,burning:alive&&(this.#burns.get(id)?.expiresAt??0)>this.#time,poisoned:alive&&this.#elements.poisoned(id),frozen:alive&&this.#elements.frozen(id)};}
   hurt(beforeArmor:number,afterArmor:number,player:{x:number;y:number}){this.#elements.hurt(beforeArmor,afterArmor,player);}
   #stacks(id:number){const c=this.#chill.get(id);return c&&c.expiresAt>this.#time?c.stacks:0;}
   #addChill(t:MutationTarget,stacks:number,duration:number){if(!this.#host.targets().some(x=>x.id===t.id&&x.health>0))return;this.#chill.set(t.id,{stacks:Math.max(stacks,this.#stacks(t.id)),expiresAt:Math.max(this.#time+duration,this.#chill.get(t.id)?.expiresAt??0)});this.#host.boonEffect?.('frost',t.x,t.y);}
@@ -142,7 +161,7 @@ export class MutationRuntime {
     if(!has('cold-snap'))return;
     const family=familyBonuses(build);
     const targets=this.#host.targets().filter(t=>t.health>0&&Math.hypot(t.x-player.x,t.y-player.y)<=190&&this.#host.canAffect?.(player,t)!==false).sort((a,b)=>Math.hypot(a.x-player.x,a.y-player.y)-Math.hypot(b.x-player.x,b.y-player.y)||a.id-b.id).slice(0,3);
-    for(const t of targets){this.#chill.set(t.id,{stacks:Math.max(2,this.#stacks(t.id)),expiresAt:this.#time+(has('permafrost')?3500:2000)+(family.cryo?500:0)});this.#host.setSlow(t.id,1-this.#stacks(t.id)*.15-(family.cryo?.05:0));this.#slow.set(t.id,1-this.#stacks(t.id)*.15-(family.cryo?.05:0));this.#host.boonEffect?.('frost',t.x,t.y);}
+    for(const t of targets){const before=this.#stacks(t.id);this.#chill.set(t.id,{stacks:Math.min(3,before+2),expiresAt:this.#time+(has('permafrost')?3500:2000)+(family.cryo?500:0)});const id=this.#combat.nextMutationEventId('cold-snap');this.#elements.reachedChill(t,before,{chainId:id,depth:1},id);const slow=Math.min(1-this.#stacks(t.id)*.15-(family.cryo?.05:0),this.#elements.slow(t));this.#host.setSlow(t.id,slow);this.#slow.set(t.id,slow);this.#host.boonEffect?.('frost',t.x,t.y);}
     this.#host.boonEffect?.('frost',player.x,player.y);
   }
 
@@ -171,9 +190,9 @@ export class MutationRuntime {
     const live = this.#host.targets().find((target) => target.id === targetId && target.health > 0);
     if (live) this.#remember(live);
     if (command.type === 'chill') {
+      if (command.stacks === 0) {this.#chill.delete(targetId);this.#elements.clearFreeze(targetId);}
       if (!live) return;
-      if (command.stacks === 0) this.#chill.delete(targetId);
-      else this.#chill.set(targetId, { stacks: command.stacks, expiresAt: this.#time + command.durationMs });
+      if (command.stacks > 0) this.#chill.set(targetId, { stacks: command.stacks, expiresAt: this.#time + command.durationMs });
       this.#host.setSlow(targetId, 1 - command.slowFraction);this.#slow.set(targetId,1-command.slowFraction);
       if(command.stacks>0)this.#host.boonEffect?.('frost',live.x,live.y);
     } else if (command.type === 'impulse') {

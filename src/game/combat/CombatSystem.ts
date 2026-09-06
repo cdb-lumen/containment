@@ -241,6 +241,8 @@ export class CombatSystem {
   #build: BuildState = createBuild();
   #mutationState = new BuildEventResolver();
   #mutationSequence = 0;
+  #cycleCharged = false;
+  #cyclePrimed = false;
 
   setBuild(build: BuildState): boolean {
     if (!isValidBuildState(build)) return false;
@@ -257,6 +259,7 @@ export class CombatSystem {
 
   resetMutationEncounter(): void {
     this.#mutationState.reset();
+    this.#cycleCharged = this.#cyclePrimed = false;
     // Keep IDs monotonic: in-flight requests from an old encounter cannot alias.
   }
 
@@ -462,10 +465,14 @@ export class CombatSystem {
     const spreadRadians = weapon.spreadRadians * this.#modifiers.spreadMultiplier;
     const stats = deriveBuildStats(this.#build, this.#weaponId);
     const mutationShotId = this.nextMutationEventId('shot');
-    const primed=this.#mutationState.isPrimed(this.#weaponId);
+    const cyclePrimed=this.hasMutation('magnetic-feed')&&this.#cyclePrimed;
     const resolution = this.resolveMutationEvent({ id: mutationShotId, cause: { chainId: mutationShotId, depth: 0 },
       type: 'shot', weapon: this.#weaponId, magazineBefore: ammo.magazine });
-    const shotBonus = resolution.commands.reduce((factor, command) => command.type === 'shot-bonus' ? factor * command.damageMultiplier : factor, 1);
+    const reloadBonus = resolution.commands.reduce((factor, command) => command.type === 'shot-bonus' ? factor * command.damageMultiplier : factor, 1);
+    const shotBonus = reloadBonus * (cyclePrimed ? 1.5 : 1);
+    const primed = shotBonus > 1;
+    this.#cyclePrimed = false;
+    this.#cycleCharged = this.hasMutation('magnetic-feed') && !primed;
     ammo.magazine -= 1;
     ammo.cooldownRemainingMs = 1_000 / weapon.roundsPerSecond * stats.shotIntervalMultiplier;
 
@@ -520,6 +527,7 @@ export class CombatSystem {
     if (!isWeaponId(weaponId) || weaponId === this.#weaponId) return false;
 
     this.#cancelReload();
+    if(this.hasMutation('magnetic-feed') && this.#cycleCharged){this.#cyclePrimed=true;this.#cycleCharged=false;}
     this.#weaponId = weaponId;
     this.#emit();
     return true;

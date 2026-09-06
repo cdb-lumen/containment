@@ -20,3 +20,14 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 
 @media(max-width:700px){.choice-card{padding-top:29px}.card-number>span{display:block;position:absolute;left:41px;top:-19px;white-space:nowrap;font-size:8px;padding-top:0}#build-strip{max-width:88vw}.panel{margin:auto 0}}
 @media(min-width:701px){.panel{max-height:94dvh;overflow:auto;touch-action:pan-y}}
+
+/* Path, effect, condition, then owned synergy. All three choices are peers. */
+.choice-panel .choice-card{padding:22px 22px 38px;min-width:0;text-align:left}
+.boon-path{display:flex;justify-content:space-between;gap:8px;color:var(--boon-color);font-size:12px;line-height:1.4;font-weight:600}
+.boon-path>span{font-size:10px;letter-spacing:.08em;color:var(--gold)}
+.choice-panel .choice-card h3{margin:14px 0 10px}
+.choice-panel .choice-card p{font-size:14px;line-height:1.5}
+.choice-panel .boon-condition{display:block;font-size:12px;line-height:1.5;margin-top:12px;color:#aabcb9}
+.boon-hint{display:block;margin-top:14px;color:var(--boon-color);font-size:12px;line-height:1.5}
+.choice-card[data-risk="true"] .boon-condition{color:#f0ad98;font-weight:600}
+@media(max-width:700px){.choice-panel .choice-card{padding:16px 32px 18px 16px}.choice-panel .choice-card h3{margin:6px 0;font-size:24px}.choice-panel .boon-condition,.boon-hint{margin-top:8px}.boon-path{font-size:11px}.choice-panel .choice-card p{font-size:13px}.choice-panel .panel-intro{margin-bottom:14px}}

@@ -191,7 +191,7 @@ export class DepthRenderer {
   for(const[id,mesh]of this.poolMeshes)if(!poolIds.has(id)){mesh.geometry.dispose();(mesh.material as T.Material).dispose();mesh.removeFromParent();this.poolMeshes.delete(id);}
 
   if(q.active&&!this.queen){this.queen=this.actorPool.take('queen');this.scene.add(this.queen.root);}
-  if(this.queen){this.queen.setExposed?.(q.vulnerable);this.queen.setAffliction?.(game.boonStatuses(-1));this.queen.root.position.set(q.x/UNIT,0,q.y/UNIT);this.queen.animate(this.time,.4,q.rotation);if(q.defeated){this.queen.root.rotation.z=1.25;this.queen.root.position.y=-.35;}}
+  if(this.queen){this.queen.setExposed?.(q.vulnerable);this.queen.setAffliction?.(q.defeated?{chilled:false,burning:false,poisoned:false,frozen:false}:game.boonStatuses(-1));this.queen.root.position.set(q.x/UNIT,0,q.y/UNIT);this.queen.animate(this.time,.4,q.rotation);if(q.defeated){this.queen.root.rotation.z=1.25;this.queen.root.position.y=-.35;}}
   const nestIds=new Set<number>();for(const n of q.nests){nestIds.add(n.id);let model=this.nests.get(n.id);if(!model){model=nest();this.nests.set(n.id,model);this.scene.add(model);}model.position.set(n.x/UNIT,0,n.y/UNIT);model.scale.y=1+Math.sin(this.time*3+n.id)*.035;}
   for(const[id,model]of this.nests)if(!nestIds.has(id)){disposeModel(model);this.nests.delete(id);}
   for(const c of this.corpses){if(c.age>2&&Math.abs(c.vx)+Math.abs(c.vy)<.02&&c.height<=.08)continue;c.age+=dt;const moved=game.moveCorpse({x:c.x*UNIT,y:c.y*UNIT,radius:14},c.vx*dt*UNIT,c.vy*dt*UNIT);c.x=moved.x/UNIT;c.y=moved.y/UNIT;if(moved.blocked){c.vx*=-.22;c.vy*=-.22;}c.vx*=Math.exp(-3.8*dt);c.vy*=Math.exp(-3.8*dt);c.lift-=9.8*dt;c.height=Math.max(.08,c.height+c.lift*dt);if(c.height<=.08)c.lift=0;
