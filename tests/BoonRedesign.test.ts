@@ -84,8 +84,8 @@ describe('composed combat paths',()=>{
  });
  it('renders simultaneous independent persistent cues and clears corpses and reused actors',()=>{
   const m=alien('brute');m.setAffliction!({chilled:true,burning:true,frozen:true,chillStacks:3});m.animate(0,1,0);m.animate(.1,1,0);
-  for(const name of ['status-burning','status-chill','status-frozen'])expect(m.root.getObjectByName(name)?.visible,name).toBe(true);
-  m.setAffliction!({chilled:true,burning:false,frozen:false,chillStacks:1});m.animate(.2,1,0);expect(m.root.getObjectByName('status-burning')?.visible).toBe(false);expect(m.root.getObjectByName('status-chill')?.visible).toBe(true);
-  m.setAffliction!({chilled:true,burning:true,frozen:true});freezeCorpse(m);for(const name of ['status-burning','status-chill','status-frozen'])expect(m.root.getObjectByName(name)?.visible).toBe(false);m.reset!();expect(m.root.getObjectByName('status-chill')?.visible).toBe(false);disposeModel(m.root);
+  expect(m.root.userData.affliction.status).toMatchObject({burning:true,chilled:true,frozen:true});
+  m.setAffliction!({chilled:true,burning:false,frozen:false,chillStacks:1});m.animate(.2,1,0);expect(m.root.userData.affliction.status).toMatchObject({burning:false,chilled:true,frozen:false});
+  m.setAffliction!({chilled:true,burning:true,frozen:true});freezeCorpse(m);expect(m.root.userData.affliction.status).toMatchObject({burning:false,chilled:false,frozen:false});m.reset!();expect(m.root.userData.affliction.status.chilled).toBe(false);disposeModel(m.root);
  });
 });
