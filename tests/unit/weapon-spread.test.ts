@@ -74,6 +74,7 @@ describe('weapon spread', () => {
 
   it.each(['pistol','plasma','rocket'] as const)('keeps %s exactly on aim', id => {
     const c=new CombatSystem();c.switchWeapon(id);
+    c.addReserveAmmo(5); // Isolate spread from the starting ammo budget.
     for(let i=0;i<5;i++){
       expect(c.fire(1.23)[0].angle).toBe(1.23);
       expect(c.snapshot.bloomRadians).toBe(0);

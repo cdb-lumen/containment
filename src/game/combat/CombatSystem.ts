@@ -240,10 +240,26 @@ export class CombatSystem {
   #healListener:(()=>void)|null=null;
   onHealing(listener:(()=>void)|null){this.#healListener=listener;}
   hasMutation(id:import('../roguelike/types').MutationId){return this.#build.mutations.includes(id);}
-  replenishReserves(){for(const [id,amount]of Object.entries({rifle:240,shotgun:64,plasma:140,rocket:12})){const key=id as WeaponId;this.#ammo[key].reserve=Math.max(amount,this.#ammo[key].reserve);}this.#supplyClock=0;this.#rocketSupply=0;this.#emit();}
-  regenerateReserves(deltaMs:number){if(this.#dead||!Number.isFinite(deltaMs)||deltaMs<=0)return;this.#supplyClock+=deltaMs;const ticks=Math.min(5,Math.floor(this.#supplyClock/1000));if(!ticks)return;this.#supplyClock-=ticks*1000;for(const [id,rate,cap]of [['rifle',6,240],['shotgun',1,64],['plasma',3,140],['rocket',.5,12]] as const){const ammo=this.#ammo[id];if(ammo.reserve<cap){if(id==='rocket'){this.#rocketSupply+=ticks*.5;const gain=Math.floor(this.#rocketSupply);this.#rocketSupply-=gain;ammo.reserve=Math.min(cap,ammo.reserve+gain);}else ammo.reserve=Math.min(cap,ammo.reserve+ticks*rate);}}this.#emit();}
-  #rocketSupply=0;
-  collectAmmoPack(){for(const [id,n]of [['rifle',60],['shotgun',12],['plasma',30],['rocket',2]] as const)this.#ammo[id].reserve=Math.min(100000,this.#ammo[id].reserve+n);const id=this.nextMutationEventId('ammo-pack');this.resolveMutationEvent({id,cause:{chainId:id,depth:0},type:'pickup',kind:'ammo',resources:this.mutationResources()});this.#emit();}
+  replenishReserves(){for(const [id,amount]of Object.entries({rifle:80,shotgun:21,plasma:47,rocket:4})){const key=id as WeaponId;this.#ammo[key].reserve=Math.max(amount,this.#ammo[key].reserve);}this.#supplyClock=0;this.#supplyTicks={rifle:0,shotgun:0,plasma:0,rocket:0};this.#emit();}
+  regenerateReserves(deltaMs:number){
+    if(this.#dead||!Number.isFinite(deltaMs)||deltaMs<=0)return;
+    this.#supplyClock+=deltaMs;
+    const ticks=Math.min(5,Math.floor(this.#supplyClock/1000));
+    if(!ticks)return;
+    this.#supplyClock-=ticks*1000;
+    // Whole-second periods retain fractional rates without fractional ammo or drift.
+    for(const [id,rounds,period,cap]of [['rifle',2,1,80],['shotgun',1,3,21],['plasma',1,1,47],['rocket',1,6,4]] as const){
+      const ammo=this.#ammo[id];
+      if(ammo.reserve>=cap)continue;
+      this.#supplyTicks[id]+=ticks;
+      const gain=Math.floor(this.#supplyTicks[id]/period)*rounds;
+      this.#supplyTicks[id]%=period;
+      ammo.reserve=Math.min(cap,ammo.reserve+gain);
+    }
+    this.#emit();
+  }
+  #supplyTicks={rifle:0,shotgun:0,plasma:0,rocket:0};
+  collectAmmoPack(){for(const [id,n]of [['rifle',20],['shotgun',4],['plasma',10],['rocket',1]] as const)this.#ammo[id].reserve=Math.min(100000,this.#ammo[id].reserve+n);const id=this.nextMutationEventId('ammo-pack');this.resolveMutationEvent({id,cause:{chainId:id,depth:0},type:'pickup',kind:'ammo',resources:this.mutationResources()});this.#emit();}
   #build: BuildState = createBuild();
   #mutationState = new BuildEventResolver();
   #mutationSequence = 0;
@@ -309,7 +325,7 @@ export class CombatSystem {
   restoreRunResources(value: unknown): boolean {
     if (!isValidRunResources(value) || value.health > INITIAL_HEALTH || value.armor > this.#maxArmor ||
       value.grenades > MAX_GRENADES || WEAPON_IDS.some((weapon) => value.ammo[weapon].magazine > this.#ammo[weapon].capacity)) return false;
-    this.#supplyClock=0;this.#rocketSupply=0;
+    this.#supplyClock=0;this.#supplyTicks={rifle:0,shotgun:0,plasma:0,rocket:0};
     this.#health = value.health;
     this.#armor = value.armor;
     this.#credits = value.credits;
@@ -696,7 +712,7 @@ export class CombatSystem {
   }
 
   reset(): void {
-    this.#supplyClock=0;this.#rocketSupply=0;
+    this.#supplyClock=0;this.#supplyTicks={rifle:0,shotgun:0,plasma:0,rocket:0};
     this.#weaponId = INITIAL_WEAPON;
     this.#ammo = createAmmoState();
     this.#reloading = false;

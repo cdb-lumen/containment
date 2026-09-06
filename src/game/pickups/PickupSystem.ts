@@ -125,7 +125,7 @@ const FIXED_VALUES: Readonly<Record<Exclude<PickupKind, 'credits'>, readonly num
   Object.freeze({
     health: Object.freeze([10, 20, 30]),
     armor: Object.freeze([8, 15, 25]),
-    ammo: Object.freeze([12, 24, 36]),
+    ammo: Object.freeze([4, 8, 12]),
     grenade: Object.freeze([1]),
   });
 

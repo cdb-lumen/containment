@@ -53,7 +53,7 @@ export class DepthGame {
   const costs={heal:100,armor:90,ammo:100},act=progressionFor(this.node).act;
   if(purchase&&this.combat.snapshot.credits<costs[purchase])return;
   if(this.node.reward==='healing'){this.combat.restoreHealth(35+act*5);this.combat.restoreArmor(15+act*5);}
-  const pack=(boost=false)=>{const r=this.combat.getRunResources(),ammo={...r.ammo};for(const [id,amount]of Object.entries({rifle:60+act*15,shotgun:18+act*6,plasma:24+act*6,rocket:2})){const key=id as WeaponId;ammo[key]={...ammo[key],reserve:Math.min(100000,ammo[key].reserve+Math.round(amount*(boost?.65:1)))};}this.combat.restoreRunResources({...r,ammo,grenades:Math.min(6,r.grenades+(boost?0:1))});};
+  const pack=(boost=false)=>{const r=this.combat.getRunResources(),ammo={...r.ammo};for(const [id,amount]of Object.entries({rifle:60+act*15,shotgun:18+act*6,plasma:24+act*6,rocket:2})){const key=id as WeaponId;ammo[key]={...ammo[key],reserve:Math.min(100000,ammo[key].reserve+Math.max(1,Math.round(amount*(boost?.65:1)/3)))};}this.combat.restoreRunResources({...r,ammo,grenades:Math.min(6,r.grenades+(boost?0:1))});};
   if(this.node.reward==='supplies')pack();
   if(purchase){this.combat.setCredits(this.combat.snapshot.credits-costs[purchase]);if(purchase==='heal')this.combat.restoreHealth(30);else if(purchase==='armor')this.combat.restoreArmor(25);else pack(true);}
   this.expedition=claimExpeditionResources(this.expedition,this.combat.getRunResources());this.status='route';this.save();
