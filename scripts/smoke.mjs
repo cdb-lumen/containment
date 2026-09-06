@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {observeAudio,checkMenuSound,checkPausedSound} from './sound-controls-check.mjs';
 import {createServer} from 'node:http';
 import {readFile, mkdir} from 'node:fs/promises';
 import {resolve, extname} from 'node:path';
@@ -23,6 +24,7 @@ try {
   for (const mobile of [false, true]) {
     const context = await browser.newContext({viewport:mobile ? {width:390,height:844} : {width:1280,height:720},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
     const page = await context.newPage();
+    await observeAudio(page);
     page.setDefaultTimeout(60000);
     const errors = [], assets = new Set();
     page.on('pageerror', error => errors.push(error.message));
@@ -37,6 +39,7 @@ try {
     await page.route('https://fonts.googleapis.com/**', route => route.fulfill({status:200,contentType:'text/css',body:''}));
     await page.goto(origin + prefix);
     await page.waitForFunction(() => document.body.dataset.state === 'menu');
+    const selectedVolume = await checkMenuSound(page, mobile);
     const chooseStartingBoon = async (capture = false) => {
       await page.locator('#start').click();
       await page.waitForFunction(() => document.body.dataset.state === 'reward' && Number(document.querySelector('#magazine').textContent)>0);
@@ -89,6 +92,7 @@ try {
     }
     await page.locator('#pause').click();
     await page.waitForFunction(() => document.body.dataset.state === 'paused');
+    await checkPausedSound(page, mobile, selectedVolume);
     const credits = await page.locator('a', {hasText:'Credits'}).getAttribute('href');
     assert.equal(new URL(credits, page.url()).pathname, prefix+'audio-credits.html');
     assert.equal((await fetch(new URL(credits,page.url()))).status,200);

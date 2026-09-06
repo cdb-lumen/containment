@@ -1,3 +1,4 @@
+import { DEFAULT_MASTER_VOLUME } from './preferences';
 import type { CombatSnapshot } from '../combat/CombatSystem';
 
 export type AudioVolumes = Readonly<{ master: number; music: number; effects: number }>;
@@ -53,7 +54,7 @@ export class AudioSystem {
   }
 
   constructor(volumes: Partial<AudioVolumes> = {}) {
-    this.volumes = { master: clamp01(volumes.master ?? .8), music: clamp01(volumes.music ?? .65), effects: clamp01(volumes.effects ?? .8) };
+    this.volumes = { master: clamp01(volumes.master ?? DEFAULT_MASTER_VOLUME), music: clamp01(volumes.music ?? .65), effects: clamp01(volumes.effects ?? .8) };
   }
 
   /** AudioContext creation/resume occurs before the first await, inside gesture. */
@@ -76,6 +77,11 @@ export class AudioSystem {
         this.compressor.ratio.value = 8;
         this.compressor.attack.value = .003;
         this.compressor.release.value = .18;
+        // Apply persisted silence before any decoded source can start. Live edits
+        // still use the short ramps below to avoid clicks.
+        this.masterGain.gain.value = this.volumes.master * .85;
+        this.effectsGain.gain.value = this.volumes.effects;
+        this.musicGain.gain.value = this.volumes.music;
         this.effectsGain.connect(this.masterGain);
         this.musicGain.connect(this.musicDuck).connect(this.masterGain);
         this.masterGain.connect(this.compressor).connect(context.destination);
@@ -143,6 +149,9 @@ export class AudioSystem {
   }
   playAlien(pan = 0, distance = 0): void {
     if (this.rateLimit('alien', .18)) this.play('alien-impact.wav', .25 / (1 + Math.max(0, distance) / 380), { pan, rate: .88 + Math.random() * .14 });
+  }
+  playConfirmedHit(blocked=false): void {
+    if (this.rateLimit('confirmed-hit', .055)) this.play(blocked?'switch.wav':'alien-impact.wav',blocked?.10:.20,{rate:blocked?1.4:1.65});
   }
   playBodyImpact(pan = 0, distance = 0): void {
     if (this.rateLimit('body-impact', .10)) this.play('alien-impact.wav', .42 / (1 + Math.max(0,distance) / 450), {pan, rate: .68 + Math.random() * .08});
