@@ -20,6 +20,8 @@ function contains(points:Outline,x:number,z:number){let inside=false;for(let i=0
 /** Room-local resources. No dimension-keyed global cache and no retained source meshes. */
 class Fabricator{
  readonly root=new T.Group();private parts=new Map<T.Material,T.BufferGeometry[]>();
+ readonly contact=new T.MeshBasicMaterial({color:0x020609,transparent:true,depthWrite:false,opacity:.34});
+ readonly shaft=this.mat(0x536d76,.3,.83,0x24414a,.26);
  readonly paint=this.mat(0x34454b,.62,.66);readonly edge=this.mat(0x718184,.7,.36);
  readonly dark=this.mat(0x101b22,.5,.65);readonly deck=this.mat(0x263238,.32,.91);
  readonly ivory=this.mat(0x9dada6,.58,.4);readonly bronze=this.mat(0x91714a,.73,.42);
@@ -27,28 +29,38 @@ class Fabricator{
  readonly ribs=this.mat(0x697164,.48,.64);readonly bolts=this.mat(0x69767a,.78,.47);
  readonly seam=this.mat(0x293a40,.3,.88);readonly stencil=this.mat(0x77745c,.2,.9);
  constructor(){
+  this.contact.userData.actorMaterial=true;this.contact.name='environment-contact';this.shaft.name='shaft-liner';
+  const contactData=new Uint8Array(32*32*4);for(let y=0;y<32;y++)for(let x=0;x<32;x++){const edge=Math.min(x,y,31-x,31-y)/6;contactData.set([255,255,255,Math.round(255*Math.min(1,edge)**2)],(y*32+x)*4);}
+  const contactMap=new T.DataTexture(contactData,32,32);contactMap.needsUpdate=true;contactMap.magFilter=T.LinearFilter;this.contact.map=contactMap;this.contact.addEventListener('dispose',()=>contactMap.dispose());
   this.chitin.name='boarding-carapace';this.ribs.name='boarding-ribs';this.bolts.name='reactor-fasteners';this.deck.name='painted-steel-deck';
   // Eight-metre paint sheet: fine rolled grain, broad rubbed patches and sparse
   // staggered plate joints. No image requests or canvas dependency.
-  const size=256,albedo=new Uint8Array(size*size*4),rough=new Uint8Array(size*size*4);
+  const size=256,albedo=new Uint8Array(size*size*4),rough=new Uint8Array(size*size*4),normal=new Uint8Array(size*size*4);
+  const relief=(x:number,z:number)=>{x=(x+size)%size;z=(z+size)%size;const dx=Math.min((x+(z<128?0:96))%256,256-(x+(z<128?0:96))%256),dz=Math.min(z%128,128-z%128);return -Math.max(0,1-Math.min(dx,dz)/2.5);};
   for(let z=0;z<size;z++)for(let x=0;x<size;x++){
    const i=(z*size+x)*4,hash=((x*73856093)^(z*19349663))>>>0,grain=(hash%13)-6;
    const wear=Math.sin(x*.037+Math.sin(z*.025))*3+Math.cos(z*.052)*2;
    const joint=(z===0||z===128||((x+(z<128?0:96))%256===0))?14:0;
    const scratch=(hash%229===0&&x%19<12)?9:0,c=Math.round(228+grain*.55+wear-joint+scratch);
-   albedo.set([c,c,c,255],i);const r=224+hash%23;rough.set([r,r,r,255],i);
+   albedo.set([c,c,c,255],i);const r=Math.round(234+wear*2);rough.set([r,r,r,255],i);
+   const n=new T.Vector3((relief(x-1,z)-relief(x+1,z))*.9,(relief(x,z-1)-relief(x,z+1))*.9,1).normalize();normal.set([Math.round(128+n.x*127),Math.round(128+n.y*127),Math.round(128+n.z*127),255],i);
   }
   const texture=(data:Uint8Array)=>{const t=new T.DataTexture(data,size,size);t.wrapS=t.wrapT=T.RepeatWrapping;t.magFilter=T.LinearFilter;t.minFilter=T.LinearMipmapLinearFilter;t.generateMipmaps=true;t.needsUpdate=true;return t;};
-  this.deck.map=texture(albedo);this.deck.map.colorSpace=T.SRGBColorSpace;this.deck.roughnessMap=texture(rough);
-  this.deck.addEventListener('dispose',()=>{this.deck.map?.dispose();this.deck.roughnessMap?.dispose();});
+  this.deck.map=texture(albedo);this.deck.map.colorSpace=T.SRGBColorSpace;this.deck.roughnessMap=texture(rough);this.deck.normalMap=texture(normal);this.deck.normalScale.set(.65,.65);
+  this.deck.addEventListener('dispose',()=>{this.deck.map?.dispose();this.deck.roughnessMap?.dispose();this.deck.normalMap?.dispose();});
  }
  readonly cold=this.mat(0x6ac9d3,.42,.27,0x38919c,.8);readonly warm=this.mat(0xe7ab65,.4,.38,0xd67d34,.7);
  readonly body=this.mat(0x53646b,.1,.83);readonly skin=this.mat(0xb5a48e,.1,.77);
  private mat(color:number,metalness:number,roughness:number,emissive=0,emissiveIntensity=0){const m=new T.MeshStandardMaterial({color,metalness,roughness,emissive,emissiveIntensity});m.userData.actorMaterial=true;return m;}
  add(g:T.BufferGeometry,m:T.Material,position=new T.Vector3(),rotation=new T.Euler(),scale=new T.Vector3(1,1,1)){
+  // Capture local origins before material batching erases individual fixtures.
+  if(m instanceof T.MeshStandardMaterial&&m.emissiveIntensity>=.5&&m.emissive.getHex()!==0&&position.y>=.65){
+   const fixtures=this.root.userData.lightFixtures??=[];
+   if(fixtures.length<256)fixtures.push({x:position.x,y:position.y,z:position.z,color:m.emissive.getHex()});
+  }
   const matrix=new T.Matrix4().compose(position,new T.Quaternion().setFromEuler(rotation),scale),flat=g.index?g.toNonIndexed():g.clone();g.dispose();flat.applyMatrix4(matrix);if(m===this.deck){const p=flat.getAttribute('position'),uv=flat.getAttribute('uv');for(let i=0;i<p.count;i++)uv.setXY(i,p.getX(i)/8,p.getZ(i)/8);}const parts=this.parts.get(m)??[];parts.push(flat);this.parts.set(m,parts);
  }
- box(x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material,r=.04,angle=0){this.add(r?new RoundedBoxGeometry(w,h,d,1,Math.min(r,w/3,h/3,d/3)):new T.BoxGeometry(w,h,d),m,v(x,y,z),new T.Euler(0,angle,0));}
+ box(x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material,r=.04,angle=0){if(y-h/2<=.05&&y+h/2>.25&&h>.3)this.add(new T.PlaneGeometry(w+.6,d+.6),this.contact,v(x,.012,z),new T.Euler(-Math.PI/2,0,angle));this.add(r?new RoundedBoxGeometry(w,h,d,1,Math.min(r,w/3,h/3,d/3)):new T.BoxGeometry(w,h,d),m,v(x,y,z),new T.Euler(0,angle,0));}
  pipe(a:T.Vector3,b:T.Vector3,r:number,m:T.Material,r2=r){const g=new T.CylinderGeometry(r2,r,a.distanceTo(b),10);g.applyQuaternion(new T.Quaternion().setFromUnitVectors(v(0,1,0),b.clone().sub(a).normalize()));this.add(g,m,a.clone().add(b).multiplyScalar(.5));}
  ring(x:number,y:number,z:number,r:number,t:number,m:T.Material,start=0,length=TAU){this.add(new T.TorusGeometry(r,t,6,64,length),m,v(x,y,z),new T.Euler(-Math.PI/2,0,start));}
  ellipsoid(x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material){this.add(new T.SphereGeometry(1,12,8),m,v(x,y,z),new T.Euler(),v(w,h,d));}
@@ -61,7 +73,7 @@ class Fabricator{
   const material=new T.MeshStandardMaterial({map:texture,emissiveMap:texture,emissive:0xffffff,emissiveIntensity:.25,roughness:.7});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
   this.add(new T.PlaneGeometry(width-.1,.7),material,v(x,y+.052,z),new T.Euler(-Math.PI/2,0,0));
  }
- finish(){for(const [material,parts]of this.parts){const geometry=mergeGeometries(parts,false);parts.forEach(g=>g.dispose());if(geometry){const mesh=new T.Mesh(geometry,material);mesh.castShadow=true;mesh.receiveShadow=true;this.root.add(mesh);}}
+ finish(){for(const [material,parts]of this.parts){const geometry=mergeGeometries(parts,false);parts.forEach(g=>g.dispose());if(geometry){const mesh=new T.Mesh(geometry,material);mesh.userData.bakedEnvironment=true;mesh.castShadow=material!==this.contact;mesh.receiveShadow=material!==this.contact;this.root.add(mesh);}}
   // Dispose palette entries unused by this room as well.
   const used=new Set(this.parts.keys());for(const value of Object.values(this))if(value instanceof T.Material&&!used.has(value))value.dispose();this.parts.clear();return this.root;
  }
@@ -86,10 +98,14 @@ function edgeArchitecture(f:Fabricator,t:RoomPlan,scar=false){
  for(const hole of t.voids??[]){
   f.slab(hole,-5,.12,f.dark);
   for(let i=0;i<hole.length;i++){
-   const a=hole[i],b=hole[(i+1)%hole.length],p=v(a.x/U,0,a.y/U),q=v(b.x/U,0,b.y/U),length=p.distanceTo(q),steps=Math.ceil(length/2.2);
+   const start=hole[i],end=hole[(i+1)%hole.length],p=v(start.x/U,0,start.y/U),q=v(end.x/U,0,end.y/U),length=p.distanceTo(q),steps=Math.ceil(length/2.2);
    f.pipe(p.clone().setY(-.26),q.clone().setY(-.26),.16,f.edge);if(scar)continue;f.pipe(p.clone().setY(.45),q.clone().setY(.45),.045,f.ivory);
-   f.pipe(p.clone().setY(-2.8),q.clone().setY(-2.8),.11,f.cold);
-   for(let j=0;j<steps;j++){const s=p.clone().lerp(q,j/steps);f.pipe(s.clone().setY(-3.8),s.clone().setY(.5),.065,f.paint);}
+   // Inset liners and projecting ribs stay inside the opening, not under deck.
+   const center=bounds(hole),inward=v(center.x-(p.x+q.x)/2,0,center.z-(p.z+q.z)/2).normalize();
+   const a=p.clone().addScaledVector(inward,.2),b=q.clone().addScaledVector(inward,.2),mid=a.clone().add(b).multiplyScalar(.5);
+   f.box(mid.x,-2.15,mid.z,length,3.9,.12,f.shaft,.02,-Math.atan2(q.z-p.z,q.x-p.x));
+   for(const y of [-1.2,-2.5,-3.7])f.pipe(a.clone().setY(y),b.clone().setY(y),.065,f.cold);
+   for(let j=0;j<steps;j++){const s=a.clone().lerp(b,(j+.5)/steps).addScaledVector(inward,.14);f.pipe(s.clone().setY(-4),s.clone().setY(-.18),.105,f.shaft);}
   }
  }
 }

@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "0b9786873b4480273f906c40c0a4dcba916e7ddd",
+  "count": 2,
+  "records": [
+    {
+      "room": "passenger-vault",
+      "path": "docs/pr-screenshots/lighting/passenger-vault-combined-depth.mp4",
+      "probe": {
+        "codec_name": "h264",
+        "width": 960,
+        "height": 540,
+        "pix_fmt": "yuv420p",
+        "duration": "6.000000",
+        "nb_frames": "120"
+      },
+      "uniqueActorCropFrames": 120,
+      "sha256": "c6c2aef603e011f9a9e242c59a6ec54965c487c5354df55a86be073b3069db08"
+    },
+    {
+      "room": "breached-loading-bay",
+      "path": "docs/pr-screenshots/lighting/breached-loading-bay-combined-depth.mp4",
+      "probe": {
+        "codec_name": "h264",
+        "width": 960,
+        "height": 540,
+        "pix_fmt": "yuv420p",
+        "duration": "6.000000",
+        "nb_frames": "120"
+      },
+      "uniqueActorCropFrames": 120,
+      "sha256": "16402071e8131c3d652da642f470dc0a62607fc123a9d55d5ca2abf537d1375b"
+    }
+  ],
+  "lowTier": "Passenger Vault: low tier, shadow maps disabled, environmental contacts present, zero browser errors",
+  "limitations": "Real fixed-step DepthGame combat, controlled legal actors via existing room-evidence-scene; native camera/high composer; no DOM HUD, inactive wave director, player health restored each frame to keep the lighting fixture alive, seeded random. Not a campaign playthrough. Fixed-step software WebGL, not GPU benchmark. Only two authored rooms shown; no new rooms or camera/gameplay changes."
+}
