@@ -77,6 +77,12 @@ export class AttackEffects {
   const p=new T.Vector3(e.x/32,(e.type==='explosion'||e.radius!==undefined)? .10:.8,e.y/32);
   if(e.type==='hit'&&e.weapon==='shotgun'&&e.wall&&e.targetId===undefined){this.metalImpact(e,p);return;}
   const angle=e.angle??0,forward=new T.Vector3(Math.cos(angle),0,Math.sin(angle));
+  if(e.contact){
+   const blocked=e.contact!=='damage',color=blocked?0x90baca:0xffe6b7;
+   this.particle(this.glow,EFFECT_LIMITS.glow,p,color,blocked?.16:.24,.065);
+   for(let i=0;i<3;i++){const a=angle+Math.PI+(i-1)*.8,v=new T.Vector3(Math.cos(a)*2,.5+i*.3,Math.sin(a)*2);this.particle(this.glow,EFFECT_LIMITS.glow,p,blocked?0x8cafbf:0xb7ba72,.045,.14,v,4);}
+   return;
+  }
   if(e.type==='enemy-warning'){
    p.y=.035;const life=(e.durationMs??650)/1000;
    this.pulse(p,0xe9a564,(e.radius??38)/32,life);

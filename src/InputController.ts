@@ -1,3 +1,5 @@
+import {hasClearExpeditionShot} from './game/world/expeditionGeometry';
+import {enemyShotRadius} from './game/combat/enemyContact';
 import type {DepthGame,GameInput} from './DepthGame';
 import type {DepthRenderer} from './render/DepthRenderer';
 const WEAPONS=['pistol','rifle','shotgun','plasma','rocket'] as const;
@@ -18,5 +20,5 @@ export class InputController {
   window.addEventListener('blur',()=>{this.reset();this.onPause();});document.addEventListener('visibilitychange',()=>{if(document.hidden){this.reset();this.onPause();}});window.addEventListener('resize',()=>this.reset());document.addEventListener('contextmenu',e=>e.preventDefault());
  }
  reset(){this.keys.clear();this.movement={x:0,y:0};this.moveId=this.fireId=null;this.shooting=this.touchFire=false;this.aim=null;document.querySelector('#stick')?.classList.remove('active');document.querySelector('#fire')?.classList.remove('held');const knob=document.querySelector<HTMLElement>('#knob');if(knob)knob.style.transform='';}
- read():GameInput{const k=this.keys;let x=this.movement.x+(k.has('d')||k.has('arrowright')?1:0)-(k.has('a')||k.has('arrowleft')?1:0),y=this.movement.y+(k.has('s')||k.has('arrowdown')?1:0)-(k.has('w')||k.has('arrowup')?1:0);y/=.81;let angle=this.aim;if(!this.touchFire&&!k.has(' ')&&this.mouse.active){const point=this.view.pointer(this.mouse.x,this.mouse.y);if(point)angle=Math.atan2(point.y-this.game.player.y,point.x-this.game.player.x);}return{x,y,angle,autoAim:this.touchFire||k.has(' '),fire:this.touchFire||this.shooting||k.has(' ')};}
+ read():GameInput{const k=this.keys;let x=this.movement.x+(k.has('d')||k.has('arrowright')?1:0)-(k.has('a')||k.has('arrowleft')?1:0),y=this.movement.y+(k.has('s')||k.has('arrowdown')?1:0)-(k.has('w')||k.has('arrowup')?1:0);y/=.81;let angle=this.aim;if(!this.touchFire&&!k.has(' ')&&this.mouse.active){const point=this.view.pointer(this.mouse.x,this.mouse.y,this.game.targets().filter(t=>hasClearExpeditionShot(this.game.geometry,this.game.player,t)).map(t=>{const e=t.id>0?this.game.enemies.getSnapshot(t.id):undefined;return {...t,radius:e?enemyShotRadius(e.type,e.elite):t.radius};}));if(point)angle=Math.atan2(point.y-this.game.player.y,point.x-this.game.player.x);}return{x,y,angle,autoAim:this.touchFire||k.has(' '),fire:this.touchFire||this.shooting||k.has(' ')};}
 }

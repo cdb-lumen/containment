@@ -144,6 +144,9 @@ export class AudioSystem {
   playAlien(pan = 0, distance = 0): void {
     if (this.rateLimit('alien', .18)) this.play('alien-impact.wav', .25 / (1 + Math.max(0, distance) / 380), { pan, rate: .88 + Math.random() * .14 });
   }
+  playConfirmedHit(blocked=false): void {
+    if (this.rateLimit('confirmed-hit', .055)) this.play(blocked?'switch.wav':'alien-impact.wav',blocked?.10:.20,{rate:blocked?1.4:1.65});
+  }
   playBodyImpact(pan = 0, distance = 0): void {
     if (this.rateLimit('body-impact', .10)) this.play('alien-impact.wav', .42 / (1 + Math.max(0,distance) / 450), {pan, rate: .68 + Math.random() * .08});
   }

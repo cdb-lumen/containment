@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {ENEMY_SPAN} from '../game/combat/enemyContact';
 import {MAT,shell,rod,batch,disposeModel} from './meshParts';
 import {instantiateAsset,type AssetName} from './assets';
 import {afflictionEffects,NO_AFFLICTION,type AfflictionStatus} from './afflictions';
@@ -8,11 +9,11 @@ export {MAT,box,ball,rod,disposeModel} from './meshParts';
 export type ActorModel={root:T.Group;body:T.Group;limbs:T.Group[];height:number;weapon?:T.Group;
  animate:(time:number,moving:number,aim:number,recoil?:number,reload?:number,velocity?:{x:number;y:number})=>void;
  equip?:(id:WeaponId)=>void;muzzleWorld?:(target:T.Vector3)=>T.Vector3;
- reset?:()=>void;prepare?:()=>void;setAffliction?:(status:AfflictionStatus)=>void;freeze?:()=>void;attack?:()=>void;hit?:()=>void;setExposed?:(exposed:boolean)=>void;stop?:()=>void;};
+ reset?:()=>void;prepare?:()=>void;setAffliction?:(status:AfflictionStatus)=>void;freeze?:()=>void;attack?:()=>void;hit?:(strength?:number)=>void;setExposed?:(exposed:boolean)=>void;stop?:()=>void;};
 const vec=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 const species:Record<string,{asset:AssetName;span:number;height?:number}>={
- crawler:{asset:'dretch',span:1.75},stalker:{asset:'basilisk',span:2.35},spitter:{asset:'marauder',span:2.35},
- carrier:{asset:'dragoon',span:3.05},brute:{asset:'tyrant',span:3.1},queen:{asset:'tyrant',span:6.5},
+ crawler:{asset:'dretch',span:ENEMY_SPAN.crawler},stalker:{asset:'basilisk',span:ENEMY_SPAN.stalker},spitter:{asset:'marauder',span:ENEMY_SPAN.spitter},
+ carrier:{asset:'dragoon',span:ENEMY_SPAN.carrier},brute:{asset:'tyrant',span:ENEMY_SPAN.brute},queen:{asset:'tyrant',span:ENEMY_SPAN.queen},
 };
 const rigMetrics=new Map<string,{size:T.Vector3;center:T.Vector3;minY:number}>();
 function rig(name:AssetName,span:number,human=false){
@@ -38,12 +39,12 @@ export function alien(kind:string,elite=false):ActorModel{
  const color=new T.Color(kind==='queen'?0xffd3bb:elite?0xffe2b5:0xffffff);for(const m of r.materials)m.color.multiply(color);
  let flash=0,previous:number|undefined,exposed=false,dead=false,status:AfflictionStatus=NO_AFFLICTION;
  let effects:ReturnType<typeof afflictionEffects>|undefined;
- return{root:r.root,body:r.body,limbs:[],height:r.height,attack(){if(!dead&&!status.frozen)r.attack();},freeze(){dead=true;status=NO_AFFLICTION;effects?.reset();r.freeze();},stop:r.stop,prepare(){r.action('run');r.action('attack');},reset(){r.reset();flash=0;previous=undefined;exposed=dead=false;status=NO_AFFLICTION;effects?.reset();for(const m of r.materials)m.emissiveIntensity=0;},hit(){flash=1;},setExposed(v){exposed=v;},setAffliction(v){
+ return{root:r.root,body:r.body,limbs:[],height:r.height,attack(){if(!dead&&!status.frozen)r.attack();},freeze(){dead=true;status=NO_AFFLICTION;effects?.reset();r.freeze();},stop:r.stop,prepare(){r.action('run');r.action('attack');},reset(){r.reset();flash=0;previous=undefined;exposed=dead=false;status=NO_AFFLICTION;effects?.reset();for(const m of r.materials)m.emissiveIntensity=0;},hit(strength=1){flash=strength;},setExposed(v){exposed=v;},setAffliction(v){
   if(dead)return;status=v;
   if(!effects&&(v.chilled||v.burning||v.poisoned||v.frozen))effects=afflictionEffects(r.root,def.span*(elite?1.12:1),r.height);
   effects?.set(v);r.mixer.timeScale=v.frozen?0:1;
  },
- animate(time,moving,aim){const dt=previous===undefined?0:Math.max(0,Math.min(.05,time-previous));previous=time;flash=Math.max(0,flash-dt*9);r.root.rotation.y=Math.PI/2-aim;r.step(time,moving);effects?.animate(time);for(const m of r.materials){m.emissive.setHex(status.frozen?0x79ddff:exposed?0x42602b:0x8f3320);m.emissiveIntensity=flash*.4+(status.frozen?.12:exposed?.22:0);}}};
+ animate(time,moving,aim){const dt=previous===undefined?0:Math.max(0,Math.min(.05,time-previous));previous=time;flash=Math.max(0,flash-dt*9);r.root.rotation.y=Math.PI/2-aim;r.step(time,moving);effects?.animate(time);for(const m of r.materials){m.emissive.setHex(status.frozen?0x79ddff:exposed?0x42602b:0xffdfb0);m.emissiveIntensity=flash*.85+(status.frozen?.12:exposed?.22:0);}}};
 }
 export function marine():ActorModel{
  const r=rig('marine',2.05,true),weapon=new T.Group();r.root.name='marine';r.root.add(weapon);

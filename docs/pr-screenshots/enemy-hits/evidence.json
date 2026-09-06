@@ -1,0 +1,84 @@
+{
+  "sha": "88102d8c2ab500f0c6315b7d6ed1f642400468d9",
+  "finalEvidence": true,
+  "fps": 20,
+  "total": 120,
+  "seconds": 6,
+  "silent": true,
+  "audioTrackCount": 0,
+  "lifecycle": {
+    "pause": {
+      "frame": 6,
+      "paused": {
+        "status": "paused",
+        "hidden": true,
+        "fire": false
+      },
+      "resumed": {
+        "status": "playing",
+        "hidden": true
+      }
+    },
+    "reset": {
+      "hidden": true,
+      "fire": false,
+      "status": "reward"
+    }
+  },
+  "errors": [],
+  "sourceHash": "e2c7208fce799a8e9f491c9fd2d0a16ba5ea9764d0b921352ccbc36664174a56",
+  "motion": {
+    "crawler": {
+      "frames": 40,
+      "uniqueActorCropFrames": 40,
+      "crop": [
+        264,
+        279,
+        193,
+        152
+      ],
+      "damage": 42,
+      "markerFrames": 3
+    },
+    "stalker": {
+      "frames": 40,
+      "uniqueActorCropFrames": 40,
+      "crop": [
+        293,
+        258,
+        145,
+        169
+      ],
+      "damage": 120,
+      "markerFrames": 8
+    },
+    "brute": {
+      "frames": 40,
+      "uniqueActorCropFrames": 40,
+      "crop": [
+        230,
+        249,
+        201,
+        168
+      ],
+      "damage": 120,
+      "markerFrames": 8
+    }
+  },
+  "setup": {
+    "room": "awakening-bay",
+    "player": {
+      "x": 230,
+      "y": 440,
+      "radius": 16,
+      "angle": 0,
+      "moving": false,
+      "vx": 0,
+      "vy": 0
+    },
+    "nativeZoom": 1,
+    "quality": "low",
+    "controlled": "Sequential legal spawns; encounter scheduling disabled; native enemy AI, projectile collision, actor rendering and browser mouse input retained.",
+    "audio": "Silent video: image-only capture with -an. Shipping audio methods remain active and are counted, not recorded."
+  }
+}
