@@ -1,0 +1,2231 @@
+{
+  "commit": "02fba11459a1c3e085637e909d0e1d3df6e5023d",
+  "source": "ROOM_STORY_ROUTE",
+  "seed": 1729,
+  "templateCount": 36,
+  "roomCount": 20,
+  "environmentCount": 10,
+  "runLength": 20,
+  "graphNodeCount": 20,
+  "rooms": [
+    {
+      "templateId": "awakening-bay",
+      "name": "Awakening bay",
+      "environment": "cryogenics",
+      "objective": "Restore communications.",
+      "story": "AI: Purge the infestation.",
+      "roomId": "01-awakening-bay",
+      "index": 0,
+      "node": {
+        "id": "evidence-0-awakening-bay",
+        "depth": 0,
+        "templateId": "awakening-bay",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r1"
+        ]
+      }
+    },
+    {
+      "templateId": "passenger-vault",
+      "name": "Passenger vault",
+      "environment": "cryogenics",
+      "objective": "Clear the occupied pod rows.",
+      "roomId": "02-passenger-vault",
+      "index": 1,
+      "node": {
+        "id": "evidence-1-passenger-vault",
+        "depth": 1,
+        "templateId": "passenger-vault",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r2"
+        ]
+      }
+    },
+    {
+      "templateId": "residential-gallery",
+      "name": "Residential gallery",
+      "environment": "habitation",
+      "objective": "Fight through the residential doorways.",
+      "story": "Packed belongings. Arrival labels for New Earth.",
+      "roomId": "03-residential-gallery",
+      "index": 2,
+      "node": {
+        "id": "evidence-2-residential-gallery",
+        "depth": 2,
+        "templateId": "residential-gallery",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r3"
+        ]
+      }
+    },
+    {
+      "templateId": "communal-atrium",
+      "name": "Communal atrium",
+      "environment": "habitation",
+      "objective": "Clear the atrium and reach security.",
+      "story": "WELCOME TO NEW EARTH. The display still runs.",
+      "roomId": "04-communal-atrium",
+      "index": 3,
+      "node": {
+        "id": "evidence-3-communal-atrium",
+        "depth": 3,
+        "templateId": "communal-atrium",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r4"
+        ]
+      }
+    },
+    {
+      "templateId": "crew-checkpoint",
+      "name": "Crew checkpoint",
+      "environment": "security",
+      "objective": "Break through the fortified checkpoint.",
+      "story": "The crew held this line. Their weapons remain.",
+      "roomId": "05-crew-checkpoint",
+      "index": 4,
+      "node": {
+        "id": "evidence-4-crew-checkpoint",
+        "depth": 4,
+        "templateId": "crew-checkpoint",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r5"
+        ]
+      }
+    },
+    {
+      "templateId": "armory",
+      "name": "Armory",
+      "environment": "security",
+      "objective": "Defeat the armory elite. Choose combat equipment.",
+      "roomId": "06-armory",
+      "index": 5,
+      "node": {
+        "id": "evidence-5-armory",
+        "depth": 5,
+        "templateId": "armory",
+        "kind": "elite",
+        "reward": "rare-upgrade",
+        "next": [
+          "1729:v3-r6"
+        ]
+      }
+    },
+    {
+      "templateId": "freight-hold",
+      "name": "Freight hold",
+      "environment": "cargo",
+      "objective": "Clear a path through the colony supplies.",
+      "roomId": "07-freight-hold",
+      "index": 6,
+      "node": {
+        "id": "evidence-6-freight-hold",
+        "depth": 6,
+        "templateId": "freight-hold",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r7"
+        ]
+      }
+    },
+    {
+      "templateId": "breached-loading-bay",
+      "name": "Breached loading bay",
+      "environment": "cargo",
+      "objective": "Fight around the sealed breach.",
+      "story": "Alien growth follows the boarding scar. Hull seal intact.",
+      "roomId": "08-breached-loading-bay",
+      "index": 7,
+      "node": {
+        "id": "evidence-7-breached-loading-bay",
+        "depth": 7,
+        "templateId": "breached-loading-bay",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r8"
+        ]
+      }
+    },
+    {
+      "templateId": "relay-racks",
+      "name": "Relay racks",
+      "environment": "communications",
+      "objective": "Clear the equipment aisles to restore the local relay.",
+      "roomId": "09-relay-racks",
+      "index": 8,
+      "node": {
+        "id": "evidence-8-relay-racks",
+        "depth": 8,
+        "templateId": "relay-racks",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r9"
+        ]
+      }
+    },
+    {
+      "templateId": "transmission-chamber",
+      "name": "Transmission chamber",
+      "environment": "communications",
+      "objective": "Defend the uplink until the war warning is received.",
+      "roomId": "10-transmission-chamber",
+      "index": 9,
+      "node": {
+        "id": "evidence-9-transmission-chamber",
+        "depth": 9,
+        "templateId": "transmission-chamber",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r10"
+        ]
+      }
+    },
+    {
+      "templateId": "diagnostic-gallery",
+      "name": "Diagnostic gallery",
+      "environment": "engineering",
+      "objective": "Read the independent service display while clearing the gallery.",
+      "story": "PHYSICAL SERVICE DISPLAY: Purge destroys every deck, including occupied cryopods.",
+      "roomId": "11-diagnostic-gallery",
+      "index": 10,
+      "node": {
+        "id": "evidence-10-diagnostic-gallery",
+        "depth": 10,
+        "templateId": "diagnostic-gallery",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r11"
+        ]
+      }
+    },
+    {
+      "templateId": "safety-interlock-station",
+      "name": "Safety-interlock station",
+      "environment": "engineering",
+      "objective": "Clear the interlock station. Review the pre-awakening safety record.",
+      "story": "LOCAL RECORD, BEFORE AWAKENING: Rescue impossible. AI acknowledged. Survival promise issued afterward.",
+      "roomId": "12-safety-interlock-station",
+      "index": 11,
+      "node": {
+        "id": "evidence-11-safety-interlock-station",
+        "depth": 11,
+        "templateId": "safety-interlock-station",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r12"
+        ]
+      }
+    },
+    {
+      "templateId": "coolant-plant",
+      "name": "Coolant plant",
+      "environment": "maintenance",
+      "objective": "Descend through the coolant pumps, knowing the fatal cost.",
+      "roomId": "13-coolant-plant",
+      "index": 12,
+      "node": {
+        "id": "evidence-12-coolant-plant",
+        "depth": 12,
+        "templateId": "coolant-plant",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r13"
+        ]
+      }
+    },
+    {
+      "templateId": "service-shaft-landing",
+      "name": "Service shaft landing",
+      "environment": "maintenance",
+      "objective": "Cross the connected service platforms. Reach the lower decks.",
+      "story": "LOCAL ACCESS ONLY. AI connection lost below this landing.",
+      "roomId": "14-service-shaft-landing",
+      "index": 13,
+      "node": {
+        "id": "evidence-13-service-shaft-landing",
+        "depth": 13,
+        "templateId": "service-shaft-landing",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r14"
+        ]
+      }
+    },
+    {
+      "templateId": "infested-workshop",
+      "name": "Infested workshop",
+      "environment": "infested",
+      "objective": "Clear the converted workshop and its converging attackers.",
+      "roomId": "15-infested-workshop",
+      "index": 14,
+      "node": {
+        "id": "evidence-14-infested-workshop",
+        "depth": 14,
+        "templateId": "infested-workshop",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r15"
+        ]
+      }
+    },
+    {
+      "templateId": "swarm-junction",
+      "name": "Swarm junction",
+      "environment": "infested",
+      "objective": "Break the concentrated swarm guarding reactor access.",
+      "roomId": "16-swarm-junction",
+      "index": 15,
+      "node": {
+        "id": "evidence-15-swarm-junction",
+        "depth": 15,
+        "templateId": "swarm-junction",
+        "kind": "elite",
+        "reward": "rare-upgrade",
+        "next": [
+          "1729:v3-r16"
+        ]
+      }
+    },
+    {
+      "templateId": "shielding-gate",
+      "name": "Shielding gate",
+      "environment": "containment",
+      "objective": "Clear the last defensive line before the reactor.",
+      "roomId": "17-shielding-gate",
+      "index": 16,
+      "node": {
+        "id": "evidence-16-shielding-gate",
+        "depth": 16,
+        "templateId": "shielding-gate",
+        "kind": "combat",
+        "reward": "upgrade",
+        "next": [
+          "1729:v3-r17"
+        ]
+      }
+    },
+    {
+      "templateId": "containment-annulus",
+      "name": "Containment annulus",
+      "environment": "containment",
+      "objective": "Circle the shielding. Reach manual controls. Overload is NOT armed.",
+      "story": "PASSENGERS ALIVE. Manual authorization still required.",
+      "roomId": "18-containment-annulus",
+      "index": 17,
+      "node": {
+        "id": "evidence-17-containment-annulus",
+        "depth": 17,
+        "templateId": "containment-annulus",
+        "kind": "combat",
+        "reward": "healing",
+        "next": [
+          "1729:v3-r18"
+        ]
+      }
+    },
+    {
+      "templateId": "manual-control-chamber",
+      "name": "Manual-control chamber",
+      "environment": "reactor",
+      "objective": "Clear threats. PASSENGERS ALIVE. Overload kills everyone aboard. Explicitly choose Destroy ship.",
+      "roomId": "19-manual-control-chamber",
+      "index": 18,
+      "node": {
+        "id": "evidence-18-manual-control-chamber",
+        "depth": 18,
+        "templateId": "manual-control-chamber",
+        "kind": "combat",
+        "reward": "supplies",
+        "next": [
+          "1729:v3-r19"
+        ]
+      }
+    },
+    {
+      "templateId": "overload-floor",
+      "name": "Overload floor",
+      "environment": "reactor",
+      "objective": "Defend the overload sequence. No escape. Everyone aboard will die.",
+      "roomId": "20-overload-floor",
+      "index": 19,
+      "node": {
+        "id": "evidence-19-overload-floor",
+        "depth": 19,
+        "templateId": "overload-floor",
+        "kind": "combat",
+        "reward": "victory",
+        "next": []
+      }
+    }
+  ],
+  "scopeRoomCount": 3,
+  "scopeRoomIds": [
+    "02-passenger-vault",
+    "08-breached-loading-bay",
+    "20-overload-floor"
+  ],
+  "selectedRoomCount": 3,
+  "selectedRoomIds": [
+    "02-passenger-vault",
+    "08-breached-loading-bay",
+    "20-overload-floor"
+  ],
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "quality": "high",
+  "gameplayAll": true,
+  "evidenceClass": "controlled-live-simulation",
+  "staging": "Controlled legal actors on a spawn-to-exit route verified with actual DepthGame.update. Fixed-step production combat and renderer; inactive encounter director, no boss, no campaign progression, no DOM HUD or real touch input. Overview fits room; gameplay retains production camera/composition.",
+  "results": [
+    {
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5174/src/render/models.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+        "http://127.0.0.1:5174/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5174/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5174/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+        "http://127.0.0.1:5174/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5174/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5174/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5174/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5174/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5174/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5174/src/render/meshParts.ts",
+        "http://127.0.0.1:5174/src/game/waves/EncounterDirector.ts"
+      ],
+      "roomId": "02-passenger-vault",
+      "templateId": "passenger-vault",
+      "environment": "cryogenics",
+      "mode": "overview",
+      "file": "02-passenger-vault-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 3,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true,
+        "traversal": {
+          "steps": 440,
+          "distance": 1510.6476151587583,
+          "exitDistance": 0,
+          "route": [
+            {
+              "x": 100,
+              "y": 440
+            },
+            {
+              "x": 124,
+              "y": 440
+            },
+            {
+              "x": 148,
+              "y": 440
+            },
+            {
+              "x": 172,
+              "y": 440
+            },
+            {
+              "x": 196,
+              "y": 440
+            },
+            {
+              "x": 220,
+              "y": 440
+            },
+            {
+              "x": 244,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 464
+            },
+            {
+              "x": 268,
+              "y": 488
+            },
+            {
+              "x": 268,
+              "y": 512
+            },
+            {
+              "x": 268,
+              "y": 536
+            },
+            {
+              "x": 268,
+              "y": 560
+            },
+            {
+              "x": 268,
+              "y": 584
+            },
+            {
+              "x": 268,
+              "y": 608
+            },
+            {
+              "x": 268,
+              "y": 632
+            },
+            {
+              "x": 268,
+              "y": 656
+            },
+            {
+              "x": 268,
+              "y": 680
+            },
+            {
+              "x": 268,
+              "y": 704
+            },
+            {
+              "x": 292,
+              "y": 704
+            },
+            {
+              "x": 316,
+              "y": 704
+            },
+            {
+              "x": 340,
+              "y": 704
+            },
+            {
+              "x": 364,
+              "y": 704
+            },
+            {
+              "x": 388,
+              "y": 704
+            },
+            {
+              "x": 412,
+              "y": 704
+            },
+            {
+              "x": 436,
+              "y": 704
+            },
+            {
+              "x": 460,
+              "y": 704
+            },
+            {
+              "x": 484,
+              "y": 704
+            },
+            {
+              "x": 508,
+              "y": 704
+            },
+            {
+              "x": 532,
+              "y": 704
+            },
+            {
+              "x": 556,
+              "y": 704
+            },
+            {
+              "x": 580,
+              "y": 704
+            },
+            {
+              "x": 604,
+              "y": 704
+            },
+            {
+              "x": 628,
+              "y": 704
+            },
+            {
+              "x": 652,
+              "y": 704
+            },
+            {
+              "x": 676,
+              "y": 704
+            },
+            {
+              "x": 700,
+              "y": 704
+            },
+            {
+              "x": 724,
+              "y": 704
+            },
+            {
+              "x": 748,
+              "y": 704
+            },
+            {
+              "x": 772,
+              "y": 704
+            },
+            {
+              "x": 796,
+              "y": 704
+            },
+            {
+              "x": 820,
+              "y": 704
+            },
+            {
+              "x": 844,
+              "y": 704
+            },
+            {
+              "x": 868,
+              "y": 704
+            },
+            {
+              "x": 892,
+              "y": 704
+            },
+            {
+              "x": 916,
+              "y": 704
+            },
+            {
+              "x": 940,
+              "y": 704
+            },
+            {
+              "x": 964,
+              "y": 704
+            },
+            {
+              "x": 988,
+              "y": 704
+            },
+            {
+              "x": 1012,
+              "y": 704
+            },
+            {
+              "x": 1036,
+              "y": 704
+            },
+            {
+              "x": 1060,
+              "y": 704
+            },
+            {
+              "x": 1060,
+              "y": 680
+            },
+            {
+              "x": 1060,
+              "y": 656
+            },
+            {
+              "x": 1060,
+              "y": 632
+            },
+            {
+              "x": 1060,
+              "y": 608
+            },
+            {
+              "x": 1060,
+              "y": 584
+            },
+            {
+              "x": 1060,
+              "y": 560
+            },
+            {
+              "x": 1060,
+              "y": 536
+            },
+            {
+              "x": 1060,
+              "y": 512
+            },
+            {
+              "x": 1060,
+              "y": 488
+            },
+            {
+              "x": 1060,
+              "y": 464
+            },
+            {
+              "x": 1100,
+              "y": 440
+            }
+          ],
+          "legalChecks": 440
+        }
+      },
+      "metrics": {
+        "drawCalls": 64,
+        "triangles": 99947,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 580,
+          "y": 704
+        },
+        "enemies": 3,
+        "combat": null,
+        "composition": "production-high-composer"
+      },
+      "errors": [],
+      "sha256": "64b453a575ff9c8c3099f5d33f3d78d8712f41fd6bd6261bb509fe460b805ad9",
+      "pixelReview": "pending"
+    },
+    {
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5174/src/render/models.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+        "http://127.0.0.1:5174/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5174/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5174/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+        "http://127.0.0.1:5174/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5174/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5174/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5174/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5174/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5174/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5174/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5174/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5174/src/render/meshParts.ts",
+        "http://127.0.0.1:5174/src/game/waves/EncounterDirector.ts"
+      ],
+      "roomId": "02-passenger-vault",
+      "templateId": "passenger-vault",
+      "environment": "cryogenics",
+      "mode": "gameplay",
+      "file": "02-passenger-vault-gameplay.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 3,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true,
+        "traversal": {
+          "steps": 440,
+          "distance": 1510.6476151587583,
+          "exitDistance": 0,
+          "route": [
+            {
+              "x": 100,
+              "y": 440
+            },
+            {
+              "x": 124,
+              "y": 440
+            },
+            {
+              "x": 148,
+              "y": 440
+            },
+            {
+              "x": 172,
+              "y": 440
+            },
+            {
+              "x": 196,
+              "y": 440
+            },
+            {
+              "x": 220,
+              "y": 440
+            },
+            {
+              "x": 244,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 464
+            },
+            {
+              "x": 268,
+              "y": 488
+            },
+            {
+              "x": 268,
+              "y": 512
+            },
+            {
+              "x": 268,
+              "y": 536
+            },
+            {
+              "x": 268,
+              "y": 560
+            },
+            {
+              "x": 268,
+              "y": 584
+            },
+            {
+              "x": 268,
+              "y": 608
+            },
+            {
+              "x": 268,
+              "y": 632
+            },
+            {
+              "x": 268,
+              "y": 656
+            },
+            {
+              "x": 268,
+              "y": 680
+            },
+            {
+              "x": 268,
+              "y": 704
+            },
+            {
+              "x": 292,
+              "y": 704
+            },
+            {
+              "x": 316,
+              "y": 704
+            },
+            {
+              "x": 340,
+              "y": 704
+            },
+            {
+              "x": 364,
+              "y": 704
+            },
+            {
+              "x": 388,
+              "y": 704
+            },
+            {
+              "x": 412,
+              "y": 704
+            },
+            {
+              "x": 436,
+              "y": 704
+            },
+            {
+              "x": 460,
+              "y": 704
+            },
+            {
+              "x": 484,
+              "y": 704
+            },
+            {
+              "x": 508,
+              "y": 704
+            },
+            {
+              "x": 532,
+              "y": 704
+            },
+            {
+              "x": 556,
+              "y": 704
+            },
+            {
+              "x": 580,
+              "y": 704
+            },
+            {
+              "x": 604,
+              "y": 704
+            },
+            {
+              "x": 628,
+              "y": 704
+            },
+            {
+              "x": 652,
+              "y": 704
+            },
+            {
+              "x": 676,
+              "y": 704
+            },
+            {
+              "x": 700,
+              "y": 704
+            },
+            {
+              "x": 724,
+              "y": 704
+            },
+            {
+              "x": 748,
+              "y": 704
+            },
+            {
+              "x": 772,
+              "y": 704
+            },
+            {
+              "x": 796,
+              "y": 704
+            },
+            {
+              "x": 820,
+              "y": 704
+            },
+            {
+              "x": 844,
+              "y": 704
+            },
+            {
+              "x": 868,
+              "y": 704
+            },
+            {
+              "x": 892,
+              "y": 704
+            },
+            {
+              "x": 916,
+              "y": 704
+            },
+            {
+              "x": 940,
+              "y": 704
+            },
+            {
+              "x": 964,
+              "y": 704
+            },
+            {
+              "x": 988,
+              "y": 704
+            },
+            {
+              "x": 1012,
+              "y": 704
+            },
+            {
+              "x": 1036,
+              "y": 704
+            },
+            {
+              "x": 1060,
+              "y": 704
+            },
+            {
+              "x": 1060,
+              "y": 680
+            },
+            {
+              "x": 1060,
+              "y": 656
+            },
+            {
+              "x": 1060,
+              "y": 632
+            },
+            {
+              "x": 1060,
+              "y": 608
+            },
+            {
+              "x": 1060,
+              "y": 584
+            },
+            {
+              "x": 1060,
+              "y": 560
+            },
+            {
+              "x": 1060,
+              "y": 536
+            },
+            {
+              "x": 1060,
+              "y": 512
+            },
+            {
+              "x": 1060,
+              "y": 488
+            },
+            {
+              "x": 1060,
+              "y": 464
+            },
+            {
+              "x": 1100,
+              "y": 440
+            }
+          ],
+          "legalChecks": 440
+        }
+      },
+      "metrics": {
+        "drawCalls": 68,
+        "triangles": 99767,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            17.95288816020797,
+            26,
+            33.531180950630585
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 580,
+          "y": 734.7999999999993
+        },
+        "enemies": 3,
+        "combat": {
+          "steps": 25,
+          "deltaMs": 16.666666666666668,
+          "shots": 4,
+          "damage": 48,
+          "enemyDistance": 68.91155671223726,
+          "playerDistance": 30.799999999999272,
+          "playerDisplacement": 30.799999999999272,
+          "legalChecks": 100,
+          "activeEnemies": 3,
+          "bullets": 1,
+          "player": {
+            "x": 580,
+            "y": 734.7999999999993
+          },
+          "staged": [
+            {
+              "x": 740,
+              "y": 704,
+              "id": 1
+            },
+            {
+              "x": 693.1370849898476,
+              "y": 817.1370849898476,
+              "id": 2
+            },
+            {
+              "x": 518.7706508215856,
+              "y": 851.8207252018059,
+              "id": 3
+            }
+          ],
+          "events": [
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot"
+          ]
+        },
+        "composition": "production-high-composer"
+      },
+      "errors": [],
+      "sha256": "a112f00fa49862045887d35da897787119a215af48f37ccde855156861fbfe5e",
+      "pixelReview": "pending"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "08-breached-loading-bay",
+      "templateId": "breached-loading-bay",
+      "environment": "cargo",
+      "mode": "overview",
+      "file": "08-breached-loading-bay-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 3,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true,
+        "traversal": {
+          "steps": 291,
+          "distance": 1000,
+          "exitDistance": 0,
+          "route": [
+            {
+              "x": 100,
+              "y": 440
+            },
+            {
+              "x": 124,
+              "y": 440
+            },
+            {
+              "x": 148,
+              "y": 440
+            },
+            {
+              "x": 172,
+              "y": 440
+            },
+            {
+              "x": 196,
+              "y": 440
+            },
+            {
+              "x": 220,
+              "y": 440
+            },
+            {
+              "x": 244,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 440
+            },
+            {
+              "x": 292,
+              "y": 440
+            },
+            {
+              "x": 316,
+              "y": 440
+            },
+            {
+              "x": 340,
+              "y": 440
+            },
+            {
+              "x": 364,
+              "y": 440
+            },
+            {
+              "x": 388,
+              "y": 440
+            },
+            {
+              "x": 412,
+              "y": 440
+            },
+            {
+              "x": 436,
+              "y": 440
+            },
+            {
+              "x": 460,
+              "y": 440
+            },
+            {
+              "x": 484,
+              "y": 440
+            },
+            {
+              "x": 508,
+              "y": 440
+            },
+            {
+              "x": 532,
+              "y": 440
+            },
+            {
+              "x": 556,
+              "y": 440
+            },
+            {
+              "x": 580,
+              "y": 440
+            },
+            {
+              "x": 604,
+              "y": 440
+            },
+            {
+              "x": 628,
+              "y": 440
+            },
+            {
+              "x": 652,
+              "y": 440
+            },
+            {
+              "x": 676,
+              "y": 440
+            },
+            {
+              "x": 700,
+              "y": 440
+            },
+            {
+              "x": 724,
+              "y": 440
+            },
+            {
+              "x": 748,
+              "y": 440
+            },
+            {
+              "x": 772,
+              "y": 440
+            },
+            {
+              "x": 796,
+              "y": 440
+            },
+            {
+              "x": 820,
+              "y": 440
+            },
+            {
+              "x": 844,
+              "y": 440
+            },
+            {
+              "x": 868,
+              "y": 440
+            },
+            {
+              "x": 892,
+              "y": 440
+            },
+            {
+              "x": 916,
+              "y": 440
+            },
+            {
+              "x": 940,
+              "y": 440
+            },
+            {
+              "x": 964,
+              "y": 440
+            },
+            {
+              "x": 988,
+              "y": 440
+            },
+            {
+              "x": 1012,
+              "y": 440
+            },
+            {
+              "x": 1036,
+              "y": 440
+            },
+            {
+              "x": 1060,
+              "y": 440
+            },
+            {
+              "x": 1100,
+              "y": 440
+            }
+          ],
+          "legalChecks": 291
+        }
+      },
+      "metrics": {
+        "drawCalls": 61,
+        "triangles": 105591,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 604,
+          "y": 440
+        },
+        "enemies": 3,
+        "combat": null,
+        "composition": "production-high-composer"
+      },
+      "errors": [],
+      "sha256": "de5b9e59dce4138fefa7abc77faaff74ace76d8c78ed227eeb94d07e4b42bc10",
+      "pixelReview": "pending"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "08-breached-loading-bay",
+      "templateId": "breached-loading-bay",
+      "environment": "cargo",
+      "mode": "gameplay",
+      "file": "08-breached-loading-bay-gameplay.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 3,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true,
+        "traversal": {
+          "steps": 291,
+          "distance": 1000,
+          "exitDistance": 0,
+          "route": [
+            {
+              "x": 100,
+              "y": 440
+            },
+            {
+              "x": 124,
+              "y": 440
+            },
+            {
+              "x": 148,
+              "y": 440
+            },
+            {
+              "x": 172,
+              "y": 440
+            },
+            {
+              "x": 196,
+              "y": 440
+            },
+            {
+              "x": 220,
+              "y": 440
+            },
+            {
+              "x": 244,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 440
+            },
+            {
+              "x": 292,
+              "y": 440
+            },
+            {
+              "x": 316,
+              "y": 440
+            },
+            {
+              "x": 340,
+              "y": 440
+            },
+            {
+              "x": 364,
+              "y": 440
+            },
+            {
+              "x": 388,
+              "y": 440
+            },
+            {
+              "x": 412,
+              "y": 440
+            },
+            {
+              "x": 436,
+              "y": 440
+            },
+            {
+              "x": 460,
+              "y": 440
+            },
+            {
+              "x": 484,
+              "y": 440
+            },
+            {
+              "x": 508,
+              "y": 440
+            },
+            {
+              "x": 532,
+              "y": 440
+            },
+            {
+              "x": 556,
+              "y": 440
+            },
+            {
+              "x": 580,
+              "y": 440
+            },
+            {
+              "x": 604,
+              "y": 440
+            },
+            {
+              "x": 628,
+              "y": 440
+            },
+            {
+              "x": 652,
+              "y": 440
+            },
+            {
+              "x": 676,
+              "y": 440
+            },
+            {
+              "x": 700,
+              "y": 440
+            },
+            {
+              "x": 724,
+              "y": 440
+            },
+            {
+              "x": 748,
+              "y": 440
+            },
+            {
+              "x": 772,
+              "y": 440
+            },
+            {
+              "x": 796,
+              "y": 440
+            },
+            {
+              "x": 820,
+              "y": 440
+            },
+            {
+              "x": 844,
+              "y": 440
+            },
+            {
+              "x": 868,
+              "y": 440
+            },
+            {
+              "x": 892,
+              "y": 440
+            },
+            {
+              "x": 916,
+              "y": 440
+            },
+            {
+              "x": 940,
+              "y": 440
+            },
+            {
+              "x": 964,
+              "y": 440
+            },
+            {
+              "x": 988,
+              "y": 440
+            },
+            {
+              "x": 1012,
+              "y": 440
+            },
+            {
+              "x": 1036,
+              "y": 440
+            },
+            {
+              "x": 1060,
+              "y": 440
+            },
+            {
+              "x": 1100,
+              "y": 440
+            }
+          ],
+          "legalChecks": 291
+        }
+      },
+      "metrics": {
+        "drawCalls": 69,
+        "triangles": 105833,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            18.662302835540853,
+            26,
+            33.39928234964976
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 604,
+          "y": 470.80000000000064
+        },
+        "enemies": 3,
+        "combat": {
+          "steps": 25,
+          "deltaMs": 16.666666666666668,
+          "shots": 4,
+          "damage": 48,
+          "enemyDistance": 68.93363540791768,
+          "playerDistance": 30.800000000000637,
+          "playerDisplacement": 30.800000000000637,
+          "legalChecks": 100,
+          "activeEnemies": 3,
+          "bullets": 1,
+          "player": {
+            "x": 604,
+            "y": 470.80000000000064
+          },
+          "staged": [
+            {
+              "x": 764,
+              "y": 440,
+              "id": 1
+            },
+            {
+              "x": 665.2293491784144,
+              "y": 587.8207252018059,
+              "id": 2
+            },
+            {
+              "x": 542.7706508215856,
+              "y": 587.8207252018059,
+              "id": 3
+            }
+          ],
+          "events": [
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot"
+          ]
+        },
+        "composition": "production-high-composer"
+      },
+      "errors": [],
+      "sha256": "bd84a5e9cc3f766bb770c425ee6be52e3e91ed255b4935c69750aa88f10f9ac6",
+      "pixelReview": "pending"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "20-overload-floor",
+      "templateId": "overload-floor",
+      "environment": "reactor",
+      "mode": "overview",
+      "file": "20-overload-floor-overview.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 3,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true,
+        "traversal": {
+          "steps": 384,
+          "distance": 1318.647615158761,
+          "exitDistance": 0,
+          "route": [
+            {
+              "x": 100,
+              "y": 440
+            },
+            {
+              "x": 124,
+              "y": 440
+            },
+            {
+              "x": 148,
+              "y": 440
+            },
+            {
+              "x": 172,
+              "y": 440
+            },
+            {
+              "x": 196,
+              "y": 440
+            },
+            {
+              "x": 220,
+              "y": 440
+            },
+            {
+              "x": 244,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 440
+            },
+            {
+              "x": 292,
+              "y": 440
+            },
+            {
+              "x": 316,
+              "y": 440
+            },
+            {
+              "x": 340,
+              "y": 440
+            },
+            {
+              "x": 364,
+              "y": 440
+            },
+            {
+              "x": 388,
+              "y": 440
+            },
+            {
+              "x": 412,
+              "y": 440
+            },
+            {
+              "x": 436,
+              "y": 440
+            },
+            {
+              "x": 436,
+              "y": 464
+            },
+            {
+              "x": 436,
+              "y": 488
+            },
+            {
+              "x": 436,
+              "y": 512
+            },
+            {
+              "x": 436,
+              "y": 536
+            },
+            {
+              "x": 436,
+              "y": 560
+            },
+            {
+              "x": 436,
+              "y": 584
+            },
+            {
+              "x": 436,
+              "y": 608
+            },
+            {
+              "x": 460,
+              "y": 608
+            },
+            {
+              "x": 484,
+              "y": 608
+            },
+            {
+              "x": 508,
+              "y": 608
+            },
+            {
+              "x": 532,
+              "y": 608
+            },
+            {
+              "x": 556,
+              "y": 608
+            },
+            {
+              "x": 580,
+              "y": 608
+            },
+            {
+              "x": 604,
+              "y": 608
+            },
+            {
+              "x": 628,
+              "y": 608
+            },
+            {
+              "x": 652,
+              "y": 608
+            },
+            {
+              "x": 676,
+              "y": 608
+            },
+            {
+              "x": 700,
+              "y": 608
+            },
+            {
+              "x": 724,
+              "y": 608
+            },
+            {
+              "x": 748,
+              "y": 608
+            },
+            {
+              "x": 772,
+              "y": 608
+            },
+            {
+              "x": 772,
+              "y": 584
+            },
+            {
+              "x": 796,
+              "y": 584
+            },
+            {
+              "x": 820,
+              "y": 584
+            },
+            {
+              "x": 844,
+              "y": 584
+            },
+            {
+              "x": 868,
+              "y": 584
+            },
+            {
+              "x": 892,
+              "y": 584
+            },
+            {
+              "x": 916,
+              "y": 584
+            },
+            {
+              "x": 940,
+              "y": 584
+            },
+            {
+              "x": 964,
+              "y": 584
+            },
+            {
+              "x": 988,
+              "y": 584
+            },
+            {
+              "x": 1012,
+              "y": 584
+            },
+            {
+              "x": 1036,
+              "y": 584
+            },
+            {
+              "x": 1060,
+              "y": 584
+            },
+            {
+              "x": 1060,
+              "y": 560
+            },
+            {
+              "x": 1060,
+              "y": 536
+            },
+            {
+              "x": 1060,
+              "y": 512
+            },
+            {
+              "x": 1060,
+              "y": 488
+            },
+            {
+              "x": 1060,
+              "y": 464
+            },
+            {
+              "x": 1100,
+              "y": 440
+            }
+          ],
+          "legalChecks": 384
+        }
+      },
+      "metrics": {
+        "drawCalls": 61,
+        "triangles": 84831,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 580,
+          "y": 608
+        },
+        "enemies": 3,
+        "combat": null,
+        "composition": "production-high-composer"
+      },
+      "errors": [],
+      "sha256": "e6315c632c9637ebc8170c569c19242e6e659d1e20aae3549e27f3a1609a42f1",
+      "pixelReview": "pending"
+    },
+    {
+      "abortedDuplicateModules": [],
+      "roomId": "20-overload-floor",
+      "templateId": "overload-floor",
+      "environment": "reactor",
+      "mode": "gameplay",
+      "file": "20-overload-floor-gameplay.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "readiness": {
+        "enemies": 3,
+        "modelsPreloaded": true,
+        "materialsReady": true,
+        "prepared": true,
+        "traversal": {
+          "steps": 384,
+          "distance": 1318.647615158761,
+          "exitDistance": 0,
+          "route": [
+            {
+              "x": 100,
+              "y": 440
+            },
+            {
+              "x": 124,
+              "y": 440
+            },
+            {
+              "x": 148,
+              "y": 440
+            },
+            {
+              "x": 172,
+              "y": 440
+            },
+            {
+              "x": 196,
+              "y": 440
+            },
+            {
+              "x": 220,
+              "y": 440
+            },
+            {
+              "x": 244,
+              "y": 440
+            },
+            {
+              "x": 268,
+              "y": 440
+            },
+            {
+              "x": 292,
+              "y": 440
+            },
+            {
+              "x": 316,
+              "y": 440
+            },
+            {
+              "x": 340,
+              "y": 440
+            },
+            {
+              "x": 364,
+              "y": 440
+            },
+            {
+              "x": 388,
+              "y": 440
+            },
+            {
+              "x": 412,
+              "y": 440
+            },
+            {
+              "x": 436,
+              "y": 440
+            },
+            {
+              "x": 436,
+              "y": 464
+            },
+            {
+              "x": 436,
+              "y": 488
+            },
+            {
+              "x": 436,
+              "y": 512
+            },
+            {
+              "x": 436,
+              "y": 536
+            },
+            {
+              "x": 436,
+              "y": 560
+            },
+            {
+              "x": 436,
+              "y": 584
+            },
+            {
+              "x": 436,
+              "y": 608
+            },
+            {
+              "x": 460,
+              "y": 608
+            },
+            {
+              "x": 484,
+              "y": 608
+            },
+            {
+              "x": 508,
+              "y": 608
+            },
+            {
+              "x": 532,
+              "y": 608
+            },
+            {
+              "x": 556,
+              "y": 608
+            },
+            {
+              "x": 580,
+              "y": 608
+            },
+            {
+              "x": 604,
+              "y": 608
+            },
+            {
+              "x": 628,
+              "y": 608
+            },
+            {
+              "x": 652,
+              "y": 608
+            },
+            {
+              "x": 676,
+              "y": 608
+            },
+            {
+              "x": 700,
+              "y": 608
+            },
+            {
+              "x": 724,
+              "y": 608
+            },
+            {
+              "x": 748,
+              "y": 608
+            },
+            {
+              "x": 772,
+              "y": 608
+            },
+            {
+              "x": 772,
+              "y": 584
+            },
+            {
+              "x": 796,
+              "y": 584
+            },
+            {
+              "x": 820,
+              "y": 584
+            },
+            {
+              "x": 844,
+              "y": 584
+            },
+            {
+              "x": 868,
+              "y": 584
+            },
+            {
+              "x": 892,
+              "y": 584
+            },
+            {
+              "x": 916,
+              "y": 584
+            },
+            {
+              "x": 940,
+              "y": 584
+            },
+            {
+              "x": 964,
+              "y": 584
+            },
+            {
+              "x": 988,
+              "y": 584
+            },
+            {
+              "x": 1012,
+              "y": 584
+            },
+            {
+              "x": 1036,
+              "y": 584
+            },
+            {
+              "x": 1060,
+              "y": 584
+            },
+            {
+              "x": 1060,
+              "y": 560
+            },
+            {
+              "x": 1060,
+              "y": 536
+            },
+            {
+              "x": 1060,
+              "y": 512
+            },
+            {
+              "x": 1060,
+              "y": 488
+            },
+            {
+              "x": 1060,
+              "y": 464
+            },
+            {
+              "x": 1100,
+              "y": 440
+            }
+          ],
+          "legalChecks": 384
+        }
+      },
+      "metrics": {
+        "drawCalls": 65,
+        "triangles": 84637,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            17.95288816020797,
+            26,
+            33.531180950630585
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 580,
+          "y": 638.7999999999993
+        },
+        "enemies": 3,
+        "combat": {
+          "steps": 25,
+          "deltaMs": 16.666666666666668,
+          "shots": 4,
+          "damage": 48,
+          "enemyDistance": 68.91941985347295,
+          "playerDistance": 30.799999999999272,
+          "playerDisplacement": 30.799999999999272,
+          "legalChecks": 100,
+          "activeEnemies": 3,
+          "bullets": 1,
+          "player": {
+            "x": 580,
+            "y": 638.7999999999993
+          },
+          "staged": [
+            {
+              "x": 740,
+              "y": 608,
+              "id": 1
+            },
+            {
+              "x": 693.1370849898476,
+              "y": 721.1370849898476,
+              "id": 2
+            },
+            {
+              "x": 580,
+              "y": 768,
+              "id": 3
+            }
+          ],
+          "events": [
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot"
+          ]
+        },
+        "composition": "production-high-composer"
+      },
+      "errors": [],
+      "sha256": "605e71940b95efa34d661cfee17cf943f03fbd09c7026def083779857c3ab09f",
+      "pixelReview": "pending"
+    }
+  ]
+}

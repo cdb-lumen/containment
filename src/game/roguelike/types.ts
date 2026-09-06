@@ -4,7 +4,7 @@ import type {StoryTemplateId} from './storyRooms';
 export type TemplateId = StoryTemplateId | 'receiving' | 'forklift-loop' | 'cold-aisle' | 'freight-crossing' | 'pump-ring' | 'specimen-bay' | 'security-lock' | 'reactor-vault'|'rail-depot'|'quarantine-cross'|'cryo-gallery'|'filtration'|'turbine-hall'|'waste-processing'|'power-conduits'|'hive-approach';
 export type Point = Readonly<{x:number;y:number}>;
 export type Rect = Point & Readonly<{width:number;height:number}>;
-export type RoomTemplate = Readonly<{id:TemplateId;name:string;width:number;height:number;spawn:Point;exit:Point;obstacles:readonly Rect[];breaches:readonly Point[]}>;
+export type RoomTemplate = Readonly<{id:TemplateId;name:string;width:number;height:number;spawn:Point;exit:Point;obstacles:readonly Rect[];breaches:readonly Point[];boundary?:readonly Point[];voids?:readonly (readonly Point[])[]}>;
 export type RunNode = Readonly<{id:string;depth:number;kind:RoomKind;templateId:TemplateId;next:readonly string[];reward:'upgrade'|'healing'|'supplies'|'rare-upgrade'|'victory'}>;
 export type RunGraph = Readonly<{seed:number;nodes:readonly RunNode[];startId:string;bossId:string}>;
 export type RunPhase = 'combat'|'reward'|'route'|'complete'|'dead';

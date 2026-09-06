@@ -1,0 +1,51 @@
+{
+  "commit": "cacf6ed0bf091c4e2c98c03851c84be75d30ef8c",
+  "evidence": "Built production app, seeded validated prior-room checkpoint, real Continue/route/authorization/fire/pause/resume. Short interaction smoke, not full playthrough or balance proof.",
+  "results": [
+    {
+      "id": "passenger-vault",
+      "file": "passenger-vault-phone-hud.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "quality": "low",
+      "state": "playing",
+      "room": "Passenger vault",
+      "input": "real touch fire",
+      "explicitFatalAuthorization": false,
+      "errors": [],
+      "sha256": "dbedd17a11ec2e78ba709e3d7c1c50a76c80370b5626cbdd8a768e93e69c80d4"
+    },
+    {
+      "id": "breached-loading-bay",
+      "file": "breached-loading-bay-phone-hud.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "quality": "low",
+      "state": "playing",
+      "room": "Breached loading bay",
+      "input": "real touch fire",
+      "explicitFatalAuthorization": false,
+      "errors": [],
+      "sha256": "efe4dd4625c8722618608e02cad5404821d9d8d3d9062241a20731dfd64dac28"
+    },
+    {
+      "id": "overload-floor",
+      "file": "overload-floor-phone-hud.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "quality": "low",
+      "state": "playing",
+      "room": "Overload floor",
+      "input": "real touch fire",
+      "explicitFatalAuthorization": true,
+      "errors": [],
+      "sha256": "12dfd2ae4fa57754d25bdda06d3289842ea91f0101faf3412e636686a22e0cc0"
+    }
+  ]
+}

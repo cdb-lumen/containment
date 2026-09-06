@@ -1,13 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { ROOM_TEMPLATES } from '../../src/game/roguelike/roomTemplates';
 import type { Point, RoomTemplate } from '../../src/game/roguelike/types';
+import {clearPolygonTopology} from '../../src/game/world/polygonGeometry';
 
 const RADIUS = 28;
 const STEP = 10;
 
 // Expanded AABBs conservatively admit a square enclosing the player's circle.
 function clear(template: RoomTemplate, point: Point): boolean {
-  return point.x >= RADIUS && point.y >= RADIUS
+  return clearPolygonTopology(template,point,point,RADIUS) && point.x >= RADIUS && point.y >= RADIUS
     && point.x <= template.width - RADIUS && point.y <= template.height - RADIUS
     && template.obstacles.every(rect => point.x < rect.x - RADIUS || point.x > rect.x + rect.width + RADIUS
       || point.y < rect.y - RADIUS || point.y > rect.y + rect.height + RADIUS);
@@ -29,7 +30,12 @@ describe('roguelike room templates', () => {
       expect(template.width).toBeGreaterThan(2 * RADIUS);
       expect(template.height).toBeGreaterThan(2 * RADIUS);
       expect(Number.isFinite(template.width + template.height)).toBe(true);
-      expect(template.obstacles.length).toBeGreaterThanOrEqual(2);
+      expect(template.obstacles.length + (template.voids?.length ?? 0)).toBeGreaterThanOrEqual(template.boundary ? 1 : 2);
+      for(const polygon of [template.boundary,...template.voids??[]].filter(p=>p!==undefined)){
+        expect(Object.isFrozen(polygon)).toBe(true);
+        expect(polygon.length).toBeGreaterThanOrEqual(3);
+        for(const point of polygon){expect(Object.isFrozen(point)).toBe(true);expect(Number.isFinite(point.x+point.y)).toBe(true);}
+      }
       expect(template.breaches.length).toBeGreaterThanOrEqual(3);
       for (const rect of template.obstacles) {
         expect(Object.isFrozen(rect)).toBe(true);
