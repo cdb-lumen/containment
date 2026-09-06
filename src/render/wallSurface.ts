@@ -1,7 +1,7 @@
 import * as T from 'three';
 
 /** Resolve presentation geometry only. Collision planes can sit inside thick wall panels. */
-export function wallSurface(world:T.Object3D,p:T.Vector3,outward:T.Vector3){
+export function wallSurface(world:T.Object3D,p:T.Vector3,outward:T.Vector3,footprint=.085){
  // Start on the playable side, beyond the panel's .28 protruding trim.
  // The short ray must not attach a void-rim strike to an unrelated distant wall.
  world.updateWorldMatrix(true,true);
@@ -16,7 +16,7 @@ export function wallSurface(world:T.Object3D,p:T.Vector3,outward:T.Vector3){
   // A .12 mark can rotate, so reserve its bounding square on this same face.
   const tangent=new T.Vector3(normal.z,0,-normal.x).normalize(),up=new T.Vector3().crossVectors(normal,tangent);
   let supported=true;
-  for(const x of [-.085,.085])for(const y of [-.085,.085]){
+  for(const x of [-footprint,footprint])for(const y of [-footprint,footprint]){
    const sample=hit.point.clone().addScaledVector(tangent,x).addScaledVector(up,y);
    ray.set(sample.clone().addScaledVector(normal,.1),normal.clone().negate());ray.far=.12;
    const support=ray.intersectObject(hit.object,false)[0];

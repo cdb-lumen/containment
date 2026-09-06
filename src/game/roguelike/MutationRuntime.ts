@@ -18,6 +18,8 @@ export type MutationHost = Readonly<{
   canAffect?:(from:Readonly<{x:number;y:number}>,to:Readonly<{x:number;y:number}>)=>boolean;
   boonEffect?:(kind:BoonEffect,x:number,y:number,targetX?:number,targetY?:number,radius?:number,durationMs?:number)=>void;
   effect?: (x: number, y: number, radius: number) => void;
+  /** One presentation contact for an accepted wall collision, before its damage commands. */
+  wallSlam?: (from: MutationTarget, to: Readonly<{x:number;y:number}>, impulse:number) => void;
 }>;
 type Launch = { x: number; y: number; cause: BuildCause; commandId: string; remainingMs: number; touched: Set<number>; ghost?: MutationTarget };
 
@@ -169,9 +171,10 @@ export class MutationRuntime {
     this.#positions.set(target.id, { ...target });
   }
 
-  #dispatch(event: BuildEvent): boolean {
+  #dispatch(event: BuildEvent, wallVisual?:()=>void): boolean {
     const result = this.#combat.resolveMutationEvent(event);
     if(result.rejected)return false;
+    if(result.commands.some(c=>(c.type==='damage'||c.type==='explosion')&&c.visual==='wall-slam'))wallVisual?.();
     this.#commands.push(...result.commands);
     if (this.#executing) return true;
     this.#executing = true;
@@ -200,12 +203,12 @@ export class MutationRuntime {
       if (!target || target.immovable) return;
       this.#launches.set(targetId, { x: command.x, y: command.y, cause: command.cause, commandId: command.id, remainingMs: 900, touched: new Set([targetId]), ...(!live ? { ghost: { ...target, health: 0 } } : {}) });
     } else if (command.type === 'damage') {
-      if (live){if(command.visual!=='shatter')this.#host.boonEffect?.('impact',live.x,live.y);this.#damage(live, command.amount, command);}
+      if (live){if(!command.visual)this.#host.boonEffect?.('impact',live.x,live.y);this.#damage(live, command.amount, command);}
     } else if (command.type === 'explosion') {
       const center = live ?? this.#positions.get(targetId);
       if (!center) return;
       if(command.visual==='shatter')this.#host.boonEffect?.('shatter',center.x,center.y,undefined,undefined,command.radius);
-      else this.#host.effect?.(center.x, center.y, command.radius);
+      else if(command.visual!=='wall-slam')this.#host.effect?.(center.x, center.y, command.radius);
       const targets = this.#host.targets().filter((target) => target.health > 0 && Math.hypot(target.x - center.x, target.y - center.y) <= command.radius && this.#host.canAffect?.(center,target)!==false)
         .sort((a, b) => Math.hypot(a.x - center.x, a.y - center.y) - Math.hypot(b.x - center.x, b.y - center.y) || a.id - b.id)
         .slice(0, command.maxTargets);
@@ -240,7 +243,7 @@ export class MutationRuntime {
       this.#remember(current);
       if (blocked) {
         this.#launches.delete(id);
-        this.#dispatch({ id: `${launch.commandId}:wall`, cause: launch.cause, type: 'wall-hit', targetId: String(id), impulse: speed });
+        this.#dispatch({ id: `${launch.commandId}:wall`, cause: launch.cause, type: 'wall-hit', targetId: String(id), impulse: speed },()=>this.#host.wallSlam?.(current,{x:before.x+dx,y:before.y+dy},speed));
         continue;
       }
       for (const other of this.#host.targets().slice().sort((a, b) => a.id - b.id)) {
