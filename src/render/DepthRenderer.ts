@@ -1,4 +1,5 @@
 import {roomFocus} from './roomFraming';
+import {prepareCryoBenchmark} from './CryoBenchmark';
 import {SceneLighting,ContactShadows} from './SceneLighting';
 import {authoredRoom} from './AuthoredRooms';
 import {ActorPool} from './ActorPool';
@@ -70,6 +71,7 @@ export class DepthRenderer {
  }
  /** Load shaders, textures, GPU buffers and common animation actions before combat. */
  async prepare(node:RunNode){
+  await prepareCryoBenchmark(node.templateId);
   this.loadRoom(node);await this.surfaces.ready;
   const warm:T.Group=new T.Group(),models:ActorModel[]=[];this.scene.add(warm);
   const yieldTask=()=>new Promise<void>(resolve=>setTimeout(resolve,0));

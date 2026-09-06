@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {cryoBenchmarkTemplate} from './CryoBenchmark';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -155,7 +156,20 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
  }
  f.sign('CRYO SERVICE / VITALS NOMINAL',24,1.36,3.1,7.8);
 }
-function passengerVault(f:Fabricator,t:RoomPlan){
+function passengerVault(f:Fabricator,t:RoomPlan,pod?:T.Group){
+ const materials=new Map<T.Material,T.Material>();
+ pod?.updateMatrixWorld(true);
+ const addPod=(x:number,y:number,z:number)=>{
+  pod!.traverse(o=>{if(!(o instanceof T.Mesh))return;
+   const source=o.material as T.Material;let material=materials.get(source);
+   if(!material){material=source.clone();material.userData.actorMaterial=true;materials.set(source,material);}
+   const geometry=o.geometry.clone().applyMatrix4(o.matrixWorld);
+   // Blender may include tangent/color attributes; the batch needs only these.
+   for(const name of Object.keys(geometry.attributes))if(!['position','normal','uv'].includes(name))geometry.deleteAttribute(name);
+   f.add(geometry,material,v(x,y,z));
+  });
+  f.root.userData.cryoPodCount=(f.root.userData.cryoPodCount??0)+1;
+ };
  for(const hole of t.voids??[]){const b=bounds(hole);
   // Occupied pressure pods remain human-sized, stacked under the balcony.
   for(let x=b.x0+1.05;x<b.x1-.9;x+=2.05){
@@ -164,7 +178,16 @@ function passengerVault(f:Fabricator,t:RoomPlan){
    const candidates:number[]=[];for(let z=b.z0+1.46;z<b.z1-1.45;z+=.08)
     if([[-.89,-1.43],[.89,-1.43],[-.89,1.43],[.89,1.43]].every(([dx,dz])=>contains(hole,x+dx,z+dz)))candidates.push(z);
    if(!candidates.length)continue;const z=candidates[Math.floor(candidates.length/2)];
+   if(pod){
+    // Each rack is fixed to the well bottom. A paired supply/return riser
+    // meets the exported hose ends at both tiers, entirely inside the void.
+    for(const side of [-1,1]){
+     f.pipe(v(x+side*.62,-4.7,z+1.34),v(x+side*.62,-.92,z+1.34),.055,f.bronze);
+     for(const end of [-1,1])f.box(x+side*.59,-2.95,z+end*.86,.1,3.56,.1,f.edge,.012);
+    }
+   }
    for(const y of [-3.05,-.95]){
+    if(pod){addPod(x,y+.2,z);continue;}
     f.box(x,y,z,1.72,.62,2.8,f.ivory,.18);f.box(x,y+.34,z,1.31,.09,2.34,f.dark,.12);
     f.ellipsoid(x,y+.48,z-.67,.19,.16,.22,f.skin);f.ellipsoid(x,y+.45,z-.04,.29,.12,.46,f.body);
     for(const side of [-1,1]){f.pipe(v(x+side*.14,y+.43,z+.25),v(x+side*.16,y+.43,z+.9),.105,f.body);f.box(x+side*.67,y+.39,z,.055,.04,2.05,f.cold,.012);}
@@ -174,7 +197,7 @@ function passengerVault(f:Fabricator,t:RoomPlan){
   for(const side of [-1,1])f.pipe(v(b.x+side*(b.w/2-.3),-3.9,b.z0+.4),v(b.x+side*(b.w/2-.3),-3.9,b.z1-.4),.18,f.bronze);
  }
  const boundary=bounds(outline(t));f.sign('PASSENGERS / VITALS NOMINAL',boundary.x,1.36,boundary.z0+.35,7.8);
- equipment(f,t,'cryo');
+ equipment(f,t,'cryo');cryoSupport(f,t);
 }
 function breachedBay(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole);
@@ -248,8 +271,42 @@ function reactorFloor(f:Fabricator,t:RoomPlan){
  equipment(f,t,'reactor');
 }
 /** Coherent equipment assemblies inside exact collision footprints; no arbitrary object stretching. */
+function cryoSupport(f:Fabricator,t:RoomPlan){
+ // Insulated wall cassettes sit on the existing wall plane, never in a route.
+ const perimeter=outline(t);
+ for(let i=0;i<perimeter.length;i++){
+  const a=perimeter[i],b=perimeter[(i+1)%perimeter.length];
+  if((a.y+b.y)/2>t.height*.32)continue;
+  const length=Math.hypot(b.x-a.x,b.y-a.y)/U,angle=-Math.atan2(b.y-a.y,b.x-a.x),n=Math.ceil(length/2.8);
+  for(let j=0;j<n;j++){
+   const x=(a.x+(b.x-a.x)*(j+.5)/n)/U,z=(a.y+(b.y-a.y)*(j+.5)/n)/U,w=length/n;
+   f.box(x,.54,z,w-.22,.92,.46,f.ivory,.07,angle);
+   f.box(x,.5,z,w-.43,.62,.48,f.paint,.055,angle);
+   f.box(x,.14,z,w-.2,.12,.52,f.dark,.02,angle);
+   for(const side of [-1,1]){const dx=Math.cos(-angle)*side*(w/2-.15),dz=Math.sin(-angle)*side*(w/2-.15);f.box(x+dx,.58,z+dz,.085,.95,.54,f.edge,.015,angle);}
+  }
+ }
+ // Short removable tread plates at the service terminals; the corridor stays quiet.
+ for(const r of t.obstacles){const x=(r.x+r.width/2)/U,z=(r.y+r.height)/U+.3,w=r.width/U;
+  for(let i=0;i<5;i++)f.box(x,-.008,z+i*.1,w*.85,.014,.028,f.edge,0);
+ }
+}
+function cryoConsole(f:Fabricator,x:number,z:number,w:number,d:number){
+ f.box(x,.12,z,w,.24,d,f.dark,.065);
+ // A sloped service fascia on a two-piece sealed cabinet, bounded by the
+ // existing terminal collision rectangle. No decorative new obstacle.
+ f.box(x,.49,z,w-.14,.65,d-.16,f.ivory,.08);
+ f.box(x,.56,z+.08,w-.32,.44,d-.17,f.paint,.04);
+ f.add(new RoundedBoxGeometry(w-.3,.12,d-.32,1,.04),f.edge,v(x,.86,z),new T.Euler(.18,0,0));
+ f.add(new RoundedBoxGeometry(Math.min(.75,w*.43),.04,Math.min(.58,d*.4),1,.02),f.dark,v(x-.13,.95,z-.15),new T.Euler(.18,0,0));
+ f.add(new T.PlaneGeometry(Math.min(.54,w*.31),Math.min(.37,d*.26)),f.cold,v(x-.13,.983,z-.15),new T.Euler(-Math.PI/2+.18,0,0));
+ for(let j=0;j<4;j++)f.box(x+w*.27,.96,z-.24+j*.13,.13,.045,.065,j===3?f.bronze:f.dark,.015);
+ for(let j=0;j<5;j++)f.box(x-w*.22+j*.11,.52,z+d/2-.065,.045,.23,.03,f.dark,.005);
+ for(const side of [-1,1])f.pipe(v(x+side*(w/2-.14),.37,z+d*.28),v(x+side*(w/2-.14),.73,z+d*.28),.04,f.edge);
+}
 function equipment(f:Fabricator,t:RoomPlan,kind:'cryo'|'cargo'|'reactor'){
  for(const r of t.obstacles){const x=(r.x+r.width/2)/U,z=(r.y+r.height/2)/U,w=r.width/U,d=r.height/U;
+  if(kind==='cryo'){cryoConsole(f,x,z,w,d);continue;}
   f.box(x,.12,z,w,.24,d,f.dark,.07);f.box(x,.47,z,w-.12,.62,d-.12,kind==='cargo'?f.rust:f.paint,.09);f.box(x,.82,z,w-.18,.1,d-.18,f.edge,.03);
   if(kind==='cargo'){
    // One reinforced pressure freight container, with lifting sockets and panel seams.
@@ -281,11 +338,11 @@ function deckServices(f:Fabricator,t:RoomPlan){
   for(let j=0;j<3;j++){const tick=p.clone().addScaledVector(tangent,(j-1)*.23).addScaledVector(out,.22);strip(tick,tick.clone().addScaledVector(out,.14),.06,f.stencil);}
  }
 }
-export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
+export function authoredRoom(id:string,t:RoomPlan,pod=cryoBenchmarkTemplate()):T.Group|null{
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;
  f.add(new T.ExtrudeGeometry(roomDeckShape(t),{depth:.44,steps:1,bevelEnabled:false}),f.deck,v(0,-.46,0),new T.Euler(-Math.PI/2,0,0));
  edgeArchitecture(f,t,id==='breached-loading-bay');deckServices(f,t);
- if(id==='awakening-bay')awakeningBay(f,t);else if(id==='passenger-vault')passengerVault(f,t);else if(id==='breached-loading-bay')breachedBay(f,t);else reactorFloor(f,t);
+ if(id==='awakening-bay')awakeningBay(f,t);else if(id==='passenger-vault')passengerVault(f,t,pod);else if(id==='breached-loading-bay')breachedBay(f,t);else reactorFloor(f,t);
  return f.finish();
 }
