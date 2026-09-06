@@ -85,6 +85,8 @@ export type CombatSnapshot = Readonly<{
   reloadDurationMs: number;
   reloadRemainingMs: number;
   fireCooldownRemainingMs: number;
+  /** Current weapon's additional full-cone width before spread modifiers. */
+  bloomRadians: number;
   grenades: number;
   grenadeCooldownRemainingMs: number;
   medkits: number;
@@ -105,6 +107,8 @@ type WeaponAmmoState = {
   capacity: number;
   reserve: number;
   cooldownRemainingMs: number;
+  bloomRadians: number;
+  shotSequence: number;
 };
 
 const noDamage = (): DamageResult =>
@@ -154,6 +158,8 @@ const createAmmoState = (): Record<WeaponId, WeaponAmmoState> =>
         capacity: WEAPONS[weaponId].magazine,
         reserve: WEAPONS[weaponId].reserve,
         cooldownRemainingMs: 0,
+        bloomRadians: 0,
+        shotSequence: 0,
       },
     ]),
   ) as Record<WeaponId, WeaponAmmoState>;
@@ -259,6 +265,10 @@ export class CombatSystem {
 
   resetMutationEncounter(): void {
     this.#mutationState.reset();
+    for (const ammo of Object.values(this.#ammo)) {
+      ammo.bloomRadians = 0;
+      ammo.shotSequence = 0;
+    }
     this.#cycleCharged = this.#cyclePrimed = false;
     // Keep IDs monotonic: in-flight requests from an old encounter cannot alias.
   }
@@ -338,6 +348,7 @@ export class CombatSystem {
       reloadDurationMs: this.#reloadDurationMs,
       reloadRemainingMs: this.#reloadRemainingMs,
       fireCooldownRemainingMs: ammo.cooldownRemainingMs,
+      bloomRadians: ammo.bloomRadians,
       grenades: this.#grenades,
       grenadeCooldownRemainingMs: this.#grenadeCooldownRemainingMs,
       medkits: this.#medkits,
@@ -417,12 +428,19 @@ export class CombatSystem {
     return true;
   }
 
-  update(deltaMs: number): void {
+  update(deltaMs: number, triggerHeld = false): void {
     if (!Number.isFinite(deltaMs) || deltaMs < 0) return;
 
     let changed = false;
     for (const weaponId of WEAPON_IDS) {
       const ammo = this.#ammo[weaponId];
+      if (ammo.bloomRadians > 0 && deltaMs > 0 &&
+        (!triggerHeld || weaponId !== this.#weaponId || this.#reloading)) {
+        const weapon = WEAPONS[weaponId];
+        ammo.bloomRadians = Math.max(0, ammo.bloomRadians - weapon.maxBloomRadians * deltaMs / weapon.bloomRecoveryMs);
+        if (ammo.bloomRadians < 1e-12) ammo.bloomRadians = 0;
+        changed = true;
+      }
       if (ammo.cooldownRemainingMs > 0 && deltaMs > 0) {
         ammo.cooldownRemainingMs = Math.max(
           0,
@@ -462,7 +480,9 @@ export class CombatSystem {
     }
 
     const weapon = WEAPONS[this.#weaponId];
-    const spreadRadians = weapon.spreadRadians * this.#modifiers.spreadMultiplier;
+    const spreadRadians = (weapon.spreadRadians + ammo.bloomRadians) * this.#modifiers.spreadMultiplier;
+    // Independent per-weapon low-discrepancy sequence: no global RNG or boon-event coupling.
+    const sample = ((ammo.shotSequence + 1) * 0.618033988749895) % 1 * 2 - 1;
     const stats = deriveBuildStats(this.#build, this.#weaponId);
     const mutationShotId = this.nextMutationEventId('shot');
     const cyclePrimed=this.hasMutation('magnetic-feed')&&this.#cyclePrimed;
@@ -475,13 +495,17 @@ export class CombatSystem {
     this.#cycleCharged = this.hasMutation('magnetic-feed') && !primed;
     ammo.magazine -= 1;
     ammo.cooldownRemainingMs = 1_000 / weapon.roundsPerSecond * stats.shotIntervalMultiplier;
+    ammo.bloomRadians = Math.min(weapon.maxBloomRadians, ammo.bloomRadians + weapon.bloomPerShotRadians);
+    ammo.shotSequence = (ammo.shotSequence + 1) >>> 0;
 
     const requests = Array.from({ length: weapon.pellets }, (_, index) => {
-      const spreadOffset =
-        weapon.pellets === 1
-          ? 0
-          : -spreadRadians / 2 +
-            (spreadRadians * index) / (weapon.pellets - 1);
+      const gap = weapon.pellets > 1 ? spreadRadians / (weapon.pellets - 1) : 0;
+      const fanOffset = -spreadRadians / 2 + gap * index;
+      // Mirror a small inner-pellet shift; fixed edges and bounded gaps keep close shots reliable.
+      const inner = index > 0 && index < weapon.pellets - 1;
+      const spreadOffset = weapon.pellets === 1
+        ? sample * spreadRadians / 2
+        : fanOffset + (inner ? Math.sign(fanOffset) * sample * gap * 0.1 : 0);
       return Object.freeze({
         weaponId: this.#weaponId,
         mutationShotId,...(primed?{primed:true}:{}),
