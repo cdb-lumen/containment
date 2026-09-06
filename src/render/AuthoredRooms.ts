@@ -170,7 +170,15 @@ function passengerVault(f:Fabricator,t:RoomPlan,pod?:T.Group){
   });
   f.root.userData.cryoPodCount=(f.root.userData.cryoPodCount??0)+1;
  };
- for(const hole of t.voids??[]){const b=bounds(hole);
+ for(const [bank,hole] of (t.voids??[]).entries()){const b=bounds(hole);
+  let previous:T.Vector3|undefined;
+  // Guard rails are bolted to the well rim, not suspended in air.
+  for(let i=0;i<hole.length;i++){
+   const a=hole[i],q=hole[(i+1)%hole.length],steps=Math.ceil(Math.hypot(q.x-a.x,q.y-a.y)/64);
+   for(let j=0;j<steps;j++){const x=(a.x+(q.x-a.x)*j/steps)/U,z=(a.y+(q.y-a.y)*j/steps)/U;
+    f.pipe(v(x,-.24,z),v(x,.45,z),.035,f.edge);
+   }
+  }
   // Occupied pressure pods remain human-sized, stacked under the balcony.
   for(let x=b.x0+1.05;x<b.x1-.9;x+=2.05){
    // Solve each column against the sloping back wall instead of discarding a
@@ -182,19 +190,30 @@ function passengerVault(f:Fabricator,t:RoomPlan,pod?:T.Group){
     // Each rack is fixed to the well bottom. A paired supply/return riser
     // meets the exported hose ends at both tiers, entirely inside the void.
     for(const side of [-1,1]){
-     f.pipe(v(x+side*.62,-4.7,z+1.34),v(x+side*.62,-.92,z+1.34),.055,f.bronze);
-     for(const end of [-1,1])f.box(x+side*.59,-2.95,z+end*.86,.1,3.56,.1,f.edge,.012);
+     f.pipe(v(x+side*.62,-4.85,z+1.34),v(x+side*.62,-.92,z+1.34),.055,f.bronze);
+     for(const end of [-1,1]){
+      f.box(x+side*.59,-3.04,z+end*.86,.1,3.82,.1,f.edge,.012);
+      f.box(x+side*.59,-4.91,z+end*.86,.28,.1,.28,f.edge,.012);
+     }
+     for(const tier of [-3.27,-1.17])f.box(x+side*.59,tier,z,.15,.12,2.22,f.edge,.015);
+     f.pipe(v(x+side*.62,-4.85,z+1.34),v(x,-4.85,z+1.34+side*.09),.055,f.bronze);
     }
+    // Paired headers follow the fitted rack positions inside the sloping well.
+    const junction=v(x,-4.85,z+1.34);
+    if(previous)for(const side of [-1,1])f.pipe(previous.clone().add(v(0,0,side*.09)),junction.clone().add(v(0,0,side*.09)),.055,f.bronze);
+    else {f.box(x,-4.64,z+1.34,.48,.5,.42,f.paint,.025);f.pipe(v(x,-4.64,z+1.34),v(x,-.18,z+1.34),.09,f.paint);}
+    previous=junction;
    }
    for(const y of [-3.05,-.95]){
     if(pod){addPod(x,y+.2,z);continue;}
     f.box(x,y,z,1.72,.62,2.8,f.ivory,.18);f.box(x,y+.34,z,1.31,.09,2.34,f.dark,.12);
-    f.ellipsoid(x,y+.48,z-.67,.19,.16,.22,f.skin);f.ellipsoid(x,y+.45,z-.04,.29,.12,.46,f.body);
-    for(const side of [-1,1]){f.pipe(v(x+side*.14,y+.43,z+.25),v(x+side*.16,y+.43,z+.9),.105,f.body);f.box(x+side*.67,y+.39,z,.055,.04,2.05,f.cold,.012);}
-    f.box(x,y+.53,z+.46,1.63,.12,.14,f.edge);f.box(x,y+.39,z+1.15,.46,.04,.12,f.warm,.01);
+    // Network failure retains the same sealed-chamber direction, without people.
+    f.box(x,y+.47,z,1.4,.2,2.45,f.ivory,.1);
+    f.box(x,y+.58,z+1,.4,.025,.2,f.dark,.01);
+    f.box(x,y+.6,z+1,.18,.016,.065,f.cold,.005);
    }
   }
-  for(const side of [-1,1])f.pipe(v(b.x+side*(b.w/2-.3),-3.9,b.z0+.4),v(b.x+side*(b.w/2-.3),-3.9,b.z1-.4),.18,f.bronze);
+  f.sign(`BANK ${String(bank+1).padStart(2,'0')} / STASIS`,b.x,-.08,b.z0+.2,3.2);
  }
  const boundary=bounds(outline(t));f.sign('PASSENGERS / VITALS NOMINAL',boundary.x,1.36,boundary.z0+.35,7.8);
  equipment(f,t,'cryo');cryoSupport(f,t);
@@ -298,9 +317,11 @@ function cryoConsole(f:Fabricator,x:number,z:number,w:number,d:number){
  f.box(x,.49,z,w-.14,.65,d-.16,f.ivory,.08);
  f.box(x,.56,z+.08,w-.32,.44,d-.17,f.paint,.04);
  f.add(new RoundedBoxGeometry(w-.3,.12,d-.32,1,.04),f.edge,v(x,.86,z),new T.Euler(.18,0,0));
- f.add(new RoundedBoxGeometry(Math.min(.75,w*.43),.04,Math.min(.58,d*.4),1,.02),f.dark,v(x-.13,.95,z-.15),new T.Euler(.18,0,0));
- f.add(new T.PlaneGeometry(Math.min(.54,w*.31),Math.min(.37,d*.26)),f.cold,v(x-.13,.983,z-.15),new T.Euler(-Math.PI/2+.18,0,0));
- for(let j=0;j<4;j++)f.box(x+w*.27,.96,z-.24+j*.13,.13,.045,.065,j===3?f.bronze:f.dark,.015);
+ // Controls are seated on the fascia at the operator edge, not floating above it.
+ const controlZ=z+d*.18,controlY=.86-d*.18*Math.sin(.18)+.075;
+ f.add(new RoundedBoxGeometry(Math.min(.85,w*.48),.04,.48,1,.02),f.dark,v(x-.13,controlY,controlZ),new T.Euler(.18,0,0));
+ for(let j=0;j<3;j++)f.add(new T.PlaneGeometry(.42-j*.07,.028),f.cold,v(x-.13,controlY+.023-j*.014,controlZ-.08+j*.075),new T.Euler(-Math.PI/2+.18,0,0));
+ for(let j=0;j<3;j++)f.box(x+w*.27,controlY+.016,controlZ-.1+j*.1,.13,.035,.065,j===2?f.bronze:f.dark,.01);
  for(let j=0;j<5;j++)f.box(x-w*.22+j*.11,.52,z+d/2-.065,.045,.23,.03,f.dark,.005);
  for(const side of [-1,1])f.pipe(v(x+side*(w/2-.14),.37,z+d*.28),v(x+side*(w/2-.14),.73,z+d*.28),.04,f.edge);
 }

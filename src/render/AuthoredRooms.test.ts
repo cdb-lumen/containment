@@ -21,7 +21,7 @@ describe('authored architecture',()=>{
  });
  it('packs occupied pods across both true sloped wells',()=>{
   const group=authoredRoom('passenger-vault',actual('passenger-vault'))!;
-  const skin=group.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0xb5a48e) as T.Mesh;
+  const skin=group.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0x9dada6) as T.Mesh;
   const p=skin.geometry.getAttribute('position');
   for(const hole of actual('passenger-vault').voids!){const z0=Math.min(...hole.map(p=>p.y))/32,z1=Math.max(...hole.map(p=>p.y))/32;const columns=new Set<number>();
    for(let i=0;i<p.count;i++)if(p.getZ(i)>z0&&p.getZ(i)<z1&&p.getY(i)>-1)columns.add(Math.round(p.getX(i)));

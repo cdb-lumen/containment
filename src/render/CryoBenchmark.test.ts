@@ -22,27 +22,25 @@ describe('cryo review asset contract',()=>{
    expect(cryoBenchmarkTemplate()).toBe(fixture.scene);await prepareCryoBenchmark('passenger-vault');expect(load).toHaveBeenCalledTimes(2);
   }finally{load.mockRestore();}
  });
- it('imports a bounded metre-scale pressure vessel with nine reused materials',async()=>{
+ it('imports a bounded metre-scale pressure vessel with functional reused materials',async()=>{
   const pod=await asset();pod.updateMatrixWorld(true);const size=new T.Box3().setFromObject(pod).getSize(new T.Vector3());
   expect(size.x).toBeLessThan(1.79);expect(size.z).toBeLessThan(2.87);expect(size.y).toBeLessThan(1.1);
   expect(size.x).toBeGreaterThan(1.5);expect(size.z).toBeGreaterThan(2.7);
   const materials=new Set<T.Material>();let triangles=0;pod.traverse(o=>{if(o instanceof T.Mesh){materials.add(o.material);triangles+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;expect(o.geometry.attributes.normal).toBeDefined();expect(o.geometry.attributes.uv).toBeDefined();}});
-  expect(materials.size).toBe(9);expect(triangles).toBeLessThan(6500);
+  expect([...materials].map(m=>m.name).sort()).toEqual(['cryo-ceramic','cryo-frost','cryo-machined','cryo-safety','cryo-seal','cryo-status']);expect(triangles).toBeLessThan(3500);
  });
- it('exports sleeping anatomy and visible hands without adding material batches',async()=>{
+ it('exports a sealed lid and life support without anatomy',async()=>{
   const pod=await asset();const components:string[]=[];
-  pod.traverse(o=>{if(o instanceof T.Mesh)components.push(...(o.userData.occupantComponents??[]));});
-  for(const part of ['Contoured face','Nose bridge','Closed eyelid left','Closed eyelid right','Neck','Left palm','Right palm','Left thumb','Right thumb','Suit collar','Shoulder restraint left','Shoulder restraint right']) expect(components).toContain(part);
-  const skin=pod.getObjectByName('cryo-passenger') as T.Mesh;
-  const bounds=new T.Box3().setFromObject(skin);
-  expect(bounds.max.x-bounds.min.x).toBeGreaterThan(.5);
-  expect(bounds.max.y).toBeGreaterThan(.49);
+  pod.traverse(o=>{if(o instanceof T.Mesh)components.push(...(o.userData.components??[]));});
+  for(const part of ['Sealed pressure lid','Continuous pressure gasket','Life support trace','Passenger identification plate'])expect(components).toContain(part);
+  expect(pod.getObjectByName('cryo-passenger')).toBeUndefined();
+  expect(pod.getObjectByName('cryo-suit')).toBeUndefined();
  });
  it('batches all pods by material, preserves source and disposes room copies exactly once',async()=>{
   const pod=await asset(),before=new T.Box3().setFromObject(pod),snapshot=JSON.stringify(plan);
   const room=authoredRoom('passenger-vault',plan,pod)!;
   const cryo=room.children.filter(o=>o instanceof T.Mesh&&(o.material as T.Material).name.startsWith('cryo-')) as T.Mesh[];
-  expect(cryo).toHaveLength(9);expect(room.userData.cryoPodCount).toBe(28);
+  expect(cryo).toHaveLength(pod.children.filter(o=>o instanceof T.Mesh).length);expect(room.userData.cryoPodCount).toBe(28);
   expect(new T.Box3().setFromObject(pod).equals(before)).toBe(true);expect(JSON.stringify(plan)).toBe(snapshot);
   let sourceDisposals=0;pod.traverse(o=>{if(o instanceof T.Mesh)o.geometry.addEventListener('dispose',()=>sourceDisposals++);});
   const resources=new Set<T.BufferGeometry|T.Material>();room.traverse(o=>{if(o instanceof T.Mesh){resources.add(o.geometry);resources.add(o.material);}});let disposed=0;for(const r of resources)r.addEventListener('dispose',()=>disposed++);

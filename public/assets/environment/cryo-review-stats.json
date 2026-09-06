@@ -1,6 +1,8 @@
 {
-  "bytes": 444008,
-  "meshes": 9,
-  "triangles": 6368,
-  "materials": 9
+  "bytes": 104248,
+  "meshes": 6,
+  "triangles": 1356,
+  "materials": 6,
+  "passengerGeometry": false,
+  "closedPressureLid": true
 }
