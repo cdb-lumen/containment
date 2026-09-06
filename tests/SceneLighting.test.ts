@@ -14,6 +14,7 @@ import {authoredRoom,AUTHORED_ROOMS} from '../src/render/AuthoredRooms';
 import {ROOM_TEMPLATES} from '../src/game/roguelike/roomTemplates';
 import {DepthRenderer} from '../src/render/DepthRenderer';
 import {disposeModel} from '../src/render/meshParts';
+import {appendEnvironment} from '../src/render/ShipEnvironments';
 
 it('retains actual fixture origins when authored geometry is baked',()=>{
  for(const id of AUTHORED_ROOMS){
@@ -36,6 +37,40 @@ it('retains unmerged fixture positions through the real legacy renderer bake',()
  renderer.bakeWorld();expect(renderer.world.children).toHaveLength(1);
  const rig=new SceneLighting();rig.loadRoom(renderer.world,24,16);
  expect(rig.fixtures.map(l=>l.position.x).sort((a,b)=>a-b)).toEqual([3,9,15,21]);
+ rig.dispose();disposeModel(renderer.world);geometry.dispose();material.dispose();renderer.floorMaterial.dispose();
+});
+
+it.each([
+ {y:1.2,offset:1,included:true},
+ {y:.1,offset:1,included:true},
+ {y:1.2,offset:-1,included:false},
+])('bakes flattened legacy fixture matrix origins with y=$y and offset=$offset',({y,offset,included})=>{
+ const renderer=Object.create(DepthRenderer.prototype) as {world:T.Group;floorMaterial:T.Material;bakeWorld():void};
+ renderer.world=new T.Group();renderer.floorMaterial=new T.MeshStandardMaterial();
+ renderer.world.position.set(40,3,20);renderer.world.rotation.y=-.4;
+ const model=new T.Group();model.position.set(8,offset,6);model.rotation.y=Math.PI/2;renderer.world.add(model);
+ const material=new T.MeshStandardMaterial({emissive:0x66cddd,emissiveIntensity:1});
+ const geometry=new T.BoxGeometry(1,.1,.1),mesh=new T.Mesh(geometry,material);
+ mesh.position.set(3,y,2);model.add(mesh);
+ appendEnvironment(renderer.world,model);model.removeFromParent();
+ expect(mesh.matrixAutoUpdate).toBe(false);
+ expect(mesh.position.toArray()).toEqual([3,y,2]);
+ const localOrigin=new T.Vector3(10,y+offset,3),worldOrigin=mesh.getWorldPosition(new T.Vector3());
+ renderer.bakeWorld();
+ const baked=renderer.world.children[0] as T.Mesh;
+ baked.geometry.computeBoundingBox();
+ expect(baked.geometry.boundingBox!.getCenter(new T.Vector3()).distanceTo(localOrigin)).toBeLessThan(1e-6);
+ const records=renderer.world.userData.lightFixtures??[];
+ expect(records).toHaveLength(included?1:0);
+ if(included){
+  const record=records[0];
+  expect(new T.Vector3(record.x,record.y,record.z).distanceTo(localOrigin)).toBeLessThan(1e-6);
+  expect(record.color).toBe(0x66cddd);
+ }
+ const rig=new SceneLighting();rig.loadRoom(renderer.world,24,16);
+ const lights=rig.fixtures.filter(light=>light.intensity>0);
+ expect(lights).toHaveLength(included?1:0);
+ if(included)expect(lights[0].position.distanceTo(worldOrigin)).toBeLessThan(1e-6);
  rig.dispose();disposeModel(renderer.world);geometry.dispose();material.dispose();renderer.floorMaterial.dispose();
 });
 

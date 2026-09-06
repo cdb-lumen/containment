@@ -94,9 +94,11 @@ export class DepthRenderer {
   this.world.updateMatrixWorld(true);const buckets=new Map<T.Material,T.BufferGeometry[]>();
   for(const child of [...this.world.children])if(child instanceof T.Mesh&&child.material!==this.floorMaterial){
    const material=child.material;
-   if(material instanceof T.MeshStandardMaterial&&material.emissiveIntensity>=.5&&material.emissive.getHex()!==0&&child.position.y>=.65){
+   // Flattened environments retain fitted transforms in matrix, not position.
+   const {x,y,z}=new T.Vector3().setFromMatrixPosition(child.matrix);
+   if(material instanceof T.MeshStandardMaterial&&material.emissiveIntensity>=.5&&material.emissive.getHex()!==0&&y>=.65){
     const fixtures=this.world.userData.lightFixtures??=[];
-    if(fixtures.length<256)fixtures.push({x:child.position.x,y:child.position.y,z:child.position.z,color:material.emissive.getHex()});
+    if(fixtures.length<256)fixtures.push({x,y,z,color:material.emissive.getHex()});
    }
    const g=(child.geometry.index?child.geometry.toNonIndexed():child.geometry.clone()).applyMatrix4(child.matrix);const mat=child.material as T.Material;const list=buckets.get(mat)??[];list.push(g);buckets.set(mat,list);if(child.geometry.userData.environmentUV)child.geometry.dispose();this.world.remove(child);
   }
