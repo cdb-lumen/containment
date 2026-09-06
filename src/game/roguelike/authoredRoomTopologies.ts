@@ -2,10 +2,20 @@ import type {Point, RoomTemplate} from './types';
 import type {StoryTemplateId} from './storyRooms';
 
 const polygon=(vertices:readonly (readonly [number,number])[]):readonly Point[]=>Object.freeze(vertices.map(([x,y])=>Object.freeze({x,y})));
+/** Radial cradle footprints: the renderer derives each pod axis from these edges. */
+const cradle=(x:number,y:number,angle:number)=>polygon([[-38,-62],[38,-62],[38,62],[-38,62]].map(([dx,dy])=>[x+dx*Math.cos(angle)-dy*Math.sin(angle),y+dx*Math.sin(angle)+dy*Math.cos(angle)] as const));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
- * Width/height remain the camera envelope. Only these three v3 rooms opt in. */
+ * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */
 export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,Topology>>>=Object.freeze({
+ 'awakening-bay':Object.freeze({
+  boundary:polygon([[40,350],[320,240],[650,40],[960,80],[1160,260],[1160,620],[960,800],[650,840],[320,640],[40,530]]),
+  // Broken origin cradle, central servicing arm, then occupied radial cradles.
+  // Wide north/south aisles rejoin on both ends of the arm.
+  voids:Object.freeze([cradle(110,440,Math.PI/2),polygon([[440,400],[600,370],[700,390],[740,440],[700,490],[600,510],[440,480]]),cradle(600,180,-.2),cradle(880,240,-.9),cradle(880,640,.9),cradle(600,700,.2)]),
+  spawn:Object.freeze({x:230,y:440}),exit:Object.freeze({x:1080,y:440}),
+  breaches:polygon([[400,280],[1060,280],[400,600],[1060,600]]),obstacles:Object.freeze([]),
+ }),
  'passenger-vault':Object.freeze({
   boundary:polygon([[80,220],[260,40],[820,40],[1100,220],[1180,440],[1100,660],[820,840],[260,840],[40,620],[40,300]]),
   // The exposed 160-wide cross-aisle cuts between two cryo banks. The covered
