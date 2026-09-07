@@ -27,7 +27,8 @@ export function attachReleasedBerth(room:T.Group,onChanged:()=>void,load:(signal
  const owner={state:'loading',notificationError:undefined as unknown,ready:Promise.resolve(),dispose(){if(owner.state==='disposed')return;active=false;controller.abort();clearTimeout(timer);if(source){retire(source);source=undefined;}owner.state='disposed';}};
  const timeout=new Promise<never>((_,reject)=>{timer=setTimeout(()=>reject(Error('released berth timeout')),timeoutMs);});
  const pending=(async()=>load(controller.signal))().then(s=>{if(!active){retire(s);throw Error('stale released berth');}return s;});
- owner.ready=Promise.race([pending,timeout]).then(s=>{
+ const cancelled=new Promise<never>((_,reject)=>controller.signal.addEventListener('abort',()=>reject(Error('released berth cancelled')),{once:true}));
+ owner.ready=Promise.race([pending,timeout,cancelled]).then(s=>{
   if(!active){retire(s);return;}source=s;
   if(!fallback||fallback.parent!==room)throw Error('stale released berth target');
   validate(s);s.name='released-berth';s.position.set(135/32,0,440/32);s.traverse(o=>{if(o instanceof T.Mesh)o.castShadow=o.receiveShadow=true;});
