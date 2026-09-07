@@ -173,7 +173,7 @@ function awakeningRelease(f:Fabricator,hole:Outline){
 export function createAwakeningRelease(){const f=new Fabricator();awakeningRelease(f,AWAKENING_BLOCKOUT[0].footprint);return f.finish();}
 /** Closed low pressure cassettes on bolted saddles. Services cross circulation
  * below the deck in a closed duct; only contained risers stand above deck. */
-function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
+function awakeningRacks(f:Fabricator,holes:readonly Outline[],sealed=false){
  const box=(x:number,h:number,z:number,w:number,t:number,d:number,m:T.Material,r=1)=>f.box(x/U,h/U,z/U,w/U,t/U,d/U,m,r/U);
  const pipe=(a:number[],b:number[],r:number,m:T.Material)=>f.pipe(v(a[0]/U,a[1]/U,a[2]/U),v(b[0]/U,b[1]/U,b[2]/U),r/U,m);
  const supply=bounds(holes[3]),wallZ=supply.z*U;
@@ -203,6 +203,7 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
   }
   for(let j=0;j<4;j++){
    const x=x0+50+j*100;
+   if(sealed)continue;
    box(x,21,z,84,10,86,f.ivory,5);
    box(x,26.5,z,83,2,85,f.dark,4);
    box(x,29,z,80,3,82,f.ivory,5);
@@ -227,6 +228,7 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
    box(trunk,18,wallZ,9,8,9,mat,1);
    for(let j=0;j<4;j++){
     const x=x0+50+j*100,portZ=z+(circuit===0?-41:41);
+    if(sealed)continue;
     const branch=[[x,12,headerZ],[x,20,headerZ],[x,20,portZ]];
     for(let k=1;k<branch.length;k++)pipe(branch[k-1],branch[k],1.6,mat);
     box(x,20,portZ,8,7,5,f.dark,1);
@@ -241,7 +243,7 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
   for(const x of [812,832])box(x,.35,z,2,.2,3,f.bolts,.2);
  }
 }
-export function createAwakeningRacks(){const f=new Fabricator();awakeningRacks(f,AWAKENING_BLOCKOUT.map(f=>f.footprint));return f.finish();}
+export function createAwakeningRacks(sealed=false){const f=new Fabricator();awakeningRacks(f,AWAKENING_BLOCKOUT.map(f=>f.footprint),sealed);f.root.name='awakening-racks';return f.finish();}
 /** Unattended recovery kit; all hardware stays in the frozen sub-reservations.
  * Cabinet-supported controls face north, seat faces south, locker faces east,
  * and the open satellite cabinet faces west. No asynchronous asset owner. */
@@ -384,7 +386,7 @@ function awakeningEnvelope(f:Fabricator,t:RoomPlan){
 export function createAwakeningEnvelope(){const f=new Fabricator();awakeningEnvelope(f,{width:1200,height:880,...AUTHORED_ROOM_TOPOLOGIES['awakening-bay']!});return f.finish();}
 function awakeningBay(f:Fabricator,t:RoomPlan){
  // Role metadata never owns alternate render coordinates.
- awakeningRacks(f,t.voids??[]);
+ const racks=createAwakeningRacks();f.root.add(racks);f.root.userData.serviceRoutes=racks.userData.serviceRoutes;(f.root.userData.localSigns??=[]).push(...racks.userData.localSigns??[]);
  f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
  for(const [i,hole] of (t.voids??[]).entries()){
   const role=AWAKENING_BLOCKOUT[i].id;
