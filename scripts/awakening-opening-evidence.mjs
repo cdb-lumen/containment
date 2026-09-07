@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {createServer} from 'vite';
+import {build,preview} from 'vite';
 import {chromium} from 'playwright';
 
 // Real app entry, controls, simulation and shipping camera. The local-only
@@ -17,11 +17,12 @@ const probe=`\nObject.defineProperty(window,'__openingSnapshot',{get:()=>({
  position:renderer.camera.position.toArray(),focus:renderer.focus.toArray()},
  performance:window.__containmentPerformance,webglError:renderer.renderer.getContext().getError()
 })});`;
-const server=await createServer({server:{host:'127.0.0.1',port:0},plugins:[{name:'opening-read-only-evidence',enforce:'post',transform(code,id){if(id.endsWith('/src/main.ts'))return code+probe;}}]});
+const outDir=resolve(out,'build');
+await build({build:{outDir,emptyOutDir:true},plugins:[{name:'opening-read-only-evidence',enforce:'post',transform(code,id){if(id.endsWith('/src/main.ts'))return code+probe;}}]});
+const server=await preview({build:{outDir},preview:{host:'127.0.0.1',port:0}});
 let browser;
 const results=[];
 try{
- await server.listen();
  browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
  for(const [name,viewport,mobile] of [['desktop',{width:1280,height:900},false],['portrait',{width:390,height:844},true]]){
   console.log(`Starting ${name}`);
@@ -45,8 +46,8 @@ try{
   assert.deepEqual(snapshot.player,{x:230,y:440});assert.equal(snapshot.camera.zoom,1);
   assert.equal(snapshot.webglError,0);assert.equal(snapshot.performance.graphicsLost,false);assert.deepEqual(errors,[]);
   results.push({name,viewport,image,before,snapshot,errors});
-  await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,evidenceClass:'Actual app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
+  await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
   console.log(JSON.stringify(results.at(-1)));await context.close();
  }
  assert.equal(results.length,2);
-}finally{await browser?.close();await server.close();}
+}finally{await browser?.close();await new Promise((resolve,reject)=>server.httpServer.close(error=>error?reject(error):resolve()));}

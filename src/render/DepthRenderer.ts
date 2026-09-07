@@ -173,7 +173,7 @@ export class DepthRenderer {
    const ring=new T.Mesh(new T.TorusGeometry(6.7,.045,5,80),MAT.amber);ring.rotation.x=Math.PI/2;ring.position.set(w/2,.07,h/2);this.world.add(ring);
    const inner=new T.Mesh(new T.TorusGeometry(4.9,.025,5,60),MAT.cyan);inner.rotation.x=Math.PI/2;inner.position.set(w/2,.08,h/2);this.world.add(inner);
   }
-  const initial=roomFocus(t.spawn.x/UNIT,t.spawn.y/UNIT,w,h,this.camera.right-this.camera.left,this.camera.top-this.camera.bottom);
+  const initial=roomFocus(t.spawn.x/UNIT,t.spawn.y/UNIT,w,h,this.camera.right-this.camera.left,this.camera.top-this.camera.bottom,node.templateId);
   this.focus.set(initial.x,0,initial.z);this.lighting.loadRoom(this.world,w,h);
  }
  private wallPanel(x:number,z:number,height:number,length:number,rotation:number){
@@ -202,7 +202,7 @@ export class DepthRenderer {
   if(game.status!=='playing'){for(const model of this.actors.values())model.hit?.(0);this.queen?.hit?.(0);}
   const dt=game.status==='paused'||game.status==='reward'||game.status==='route'?0:Math.min(delta,.05);this.time+=dt;const p=game.player;
   const bounds=game.geometry.bounds;
-  const framed=roomFocus(p.x/UNIT,p.y/UNIT,bounds.width/UNIT,bounds.height/UNIT,(this.camera.right-this.camera.left)/this.camera.zoom,(this.camera.top-this.camera.bottom)/this.camera.zoom);
+  const framed=roomFocus(p.x/UNIT,p.y/UNIT,bounds.width/UNIT,bounds.height/UNIT,(this.camera.right-this.camera.left)/this.camera.zoom,(this.camera.top-this.camera.bottom)/this.camera.zoom,game.node.templateId);
   const desired=new T.Vector3(framed.x,0,framed.z);if(menu){desired.set(bounds.width/UNIT*.45,0,bounds.height/UNIT*.51);}
   this.focus.lerp(desired,1-Math.exp(-dt*7));this.camera.position.copy(this.focus).add(new T.Vector3(0,26,19));this.camera.lookAt(this.focus);this.camera.updateMatrixWorld();
   // The shadow projection remains anchored to the room, avoiding subpixel shimmer.
