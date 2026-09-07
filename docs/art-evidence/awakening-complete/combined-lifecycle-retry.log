@@ -7,7 +7,7 @@ computing gzip size...
 ../../../.hermes/workspaces/containment-awakening-completion/combined-lifecycle-run/build/assets/index-CAC8btSV.js   958.11 kB │ gzip: 263.67 kB
 
 ✓ built in 545ms
-[plugin builtin:vite-reporter] 
+[plugin builtin:vite-reporter]
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting

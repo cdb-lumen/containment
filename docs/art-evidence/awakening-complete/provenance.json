@@ -9,11 +9,11 @@
     },
     {
       "path": "combined-verify-retry.log",
-      "sha256": "4c28cfd9b5a80747c2faceb48c380dbc088a1ce4021bada347988b41e4775a7d"
+      "sha256": "da574387a4a9519b4be9962f816333732603592779871d1f633104f4daeeb63e"
     },
     {
       "path": "combined-lifecycle-retry.log",
-      "sha256": "ede0a4b8f5b58be5179a271d76417ef7869ac07c2ae44e0a8b6bb293e42c243f"
+      "sha256": "02e06e09a7aed059ca197efcaed3768c7f7d2eddd930b8ad030d9d71a73d5246"
     },
     {
       "path": "combined-lifecycle-run/manifest.json",
@@ -51,5 +51,6 @@
       "path": "combined-video/awakening-bay-desktop.mp4",
       "sha256": "22751e0243ae3df10c5854b0f7279e465b5c149c89663ef3778fb78870295928"
     }
-  ]
+  ],
+  "log_normalization": "Copied logs have trailing whitespace removed; original logs retained in evidence workspace."
 }
