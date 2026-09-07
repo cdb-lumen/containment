@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
 import {AWAKENING_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
@@ -182,7 +183,13 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[],sealed=false){
  // toward the outer aisle. Two dedicated circuits per bank, no broken hoses.
  box(supply.x*U,3,wallZ,supply.w*U-4,6,supply.d*U-4,f.dark,2);
  box(supply.x*U,21,wallZ,supply.w*U-10,30,supply.d*U-10,f.paint,2);
+ const serviceFinish=createAwakeningServiceFinish();
  for(let x=supply.x0*U+45;x<supply.x1*U-25;x+=80){
+  // Removable crown covers sit directly on the original cabinet roof at h36.
+  // Individual gaskets and captive screws make service divisions legible above.
+  box(x,36.1,wallZ,70,.2,30,f.dark,.1);
+  box(x,36.35,wallZ,68,.3,28,serviceFinish,.1);
+  for(const dx of [-29,29])for(const dz of [-10,10])box(x+dx,36.65,wallZ+dz,2,.3,2,f.bolts,.15);
   box(x,22,wallZ+20,68,24,2,f.ivory,1);
   box(x+23,23,wallZ+21.5,3,8,1,f.dark,.3);
   for(let j=0;j<4;j++)box(x-16+j*8,15,wallZ+21.5,3,7,1,f.seam,.2);
