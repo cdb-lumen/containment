@@ -54,7 +54,7 @@ try{
   assert.deepEqual(before.player,{x:230,y:440});assert.equal(before.boons.length,0);
   const card=page.locator('[data-mutation]').first();
   if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
-  await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&document.querySelector('#room-name').textContent==='Awakening bay');
+  await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&window.__openingSnapshot.camera.zoom===1&&document.querySelector('#room-loading').hidden&&document.querySelector('#world').getAttribute('aria-busy')==='false'&&document.querySelector('#room-name').textContent==='Awakening bay');
   console.log('Asset readiness',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));
   try{await page.waitForFunction(()=>window.__openingSnapshot.berth!=='loading'&&window.__openingSnapshot.bank!=='loading'&&window.__openingSnapshot.kit!=='loading',{},{timeout:30000});}
   catch(error){console.log('Unsettled assets',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));throw error;}
