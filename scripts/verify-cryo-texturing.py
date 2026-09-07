@@ -14,7 +14,7 @@ def geometry(path):
   if o.name in ['Recessed medical display','Small casing pod identification']:
    result[o.name]['graphicsUV']=[list(p.uv) for p in o.data.uv_layers.active.data]
  return result
-before=geometry(E/'texture-before/sealed-cryo.blend');after=geometry(ROOT/'public/assets/benchmark/sealed-cryo.blend')
+before=geometry(E/'improvement-before/sealed-cryo.blend');after=geometry(ROOT/'public/assets/benchmark/sealed-cryo.blend')
 assert before==after,'Geometry, transforms or normals changed'
 for o in bpy.context.scene.objects:
  if o.type=='MESH':
@@ -32,15 +32,16 @@ for m in bpy.data.materials:
     if '-roughness' in node.image.name:assert pixels[:,0].std()>.001
 def glb(p):
  raw=p.read_bytes();n=struct.unpack_from('<I',raw,12)[0];return json.loads(raw[20:20+n]),len(raw)
-b,bs=glb(E/'texture-before/sealed-cryo.glb');a,asize=glb(ROOT/'public/assets/benchmark/sealed-cryo.glb')
+b,bs=glb(E/'improvement-before/sealed-cryo.glb');a,asize=glb(ROOT/'public/assets/benchmark/sealed-cryo.glb')
 assert len(a['materials'])==len(b['materials'])==8
-assert len([m for m in a['materials'] if 'normalTexture' in m])==4
-assert len([m for m in a['materials'] if 'metallicRoughnessTexture' in m.get('pbrMetallicRoughness',{})])==4
-assert len(a['images'])==10
+assert len([m for m in a['materials'] if 'normalTexture' in m])==0
+assert len([m for m in a['materials'] if 'metallicRoughnessTexture' in m.get('pbrMetallicRoughness',{})])==1
+assert len(a['images'])==5
+assert asize < 1100000 and asize < bs
 assert all(i['mimeType']=='image/png' and 'bufferView' in i for i in a['images'])
 # The graphics source is bit-identical; graphic mesh UVs must also be unchanged.
 for name in ['Recessed medical display','Small casing pod identification']:
  assert name in before
-result={'status':'PASS','geometryAndVertexNormalsExact':True,'namedMeshes':len(after),'materialsBefore':len(b['materials']),'materialsAfter':len(a['materials']),'bytesBefore':bs,'bytesAfter':asize,'embeddedImages':len(a['images']),'normalMappedMaterials':4,'roughnessMappedMaterials':4,'sourceTextureType':'Original analytic image atlases, not high-poly bakes','sha256':hashlib.sha256((ROOT/'public/assets/benchmark/sealed-cryo.glb').read_bytes()).hexdigest()}
+result={'status':'PASS','geometryAndVertexNormalsExact':True,'namedMeshes':len(after),'materialsBefore':len(b['materials']),'materialsAfter':len(a['materials']),'bytesBefore':bs,'bytesAfter':asize,'embeddedImages':len(a['images']),'normalMappedMaterials':0,'roughnessMappedMaterials':1,'sourceTextureType':'Compact semantic colour atlases and satin roughness, no normal maps','sha256':hashlib.sha256((ROOT/'public/assets/benchmark/sealed-cryo.glb').read_bytes()).hexdigest()}
 assert (E/'texture-before/cryo-graphics-atlas.png').read_bytes()==(ROOT/'public/assets/benchmark/cryo-graphics-atlas.png').read_bytes()
-(E/'texture-verification.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
+(E/'improvement-verification.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))

@@ -2,7 +2,7 @@
 blender -b --factory-startup --python-exit-code 1 -P scripts/build-sealed-cryo.py
 No third-party geometry or textures. References documented in handoff.
 """
-import bpy, math, json, pathlib
+import bpy, math, json, pathlib, os
 from mathutils import Vector
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 OUT=ROOT/'public/assets/benchmark';OUT.mkdir(parents=True,exist_ok=True)
@@ -133,6 +133,8 @@ meshes=[o for o in bpy.context.scene.objects if o.type=='MESH'];coords=[o.matrix
 stats={'bytes':glb.stat().st_size,'meshes':len(meshes),'triangles':sum(len(p.vertices)-2 for o in meshes for p in o.data.polygons),'materials':len({m.name for o in meshes for m in o.data.materials}),'boundsBlender':[[min(v[i] for v in coords),max(v[i] for v in coords)] for i in range(3)],'uvMeshes':sum(bool(o.data.uv_layers) for o in meshes),'imageTextures':True,'bakedNormalMap':False,'fitsApprovedReservation':False,'roundtrip':'PASS'}
 assert stats['uvMeshes']==stats['meshes'];assert all(math.isfinite(q) for v in coords for q in v)
 (E/'asset-stats.json').write_text(json.dumps(stats,indent=2))
+if os.environ.get('CRYO_SKIP_RENDER')=='1':
+ print(json.dumps(stats));raise SystemExit(0)
 # Neutral studio only. Not shipping lighting.
 box('Studio floor',(0,0,-.065),(200,200,.1),mat('studio',(.055,.069,.08),0,.7),0)
 scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=48;scene.cycles.use_denoising=False;scene.render.resolution_x=1300;scene.render.resolution_y=1000;scene.render.resolution_percentage=100
