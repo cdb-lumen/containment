@@ -20,7 +20,8 @@ Object.defineProperty(window,'__openingSnapshot',{get:()=>{
  while((error=gl.getError())!==gl.NO_ERROR){openingWebglErrors.push(error);if(error===gl.CONTEXT_LOST_WEBGL)break;}
  return ({
  state:game.status,room:game.node.templateId,player:{x:game.player.x,y:game.player.y},
- berth:renderer.releasedBerth?.state,bank:renderer.sealedBank?.state,
+ berth:renderer.releasedBerth?.state,bank:renderer.sealedBank?.state,kit:renderer.recoveryKit?.state,
+ kitPosition:renderer.world.getObjectByName('recovery-kit')?.position.toArray(),kitFallback:!!renderer.world.getObjectByName('awakening-kit'),
  berthPosition:renderer.world.getObjectByName('released-berth')?.position.toArray(),
  fallback:!!renderer.world.getObjectByName('awakening-release'),
  sealedPassengers:renderer.world.getObjectByName('sealed-chamber-bank')?.userData.sealedPassengers,
@@ -55,12 +56,12 @@ try{
   if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
   await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&document.querySelector('#room-name').textContent==='Awakening bay');
   console.log('Asset readiness',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));
-  try{await page.waitForFunction(()=>window.__openingSnapshot.berth!=='loading'&&window.__openingSnapshot.bank!=='loading',{},{timeout:30000});}
+  try{await page.waitForFunction(()=>window.__openingSnapshot.berth!=='loading'&&window.__openingSnapshot.bank!=='loading'&&window.__openingSnapshot.kit!=='loading',{},{timeout:30000});}
   catch(error){console.log('Unsettled assets',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));throw error;}
   const settled=await page.evaluate(()=>({...window.__openingSnapshot,resources:performance.getEntriesByType('resource').filter(r=>r.name.includes('.glb')).map(r=>({name:r.name,duration:r.duration,bytes:r.transferSize}))}));
   console.log('Settled assets',JSON.stringify(settled));
   await writeFile(resolve(out,`${name}-settled.json`),JSON.stringify(settled,null,2));
-  if(settled.berth!=='ready'||settled.bank!=='ready'){
+  if(settled.berth!=='ready'||settled.bank!=='ready'||settled.kit!=='ready'){
    await page.screenshot({path:resolve(out,`${name}-FAILED-fallback.png`)});
    results.push({name,viewport,failed:true,settled,errors});
    await writeFile(resolve(out,'failure-manifest.json'),JSON.stringify({sha,assetSha256,results},null,2));
@@ -76,7 +77,7 @@ try{
   const snapshot=await page.evaluate(()=>window.__openingSnapshot);
   assert.equal(snapshot.state,'playing');assert.equal(snapshot.room,'awakening-bay');assert.equal(snapshot.boons.length,1);
   assert.deepEqual(snapshot.player,{x:230,y:440});assert.equal(snapshot.camera.zoom,1);
-  assert.equal(snapshot.berth,'ready');assert.equal(snapshot.bank,'ready');assert.equal(snapshot.fallback,false);assert.equal(snapshot.sealedPassengers,8);assert.deepEqual(snapshot.berthPosition,[135/32,0,440/32]);
+  assert.equal(snapshot.kit,'ready');assert.equal(snapshot.kitFallback,false);assert.deepEqual(snapshot.kitPosition,[204/32,0,700/32]);assert.equal(snapshot.berth,'ready');assert.equal(snapshot.bank,'ready');assert.equal(snapshot.fallback,false);assert.equal(snapshot.sealedPassengers,8);assert.deepEqual(snapshot.berthPosition,[135/32,0,440/32]);
   assert.deepEqual(snapshot.webglErrors,[]);assert.equal(snapshot.performance.graphicsLost,false);assert.deepEqual(errors,[]);
   results.push({name,viewport,image,before,snapshot,errors});
   await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,assetSha256,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));

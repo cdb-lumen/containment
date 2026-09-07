@@ -331,7 +331,7 @@ function awakeningKit(f:Fabricator){
  for(const z of [717,739])pipe([1055,17,z],[1050,30,z],1.3,f.edge);
  pipe([1050,30,717],[1050,30,739],1.6,f.ivory);
 }
-export function createAwakeningKit(){const f=new Fabricator();awakeningKit(f);return f.finish();}
+export function createAwakeningKit(){const f=new Fabricator();awakeningKit(f);f.root.name='awakening-kit';return f.finish();}
 /** Small equipment plates retain physical aspect ratio and never span a bank. */
 function awakeningPlate(f:Fabricator,text:string,x:number,h:number,z:number,width:number,depth=14){
  (f.root.userData.localSigns??=[]).push({text,x,h,z,width,depth});
@@ -398,7 +398,8 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
    (f.root.userData.lightFixtures??=[]).push(...release.userData.lightFixtures??[]);delete release.userData.lightFixtures;
   }
  }
- awakeningKit(f);
+ const kit=createAwakeningKit();f.root.add(kit);
+ (f.root.userData.lightFixtures??=[]).push(...kit.userData.lightFixtures??[]);delete kit.userData.lightFixtures;
 }
 function passengerVault(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole);

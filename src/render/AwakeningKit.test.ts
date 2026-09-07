@@ -17,6 +17,7 @@ describe('monitoring and recovery kit actual meshes',()=>{
   expect(hits[0].point.x*32).toBeGreaterThan(1098);
  });
  it('keeps detailed solids inside each immutable sub-reservation',()=>{
+  expect(rooms.createAwakeningKit().name).toBe('awakening-kit');
   expect(rooms).toHaveProperty('createAwakeningKit');
   const g=(rooms as unknown as {createAwakeningKit:()=>T.Group}).createAwakeningKit();owned.push(g);
   const allowed=envelopes.filter(e=>['monitor','seat-pullback','locker-door','cabinet-door','trolley'].includes(e.id));let count=0;
