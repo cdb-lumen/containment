@@ -110,6 +110,10 @@ screen=graphic_mat('08 recessed medical LCD atlas',True);decal=graphic_mat('09 e
 graphic('Recessed medical display',-.12,-.525,.666,.60,.435,(0,.5,1,1),screen)
 graphic('Small casing pod identification',-.12,.08,.678,.34,.085,(0,.25,1,.5),decal)
 asset=list(bpy.context.scene.objects)
+import runpy
+surface=runpy.run_path(str(ROOT/'scripts/cryo-surface-textures.py'))
+surface_stats=surface['surface_textures'](asset,OUT)
+(E/'texture-authoring.json').write_text(json.dumps(surface_stats,indent=2))
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'sealed-cryo.blend'))
 # Join compatible meshes by material after applying normals and UVs.
 # The editable blend retains named construction parts; only export is batched.
