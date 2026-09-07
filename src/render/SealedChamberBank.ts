@@ -63,7 +63,8 @@ export function attachSealedBank(room:T.Group,onChanged:()=>void,load:(signal:Ab
  let timer:ReturnType<typeof setTimeout>;
  const timeout=new Promise<never>((_,reject)=>{timer=setTimeout(()=>reject(Error('chamber timeout')),timeoutMs);});
  const pending=(async()=>load(controller.signal))().then(s=>{if(!active){retire(s);throw Error('stale chamber');}return s;});
- owner.ready=Promise.race([pending,timeout]).then(s=>{
+ const cancelled=new Promise<never>((_,reject)=>controller.signal.addEventListener('abort',()=>reject(Error('chamber cancelled')),{once:true}));
+ owner.ready=Promise.race([pending,timeout,cancelled]).then(s=>{
   if(!active){retire(s);return;}source=s;
   const fallback=room.getObjectByName('awakening-racks');if(!fallback)throw Error('stale rack target');
   bank=buildSealedBank(s);const racks=createAwakeningRacks(true);racks.userData.serviceRoutes=bank.userData.serviceRoutes;

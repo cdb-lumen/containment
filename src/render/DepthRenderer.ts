@@ -205,6 +205,11 @@ export class DepthRenderer {
  syncCorpse(id:number,x:number,y:number){const corpse=this.corpses.find(c=>c.id===id);if(corpse){corpse.x=x/UNIT;corpse.y=y/UNIT;corpse.vx=corpse.vy=0;}}
  render(game:DepthGame,delta:number,menu=false){
   if(this.roomKey!==game.node.id)this.loadRoom(game.node);
+  // ImageBitmap completion shares browser/GPU scheduling with WebGL. Do not
+  // queue expensive fallback frames ahead of the room's bounded optional decode.
+  // The main RAF still handles input, simulation and DOM menus; terminal owners
+  // (including the unchanged 8-second fallback) resume the normal render path.
+  if(this.sealedBank?.state==='loading'||this.releasedBerth?.state==='loading')return;
   if(game.status!=='playing'){for(const model of this.actors.values())model.hit?.(0);this.queen?.hit?.(0);}
   const dt=game.status==='paused'||game.status==='reward'||game.status==='route'?0:Math.min(delta,.05);this.time+=dt;const p=game.player;
   const bounds=game.geometry.bounds;
