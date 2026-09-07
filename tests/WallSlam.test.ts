@@ -57,8 +57,8 @@ describe('body wall-slam presentation',()=>{
   fx.clear();fx.event({type:'hit',contact:'damage',weapon:'shotgun',x:0,y:0,targetId:1});expect(fx.counts.glow).toBe(4);expect(fx.counts.debris).toBe(0);
  });
  it('traces native shotgun hit, launch, wall contact and additional damage in authored geometry',()=>{
-  const events:GameEffect[]=[],g=new DepthGame(e=>events.push(e));g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.skipStory();g.enemies.reset();g.combat.setBuild({mutations:['breacher','seismic-impact','heavy-pellets']});g.switchWeapon('shotgun');Object.assign(g.player,{x:760,y:205});
-  const spawn=g.enemies.spawn('brute',760,88,true);expect(spawn.spawned).toBe(true);if(!spawn.spawned)return;
+  const events:GameEffect[]=[],g=new DepthGame(e=>events.push(e));g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.skipStory();g.enemies.reset();g.combat.setBuild({mutations:['breacher','seismic-impact','heavy-pellets']});g.switchWeapon('shotgun');Object.assign(g.player,{x:320,y:205});
+  const spawn=g.enemies.spawn('brute',320,88,true);expect(spawn.spawned).toBe(true);if(!spawn.spawned)return;
   for(let i=0;i<30;i++)g.update(1000/30,{x:0,y:0,fire:i===6,angle:-Math.PI/2,autoAim:false});
   const slams=events.filter(e=>e.type==='wall-slam');expect(slams).toHaveLength(1);expect(slams[0].targetId).toBe(spawn.enemy.id);expect(slams[0].wall!.y).toBeGreaterThan(.9);expect(slams[0].y).toBeLessThan(65);expect(events.some(e=>e.contact)).toBe(true);expect(events.filter(e=>e.type==='explosion')).toHaveLength(0);
  });

@@ -1,4 +1,6 @@
 import * as T from 'three';
+import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
+import {AWAKENING_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -109,51 +111,302 @@ function edgeArchitecture(f:Fabricator,t:RoomPlan,scar=false){
   }
  }
 }
+/** Authored in game units, using the room's synchronous batched geometry pipeline.
+ * The empty berth, nested lid and released restraints are the completed pose.
+ * No optional download or runtime opening state is needed. */
+function awakeningRelease(f:Fabricator,hole:Outline){
+ const b=bounds(hole),dx=b.x0*U-90,dz=b.z0*U-380;
+ const box=(x:number,h:number,z:number,w:number,t:number,d:number,m:T.Material,r=1)=>f.box((x+dx)/U,h/U,(z+dz)/U,w/U,t/U,d/U,m,r/U);
+ const pipe=(x:number,h:number,z:number,x2:number,h2:number,z2:number,r:number,m:T.Material)=>f.pipe(v((x+dx)/U,h/U,(z+dz)/U),v((x2+dx)/U,h2/U,(z2+dz)/U),r/U,m);
+ // Load-bearing cradle, inset empty mattress and segmented end bumpers.
+ box(135,3,440,88,6,118,f.dark,3);
+ box(135,6,440,80,6,112,f.ivory,4);
+ box(136,8,440,62,4,85,f.seam,4);
+ for(const z of [414,431,448,465])box(136,9, z,56,2,16,f.body,2);
+ box(136,11,408,40,6,12,f.ivory,3);
+ box(136,8,481,55,3,8,f.dark,2);
+ // A low east sill is intentionally not a side wall: feet can reach the landing.
+ box(176,5,440,6,6,70,f.edge,1);
+ for(const x of [104,168]){
+  box(x,12,488,7,12,15,f.ivory,2);
+  box(x,10,391,7,8,14,f.edge,1);
+ }
+ // Two guide channels carry three overlapping telescoping canopy cassettes.
+ // The entire parked lid is y383..405; nothing hinges into the aisle.
+ for(const x of [101,169]){
+  box(x,15,440,4,4,110,f.dark,1);
+  box(x,17,440,1.3,1,108,f.edge,.3);
+  box(x,20,395,6,8,18,f.bolts,1);
+  pipe(x,19,399,x,19,428,1.2,f.edge);
+  pipe(x,19,402,x,19,414,2.1,f.dark);
+ }
+ for(const [z,h,w,d] of [[393,23,76,20],[394,28,72,18],[395,33,68,16]]){
+  box(135,h,z,w,5,d,f.ivory,2);
+  box(135,h+2.6,z,w-8,.5,d-5,f.paint,1);
+ }
+ // Quiet amber release indicator; physical latches are open beside the mattress.
+ box(135,36,395,36,1,3,f.warm,.4);
+ for(const z of [425,459]){
+  box(108,12,z,10,2,5,f.bronze,.5);
+  box(111,13,z+3,4,2,7,f.dark,.5);
+  box(164,10,z,8,2,5,f.bronze,.5);
+  box(159,11,z+4,4,2,9,f.dark,.5);
+ }
+ // West recovery handrail, welded sockets and feet. East gap stays fully open.
+ for(const z of [389,442,491]){
+  box(96,2,z,7,4,8,f.edge,.6);
+  pipe(96,3,z,96,27,z,1.3,f.edge);
+  box(96,6,z,4,5,4,f.dark,.5);
+ }
+ pipe(96,28,386,96,28,494,1.5,f.ivory);
+ // Fasteners, service seam and sparse rub marks imply use, not wreckage.
+ for(const z of [409,480])for(const x of [116,154])box(x,9.2,z,2,.6,2,f.bolts,.3);
+ for(const z of [433,452,470])box(173,8.1,z,2,.3,7,f.ivory,.2);
+ box(135,4,497,46,2,1,f.seam,.2);
+ box(156,5.5,497,7,1,1.2,f.cold,.2);
+ // Flush non-slip recovery deck. All tread and border relief stays below 0.6.
+ box(209,.16,440,58,.32,120,f.paint,0);
+ for(const x of [182,236])box(x,.36,440,1,.16,116,f.edge,0);
+ for(let z=386;z<498;z+=6)box(209,.38,z,49,.2,1,f.seam,0);
+ for(const z of [392,488])box(188,.4,z,9,.2,2,f.stencil,0);
+}
+/** Standalone construction uses exactly the same parts as the room for mesh QA. */
+export function createAwakeningRelease(){const f=new Fabricator();awakeningRelease(f,AWAKENING_BLOCKOUT[0].footprint);awakeningPlate(f,'RELEASED',135,36.2,390,62,10);const root=f.finish();root.name='awakening-release';return root;}
+/** Closed low pressure cassettes on bolted saddles. Services cross circulation
+ * below the deck in a closed duct; only contained risers stand above deck. */
+function awakeningRacks(f:Fabricator,holes:readonly Outline[],sealed=false){
+ const box=(x:number,h:number,z:number,w:number,t:number,d:number,m:T.Material,r=1)=>f.box(x/U,h/U,z/U,w/U,t/U,d/U,m,r/U);
+ const pipe=(a:number[],b:number[],r:number,m:T.Material)=>f.pipe(v(a[0]/U,a[1]/U,a[2]/U),v(b[0]/U,b[1]/U,b[2]/U),r/U,m);
+ const supply=bounds(holes[3]),wallZ=supply.z*U;
+ const routes:{points:number[][]}[]=f.root.userData.serviceRoutes=[];
+ // Supply cabinet remains in its approved rear footprint, with a service face
+ // toward the outer aisle. Two dedicated circuits per bank, no broken hoses.
+ box(supply.x*U,3,wallZ,supply.w*U-4,6,supply.d*U-4,f.dark,2);
+ box(supply.x*U,21,wallZ,supply.w*U-10,30,supply.d*U-10,f.paint,2);
+ const serviceFinish=createAwakeningServiceFinish();
+ for(let x=supply.x0*U+45;x<supply.x1*U-25;x+=80){
+  // Removable crown covers sit directly on the original cabinet roof at h36.
+  // Individual gaskets and captive screws make service divisions legible above.
+  box(x,36.1,wallZ,70,.2,30,f.dark,.1);
+  box(x,36.35,wallZ,68,.3,28,serviceFinish,.1);
+  for(const dx of [-29,29])for(const dz of [-10,10])box(x+dx,36.65,wallZ+dz,2,.3,2,f.bolts,.15);
+  box(x,22,wallZ+20,68,24,2,f.ivory,1);
+  box(x+23,23,wallZ+21.5,3,8,1,f.dark,.3);
+  for(let j=0;j<4;j++)box(x-16+j*8,15,wallZ+21.5,3,7,1,f.seam,.2);
+ }
+ awakeningPlate(f,'LIFE SUPPORT',supply.x*U,37,wallZ,106,16);
+ for(const index of [1,2]){
+  const b=bounds(holes[index]),z=b.z*U,x0=b.x0*U;
+  // Solid infill removes the collision cutout without creating a pit.
+  f.slab(holes[index],-.10,.10,f.dark);
+  for(const dz of [-28,28]){
+   box(b.x*U,7,z+dz,b.w*U-8,6,10,f.edge,1);
+   for(let j=0;j<4;j++){
+    const x=x0+50+j*100;
+    box(x,2,z+dz,72,4,20,f.paint,1);
+    box(x,13,z+dz,64,6,14,f.dark,2);
+    for(const dx of [-30,30])box(x+dx,4.6,z+dz+7,3,1.2,3,f.bolts,.4);
+   }
+  }
+  for(let j=0;j<4;j++){
+   const x=x0+50+j*100;
+   if(sealed)continue;
+   box(x,21,z,84,10,86,f.ivory,5);
+   box(x,26.5,z,83,2,85,f.dark,4);
+   box(x,29,z,80,3,82,f.ivory,5);
+   box(x,30.7,z-5,64,.6,55,f.paint,4);
+   awakeningPlate(f,'OCCUPIED',x,31.4,z-7,62,14);
+   // Closed compression latches bridge the seam, not a lid-opening pose.
+   for(const dx of [-40,40])for(const dz of [-24,24])box(x+dx,26,z+dz,4,7,8,f.bronze,1);
+   box(x,31.4,z+24,44,.8,10,f.dark,1);
+   box(x-9,32,z+24,19,.5,3,f.cold,.4);
+   // Repeated pulse ticks supply a non-colour living-status cue at each shell.
+   for(const [dx,d] of [[4,3],[8,7],[12,4]])box(x+dx,32,z+24,2,.5,d,f.ivory,.2);
+  }
+
+  // Dedicated paired underfloor trunks. Wall -> buried run -> rack riser ->
+  // contained rear header -> individual sealed coupling on each cassette.
+  for(const [circuit,dz] of [[0,-48],[1,48]]){
+   const trunk=x0+376+circuit*12-(index-1)*24,headerZ=z+dz,mat=circuit===0?f.bronze:f.edge;
+   const common=[[trunk,18,wallZ],[trunk,-8,wallZ],[trunk,-8,headerZ],[trunk,12,headerZ]];
+   for(let k=1;k<common.length;k++)pipe(common[k-1],common[k],2,mat);
+   pipe([x0+50,12,headerZ],[trunk,12,headerZ],2,mat);
+   box(trunk,1,headerZ,9,2,9,f.dark,1);
+   box(trunk,18,wallZ,9,8,9,mat,1);
+   for(let j=0;j<4;j++){
+    const x=x0+50+j*100,portZ=z+(circuit===0?-41:41);
+    if(sealed)continue;
+    const branch=[[x,12,headerZ],[x,20,headerZ],[x,20,portZ]];
+    for(let k=1;k<branch.length;k++)pipe(branch[k-1],branch[k],1.6,mat);
+    box(x,20,portZ,8,7,5,f.dark,1);
+    routes.push({points:[...common,[x,12,headerZ],...branch.slice(1)]});
+   }
+  }
+ }
+ // Removable closed floor plates over the shared duct. Relief stays under the
+ // existing flush-landing limit, so neither aisle gains render-only collision.
+ for(let z=145;z<625;z+=30){
+  box(810,.15,z,52,.3,30,f.paint,0);
+  for(const x of [812,832])box(x,.35,z,2,.2,3,f.bolts,.2);
+ }
+}
+export function createAwakeningRacks(sealed=false){const f=new Fabricator();awakeningRacks(f,AWAKENING_BLOCKOUT.map(f=>f.footprint),sealed);f.root.name='awakening-racks';return f.finish();}
+/** Unattended recovery kit; all hardware stays in the frozen sub-reservations.
+ * Cabinet-supported controls face north, seat faces south, locker faces east,
+ * and the open satellite cabinet faces west. No asynchronous asset owner. */
+function awakeningKit(f:Fabricator){
+ const box=(x:number,h:number,z:number,w:number,t:number,d:number,m:T.Material,r=1)=>f.box(x/U,h/U,z/U,w/U,t/U,d/U,m,r/U);
+ const pipe=(a:number[],b:number[],r:number,m:T.Material)=>f.pipe(v(a[0]/U,a[1]/U,a[2]/U),v(b[0]/U,b[1]/U,b[2]/U),r/U,m);
+ // Medical drawer cabinet bears the console: recessed toe-space, full worktop,
+ // low supported display and tactile keys on the near operator edge.
+ box(204,2,684,56,4,30,f.dark);
+ box(204,16,685,58,28,30,f.ivory,2);
+ for(const h of [10,22]){
+  box(204,h,669.5,52,10,1,f.paint,.3);
+  box(204,h+2,668.5,14,2,2,f.edge,.4);
+ }
+ box(181,22,668.6,3,8,1,f.ivory,.2);box(181,22,668.5,8,3,1,f.ivory,.2);
+ box(204,31,682.5,62,2,37,f.edge,1);
+ box(204,33,667,48,2,4,f.dark,.4);
+ for(const x of [185,194,204,214,223])box(x,33.7,667,5,.6,3,x===223?f.warm:f.ivory,.3);
+ // Screen is set into a backed instrument wedge, not a floating glass slab.
+ box(204,34,686,52,4,26,f.paint,1);
+ box(204,36.5,686,50,1,25,f.dark,.7);
+ if(typeof document!=='undefined'){
+  const canvas=document.createElement('canvas');canvas.width=512;canvas.height=256;const c=canvas.getContext('2d');
+  if(c){
+   c.fillStyle='#10282d';c.fillRect(0,0,512,256);c.fillStyle='#a5ece5';c.font='bold 62px monospace';c.fillText('08 STABLE',22,70);
+   c.strokeStyle='#7edbd5';c.lineWidth=6;c.beginPath();
+   for(const [i,y] of [160,160,157,166,115,203,148,160,160,160,160,157,166,115,203,148,160].entries()){const x=22+i*29;if(i===0)c.moveTo(x,y);else c.lineTo(x,y);}c.stroke();
+   for(let i=0;i<8;i++){c.fillStyle='#7edbd5';c.fillRect(24+i*60,226,40,10);}
+   const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;
+   const material=new T.MeshStandardMaterial({map:texture,emissiveMap:texture,emissive:0xffffff,emissiveIntensity:.45,roughness:.65});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
+   f.add(new T.PlaneGeometry(48/U,23/U),material,v(204/U,37.1/U,686/U),new T.Euler(-Math.PI/2,0,0));
+  }
+ }
+ // Recovery chair faces its southern access area: bolted feet, stretchers,
+ // cushion at23, low back to north and reachable arms.
+ for(const x of [190,218])for(const z of [710,742]){
+  box(x,1,z,6,2,6,f.dark,.5);box(x,10,z,3,18,3,f.edge,.5);
+ }
+ for(const x of [190,218])pipe([x,9,710],[x,9,742],1.3,f.edge);
+ box(204,19,727,32,4,38,f.paint,2);box(204,22,727,30,2,36,f.body,2);
+ for(const x of [190,218]){box(x,27,708,3,20,3,f.edge,.5);box(x,26,738,2,12,2,f.edge,.5);box(x,32,725,4,3,30,f.ivory,1);}
+ box(204,31,707,30,12,4,f.body,2);
+ // Personal locker: an east-facing recessed sliding leaf; rails and pulls do
+ // not protrude into the cross-aisle. Short local marking replaces debug text.
+ box(270,2,700,34,4,86,f.dark,1);
+ box(270,24,700,34,40,86,f.ivory,2);
+ box(287.2,24,700,1,36,79,f.dark,.3);
+ for(const z of [680,720])box(287.7,24,z,.5,34,38,f.paint,.2);
+ for(const h of [7,41])box(287.8,h,700,.3,1,80,f.edge,.1);
+ box(287.9,25,703,.2,8,3,f.ivory,.1);
+ // Compact lid marking uses a matching aspect ratio, not the room-header font.
+ box(270,44.4,700,28,.8,16,f.dark,.5);
+ if(typeof document!=='undefined'){
+  const canvas=document.createElement('canvas');canvas.width=256;canvas.height=128;const c=canvas.getContext('2d');
+  if(c){c.fillStyle='#18262b';c.fillRect(0,0,256,128);c.fillStyle='#d5dfd7';c.font='bold 100px monospace';c.textAlign='center';c.textBaseline='middle';c.fillText('KIT',128,68);
+   const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;
+   const material=new T.MeshStandardMaterial({map:texture,roughness:.7});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
+   f.add(new T.PlaneGeometry(27/U,15/U),material,v(270/U,44.9/U,700/U),new T.Euler(-Math.PI/2,0,0));
+  }
+ }
+ // Open satellite supply cabinet. Back and cheeks carry the shelves; split
+ // door leaves fold inward against the north/south cheeks, never into route.
+ box(1075,2,681.5,60,4,45,f.dark,1);
+ box(1103,24,681.5,4,40,45,f.paint,1);
+ for(const z of [660,703])box(1075,24,z,60,40,3,f.ivory,1);
+ for(const h of [5,20,36,45])box(1075,h,681.5,60,2,40,f.edge,.5);
+ for(const z of [664,699]){
+  box(1055,25,z,20,36,2,f.ivory,.4);
+  box(1072,25,z,14,36,2,f.paint,.4);
+  pipe([1046,8,z],[1046,42,z],1,f.bronze);
+  box(1076,26,z+(z<680?2:-2),3,8,2,f.dark,.3);
+ }
+ // One sealed dressing pack remains on the lower shelf, not decorative litter.
+ box(1090,11,687,14,10,12,f.ivory,1);
+ box(1090,16.3,687,8,.6,3,f.cold,.2);
+ // Abandoned trolley parked four units east of storage alignment. Wheels
+ // touch deck; uprights carry both trays and the raised west push handle.
+ for(const x of [1058,1100])for(const z of [716,740]){
+  pipe([x-2,3,z],[x+2,3,z],3,f.dark);
+  box(x,10,z,2,14,2,f.edge,.4);
+ }
+ for(const h of [8,17])box(1079,h,728,48,2,28,f.edge,1);
+ for(const z of [714,742])box(1079,20,z,48,4,2,f.ivory,.5);
+ for(const x of [1055,1103])box(x,20,728,2,4,28,f.ivory,.5);
+ for(const z of [717,739])pipe([1055,17,z],[1050,30,z],1.3,f.edge);
+ pipe([1050,30,717],[1050,30,739],1.6,f.ivory);
+}
+export function createAwakeningKit(){const f=new Fabricator();awakeningKit(f);f.root.name='awakening-kit';return f.finish();}
+/** Small equipment plates retain physical aspect ratio and never span a bank. */
+function awakeningPlate(f:Fabricator,text:string,x:number,h:number,z:number,width:number,depth=14){
+ (f.root.userData.localSigns??=[]).push({text,x,h,z,width,depth});
+ f.box(x/U,h/U,z/U,width/U,.6/U,depth/U,f.dark,.4/U);
+ if(typeof document==='undefined')return;
+ const canvas=document.createElement('canvas');canvas.width=Math.round(width*8);canvas.height=Math.round(depth*8);const c=canvas.getContext('2d');if(!c)return;
+ c.fillStyle='#18262b';c.fillRect(0,0,canvas.width,canvas.height);c.fillStyle='#d5dfd7';c.font=`600 ${Math.floor(Math.min(depth*5.8,width*12/text.length))}px monospace`;c.textAlign='center';c.textBaseline='middle';c.fillText(text,canvas.width/2,canvas.height/2);
+ const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;
+ const material=new T.MeshStandardMaterial({map:texture,roughness:.7});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
+ f.add(new T.PlaneGeometry(width/U,depth/U),material,v(x/U,(h+.32)/U,z/U),new T.Euler(-Math.PI/2,0,0));
+}
+/** The same wall cassette rhythm follows the approved boundary. The east
+ * bulkhead is parked open; damage is confined to its north drive housing. */
+function awakeningEnvelope(f:Fabricator,t:RoomPlan){
+ const box=(x:number,h:number,z:number,w:number,d:number,l:number,m:T.Material,r=1)=>f.box(x/U,h/U,z/U,w/U,d/U,l/U,m,r/U);
+ const perimeter=outline(t);
+ for(let i=0;i<perimeter.length;i++){
+  const a=perimeter[i],b=perimeter[(i+1)%perimeter.length];
+  const runs=a.x===1160&&b.x===1160?[[a,{x:1160,y:348}],[{x:1160,y:532},b]]:[[a,b]];
+  for(const [p,q] of runs){const length=Math.hypot(q.x-p.x,q.y-p.y),angle=-Math.atan2(q.y-p.y,q.x-p.x),n=Math.ceil(length/88),height=(p.y+q.y)/2<282?42:14;
+   for(let j=0;j<n;j++){
+    const s=(j+.5)/n,x=p.x+(q.x-p.x)*s,z=p.y+(q.y-p.y)*s,w=length/n;
+    f.box(x/U,(height/2-4)/U,z/U,(w-2)/U,height/U,12.16/U,f.paint,1/U,angle);
+    f.box(x/U,(height-3)/U,z/U,(w-4)/U,2/U,13/U,f.edge,.5/U,angle);
+    // Recessed joint straps and paired fasteners share the cassette supports.
+    const u=j/n,jx=p.x+(q.x-p.x)*u,jz=p.y+(q.y-p.y)*u;
+    f.box(jx/U,(height/2-4)/U,jz/U,2/U,height/U,12/U,f.dark,.2/U,angle);
+    for(const side of [-1,1])f.box((x+Math.cos(-angle)*side*(w/2-7))/U,(height-1.8)/U,(z+Math.sin(-angle)*side*(w/2-7))/U,2/U,.8/U,3/U,f.bolts,.2/U,angle);
+   }
+  }
+ }
+ // Flush expansion joints in the main access deck. No raised trip obstacles.
+ for(const x of [320,520,720,920])box(x,.08,440,1,.16,168,f.seam,0);
+ for(const z of [358,522])box(640,.08,z,620,.16,1,f.seam,0);
+ // Sealed sockets support jambs, lintel and the retracted overhead door leaves.
+ for(const z of [360,520]){
+  box(1154,2,z,24,4,24,f.dark);box(1154,38,z,16,72,22,f.ivory);
+  box(1145,36,z,2,64,12,f.paint,.4);box(1154,74,z,22,4,26,f.edge);
+ }
+ box(1154,78,440,22,12,184,f.paint);box(1154,86,440,18,4,164,f.edge);
+ for(const z of [397,440,483])box(1154,73,z,16,2,40,f.ivory,.5);
+ box(1149,.2,440,20,.4,128,f.edge,0);
+ for(const z of [381,499])box(1137,.18,z,22,.3,3,f.stencil,0);
+ // Exposed drive beneath one buckled cover, not a destroyed life-support line.
+ box(1153,55,339,20,30,16,f.dark);for(const h of [46,53,60])box(1142,h,339,3,3,12,f.bronze,.4);
+ f.add(new T.BoxGeometry(3/U,26/U,15/U),f.paint,v(1145/U,55/U,327/U),new T.Euler(.18,0,-.22));
+ for(const h of [49,58])box(1140,h,331,1.2,2,8,f.edge,.2);
+ awakeningPlate(f,'RESTORE COMMS',1100,.25,550,112,18);
+ // Two worn parking corners connect the offset trolley to interrupted work.
+ for(const x of [1050,1100]){box(x,.12,748,7,.2,1,f.stencil,0);box(x,.12,744,1,.2,8,f.stencil,0);}
+}
+export function createAwakeningEnvelope(){const f=new Fabricator();awakeningEnvelope(f,{width:1200,height:880,...AUTHORED_ROOM_TOPOLOGIES['awakening-bay']!});return f.finish();}
 function awakeningBay(f:Fabricator,t:RoomPlan){
- const holes=t.voids??[];
- // Human-scale radial cradles use the actual footprint axes, never a second layout.
- for(const [index,hole]of holes.entries()){
-  if(index===1)continue;
-  const b=bounds(hole),across=v(hole[1].x-hole[0].x,0,hole[1].y-hole[0].y).normalize(),along=v(hole[3].x-hole[0].x,0,hole[3].y-hole[0].y).normalize(),angle=-Math.atan2(across.z,across.x);
-  const p=(x:number,y:number,z:number)=>v(b.x,y,b.z).addScaledVector(across,x).addScaledVector(along,z);
-  const box=(x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material)=>{const q=p(x,y,z);f.box(q.x,q.y,q.z,w,h,d,m,.045,angle);};
-  f.slab(hole,-.5,.58,f.dark);
-  box(0,.18,0,2.05,.5,3.55,f.ivory);box(0,.46,0,1.62,.13,3.1,f.dark);
-  for(const side of [-1,1]){
-   box(side*.91,.63,0,.16,.42,3.3,f.edge);box(side*.79,.87,0,.045,.04,2.7,index===0?f.warm:f.cold);
-   for(const end of [-1,1]){const q=p(side*.82,.1,end*1.35);f.pipe(q.clone().setY(-.35),q.clone().setY(.8),.075,f.bronze);}
-  }
-  box(0,.65,-1.53,1.7,.32,.23,f.ivory);box(0,.65,1.53,1.7,.32,.23,f.ivory);
-  if(index===0){
-   // Empty mattress, torn restraint and split pressure lid remain inside the cradle.
-   box(-.47,.95,-.45,.46,.12,1.75,f.ivory);box(.48,.74,.67,.4,.09,1.35,f.ivory);
-   for(let j=0;j<5;j++){const q=p(-.4+j*.2,.6,-.9+j*.35);f.add(new T.BoxGeometry(.23,.035,.32),f.cold,q,new T.Euler(.1*j,angle+j*.45,.15));}
-   box(.2,.64,.15,.8,.08,.13,f.rust);
-  }else{
-   const head=p(0,.78,-.88);f.ellipsoid(head.x,head.y,head.z,.2,.19,.22,f.skin);
-   f.add(new T.SphereGeometry(1,12,8),f.body,p(0,.71,-.15),new T.Euler(0,angle,0),v(.32,.17,.55));
-   for(const side of [-1,1]){f.pipe(p(side*.14,.68,.2),p(side*.16,.68,1.03),.115,f.body);f.pipe(p(side*.36,.67,-.48),p(side*.38,.67,.3),.085,f.body);}
-   box(0,.89,.32,1.66,.12,.17,f.edge);box(0,.9,1.23,.48,.045,.19,f.cold);
+ // Role metadata never owns alternate render coordinates.
+ const racks=createAwakeningRacks();f.root.add(racks);f.root.userData.serviceRoutes=racks.userData.serviceRoutes;(f.root.userData.localSigns??=[]).push(...racks.userData.localSigns??[]);
+ (f.root.userData.lightFixtures??=[]).push(...racks.userData.lightFixtures??[]);delete racks.userData.lightFixtures;
+ f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
+ for(const [i,hole] of (t.voids??[]).entries()){
+  const role=AWAKENING_BLOCKOUT[i].id;
+  if(role.startsWith('bank-')||role==='supply-wall')continue;
+  if(role!=='player-release')f.slab(hole,-.10,.10,f.paint);
+  if(role==='player-release'){
+   const release=createAwakeningRelease();f.root.add(release);(f.root.userData.localSigns??=[]).push(...release.userData.localSigns??[]);
+   (f.root.userData.lightFixtures??=[]).push(...release.userData.lightFixtures??[]);delete release.userData.lightFixtures;
   }
  }
- const arm=holes[1];if(arm){
-  f.bronze.name='awakening-service-arm';f.slab(arm,-.45,.66,f.dark);
-  // Low, heavy servicing carriage with a telescoping arm and visible actuator.
-  const b=bounds(arm),x0=b.x0+.4,x1=b.x1-.7,z=b.z;
-  f.box((x0+x1)/2,.47,z,x1-x0,.65,1.25,f.bronze,.09);
-  for(const side of [-1,1]){
-   f.pipe(v(x0,.78,z+side*.48),v(x1,.78,z+side*.48),.12,f.edge);
-   f.pipe(v(x0+.5,.5,z+side*.8),v(x1-1,.5,z+side*.8),.07,f.cold);
-  }
-  const pivot=x0+4.2;f.pipe(v(pivot,.3,z),v(pivot,1.7,z),.86,f.paint);
-  for(const y of [.4,1.55])f.ring(pivot,y,z,.9,.11,f.bronze);
-  f.box(pivot-1.7,1.74,z,3.9,.45,.65,f.bronze,.06);
-  f.pipe(v(x0+.2,.86,z),v(pivot-1,1.78,z),.14,f.edge);
-  f.box(x0+.5,1.7,z,.55,.63,1.1,f.ivory,.06);
-  for(const side of [-1,1])f.box(x0+.3,1.3,z+side*.47,.28,.66,.18,f.bronze,.025);
-  for(let j=0;j<4;j++)f.box(pivot+1+j*.38,.89,z,.12,.045,.8,f.dark,.012);
- }
- f.sign('CRYO SERVICE / VITALS NOMINAL',24,1.36,3.1,7.8);
+ const kit=createAwakeningKit();f.root.add(kit);
+ (f.root.userData.lightFixtures??=[]).push(...kit.userData.lightFixtures??[]);delete kit.userData.lightFixtures;
 }
 function passengerVault(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole);
@@ -285,7 +538,7 @@ export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;
  f.add(new T.ExtrudeGeometry(roomDeckShape(t),{depth:.44,steps:1,bevelEnabled:false}),f.deck,v(0,-.46,0),new T.Euler(-Math.PI/2,0,0));
- edgeArchitecture(f,t,id==='breached-loading-bay');deckServices(f,t);
+ if(id==='awakening-bay')awakeningEnvelope(f,t);else edgeArchitecture(f,t,id==='breached-loading-bay');deckServices(f,t);
  if(id==='awakening-bay')awakeningBay(f,t);else if(id==='passenger-vault')passengerVault(f,t);else if(id==='breached-loading-bay')breachedBay(f,t);else reactorFloor(f,t);
  return f.finish();
 }

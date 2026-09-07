@@ -104,7 +104,10 @@ try {
       await mkdir('docs/pr-screenshots',{recursive:true});
       await page.screenshot({path:`docs/pr-screenshots/v2-${mobile?'touch':'desktop'}-gameplay.png`});
     }
-    assert.equal([...assets].filter(p=>p.endsWith('.glb')).length,11);
+    assert.equal([...assets].filter(p=>p.includes('/assets/models/')&&p.endsWith('.glb')).length,11);
+    const roomModels=['assets/benchmark/sealed-cryo.glb','assets/awakening/released-berth/released-berth.glb','assets/awakening/recovery-kit/room-kit.glb'];
+    for(const path of roomModels)assert.ok(assets.has(prefix+path),`Missing room model: ${path}`);
+    assert.equal([...assets].filter(p=>p.endsWith('.glb')).length,11+roomModels.length);
     assert.equal([...assets].filter(p=>p.includes('/environment/')).length,9);
     assert.ok([...assets].some(p=>p.includes('/audio/')));
     assert.ok([...assets].every(p=>p.startsWith(prefix)));

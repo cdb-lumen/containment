@@ -2,7 +2,7 @@ import {describe,it,expect} from 'vitest';
 import * as T from 'three';
 import {authoredRoom,roomDeckShape} from './AuthoredRooms';
 import {disposeModel} from './meshParts';
-import {AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
+import {AWAKENING_BLOCKOUT,AWAKENING_FUNCTIONAL_ENVELOPES,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
 const actual=(id:keyof typeof AUTHORED_ROOM_TOPOLOGIES)=>({...template,...AUTHORED_ROOM_TOPOLOGIES[id]!});
 const materialMesh=(group:T.Group,name:string)=>group.children.find(o=>o instanceof T.Mesh&&(o.material as T.Material).name===name) as T.Mesh<T.BufferGeometry,T.MeshStandardMaterial>;
 const template={width:1200,height:880,boundary:[{x:80,y:80},{x:1100,y:100},{x:1000,y:800},{x:80,y:750}],voids:[[{x:450,y:300},{x:700,y:300},{x:700,y:550},{x:450,y:550}]],obstacles:[]};
@@ -13,8 +13,8 @@ describe('authored architecture',()=>{
   const geometry=new T.ShapeGeometry(shape),pos=geometry.getAttribute('position'),index=geometry.index!;
   for(let i=0;i<index.count;i+=3){let x=0,z=0;for(let j=0;j<3;j++){x+=pos.getX(index.getX(i+j))/3;z-=pos.getY(index.getX(i+j))/3;}expect(x>450/32&&x<700/32&&z>300/32&&z<550/32).toBe(false);}geometry.dispose();
  });
- it.each(['passenger-vault','breached-loading-bay','overload-floor'])('batches %s and releases every owned GPU resource once',id=>{
-  const group=authoredRoom(id,template)!;expect(group).toBeInstanceOf(T.Group);expect(group.children.length).toBeLessThan(22);
+ it.each(['awakening-bay','passenger-vault','breached-loading-bay','overload-floor'] as const)('batches %s and releases every owned GPU resource once',id=>{
+  const group=authoredRoom(id,actual(id))!;expect(group).toBeInstanceOf(T.Group);expect(group.children.length).toBeLessThan(22);
   const geometry=new Set<T.BufferGeometry>(),materials=new Set<T.Material>();group.traverse(o=>{if(o instanceof T.Mesh){geometry.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);}});
   expect(geometry.size).toBeGreaterThan(5);let disposed=0;for(const resource of [...geometry,...materials])resource.addEventListener('dispose',()=>disposed++);
   disposeModel(group);expect(disposed).toBe(geometry.size+materials.size);
@@ -44,18 +44,29 @@ describe('authored architecture',()=>{
   let disposed=0;map.addEventListener('dispose',()=>disposed++);rough.addEventListener('dispose',()=>disposed++);disposeModel(group);expect(disposed).toBe(2);expect(group.children.length).toBeLessThan(22);
  });
  it('adds bolted reactor clamp housings',()=>{const group=authoredRoom('overload-floor',actual('overload-floor'))!;expect(materialMesh(group,'reactor-fasteners')).toBeDefined();disposeModel(group);});
- it('builds an exposed service arm and radial occupied cradles in the awakening bay',()=>{
-  const group=authoredRoom('awakening-bay',actual('awakening-bay'))!;expect(group).not.toBeNull();
-  const arm=materialMesh(group,'awakening-service-arm');expect(arm).toBeDefined();arm.geometry.computeBoundingBox();
-  expect(arm.geometry.boundingBox!.max.y).toBeGreaterThan(1.5);
-  expect(arm.geometry.boundingBox!.getSize(new T.Vector3()).x).toBeGreaterThan(7);
-  const skin=group.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0xb5a48e) as T.Mesh;
-  const p=skin.geometry.getAttribute('position');
-  for(const hole of actual('awakening-bay').voids!.slice(2)){
-   const x=hole.reduce((n,p)=>n+p.x,0)/hole.length/32,z=hole.reduce((n,p)=>n+p.y,0)/hole.length/32;
-   expect(Array.from({length:p.count},(_,i)=>i).some(i=>Math.hypot(p.getX(i)-x,p.getZ(i)-z)<1.5&&p.getY(i)>.4)).toBe(true);
+ it('builds shared story footprints with sealed banks and no exposed bodies',()=>{
+  const template=actual('awakening-bay'),group=authoredRoom('awakening-bay',template)!;
+  expect(group.userData.storyFixtures.map((f:{id:string})=>f.id)).toEqual(['player-release','bank-north','bank-south','supply-wall','monitoring-recovery','interrupted-service']);
+  expect(Object.isFrozen(AWAKENING_BLOCKOUT)).toBe(true);
+  for(const [i,fixture] of AWAKENING_BLOCKOUT.entries()){
+   expect(Object.isFrozen(fixture)).toBe(true);expect(Object.isFrozen(fixture.footprint)).toBe(true);
+   for(const point of fixture.footprint)expect(Object.isFrozen(point)).toBe(true);
+   expect(group.userData.storyFixtures[i].footprint).toBe(fixture.footprint);
+   expect(fixture.footprint).toBe(template.voids![i]);
   }
+  expect(materialMesh(group,'awakening-service-arm')).toBeUndefined();
+  expect(group.children.some(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0xb5a48e)).toBe(false);
   expect(group.children.length).toBeLessThan(22);disposeModel(group);
+ });
+ it('freezes functional annotations without adding interaction collision',()=>{
+  expect(AWAKENING_FUNCTIONAL_ENVELOPES).toBeDefined();
+  expect(Object.isFrozen(AWAKENING_FUNCTIONAL_ENVELOPES)).toBe(true);
+  expect(AWAKENING_FUNCTIONAL_ENVELOPES.map(e=>e.id)).toEqual(['release-lid','release-rail','landing','monitor','operator','seat-pullback','seat-access','locker-door','locker-access','cabinet-door','technician','trolley']);
+  for(const envelope of AWAKENING_FUNCTIONAL_ENVELOPES){
+   expect(Object.isFrozen(envelope)).toBe(true);expect(Object.isFrozen(envelope.bounds)).toBe(true);
+   expect(envelope.bounds.w).toBeGreaterThan(0);expect(envelope.bounds.h).toBeGreaterThan(0);
+  }
+  expect(actual('awakening-bay').voids).toHaveLength(AWAKENING_BLOCKOUT.length);
  });
  it('does not replace other rooms',()=>expect(authoredRoom('residential-gallery',template)).toBeNull());
 });
