@@ -387,6 +387,7 @@ export function createAwakeningEnvelope(){const f=new Fabricator();awakeningEnve
 function awakeningBay(f:Fabricator,t:RoomPlan){
  // Role metadata never owns alternate render coordinates.
  const racks=createAwakeningRacks();f.root.add(racks);f.root.userData.serviceRoutes=racks.userData.serviceRoutes;(f.root.userData.localSigns??=[]).push(...racks.userData.localSigns??[]);
+ (f.root.userData.lightFixtures??=[]).push(...racks.userData.lightFixtures??[]);delete racks.userData.lightFixtures;
  f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
  for(const [i,hole] of (t.voids??[]).entries()){
   const role=AWAKENING_BLOCKOUT[i].id;
