@@ -110,12 +110,73 @@ function edgeArchitecture(f:Fabricator,t:RoomPlan,scar=false){
   }
  }
 }
+/** Authored in game units, using the room's synchronous batched geometry pipeline.
+ * The empty berth, nested lid and released restraints are the completed pose.
+ * No optional download or runtime opening state is needed. */
+function awakeningRelease(f:Fabricator,hole:Outline){
+ const b=bounds(hole),dx=b.x0*U-90,dz=b.z0*U-380;
+ const box=(x:number,h:number,z:number,w:number,t:number,d:number,m:T.Material,r=1)=>f.box((x+dx)/U,h/U,(z+dz)/U,w/U,t/U,d/U,m,r/U);
+ const pipe=(x:number,h:number,z:number,x2:number,h2:number,z2:number,r:number,m:T.Material)=>f.pipe(v((x+dx)/U,h/U,(z+dz)/U),v((x2+dx)/U,h2/U,(z2+dz)/U),r/U,m);
+ // Load-bearing cradle, inset empty mattress and segmented end bumpers.
+ box(135,3,440,88,6,118,f.dark,3);
+ box(135,6,440,80,6,112,f.ivory,4);
+ box(136,8,440,62,4,85,f.seam,4);
+ for(const z of [414,431,448,465])box(136,9, z,56,2,16,f.body,2);
+ box(136,11,408,40,6,12,f.ivory,3);
+ box(136,8,481,55,3,8,f.dark,2);
+ // A low east sill is intentionally not a side wall: feet can reach the landing.
+ box(176,5,440,6,6,70,f.edge,1);
+ for(const x of [104,168]){
+  box(x,12,488,7,12,15,f.ivory,2);
+  box(x,10,391,7,8,14,f.edge,1);
+ }
+ // Two guide channels carry three overlapping telescoping canopy cassettes.
+ // The entire parked lid is y383..405; nothing hinges into the aisle.
+ for(const x of [101,169]){
+  box(x,15,440,4,4,110,f.dark,1);
+  box(x,17,440,1.3,1,108,f.edge,.3);
+  box(x,20,395,6,8,18,f.bolts,1);
+  pipe(x,19,399,x,19,428,1.2,f.edge);
+  pipe(x,19,402,x,19,414,2.1,f.dark);
+ }
+ for(const [z,h,w,d] of [[393,23,76,20],[394,28,72,18],[395,33,68,16]]){
+  box(135,h,z,w,5,d,f.ivory,2);
+  box(135,h+2.6,z,w-8,.5,d-5,f.paint,1);
+ }
+ // Quiet amber release indicator; physical latches are open beside the mattress.
+ box(135,36,395,36,1,3,f.warm,.4);
+ for(const z of [425,459]){
+  box(108,12,z,10,2,5,f.bronze,.5);
+  box(111,13,z+3,4,2,7,f.dark,.5);
+  box(164,10,z,8,2,5,f.bronze,.5);
+  box(159,11,z+4,4,2,9,f.dark,.5);
+ }
+ // West recovery handrail, welded sockets and feet. East gap stays fully open.
+ for(const z of [389,442,491]){
+  box(96,2,z,7,4,8,f.edge,.6);
+  pipe(96,3,z,96,27,z,1.3,f.edge);
+  box(96,6,z,4,5,4,f.dark,.5);
+ }
+ pipe(96,28,386,96,28,494,1.5,f.ivory);
+ // Fasteners, service seam and sparse rub marks imply use, not wreckage.
+ for(const z of [409,480])for(const x of [116,154])box(x,9.2,z,2,.6,2,f.bolts,.3);
+ for(const z of [433,452,470])box(173,8.1,z,2,.3,7,f.ivory,.2);
+ box(135,4,497,46,2,1,f.seam,.2);
+ box(156,5.5,497,7,1,1.2,f.cold,.2);
+ // Flush non-slip recovery deck. All tread and border relief stays below 0.6.
+ box(209,.16,440,58,.32,120,f.paint,0);
+ for(const x of [182,236])box(x,.36,440,1,.16,116,f.edge,0);
+ for(let z=386;z<498;z+=6)box(209,.38,z,49,.2,1,f.seam,0);
+ for(const z of [392,488])box(188,.4,z,9,.2,2,f.stencil,0);
+}
+/** Standalone construction uses exactly the same parts as the room for mesh QA. */
+export function createAwakeningRelease(){const f=new Fabricator();awakeningRelease(f,AWAKENING_BLOCKOUT[0].footprint);return f.finish();}
 function awakeningBay(f:Fabricator,t:RoomPlan){
  // Neutral solid blockout. Role metadata never owns alternate render coordinates.
  f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
  for(const [i,hole] of (t.voids??[]).entries()){
   const role=AWAKENING_BLOCKOUT[i].id,b=bounds(hole);
-  f.slab(hole,-.46,.64,f.paint);
+  if(role!=='player-release')f.slab(hole,-.46,.64,f.paint);
   if(role.startsWith('bank-')){
    for(let j=0;j<4;j++){
     const x=b.x0+(j+.5)*b.w/4;
@@ -125,13 +186,7 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
    }
    f.sign('SEALED / PASSENGERS ALIVE',b.x,1.02,b.z-.8,b.w-.6);
   }else if(role==='player-release'){
-   f.box(b.x,.35,b.z,b.w-.2,.3,b.d-.2,f.ivory,.12);
-   f.box(b.x,.52,b.z,b.w-.6,.04,b.d-.7,f.dark,.08);
-   // Lid retracted to the head, empty tray, rail entirely inside solid footprint.
-   f.box(b.x,.8,b.z0+.4,b.w-.3,.4,.65,f.ivory,.12);
-   f.pipe(v(b.x0+.15,.85,b.z0+.15),v(b.x0+.15,.85,b.z1-.15),.06,f.edge);
-   f.sign('01 / RELEASED',b.x,1.04,b.z0+.45,b.w-.25);
-   f.box(b.x1+.9,.008,b.z,1.8,.016,b.d,f.stencil,0);
+   awakeningRelease(f,hole);
   }else if(role==='supply-wall'){
    f.box(b.x,.65,b.z,b.w-.1,1.2,b.d-.1,f.paint,.04);
    f.sign('CRYO SUPPLY / VITALS NOMINAL',b.x,1.28,b.z,b.w-.4);

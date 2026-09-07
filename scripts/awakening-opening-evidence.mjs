@@ -10,13 +10,17 @@ import {chromium} from 'playwright';
 const out=resolve(process.argv[2]??'artifacts/awakening-opening');
 await mkdir(out,{recursive:true});
 const sha=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
-const probe=`\nObject.defineProperty(window,'__openingSnapshot',{get:()=>({
+const probe=`\nconst openingWebglErrors=[];
+Object.defineProperty(window,'__openingSnapshot',{get:()=>{
+ const gl=renderer.renderer.getContext();let error;
+ while((error=gl.getError())!==gl.NO_ERROR){openingWebglErrors.push(error);if(error===gl.CONTEXT_LOST_WEBGL)break;}
+ return ({
  state:game.status,room:game.node.templateId,player:{x:game.player.x,y:game.player.y},
  boons:[...game.expedition.build.mutations],camera:{zoom:renderer.camera.zoom,
  left:renderer.camera.left,right:renderer.camera.right,top:renderer.camera.top,bottom:renderer.camera.bottom,
  position:renderer.camera.position.toArray(),focus:renderer.focus.toArray()},
- performance:window.__containmentPerformance,webglError:renderer.renderer.getContext().getError()
-})});`;
+ performance:window.__containmentPerformance,webglErrors:[...openingWebglErrors]
+});}});`;
 const outDir=resolve(out,'build');
 await build({build:{outDir,emptyOutDir:true},plugins:[{name:'opening-read-only-evidence',enforce:'post',transform(code,id){if(id.endsWith('/src/main.ts'))return code+probe;}}]});
 const server=await preview({build:{outDir},preview:{host:'127.0.0.1',port:0}});
@@ -44,7 +48,7 @@ try{
   const snapshot=await page.evaluate(()=>window.__openingSnapshot);
   assert.equal(snapshot.state,'playing');assert.equal(snapshot.room,'awakening-bay');assert.equal(snapshot.boons.length,1);
   assert.deepEqual(snapshot.player,{x:230,y:440});assert.equal(snapshot.camera.zoom,1);
-  assert.equal(snapshot.webglError,0);assert.equal(snapshot.performance.graphicsLost,false);assert.deepEqual(errors,[]);
+  assert.deepEqual(snapshot.webglErrors,[]);assert.equal(snapshot.performance.graphicsLost,false);assert.deepEqual(errors,[]);
   results.push({name,viewport,image,before,snapshot,errors});
   await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
   console.log(JSON.stringify(results.at(-1)));await context.close();

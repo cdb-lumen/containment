@@ -13,8 +13,8 @@ describe('authored architecture',()=>{
   const geometry=new T.ShapeGeometry(shape),pos=geometry.getAttribute('position'),index=geometry.index!;
   for(let i=0;i<index.count;i+=3){let x=0,z=0;for(let j=0;j<3;j++){x+=pos.getX(index.getX(i+j))/3;z-=pos.getY(index.getX(i+j))/3;}expect(x>450/32&&x<700/32&&z>300/32&&z<550/32).toBe(false);}geometry.dispose();
  });
- it.each(['passenger-vault','breached-loading-bay','overload-floor'])('batches %s and releases every owned GPU resource once',id=>{
-  const group=authoredRoom(id,template)!;expect(group).toBeInstanceOf(T.Group);expect(group.children.length).toBeLessThan(22);
+ it.each(['awakening-bay','passenger-vault','breached-loading-bay','overload-floor'] as const)('batches %s and releases every owned GPU resource once',id=>{
+  const group=authoredRoom(id,actual(id))!;expect(group).toBeInstanceOf(T.Group);expect(group.children.length).toBeLessThan(22);
   const geometry=new Set<T.BufferGeometry>(),materials=new Set<T.Material>();group.traverse(o=>{if(o instanceof T.Mesh){geometry.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);}});
   expect(geometry.size).toBeGreaterThan(5);let disposed=0;for(const resource of [...geometry,...materials])resource.addEventListener('dispose',()=>disposed++);
   disposeModel(group);expect(disposed).toBe(geometry.size+materials.size);
