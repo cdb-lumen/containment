@@ -66,7 +66,11 @@ try{
    await writeFile(resolve(out,'failure-manifest.json'),JSON.stringify({sha,assetSha256,results},null,2));
    await context.close();continue;
   }
-  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  await page.waitForFunction(()=>document.querySelector('#room-loading').hidden&&document.querySelector('#world').getAttribute('aria-busy')==='false');
+  // Software WebGL may still have the pre-loading canvas in the compositor.
+  // Drain screenshot/readback once, then wait for subsequent production frames.
+  await page.screenshot();
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))));
   const image=resolve(out,`${name}.png`);
   await page.screenshot({path:image});
   const snapshot=await page.evaluate(()=>window.__openingSnapshot);
