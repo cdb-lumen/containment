@@ -37,7 +37,7 @@ try{
   assert.deepEqual(before.player,{x:230,y:440});assert.equal(before.boons.length,0);
   const card=page.locator('[data-mutation]').first();
   if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
-  await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&document.querySelector('#room-name').textContent==='Awakening Bay');
+  await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&document.querySelector('#room-name').textContent==='Awakening bay');
   const image=resolve(out,`${name}.png`);
   await page.screenshot({path:image});
   const snapshot=await page.evaluate(()=>window.__openingSnapshot);
