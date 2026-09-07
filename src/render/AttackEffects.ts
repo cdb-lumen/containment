@@ -147,8 +147,8 @@ export class AttackEffects {
    if(e.boon==='overload'&&e.radius===undefined){
     p.y=.85;
     for(let i=0;i<6;i++){
-     const a=i*Math.PI/3,pos=p.clone().add(new T.Vector3(Math.cos(a)*.28,(i%2)*.12,Math.sin(a)*.28));
-     this.particle(this.glow,EFFECT_LIMITS.glow,pos,color,.16,.55,new T.Vector3(0,.65,0));
+     const a=i*Math.PI/3,pos=p.clone().add(new T.Vector3(Math.cos(a)*.44,(i%2)*.12,Math.sin(a)*.44));
+     this.particle(this.glow,EFFECT_LIMITS.glow,pos,color,.32,.65,new T.Vector3(0,.65,0));
     }return;
    }
    if(e.boon==='blast'||e.boon==='overload'||e.boon==='combustion'){this.event({type:'explosion',x:e.x,y:e.y,radius:e.radius??48,elements:e.boon==='combustion'?['fire']:[]});return;}
