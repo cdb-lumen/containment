@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {AWAKENING_BLOCKOUT} from '../game/roguelike/authoredRoomTopologies';
+import {AWAKENING_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -187,7 +187,7 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
   box(x+23,23,wallZ+21.5,3,8,1,f.dark,.3);
   for(let j=0;j<4;j++)box(x-16+j*8,15,wallZ+21.5,3,7,1,f.seam,.2);
  }
- f.sign('SUPPLY / RETURN - NOMINAL',supply.x,37/U,supply.z,supply.w-.5);
+ awakeningPlate(f,'LIFE SUPPORT',supply.x*U,37,wallZ,106,16);
  for(const index of [1,2]){
   const b=bounds(holes[index]),z=b.z*U,x0=b.x0*U;
   // Solid infill removes the collision cutout without creating a pit.
@@ -207,6 +207,7 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
    box(x,26.5,z,83,2,85,f.dark,4);
    box(x,29,z,80,3,82,f.ivory,5);
    box(x,30.7,z-5,64,.6,55,f.paint,4);
+   awakeningPlate(f,'OCCUPIED',x,31.4,z-7,62,14);
    // Closed compression latches bridge the seam, not a lid-opening pose.
    for(const dx of [-40,40])for(const dz of [-24,24])box(x+dx,26,z+dz,4,7,8,f.bronze,1);
    box(x,31.4,z+24,44,.8,10,f.dark,1);
@@ -214,7 +215,7 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
    // Repeated pulse ticks supply a non-colour living-status cue at each shell.
    for(const [dx,d] of [[4,3],[8,7],[12,4]])box(x+dx,32,z+24,2,.5,d,f.ivory,.2);
   }
-  f.sign('SEALED / PASSENGERS ALIVE',b.x,31.8/U,(z-40)/U,b.w-.6);
+
   // Dedicated paired underfloor trunks. Wall -> buried run -> rack riser ->
   // contained rear header -> individual sealed coupling on each cassette.
   for(const [circuit,dz] of [[0,-48],[1,48]]){
@@ -329,8 +330,60 @@ function awakeningKit(f:Fabricator){
  pipe([1050,30,717],[1050,30,739],1.6,f.ivory);
 }
 export function createAwakeningKit(){const f=new Fabricator();awakeningKit(f);return f.finish();}
+/** Small equipment plates retain physical aspect ratio and never span a bank. */
+function awakeningPlate(f:Fabricator,text:string,x:number,h:number,z:number,width:number,depth=14){
+ (f.root.userData.localSigns??=[]).push({text,x,h,z,width,depth});
+ f.box(x/U,h/U,z/U,width/U,.6/U,depth/U,f.dark,.4/U);
+ if(typeof document==='undefined')return;
+ const canvas=document.createElement('canvas');canvas.width=Math.round(width*8);canvas.height=Math.round(depth*8);const c=canvas.getContext('2d');if(!c)return;
+ c.fillStyle='#18262b';c.fillRect(0,0,canvas.width,canvas.height);c.fillStyle='#d5dfd7';c.font=`600 ${Math.floor(Math.min(depth*5.8,width*12/text.length))}px monospace`;c.textAlign='center';c.textBaseline='middle';c.fillText(text,canvas.width/2,canvas.height/2);
+ const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;
+ const material=new T.MeshStandardMaterial({map:texture,roughness:.7});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
+ f.add(new T.PlaneGeometry(width/U,depth/U),material,v(x/U,(h+.32)/U,z/U),new T.Euler(-Math.PI/2,0,0));
+}
+/** The same wall cassette rhythm follows the approved boundary. The east
+ * bulkhead is parked open; damage is confined to its north drive housing. */
+function awakeningEnvelope(f:Fabricator,t:RoomPlan){
+ const box=(x:number,h:number,z:number,w:number,d:number,l:number,m:T.Material,r=1)=>f.box(x/U,h/U,z/U,w/U,d/U,l/U,m,r/U);
+ const perimeter=outline(t);
+ for(let i=0;i<perimeter.length;i++){
+  const a=perimeter[i],b=perimeter[(i+1)%perimeter.length];
+  const runs=a.x===1160&&b.x===1160?[[a,{x:1160,y:348}],[{x:1160,y:532},b]]:[[a,b]];
+  for(const [p,q] of runs){const length=Math.hypot(q.x-p.x,q.y-p.y),angle=-Math.atan2(q.y-p.y,q.x-p.x),n=Math.ceil(length/88),height=(p.y+q.y)/2<282?42:14;
+   for(let j=0;j<n;j++){
+    const s=(j+.5)/n,x=p.x+(q.x-p.x)*s,z=p.y+(q.y-p.y)*s,w=length/n;
+    f.box(x/U,(height/2-4)/U,z/U,(w-2)/U,height/U,12.16/U,f.paint,1/U,angle);
+    f.box(x/U,(height-3)/U,z/U,(w-4)/U,2/U,13/U,f.edge,.5/U,angle);
+    // Recessed joint straps and paired fasteners share the cassette supports.
+    const u=j/n,jx=p.x+(q.x-p.x)*u,jz=p.y+(q.y-p.y)*u;
+    f.box(jx/U,(height/2-4)/U,jz/U,2/U,height/U,12/U,f.dark,.2/U,angle);
+    for(const side of [-1,1])f.box((x+Math.cos(-angle)*side*(w/2-7))/U,(height-1.8)/U,(z+Math.sin(-angle)*side*(w/2-7))/U,2/U,.8/U,3/U,f.bolts,.2/U,angle);
+   }
+  }
+ }
+ // Flush expansion joints in the main access deck. No raised trip obstacles.
+ for(const x of [320,520,720,920])box(x,.08,440,1,.16,168,f.seam,0);
+ for(const z of [358,522])box(640,.08,z,620,.16,1,f.seam,0);
+ // Sealed sockets support jambs, lintel and the retracted overhead door leaves.
+ for(const z of [360,520]){
+  box(1154,2,z,24,4,24,f.dark);box(1154,38,z,16,72,22,f.ivory);
+  box(1145,36,z,2,64,12,f.paint,.4);box(1154,74,z,22,4,26,f.edge);
+ }
+ box(1154,78,440,22,12,184,f.paint);box(1154,86,440,18,4,164,f.edge);
+ for(const z of [397,440,483])box(1154,73,z,16,2,40,f.ivory,.5);
+ box(1149,.2,440,20,.4,128,f.edge,0);
+ for(const z of [381,499])box(1137,.18,z,22,.3,3,f.stencil,0);
+ // Exposed drive beneath one buckled cover, not a destroyed life-support line.
+ box(1153,55,339,20,30,16,f.dark);for(const h of [46,53,60])box(1142,h,339,3,3,12,f.bronze,.4);
+ f.add(new T.BoxGeometry(3/U,26/U,15/U),f.paint,v(1145/U,55/U,327/U),new T.Euler(.18,0,-.22));
+ for(const h of [49,58])box(1140,h,331,1.2,2,8,f.edge,.2);
+ awakeningPlate(f,'RESTORE COMMS',1100,.25,550,112,18);
+ // Two worn parking corners connect the offset trolley to interrupted work.
+ for(const x of [1050,1100]){box(x,.12,748,7,.2,1,f.stencil,0);box(x,.12,744,1,.2,8,f.stencil,0);}
+}
+export function createAwakeningEnvelope(){const f=new Fabricator();awakeningEnvelope(f,{width:1200,height:880,...AUTHORED_ROOM_TOPOLOGIES['awakening-bay']!});return f.finish();}
 function awakeningBay(f:Fabricator,t:RoomPlan){
- // Neutral solid blockout. Role metadata never owns alternate render coordinates.
+ // Role metadata never owns alternate render coordinates.
  awakeningRacks(f,t.voids??[]);
  f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
  for(const [i,hole] of (t.voids??[]).entries()){
@@ -339,13 +392,10 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
   if(role!=='player-release')f.slab(hole,-.10,.10,f.paint);
   if(role==='player-release'){
    awakeningRelease(f,hole);
+   awakeningPlate(f,'RELEASED',135,36.2,390,62,10);
   }
  }
- // Local damaged bulkhead markers stay on the perimeter, outside actor routes.
  awakeningKit(f);
- const wall=bounds(outline(t));
- for(const dz of [-2,2])f.box(wall.x1-.1,.7,t.height/64+dz,.2,1.6,1.2,f.rust,.03);
- f.sign('DAMAGED EXIT / RESTORE COMMS',wall.x1-2.7,.025,t.height/64,4.6);
 }
 function passengerVault(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole);
@@ -477,7 +527,7 @@ export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;
  f.add(new T.ExtrudeGeometry(roomDeckShape(t),{depth:.44,steps:1,bevelEnabled:false}),f.deck,v(0,-.46,0),new T.Euler(-Math.PI/2,0,0));
- edgeArchitecture(f,id==='awakening-bay'?{...t,voids:[]}:t,id==='breached-loading-bay');deckServices(f,t);
+ if(id==='awakening-bay')awakeningEnvelope(f,t);else edgeArchitecture(f,t,id==='breached-loading-bay');deckServices(f,t);
  if(id==='awakening-bay')awakeningBay(f,t);else if(id==='passenger-vault')passengerVault(f,t);else if(id==='breached-loading-bay')breachedBay(f,t);else reactorFloor(f,t);
  return f.finish();
 }
