@@ -3,6 +3,7 @@ import type {WeaponId} from '../game/combat/types';
 import type {Bullet,GameEffect} from '../DepthGame';
 import {WEAPON_APPEARANCE} from './weapons';
 import {electricArc} from './electricArc';
+import {ballLightning} from './ballLightning';
 import {wallSurface} from './wallSurface';
 const UP=new T.Vector3(0,1,0),WHITE=new T.Color(0xffffff);
 type Particle={liquid?:boolean;wall?:T.Vector3;growth?:number;aspect?:number;p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
@@ -30,7 +31,7 @@ function pool(scene:T.Scene,geometry:T.BufferGeometry,count:number,style:number,
 export class AttackEffects {
  private fire:Particle[]=[];private fireMesh:T.InstancedMesh;private textures:T.Texture[]=[];
  private links:{start:T.Vector3;end:T.Vector3;age:number;frost:boolean}[]=[];
- private arcs:{start:T.Vector3;end:T.Vector3;age:number;seed:number}[]=[];
+ private arcs:{start:T.Vector3;end:T.Vector3;age:number;seed:number;ball?:boolean}[]=[];
  private glow:Particle[]=[];private smoke:Particle[]=[];private debris:Particle[]=[];private decals:Particle[]=[];private pulses:Pulse[]=[];
  private glowMesh:T.InstancedMesh;private smokeMesh:T.InstancedMesh;private debrisMesh:T.InstancedMesh;private decalMesh:T.InstancedMesh;private pulseMesh:T.InstancedMesh;private slashMesh:T.InstancedMesh;private beamMesh:T.InstancedMesh;
  private dummy=new T.Object3D();private forward=new T.Vector3();private previous=new WeakMap<Bullet,T.Vector3>();private trailClock=0;private boonBursts=0;private arcBursts=0;
@@ -116,8 +117,8 @@ export class AttackEffects {
     p.y=.65;const radius=Math.min(4,e.radius/32);
     this.particle(this.glow,EFFECT_LIMITS.glow,p,0xc4eaff,.5,.12);
     for(let i=0;i<6;i++){
-     const angle=i*Math.PI/3+.17,end=p.clone().add(new T.Vector3(Math.cos(angle)*radius,(i%2)*.3,Math.sin(angle)*radius));
-     if(this.arcs.length>=6)this.arcs.shift();this.arcs.push({start:p.clone(),end,age:0,seed:Math.floor(Math.random()*65536)});
+     const angle=i*Math.PI/3+(Math.random()-.5)*.85,reach=radius*(.65+Math.random()*.35),end=p.clone().add(new T.Vector3(Math.cos(angle)*reach,Math.random()*.6,Math.sin(angle)*reach));
+     if(this.arcs.length>=6)this.arcs.shift();this.arcs.push({start:p.clone(),end,age:0,seed:Math.floor(Math.random()*65536),ball:true});
      this.particle(this.glow,EFFECT_LIMITS.glow,end,0x8d9bff,.12,.18);
     }return;
    }
@@ -284,18 +285,19 @@ export class AttackEffects {
   this.links=this.links.filter(link=>link.age<(link.frost?.24:.12));
   // Reuse the bounded beam pool: broad violet corona plus thin blue-white core.
   for(const arc of this.arcs){
-   arc.age+=dt;if(arc.age>=.26)continue;
-   const strike=Math.floor(arc.age/.045),fade=Math.pow(1-arc.age/.26,.6)*(strike%2?.65:1);
-   for(const segment of electricArc(arc.start,arc.end,arc.seed+strike))for(let layer=0;layer<2;layer++){
+   arc.age+=dt;const life=arc.ball?.36:.26;if(arc.age>=life)continue;
+   const strike=Math.floor(arc.age/(arc.ball?.06:.045)),fade=Math.pow(1-arc.age/life,.6)*(strike%2?.65:1);
+   const segments=arc.ball?ballLightning(arc.start,arc.end,arc.seed+strike):electricArc(arc.start,arc.end,arc.seed+strike);
+   for(const segment of segments)for(let layer=0;layer<2;layer++){
     if(beam>=EFFECT_LIMITS.beams)break;
     this.forward.copy(segment.end).sub(segment.start);const length=this.forward.length();
     this.dummy.position.copy(segment.start).add(segment.end).multiplyScalar(.5);this.dummy.quaternion.setFromUnitVectors(UP,this.forward.normalize());
-    const width=(layer?.012:.045)*(segment.branch?.55:1);
+    const width=arc.ball?(layer?.042:.075)*('width' in segment?segment.width as number:1):(layer?.012:.045)*(segment.branch?.55:1);
     this.dummy.scale.set(width,length,width);this.dummy.updateMatrix();this.beamMesh.setMatrixAt(beam,this.dummy.matrix);
     this.beamMesh.setColorAt(beam,new T.Color(layer?0xc4eaff:0x666dff));alpha.setX(beam++,fade*(layer?.95:.22));
    }
   }
-  this.arcs=this.arcs.filter(a=>a.age<.26);
+  this.arcs=this.arcs.filter(a=>a.age<(a.ball?.36:.26));
   // Short velocity-aligned spark streaks share the existing bounded beam draw.
   for(const spark of this.glow){
    if(beam>=EFFECT_LIMITS.beams)break;

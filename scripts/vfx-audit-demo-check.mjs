@@ -63,6 +63,11 @@ test('radial demos reject links, missing kills and missing delayed discharges',(
   assert.throws(()=>verifyEvents(events,frames,o,[]),/secondary damage/);
  }
 });
+test('final Ball Lightning evidence rejects an end-of-clip discharge',()=>{
+ const o=options(['--case=ball-lightning','--source-sha='+'a'.repeat(40)]);
+ const events=[{type:'shot'},{type:'boon',boon:'charge',durationMs:500,frame:100},{type:'boon',boon:'arc',radius:100,frame:110}];
+ assert.throws(()=>verifyEvents(events,[{zoom:1,secondaryDamage:22}],o,[{owner:'damage',amount:22,applied:true,secondary:true}]),/aftermath/);
+});
 test('recorder bytes retain numeric RNG and contain no redaction tokens',()=>{
  const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');
  assert(!source.includes('****'));assert(source.includes(String(1013904223)));

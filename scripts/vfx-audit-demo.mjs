@@ -91,7 +91,7 @@ async function stage(o) {
 function step({frame,o}) {
  const d=window.__vfxAudit,g=d.game,r=d.renderer;d.frame=frame;
  if(o.definition.link&&g.combat.snapshot.magazine===0)g.reload();
- g.update(1000/o.fps,{x:0,y:0,fire:!!o.definition.link&&frame>=5&&(frame-5)%(o.definition.fireEvery??10)===0,angle:d.aim??0,autoAim:false});
+ g.update(1000/o.fps,{x:0,y:0,fire:!!o.definition.link&&!d.chargedPreroll&&frame>=5&&(frame-5)%(o.definition.fireEvery??10)===0,angle:d.aim??0,autoAim:false});
  d.confirmation.update(1/o.fps,g.status==='playing');r.render(g,1/o.fps,false);d.hud();
  if(g.status!=='playing')throw Error(`Left playing: ${g.status}`);
  if(r.camera.zoom!==d.nativeZoom)throw Error('Camera zoom changed');
@@ -108,6 +108,7 @@ export function verifyEvents(events,frames,o,domainEvents=[]) {
   if(o.definition.radial){
    const discharge=events.find(e=>e.type==='boon'&&e.boon===o.definition.link&&e.targetX===undefined&&e.radius>0);
    assert(discharge,'Missing production radial discharge');
+   if(o.case==='ball-lightning'&&!o.provisional)assert(discharge.frame>=0&&discharge.frame<=o.frames-60,'Missing three-second discharge aftermath');
    if(o.case==='ball-lightning')assert(events.some(e=>e.type==='boon'&&e.boon==='charge'&&e.durationMs===500&&discharge.frame-e.frame>=9),'Missing delayed charge');
    else assert(events.some(e=>e.type==='corpse'),'Missing real direct kill');
   }else assert(events.some(e=>e.type==='boon'&&e.boon===o.definition.link&&Number.isFinite(e.targetX)&&Number.isFinite(e.targetY)),'Missing production link');
@@ -160,7 +161,19 @@ async function record(o) {
   await page.evaluate(()=>{window.__vfxGate=true;});await page.locator('#start').click();m.setup=await page.evaluate(stage,o);
   // Bounded native-timer preroll stops at a real warning/projectile, before impact.
   m.preroll=[];let ready=!!o.definition.link;for(let n=0;!ready&&n<200;n++){const state=await page.evaluate(step,{frame:n-200,o});m.preroll.push(state);if(state.bullets.some(b=>b.kind==='hazard')||state.boss.pendingTelegraph){ready=true;break;}}assert(ready,'No native hazard within ten-second preroll');
-  encoder=spawn('ffmpeg',['-y','-loglevel','error','-f','image2pipe','-framerate',String(o.fps),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',mp4],{stdio:['pipe','ignore','pipe']});
+  if(o.case==='ball-lightning'){
+   let charged=false;
+   for(let n=0;n<200;n++){
+    m.preroll.push(await page.evaluate(step,{frame:n,o}));
+    charged=await page.evaluate(()=>window.__vfxAudit.events.some(e=>e.type==='boon'&&e.boon==='charge'));
+    if(charged){
+     await page.evaluate(offset=>{const d=window.__vfxAudit;d.chargedPreroll=true;for(const e of [...d.events,...d.domainEvents])e.frame-=offset;},n+1);break;
+    }
+   }
+   assert(charged,'No real Ball Lightning charge within ten-second preroll');
+   m.setup.controls+=' Ball Lightning prerolls real pistol hits through the 500ms charge precursor, then stops firing for the captured discharge and aftermath.';
+  }
+  encoder=spawn('ffmpeg' ,['-y','-loglevel','error','-f','image2pipe','-framerate',String(o.fps),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',mp4],{stdio:['pipe','ignore','pipe']});
   m.encoderPid=encoder.pid;m.encoderErrors='';encoder.stderr.on('data',x=>m.encoderErrors+=x);encoder.stdin.on('error',e=>m.errors.push(e.message));const finished=once(encoder,'close');m.state='recording';await save();
   for(let frame=0;frame<o.frames;frame++){
    assert.deepEqual(m.errors,[]);const s=await page.evaluate(step,{frame,o});const png=await page.screenshot({timeout:120000});m.frames.push({...s,sha256:hash(png)});
