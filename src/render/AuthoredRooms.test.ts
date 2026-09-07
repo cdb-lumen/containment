@@ -2,7 +2,7 @@ import {describe,it,expect} from 'vitest';
 import * as T from 'three';
 import {authoredRoom,roomDeckShape} from './AuthoredRooms';
 import {disposeModel} from './meshParts';
-import {AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
+import {AWAKENING_BLOCKOUT,AWAKENING_FUNCTIONAL_ENVELOPES,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
 const actual=(id:keyof typeof AUTHORED_ROOM_TOPOLOGIES)=>({...template,...AUTHORED_ROOM_TOPOLOGIES[id]!});
 const materialMesh=(group:T.Group,name:string)=>group.children.find(o=>o instanceof T.Mesh&&(o.material as T.Material).name===name) as T.Mesh<T.BufferGeometry,T.MeshStandardMaterial>;
 const template={width:1200,height:880,boundary:[{x:80,y:80},{x:1100,y:100},{x:1000,y:800},{x:80,y:750}],voids:[[{x:450,y:300},{x:700,y:300},{x:700,y:550},{x:450,y:550}]],obstacles:[]};
@@ -47,10 +47,26 @@ describe('authored architecture',()=>{
  it('builds shared story footprints with sealed banks and no exposed bodies',()=>{
   const template=actual('awakening-bay'),group=authoredRoom('awakening-bay',template)!;
   expect(group.userData.storyFixtures.map((f:{id:string})=>f.id)).toEqual(['player-release','bank-north','bank-south','supply-wall','monitoring-recovery','interrupted-service']);
-  for(const [i,fixture] of group.userData.storyFixtures.entries())expect(fixture.footprint).toBe(template.voids![i]);
+  expect(Object.isFrozen(AWAKENING_BLOCKOUT)).toBe(true);
+  for(const [i,fixture] of AWAKENING_BLOCKOUT.entries()){
+   expect(Object.isFrozen(fixture)).toBe(true);expect(Object.isFrozen(fixture.footprint)).toBe(true);
+   for(const point of fixture.footprint)expect(Object.isFrozen(point)).toBe(true);
+   expect(group.userData.storyFixtures[i].footprint).toBe(fixture.footprint);
+   expect(fixture.footprint).toBe(template.voids![i]);
+  }
   expect(materialMesh(group,'awakening-service-arm')).toBeUndefined();
   expect(group.children.some(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0xb5a48e)).toBe(false);
   expect(group.children.length).toBeLessThan(22);disposeModel(group);
+ });
+ it('freezes functional annotations without adding interaction collision',()=>{
+  expect(AWAKENING_FUNCTIONAL_ENVELOPES).toBeDefined();
+  expect(Object.isFrozen(AWAKENING_FUNCTIONAL_ENVELOPES)).toBe(true);
+  expect(AWAKENING_FUNCTIONAL_ENVELOPES.map(e=>e.id)).toEqual(['release-lid','release-rail','landing','monitor','operator','seat-pullback','seat-access','locker-door','locker-access','cabinet-door','technician','trolley']);
+  for(const envelope of AWAKENING_FUNCTIONAL_ENVELOPES){
+   expect(Object.isFrozen(envelope)).toBe(true);expect(Object.isFrozen(envelope.bounds)).toBe(true);
+   expect(envelope.bounds.w).toBeGreaterThan(0);expect(envelope.bounds.h).toBeGreaterThan(0);
+  }
+  expect(actual('awakening-bay').voids).toHaveLength(AWAKENING_BLOCKOUT.length);
  });
  it('does not replace other rooms',()=>expect(authoredRoom('residential-gallery',template)).toBeNull());
 });

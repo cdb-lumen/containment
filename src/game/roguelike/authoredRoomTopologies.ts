@@ -11,6 +11,28 @@ export const AWAKENING_BLOCKOUT=Object.freeze([
  {id:'monitoring-recovery',x:160,y:650,w:130,h:100},
  {id:'interrupted-service',x:1040,y:650,w:70,h:100},
 ].map(({id,x,y,w,h})=>Object.freeze({id,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
+/** Detail-stage reservations, NOT collision geometry or new interactions.
+ * XY and elevation are game units above deck. Sweeps include handles/rail feet.
+ * Solid detail must stay in its owning AWAKENING_BLOCKOUT footprint. Access
+ * reservations remain walkable; never append them to topology voids. */
+export type AwakeningFunctionalEnvelope=Readonly<{
+ id:string;fixture:string;kind:'contained-sweep'|'access'|'contained-kit';
+ bounds:Readonly<{x:number;y:number;w:number;h:number}>;maxHeight:number;contract:string;
+}>;
+export const AWAKENING_FUNCTIONAL_ENVELOPES:readonly AwakeningFunctionalEnvelope[]=Object.freeze(([
+ {id:'release-lid',fixture:'player-release',kind:'contained-sweep',bounds:{x:94,y:383,w:82,h:114},maxHeight:40,contract:'Telescoping lid retracts north inside tray footprint; parked y383–405. No outward hinge sweep.'},
+ {id:'release-rail',fixture:'player-release',kind:'contained-kit',bounds:{x:92,y:383,w:8,h:114},maxHeight:30,contract:'West rail with feet inside solid. East side y405–475 is the unobstructed release gap.'},
+ {id:'landing',fixture:'player-release',kind:'access',bounds:{x:180,y:380,w:58,h:120},maxHeight:.6,contract:'Flush walkable landing, no lip, steps or rail across east exit. Spawn 230/440.'},
+ {id:'monitor',fixture:'monitoring-recovery',kind:'contained-kit',bounds:{x:173,y:664,w:62,h:37},maxHeight:40,contract:'North working face y664, controls at height 34. Mount on cabinet, no floating screen.'},
+ {id:'operator',fixture:'monitoring-recovery',kind:'access',bounds:{x:176,y:582,w:56,h:56},maxHeight:64,contract:'Standing center 204/610 radius28 faces south; 54 units to controls. Approach from landing via x204/y610.'},
+ {id:'seat-pullback',fixture:'monitoring-recovery',kind:'contained-sweep',bounds:{x:186,y:704,w:36,h:44},maxHeight:38,contract:'Seat height23; back/feet and southward pull-back end at y748 inside island. No new sit interaction.'},
+ {id:'seat-access',fixture:'monitoring-recovery',kind:'access',bounds:{x:176,y:762,w:56,h:56},maxHeight:64,contract:'Standing center 204/790 faces north. Reach south seat edge; approach around west side x120.'},
+ {id:'locker-door',fixture:'monitoring-recovery',kind:'contained-sweep',bounds:{x:252,y:656,w:36,h:88},maxHeight:48,contract:'East-facing sliding door and recessed handle, no hinged swing into aisle. Entire travel remains inside island.'},
+ {id:'locker-access',fixture:'monitoring-recovery',kind:'access',bounds:{x:302,y:672,w:56,h:56},maxHeight:64,contract:'Standing center 330/700 faces west; 42 units to door. Approach from x350 center cross-aisle.'},
+ {id:'cabinet-door',fixture:'interrupted-service',kind:'contained-sweep',bounds:{x:1044,y:658,w:62,h:47},maxHeight:48,contract:'West-facing split folding door parked ajar inside reserved sweep, including handle. Technician stands west, no swing toward x960 route.'},
+ {id:'technician',fixture:'interrupted-service',kind:'access',bounds:{x:972,y:650,w:56,h:56},maxHeight:64,contract:'Standing center 1000/678 faces east; 44 units to cabinet working face. Unattended satellite supply station, not bedside monitor kit.'},
+ {id:'trolley',fixture:'interrupted-service',kind:'contained-kit',bounds:{x:1044,y:710,w:62,h:36},maxHeight:34,contract:'Tray height18; wheels touch deck, handle included. Detail-stage parked center1079/728, +4 east of aligned storage1075/728; no aisle overhang.'},
+] satisfies AwakeningFunctionalEnvelope[]).map(e=>Object.freeze({...e,bounds:Object.freeze(e.bounds)})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
  * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */

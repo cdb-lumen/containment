@@ -4,6 +4,7 @@ import {ROOM_TEMPLATES} from '../../src/game/roguelike/roomTemplates';
 import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition,hasClearExpeditionShot} from '../../src/game/world/expeditionGeometry';
 import {FacilityNavigation} from '../../src/game/world/FacilityNavigation';
 import {ProjectileHitTracker} from '../../src/game/combat/CombatSystem';
+import {AWAKENING_BLOCKOUT,AWAKENING_FUNCTIONAL_ENVELOPES} from '../../src/game/roguelike/authoredRoomTopologies';
 import {DepthGame} from '../../src/DepthGame';
 const nodes=generateRun(3,3).nodes;
 const geometry=()=>createExpeditionGeometry(nodes.find(n=>n.templateId==='awakening-bay')!);
@@ -20,12 +21,28 @@ describe('awakening cradle',()=>{
  });
  it('allows radius-38 traversal from the broken cradle to exit on both broad routes',()=>{
   const g=geometry(),nav=new FacilityNavigation(g);nav.prepare(g.playerSpawn,1);
+  for(const radius of [16,28,38])expect(canTraverseExpedition(g,g.playerSpawn,g.exitPoint,radius),`center radius ${radius}`).toBe(true);
   for(const side of [190,700]){
    const route=[g.playerSpawn,{x:350,y:440},{x:350,y:side},{x:960,y:side},{x:960,y:440},g.exitPoint];
    for(const radius of [16,28,38])for(let i=1;i<route.length;i++)expect(canTraverseExpedition(g,route[i-1],route[i],radius),JSON.stringify(route[i])).toBe(true);
   }
   for(const b of g.breaches)for(const p of [b,{x:b.x+(b.facing==='east'?56:-56),y:b.y}]){
    expect(canOccupyExpedition(g,p,38)).toBe(true);expect(nav.reachable(p)).toBe(true);
+  }
+ });
+ it('keeps kit sweeps within solids and reserved standing centers reachable',()=>{
+  const g=geometry(),nav=new FacilityNavigation(g);nav.prepare(g.playerSpawn,1);
+  for(const e of AWAKENING_FUNCTIONAL_ENVELOPES){
+   const b=e.bounds;
+   if(e.kind==='access'){
+    if(e.id==='landing')continue;
+    const center={x:b.x+b.w/2,y:b.y+b.h/2};
+    expect(canOccupyExpedition(g,center,28),e.id).toBe(true);expect(nav.reachable(center),e.id).toBe(true);
+   }else{
+    const f=AWAKENING_BLOCKOUT.find(f=>f.id===e.fixture)!.footprint;
+    expect(b.x,e.id).toBeGreaterThanOrEqual(f[0].x);expect(b.y,e.id).toBeGreaterThanOrEqual(f[0].y);
+    expect(b.x+b.w,e.id).toBeLessThanOrEqual(f[2].x);expect(b.y+b.h,e.id).toBeLessThanOrEqual(f[2].y);
+   }
   }
  });
  it.each([190,700])('routes a live brute around the straight banks via y=%s without entering solids',y=>{
