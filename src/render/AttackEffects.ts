@@ -111,6 +111,25 @@ export class AttackEffects {
     for(let i=0;i<9;i++){const a=i*2.399;this.particle(this.glow,EFFECT_LIMITS.glow,end,i%2?0x8d9bff:0xcbefff,.065,.18+Math.random()*.16,new T.Vector3(Math.cos(a)*2,.4+Math.random()*2,Math.sin(a)*2),4);}
     return;
    }
+   // Untargeted radial arc is Ball Lightning's discharge, not a blast ring.
+   if(e.boon==='arc'&&e.radius!==undefined){
+    p.y=.65;const radius=Math.min(4,e.radius/32);
+    this.particle(this.glow,EFFECT_LIMITS.glow,p,0xc4eaff,.5,.12);
+    for(let i=0;i<6;i++){
+     const angle=i*Math.PI/3+.17,end=p.clone().add(new T.Vector3(Math.cos(angle)*radius,(i%2)*.3,Math.sin(angle)*radius));
+     if(this.arcs.length>=6)this.arcs.shift();this.arcs.push({start:p.clone(),end,age:0,seed:Math.floor(Math.random()*65536)});
+     this.particle(this.glow,EFFECT_LIMITS.glow,end,0x8d9bff,.12,.18);
+    }return;
+   }
+   // Radial impact is Fragmentation. Keep ordinary point impacts and links separate.
+   if(e.boon==='impact'&&e.radius!==undefined){
+    p.y=.65;const speed=Math.min(7,e.radius/32*1.7);
+    this.particle(this.glow,EFFECT_LIMITS.glow,p,0xf5dab0,.28,.07);
+    for(let i=0;i<12;i++){
+     const angle=i*Math.PI/6,s=speed*(.65+Math.random()*.35),v=new T.Vector3(Math.cos(angle)*s,.8+Math.random()*1.5,Math.sin(angle)*s);
+     this.particle(this.debris,EFFECT_LIMITS.debris,p,i%3?0x9d9c8d:0xf5dab0,.085+Math.random()*.045,.65+Math.random()*.2,v,9.8,2.8);
+    }return;
+   }
    if(e.boon==='field'){this.pulse(new T.Vector3(p.x,.025,p.z),color,(e.radius??75)/32,(e.durationMs??2000)/1000,0,false,true);return;}
    if(e.boon==='charge'){this.particle(this.glow,EFFECT_LIMITS.glow,p,color,.25,(e.durationMs??450)/1000);return;}
    if(e.boon==='shatter'){

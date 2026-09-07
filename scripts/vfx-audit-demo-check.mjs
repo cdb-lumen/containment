@@ -9,7 +9,7 @@ const impact={type:'acid',angle:0};
 const pool={type:'acid',radius:120};
 const spit=[{type:'hazard-attack',enemyType:'spitter'}];
 const queen=[{type:'area-attack'}];
-test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance']));
+test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance','ball-lightning','fragmentation']));
 test('options enforce exact arguments, SHA, quality and final length',()=>{
  assert.equal(opt('acid-impact').frames,40);
  assert.equal(options(['--case=acid-pool','--source-sha='+'a'.repeat(40),'--root=/tmp/immutable']).root,'/tmp/immutable');
@@ -50,6 +50,17 @@ test('links require real shots, secondary damage and chilled lance targets',()=>
   assert.throws(()=>verifyEvents(events.slice(1),frames,o,damage),/shot/);
   assert.throws(()=>verifyEvents(events,[{...frames[0],secondaryDamage:0}],o,damage),/secondary health/);
   if(id==='ice-lance')assert.throws(()=>verifyEvents(events,[{...frames[0],secondaryStatuses:{}}],o,damage),/chill/);
+ }
+});
+test('radial demos reject links, missing kills and missing delayed discharges',()=>{
+ for(const id of ['ball-lightning','fragmentation']){
+  const o=opt(id),ball=id==='ball-lightning',boon=ball?'arc':'impact',amount=ball?22:16;
+  const events=[{type:'shot'},{type:'boon',boon,radius:ball?100:115,frame:20},...(ball?[{type:'boon',boon:'charge',durationMs:500,frame:10}]:[{type:'corpse'}])];
+  const frames=[{zoom:1,secondaryDamage:amount}],damage=[{owner:'damage',amount,applied:true,secondary:true}];
+  assert.doesNotThrow(()=>verifyEvents(events,frames,o,damage));
+  assert.throws(()=>verifyEvents(events.slice(0,2),frames,o,damage),ball?/charge/:/kill/);
+  assert.throws(()=>verifyEvents(events.map(e=>e.boon===boon?{...e,targetX:50,targetY:50}:e),frames,o,damage),/radial/);
+  assert.throws(()=>verifyEvents(events,frames,o,[]),/secondary damage/);
  }
 });
 test('recorder bytes retain numeric RNG and contain no redaction tokens',()=>{
