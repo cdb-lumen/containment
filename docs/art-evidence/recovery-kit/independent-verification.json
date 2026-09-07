@@ -1,0 +1,87 @@
+{
+  "result": "PASS",
+  "finiteGLBAccessorCounts": {
+    "POSITION": 12985,
+    "NORMAL": 12985,
+    "TEXCOORD_0": 12985
+  },
+  "unitLengthNormals": true,
+  "embeddedTextures": [
+    {
+      "name": "cryo-surface-04-color",
+      "width": 512,
+      "height": 512,
+      "bytes": 16001
+    },
+    {
+      "name": "cryo-surface-02-color",
+      "width": 512,
+      "height": 512,
+      "bytes": 11398
+    },
+    {
+      "name": "cryo-surface-02-metallic-cryo-surface-02-roughness",
+      "width": 512,
+      "height": 512,
+      "bytes": 8912
+    },
+    {
+      "name": "cryo-surface-01-color",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 35429
+    },
+    {
+      "name": "cryo-surface-01-metallic-cryo-surface-01-roughness",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 29875
+    },
+    {
+      "name": "cryo-surface-03-color",
+      "width": 512,
+      "height": 512,
+      "bytes": 24111
+    },
+    {
+      "name": "cryo-surface-03-metallic-cryo-surface-03-roughness",
+      "width": 512,
+      "height": 512,
+      "bytes": 23715
+    },
+    {
+      "name": "kit-display",
+      "width": 512,
+      "height": 256,
+      "bytes": 6906
+    }
+  ],
+  "individualTriangleReservationChecks": 14226,
+  "deckContactFeet": [
+    [
+      190,
+      710
+    ],
+    [
+      190,
+      742
+    ],
+    [
+      218,
+      710
+    ],
+    [
+      218,
+      742
+    ]
+  ],
+  "consoleDeckSupportRays": 3,
+  "nativeScale": 1,
+  "gameUnitsPerUnit": 32,
+  "mountThreeXYZ": [
+    6.375,
+    0,
+    21.875
+  ],
+  "runtimeCameraOrCollisionVerified": false
+}

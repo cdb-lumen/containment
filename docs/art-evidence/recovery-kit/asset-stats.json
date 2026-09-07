@@ -1,0 +1,38 @@
+{
+  "scope": "console + medical drawers + recovery seat; remaining kit deferred",
+  "roundtrip": "PASS",
+  "finiteNormalsUV": true,
+  "allTrianglesOutsideFourAccessRectangles": true,
+  "exactFrozenBounds": "PASS",
+  "seatHeightGame": 22.999996185302734,
+  "nativeGameUnitsPerUnit": 32,
+  "mountGameXY": [
+    204,
+    700
+  ],
+  "glbBytes": 666592,
+  "editableNamedParts": 105,
+  "meshes": 7,
+  "triangles": 14226,
+  "boundsGame": [
+    [
+      172.99999809265137,
+      235.0
+    ],
+    [
+      664.0,
+      746.0
+    ],
+    [
+      0.0,
+      37.95000457763672
+    ]
+  ],
+  "materials": 7,
+  "embeddedImages": 8,
+  "embeddedImageBytes": 156347,
+  "baseColorTexturedMaterials": 5,
+  "roughnessTexturedMaterials": 3,
+  "normalMappedMaterials": 0,
+  "runtimeVerified": false
+}
