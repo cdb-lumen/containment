@@ -170,7 +170,7 @@ function awakeningRelease(f:Fabricator,hole:Outline){
  for(const z of [392,488])box(188,.4,z,9,.2,2,f.stencil,0);
 }
 /** Standalone construction uses exactly the same parts as the room for mesh QA. */
-export function createAwakeningRelease(){const f=new Fabricator();awakeningRelease(f,AWAKENING_BLOCKOUT[0].footprint);return f.finish();}
+export function createAwakeningRelease(){const f=new Fabricator();awakeningRelease(f,AWAKENING_BLOCKOUT[0].footprint);awakeningPlate(f,'RELEASED',135,36.2,390,62,10);const root=f.finish();root.name='awakening-release';return root;}
 /** Closed low pressure cassettes on bolted saddles. Services cross circulation
  * below the deck in a closed duct; only contained risers stand above deck. */
 function awakeningRacks(f:Fabricator,holes:readonly Outline[],sealed=false){
@@ -394,8 +394,8 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
   if(role.startsWith('bank-')||role==='supply-wall')continue;
   if(role!=='player-release')f.slab(hole,-.10,.10,f.paint);
   if(role==='player-release'){
-   awakeningRelease(f,hole);
-   awakeningPlate(f,'RELEASED',135,36.2,390,62,10);
+   const release=createAwakeningRelease();f.root.add(release);(f.root.userData.localSigns??=[]).push(...release.userData.localSigns??[]);
+   (f.root.userData.lightFixtures??=[]).push(...release.userData.lightFixtures??[]);delete release.userData.lightFixtures;
   }
  }
  awakeningKit(f);

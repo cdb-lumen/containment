@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
 import {build,preview} from 'vite';
 import {chromium} from 'playwright';
 
@@ -10,12 +12,18 @@ import {chromium} from 'playwright';
 const out=resolve(process.argv[2]??'artifacts/awakening-opening');
 await mkdir(out,{recursive:true});
 const sha=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+assert.equal(execFileSync('git',['diff','HEAD','--','src','scripts/awakening-opening-evidence.mjs'],{encoding:'utf8'}),'','capture requires committed runtime and script');
+const assetSha256=createHash('sha256').update(readFileSync('public/assets/awakening/released-berth/released-berth.glb')).digest('hex');
 const probe=`\nconst openingWebglErrors=[];
 Object.defineProperty(window,'__openingSnapshot',{get:()=>{
  const gl=renderer.renderer.getContext();let error;
  while((error=gl.getError())!==gl.NO_ERROR){openingWebglErrors.push(error);if(error===gl.CONTEXT_LOST_WEBGL)break;}
  return ({
  state:game.status,room:game.node.templateId,player:{x:game.player.x,y:game.player.y},
+ berth:renderer.releasedBerth?.state,bank:renderer.sealedBank?.state,
+ berthPosition:renderer.world.getObjectByName('released-berth')?.position.toArray(),
+ fallback:!!renderer.world.getObjectByName('awakening-release'),
+ sealedPassengers:renderer.world.getObjectByName('sealed-chamber-bank')?.userData.sealedPassengers,
  boons:[...game.expedition.build.mutations],camera:{zoom:renderer.camera.zoom,
  left:renderer.camera.left,right:renderer.camera.right,top:renderer.camera.top,bottom:renderer.camera.bottom,
  position:renderer.camera.position.toArray(),focus:renderer.focus.toArray()},
@@ -43,14 +51,17 @@ try{
   const card=page.locator('[data-mutation]').first();
   if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
   await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&document.querySelector('#room-name').textContent==='Awakening bay');
+  await page.waitForFunction(()=>window.__openingSnapshot.berth==='ready'&&window.__openingSnapshot.bank==='ready');
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const image=resolve(out,`${name}.png`);
   await page.screenshot({path:image});
   const snapshot=await page.evaluate(()=>window.__openingSnapshot);
   assert.equal(snapshot.state,'playing');assert.equal(snapshot.room,'awakening-bay');assert.equal(snapshot.boons.length,1);
   assert.deepEqual(snapshot.player,{x:230,y:440});assert.equal(snapshot.camera.zoom,1);
+  assert.equal(snapshot.berth,'ready');assert.equal(snapshot.bank,'ready');assert.equal(snapshot.fallback,false);assert.equal(snapshot.sealedPassengers,8);assert.deepEqual(snapshot.berthPosition,[135/32,0,440/32]);
   assert.deepEqual(snapshot.webglErrors,[]);assert.equal(snapshot.performance.graphicsLost,false);assert.deepEqual(errors,[]);
   results.push({name,viewport,image,before,snapshot,errors});
-  await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
+  await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,assetSha256,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
   console.log(JSON.stringify(results.at(-1)));await context.close();
  }
  assert.equal(results.length,2);
