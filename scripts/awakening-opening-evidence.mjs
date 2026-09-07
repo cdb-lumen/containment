@@ -30,7 +30,10 @@ Object.defineProperty(window,'__openingSnapshot',{get:()=>{
  performance:window.__containmentPerformance,webglErrors:[...openingWebglErrors]
 });}});`;
 const outDir=resolve(out,'build');
-await build({build:{outDir,emptyOutDir:true},plugins:[{name:'opening-read-only-evidence',enforce:'post',transform(code,id){if(id.endsWith('/src/main.ts'))return code+probe;}}]});
+await build({build:{outDir,emptyOutDir:true},plugins:[{name:'opening-read-only-evidence',enforce:'pre',transform(code,id){
+ if(id.endsWith('/src/main.ts'))return code+probe;
+ if(id.endsWith('/src/render/ReleasedBerth.ts')||id.endsWith('/src/render/SealedChamberBank.ts'))return code.replace('.catch(()=>{if(source)',`.catch((error)=>{console.log('Opening asset failure',${JSON.stringify(id)},String(error));if(source)`);
+}}]});
 const server=await preview({build:{outDir},preview:{host:'127.0.0.1',port:0}});
 let browser;
 const results=[];
@@ -40,7 +43,7 @@ try{
   console.log(`Starting ${name}`);
   const context=await browser.newContext({viewport,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
   const page=await context.newPage();page.setDefaultTimeout(90000);
-  const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());if(m.text().startsWith('Opening asset failure'))console.log(m.text());});
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:''}));
   await page.goto(server.resolvedUrls.local[0]);
   await page.waitForFunction(()=>document.body.dataset.state==='menu'&&window.__openingSnapshot);
@@ -57,7 +60,12 @@ try{
   const settled=await page.evaluate(()=>({...window.__openingSnapshot,resources:performance.getEntriesByType('resource').filter(r=>r.name.includes('.glb')).map(r=>({name:r.name,duration:r.duration,bytes:r.transferSize}))}));
   console.log('Settled assets',JSON.stringify(settled));
   await writeFile(resolve(out,`${name}-settled.json`),JSON.stringify(settled,null,2));
-  assert.equal(settled.berth,'ready');assert.equal(settled.bank,'ready');
+  if(settled.berth!=='ready'||settled.bank!=='ready'){
+   await page.screenshot({path:resolve(out,`${name}-FAILED-fallback.png`)});
+   results.push({name,viewport,failed:true,settled,errors});
+   await writeFile(resolve(out,'failure-manifest.json'),JSON.stringify({sha,assetSha256,results},null,2));
+   await context.close();continue;
+  }
   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const image=resolve(out,`${name}.png`);
   await page.screenshot({path:image});
@@ -70,5 +78,5 @@ try{
   await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,assetSha256,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
   console.log(JSON.stringify(results.at(-1)));await context.close();
  }
- assert.equal(results.length,2);
+ assert.equal(results.length,2);assert.ok(results.every(result=>!result.failed),'both viewports must have ready assets');
 }finally{await browser?.close();await new Promise((resolve,reject)=>server.httpServer.close(error=>error?reject(error):resolve()));}
