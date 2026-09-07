@@ -241,31 +241,108 @@ function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
  }
 }
 export function createAwakeningRacks(){const f=new Fabricator();awakeningRacks(f,AWAKENING_BLOCKOUT.map(f=>f.footprint));return f.finish();}
+/** Unattended recovery kit; all hardware stays in the frozen sub-reservations.
+ * Cabinet-supported controls face north, seat faces south, locker faces east,
+ * and the open satellite cabinet faces west. No asynchronous asset owner. */
+function awakeningKit(f:Fabricator){
+ const box=(x:number,h:number,z:number,w:number,t:number,d:number,m:T.Material,r=1)=>f.box(x/U,h/U,z/U,w/U,t/U,d/U,m,r/U);
+ const pipe=(a:number[],b:number[],r:number,m:T.Material)=>f.pipe(v(a[0]/U,a[1]/U,a[2]/U),v(b[0]/U,b[1]/U,b[2]/U),r/U,m);
+ // Medical drawer cabinet bears the console: recessed toe-space, full worktop,
+ // low supported display and tactile keys on the near operator edge.
+ box(204,2,684,56,4,30,f.dark);
+ box(204,16,685,58,28,30,f.ivory,2);
+ for(const h of [10,22]){
+  box(204,h,669.5,52,10,1,f.paint,.3);
+  box(204,h+2,668.5,14,2,2,f.edge,.4);
+ }
+ box(181,22,668.6,3,8,1,f.ivory,.2);box(181,22,668.5,8,3,1,f.ivory,.2);
+ box(204,31,682.5,62,2,37,f.edge,1);
+ box(204,33,667,48,2,4,f.dark,.4);
+ for(const x of [185,194,204,214,223])box(x,33.7,667,5,.6,3,x===223?f.warm:f.ivory,.3);
+ // Screen is set into a backed instrument wedge, not a floating glass slab.
+ box(204,34,686,52,4,26,f.paint,1);
+ box(204,36.5,686,50,1,25,f.dark,.7);
+ if(typeof document!=='undefined'){
+  const canvas=document.createElement('canvas');canvas.width=512;canvas.height=256;const c=canvas.getContext('2d');
+  if(c){
+   c.fillStyle='#10282d';c.fillRect(0,0,512,256);c.fillStyle='#a5ece5';c.font='bold 62px monospace';c.fillText('08 STABLE',22,70);
+   c.strokeStyle='#7edbd5';c.lineWidth=6;c.beginPath();
+   for(const [i,y] of [160,160,157,166,115,203,148,160,160,160,160,157,166,115,203,148,160].entries()){const x=22+i*29;if(i===0)c.moveTo(x,y);else c.lineTo(x,y);}c.stroke();
+   for(let i=0;i<8;i++){c.fillStyle='#7edbd5';c.fillRect(24+i*60,226,40,10);}
+   const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;
+   const material=new T.MeshStandardMaterial({map:texture,emissiveMap:texture,emissive:0xffffff,emissiveIntensity:.45,roughness:.65});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
+   f.add(new T.PlaneGeometry(48/U,23/U),material,v(204/U,37.1/U,686/U),new T.Euler(-Math.PI/2,0,0));
+  }
+ }
+ // Recovery chair faces its southern access area: bolted feet, stretchers,
+ // cushion at23, low back to north and reachable arms.
+ for(const x of [190,218])for(const z of [710,742]){
+  box(x,1,z,6,2,6,f.dark,.5);box(x,10,z,3,18,3,f.edge,.5);
+ }
+ for(const x of [190,218])pipe([x,9,710],[x,9,742],1.3,f.edge);
+ box(204,19,727,32,4,38,f.paint,2);box(204,22,727,30,2,36,f.body,2);
+ for(const x of [190,218]){box(x,27,708,3,20,3,f.edge,.5);box(x,26,738,2,12,2,f.edge,.5);box(x,32,725,4,3,30,f.ivory,1);}
+ box(204,31,707,30,12,4,f.body,2);
+ // Personal locker: an east-facing recessed sliding leaf; rails and pulls do
+ // not protrude into the cross-aisle. Short local marking replaces debug text.
+ box(270,2,700,34,4,86,f.dark,1);
+ box(270,24,700,34,40,86,f.ivory,2);
+ box(287.2,24,700,1,36,79,f.dark,.3);
+ for(const z of [680,720])box(287.7,24,z,.5,34,38,f.paint,.2);
+ for(const h of [7,41])box(287.8,h,700,.3,1,80,f.edge,.1);
+ box(287.9,25,703,.2,8,3,f.ivory,.1);
+ // Compact lid marking uses a matching aspect ratio, not the room-header font.
+ box(270,44.4,700,28,.8,16,f.dark,.5);
+ if(typeof document!=='undefined'){
+  const canvas=document.createElement('canvas');canvas.width=256;canvas.height=128;const c=canvas.getContext('2d');
+  if(c){c.fillStyle='#18262b';c.fillRect(0,0,256,128);c.fillStyle='#d5dfd7';c.font='bold 100px monospace';c.textAlign='center';c.textBaseline='middle';c.fillText('KIT',128,68);
+   const texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;
+   const material=new T.MeshStandardMaterial({map:texture,roughness:.7});material.userData.actorMaterial=true;material.addEventListener('dispose',()=>texture.dispose());
+   f.add(new T.PlaneGeometry(27/U,15/U),material,v(270/U,44.9/U,700/U),new T.Euler(-Math.PI/2,0,0));
+  }
+ }
+ // Open satellite supply cabinet. Back and cheeks carry the shelves; split
+ // door leaves fold inward against the north/south cheeks, never into route.
+ box(1075,2,681.5,60,4,45,f.dark,1);
+ box(1103,24,681.5,4,40,45,f.paint,1);
+ for(const z of [660,703])box(1075,24,z,60,40,3,f.ivory,1);
+ for(const h of [5,20,36,45])box(1075,h,681.5,60,2,40,f.edge,.5);
+ for(const z of [664,699]){
+  box(1055,25,z,20,36,2,f.ivory,.4);
+  box(1072,25,z,14,36,2,f.paint,.4);
+  pipe([1046,8,z],[1046,42,z],1,f.bronze);
+  box(1076,26,z+(z<680?2:-2),3,8,2,f.dark,.3);
+ }
+ // One sealed dressing pack remains on the lower shelf, not decorative litter.
+ box(1090,11,687,14,10,12,f.ivory,1);
+ box(1090,16.3,687,8,.6,3,f.cold,.2);
+ // Abandoned trolley parked four units east of storage alignment. Wheels
+ // touch deck; uprights carry both trays and the raised west push handle.
+ for(const x of [1058,1100])for(const z of [716,740]){
+  pipe([x-2,3,z],[x+2,3,z],3,f.dark);
+  box(x,10,z,2,14,2,f.edge,.4);
+ }
+ for(const h of [8,17])box(1079,h,728,48,2,28,f.edge,1);
+ for(const z of [714,742])box(1079,20,z,48,4,2,f.ivory,.5);
+ for(const x of [1055,1103])box(x,20,728,2,4,28,f.ivory,.5);
+ for(const z of [717,739])pipe([1055,17,z],[1050,30,z],1.3,f.edge);
+ pipe([1050,30,717],[1050,30,739],1.6,f.ivory);
+}
+export function createAwakeningKit(){const f=new Fabricator();awakeningKit(f);return f.finish();}
 function awakeningBay(f:Fabricator,t:RoomPlan){
  // Neutral solid blockout. Role metadata never owns alternate render coordinates.
  awakeningRacks(f,t.voids??[]);
  f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
  for(const [i,hole] of (t.voids??[]).entries()){
-  const role=AWAKENING_BLOCKOUT[i].id,b=bounds(hole);
+  const role=AWAKENING_BLOCKOUT[i].id;
   if(role.startsWith('bank-')||role==='supply-wall')continue;
-  if(role!=='player-release')f.slab(hole,-.46,.64,f.paint);
+  if(role!=='player-release')f.slab(hole,-.10,.10,f.paint);
   if(role==='player-release'){
    awakeningRelease(f,hole);
-  }else if(role==='monitoring-recovery'){
-   f.box(b.x-.65,.6,b.z-.55,1.9,.9,1.1,f.ivory,.06);
-   f.box(b.x-.65,1.08,b.z-.55,1.5,.12,.75,f.cold,.03);
-   f.box(b.x-.65,.45,b.z+.6,.85,.55,.75,f.paint,.06);
-   f.box(b.x-.65,.85,b.z+.92,.85,.6,.12,f.edge,.03);
-   f.box(b.x+1.25,.8,b.z,.65,1.3,b.d-.4,f.ivory,.04);
-   f.sign('RECOVERY / MONITOR',b.x,1.5,b.z-.85,b.w-.3);
-  }else{
-   f.box(b.x,.75,b.z-.7,b.w-.3,1.2,1,f.ivory,.04);
-   f.box(b.x,.79,b.z-.16,b.w-.6,.8,.08,f.dark,.02);
-   f.box(b.x,.5,b.z+.8,b.w-.35,.12,.8,f.edge,.03);
-   for(const dx of [-.6,.6])f.box(b.x+dx,.3,b.z+.8,.1,.5,.65,f.paint,.02);
   }
  }
  // Local damaged bulkhead markers stay on the perimeter, outside actor routes.
+ awakeningKit(f);
  const wall=bounds(outline(t));
  for(const dz of [-2,2])f.box(wall.x1-.1,.7,t.height/64+dz,.2,1.6,1.2,f.rust,.03);
  f.sign('DAMAGED EXIT / RESTORE COMMS',wall.x1-2.7,.025,t.height/64,4.6);
