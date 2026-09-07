@@ -9,7 +9,7 @@ const impact={type:'acid',angle:0};
 const pool={type:'acid',radius:120};
 const spit=[{type:'hazard-attack',enemyType:'spitter'}];
 const queen=[{type:'area-attack'}];
-test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance','ball-lightning','fragmentation','hot-reload']));
+test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance','ball-lightning','fragmentation','frost-field','hot-reload']));
 test('options enforce exact arguments, SHA, quality and final length',()=>{
  assert.equal(opt('acid-impact').frames,40);
  assert.equal(options(['--case=acid-pool','--source-sha='+'a'.repeat(40),'--root=/tmp/immutable']).root,'/tmp/immutable');

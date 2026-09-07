@@ -9,7 +9,7 @@ it.each([undefined,96])('renders untargeted acid radius %s as bounded non-additi
  try{
   fx.event({type:'acid',x:64,y:96,angle:.4,radius});fx.update(.01,camera,[]);
   expect(fx.counts).toEqual({fire:0,glow:0,smoke:radius===undefined?10:18,debris:0,pulses:0,decals:0});
-  expect(scene.children).toHaveLength(8);expect((drops.material as T.ShaderMaterial).blending).toBe(T.NormalBlending);
+  expect(scene.children).toHaveLength(9);expect((drops.material as T.ShaderMaterial).blending).toBe(T.NormalBlending);
   expect((scene.children[6] as T.InstancedMesh).count).toBe(0);
   for(let i=0;i<drops.count;i++)expect(drops.geometry.getAttribute('effectFrame').getX(i)).toBe(-1);
  }finally{fx.dispose();}
@@ -31,7 +31,7 @@ it('shares the smoke cap, freezes on pause and clears without allocating more dr
   for(let i=0;i<100;i++)fx.event({type:'acid',x:0,y:0,radius:96});
   expect(fx.counts.smoke).toBe(EFFECT_LIMITS.smoke);fx.update(.01,camera,[]);expect(drops.count).toBe(EFFECT_LIMITS.smoke);
   const matrices=drops.instanceMatrix.array.slice();fx.update(0,camera,[]);expect(drops.instanceMatrix.array).toEqual(matrices);
-  expect(scene.children).toHaveLength(8);fx.clear();expect(fx.counts.smoke).toBe(0);expect(drops.count).toBe(0);
+  expect(scene.children).toHaveLength(9);fx.clear();expect(fx.counts.smoke).toBe(0);expect(drops.count).toBe(0);
   fx.event({type:'explosion',x:0,y:0,radius:96,elements:['poison']});fx.update(.01,camera,[]);
   expect(fx.counts.pulses).toBe(1);expect(fx.counts.glow).toBeGreaterThan(0);
   for(let i=0;i<drops.count;i++)expect(drops.geometry.getAttribute('effectFrame').getX(i)).toBeGreaterThanOrEqual(0);
