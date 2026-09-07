@@ -9,7 +9,7 @@ const impact={type:'acid',angle:0};
 const pool={type:'acid',radius:120};
 const spit=[{type:'hazard-attack',enemyType:'spitter'}];
 const queen=[{type:'area-attack'}];
-test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance','ball-lightning','fragmentation']));
+test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance','ball-lightning','fragmentation','hot-reload']));
 test('options enforce exact arguments, SHA, quality and final length',()=>{
  assert.equal(opt('acid-impact').frames,40);
  assert.equal(options(['--case=acid-pool','--source-sha='+'a'.repeat(40),'--root=/tmp/immutable']).root,'/tmp/immutable');
@@ -67,6 +67,14 @@ test('final Ball Lightning evidence rejects an end-of-clip discharge',()=>{
  const o=options(['--case=ball-lightning','--source-sha='+'a'.repeat(40)]);
  const events=[{type:'shot'},{type:'boon',boon:'charge',durationMs:500,frame:100},{type:'boon',boon:'arc',radius:100,frame:110}];
  assert.throws(()=>verifyEvents(events,[{zoom:1,secondaryDamage:22}],o,[{owner:'damage',amount:22,applied:true,secondary:true}]),/aftermath/);
+});
+test('reload evidence rejects a damaging cascade, missing reload completion or player damage',()=>{
+ const o=opt('hot-reload'),events=[{type:'boon',boon:'overload'}],frames=[{zoom:1,damage:0,reloading:true,magazine:9},{zoom:1,damage:0,reloading:false,magazine:10}];
+ assert.doesNotThrow(()=>verifyEvents(events,frames,o));
+ assert.throws(()=>verifyEvents([{...events[0],radius:115}],frames,o),/prime/);
+ assert.throws(()=>verifyEvents(events,[frames[0]],o),/reload/);
+ assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,damage:1})),o),/damage/);
+ assert.throws(()=>verifyEvents([...events,{type:'shot'}],frames,o),/firing/);
 });
 test('recorder bytes retain numeric RNG and contain no redaction tokens',()=>{
  const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');

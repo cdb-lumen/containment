@@ -187,7 +187,7 @@ export class DepthRenderer {
  effect(effect:GameEffect){
   const x=effect.x/UNIT,z=effect.y/UNIT;
   if(effect.type==='hurt'||effect.type==='sync-corpse')return;
-  if(effect.type==='explosion'||(effect.type==='boon'&&(effect.boon==='blast'||effect.boon==='overload')))this.lighting.explosion(x,z,(effect.radius??48)/UNIT);
+  if(effect.type==='explosion'||(effect.type==='boon'&&(effect.boon==='blast'||(effect.boon==='overload'&&effect.radius!==undefined))))this.lighting.explosion(x,z,(effect.radius??48)/UNIT);
   if(effect.type==='shot'){
    this.recoil=1;if(this.pendingShots.length<4)this.pendingShots.push(effect);return;
   }

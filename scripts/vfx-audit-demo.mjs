@@ -20,6 +20,7 @@ export const CASES = Object.freeze({
  'ice-lance': {link:'frost',mutations:['cryogenic','ice-lance'],damage:14},
  'ball-lightning': {link:'arc',radial:true,mutations:['arc-filament','ball-lightning'],damage:22,distance:85,fireEvery:4},
  'fragmentation': {link:'impact',radial:true,mutations:['fragmentation'],damage:16,distance:90,weakenPrimary:true},
+ 'hot-reload': {prime:true,mutations:['hot-reload']},
 });
 export function options(argv) {
  const v={};for(const arg of argv){const m=/^--(case|out|root|source-sha|seconds|quality)=(.+)$/.exec(arg);if(arg==='--provisional'){assert(!v.provisional);v.provisional=true;}else{assert(m,`Unknown argument ${arg}`);assert(!(m[1] in v),`Duplicate ${m[1]}`);v[m[1]]=m[2];}}
@@ -81,12 +82,14 @@ async function stage(o) {
   if(o.definition.weakenPrimary)g.enemies.applyDamage(d.primaryId,spawned[0].enemy.health+spawned[0].enemy.armor-1);
   d.aim=Math.atan2(pair[0].y-g.player.y,pair[0].x-g.player.x);g.switchWeapon('pistol');hazardSource=pair;
   const damage=g.damage.bind(g);g.damage=(id,amount,...rest)=>{const result=damage(id,amount,...rest);d.domainEvents.push({owner:'damage',id,amount,...result,secondary:id===d.secondaryId,frame:d.frame});return result;};
+ }else if(o.definition.prime){
+  g.switchWeapon('pistol');g.combat.fire(0);g.reload();
  }else if(!queen){const spawn=g.enemies.spawn('spitter',hazardSource.x,hazardSource.y);if(!spawn.spawned)throw Error('Spawn rejected');}
  else{Object.assign(g.player,candidates[0]);hazardSource={...origin};if(!g.boss.start(origin.x,origin.y))throw Error('Queen start failed');}
  d.initialTotal=g.combat.snapshot.health+g.combat.snapshot.armor;
  const caption=document.createElement('div');caption.id='vfx-audit-caption';caption.style.cssText='position:fixed;left:12px;bottom:78px;z-index:999;padding:6px 9px;background:#061116ef;color:#eff5ef;font:12px monospace;pointer-events:none';
  caption.textContent=`${o.provisional?'PROVISIONAL / ':''}${o.case}${queen?' / LEGACY BOSS':''} / CONTROLLED / NATIVE CAMERA / ${o.quality.toUpperCase()} / SILENT`;document.body.append(caption);
- return {room:g.node.templateId,runVersion:g.expedition.run.version,player:{...g.player},hazardSource,build,nativeZoom:d.nativeZoom,quality:r.qualityTier,controls:o.definition.link?'Controlled fixed-step fixture: legal prerequisite build, stationary high-health stalker pair in authored geometry, director disabled. Fragmentation starts its primary at one health via setup-only EnemySystem damage, then a real pistol collision kills it. Real pistol projectile collisions and MutationRuntime secondary damage/status events; simulated aim/fire input, no DOM input or live gameplay session. Native camera, silent.':'Stationary player and spitter; normal damage, specials and boss timers. Encounter director disabled. The queen case uses the supported legacy v2 Reactor Vault through production room entry, with a legal nearby player position; not current story-campaign progression. Actual DepthGame.update hazard collision/queen area attacks, unchanged danger radius and pool lifetime. No injected effects, player fire, DOM input, audio or performance evidence.'};
+ return {room:g.node.templateId,runVersion:g.expedition.run.version,player:{...g.player},hazardSource,build,nativeZoom:d.nativeZoom,quality:r.qualityTier,controls:o.definition.prime?'Controlled completed nonempty pistol reload through DepthGame.update, legal Hot Reload build. Setup consumes one round via CombatSystem.fire without a projectile; no enemies, firing, damage, DOM input or audio in clip. Native camera.':o.definition.link?'Controlled fixed-step fixture: legal prerequisite build, stationary high-health stalker pair in authored geometry, director disabled. Fragmentation starts its primary at one health via setup-only EnemySystem damage, then a real pistol collision kills it. Real pistol projectile collisions and MutationRuntime secondary damage/status events; simulated aim/fire input, no DOM input or live gameplay session. Native camera, silent.':'Stationary player and spitter; normal damage, specials and boss timers. Encounter director disabled. The queen case uses the supported legacy v2 Reactor Vault through production room entry, with a legal nearby player position; not current story-campaign progression. Actual DepthGame.update hazard collision/queen area attacks, unchanged danger radius and pool lifetime. No injected effects, player fire, DOM input, audio or performance evidence.'};
 }
 function step({frame,o}) {
  const d=window.__vfxAudit,g=d.game,r=d.renderer;d.frame=frame;
@@ -100,9 +103,16 @@ function step({frame,o}) {
  let poolShader=null;
  if(g.pools.length){const material=r.poolMeshes.values().next().value?.material;poolShader={material:material?.constructor.name,clock:material?.surfaceTime?.value,compiled:r.renderer.info.programs.some(program=>gl.getShaderSource(program.fragmentShader)?.includes('acidWet'))};}
  const secondary=d.secondaryId?g.enemies.getSnapshot(d.secondaryId):null;
- return {frame,secondaryDamage:secondary?d.secondaryTotal-secondary.health-secondary.armor:0,secondaryStatuses:d.secondaryId?g.boonStatuses(d.secondaryId):null,elapsed:g.elapsed,poolShader,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
+ return {frame,reloading:g.combat.snapshot.reloading,magazine:g.combat.snapshot.magazine,secondaryDamage:secondary?d.secondaryTotal-secondary.health-secondary.armor:0,secondaryStatuses:d.secondaryId?g.boonStatuses(d.secondaryId):null,elapsed:g.elapsed,poolShader,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
 }
 export function verifyEvents(events,frames,o,domainEvents=[]) {
+ if(o.definition.prime){
+  assert(events.some(e=>e.type==='boon'&&e.boon==='overload'&&e.radius===undefined),'Missing reload prime');
+  assert(frames.some(f=>f.reloading)&&frames.some(f=>!f.reloading&&f.magazine>frames[0].magazine),'Missing completed nonempty reload');
+  assert(!events.some(e=>e.type==='shot'||e.type==='explosion'),'Unexpected firing or explosion event');
+  assert(frames.every(f=>f.damage===0),'Priming caused damage');
+  assert(frames.every(f=>f.zoom===frames[0].zoom),'Changed zoom');return;
+ }
  if(o.definition.link){
   assert(events.some(e=>e.type==='shot'),'Missing real shot');
   if(o.definition.radial){
@@ -160,7 +170,7 @@ async function record(o) {
   await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/`);await page.waitForFunction(()=>window.__vfxAudit&&document.body.dataset.state==='menu');
   await page.evaluate(()=>{window.__vfxGate=true;});await page.locator('#start').click();m.setup=await page.evaluate(stage,o);
   // Bounded native-timer preroll stops at a real warning/projectile, before impact.
-  m.preroll=[];let ready=!!o.definition.link;for(let n=0;!ready&&n<200;n++){const state=await page.evaluate(step,{frame:n-200,o});m.preroll.push(state);if(state.bullets.some(b=>b.kind==='hazard')||state.boss.pendingTelegraph){ready=true;break;}}assert(ready,'No native hazard within ten-second preroll');
+  m.preroll=[];let ready=!!o.definition.link||!!o.definition.prime;for(let n=0;!ready&&n<200;n++){const state=await page.evaluate(step,{frame:n-200,o});m.preroll.push(state);if(state.bullets.some(b=>b.kind==='hazard')||state.boss.pendingTelegraph){ready=true;break;}}assert(ready,'No native hazard within ten-second preroll');
   if(o.case==='ball-lightning'){
    let charged=false;
    for(let n=0;n<200;n++){
@@ -185,7 +195,7 @@ async function record(o) {
   m.events=await page.evaluate(()=>window.__vfxAudit.events);m.domainEvents=await page.evaluate(()=>window.__vfxAudit.domainEvents);verifyEvents(m.events,m.frames,o,m.domainEvents);assert.deepEqual(m.errors,[]);
   m.probe=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-show_streams','-show_format','-of','json',mp4],{encoding:'utf8',timeout:60000}));assert.equal(m.probe.streams.length,1);verifyProbe(m.probe,o);
   execFileSync('ffmpeg',['-v','error','-xerror','-i',mp4,'-f','null','-'],{timeout:60000});m.decodeErrors=[];
-  const relevant=e=>o.definition.link?e.type==='boon'&&e.boon===o.definition.link&&(o.definition.radial?e.targetX===undefined&&e.radius>0:e.targetX!==undefined):e.type==='acid'&&e.targetId===undefined;
+  const relevant=e=>o.definition.prime?e.type==='boon'&&e.boon==='overload'&&e.radius===undefined:o.definition.link?e.type==='boon'&&e.boon===o.definition.link&&(o.definition.radial?e.targetX===undefined&&e.radius>0:e.targetX!==undefined):e.type==='acid'&&e.targetId===undefined;
   const p=m.events.find(e=>relevant(e)&&e.frame>=0)?.pixel;assert(p,'Missing event centroid');const size=128,x=Math.max(0,Math.min(o.viewport.width-size,Math.round(p.x)-size/2)),y=Math.max(90,Math.min(370-size,Math.round(p.y)-size/2));
   assert(p.x>=x&&p.x<x+size&&p.y>=y&&p.y<y+size,'Target crop would overlap HUD/caption; choose another legal location');
   const raw=execFileSync('ffmpeg',['-v','error','-i',mp4,'-vf',`crop=${size}:${size}:${x}:${y},format=gray`,'-f','rawvideo','pipe:1'],{maxBuffer:16*1024*1024,timeout:60000});m.motion={crop:[x,y,size,size],...decodedMotion(raw,size*size,o.frames)};

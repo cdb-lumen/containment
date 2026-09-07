@@ -143,6 +143,14 @@ export class AttackEffects {
     }
     for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0xa9ddec,.5,.3,new T.Vector3(Math.cos(a)*1.2,.3,Math.sin(a)*1.2));}return;
    }
+   // Radius-free overload is non-damaging Hot Reload readiness, not Cascade.
+   if(e.boon==='overload'&&e.radius===undefined){
+    p.y=.85;
+    for(let i=0;i<6;i++){
+     const a=i*Math.PI/3,pos=p.clone().add(new T.Vector3(Math.cos(a)*.28,(i%2)*.12,Math.sin(a)*.28));
+     this.particle(this.glow,EFFECT_LIMITS.glow,pos,color,.16,.55,new T.Vector3(0,.65,0));
+    }return;
+   }
    if(e.boon==='blast'||e.boon==='overload'||e.boon==='combustion'){this.event({type:'explosion',x:e.x,y:e.y,radius:e.radius??48,elements:e.boon==='combustion'?['fire']:[]});return;}
    const frost=e.boon==='frost',shield=e.boon==='shield'||e.boon==='leech';
    this.pulse(new T.Vector3(p.x,.05,p.z),color,e.radius?e.radius/32:frost?1.3:shield?.65:.8,frost?.45:.3);
