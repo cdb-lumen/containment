@@ -51,6 +51,7 @@ try{
   const card=page.locator('[data-mutation]').first();
   if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
   await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&document.querySelector('#room-name').textContent==='Awakening bay');
+  console.log('Asset readiness',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));
   await page.waitForFunction(()=>window.__openingSnapshot.berth==='ready'&&window.__openingSnapshot.bank==='ready');
   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const image=resolve(out,`${name}.png`);
