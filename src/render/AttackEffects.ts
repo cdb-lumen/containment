@@ -13,7 +13,22 @@ const vertex=`attribute float effectFrame; varying float vFrame;attribute float 
 void main(){vFrame=effectFrame;vUv=uv;vColor=instanceColor;vAlpha=effectAlpha;gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(position,1.0);}`;
 const fragment=`uniform sampler2D map;uniform float inset;uniform float grid;uniform float textured;varying float vFrame;uniform float style;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
 void main(){vec2 p=vUv*2.0-1.0;float d=length(p);float alpha=vAlpha;vec3 color=vColor;
-if(vFrame<0.0){float drop=length(vec2(p.x/(.76-.18*p.y),p.y));alpha*=1.0-smoothstep(.82,1.0,drop);color*=.72+.28*max(0.0,1.0-drop);color=mix(color,vec3(.64,.78,.33),.35*(1.0-smoothstep(.08,.30,length(p-vec2(-.22,.28)))));}
+if(style>3.5){
+ // Dendritic ice veins and granular frost stay clipped to the authoritative disk.
+ vec2 q=p*3.2;vec2 cell=floor(q+.5);vec2 local=fract(q+.5)-.5;
+ float seed=fract(sin(dot(cell,vec2(127.1,311.7)))*43758.5453);
+ float angle=atan(local.y,local.x)+seed*6.28;float reach=length(local);
+ float spoke=abs(sin(angle*3.0))*reach;
+ float trunk=1.0-smoothstep(.014,.033,spoke);
+ float twig=1.0-smoothstep(.012,.027,abs(sin(reach*43.0+spoke*32.0))*reach);
+ float crystal=max(trunk,twig*.5)*(1.0-smoothstep(.25,.48,reach));
+ float grain=fract(sin(dot(floor(p*95.0),vec2(12.9898,78.233)))*43758.5453);
+ float edge=1.0-smoothstep(.975,1.0,d);
+ alpha*=edge*(.12+crystal*.58+step(.91,grain)*.13);
+ color=mix(vec3(.22,.48,.58),vec3(.73,.94,.98),crystal);
+ if(d>1.0)discard;
+}
+else if(vFrame<0.0){float drop=length(vec2(p.x/(.76-.18*p.y),p.y));alpha*=1.0-smoothstep(.82,1.0,drop);color*=.72+.28*max(0.0,1.0-drop);color=mix(color,vec3(.64,.78,.33),.35*(1.0-smoothstep(.08,.30,length(p-vec2(-.22,.28)))));}
 else if(style<0.5){alpha*=pow(max(0.0,1.0-d),1.8);color*=1.0+2.0*pow(max(0.0,1.0-d),5.0);}
 else if(style<1.5){float n=.86+.09*sin(p.x*13.0+p.y*7.0)+.05*sin(p.y*19.0-p.x*4.0);alpha*=(1.0-smoothstep(.15,1.0,d/n))*.48;}
 if(textured>.5&&vFrame>=0.0){float frame=floor(vFrame);vec2 cell=vec2(mod(frame,grid),grid-1.0-floor(frame/grid));vec4 tex=texture2D(map,(cell+clamp(vUv,inset,1.0-inset))/grid);alpha=vAlpha*tex.a*(style>2.5?.9*smoothstep(.0,.12,vUv.y):.42);color=style>2.5?tex.rgb:vColor*(.6+tex.r*.8);}
@@ -29,6 +44,7 @@ function pool(scene:T.Scene,geometry:T.BufferGeometry,count:number,style:number,
 }
 /** Bounded GPU instance pools: no lights or draw call per pellet / particle. */
 export class AttackEffects {
+ private fields:Pulse[]=[];private fieldMesh:T.InstancedMesh;
  private fire:Particle[]=[];private fireMesh:T.InstancedMesh;private textures:T.Texture[]=[];
  private links:{start:T.Vector3;end:T.Vector3;age:number;frost:boolean}[]=[];
  private arcs:{start:T.Vector3;end:T.Vector3;age:number;seed:number;ball?:boolean}[]=[];
@@ -47,6 +63,7 @@ export class AttackEffects {
   this.beamMesh=pool(scene,new T.CylinderGeometry(1,1,1,5),EFFECT_LIMITS.beams,2,true);
   // Keep the existing pool order stable for renderer diagnostics.
   scene.remove(this.fireMesh);scene.add(this.fireMesh);
+  this.fieldMesh=pool(scene,new T.PlaneGeometry(1,1),4,4);this.fieldMesh.name='frost-fields';
  }
  /** Room loads replace the rendered geometry group. Never retain its disposed predecessor. */
  setWorld(world:T.Object3D){this.world=world;}
@@ -131,7 +148,7 @@ export class AttackEffects {
      this.particle(this.debris,EFFECT_LIMITS.debris,p,i%3?0x9d9c8d:0xf5dab0,.085+Math.random()*.045,.65+Math.random()*.2,v,9.8,2.8);
     }return;
    }
-   if(e.boon==='field'){this.pulse(new T.Vector3(p.x,.025,p.z),color,(e.radius??75)/32,(e.durationMs??2000)/1000,0,false,true);return;}
+   if(e.boon==='field'){if(this.fields.length>=4)this.fields.shift();this.fields.push({p:new T.Vector3(p.x,.026,p.z),color:new T.Color(color),radius:(e.radius??75)/32,life:(e.durationMs??2000)/1000,age:0,angle:0,slash:false,stable:true});return;}
    if(e.boon==='charge'){this.particle(this.glow,EFFECT_LIMITS.glow,p,color,.25,(e.durationMs??450)/1000);return;}
    if(e.boon==='shatter'){
     // Fracture, not combustion: blue-white flash, radial crystals and fleeting vapor.
@@ -318,13 +335,18 @@ export class AttackEffects {
   this.finish(this.beamMesh,beam);
   this.drawParticles(this.fire,this.fireMesh,dt,camera,'fire');
   this.drawParticles(this.glow,this.glowMesh,dt,camera,'glow');this.drawParticles(this.smoke,this.smokeMesh,dt,camera,'smoke');this.drawParticles(this.debris,this.debrisMesh,dt,camera,'debris');this.drawParticles(this.decals,this.decalMesh,dt,camera,'decal');
+  let field=0;for(const f of this.fields){f.age+=dt;if(f.age>=f.life)continue;
+   this.dummy.position.copy(f.p);this.dummy.rotation.set(-Math.PI/2,0,0);this.dummy.scale.setScalar(f.radius*2);this.dummy.updateMatrix();
+   this.fieldMesh.setMatrixAt(field,this.dummy.matrix);this.fieldMesh.setColorAt(field,f.color);
+   (this.fieldMesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute).setX(field++,Math.min(1,f.age/.12,(f.life-f.age)/.25));
+  }this.fields=this.fields.filter(f=>f.age<f.life);this.finish(this.fieldMesh,field);
   let ring=0,slash=0;for(const pulse of this.pulses){pulse.age+=dt;if(pulse.age>=pulse.life)continue;const t=pulse.age/pulse.life,mesh=pulse.slash?this.slashMesh:this.pulseMesh,index=pulse.slash?slash++:ring++;
    this.dummy.position.copy(pulse.p);this.dummy.rotation.set(-Math.PI/2,0,-pulse.angle);const size=pulse.radius*(pulse.stable?1:pulse.slash?.65+t*.35:.15+t*.85);this.dummy.scale.setScalar(size);this.dummy.updateMatrix();mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,pulse.color);(mesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute).setX(index,(1-t)*.8);
   }
   this.pulses=this.pulses.filter(p=>p.age<p.life);this.finish(this.pulseMesh,ring);this.finish(this.slashMesh,slash);
  }
- clear(){this.fire=[];this.trailClock=0;this.boonBursts=this.arcBursts=0;this.links=[];this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
+ clear(){this.fields=[];this.fire=[];this.trailClock=0;this.boonBursts=this.arcBursts=0;this.links=[];this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
  get counts(){return{fire:this.fire.length,glow:this.glow.length,smoke:this.smoke.length,debris:this.debris.length,pulses:this.pulses.length,decals:this.decals.length};}
- private meshes(){return[this.fireMesh,this.glowMesh,this.smokeMesh,this.debrisMesh,this.decalMesh,this.pulseMesh,this.slashMesh,this.beamMesh];}
+ private meshes(){return[this.fireMesh,this.glowMesh,this.smokeMesh,this.debrisMesh,this.decalMesh,this.pulseMesh,this.slashMesh,this.beamMesh,this.fieldMesh];}
  dispose(){for(const t of this.textures)t.dispose();for(const m of this.meshes()){m.geometry.dispose();(m.material as T.Material).dispose();m.removeFromParent();}}
 }
