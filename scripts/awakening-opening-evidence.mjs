@@ -52,7 +52,12 @@ try{
   if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
   await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&document.querySelector('#room-name').textContent==='Awakening bay');
   console.log('Asset readiness',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));
-  await page.waitForFunction(()=>window.__openingSnapshot.berth==='ready'&&window.__openingSnapshot.bank==='ready');
+  try{await page.waitForFunction(()=>window.__openingSnapshot.berth!=='loading'&&window.__openingSnapshot.bank!=='loading',{},{timeout:30000});}
+  catch(error){console.log('Unsettled assets',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));throw error;}
+  const settled=await page.evaluate(()=>({...window.__openingSnapshot,resources:performance.getEntriesByType('resource').filter(r=>r.name.includes('.glb')).map(r=>({name:r.name,duration:r.duration,bytes:r.transferSize}))}));
+  console.log('Settled assets',JSON.stringify(settled));
+  await writeFile(resolve(out,`${name}-settled.json`),JSON.stringify(settled,null,2));
+  assert.equal(settled.berth,'ready');assert.equal(settled.bank,'ready');
   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const image=resolve(out,`${name}.png`);
   await page.screenshot({path:image});
