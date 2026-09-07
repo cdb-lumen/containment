@@ -1,0 +1,405 @@
+
+> containment-depth@2.0.0 verify
+> npm test && npm run test:room-evidence && npm run build && npm run test:smoke
+
+
+> containment-depth@2.0.0 test
+> vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs
+
+
+ RUN  v4.1.10 /home/chernodubv/dev/.worktrees/containment-awakening-completion
+
+
+ Test Files  57 passed | 1 skipped (58)
+      Tests  456 passed | 1 skipped (457)
+   Start at  14:46:38
+   Duration  7.88s (transform 2.38s, setup 0ms, import 8.32s, tests 35.00s, environment 6ms)
+
+TAP version 13
+# Subtest: preview hooks replace only shell loop and local branches, not saddles or production source
+ok 1 - preview hooks replace only shell loop and local branches, not saddles or production source
+  ---
+  duration_ms: 9.240167
+  type: 'test'
+  ...
+# {
+#   "bounds": {
+#     "min": [
+#       465.5200004577637,
+#       16,
+#       253.72000122070312
+#     ],
+#     "max": [
+#       514.4799995422363,
+#       38.207999765872955,
+#       336.2799987792969
+#     ]
+#   },
+#   "feet": [
+#     {
+#       "min": [
+#         465.5200004577637,
+#         16,
+#         261.1599998474121
+#       ],
+#       "max": [
+#         473.5200004577637,
+#         17.919999957084656,
+#         273.1599998474121
+#       ],
+#       "vertices": 216
+#     },
+#     {
+#       "min": [
+#         465.5200004577637,
+#         16,
+#         316.8400001525879
+#       ],
+#       "max": [
+#         473.5200004577637,
+#         17.919999957084656,
+#         328.8400001525879
+#       ],
+#       "vertices": 216
+#     },
+#     {
+#       "min": [
+#         506.4799995422363,
+#         16,
+#         261.1599998474121
+#       ],
+#       "max": [
+#         514.4799995422363,
+#         17.919999957084656,
+#         273.1599998474121
+#       ],
+#       "vertices": 216
+#     },
+#     {
+#       "min": [
+#         506.4799995422363,
+#         16,
+#         316.8400001525879
+#       ],
+#       "max": [
+#         514.4799995422363,
+#         17.919999957084656,
+#         328.8400001525879
+#       ],
+#       "vertices": 216
+#     }
+#   ],
+#   "adapterBounds": {
+#     "min": [
+#       477.679999768734,
+#       11.199999988079062,
+#       246.19999998807907
+#     ],
+#     "max": [
+#       526.8000000119209,
+#       24.419999319314957,
+#       343.80000001192093
+#     ]
+#   },
+#   "segments": [
+#     {
+#       "min": [
+#         478.4799996614456,
+#         11.19999998807907,
+#         246.19999998807907
+#       ],
+#       "max": [
+#         490.0000001192093,
+#         12.80000001192093,
+#         247.80000001192093
+#       ]
+#     },
+#     {
+#       "min": [
+#         477.679999768734,
+#         11.19999998807907,
+#         247
+#       ],
+#       "max": [
+#         479.27999979257584,
+#         12.80000001192093,
+#         257.99217224121094
+#       ]
+#     },
+#     {
+#       "min": [
+#         477.679999768734,
+#         12.000000196695328,
+#         257.19217222929
+#       ],
+#       "max": [
+#         479.27999979257584,
+#         24.419999319314957,
+#         258.79217225313187
+#       ]
+#     },
+#     {
+#       "min": [
+#         490,
+#         11.199999988079067,
+#         342.19999998807907
+#       ],
+#       "max": [
+#         526,
+#         12.800000011920933,
+#         343.80000001192093
+#       ]
+#     },
+#     {
+#       "min": [
+#         525.1999999880791,
+#         11.199999988079062,
+#         255
+#       ],
+#       "max": [
+#         526.8000000119209,
+#         12.800000011920938,
+#         343
+#       ]
+#     },
+#     {
+#       "min": [
+#         493.8400001525879,
+#         11.199999988079067,
+#         254.19999998807907
+#       ],
+#       "max": [
+#         526,
+#         12.800000011920933,
+#         255.80000001192093
+#       ]
+#     },
+#     {
+#       "min": [
+#         493.04000014066696,
+#         11.199999988079071,
+#         255
+#       ],
+#       "max": [
+#         494.6400001645088,
+#         12.800000011920929,
+#         257.99217224121094
+#       ]
+#     },
+#     {
+#       "min": [
+#         493.04000014066696,
+#         12.000000196695328,
+#         257.19217222929
+#       ],
+#       "max": [
+#         494.6400001645088,
+#         24.419999319314957,
+#         258.79217225313187
+#       ]
+#     }
+#   ],
+#   "routes": [
+#     {
+#       "circuit": "SUPPLY",
+#       "points": [
+#         [
+#           490,
+#           12,
+#           247
+#         ],
+#         [
+#           478.4799997806549,
+#           12,
+#           247
+#         ],
+#         [
+#           478.4799997806549,
+#           12,
+#           257.99217224121094
+#         ],
+#         [
+#           478.4799997806549,
+#           24.419999516010286,
+#           257.99217224121094
+#         ]
+#       ],
+#       "unionBounds": {
+#         "min": [
+#           477.0389332771301,
+#           24.319999516010284,
+#           255.50379943847656
+#         ],
+#         "max": [
+#           479.9210662841797,
+#           25.92740136384964,
+#           260.4805450439453
+#         ],
+#         "vertices": 315
+#       },
+#       "endpoint": [
+#         478.4799997806549,
+#         24.419999516010286,
+#         257.99217224121094
+#       ],
+#       "connection": "header axis to underside manifold feed and actual union bottom"
+#     },
+#     {
+#       "circuit": "RETURN",
+#       "points": [
+#         [
+#           490,
+#           12,
+#           343
+#         ],
+#         [
+#           526,
+#           12,
+#           343
+#         ],
+#         [
+#           526,
+#           12,
+#           255
+#         ],
+#         [
+#           493.8400001525879,
+#           12,
+#           255
+#         ],
+#         [
+#           493.8400001525879,
+#           12,
+#           257.99217224121094
+#         ],
+#         [
+#           493.8400001525879,
+#           24.419999516010286,
+#           257.99217224121094
+#         ]
+#       ],
+#       "unionBounds": {
+#         "min": [
+#           492.39893341064453,
+#           24.319999516010284,
+#           255.50379943847656
+#         ],
+#         "max": [
+#           495.28106689453125,
+#           25.92740136384964,
+#           260.4805450439453
+#         ],
+#         "vertices": 315
+#       },
+#       "endpoint": [
+#         493.8400001525879,
+#         24.419999516010286,
+#         257.99217224121094
+#       ],
+#       "connection": "header axis to underside manifold feed and actual union bottom"
+#     }
+#   ],
+#   "scale": 1,
+#   "supportTop": 16,
+#   "interiorFit": "not established"
+# }
+# Subtest: actual GLB native bounds, all feet supported, actual unions connected, contained adapters
+ok 2 - actual GLB native bounds, all feet supported, actual unions connected, contained adapters
+  ---
+  duration_ms: 78.294001
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 628.496899
+
+> containment-depth@2.0.0 test:room-evidence
+> node --test scripts/room-evidence-check.mjs scripts/room-demo-check.mjs
+
+TAP version 13
+# Subtest: reusable room recorder exists
+ok 1 - reusable room recorder exists
+  ---
+  duration_ms: 0.766548
+  type: 'test'
+  ...
+# Subtest: combat requires repeated live shots, damage and legal movement
+ok 2 - combat requires repeated live shots, damage and legal movement
+  ---
+  duration_ms: 1.537113
+  type: 'test'
+  ...
+# Subtest: final capture requires exact SHA and 6–10 seconds
+ok 3 - final capture requires exact SHA and 6–10 seconds
+  ---
+  duration_ms: 0.788943
+  type: 'test'
+  ...
+# Subtest: probe rejects wrong codec, duration and actual decoded count
+ok 4 - probe rejects wrong codec, duration and actual decoded count
+  ---
+  duration_ms: 1.861062
+  type: 'test'
+  ...
+# Subtest: motion validation rejects still or truncated decoded actor crops
+ok 5 - motion validation rejects still or truncated decoded actor crops
+  ---
+  duration_ms: 1.056694
+  type: 'test'
+  ...
+# Subtest: selection, viewport and expected modes are explicit and reject mistakes
+ok 6 - selection, viewport and expected modes are explicit and reject mistakes
+  ---
+  duration_ms: 3.254875
+  type: 'test'
+  ...
+# Subtest: three rooms: production update traverses spawn to exit and fires into live enemies legally
+ok 7 - three rooms: production update traverses spawn to exit and fires into live enemies legally
+  ---
+  duration_ms: 804.136522
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1025.045619
+
+> containment-depth@2.0.0 build
+> tsc --noEmit && vite build
+
+vite v8.1.4 building client environment for production...
+[2Ktransforming...✓ 80 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.60 kB │ gzip:   0.39 kB
+dist/assets/index-Czxxj7s4.css   22.30 kB │ gzip:   6.11 kB
+dist/assets/index-DP3RsbjV.js   955.94 kB │ gzip: 262.87 kB
+
+✓ built in 360ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+> containment-depth@2.0.0 test:smoke
+> node scripts/smoke.mjs
+
+Sound menu passed: desktop, default 30%, native keyboard/touch, real gain, muted reload, zero reload, channel playback.
+Sound pause passed: desktop, retains choice, muted adjustment stays silent, unmute restores choice, live zero gain.
+{"viewport":"desktop 1280x720","startingBoon":"Hot Reload","restart":"fresh boon selected","state":"playing","assets":46,"errors":[],"performance":{"samples":120,"stallsOver50ms":318,"frameMs":{"average":1328.8361162821452,"p95":1949.9000244140625},"updateMs":{"average":6.092500097552935,"p95":2.1999998092651367},"renderSubmissionMs":{"average":26.663333534200987,"p95":7.099999904632568},"quality":"balanced","drawCalls":176,"triangles":585538,"geometries":110,"textures":92,"graphicsLost":false}}
+Sound menu passed: touch, default 30%, native keyboard/touch, real gain, muted reload, zero reload, channel playback.
+Sound pause passed: touch, retains choice, muted adjustment stays silent, unmute restores choice, live zero gain.
+{"viewport":"touch 390x844","startingBoon":"Cryogenic","restart":"fresh boon selected","state":"playing","assets":46,"errors":[],"performance":{"samples":120,"stallsOver50ms":368,"frameMs":{"average":888.5761102835337,"p95":1216.699951171875},"updateMs":{"average":10.774999901652336,"p95":10.800000190734863},"renderSubmissionMs":{"average":37.49583374261856,"p95":14.699999809265137},"quality":"low","drawCalls":70,"triangles":280956,"geometries":96,"textures":90,"graphicsLost":false}}
+Browser smoke passed: desktop and touch, production Pages subpath, assets, fire, weapon switch, pause/resume, credits.

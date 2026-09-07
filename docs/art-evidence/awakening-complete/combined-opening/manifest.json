@@ -1,0 +1,267 @@
+{
+  "sha": "27bff3a431cdbdd66cd1c76c4c2a6b1743efe357",
+  "assetSha256": "eb11cdda45519484ddcf50735607a4c170adfd520c35ac6eb65a932bf483d997",
+  "evidenceClass": "Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides",
+  "results": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "image": "/home/chernodubv/.hermes/workspaces/containment-awakening-completion/combined-opening/desktop.png",
+      "before": {
+        "state": "reward",
+        "room": "awakening-bay",
+        "player": {
+          "x": 230,
+          "y": 440
+        },
+        "berth": "loading",
+        "bank": "loading",
+        "kit": "loading",
+        "kitFallback": true,
+        "fallback": true,
+        "boons": [],
+        "camera": {
+          "zoom": 1.23,
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11,
+          "position": [
+            16.801381494582788,
+            26,
+            33.01451333519956
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ]
+        },
+        "performance": {
+          "samples": 14,
+          "stallsOver50ms": 12,
+          "frameMs": {
+            "average": 2185.630943570818,
+            "p95": 3149.89990234375
+          },
+          "updateMs": {
+            "average": 46.964285714285715,
+            "p95": 655.5
+          },
+          "renderSubmissionMs": {
+            "average": 11.807142802647181,
+            "p95": 40.5
+          },
+          "quality": "balanced",
+          "drawCalls": 162,
+          "triangles": 593114,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "webglErrors": []
+      },
+      "snapshot": {
+        "state": "playing",
+        "room": "awakening-bay",
+        "player": {
+          "x": 230,
+          "y": 440
+        },
+        "berth": "ready",
+        "bank": "ready",
+        "kit": "ready",
+        "kitPosition": [
+          6.375,
+          0,
+          21.875
+        ],
+        "kitFallback": false,
+        "berthPosition": [
+          4.21875,
+          0,
+          13.75
+        ],
+        "fallback": false,
+        "sealedPassengers": 8,
+        "boons": [
+          "hot-reload"
+        ],
+        "camera": {
+          "zoom": 1,
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ]
+        },
+        "performance": {
+          "samples": 42,
+          "stallsOver50ms": 39,
+          "frameMs": {
+            "average": 2146.3428609484718,
+            "p95": 3149.89990234375
+          },
+          "updateMs": {
+            "average": 30.38809463807515,
+            "p95": 20.799999237060547
+          },
+          "renderSubmissionMs": {
+            "average": 60.52380949542636,
+            "p95": 35.79999923706055
+          },
+          "quality": "balanced",
+          "drawCalls": 159,
+          "triangles": 574020,
+          "geometries": 109,
+          "textures": 89,
+          "graphicsLost": false
+        },
+        "webglErrors": []
+      },
+      "errors": []
+    },
+    {
+      "name": "portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "image": "/home/chernodubv/.hermes/workspaces/containment-awakening-completion/combined-opening/portrait.png",
+      "before": {
+        "state": "reward",
+        "room": "awakening-bay",
+        "player": {
+          "x": 230,
+          "y": 440
+        },
+        "berth": "loading",
+        "bank": "loading",
+        "kit": "loading",
+        "kitFallback": true,
+        "fallback": true,
+        "boons": [],
+        "camera": {
+          "zoom": 1.23,
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5,
+          "position": [
+            16.606875047716088,
+            26,
+            33.01451333519956
+          ],
+          "focus": [
+            9.84375,
+            0,
+            13.75
+          ]
+        },
+        "performance": {
+          "samples": 14,
+          "stallsOver50ms": 12,
+          "frameMs": {
+            "average": 910.6738087790353,
+            "p95": 1416.5999755859375
+          },
+          "updateMs": {
+            "average": 60.814285695552826,
+            "p95": 850
+          },
+          "renderSubmissionMs": {
+            "average": 8.171428527150836,
+            "p95": 25.299999237060547
+          },
+          "quality": "low",
+          "drawCalls": 53,
+          "triangles": 258466,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "webglErrors": []
+      },
+      "snapshot": {
+        "state": "playing",
+        "room": "awakening-bay",
+        "player": {
+          "x": 230,
+          "y": 440
+        },
+        "berth": "ready",
+        "bank": "ready",
+        "kit": "ready",
+        "kitPosition": [
+          6.375,
+          0,
+          21.875
+        ],
+        "kitFallback": false,
+        "berthPosition": [
+          4.21875,
+          0,
+          13.75
+        ],
+        "fallback": false,
+        "sealedPassengers": 8,
+        "boons": [
+          "incendiary"
+        ],
+        "camera": {
+          "zoom": 1,
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5,
+          "position": [
+            9.84375,
+            26,
+            32.75
+          ],
+          "focus": [
+            9.84375,
+            0,
+            13.75
+          ]
+        },
+        "performance": {
+          "samples": 58,
+          "stallsOver50ms": 44,
+          "frameMs": {
+            "average": 672.9614909270714,
+            "p95": 1316.5999755859375
+          },
+          "updateMs": {
+            "average": 25.001723710832923,
+            "p95": 20.200000762939453
+          },
+          "renderSubmissionMs": {
+            "average": 75.03275775703891,
+            "p95": 38.29999923706055
+          },
+          "quality": "low",
+          "drawCalls": 71,
+          "triangles": 281340,
+          "geometries": 96,
+          "textures": 88,
+          "graphicsLost": false
+        },
+        "webglErrors": []
+      },
+      "errors": []
+    }
+  ]
+}
