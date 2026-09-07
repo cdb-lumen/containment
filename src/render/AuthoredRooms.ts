@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {AWAKENING_BLOCKOUT} from '../game/roguelike/authoredRoomTopologies';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -110,50 +111,48 @@ function edgeArchitecture(f:Fabricator,t:RoomPlan,scar=false){
  }
 }
 function awakeningBay(f:Fabricator,t:RoomPlan){
- const holes=t.voids??[];
- // Human-scale radial cradles use the actual footprint axes, never a second layout.
- for(const [index,hole]of holes.entries()){
-  if(index===1)continue;
-  const b=bounds(hole),across=v(hole[1].x-hole[0].x,0,hole[1].y-hole[0].y).normalize(),along=v(hole[3].x-hole[0].x,0,hole[3].y-hole[0].y).normalize(),angle=-Math.atan2(across.z,across.x);
-  const p=(x:number,y:number,z:number)=>v(b.x,y,b.z).addScaledVector(across,x).addScaledVector(along,z);
-  const box=(x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material)=>{const q=p(x,y,z);f.box(q.x,q.y,q.z,w,h,d,m,.045,angle);};
-  f.slab(hole,-.5,.58,f.dark);
-  box(0,.18,0,2.05,.5,3.55,f.ivory);box(0,.46,0,1.62,.13,3.1,f.dark);
-  for(const side of [-1,1]){
-   box(side*.91,.63,0,.16,.42,3.3,f.edge);box(side*.79,.87,0,.045,.04,2.7,index===0?f.warm:f.cold);
-   for(const end of [-1,1]){const q=p(side*.82,.1,end*1.35);f.pipe(q.clone().setY(-.35),q.clone().setY(.8),.075,f.bronze);}
-  }
-  box(0,.65,-1.53,1.7,.32,.23,f.ivory);box(0,.65,1.53,1.7,.32,.23,f.ivory);
-  if(index===0){
-   // Empty mattress, torn restraint and split pressure lid remain inside the cradle.
-   box(-.47,.95,-.45,.46,.12,1.75,f.ivory);box(.48,.74,.67,.4,.09,1.35,f.ivory);
-   for(let j=0;j<5;j++){const q=p(-.4+j*.2,.6,-.9+j*.35);f.add(new T.BoxGeometry(.23,.035,.32),f.cold,q,new T.Euler(.1*j,angle+j*.45,.15));}
-   box(.2,.64,.15,.8,.08,.13,f.rust);
+ // Neutral solid blockout. Role metadata never owns alternate render coordinates.
+ f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
+ for(const [i,hole] of (t.voids??[]).entries()){
+  const role=AWAKENING_BLOCKOUT[i].id,b=bounds(hole);
+  f.slab(hole,-.46,.64,f.paint);
+  if(role.startsWith('bank-')){
+   for(let j=0;j<4;j++){
+    const x=b.x0+(j+.5)*b.w/4;
+    f.box(x,.48,b.z,b.w/4-.2,.6,b.d-.22,f.ivory,.18);
+    f.box(x,.85,b.z,b.w/4-.48,.2,b.d-.5,f.paint,.16);
+    f.box(x,.97,b.z+.7,1.3,.035,.12,f.cold,.015);
+   }
+   f.sign('SEALED / PASSENGERS ALIVE',b.x,1.02,b.z-.8,b.w-.6);
+  }else if(role==='player-release'){
+   f.box(b.x,.35,b.z,b.w-.2,.3,b.d-.2,f.ivory,.12);
+   f.box(b.x,.52,b.z,b.w-.6,.04,b.d-.7,f.dark,.08);
+   // Lid retracted to the head, empty tray, rail entirely inside solid footprint.
+   f.box(b.x,.8,b.z0+.4,b.w-.3,.4,.65,f.ivory,.12);
+   f.pipe(v(b.x0+.15,.85,b.z0+.15),v(b.x0+.15,.85,b.z1-.15),.06,f.edge);
+   f.sign('01 / RELEASED',b.x,1.04,b.z0+.45,b.w-.25);
+   f.box(b.x1+.9,.008,b.z,1.8,.016,b.d,f.stencil,0);
+  }else if(role==='supply-wall'){
+   f.box(b.x,.65,b.z,b.w-.1,1.2,b.d-.1,f.paint,.04);
+   f.sign('CRYO SUPPLY / VITALS NOMINAL',b.x,1.28,b.z,b.w-.4);
+  }else if(role==='monitoring-recovery'){
+   f.box(b.x-.65,.6,b.z-.55,1.9,.9,1.1,f.ivory,.06);
+   f.box(b.x-.65,1.08,b.z-.55,1.5,.12,.75,f.cold,.03);
+   f.box(b.x-.65,.45,b.z+.6,.85,.55,.75,f.paint,.06);
+   f.box(b.x-.65,.85,b.z+.92,.85,.6,.12,f.edge,.03);
+   f.box(b.x+1.25,.8,b.z,.65,1.3,b.d-.4,f.ivory,.04);
+   f.sign('RECOVERY / MONITOR',b.x,1.5,b.z-.85,b.w-.3);
   }else{
-   const head=p(0,.78,-.88);f.ellipsoid(head.x,head.y,head.z,.2,.19,.22,f.skin);
-   f.add(new T.SphereGeometry(1,12,8),f.body,p(0,.71,-.15),new T.Euler(0,angle,0),v(.32,.17,.55));
-   for(const side of [-1,1]){f.pipe(p(side*.14,.68,.2),p(side*.16,.68,1.03),.115,f.body);f.pipe(p(side*.36,.67,-.48),p(side*.38,.67,.3),.085,f.body);}
-   box(0,.89,.32,1.66,.12,.17,f.edge);box(0,.9,1.23,.48,.045,.19,f.cold);
+   f.box(b.x,.75,b.z-.7,b.w-.3,1.2,1,f.ivory,.04);
+   f.box(b.x,.79,b.z-.16,b.w-.6,.8,.08,f.dark,.02);
+   f.box(b.x,.5,b.z+.8,b.w-.35,.12,.8,f.edge,.03);
+   for(const dx of [-.6,.6])f.box(b.x+dx,.3,b.z+.8,.1,.5,.65,f.paint,.02);
   }
  }
- const arm=holes[1];if(arm){
-  f.bronze.name='awakening-service-arm';f.slab(arm,-.45,.66,f.dark);
-  // Low, heavy servicing carriage with a telescoping arm and visible actuator.
-  const b=bounds(arm),x0=b.x0+.4,x1=b.x1-.7,z=b.z;
-  f.box((x0+x1)/2,.47,z,x1-x0,.65,1.25,f.bronze,.09);
-  for(const side of [-1,1]){
-   f.pipe(v(x0,.78,z+side*.48),v(x1,.78,z+side*.48),.12,f.edge);
-   f.pipe(v(x0+.5,.5,z+side*.8),v(x1-1,.5,z+side*.8),.07,f.cold);
-  }
-  const pivot=x0+4.2;f.pipe(v(pivot,.3,z),v(pivot,1.7,z),.86,f.paint);
-  for(const y of [.4,1.55])f.ring(pivot,y,z,.9,.11,f.bronze);
-  f.box(pivot-1.7,1.74,z,3.9,.45,.65,f.bronze,.06);
-  f.pipe(v(x0+.2,.86,z),v(pivot-1,1.78,z),.14,f.edge);
-  f.box(x0+.5,1.7,z,.55,.63,1.1,f.ivory,.06);
-  for(const side of [-1,1])f.box(x0+.3,1.3,z+side*.47,.28,.66,.18,f.bronze,.025);
-  for(let j=0;j<4;j++)f.box(pivot+1+j*.38,.89,z,.12,.045,.8,f.dark,.012);
- }
- f.sign('CRYO SERVICE / VITALS NOMINAL',24,1.36,3.1,7.8);
+ // Local damaged bulkhead markers stay on the perimeter, outside actor routes.
+ const wall=bounds(outline(t));
+ for(const dz of [-2,2])f.box(wall.x1-.1,.7,t.height/64+dz,.2,1.6,1.2,f.rust,.03);
+ f.sign('DAMAGED EXIT / RESTORE COMMS',wall.x1-2.7,.025,t.height/64,4.6);
 }
 function passengerVault(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole);
@@ -285,7 +284,7 @@ export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;
  f.add(new T.ExtrudeGeometry(roomDeckShape(t),{depth:.44,steps:1,bevelEnabled:false}),f.deck,v(0,-.46,0),new T.Euler(-Math.PI/2,0,0));
- edgeArchitecture(f,t,id==='breached-loading-bay');deckServices(f,t);
+ edgeArchitecture(f,id==='awakening-bay'?{...t,voids:[]}:t,id==='breached-loading-bay');deckServices(f,t);
  if(id==='awakening-bay')awakeningBay(f,t);else if(id==='passenger-vault')passengerVault(f,t);else if(id==='breached-loading-bay')breachedBay(f,t);else reactorFloor(f,t);
  return f.finish();
 }

@@ -7,7 +7,7 @@ import {ProjectileHitTracker} from '../../src/game/combat/CombatSystem';
 import {DepthGame} from '../../src/DepthGame';
 const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay'];
 const nodes=generateRun(3,3).nodes;
-const probes=[{x:600,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:440}];
+const probes=[{x:600,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280}];
 describe('authored walkable topologies',()=>{
  it('replaces exactly four rectangular footprints with polygon boundaries and real voids',()=>{
   expect(nodes).toHaveLength(20);
