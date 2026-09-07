@@ -30,7 +30,7 @@ The browser smoke serves the production build beneath `/containment/`, checks lo
 
 ## Source and credits
 
-Game and reusable domain systems: cdb-lumen / Containment. Code is MIT licensed, see `LICENSE`. Three.js is MIT licensed, see `THIRD_PARTY/Three-LICENSE.txt`.
+Game and reusable domain systems: cdb-lumen / Containment. Code is MIT licensed, see `LICENSE`. The original sealed cryochamber model and authored textures are also MIT licensed within the explicit [benchmark asset scope](public/assets/benchmark/CREDITS.md). Three.js is MIT licensed, see `THIRD_PARTY/Three-LICENSE.txt`.
 
 Adapted Unvanquished models, animations and embedded textures have separate Creative Commons licenses. Preserve [model credits](public/asset-credits.html) and the asset manifests. Environment materials, sound and music attribution are in [audio and environment credits](public/audio-credits.html) and `public/assets/audio/manifest.json`. Barlow fonts by Jeremy Tribby use the SIL Open Font License and load through Google Fonts. Asset licenses are not replaced by the code's MIT license.
 
