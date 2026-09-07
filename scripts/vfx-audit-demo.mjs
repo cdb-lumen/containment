@@ -16,6 +16,8 @@ import {verifyProbe,decodedMotion} from './room-demo.mjs';
 export const CASES = Object.freeze({
  'acid-impact': {hazard:'spitter',require:'acid'},
  'acid-pool': {hazard:'queen',require:'acid',runVersion:2},
+ 'ricochet': {link:'impact',mutations:['ricochet-rounds'],damage:18},
+ 'ice-lance': {link:'frost',mutations:['cryogenic','ice-lance'],damage:14},
 });
 export function options(argv) {
  const v={};for(const arg of argv){const m=/^--(case|out|root|source-sha|seconds|quality)=(.+)$/.exec(arg);if(arg==='--provisional'){assert(!v.provisional);v.provisional=true;}else{assert(m,`Unknown argument ${arg}`);assert(!(m[1] in v),`Duplicate ${m[1]}`);v[m[1]]=m[2];}}
@@ -33,7 +35,7 @@ async function stage(o) {
  const {expeditionRewardOffers}=await import('/src/game/roguelike/expedition.ts');
  const geometry=await import('/src/game/world/expeditionGeometry.ts');
  const {EnemySystem}=await import('/src/game/enemies/EnemySystem.ts');
- const {createBuild}=await import('/src/game/roguelike/builds.ts');
+ const {createBuild,addMutation}=await import('/src/game/roguelike/builds.ts');
  let seed=1729;Math.random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
  g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.skipStory();
  if(o.definition.hazard==='queen'){
@@ -43,9 +45,9 @@ async function stage(o) {
   g.expedition={...g.expedition,run:{...g.expedition.run,version:o.definition.runVersion,currentNodeId:node.id}};
   g.enterRoom(false);g.skipStory();
  }
- const build=createBuild();g.combat.setBuild(build);g.expedition={...g.expedition,build};
+ const build=(o.definition.mutations??[]).reduce(addMutation,createBuild());g.combat.setBuild(build);g.expedition={...g.expedition,build};
  g.pending=[];g.director.update=()=>[];g.clearRequested=false;
- g.enemies=new EnemySystem({balance:{health:1,damage:1,speed:0,eliteHealth:1,eliteDamage:1,specials:true},canMove:()=>false,canAttack:(a,b)=>geometry.hasClearExpeditionShot(g.geometry,a,b)});
+ g.enemies=new EnemySystem({balance:{health:o.definition.link?20:1,damage:1,speed:0,eliteHealth:1,eliteDamage:1,specials:true},canMove:()=>false,canAttack:(a,b)=>geometry.hasClearExpeditionShot(g.geometry,a,b)});
  r.setQuality(o.quality);r.loadRoom(g.node);r.render(g,1,false);d.hud();d.syncScreen(true);
  if(g.status!=='playing'||!r.camera.isOrthographicCamera)throw Error('Startup failed');
  d.nativeZoom=r.camera.zoom;d.events=[];d.domainEvents=[];d.frame=-1;
@@ -62,16 +64,31 @@ async function stage(o) {
  }
  if(!candidates.length)throw Error('No legal visible unobstructed hazard source');
  let hazardSource=candidates[0];
- if(!queen){const spawn=g.enemies.spawn('spitter',hazardSource.x,hazardSource.y);if(!spawn.spawned)throw Error('Spawn rejected');}
+ if(o.definition.link){
+  let pair;
+  for(const a of candidates)for(let i=0;i<24&&!pair;i++){
+   const angle=i*Math.PI/12,b={x:a.x+Math.cos(angle)*130,y:a.y+Math.sin(angle)*130};
+   const screen=r.camera.position.clone().set(b.x/32,.8,b.y/32).project(r.camera),sy=(1-screen.y)*innerHeight/2;
+   const aim=Math.atan2(a.y-g.player.y,a.x-g.player.x),off=Math.abs((b.x-g.player.x)*Math.sin(aim)-(b.y-g.player.y)*Math.cos(aim));
+   const primaryScreen=r.camera.position.clone().set(a.x/32,.3,a.y/32).project(r.camera),primaryY=(1-primaryScreen.y)*innerHeight/2;
+   if((primaryScreen.x+1)*innerWidth/2>470&&primaryY>200&&primaryY<330&&off>55&&sy>180&&sy<330&&geometry.canOccupyExpedition(g.geometry,b,32)&&geometry.hasClearExpeditionShot(g.geometry,a,b)&&r.visible(b.x,b.y))pair=[a,b];
+  }
+  if(!pair)throw Error('No legal unobstructed target pair');
+  const spawned=pair.map(p=>g.enemies.spawn('stalker',p.x,p.y));if(spawned.some(s=>!s.spawned))throw Error('Target spawn rejected');
+  d.primaryId=spawned[0].enemy.id;d.secondaryId=spawned[1].enemy.id;d.secondaryTotal=spawned[1].enemy.health+spawned[1].enemy.armor;
+  d.aim=Math.atan2(pair[0].y-g.player.y,pair[0].x-g.player.x);g.switchWeapon('pistol');hazardSource=pair;
+  const damage=g.damage.bind(g);g.damage=(id,amount,...rest)=>{const result=damage(id,amount,...rest);d.domainEvents.push({owner:'damage',id,amount,...result,secondary:id===d.secondaryId,frame:d.frame});return result;};
+ }else if(!queen){const spawn=g.enemies.spawn('spitter',hazardSource.x,hazardSource.y);if(!spawn.spawned)throw Error('Spawn rejected');}
  else{Object.assign(g.player,candidates[0]);hazardSource={...origin};if(!g.boss.start(origin.x,origin.y))throw Error('Queen start failed');}
  d.initialTotal=g.combat.snapshot.health+g.combat.snapshot.armor;
  const caption=document.createElement('div');caption.id='vfx-audit-caption';caption.style.cssText='position:fixed;left:12px;bottom:78px;z-index:999;padding:6px 9px;background:#061116ef;color:#eff5ef;font:12px monospace;pointer-events:none';
  caption.textContent=`${o.provisional?'PROVISIONAL / ':''}${o.case}${queen?' / LEGACY BOSS':''} / CONTROLLED / NATIVE CAMERA / ${o.quality.toUpperCase()} / SILENT`;document.body.append(caption);
- return {room:g.node.templateId,runVersion:g.expedition.run.version,player:{...g.player},hazardSource,build,nativeZoom:d.nativeZoom,quality:r.qualityTier,controls:'Stationary player and spitter; normal damage, specials and boss timers. Encounter director disabled. The queen case uses the supported legacy v2 Reactor Vault through production room entry, with a legal nearby player position; not current story-campaign progression. Actual DepthGame.update hazard collision/queen area attacks, unchanged danger radius and pool lifetime. No injected effects, player fire, DOM input, audio or performance evidence.'};
+ return {room:g.node.templateId,runVersion:g.expedition.run.version,player:{...g.player},hazardSource,build,nativeZoom:d.nativeZoom,quality:r.qualityTier,controls:o.definition.link?'Controlled fixed-step fixture: legal prerequisite build, stationary high-health stalker pair in authored geometry, director disabled. Real pistol projectile collisions and MutationRuntime secondary damage/status events; simulated aim/fire input, no DOM input or live gameplay session. Native camera, silent.':'Stationary player and spitter; normal damage, specials and boss timers. Encounter director disabled. The queen case uses the supported legacy v2 Reactor Vault through production room entry, with a legal nearby player position; not current story-campaign progression. Actual DepthGame.update hazard collision/queen area attacks, unchanged danger radius and pool lifetime. No injected effects, player fire, DOM input, audio or performance evidence.'};
 }
 function step({frame,o}) {
  const d=window.__vfxAudit,g=d.game,r=d.renderer;d.frame=frame;
- g.update(1000/o.fps,{x:0,y:0,fire:false,angle:0,autoAim:false});
+ if(o.definition.link&&g.combat.snapshot.magazine===0)g.reload();
+ g.update(1000/o.fps,{x:0,y:0,fire:!!o.definition.link&&frame>=5&&frame%10===5,angle:d.aim??0,autoAim:false});
  d.confirmation.update(1/o.fps,g.status==='playing');r.render(g,1/o.fps,false);d.hud();
  if(g.status!=='playing')throw Error(`Left playing: ${g.status}`);
  if(r.camera.zoom!==d.nativeZoom)throw Error('Camera zoom changed');
@@ -79,9 +96,18 @@ function step({frame,o}) {
  const p=r.camera.position.clone().set(g.player.x/32,.3,g.player.y/32).project(r.camera);
  let poolShader=null;
  if(g.pools.length){const material=r.poolMeshes.values().next().value?.material;poolShader={material:material?.constructor.name,clock:material?.surfaceTime?.value,compiled:r.renderer.info.programs.some(program=>gl.getShaderSource(program.fragmentShader)?.includes('acidWet'))};}
- return {frame,elapsed:g.elapsed,poolShader,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
+ const secondary=d.secondaryId?g.enemies.getSnapshot(d.secondaryId):null;
+ return {frame,secondaryDamage:secondary?d.secondaryTotal-secondary.health-secondary.armor:0,secondaryStatuses:d.secondaryId?g.boonStatuses(d.secondaryId):null,elapsed:g.elapsed,poolShader,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
 }
 export function verifyEvents(events,frames,o,domainEvents=[]) {
+ if(o.definition.link){
+  assert(events.some(e=>e.type==='shot'),'Missing real shot');
+  assert(events.some(e=>e.type==='boon'&&e.boon===o.definition.link&&Number.isFinite(e.targetX)&&Number.isFinite(e.targetY)),'Missing production link');
+  assert(domainEvents.some(e=>e.owner==='damage'&&e.secondary&&e.applied&&e.amount===o.definition.damage),'Missing secondary damage');
+  assert(frames.some(f=>f.secondaryDamage>0),'Missing secondary health/armor loss');
+  if(o.definition.link==='frost')assert(frames.some(f=>f.secondaryStatuses?.chilled),'Missing secondary chill');
+  assert(frames.every(f=>f.zoom===frames[0].zoom),'Changed zoom');return;
+ }
  const acid=events.filter(e=>e.type==='acid'&&e.targetId===undefined&&e.contact===undefined);
  assert(acid.length,'Missing untargeted production acid; targetId acid is NOT hazard evidence');
  assert(!events.some(e=>e.type==='shot'),'Unexpected player firing');
@@ -125,7 +151,7 @@ async function record(o) {
   await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/`);await page.waitForFunction(()=>window.__vfxAudit&&document.body.dataset.state==='menu');
   await page.evaluate(()=>{window.__vfxGate=true;});await page.locator('#start').click();m.setup=await page.evaluate(stage,o);
   // Bounded native-timer preroll stops at a real warning/projectile, before impact.
-  m.preroll=[];let ready=false;for(let n=0;n<200;n++){const state=await page.evaluate(step,{frame:n-200,o});m.preroll.push(state);if(state.bullets.some(b=>b.kind==='hazard')||state.boss.pendingTelegraph){ready=true;break;}}assert(ready,'No native hazard within ten-second preroll');
+  m.preroll=[];let ready=!!o.definition.link;for(let n=0;!ready&&n<200;n++){const state=await page.evaluate(step,{frame:n-200,o});m.preroll.push(state);if(state.bullets.some(b=>b.kind==='hazard')||state.boss.pendingTelegraph){ready=true;break;}}assert(ready,'No native hazard within ten-second preroll');
   encoder=spawn('ffmpeg',['-y','-loglevel','error','-f','image2pipe','-framerate',String(o.fps),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',mp4],{stdio:['pipe','ignore','pipe']});
   m.encoderPid=encoder.pid;m.encoderErrors='';encoder.stderr.on('data',x=>m.encoderErrors+=x);encoder.stdin.on('error',e=>m.errors.push(e.message));const finished=once(encoder,'close');m.state='recording';await save();
   for(let frame=0;frame<o.frames;frame++){
@@ -138,10 +164,10 @@ async function record(o) {
   m.events=await page.evaluate(()=>window.__vfxAudit.events);m.domainEvents=await page.evaluate(()=>window.__vfxAudit.domainEvents);verifyEvents(m.events,m.frames,o,m.domainEvents);assert.deepEqual(m.errors,[]);
   m.probe=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-show_streams','-show_format','-of','json',mp4],{encoding:'utf8',timeout:60000}));assert.equal(m.probe.streams.length,1);verifyProbe(m.probe,o);
   execFileSync('ffmpeg',['-v','error','-xerror','-i',mp4,'-f','null','-'],{timeout:60000});m.decodeErrors=[];
-  const p=m.events.find(e=>e.type==='acid'&&e.targetId===undefined&&e.frame>=0)?.pixel;assert(p,'Missing event centroid');const size=128,x=Math.max(0,Math.min(o.viewport.width-size,Math.round(p.x)-size/2)),y=Math.max(90,Math.min(370-size,Math.round(p.y)-size/2));
+  const p=m.events.find(e=>(o.definition.link?e.type==='boon'&&e.boon===o.definition.link&&e.targetX!==undefined:e.type==='acid'&&e.targetId===undefined)&&e.frame>=0)?.pixel;assert(p,'Missing event centroid');const size=128,x=Math.max(0,Math.min(o.viewport.width-size,Math.round(p.x)-size/2)),y=Math.max(90,Math.min(370-size,Math.round(p.y)-size/2));
   assert(p.x>=x&&p.x<x+size&&p.y>=y&&p.y<y+size,'Target crop would overlap HUD/caption; choose another legal location');
   const raw=execFileSync('ffmpeg',['-v','error','-i',mp4,'-vf',`crop=${size}:${size}:${x}:${y},format=gray`,'-f','rawvideo','pipe:1'],{maxBuffer:16*1024*1024,timeout:60000});m.motion={crop:[x,y,size,size],...decodedMotion(raw,size*size,o.frames)};
-  const first=m.events.find(e=>e.type==='acid'&&e.targetId===undefined)?.frame??4;
+  const first=m.events.find(e=>(o.definition.link?e.type==='boon'&&e.boon===o.definition.link&&e.targetX!==undefined:e.type==='acid'&&e.targetId===undefined))?.frame??4;
   for(const frame of [...new Set([0,first,first+1,first+3,first+10,first+25,first+35,Math.floor(o.frames/2),o.frames-1])].filter(f=>f<o.frames)){
    const file=`${o.case}-decoded-${frame}.png`;execFileSync('ffmpeg',['-v','error','-y','-i',mp4,'-vf',`select=eq(n\\,${frame})`,'-frames:v','1',join(out,file)],{timeout:60000});m.samples.push({frame,file,sha256:hash(await readFile(join(out,file)))});
   }

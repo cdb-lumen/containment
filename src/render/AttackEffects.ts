@@ -29,6 +29,7 @@ function pool(scene:T.Scene,geometry:T.BufferGeometry,count:number,style:number,
 /** Bounded GPU instance pools: no lights or draw call per pellet / particle. */
 export class AttackEffects {
  private fire:Particle[]=[];private fireMesh:T.InstancedMesh;private textures:T.Texture[]=[];
+ private links:{start:T.Vector3;end:T.Vector3;age:number;frost:boolean}[]=[];
  private arcs:{start:T.Vector3;end:T.Vector3;age:number;seed:number}[]=[];
  private glow:Particle[]=[];private smoke:Particle[]=[];private debris:Particle[]=[];private decals:Particle[]=[];private pulses:Pulse[]=[];
  private glowMesh:T.InstancedMesh;private smokeMesh:T.InstancedMesh;private debrisMesh:T.InstancedMesh;private decalMesh:T.InstancedMesh;private pulseMesh:T.InstancedMesh;private slashMesh:T.InstancedMesh;private beamMesh:T.InstancedMesh;
@@ -96,6 +97,14 @@ export class AttackEffects {
    if(this.boonBursts++>=8)return;
    const colors={frost:0x8cdeed,arc:0xb3bbff,burn:0xf89847,impact:0xf5dab0,leech:0xbb7385,shield:0x86c9ce,overload:0xf4b96b,poison:0x5dd8b6,charge:0xd6b9f3,blast:0xcbd8dc,combustion:0xffba71,shatter:0xa3eaf3,field:0x75bdcf},color=colors[e.boon??'impact'];
    if(e.targetX!==undefined&&e.targetY!==undefined){
+    if(e.boon==='impact'||e.boon==='frost'){
+     const end=new T.Vector3(e.targetX/32,.8,e.targetY/32),frost=e.boon==='frost';
+     if(this.links.length>=12)this.links.shift();this.links.push({start:p.clone(),end,age:0,frost});
+     this.particle(this.glow,EFFECT_LIMITS.glow,end,color,frost?.28:.18,.09);
+     for(let i=0;i<(frost?7:4);i++){const a=i*2.399,v=new T.Vector3(Math.cos(a)*1.5,.5+Math.random(),Math.sin(a)*1.5);
+      this.particle(frost?this.debris:this.glow,frost?EFFECT_LIMITS.debris:EFFECT_LIMITS.glow,end,color,frost?.075:.04,frost?.35:.16,v,5,frost?3:1);
+     }return;
+    }
     if(this.arcBursts++>=2)return;const end=new T.Vector3(e.targetX/32,.8,e.targetY/32);
     if(this.arcs.length>=6)this.arcs.shift();this.arcs.push({start:p.clone(),end,age:0,seed:Math.floor(Math.random()*65536)});
     this.particle(this.glow,EFFECT_LIMITS.glow,end,0xddeaff,.48,.10);
@@ -242,6 +251,18 @@ export class AttackEffects {
     if(id==='rocket')this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x77817d,.25,.6,new T.Vector3(0,.2,0));
    }
   }
+  // Straight kinetic tracer or layered cyan lance. Only arc events branch/restrike.
+  for(const link of this.links){
+   link.age+=dt;const life=link.frost?.24:.12;if(link.age>=life)continue;
+   this.forward.copy(link.end).sub(link.start);const length=this.forward.length();if(length<.002)continue;
+   const fade=1-link.age/life;
+   for(let layer=0;layer<(link.frost?2:1)&&beam<EFFECT_LIMITS.beams;layer++){
+    this.dummy.position.copy(link.start).add(link.end).multiplyScalar(.5);this.dummy.quaternion.setFromUnitVectors(UP,this.forward.normalize());
+    const width=link.frost?(layer?.018:.065):.018;this.dummy.scale.set(width,length,width);this.dummy.updateMatrix();
+    this.beamMesh.setMatrixAt(beam,this.dummy.matrix);this.beamMesh.setColorAt(beam,new T.Color(link.frost?(layer?0xe4fbff:0x8cdeed):0xf5dab0));alpha.setX(beam++,fade*(layer||!link.frost?.85:.35));
+   }
+  }
+  this.links=this.links.filter(link=>link.age<(link.frost?.24:.12));
   // Reuse the bounded beam pool: broad violet corona plus thin blue-white core.
   for(const arc of this.arcs){
    arc.age+=dt;if(arc.age>=.26)continue;
@@ -273,7 +294,7 @@ export class AttackEffects {
   }
   this.pulses=this.pulses.filter(p=>p.age<p.life);this.finish(this.pulseMesh,ring);this.finish(this.slashMesh,slash);
  }
- clear(){this.fire=[];this.trailClock=0;this.boonBursts=this.arcBursts=0;this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
+ clear(){this.fire=[];this.trailClock=0;this.boonBursts=this.arcBursts=0;this.links=[];this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
  get counts(){return{fire:this.fire.length,glow:this.glow.length,smoke:this.smoke.length,debris:this.debris.length,pulses:this.pulses.length,decals:this.decals.length};}
  private meshes(){return[this.fireMesh,this.glowMesh,this.smokeMesh,this.debrisMesh,this.decalMesh,this.pulseMesh,this.slashMesh,this.beamMesh];}
  dispose(){for(const t of this.textures)t.dispose();for(const m of this.meshes()){m.geometry.dispose();(m.material as T.Material).dispose();m.removeFromParent();}}

@@ -9,7 +9,7 @@ const impact={type:'acid',angle:0};
 const pool={type:'acid',radius:120};
 const spit=[{type:'hazard-attack',enemyType:'spitter'}];
 const queen=[{type:'area-attack'}];
-test('catalog is scoped to separate untargeted acid effects',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool']));
+test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance']));
 test('options enforce exact arguments, SHA, quality and final length',()=>{
  assert.equal(opt('acid-impact').frames,40);
  assert.equal(options(['--case=acid-pool','--source-sha='+'a'.repeat(40),'--root=/tmp/immutable']).root,'/tmp/immutable');
@@ -20,7 +20,7 @@ test('event validators accept appropriate runtime-shaped records',()=>{
  assert.doesNotThrow(()=>verifyEvents([pool],[frame],opt('acid-pool'),queen));
 });
 test('targeted weapon acid is never hazard evidence',()=>{
- for(const id of Object.keys(CASES))assert.throws(()=>verifyEvents([{...impact,targetId:42,contact:'damage'}],[frame],opt(id),[...spit,...queen]),/untargeted/);
+ for(const id of ['acid-impact','acid-pool'])assert.throws(()=>verifyEvents([{...impact,targetId:42,contact:'damage'}],[frame],opt(id),[...spit,...queen]),/untargeted/);
 });
 test('impact requires spitter output, hazard projectile and real damage',()=>{
  assert.throws(()=>verifyEvents([impact],[frame],opt('acid-impact'),queen),/spitter/);
@@ -40,6 +40,17 @@ test('pool requires queen output, radius, pool lifetime and damage',()=>{
 test('player firing and camera changes invalidate evidence',()=>{
  assert.throws(()=>verifyEvents([impact,{type:'shot'}],[frame],opt('acid-impact'),spit),/firing/);
  assert.throws(()=>verifyEvents([impact],[frame,{...frame,zoom:2}],opt('acid-impact'),spit),/zoom/);
+});
+test('links require real shots, secondary damage and chilled lance targets',()=>{
+ for(const id of ['ricochet','ice-lance']){
+  const o=opt(id),boon=id==='ricochet'?'impact':'frost',amount=id==='ricochet'?18:14;
+  const events=[{type:'shot'},{type:'boon',boon,targetX:100,targetY:100}],frames=[{zoom:1,secondaryDamage:amount,secondaryStatuses:{chilled:true}}],damage=[{owner:'damage',amount,applied:true,secondary:true}];
+  assert.doesNotThrow(()=>verifyEvents(events,frames,o,damage));
+  assert.throws(()=>verifyEvents(events,frames,o,[]),/secondary damage/);
+  assert.throws(()=>verifyEvents(events.slice(1),frames,o,damage),/shot/);
+  assert.throws(()=>verifyEvents(events,[{...frames[0],secondaryDamage:0}],o,damage),/secondary health/);
+  if(id==='ice-lance')assert.throws(()=>verifyEvents(events,[{...frames[0],secondaryStatuses:{}}],o,damage),/chill/);
+ }
 });
 test('recorder bytes retain numeric RNG and contain no redaction tokens',()=>{
  const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');
