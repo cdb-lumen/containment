@@ -171,25 +171,86 @@ function awakeningRelease(f:Fabricator,hole:Outline){
 }
 /** Standalone construction uses exactly the same parts as the room for mesh QA. */
 export function createAwakeningRelease(){const f=new Fabricator();awakeningRelease(f,AWAKENING_BLOCKOUT[0].footprint);return f.finish();}
+/** Closed low pressure cassettes on bolted saddles. Services cross circulation
+ * below the deck in a closed duct; only contained risers stand above deck. */
+function awakeningRacks(f:Fabricator,holes:readonly Outline[]){
+ const box=(x:number,h:number,z:number,w:number,t:number,d:number,m:T.Material,r=1)=>f.box(x/U,h/U,z/U,w/U,t/U,d/U,m,r/U);
+ const pipe=(a:number[],b:number[],r:number,m:T.Material)=>f.pipe(v(a[0]/U,a[1]/U,a[2]/U),v(b[0]/U,b[1]/U,b[2]/U),r/U,m);
+ const supply=bounds(holes[3]),wallZ=supply.z*U;
+ const routes:{points:number[][]}[]=f.root.userData.serviceRoutes=[];
+ // Supply cabinet remains in its approved rear footprint, with a service face
+ // toward the outer aisle. Two dedicated circuits per bank, no broken hoses.
+ box(supply.x*U,3,wallZ,supply.w*U-4,6,supply.d*U-4,f.dark,2);
+ box(supply.x*U,21,wallZ,supply.w*U-10,30,supply.d*U-10,f.paint,2);
+ for(let x=supply.x0*U+45;x<supply.x1*U-25;x+=80){
+  box(x,22,wallZ+20,68,24,2,f.ivory,1);
+  box(x+23,23,wallZ+21.5,3,8,1,f.dark,.3);
+  for(let j=0;j<4;j++)box(x-16+j*8,15,wallZ+21.5,3,7,1,f.seam,.2);
+ }
+ f.sign('SUPPLY / RETURN - NOMINAL',supply.x,37/U,supply.z,supply.w-.5);
+ for(const index of [1,2]){
+  const b=bounds(holes[index]),z=b.z*U,x0=b.x0*U;
+  // Solid infill removes the collision cutout without creating a pit.
+  f.slab(holes[index],-.10,.10,f.dark);
+  for(const dz of [-28,28]){
+   box(b.x*U,7,z+dz,b.w*U-8,6,10,f.edge,1);
+   for(let j=0;j<4;j++){
+    const x=x0+50+j*100;
+    box(x,2,z+dz,72,4,20,f.paint,1);
+    box(x,13,z+dz,64,6,14,f.dark,2);
+    for(const dx of [-30,30])box(x+dx,4.6,z+dz+7,3,1.2,3,f.bolts,.4);
+   }
+  }
+  for(let j=0;j<4;j++){
+   const x=x0+50+j*100;
+   box(x,21,z,84,10,86,f.ivory,5);
+   box(x,26.5,z,83,2,85,f.dark,4);
+   box(x,29,z,80,3,82,f.ivory,5);
+   box(x,30.7,z-5,64,.6,55,f.paint,4);
+   // Closed compression latches bridge the seam, not a lid-opening pose.
+   for(const dx of [-40,40])for(const dz of [-24,24])box(x+dx,26,z+dz,4,7,8,f.bronze,1);
+   box(x,31.4,z+24,44,.8,10,f.dark,1);
+   box(x-9,32,z+24,19,.5,3,f.cold,.4);
+   // Repeated pulse ticks supply a non-colour living-status cue at each shell.
+   for(const [dx,d] of [[4,3],[8,7],[12,4]])box(x+dx,32,z+24,2,.5,d,f.ivory,.2);
+  }
+  f.sign('SEALED / PASSENGERS ALIVE',b.x,31.8/U,(z-40)/U,b.w-.6);
+  // Dedicated paired underfloor trunks. Wall -> buried run -> rack riser ->
+  // contained rear header -> individual sealed coupling on each cassette.
+  for(const [circuit,dz] of [[0,-48],[1,48]]){
+   const trunk=x0+376+circuit*12-(index-1)*24,headerZ=z+dz,mat=circuit===0?f.bronze:f.edge;
+   const common=[[trunk,18,wallZ],[trunk,-8,wallZ],[trunk,-8,headerZ],[trunk,12,headerZ]];
+   for(let k=1;k<common.length;k++)pipe(common[k-1],common[k],2,mat);
+   pipe([x0+50,12,headerZ],[trunk,12,headerZ],2,mat);
+   box(trunk,1,headerZ,9,2,9,f.dark,1);
+   box(trunk,18,wallZ,9,8,9,mat,1);
+   for(let j=0;j<4;j++){
+    const x=x0+50+j*100,portZ=z+(circuit===0?-41:41);
+    const branch=[[x,12,headerZ],[x,20,headerZ],[x,20,portZ]];
+    for(let k=1;k<branch.length;k++)pipe(branch[k-1],branch[k],1.6,mat);
+    box(x,20,portZ,8,7,5,f.dark,1);
+    routes.push({points:[...common,[x,12,headerZ],...branch.slice(1)]});
+   }
+  }
+ }
+ // Removable closed floor plates over the shared duct. Relief stays under the
+ // existing flush-landing limit, so neither aisle gains render-only collision.
+ for(let z=145;z<625;z+=30){
+  box(810,.15,z,52,.3,30,f.paint,0);
+  for(const x of [812,832])box(x,.35,z,2,.2,3,f.bolts,.2);
+ }
+}
+export function createAwakeningRacks(){const f=new Fabricator();awakeningRacks(f,AWAKENING_BLOCKOUT.map(f=>f.footprint));return f.finish();}
 function awakeningBay(f:Fabricator,t:RoomPlan){
  // Neutral solid blockout. Role metadata never owns alternate render coordinates.
+ awakeningRacks(f,t.voids??[]);
  f.root.userData.storyFixtures=AWAKENING_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
  for(const [i,hole] of (t.voids??[]).entries()){
   const role=AWAKENING_BLOCKOUT[i].id,b=bounds(hole);
+  if(role.startsWith('bank-')||role==='supply-wall')continue;
   if(role!=='player-release')f.slab(hole,-.46,.64,f.paint);
-  if(role.startsWith('bank-')){
-   for(let j=0;j<4;j++){
-    const x=b.x0+(j+.5)*b.w/4;
-    f.box(x,.48,b.z,b.w/4-.2,.6,b.d-.22,f.ivory,.18);
-    f.box(x,.85,b.z,b.w/4-.48,.2,b.d-.5,f.paint,.16);
-    f.box(x,.97,b.z+.7,1.3,.035,.12,f.cold,.015);
-   }
-   f.sign('SEALED / PASSENGERS ALIVE',b.x,1.02,b.z-.8,b.w-.6);
-  }else if(role==='player-release'){
+  if(role==='player-release'){
    awakeningRelease(f,hole);
-  }else if(role==='supply-wall'){
-   f.box(b.x,.65,b.z,b.w-.1,1.2,b.d-.1,f.paint,.04);
-   f.sign('CRYO SUPPLY / VITALS NOMINAL',b.x,1.28,b.z,b.w-.4);
   }else if(role==='monitoring-recovery'){
    f.box(b.x-.65,.6,b.z-.55,1.9,.9,1.1,f.ivory,.06);
    f.box(b.x-.65,1.08,b.z-.55,1.5,.12,.75,f.cold,.03);
