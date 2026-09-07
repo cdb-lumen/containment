@@ -14,18 +14,23 @@ void main(){vFrame=effectFrame;vUv=uv;vColor=instanceColor;vAlpha=effectAlpha;gl
 const fragment=`uniform sampler2D map;uniform float inset;uniform float grid;uniform float textured;varying float vFrame;uniform float style;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
 void main(){vec2 p=vUv*2.0-1.0;float d=length(p);float alpha=vAlpha;vec3 color=vColor;
 if(style>3.5){
- // Dendritic ice veins and granular frost stay clipped to the authoritative disk.
- vec2 q=p*3.2;vec2 cell=floor(q+.5);vec2 local=fract(q+.5)-.5;
+ // Dry, disconnected frost deposits, not a liquid disk. The plane and hard
+ // outer clip retain the real radius; a quiet broken fringe indicates its reach.
+ vec2 q=p*2.8+vec2(sin(p.y*7.0),sin(p.x*5.0))*.18;
+ vec2 cell=floor(q+.5);vec2 local=fract(q+.5)-.5;
  float seed=fract(sin(dot(cell,vec2(127.1,311.7)))*43758.5453);
  float angle=atan(local.y,local.x)+seed*6.28;float reach=length(local);
  float spoke=abs(sin(angle*3.0))*reach;
- float trunk=1.0-smoothstep(.014,.033,spoke);
- float twig=1.0-smoothstep(.012,.027,abs(sin(reach*43.0+spoke*32.0))*reach);
- float crystal=max(trunk,twig*.5)*(1.0-smoothstep(.25,.48,reach));
+ float trunk=1.0-smoothstep(.010,.025,spoke);
+ float twig=1.0-smoothstep(.008,.020,abs(sin(reach*43.0+spoke*32.0))*reach);
+ float crystal=max(trunk,twig*.35)*(1.0-smoothstep(.22,.45,reach));
  float grain=fract(sin(dot(floor(p*95.0),vec2(12.9898,78.233)))*43758.5453);
- float edge=1.0-smoothstep(.975,1.0,d);
- alpha*=edge*(.12+crystal*.58+step(.91,grain)*.13);
- color=mix(vec3(.22,.48,.58),vec3(.73,.94,.98),crystal);
+ float deposits=sin(p.x*8.0+p.y*3.0)*sin(p.y*9.0-p.x*2.0);
+ float patches=smoothstep(-.12,.48,deposits);
+ float boundary=.86+.08*sin(atan(p.y,p.x)*5.0+.7)+.06*sin(atan(p.y,p.x)*9.0);
+ float brokenEdge=1.0-smoothstep(boundary-.12,min(1.0,boundary+.05),d);
+ alpha*=brokenEdge*patches*(.025+crystal*.34+step(.975,grain)*.065);
+ color=mix(vec3(.18,.34,.39),vec3(.48,.67,.72),crystal);
  if(d>1.0)discard;
 }
 else if(vFrame<0.0){float drop=length(vec2(p.x/(.76-.18*p.y),p.y));alpha*=1.0-smoothstep(.82,1.0,drop);color*=.72+.28*max(0.0,1.0-drop);color=mix(color,vec3(.64,.78,.33),.35*(1.0-smoothstep(.08,.30,length(p-vec2(-.22,.28)))));}

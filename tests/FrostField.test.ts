@@ -12,6 +12,19 @@ it('renders a bounded frost material inside the stable real radius, with pause a
  fx.update(0,camera,[]);expect(Array.from(field.instanceMatrix.array)).toEqual(frozen);expect(Array.from(field.geometry.getAttribute('effectAlpha').array)).toEqual(alpha);
  fx.update(1.9,camera,[]);expect(field.count).toBe(1);fx.update(.051,camera,[]);expect(field.count).toBe(0);fx.dispose();expect(scene.children).toHaveLength(0);
 });
+it('uses broken frost coverage rather than a uniformly filled circular pool',()=>{
+ const scene=new T.Scene(),fx=new AttackEffects(scene);
+ const field=scene.getObjectByName('frost-fields') as T.InstancedMesh;
+ const material=field.material as T.ShaderMaterial;
+ expect(material.blending).toBe(T.NormalBlending);expect(material.depthWrite).toBe(false);
+ // Shader contract: clear floor gaps, irregular edge and bounded translucent energy.
+ expect(material.fragmentShader).toContain('float patches=');
+ expect(material.fragmentShader).toContain('float brokenEdge=');
+ expect(material.fragmentShader).toContain('alpha*=brokenEdge*patches*');
+ expect(material.fragmentShader).not.toContain('edge*(.12+crystal*.58');
+ expect(material.fragmentShader).toContain('if(d>1.0)discard');
+ fx.dispose();
+});
 it('caps frost fields at four, clears and disposes their shared resources',()=>{
  const scene=new T.Scene(),fx=new AttackEffects(scene),camera=new T.PerspectiveCamera();
  for(let i=0;i<10;i++){fx.event({type:'boon',boon:'field',x:i*32,y:96,radius:75,durationMs:2000});fx.update(.01,camera,[]);}
