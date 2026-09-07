@@ -1,0 +1,180 @@
+{
+  "result": "PASS",
+  "assets": [
+    {
+      "asset": "locker",
+      "finiteAccessors": {
+        "POSITION": 4070,
+        "NORMAL": 4070,
+        "TEXCOORD_0": 4070
+      },
+      "packedUsedImages": 11,
+      "embeddedTextures": [
+        {
+          "name": "cryo-surface-04-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 16001
+        },
+        {
+          "name": "cryo-surface-03-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 24111
+        },
+        {
+          "name": "cryo-surface-03-metallic-cryo-surface-03-roughness",
+          "width": 512,
+          "height": 512,
+          "bytes": 23715
+        },
+        {
+          "name": "cryo-surface-01-color",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 35429
+        },
+        {
+          "name": "cryo-surface-01-metallic-cryo-surface-01-roughness",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 29875
+        },
+        {
+          "name": "cryo-surface-02-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 11398
+        },
+        {
+          "name": "cryo-surface-02-metallic-cryo-surface-02-roughness",
+          "width": 512,
+          "height": 512,
+          "bytes": 8912
+        },
+        {
+          "name": "locker-label",
+          "width": 256,
+          "height": 128,
+          "bytes": 1963
+        }
+      ],
+      "construction": {
+        "twoSeparateSlidingTracks": true,
+        "shelfLeafClear": true,
+        "KITPlateExplicitUV": true
+      }
+    },
+    {
+      "asset": "satellite-cabinet",
+      "finiteAccessors": {
+        "POSITION": 4608,
+        "NORMAL": 4608,
+        "TEXCOORD_0": 4608
+      },
+      "packedUsedImages": 10,
+      "embeddedTextures": [
+        {
+          "name": "cryo-surface-04-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 16001
+        },
+        {
+          "name": "cryo-surface-02-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 11398
+        },
+        {
+          "name": "cryo-surface-02-metallic-cryo-surface-02-roughness",
+          "width": 512,
+          "height": 512,
+          "bytes": 8912
+        },
+        {
+          "name": "cryo-surface-01-color",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 35429
+        },
+        {
+          "name": "cryo-surface-01-metallic-cryo-surface-01-roughness",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 29875
+        },
+        {
+          "name": "cryo-surface-03-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 24111
+        },
+        {
+          "name": "cryo-surface-03-metallic-cryo-surface-03-roughness",
+          "width": 512,
+          "height": 512,
+          "bytes": 23715
+        }
+      ],
+      "construction": {
+        "parkedDoorShelfPairsClear": 32,
+        "fourFoldedLeavesMutuallyClear": true
+      }
+    },
+    {
+      "asset": "trolley",
+      "finiteAccessors": {
+        "POSITION": 5038,
+        "NORMAL": 5038,
+        "TEXCOORD_0": 5038
+      },
+      "packedUsedImages": 10,
+      "embeddedTextures": [
+        {
+          "name": "cryo-surface-04-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 16001
+        },
+        {
+          "name": "cryo-surface-03-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 24111
+        },
+        {
+          "name": "cryo-surface-03-metallic-cryo-surface-03-roughness",
+          "width": 512,
+          "height": 512,
+          "bytes": 23715
+        },
+        {
+          "name": "cryo-surface-02-color",
+          "width": 512,
+          "height": 512,
+          "bytes": 11398
+        },
+        {
+          "name": "cryo-surface-02-metallic-cryo-surface-02-roughness",
+          "width": 512,
+          "height": 512,
+          "bytes": 8912
+        },
+        {
+          "name": "cryo-surface-01-color",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 35429
+        },
+        {
+          "name": "cryo-surface-01-metallic-cryo-surface-01-roughness",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 29875
+        }
+      ],
+      "construction": {}
+    }
+  ]
+}

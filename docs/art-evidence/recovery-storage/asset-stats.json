@@ -1,0 +1,160 @@
+{
+  "assets": [
+    {
+      "asset": "locker",
+      "bytes": 316508,
+      "triangles": 4690,
+      "batches": 5,
+      "materials": 5,
+      "namedParts": 29,
+      "images": 8,
+      "embeddedImageBytes": 151404,
+      "texturedPBRMaterials": 3,
+      "finiteAccessorCounts": {
+        "POSITION": 4070,
+        "NORMAL": 4070,
+        "TEXCOORD_0": 4070
+      },
+      "boundsGame": [
+        [
+          252.5,
+          287.80999755859375
+        ],
+        [
+          656.5,
+          743.5
+        ],
+        [
+          0.0,
+          45.900001525878906
+        ]
+      ],
+      "triangleReservationAndAccess": "PASS",
+      "deckContacts": [
+        [
+          260,
+          680
+        ],
+        [
+          278,
+          720
+        ]
+      ],
+      "unitNormals": true,
+      "roundtrip": "PASS",
+      "mountThreeXYZ": [
+        6.375,
+        0,
+        21.875
+      ],
+      "nativeScale": 1
+    },
+    {
+      "asset": "satellite-cabinet",
+      "bytes": 333288,
+      "triangles": 4940,
+      "batches": 5,
+      "materials": 5,
+      "namedParts": 37,
+      "images": 7,
+      "embeddedImageBytes": 149441,
+      "texturedPBRMaterials": 3,
+      "finiteAccessorCounts": {
+        "POSITION": 4608,
+        "NORMAL": 4608,
+        "TEXCOORD_0": 4608
+      },
+      "boundsGame": [
+        [
+          1044.0499877929688,
+          1105.0
+        ],
+        [
+          658.5,
+          704.5
+        ],
+        [
+          0.0,
+          46.0
+        ]
+      ],
+      "triangleReservationAndAccess": "PASS",
+      "deckContacts": [
+        [
+          1050,
+          681
+        ],
+        [
+          1100,
+          681
+        ]
+      ],
+      "unitNormals": true,
+      "roundtrip": "PASS",
+      "mountThreeXYZ": [
+        6.375,
+        0,
+        21.875
+      ],
+      "nativeScale": 1
+    },
+    {
+      "asset": "trolley",
+      "bytes": 349192,
+      "triangles": 5448,
+      "batches": 4,
+      "materials": 4,
+      "namedParts": 42,
+      "images": 7,
+      "embeddedImageBytes": 149441,
+      "texturedPBRMaterials": 3,
+      "finiteAccessorCounts": {
+        "POSITION": 5038,
+        "NORMAL": 5038,
+        "TEXCOORD_0": 5038
+      },
+      "boundsGame": [
+        [
+          1048.2999877929688,
+          1104.0
+        ],
+        [
+          713.0,
+          743.0
+        ],
+        [
+          -1.430527589718622e-07,
+          31.700002670288086
+        ]
+      ],
+      "triangleReservationAndAccess": "PASS",
+      "deckContacts": [
+        [
+          1058,
+          716
+        ],
+        [
+          1058,
+          740
+        ],
+        [
+          1100,
+          716
+        ],
+        [
+          1100,
+          740
+        ]
+      ],
+      "unitNormals": true,
+      "roundtrip": "PASS",
+      "mountThreeXYZ": [
+        6.375,
+        0,
+        21.875
+      ],
+      "nativeScale": 1
+    }
+  ],
+  "runtimeVerified": false
+}
