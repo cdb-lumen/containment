@@ -1,6 +1,6 @@
 # Passenger Vault whole-room layout proposal
 
-**Layout gate: UNVALIDATED.** The story gate passed. This drawing is a candidate for a whole-room blockout, not an approved layout, equipment brief or runtime change. It cannot pass until independent review of shipping-camera blockout evidence and collision, navigation, shots and pickups succeeds.
+**Neutral layout gate: PASS.** The story gate passed first. The coordinate plan below is implemented as a low-detail blockout at `e3226a06328ca3cf442b361a0c60ba98bc63d69b`. [Independent final review](../art-evidence/passenger-blockout/final-review.md) accepts the spatial reservations after desktop/portrait evidence and production collision, navigation, projectile and pickup tests. This is not equipment acceptance or release readiness. Earlier proposal reviews remain historical records of the then-unvalidated state.
 
 ![Annotated top-down proposal](passenger-vault-layout.svg)
 
@@ -94,7 +94,7 @@ The SVG marks three useful views/tests:
 2. L1 along `y440`, from `180,440` to `1020,440`. This should be a clear shot corridor. Use the separate oblique ray below for the blocked-row expectation; no row intersects L1. No shoot-through chamber windows.
 3. L2 along `x600`, from `600,180` to `600,700`. This gives a north/south transfer sightline. Test oblique blocked ray `260,440 → 780,180` across A as a contrasting solid-contact case.
 
-Pickup probes P1 `600,440`, P2 `260,300`, P3 `960,580` sample centre and both returns. They are test locations, not authored rewards. Also test real drops at every row corner and service face, ordinary attraction near solids and collection after room clear. Drops must resolve to reachable floor. Preserve the existing room-clear auto-collection sweep, which intentionally awards remaining drops without a player-to-pickup route. Do not redesign the pickup system in this layout slice.
+Pickup probes P1 `600,440`, P2 `260,300`, P3 `960,580` sample centre and both returns. They are test locations, not authored rewards. Also test real drops at every row corner and service face, ordinary attraction near solids and collection after room clear. Admitted pickups must occupy reachable floor. Preserve the existing radius-16 placement rejection when a radius-14 crawler dies too close to a solid; a successful chance roll does not guarantee a created pickup. No relocation mechanic is added. Preserve the existing room-clear auto-collection sweep, which intentionally awards remaining drops without a player-to-pickup route. Do not redesign the pickup system in this layout slice.
 
 ## Retain/change decisions
 
@@ -113,9 +113,9 @@ Inherited comparison is grounded in [authored topology](../../src/game/roguelike
 
 ## Blockout gate and handoff
 
-**Still UNVALIDATED.** This deliverable contains only the Markdown and SVG. No runtime geometry, equipment or production asset is changed. SVG/XML and dimensional checks do not establish gameplay safety.
+**Neutral blockout validated.** The original coordinate proposal is now implemented and independently reviewed. [Capture manifest](../art-evidence/passenger-blockout/manifest.json), [behavioral follow-up](../art-evidence/passenger-blockout/followup-tests.md) and [final review](../art-evidence/passenger-blockout/final-review.md) record the gate outcome. The checklist below remains the evidence contract, not unfinished work by itself. Live combat presentation, finished assets, full release verification and hosted delivery remain later gates.
 
-The next writer must build neutral floor, row and service volumes from this exact coordinate list, with the same boundary and solid set used by rendering, collision, navigation and projectile queries. Do not merely place these visuals over inherited wells. Keep the common deck, conservative solid contact faces and closed living-passenger cues. The nominated heights are upper bounds to test, not equipment designs.
+The next equipment writer must preserve the implemented floor, row and service reservations from this coordinate list, with the same boundary and solid set used by rendering, collision, navigation and projectile queries. Do not restore inherited wells. Keep the common deck, conservative contact faces and closed living-passenger cues. Heights remain conservative upper bounds; material changes to layout require renewed evidence.
 
 Required evidence before layout passes:
 
@@ -126,4 +126,4 @@ Required evidence before layout passes:
 - Real drop, attraction and collection checks at P1–P3, all row corners and service edges. Prove reachable placement and inspect ordinary attraction near solids. Preserve room-clear auto-collection, campaign rewards and progression; the clear-room sweep does not require a physical collection path.
 - Independent layout/spec review against the reviewed story, then evidence review. If camera readability or encounter traversal fails, revise this plan and blockout together before equipment planning. Any required wave/progression redesign is a scope escalation, not a quiet layout fix.
 
-No layout PASS, equipment start, release readiness or real-device performance claim follows from this proposal.
+The neutral layout pass permits deriving a new equipment plan. It does not accept equipment or establish release readiness or real-device performance.
