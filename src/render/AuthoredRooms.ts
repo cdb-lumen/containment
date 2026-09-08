@@ -1,6 +1,6 @@
 import * as T from 'three';
 import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
-import {AWAKENING_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
+import {AWAKENING_BLOCKOUT,PASSENGER_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -409,25 +409,29 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
  (f.root.userData.lightFixtures??=[]).push(...kit.userData.lightFixtures??[]);delete kit.userData.lightFixtures;
 }
 function passengerVault(f:Fabricator,t:RoomPlan){
- for(const hole of t.voids??[]){const b=bounds(hole);
-  // Occupied pressure pods remain human-sized, stacked under the balcony.
-  for(let x=b.x0+1.05;x<b.x1-.9;x+=2.05){
-   // Solve each column against the sloping back wall instead of discarding a
-   // whole bank when a global grid begins just outside that polygon.
-   const candidates:number[]=[];for(let z=b.z0+1.46;z<b.z1-1.45;z+=.08)
-    if([[-.89,-1.43],[.89,-1.43],[-.89,1.43],[.89,1.43]].every(([dx,dz])=>contains(hole,x+dx,z+dz)))candidates.push(z);
-   if(!candidates.length)continue;const z=candidates[Math.floor(candidates.length/2)];
-   for(const y of [-3.05,-.95]){
-    f.box(x,y,z,1.72,.62,2.8,f.ivory,.18);f.box(x,y+.34,z,1.31,.09,2.34,f.dark,.12);
-    f.ellipsoid(x,y+.48,z-.67,.19,.16,.22,f.skin);f.ellipsoid(x,y+.45,z-.04,.29,.12,.46,f.body);
-    for(const side of [-1,1]){f.pipe(v(x+side*.14,y+.43,z+.25),v(x+side*.16,y+.43,z+.9),.105,f.body);f.box(x+side*.67,y+.39,z,.055,.04,2.05,f.cold,.012);}
-    f.box(x,y+.53,z+.46,1.63,.12,.14,f.edge);f.box(x,y+.39,z+1.15,.46,.04,.12,f.warm,.01);
-   }
+ const box=(x:number,h:number,y:number,w:number,d:number,l:number,m:T.Material)=>f.box(x/U,h/U,y/U,w/U,d/U,l/U,m,0);
+ // Neutral blockout only. A full-height sealed plinth makes the whole row
+ // contact conservative, including the infill between closed chamber volumes.
+ f.root.userData.sealedPassengers=16;
+ f.root.userData.storyFixtures=PASSENGER_BLOCKOUT.map(({id},i)=>({id,footprint:t.voids?.[i]}));
+ for(const [i,role] of PASSENGER_BLOCKOUT.entries()){
+  const b=bounds(t.voids![i]),x=b.x*U,y=b.z*U;
+  box(x,role.row?12:role.height/2,y,b.w*U,role.row?24:role.height,b.d*U,f.paint);
+  if(!role.row)continue;
+  const north=i<2,cy=north?308:572;
+  for(let slot=0;slot<4;slot++){
+   const cx=b.x0*U+25+slot*50;
+   box(cx,32,cy,40,16,88,f.ivory);
+   // Broad live band at each working face; no exposed occupants or glass.
+   box(cx,36,north?351:529,32,6,2,f.cold);
   }
-  for(const side of [-1,1])f.pipe(v(b.x+side*(b.w/2-.3),-3.9,b.z0+.4),v(b.x+side*(b.w/2-.3),-3.9,b.z1-.4),.18,f.bronze);
+  box(x,28,north?248:632,200,8,16,f.dark);
  }
- const boundary=bounds(outline(t));f.sign('PASSENGERS / VITALS NOMINAL',boundary.x,1.36,boundary.z0+.35,7.8);
- equipment(f,t,'cryo');
+ // Flush, neutral route annotations. No raised pipes or extra blockers.
+ for(const x of [420,780])for(const [y,length] of [[184,128],[696,128]])box(x,.08,y,3,.16,length,f.seam);
+ // Perimeter volumes are outside the same boundary queried by actors/shots.
+ box(600,24,34,1132,48,12,f.paint);box(600,12,846,1132,24,12,f.paint);
+ box(34,12,440,12,24,800,f.paint);box(1166,12,440,12,24,800,f.paint);
 }
 function breachedBay(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole);
@@ -537,8 +541,10 @@ function deckServices(f:Fabricator,t:RoomPlan){
 export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;
- f.add(new T.ExtrudeGeometry(roomDeckShape(t),{depth:.44,steps:1,bevelEnabled:false}),f.deck,v(0,-.46,0),new T.Euler(-Math.PI/2,0,0));
- if(id==='awakening-bay')awakeningEnvelope(f,t);else edgeArchitecture(f,t,id==='breached-loading-bay');deckServices(f,t);
+ const deckPlan=id==='passenger-vault'?{...t,voids:[]}:t;
+ f.add(new T.ExtrudeGeometry(roomDeckShape(deckPlan),{depth:.44,steps:1,bevelEnabled:false}),f.deck,v(0,-.46,0),new T.Euler(-Math.PI/2,0,0));
+ if(id==='awakening-bay')awakeningEnvelope(f,t);else if(id!=='passenger-vault')edgeArchitecture(f,t,id==='breached-loading-bay');
+ if(id!=='passenger-vault')deckServices(f,t);
  if(id==='awakening-bay')awakeningBay(f,t);else if(id==='passenger-vault')passengerVault(f,t);else if(id==='breached-loading-bay')breachedBay(f,t);else reactorFloor(f,t);
  return f.finish();
 }
