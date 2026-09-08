@@ -1,0 +1,56 @@
+{
+  "source_sha": "27bff3a431cdbdd66cd1c76c4c2a6b1743efe357",
+  "runtime_tree_sha256": "8b93b1f69e4f49aa9bf5a42ed46b0dd1997c2556e544abf25cafe81a7b7ffa1d",
+  "verified_source_files": 191,
+  "files": [
+    {
+      "path": "combined-media-review.md",
+      "sha256": "c5efae9c3a6de2a90b78d01cfc1e574be0da35410bd6f43b4eedb227ca1eadbe"
+    },
+    {
+      "path": "combined-verify-retry.log",
+      "sha256": "da574387a4a9519b4be9962f816333732603592779871d1f633104f4daeeb63e"
+    },
+    {
+      "path": "combined-lifecycle-retry.log",
+      "sha256": "02e06e09a7aed059ca197efcaed3768c7f7d2eddd930b8ad030d9d71a73d5246"
+    },
+    {
+      "path": "combined-lifecycle-run/manifest.json",
+      "sha256": "7eca9f4c930bd1ae806916492b477ba495f89deb7e8172910bfe421099f64f2e"
+    },
+    {
+      "path": "combined-opening/manifest.json",
+      "sha256": "739af1792f8cab239f520a58eedea63e79cc15c734d9131dea7f8f938ddb5333"
+    },
+    {
+      "path": "combined-opening/desktop.png",
+      "sha256": "5f6c048b008d81fd42ab95ee3e684d956cca8a689c34ba14ddc87bf21368e465"
+    },
+    {
+      "path": "combined-opening/portrait.png",
+      "sha256": "f6e9272cbc9a312802ab1ec47da2e4469c45aa33932d995a53c9fc9e7c60da6e"
+    },
+    {
+      "path": "combined-room/manifest.json",
+      "sha256": "2e518e81cf216bf809393108777dc53f526b43495b7614485873645f477d558b"
+    },
+    {
+      "path": "combined-room/01-awakening-bay-overview.png",
+      "sha256": "8ccbfb0a4e1cfe989c8a8b1d7ed5a6bf3c09967ae3a0f6b802c8d54a5ce6faf4"
+    },
+    {
+      "path": "combined-room/01-awakening-bay-gameplay.png",
+      "sha256": "6f5fdab76c15baa3c42b5aa98748a2f93ee8dfd9840b6a80d21520856be4a850"
+    },
+    {
+      "path": "combined-video/awakening-bay-desktop.json",
+      "sha256": "ea615a0bc705a2b991f11fa2bfe47f436b0fea2c48d02f449a8eb66e89c16a85"
+    },
+    {
+      "path": "combined-video/awakening-bay-desktop.mp4",
+      "sha256": "22751e0243ae3df10c5854b0f7279e465b5c149c89663ef3778fb78870295928"
+    }
+  ],
+  "log_normalization": "Copied logs have trailing whitespace removed; original logs retained in evidence workspace."
+}

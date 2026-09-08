@@ -3,6 +3,24 @@ import * as T from 'three';
 import {roomFocus} from '../src/render/roomFraming';
 
 describe('room camera framing',()=>{
+ it('frames the release and first sealed neighbour together at portrait spawn without zooming',()=>{
+  const width=31*390/844;
+  const focus=roomFocus(230/32,440/32,1200/32,880/32,width,31,'awakening-bay');
+  expect(focus.x-width/2).toBeLessThan(90/32);
+  expect(focus.x+width/2).toBeGreaterThan(540/32);
+  expect(roomFocus(600/32,440/32,1200/32,880/32,width,31,'awakening-bay')).toEqual(roomFocus(600/32,440/32,1200/32,880/32,width,31));
+  expect(roomFocus(230/32,440/32,1200/32,880/32,32,22,'awakening-bay')).toEqual(roomFocus(230/32,440/32,1200/32,880/32,32,22));
+ });
+ it('leaves other portrait rooms unchanged and keeps opening follow continuous',()=>{
+  const width=31*390/844;
+  for(const x of [60,230,315,400,600]){
+   expect(roomFocus(x/32,440/32,1200/32,880/32,width,31,'passenger-vault')).toEqual(roomFocus(x/32,440/32,1200/32,880/32,width,31));
+  }
+  const before=roomFocus(399.99/32,440/32,1200/32,880/32,width,31,'awakening-bay');
+  const after=roomFocus(400.01/32,440/32,1200/32,880/32,width,31,'awakening-bay');
+  expect(after.x-before.x).toBeGreaterThan(0);
+  expect(after.x-before.x).toBeLessThan(.001);
+ });
  it('keeps an interior player as the focus',()=>{expect(roomFocus(25,25,60,60,20,16)).toEqual({x:25,z:25});});
  it('centers rooms smaller than the projected view on either axis',()=>{
   expect(roomFocus(-100,100,8,6,40,30)).toEqual({x:4,z:3});

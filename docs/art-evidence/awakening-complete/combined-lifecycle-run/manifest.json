@@ -1,0 +1,6716 @@
+{
+  "sha": "27bff3a431cdbdd66cd1c76c4c2a6b1743efe357",
+  "assets": {
+    "assets/benchmark/sealed-cryo.glb": "e87b1f2c49858b00b3b217d6da3ca3a0870786e36903c5d3f3a48f1b5ee5bbd4",
+    "assets/awakening/released-berth/released-berth.glb": "eb11cdda45519484ddcf50735607a4c170adfd520c35ac6eb65a932bf483d997",
+    "assets/awakening/recovery-kit/room-kit.glb": "78f5daae3d6d409cd1dfcce8365373fbec9768ad5f4036e8b49ab1b4eee0ea0f"
+  },
+  "scriptSha256": "419cc936f42e905044c76945763bce523cad8393b03f4ff7dc5f49ea3b5a7404",
+  "evidenceClass": "Instrumented built app; real controls for input gate; direct renderer reload/shutdown for ownership; not canonical pixels or real-GPU performance acceptance",
+  "results": [
+    {
+      "mode": "ready",
+      "before": {
+        "state": "playing",
+        "loading": true,
+        "recovering": true,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "loading",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "hot-reload"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 23,
+          "stallsOver50ms": 17,
+          "frameMs": {
+            "average": 572.4405762216319,
+            "p95": 983.2999877929688
+          },
+          "updateMs": {
+            "average": 24.982608696688775,
+            "p95": 0.2999999523162842
+          },
+          "renderSubmissionMs": {
+            "average": 3.8739130082337754,
+            "p95": 10.199999809265137
+          },
+          "quality": "low",
+          "drawCalls": 53,
+          "triangles": 258466,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "pending": {
+        "state": "playing",
+        "loading": true,
+        "recovering": true,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "loading",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "hot-reload"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 31,
+          "stallsOver50ms": 20,
+          "frameMs": {
+            "average": 449.44300848437894,
+            "p95": 983.2999877929688
+          },
+          "updateMs": {
+            "average": 32.212903030457035,
+            "p95": 423.8999938964844
+          },
+          "renderSubmissionMs": {
+            "average": 2.8774193256132063,
+            "p95": 10.199999809265137
+          },
+          "quality": "low",
+          "drawCalls": 53,
+          "triangles": 258466,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "settled": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "ready",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "hot-reload"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 35,
+          "stallsOver50ms": 20,
+          "frameMs": {
+            "average": 401.41237896510535,
+            "p95": 983.2999877929688
+          },
+          "updateMs": {
+            "average": 28.53428554194314,
+            "p95": 423.8999938964844
+          },
+          "renderSubmissionMs": {
+            "average": 58.09428708212716,
+            "p95": 16.100000381469727
+          },
+          "quality": "low",
+          "drawCalls": 70,
+          "triangles": 280956,
+          "geometries": 96,
+          "textures": 88,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 1,
+          "awakening-kit": 0,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "resumed": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "ready",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0.2,
+        "remaining": 12,
+        "boons": [
+          "hot-reload"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 53,
+          "stallsOver50ms": 37,
+          "frameMs": {
+            "average": 481.4301875852189,
+            "p95": 966.5999755859375
+          },
+          "updateMs": {
+            "average": 19.105660267595976,
+            "p95": 9.300000190734863
+          },
+          "renderSubmissionMs": {
+            "average": 39.85094428962132,
+            "p95": 13.699999809265137
+          },
+          "quality": "low",
+          "drawCalls": 70,
+          "triangles": 280956,
+          "geometries": 96,
+          "textures": 88,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 1,
+          "awakening-kit": 0,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": true
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": true
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": true
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        }
+      ],
+      "errors": [],
+      "consoleErrors": [],
+      "generations": [
+        {
+          "shadow": {
+            "calls": 70,
+            "triangles": 280956,
+            "points": 0,
+            "lines": 0
+          },
+          "steady": {
+            "calls": 70,
+            "triangles": 280956,
+            "points": 0,
+            "lines": 0
+          },
+          "memory": {
+            "geometries": 96,
+            "textures": 88
+          },
+          "quality": "low"
+        },
+        {
+          "shadow": {
+            "calls": 70,
+            "triangles": 280956,
+            "points": 0,
+            "lines": 0
+          },
+          "steady": {
+            "calls": 70,
+            "triangles": 280956,
+            "points": 0,
+            "lines": 0
+          },
+          "memory": {
+            "geometries": 96,
+            "textures": 88
+          },
+          "quality": "low"
+        },
+        {
+          "shadow": {
+            "calls": 70,
+            "triangles": 280956,
+            "points": 0,
+            "lines": 0
+          },
+          "steady": {
+            "calls": 70,
+            "triangles": 280956,
+            "points": 0,
+            "lines": 0
+          },
+          "memory": {
+            "geometries": 96,
+            "textures": 88
+          },
+          "quality": "low"
+        }
+      ],
+      "cancelled": [
+        "disposed",
+        "disposed",
+        "disposed"
+      ],
+      "cancelledRouteErrors": [],
+      "shutdown": [
+        "disposed",
+        "disposed",
+        "disposed"
+      ],
+      "retired": [
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "89a1f2ce-f5b2-4ecb-bbd4-fbc6710d08b4",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "78b93b6f-eca3-4f3e-9082-76b9e7056a76",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e079882d-7b75-45ac-a7bf-1293043aaced",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "46c408da-110e-4bc9-a0ee-f67f7106247d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "045815aa-8854-4f99-a9a2-fc2d80708a54",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9f6be8bc-f76a-45a3-a427-d8f9ac3434b0",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "f5ee3a37-51d1-4689-8004-9af113f8e85e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "83dd5777-0af5-4c1e-9e92-6db774420670",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4c35b300-c028-41b3-8db2-d1175c709706",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "bfa85643-0090-4921-a6c5-aef245e4b895",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7b36cdf6-2f29-4abe-aa68-180d336f72ac",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "141fafe2-4e1f-4d9a-92ae-f91cb9e48ee7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "2d19e9fc-baf0-4d0d-a059-5f2050faccaa",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e8e44564-af9d-464c-9f3d-e637c13e80a5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cbcebd18-cd46-4e13-a577-a91fec9e3296",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "d2f50ab0-af14-4410-8c54-ff1acbaa1970",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9e0daf1d-87d8-47b0-ae47-aa39de68c379",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "b22d9e8b-a9dd-45b0-94d3-a3cf0278b11c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "5d7a3bf9-1049-46b6-a68b-ec314dc53154",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "25f89e8b-e9ad-4202-b9ac-4e5e2e5f1c04",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "bd5276f5-7681-46b9-a61a-3bf86f366b16",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "56112007-9d6e-4d29-a1e8-751527da98d7",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9fff6ad5-15f6-48dc-b24d-5b1ed951132d",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "f2fce197-71ce-4249-8596-9b5cccde1abc",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e98ee82a-0bc4-496b-b0ed-05b5898f9916",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a0f5fbbf-f1f7-4499-b105-eb004ca1dbad",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "3494267d-f3c1-40b6-a0f0-61691a6d2142",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a4878ca1-adfc-4527-b85d-fa29a4aa6b74",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "b9678613-038b-441f-b374-f43186bd97ca",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c3f8e246-c727-4e75-b3d5-682456659b5c",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "f6e145d5-8a32-4873-9f3e-668efdfc1a9e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8866f3e7-1a56-44a3-a60c-26a75ea92454",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "93da1606-0a15-459d-8db5-e6dca4014f12",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "1417f4cd-a50c-4b0c-a095-536fdeac34d1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "475351fd-f994-4344-a8f3-4b72d1ab0421",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "331ad4d4-5d52-4ce7-a150-8923f20410c6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "425a8f62-9ffd-4322-aba6-ddd5ae00ff0a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9d8493d9-ae92-4bc5-8985-9aa4316a7c0e",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "072aa696-8760-4d01-802a-890a82738349",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "fb8f5696-38e8-40f4-bd77-55bf7e19240b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "5d2aed03-edb8-4984-9f07-44f0a5d81e37",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "4222dc42-a9f5-4f1e-a562-07466b24ba61",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "965d34c5-b137-4495-b984-36ad373d50bc",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "20ba3864-fc5c-4c42-bbfc-91be76b53f3f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8ce0698f-8301-4894-ae87-a95c10650240",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "60da6c3a-caf2-43c3-87ea-818def6facd1",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a699699f-8278-4b51-b529-2d9774386f0b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f4f40069-6a5f-4b75-96aa-3d767401083a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d2e65a15-9e32-45f4-938d-3745fbeddea2",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "52bb9d6d-c279-41b4-8244-c35156733149",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "b880e649-f7ee-4e72-b780-030d9adbc6c6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "aee2da1c-16db-456e-a0cc-f760216e7a03",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f7896d4c-f7ec-4637-98e7-30cd446b3036",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "5e782292-72dc-4170-ae82-8a4655f0d94a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a5b5e8c5-3484-4196-ac6c-46a98dc694da",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "f99138e8-57b8-476a-86d4-e9a472923d03",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "2f0a9943-2e9b-40c9-a151-9056673d6e49",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8da83f4b-2f17-4558-bb59-960ac2bd0898",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d9a94d40-ab50-4d08-a4e3-092502cc421b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "90548dd4-252f-4749-802b-709501b9b6b4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7555814b-297b-4e58-9db1-2ec0612e6cb8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9feb9884-4db2-47f4-9040-acc82af345ad",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9776fbfb-662c-4215-812a-1e78ceb1268a",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "0043c874-957d-4d3b-bf5a-bde612451735",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "72f78bb2-7524-4f48-baf4-37d767b637c9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "32c6fd1a-8b90-4225-9b63-f8d86b394c61",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "447f7576-28bc-4e37-abc9-747b0f9f3ecb",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "aa28adba-f021-43d0-9faa-3d260e9f8bdd",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e65aac7d-7eeb-4000-bfdd-12a261938ce6",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "853280e6-c2de-40d3-adaa-b9538f5fcbc8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "f6776787-8687-44a7-a259-cff979bfb391",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "0fbd0b6c-4b38-4373-9812-d8931e444ed0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "27b7ccdf-0cf7-4f72-9df0-6d8145716e72",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "67f14537-ff58-4b23-b3a2-f7c2c7970bc3",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "63c0ed18-c029-4a88-a3ef-bda199b09294",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "b47ce8de-aed6-4f94-b214-a88b8d6c5cb0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "317bc876-fb9c-4a85-9e06-ca63587b80e9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f7bad37c-de3e-4aa2-b06a-256b10ee18cd",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "4c98470b-ec5a-48aa-97d4-ea6a07a07fb4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "cd934ad1-78b6-432d-a880-6f2fe1443b71",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "320aea23-dea5-4a4d-b0fc-d266ae9fcb02",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ef4092e1-be6d-4a0c-a406-f3bf15d296a8",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6514118b-6786-4ad4-b997-a2d4a850d453",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1f14d6f6-caad-4869-b293-66fcf136071a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8b2d5469-9e9d-4a4c-af5f-2e1b890f6219",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "68b20469-9105-4c17-bf66-220f86c65e32",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "20474d72-8d48-41fe-9344-b33d5c89930d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "03a45526-2e39-4d6d-88e0-1c4bedef85f4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d219ac2e-2c28-4221-8d02-0d4c510e23f9",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "29d9803e-fb00-4dd0-a962-9efb70db6e71",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ad0ee17a-71fa-435a-95be-bcea1d5d971f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a66986a9-e352-4059-a1d0-7973dedd3929",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "853f1cb8-a8fe-4fb1-8059-41997e1a82a7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "d381d326-f001-42bf-95fb-7a0e5d3e24fe",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3333e00b-4343-4d80-b719-d5e042279d01",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "59a2c6af-25e9-4d82-982f-9e060f00c26b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "37f0140c-83b2-47c8-897f-1869506ec63c",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "70ead686-b4a3-4f96-9818-3560a2240633",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e8f1ae04-0f27-473f-8778-063785d97ac2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "cd75c82f-7b8d-411f-8d73-276a87821617",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1403eff5-0944-413a-bec6-ed831218fb2f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "95c4a57f-14e5-43c9-a3d6-6f3662098b1e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b9cd3d4f-9f76-46ef-89f8-0e9d467acf51",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7e458507-37d9-4f9e-ae07-875e34463994",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "25995a81-991f-4e64-8787-f8964d6003db",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b193bd84-0898-4e46-9d9f-d03d7406ed50",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "34266a6f-03ec-4d8e-b64e-be636dd74408",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9383011e-d777-48da-8716-41212a57e7ac",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7916b8d7-737d-4a07-a131-575f0b3f4bd2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e78c6144-6b77-472c-8cb6-814a27595fb1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8c352529-1488-455c-95e8-5812fbe5feb3",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a58e8e6c-dfd0-43f3-8686-e621ff10c7ae",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ],
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "47b40a68-2d07-4ddc-811a-e5d188f1c2bc",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "abd8261e-6019-444a-8c65-bed5f5ddfc85",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "655f7d32-f11c-40fb-b89f-f6247e13f9e7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "09b092a6-8446-4dac-9c8b-92d87a1789df",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "93c31a8b-7f8c-4dbe-92ef-c13ea9f104b7",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "298e2afc-fef5-4340-aec4-aa6c5bae7526",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "84f8f46d-5366-43dd-bda8-794e60821f94",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "52e4cc3a-a4dd-43d8-8148-605c7c4d7fce",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "8fcb9367-6693-4b64-8074-abfce9d41124",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "cf0fe069-55d6-44e0-a0f2-66668c4d1c44",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e6e94785-8d7a-4927-9cfe-f0332ba4bb2e",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "33be6ae3-ac43-4b66-b1eb-a6d687e2b8ad",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "02bb7880-4be3-4616-91e7-f03f39eb4f8c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "68eae222-a39d-4b3b-b11e-c1b1188b3f53",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cbf4aff8-9323-418f-9af8-a4690a53c65c",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "caa076b8-07ef-4186-b9e3-0644232b07ab",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "87494790-6429-41d9-bbca-1438738ffb33",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "d3bb0a99-f24a-4d33-af3e-d02284b2b1b1",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4952c7e0-3f75-4e44-804b-d7428b76c544",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1e9ef9a1-8871-4b38-b0de-fb0cb25d86fe",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "fb3b0c65-d1db-4fa2-809d-9ebd46633400",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "56010dcd-5b3a-4dea-9593-ff88befd80d1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "4c8e17c9-0536-432d-b217-9aa553235a2a",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "6bb9b98c-bebc-482c-affc-cd0789147a97",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b4e606cd-5017-4816-a4ae-69bb02f56523",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7d0d6bc3-afe7-4dc0-92e5-0d166f6481ec",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "d0442b18-53cb-4cd5-8464-f2eed7b4170d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0f8ac9b2-966b-4c81-86f7-751255e1cc5b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a3a618fa-3bf2-41e6-918b-8c3392afb816",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a51a5499-4d9d-4245-b17a-cb1eec96c55e",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "c1c5133f-cac8-4e4a-abdc-94dd06f31d14",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "cbcf8418-5e5a-45f3-8dde-b5d13c88b13c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "6b858362-9d4b-4535-9ad2-8118164020e8",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "36887cc5-58a2-42c1-8dbe-064353e17b67",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "05415782-64ac-477d-bb08-c176fb76c17b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d5f30c22-12a9-4a1c-ace5-0451658769df",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1a0154e7-5c0a-4eda-b9b3-97e049f1eb22",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "46eb7ea7-4998-4cd6-95a5-0b86ceca304f",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "56dfa4ad-4c16-45a0-9c6e-a005adfaa83d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "3f01513a-c3c4-4fd4-933c-b1ecc707fb33",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f5437505-67ea-4716-af54-3269bf677132",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "1b4b87e9-3d01-42a1-9523-7a6eb9f88339",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "baadf751-9e44-4da5-a872-8f787432c598",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "385a4469-5b6b-4f73-9566-be18b7615079",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9aadbe82-d5ce-43eb-be51-f4c757e5ba10",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "54681ace-6309-4e7a-8afd-fd31bf42c103",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a67b89aa-ab6f-4865-bdd8-055a014a75f3",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "4a5a3c63-f971-4b17-8221-4575ae4f3979",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "06ea594a-43d4-47a4-b746-843546af422f",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "3cee6b81-d623-43c6-a573-fa6d237fae31",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "9299aa54-1580-4fad-9e5c-c2051bc555e6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7b1e36c6-dd97-4a5d-bb97-5ff5d847e913",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "48e56188-8da3-4126-85df-e481703a8523",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "eec14c27-2e97-4929-8e1d-093cd365dd28",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ca5e452e-385e-4430-bf28-a94163ffe3e2",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ac1bb872-a535-497d-b208-e9f40e6cc580",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "45ecd977-8fc9-41dc-ac91-dc2c4e64f9a8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "bd9fd1bd-3030-46fd-b9bb-5b641ac14412",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "47c0e81d-179c-46a7-9588-8e7e7d060a96",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "2b7a5c94-f955-4385-95f8-d77b31a61dde",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3ba9aeb3-7efb-4e04-a0e7-498728d772e7",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a0079a0d-876d-4fac-812f-8b858b9bbc12",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8c171421-753d-459b-b5ee-359544593e9c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "cf56ab33-d7cf-49e5-9631-d23aa0bb5a05",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "63253eb7-547c-4cfa-8882-43e73b9057ce",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0af0383f-a01d-463f-9a65-5ab47f0822b5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4c2ae9c0-1fe7-4a84-85f8-4dc86277f190",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "0bfc3ee5-775c-42e4-b8db-69fcbf99f337",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "de166f57-827a-4042-b339-83a542c830fe",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "1f5e7f3f-0b4d-4d04-8d0a-e39cd48d8b86",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "5674cf3c-7a9a-4300-bc78-5f85bf527024",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ce2369b4-1712-4d04-b570-cb49c3a922e7",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c4ec88f5-1898-4f00-be66-9fea50f9bf73",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "829e734c-99ce-49bf-997a-d8a7e4371d27",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c719ee82-10a5-402a-ab75-f39d0dca436b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "eae510cc-58ee-4abd-8fcd-b989928f57f2",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a0859ed7-4b15-4b0d-8d92-b42e6326ce52",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "155b54be-8703-44dc-8176-2edf98bac275",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "35060f0f-e305-47ce-bde4-6b1e17f770db",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6facb638-fdc8-4b16-92d9-27b39a8bf867",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a65a5f83-492f-4309-a51f-e9c088778a73",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "bb204d5e-6209-4a54-9894-7061cec22b64",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "bbbd939e-16a1-44e4-b250-b7fcc2d8c9b8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "6a62e245-eab3-4ee0-b18a-756104c1cefa",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "aa571ae1-bf7d-4609-a7d9-f5b35de23efb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cdd41334-b14e-4a51-acf7-7846ce12b354",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8519e3a5-e5c5-4f28-a3a3-0b91242e9f36",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "891625d3-a47f-4708-9dc4-dde57711ac21",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "86bf8839-0630-43ee-83d4-1677f34d358f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9a6d5be9-8609-480a-837f-a05fc83047af",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9577e540-68e0-4bd6-a14e-81c34498794a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "047362cc-7a27-49da-9dec-ccddb32f34ed",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "946d1296-5dbd-4f8f-9f16-0449aaf008d0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4b15cf3e-57b3-4aaa-80fc-20cbf8f6b59d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "be2cc66d-e527-4585-9d9e-a9c86ad53db2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9c197280-d484-4790-a1bc-d9dec02604b0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0c6227dc-a988-427d-b679-055d2b5fd679",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "636849bf-d2d0-4a30-bee8-d2b1a4e0c612",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a1d8cdf7-9fe0-474e-9fb2-47a6e38ed4d1",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b802c37d-8ddc-433c-9dbc-6c4ee85eed7f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "150fecb4-8692-412d-930b-2a4f7d483d62",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ad588924-36b9-46ee-bdf3-5f29a6901756",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d909c51f-5047-4714-ad7e-339c9675fad2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b0cc3589-7dc0-41b2-9783-e6b421d21413",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3da3a7a1-4547-4270-9f64-cc9e70865bf9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "bcf52ee7-1fbc-4161-bff8-acfa6f1d39d1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "04fbf5d5-46ce-4639-990f-d43feaba0b91",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f871c1da-516c-4d74-95fc-ca9c558fe6ba",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "35c05414-3f54-4922-b615-00cbbd12cf86",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "73027a8d-19b2-4cc5-8fa1-23c07b9cae3c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0c6aabb5-f581-4c29-ab90-636db63cf69f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "04f6c927-b17c-4f87-89be-ae1aba2e75f4",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ],
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "87bdef1b-94c1-420a-bd93-0beeb1d85aaa",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "5a333a05-7983-4982-a69d-f4f02212807b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a063b500-2027-4c2a-9ee9-d71ac28ea653",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "857adf65-d141-45e4-93a6-97c4a8d2c32c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "678ea1db-d1a9-45da-b159-163c10626f59",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "4ef259e4-7c5e-4cf8-92ee-63be7e07e184",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "6b06975c-3444-460b-81ed-f02da1dc6c71",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "decbfe7c-1693-4ada-b87a-537c6fdde8f0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "528c6b4a-3a2a-4ea2-826d-acb44509d33c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1e7b3b4d-b9e1-4940-9095-7c9b4c8775eb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8afb1c0f-bf38-432b-9cdd-c1066a115038",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "c5d77e26-5084-460d-9a83-d2f8bad0fc50",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "869fc254-f47a-4340-906e-b143ee9f2a0c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "eb92ca33-3eab-4568-8cab-3daf63f556f5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3cac19d3-03b4-4f94-ba93-4e7ef5ba9474",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "bd795d7b-3127-47a3-a1dd-1f79036a6bd3",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "49477d13-4847-4e6e-bb13-201d6ea2f184",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e598dc84-00cb-450b-93c6-a59cf55c4ed6",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "21bff75a-7bf5-41a6-aa91-40281150178b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "da2f94df-f633-486e-bd20-07529afd6236",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "30b943f1-d06f-4888-9b92-6799f33bd305",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "35b1b652-4890-499f-a510-6d798dfcbfa0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "487ad7c6-d6a9-4435-97d0-ecd1ca6467bf",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "b6acce10-ff0e-4e8c-84f7-aaf81d4554dd",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "87079d38-80df-442b-a8a8-3507f1852e14",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "482c49c8-1d11-4d98-a310-cb2143e6b7aa",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "4edcf403-024a-4426-baa1-21e09305da86",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "4cdbf77f-5fa5-4e3a-b2e5-d4b0289d16cb",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "367b631f-8539-4fed-936c-38e86550b106",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0af6a9b6-aa11-4ef1-8a1a-4c1992bc39f1",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "3755442f-93e2-44de-bfb1-27af46aa1cab",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "71972e42-ce0f-41ee-8c5e-5562ecb470fa",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "92644f08-c72e-4d9c-8b56-4d2e6eb280d9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e7c54556-e940-49a9-a545-8544674f020e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8952201d-1783-4189-ad68-d6767fba13ae",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "94671609-05f8-4b3e-92e7-702c3a39dd19",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "46386a69-2ee7-4b8e-b37b-4b6ac50ec61e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "fdccb160-a16a-499b-9ea4-be0be23677f6",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "d07a3a4e-2dc9-4420-84cc-3e6fcbeca0c9",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "96f35f8f-3382-4bd5-aa34-3b78700c735a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7f53ccf3-a2ac-4683-832d-120f904f2bc3",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b2153602-8771-4c1d-88ac-727fae378089",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1abd3a07-df2e-49a6-96ba-ecfb81bf909c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4caa0dd0-6cf8-4025-ae10-7e2e29c7c853",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "23c53f9a-3de7-47f4-bec1-1dbbc0509167",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e033f798-7189-4261-acd1-14cf161446c0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ad14ceef-d3cf-4d6e-bea4-ee9eb0599488",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f995579d-9b69-48ab-adb4-13213045241d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "57f7db6f-3408-4de2-9568-fd3de0f1c266",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1170d4f9-2d71-4fea-a8d7-04ac2aa1163c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "62bad03a-a7b0-4256-b895-0e7d133576a1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "37aa831a-38f0-4822-9684-583c5213ad48",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "bdb10ce1-78ee-43f9-b677-fa3b27c8c416",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9203d241-99d4-46a7-9ba3-eb976380daad",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7842ae99-0753-4a24-8752-dff0c3ec4b6e",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "423b488c-ae24-413d-abcb-6c7b01a3e1be",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "73fd28ee-82e9-411d-aa40-dc82e3e634fb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "38ce7574-2f2d-490e-b3e5-d1a27ea3e752",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "14ed537f-9514-4c11-82f0-d631eed9b514",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b6e46f8c-4183-4998-aaee-c9f578193311",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "60163b5f-0bf3-42c1-9742-46962fac8dcd",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cc128fef-3823-4444-b0f5-087db7a33c74",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "068661b5-8d7f-4883-a4b3-7301c1a53098",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "084b4d4c-6045-48ef-a854-ad0fdcd66cd0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9060142f-58da-41ef-a735-4b8cd93a922d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f567f1a5-9dce-4640-8b4b-9958e8c39264",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "73e7eed5-09d5-4d5e-aacf-515e98481d6f",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "de9a5579-b0bc-4b98-aed1-a768ab4705ba",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "38b8dfbf-07bc-4e8e-b5f8-b397f9dc717e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "12f219fa-719c-4a71-a6cf-2843b2a4ee6b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "82629617-423c-48de-82d7-02e5f366abfb",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "3f53efb1-19f9-447a-be30-44870bfc9606",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8ef1671c-1e65-4d0e-a134-a0236ab40757",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "58010412-e2fb-4bbf-bdb2-f40fb0fc45b8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "87bb6661-876d-4196-8edd-c76b37f068f0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "acb5089f-81ff-4642-ba23-de3dfe470dfb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a7b47f4f-c3d5-4899-8663-c108af7f3847",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e169927d-1951-4942-b2ab-43284362f9f2",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "96f56b03-cb14-4c1d-a743-c8a5ca9875cf",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7980b5bf-c29b-4a1d-adcb-e56a098747b2",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ba0a51c7-fbc8-44fa-b1d6-f3ad05eab1b8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f93b3026-f816-4ed5-80e5-f12f7175a381",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c8d3ea94-d6a2-4f99-91cf-c419bc2b106b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "34ecd233-cc1c-4d6c-802c-579992af6472",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "1868dbbb-190e-4cb4-b9c1-e261974aa368",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "70ed8891-d2c0-43c8-95d7-1dfc872276f7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "57ca5988-c729-43c3-bd30-5bbe3e462a5b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "297c56d6-b7a5-4e3a-9463-d4cec5ae7cb7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f4d8b70d-691f-4fdc-b5c1-20eac28db8eb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cba560d1-460a-4ffd-a5d6-3914d402f978",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "fbf5cee6-efb2-4c82-a3ea-c88725f288e1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "aa770a89-9078-44c7-9c04-6d608b8d8f43",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "af9a4b73-b28d-419d-b9c2-a199e89a516b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "006b4a86-8bc2-484f-846b-ab65ae08e5ad",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1e51d8d8-0486-4094-b0e7-88c5f151af39",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "43f58519-3f5d-46f8-a0cd-3a2e14543b10",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e891a170-a28c-46a6-b32a-7f701d33f15a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "065720bf-d283-4646-8ca0-d0ce791aa4c8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "498abb0f-2fd9-48fd-a288-c9e1019fca5f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "bccc569b-628f-4738-86e5-15216b9aa2ae",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f360e503-c502-4739-a873-ff3098bd4fcd",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d73f38d0-d722-45a7-944e-236d5fdc78a5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "df052c4c-c56f-4824-aa78-6d41d65042b0",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "4c926c45-8af8-4047-8124-d6e024785cc4",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7dd82735-9184-413b-9ad3-6cd86da67d55",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c9174936-b41f-432a-bd0b-7ef30e281dd0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b95c02d6-8050-4b44-90ba-a1451b105efb",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "442a54af-b358-4c86-93a0-30748e71f645",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a30bfce7-6536-4da9-8a4a-06091650f4e1",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "69b9879f-1e1e-4637-8fb9-d5ffe04c2857",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "5391bf03-4327-43bf-9c1c-3cace3c949df",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8ca0601a-ff20-4108-8037-022e7da80be1",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ],
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "bf009fdc-0bbe-467a-a230-95304b78948f",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "fade53ae-8991-4d68-bc9c-de1b2e5e83db",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "90f02d36-4dfc-487a-8413-916636d6f3ff",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "984bd7a1-95ae-433a-a84d-e30ffd4948d6",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a3303056-7b8b-41fc-9de4-909512eff61f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0c9f90d9-feb3-4049-a8e0-e194daff6479",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "5c7d8509-9b45-473b-8409-adc694e5e8d5",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "34203e78-ef57-4069-8b97-0917c0353e8d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e87f78a4-1d32-4095-92fd-715aa457e597",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "f160782b-23f9-4099-871c-2a8924f04302",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0b73966a-e161-4902-84ea-6539c236cd57",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "eafba104-a9b3-4643-a071-6cee0ff14f96",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b599cfdf-c888-4792-ba8d-ffaf99aa31b0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "486a7f18-76a2-400d-a856-af08071c390b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "bdc03301-611c-4679-ac35-937157fd792c",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "90a97123-3495-4549-a58a-480fabf6846f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ffe4cc09-c82a-483e-b113-d2afc07e34d2",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1ecb2ad9-fdd2-498b-bf12-ee31ac0cfc3f",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "41415598-b99c-4aee-a6a2-642768f538f5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "40ed721b-1ced-405f-8435-5c60066fcf7b",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "c3be6d5e-a442-4501-aa6f-13ec15526f09",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c4be2ccb-dcfe-41ff-9141-a0a9699a5e26",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "2afe790e-33c4-4d9c-9ef7-dc1e8e0af43a",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "2c5dc573-0dd9-4704-ac36-1e3bcae3eedc",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d165d221-df34-45b5-a3e7-0ec6d3e8dd9d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c076e5bc-b643-469d-a2a7-ceb27d58c76f",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "a0803753-c803-455a-ab19-b10d04451b2d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3974aa6f-4f9a-4ccd-ad30-88e460e69ee5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "6c7c7cc7-38af-4b68-9dca-ebd2ee2b9f93",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "363f1b41-eec6-4ed8-8dac-1ec03e6a31c7",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "733b7961-9aad-4822-acb2-8a557d7900f1",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "82c17604-e82d-4049-a73b-35110c630945",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3d2adcba-bbbd-4b93-9c85-e40dde06252c",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9700586a-ea06-4bb3-bae2-45b3dc60be59",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "73df7fe2-ea15-4be1-a8cd-27f528e33d2a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7278986e-bd7a-44e3-ba46-be2e22ae8798",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "06942743-544e-4200-acee-3486128ae86f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "57be85c7-0d67-4ec0-ab6b-b22289bb7757",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "71cc8c99-2daf-48b0-8077-70b73d281828",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "bb3d4386-f01b-4fd4-86b4-3d137f23f9fe",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "770e8aad-3df3-4f23-a02c-db24a7b46eb5",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "63edc652-0bc3-4ea7-bc64-dfb5a33634b0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "0334e5fe-4815-4baa-bd42-002cfe4f7d82",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "983b04a3-9ce3-4245-a816-bbbee50a3e04",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7b15bf5e-26d6-41bd-b719-085a9e09686d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "fbfa01a0-33d3-4447-832f-5535c5f2f022",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "f50e1d46-8fb9-4dc9-9ec4-b3d9fbded696",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f9de5192-3314-461e-87a8-a9a6af1f705e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c2d142c5-b534-44bf-ba2f-f5dcf3d25997",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a738c457-eb75-432f-bd19-d0f87b1a0b8b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "dd328da4-62ce-489f-b4cb-59c054658c76",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "fe986b37-4759-4834-a8c6-2530a5853cc8",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "97101f4f-09a3-406b-bd61-a97bd5020bbb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "dcb1662a-87a2-43ad-ba05-a940ade32842",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6524db5e-4f98-4431-9f2a-1182333edd2a",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7495a7fc-e441-4577-84e4-7179bdaad060",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c1fc36e5-0dbc-4e82-b022-c525f1dd039a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "073eca01-d871-48d2-989b-b05ee13bb95a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9bbbffaa-0f9e-4312-b037-bd4edc379e1a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "63c551ae-15fa-4fa8-897b-2de5db9c2d86",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "273e6f8e-fff9-4dd2-950e-514faa34a1da",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "4b67d814-71ea-4b7e-a29b-dfba68c0fe91",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d65970f3-8076-4f73-a5f2-5cd301c4f566",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "24cb6e56-4ffd-44ba-8f24-becb3de1c6f1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cf05b6ee-fd80-43db-b99e-7f90c76da690",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ea9fec86-6fdf-4238-89f7-a63c661523d8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "70cead41-621c-4e64-8876-144781465c23",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "154b794e-0739-4ca8-ae66-0a9361579e1b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "632ced2d-a7a2-45a9-9107-0c3441959d69",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "47e08228-39eb-46d7-bab8-9ff1f243201c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e95058b2-20b9-4970-b707-a842209e05e3",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "98c64799-5e06-4197-822b-d59ce3ca13d7",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "151c8938-a9fc-466a-b63e-0ed68c289da1",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7bfcf565-f10b-4963-a6d3-1021c60fcb99",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c54c0bd1-60d9-4bb2-af68-e5a80cb92f80",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7f2da6a9-dd40-40f6-91ea-c8330c9db6a6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "215c68bc-b259-4242-be81-5763eb945b76",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3f3f49b1-55c3-4138-a9c2-5c84548c2a26",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f47f960d-ad09-467e-b79a-5454c8029ff2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3b573bec-64bc-43bc-a974-91c296be6243",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "25a75f99-d5c2-49f3-b547-e5bc15930c07",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "eeb38815-d690-4ece-b9e6-a8d3df371117",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0381e83c-a907-4e53-a730-ea4abbcc2294",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a1076b34-f721-4919-8dd7-130cf24ab679",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "5c34f573-4843-4846-8c76-bb1807c021d6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "22dafd60-3968-4108-bd73-96083b1d0562",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "50214d41-c552-46b6-b3bc-58277902e02d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "de12d3e9-749d-4a41-9786-454ccbb32d84",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0d347096-767d-44db-a7ad-bc59275ba09a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7253436f-a409-47ba-bf89-512be465fa29",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "89417383-736b-4b63-9d93-7b598cf948bc",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3793f938-ae08-4a65-bbc4-73ab76f13481",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3a644d78-9865-450b-8dfa-f84b0fbab038",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4a5376b3-dc31-4222-b6d4-b8abf2c8ebee",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1dfe05e6-5032-458c-80f6-3d45e1dbecc9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "910b9e60-ab5f-4a7d-abb6-e3ae766be0f6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9f6dedb4-b06f-46c7-82f9-9dd07967ec4d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a7966f19-1a41-4911-b1f4-21b467649dd6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f7020b06-898b-48da-a249-339b27713364",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "fdddb741-2dca-4909-8a25-8a2592013465",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7eec7202-ae7f-45d3-9394-2e3a62753196",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ba6e71fe-0926-47c3-b015-052d53e34bf1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f4ed8066-a827-4e43-9f43-0fedeb9c0e37",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "839dbe1c-33a8-4bdb-b6cd-64db65b673ba",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8a00a212-2abc-47be-8f90-286330d7323e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "5ba65c4d-ffd1-433d-8af8-5305ecdccd3c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "5711bfaa-cf02-4f16-98d7-c6390e733e9b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d28cb502-ce78-4363-9208-a7c61c0a37d1",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d8b6f1ed-8acc-42a9-8f21-4ea3fa7e7576",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "62c3a211-1937-468e-9872-db700f116c5a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "305b854b-f505-49c2-8bf3-8bec1f2901ba",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "711acdef-c4c7-46f7-9ab0-7cbb6218a7fd",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ],
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "5f61a2bb-b2e6-4418-8461-eee97ba9b80f",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "d9a6db02-4453-43d2-8d93-fed6677461cf",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c273804d-a414-4cd4-9151-bc6f394c8f7e",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "0ac1434c-d911-4b10-8092-7103111e16da",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ce809974-6a7e-4af1-8c68-234435e21c38",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "00554ea5-e40e-4d07-9386-9628e1fce591",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "f0d6fd60-d4b1-4e67-9cd9-648bf3ca748a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "55b010a9-7b08-450a-a4b3-8813c902606c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "6b19ffe9-e164-458d-938f-11cd5bfd4d2e",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "3e5c9b05-e4d5-4e08-a80b-b2fd71f96d40",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ebe95a8f-405a-4add-aead-a7c00d64c1de",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "b920485c-cc8d-4daa-a77d-39fa62b51dc3",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6b345ce0-bae9-49dd-bead-0edd08d0ce03",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a6fa55c2-e5d8-40d0-9478-c864ae22b1fb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "2cfe2a0c-dbf7-4b87-b363-8a116f91cdb2",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "013b0a4a-e913-4075-b080-5fc75bd768ff",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "71956f9e-a2ed-4aee-9d15-bb9d90bd8c57",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "42b1d147-6e57-47df-a0cb-2a27ffd32448",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "70aa6200-b3e6-4a3a-9c41-fcea97ab3505",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d055f6b9-0692-4012-a5a9-2386e2b1b285",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "0ee26a2f-a6b1-4bf4-9889-24388402a881",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "2479eb9b-fea5-43ff-8752-15ff6eace9c8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a6b3ed30-57ee-4cdf-969e-da6064a22354",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "357560ac-ba0f-444e-b7ba-901f14ea47cb",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c2d8467a-d77c-4fd3-a81e-1185acff690c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "27aef2c6-8c5e-44aa-8d9b-96cbb0e3a5e9",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "6b9bbb59-0019-4912-8c26-a9b1862b045b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "190adf17-6c4d-4d7d-b2ce-a3efb75af236",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "d44ee40f-48c3-4454-b138-b1e9c13e3c38",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7cc6bfdb-e237-4340-a0c5-47b3e3743df6",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "62e6e8bb-d555-416d-b15c-216db0010007",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0812d9c7-0e2a-4509-9749-a5b36ceb5454",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "646da611-12db-4a8c-9127-58c7e1be7bd8",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e848d88d-819f-46f3-8431-87cb9d09b328",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "703313e6-37d3-4ab7-9954-fc247e85ad2d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9f6516b9-bc60-44ae-8d10-8d350e11335e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "25414c91-84c8-4e8d-bc7f-f05a1f944ddd",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "64c69134-c725-4dfe-8028-916a093e2251",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "3541bc19-7ef7-4583-a3bb-70bf09210db7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "01e6c1ef-8fd0-4781-b8e2-d952c4c02f6e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "fd4b4981-a2f7-41b6-8d29-9c3a1bed5872",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "5e34c2ff-3977-4e4e-aabd-d1f92e457022",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1bb6ad5c-fe1d-4606-9a17-ae3c48325612",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "579e8e6b-1b88-432e-9c87-8d596232071f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "70f34de3-0c74-4267-b930-cb47b215d537",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ae81d028-4b3a-4eb3-bdcf-c74b4f02591f",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "60827616-8c73-400b-8153-7d158e0bc651",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "4d7843b9-3041-48d9-98c7-4d838a9edd35",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ed43c494-380f-4be0-a430-cb3828b11135",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "483d4a40-063e-4c1c-8ba5-3322458c7e26",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1f151dbc-00e3-4fe6-82e1-da0b02d8a223",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "150c5c9f-2382-479b-9cb6-28a23f1e18a7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3303fece-eea0-4e52-a68e-89e8190ab478",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "2307efa2-8c3a-4735-9c39-32211a791d9c",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a21bf86f-1a67-41a4-aafd-5b7e7505b236",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "9c36aa45-2f4f-41a2-81bd-98cfb8a4ed49",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7aa65c87-0db5-4cbe-af3d-723fc25af09d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f767a286-9ce4-4bae-a2bc-cb989b7d493c",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ea9c93ed-6f20-4653-9f38-84751925996f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f7e4b01f-bda7-41c4-baf8-281f4c18af78",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "59d8aa9d-5ca5-495a-bb5a-f652e2877fea",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "06ae0017-fa5b-4bd4-bef8-0441f29e86f2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "06fb56c1-fddd-4bb7-914b-77dbd8f32700",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a2e25322-1231-454c-818a-10687c19415d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d620df64-0fd3-4cda-a09a-12c649228086",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "bba634d7-37d5-4e93-bddf-65bb8f1709d5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "bfb5ca18-af83-47ba-a305-c5b597a48b3f",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "002ca874-4b64-42ce-ac56-bf62170be540",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "02bcefb9-c3d7-4fd5-82b4-e71a62400736",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "03b86381-95db-45ff-8238-333b6bbcbd85",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7be1aec5-11e1-4bed-a875-393d21962361",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ef050461-4d30-4518-b421-06127ee67bb9",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "924fcc71-f1f6-46c2-997f-883d2aa15169",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "886e0465-a379-44f9-b179-042da7e6d467",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e9db1886-4745-4a14-a225-d2bc645435f5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "cce8f9a3-d6b1-4db4-8c39-1071f0d4fd25",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0b8cbf25-99ec-4b89-9a83-3cb647c85941",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6c7487c3-9e0d-44f5-9b53-ae3f7c21070d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "5ed5cf61-3a7e-4b43-8da6-163b1f3355e7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "cca34e7c-2a19-43ce-82bb-7504cd0da85d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "05aca63e-8b82-4c90-8739-032ed45a3c17",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cb607315-682f-4069-96ab-1b81476aa4f0",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "5775685b-371d-48dc-87e5-83449804f8a2",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d8d6dde1-5180-484c-9d59-02559255b021",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "463b580b-a144-46c3-9d0c-196925b48ebf",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "01d8decd-83ee-4bea-9123-5f377ccfefff",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "18683c73-d42f-4548-8f1d-949c4812bdf6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a27d39f7-3fcc-40d7-b472-a3534c5e3883",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e6aa7aef-a083-4e85-9f52-812558005bd4",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b6b2550c-fa6b-4f8b-b25a-8a10aba2f72e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "002cbde6-dd04-4669-a2fc-d5146f12fa63",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "631b536c-0368-415e-a7c4-5c5eda35f2d4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "700ae4bf-b6b9-4f9c-aacc-ad2d97d8b2c8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7f21189c-40b7-4fbf-976f-fc4f60d9f93f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d80fc762-7917-4b52-b7f1-7ef4824142f8",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8a6cfb08-5c48-4ec8-ba85-71a2d6000925",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "48a7432f-fade-43bb-a613-e94128b4bec2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "69d6f907-2bf6-4534-a2b5-08daed98121f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8dd24dae-74ce-4ea4-a043-0ea6b67f6a64",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "36f9d93a-14d1-4f67-bbf2-598a5ef8f4d2",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1a7ea6d3-089c-4961-8445-7cc60adad86e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "4d76dd63-6355-4876-9184-202d12497323",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "89a24261-e5b7-49bd-8ae5-61e2c46f7087",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7bf0be70-1221-4bfb-96cf-c9b6477d4456",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "679e0c79-9b46-4dc5-a34a-42d2dae67b7b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3c86b5cf-e322-4287-a8e5-ed13f7135788",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "463cb98e-ac3e-40e0-9602-a6655d4e27b5",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d2e480a3-2677-4c6d-8c4c-0cce698902ce",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3a2240ad-d66b-4323-8460-7a1c201498e9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f24cec19-847a-4bb5-a378-6bf1a026f60b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f2a8be82-8d9c-414f-b4f1-60b30c83eaea",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "65d551e9-53d5-4bae-a1fa-95d72beea333",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ]
+      ]
+    },
+    {
+      "mode": "404",
+      "before": {
+        "state": "playing",
+        "loading": true,
+        "recovering": true,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "loading",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "cryogenic"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 24,
+          "stallsOver50ms": 16,
+          "frameMs": {
+            "average": 315.26388788223267,
+            "p95": 566.5999755859375
+          },
+          "updateMs": {
+            "average": 16.683333824078243,
+            "p95": 0.2999999523162842
+          },
+          "renderSubmissionMs": {
+            "average": 1.9958333174387615,
+            "p95": 3.799999952316284
+          },
+          "quality": "low",
+          "drawCalls": 53,
+          "triangles": 258466,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "pending": {
+        "state": "playing",
+        "loading": true,
+        "recovering": true,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "loading",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "cryogenic"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 31,
+          "stallsOver50ms": 18,
+          "frameMs": {
+            "average": 260.74300999795236,
+            "p95": 566.5999755859375
+          },
+          "updateMs": {
+            "average": 22.725806636195028,
+            "p95": 303.8999938964844
+          },
+          "renderSubmissionMs": {
+            "average": 1.551612888613055,
+            "p95": 3.799999952316284
+          },
+          "quality": "low",
+          "drawCalls": 53,
+          "triangles": 258466,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "settled": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "fallback",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "cryogenic"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 33,
+          "stallsOver50ms": 18,
+          "frameMs": {
+            "average": 245.94949427517977,
+            "p95": 566.5999755859375
+          },
+          "updateMs": {
+            "average": 21.35151532202056,
+            "p95": 303.8999938964844
+          },
+          "renderSubmissionMs": {
+            "average": 57.63030153693575,
+            "p95": 11.5
+          },
+          "quality": "low",
+          "drawCalls": 67,
+          "triangles": 269756,
+          "geometries": 93,
+          "textures": 82,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "resumed": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "fallback",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0.2,
+        "remaining": 12,
+        "boons": [
+          "cryogenic"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 53,
+          "stallsOver50ms": 37,
+          "frameMs": {
+            "average": 311.93584873991193,
+            "p95": 566.7000122070312
+          },
+          "updateMs": {
+            "average": 13.503773700516179,
+            "p95": 9.300000190734863
+          },
+          "renderSubmissionMs": {
+            "average": 37.21131983118237,
+            "p95": 7.900000095367432
+          },
+          "quality": "low",
+          "drawCalls": 67,
+          "triangles": 269756,
+          "geometries": 93,
+          "textures": 82,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": true
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": true
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        }
+      ],
+      "errors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "fallbackReentry": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "ready",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0.2,
+        "remaining": 12,
+        "boons": [
+          "cryogenic"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 62,
+          "stallsOver50ms": 41,
+          "frameMs": {
+            "average": 290.04032288828205,
+            "p95": 566.5999755859375
+          },
+          "updateMs": {
+            "average": 11.548387196756178,
+            "p95": 0.5
+          },
+          "renderSubmissionMs": {
+            "average": 55.15322501620939,
+            "p95": 7.900000095367432
+          },
+          "quality": "low",
+          "drawCalls": 70,
+          "triangles": 280956,
+          "geometries": 96,
+          "textures": 88,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 1,
+          "awakening-kit": 0,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "shutdown": [
+        "disposed",
+        "disposed",
+        "disposed"
+      ],
+      "retired": [
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "1aab4b62-c737-4994-a386-553f930fde5d",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "0613826f-1447-4653-96c8-f52fdfd34bcc",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0108e3ce-f354-43df-ac5f-ef3912454bd1",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "8b722e97-cd3d-4966-a704-1a4408b2efe7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c770c9f8-1262-40e9-8875-ad4341c7e2f9",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c5f7bd7b-6dd1-4766-b7ae-db2656d8dcea",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "cef8e1b3-40b4-46c6-af28-978a55f806ef",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "5d51e663-d5d4-41ef-88ef-c6c61a196e6d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7c1bc755-dfeb-4b73-b1b2-4ec432aee2b9",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ef403538-4956-4438-a21d-7bfe4db3020f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c2688424-5dc9-408c-ab93-cca108d8bf10",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "ea66ddca-d333-43b5-96d9-606e7cfcc576",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a55402b1-ee5a-4cb7-80dd-61250d73a0f7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "b1ee826b-d259-4b27-b422-1e527e123b6b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "12438007-9d82-4fa7-b7df-a6e29b5fca24",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "8f4ebcd0-f338-49e0-ba8e-19522e3723fa",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d95cb1b4-6f82-4054-b325-f75d484e1e61",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "2dc09796-2b0d-43a0-958f-b53eba9ece43",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "399429b5-b574-4318-808c-d402030262f0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3190e459-f7f1-473d-8088-59843fb46527",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "bcfd96c5-ea62-4940-997d-f0e91e2059b9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b805fc0c-71af-4046-a806-23cd0572b6fd",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "86069765-6adb-49d5-bf75-fb709ccb71ac",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "fcdf00ce-0091-4597-a296-5fa87130a527",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e9bec378-ae7f-44d9-be67-674327167756",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c93e81e0-a4b2-4062-9ba6-11701ae506a0",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "a3b11aad-7f11-4145-b49e-bbaad5d37100",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "96271b70-564f-4996-a459-0763b97f83a9",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1281127c-86f4-4973-a57c-dd6c2603ae5d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "81ce2d6f-8e83-4ea8-8c69-911e9e673664",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "e977cf60-407d-4100-9258-6777e0e82d5f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "82321298-c59b-437b-9bde-fe902d87d2a0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3ac64aab-4b99-4cf2-9f4c-e156a5e70388",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8c01d05a-37ca-4f02-a5b1-64b0294c44b9",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e626500d-5fba-4058-8d9d-e7761932ff12",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "510e7735-1864-401e-95be-66336cccfe3e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "690527a4-bb0f-498e-91b8-75a53f8f8cb7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f489d504-59e5-497e-8250-f41688229a61",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "38840b82-8d5f-424d-9553-7d49b838249c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "6de632d5-5e90-41f8-ab2b-fc5d39cd7804",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "14ed5d8c-5d83-4807-9846-0c2f154364fa",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8ed47025-d1d2-449d-ae87-1b1d4636f29a",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "96e36025-216c-4ce7-ad8d-f4992e80a7da",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "753e2a17-8ae4-4c3b-bb86-f159acc5814c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d65dd6b6-0bc7-4b46-ae37-1e674a208546",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "50624346-255c-461b-811b-1e54b2bd73df",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ae4cc455-fa4d-44b1-8448-e741213766e2",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b359a601-cb1f-40d1-8168-c7f03bda0501",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0b1f50fa-6467-40c3-b331-29efd9e31b60",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a4a736fa-35e9-4483-a521-ba96bc7fc4e5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "019b7309-5335-4643-b367-6d126d47ec04",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ee58d898-8abc-4822-92ce-21db7732cc74",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "8a85cc86-a667-4092-8b68-f311f1f020fa",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "475fd0e6-24f5-4ccd-88f8-3eabfef95dde",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ef7fab65-c731-4b8d-b98a-fcca60b20b2d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "f43aede3-dbec-4b61-a8cd-eb71f1f71ef7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c552edd3-1be8-4f0c-846d-5cadf57db69b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "fa0295b9-1bfa-46ed-a19e-07a59c702cab",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "2e20d12a-a580-4ebe-9d92-4906e0156357",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b07bc05f-f8a3-48c1-bb2e-0d0458733096",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "581b4e62-5fcf-48ee-80f9-d8adfc35bbbc",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ],
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "02643317-ee98-4206-a221-453a02309e35",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "1479b0d6-9a50-4036-b668-138c69a42b11",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e5cf05ec-4545-4f27-af07-521352d756da",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "52f7690a-2629-4012-bd0f-8f0e8e94b8c2",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "424c2033-d277-4ef1-83b6-ea806e758bdd",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8bb548c1-e4ed-408e-8abd-9008f3502bf0",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "ad32be4b-13f8-4d30-a6f7-20f8a6b795eb",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f676017f-4187-462a-abd1-f640cd3cf72d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "d0d93de8-f4e8-4725-a40c-9ffe49d5fa35",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "d04d1881-c0da-4511-acb7-3d9e9071d2c3",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "62530b16-232d-44d7-878d-0edeac57d629",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "b4e6f6b8-4b77-4ea5-b4ac-d8a65de924b4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "16612366-9e71-48b4-afdd-0ea6cb5d3998",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "d2feb6c3-6bce-4845-88be-26e571211939",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9e3f5e24-fe68-467a-934a-b827fb74bd2f",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "0826a100-b341-4172-85a5-cd0c098a5e7f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "54a39dcb-e7c5-4d5d-9926-aac27c20c7a3",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1d67be79-05f6-4c4c-9686-c6a580976718",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "070c2cce-a409-4409-933a-fa84efecdc03",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ca075901-9c70-4e81-b241-0dea0e5eae75",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "4993f9ce-59db-4804-ae16-a918c71ac87f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "32e84d88-475d-4c69-b3b9-f3367e26620e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "40ca1eac-4078-4a56-8ae6-a5d48aa63fcc",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "9896051b-4a9b-46bf-92ff-6d7cb484f562",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "4742ff3a-f043-4ccd-9179-98e5bb592b76",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "64310bc5-77cf-46c4-8f6e-525754479838",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "c10e99c9-1d9c-4a56-a627-9552762525c1",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "5c88f70e-8bd5-4ea2-b8c3-404f586ef0e0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "43b8cf7a-efda-45f1-a521-f5696a82d03e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "646f10b4-13fc-437f-a6b0-0a5896491b1d",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "38300f53-ef87-4a9a-b5af-e503d06cc301",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "858306c3-8380-480a-953d-a2a0fba2a419",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "652392e0-a0db-4464-aa11-f1b5de1f85d6",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "50c92da9-a0f2-48eb-9675-ed4d0993c8e0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "9722e2f7-d694-413c-aeb4-f3f3d305a3eb",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "72b63adf-f455-4bb8-b4d0-522bd506970f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "adf63b87-fc06-42c4-bd3c-b07c3bc5a419",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "83fde6cd-9726-42bf-a5f8-507bd1192ed5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e0a152d9-7ff6-431e-b44b-4defe3987942",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e0eec360-3f96-4d27-b05d-6fbe2a211884",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cbcf9387-9493-4b98-b079-5d09d46f0ef8",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9ec7f31f-07bf-4377-a3ef-cc65c327c40f",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7a591a17-b012-4619-ad39-913bd2d53330",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "24417a5f-6875-4fd3-b9c7-25afed261964",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "adaf4bb2-c25d-4f99-90a9-4e4f5af9c0a6",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9dcfcad3-44c7-412f-b81d-309e61cfdbbf",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "0ff9b80a-9005-428e-b9e1-72bfc19c2552",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "456cbef2-3f89-48ac-a6f8-d45e2cff3017",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c8fdd366-a165-4c23-abe1-a71622a5b844",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "71a11de8-d86f-491b-ba26-1d4f796a28f8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1a133e16-a781-4970-9b8c-308ca18db46a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "28bcada5-da7f-4eb1-8528-c00d8f7fff93",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "50ad9394-4399-447d-8135-f2491c28bd99",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "496d30d9-6a56-46a1-b231-732f0301fa0b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b58330a5-8bd8-4ff4-a822-0f62d0ba5105",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a16ed6de-a356-480c-84e7-2e92eb8ac7d6",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "9c4e7da7-a6d1-4dae-9ba1-5cb8fa9de60c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "6f19c224-5423-42dd-84de-db5b97b9c2aa",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "2f008195-3bb2-48ed-a080-72669ab26d3a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ef56afc6-5c78-4149-a1a7-9a7251e6cb00",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "de42fcb7-201b-4c62-bbb4-8508833c1364",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "62915435-cb24-44d0-86b2-c3d6483504e4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "1c487de4-dd99-4756-a95b-c11ff50b300e",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "0e7ce541-c5bf-4947-abc9-6dbf32919cdd",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a1df1afc-c45c-4bb5-b602-4af333f86943",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f9724449-43cd-49c9-bb26-fb94c54fffae",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "76ea6008-8734-470e-8293-e7421053702b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "51e37864-461f-46ac-957f-67e3df2899a6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ca4b6c72-f2c8-4cb9-9012-470c32f560b9",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f6d51598-8766-4e05-8aa7-60576b3fad87",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "5cee4cb8-25f4-48a2-8602-84de9283aa33",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "43637054-19e5-4cf8-93e0-d199fda3a4a2",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "bc0384cb-184f-4c9d-9df2-1b7f4c9c1980",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "4228be63-f5a2-45d2-a837-38842a4f0e24",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "91280cc2-8895-4764-a60a-aa06b489c7c6",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c13ab8c4-fb56-4177-9b3a-bf644453907f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "76aa29e5-debc-4db4-bd22-d1197edceba4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "50fce482-73be-4db8-8290-9c6227f6138e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e86f5d5f-95a5-4506-bdf0-fb273322b5c7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "176cb7ec-8958-467d-8b91-cca68b1151d4",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "56c5d404-c2d4-436a-98e7-dfea931a4a49",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f29f51a6-576b-4e6a-be16-aba9cf2054a7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "46f1ba98-41eb-443f-b666-e5e9df42255a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "89c08386-ed5d-4dd6-9890-2e90561491c5",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "9443e276-5f5e-41ae-b63c-dbbab8ce2c2a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0c557ab9-0781-4f57-a020-3f6e3bf8a320",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "08f37eff-6781-4a88-9e4b-c7b8438e127f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cd2c2c11-90ca-4c87-a973-c871e21c569c",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "20e06ca0-487b-482c-bdb1-71cdec5bf6b7",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "6599c4bd-9e9c-4052-86a4-60d0fc89c77e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "29dfdd9f-0315-4455-a421-ab380249d662",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ff4146ae-f705-4e32-b68d-5f1fdc6c337b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "06d28a5d-21de-42a7-a29c-a15bcbddc689",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e67f9a17-cc7d-403b-b22a-7c7df2b25bcb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ea3bc865-d7c5-4bb6-abfd-61e6750ba2ca",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "2ca62d4b-5bb0-460a-9c0d-1a2c8866a3f4",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "dace4509-0601-42ba-bf69-d9935888dea4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e891f133-7dae-4f75-9a78-d2a61aa8d133",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d52afe7b-d0e6-416e-b1da-d8bb42da3833",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "69a4ce1d-05d8-463f-af6f-41ca060b130f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "cfe890e7-be27-4b94-a20a-81bfb53cdf4c",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a63c639d-8590-4e99-9d40-ebcee387d827",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "11053ad6-e0c3-4499-955b-3e7c2320a1d0",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "056fda09-9e03-4ab1-9f92-4b1710c919fb",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "6e2a969d-cb4e-4336-87c8-293dee17051f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3fc45e76-f6c0-4cc9-a574-d6e5f62272a5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a99cee8a-c493-4ad1-b186-0dcd7e64d438",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "1c277f66-42cb-4841-bfa1-14fb6a8da42d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "5f67ab1b-3fed-4282-a2aa-0ad6d05fbeb8",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "33890dc6-1d55-48ef-aa28-85b386a9e2ce",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e2050425-7e86-452f-a821-c83dafbcb5a6",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "a0e335c2-3541-47e8-9268-c2cd5ce08e97",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ]
+      ]
+    },
+    {
+      "mode": "timeout",
+      "before": {
+        "state": "playing",
+        "loading": true,
+        "recovering": true,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "loading",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "breacher"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 24,
+          "stallsOver50ms": 17,
+          "frameMs": {
+            "average": 761.772228717804,
+            "p95": 1399.9000244140625
+          },
+          "updateMs": {
+            "average": 25.258334348599117,
+            "p95": 0.3999999761581421
+          },
+          "renderSubmissionMs": {
+            "average": 6.358333374063174,
+            "p95": 28
+          },
+          "quality": "low",
+          "drawCalls": 53,
+          "triangles": 258466,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "pending": {
+        "state": "playing",
+        "loading": true,
+        "recovering": true,
+        "bank": "loading",
+        "berth": "loading",
+        "kit": "loading",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "breacher"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 27,
+          "stallsOver50ms": 19,
+          "frameMs": {
+            "average": 701.8197578147606,
+            "p95": 1399.9000244140625
+          },
+          "updateMs": {
+            "average": 43.58889024345963,
+            "p95": 570.7000122070312
+          },
+          "renderSubmissionMs": {
+            "average": 5.651851888056155,
+            "p95": 28
+          },
+          "quality": "low",
+          "drawCalls": 53,
+          "triangles": 258466,
+          "geometries": 49,
+          "textures": 56,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 0,
+          "released-berth": 0,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 1
+        }
+      },
+      "settled": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "fallback",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0,
+        "remaining": 12,
+        "boons": [
+          "breacher"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 120,
+          "stallsOver50ms": 24,
+          "frameMs": {
+            "average": 20.277500359217324,
+            "p95": 50
+          },
+          "updateMs": {
+            "average": 0.04833333094914754,
+            "p95": 0.10000002384185791
+          },
+          "renderSubmissionMs": {
+            "average": 15.650833129882812,
+            "p95": 0.10000002384185791
+          },
+          "quality": "low",
+          "drawCalls": 67,
+          "triangles": 269756,
+          "geometries": 93,
+          "textures": 82,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "resumed": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "fallback",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0.15000000000000002,
+        "remaining": 12,
+        "boons": [
+          "breacher"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 120,
+          "stallsOver50ms": 41,
+          "frameMs": {
+            "average": 139.02138856252034,
+            "p95": 916.5999755859375
+          },
+          "updateMs": {
+            "average": 0.3383333166440328,
+            "p95": 0.20000004768371582
+          },
+          "renderSubmissionMs": {
+            "average": 16.499166468779247,
+            "p95": 6.400000095367432
+          },
+          "quality": "low",
+          "drawCalls": 67,
+          "triangles": 269756,
+          "geometries": 93,
+          "textures": 82,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 0,
+          "awakening-kit": 1,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": true
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": true
+        },
+        {
+          "url": "http://127.0.0.1:33385/assets/awakening/recovery-kit/room-kit.glb",
+          "held": false
+        }
+      ],
+      "errors": [],
+      "consoleErrors": [],
+      "fallbackReentry": {
+        "state": "paused",
+        "loading": false,
+        "recovering": false,
+        "bank": "ready",
+        "berth": "ready",
+        "kit": "ready",
+        "player": {
+          "x": 230,
+          "y": 440,
+          "radius": 16,
+          "angle": 0,
+          "moving": false,
+          "vx": 0,
+          "vy": 0
+        },
+        "combat": {
+          "weaponId": "shotgun",
+          "magazine": 8,
+          "magazineCapacity": 8,
+          "reserve": 21,
+          "reloading": false,
+          "reloadDurationMs": 0,
+          "reloadRemainingMs": 0,
+          "fireCooldownRemainingMs": 0,
+          "bloomRadians": 0,
+          "grenades": 3,
+          "grenadeCooldownRemainingMs": 0,
+          "medkits": 2,
+          "health": 100,
+          "armor": 50,
+          "maxArmor": 100,
+          "dead": false,
+          "credits": 0,
+          "wave": 1,
+          "objective": null
+        },
+        "enemies": {
+          "activeCount": 0,
+          "reservedCount": 0,
+          "enemies": []
+        },
+        "shots": 0,
+        "elapsed": 0.15000000000000002,
+        "remaining": 12,
+        "boons": [
+          "breacher"
+        ],
+        "story": "AI: Purge the infestation.",
+        "performance": {
+          "samples": 120,
+          "stallsOver50ms": 46,
+          "frameMs": {
+            "average": 163.74305500984192,
+            "p95": 916.5999755859375
+          },
+          "updateMs": {
+            "average": 0.33416664799054463,
+            "p95": 0.20000004768371582
+          },
+          "renderSubmissionMs": {
+            "average": 30.33166606227557,
+            "p95": 6.5
+          },
+          "quality": "low",
+          "drawCalls": 70,
+          "triangles": 280956,
+          "geometries": 96,
+          "textures": 88,
+          "graphicsLost": false
+        },
+        "counts": {
+          "sealed-chamber-bank": 1,
+          "released-berth": 1,
+          "recovery-kit": 1,
+          "awakening-kit": 0,
+          "awakening-release": 0
+        },
+        "passengers": 8
+      },
+      "shutdown": [
+        "disposed",
+        "disposed",
+        "disposed"
+      ],
+      "retired": [
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "dba67e25-9815-4cc7-ae13-cb9afdb8ba55",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "203dbc52-7fcb-4d53-af63-b078186df4a5",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f3a25500-c773-4d03-ae4b-982ad9ee3d74",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "81cb8e28-e7e0-40e2-982a-18c9280ac5ff",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "140c1c02-9c80-4edf-9e1c-2e6fed0af576",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f8977da6-9f4c-4080-ad40-36859137792d",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "75285182-d04e-4384-bcc2-d69c9eaed889",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "16904015-2130-480b-9697-4aa4717029d0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "38c6df90-3c0d-4763-be96-a051ef583b56",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "193f19c6-f543-4da4-a13a-772bfd55c687",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "74808fee-e61a-4034-988e-5e523946d9fc",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "6721c818-63e6-445e-ad4e-b874dc9d85bf",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "62f82720-fbe6-4d65-9c35-cfcf88e7b026",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4a276aef-8cca-437b-b3cf-15a6bc37404c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e29c0d40-0f33-4d3b-b8ee-ac5715961631",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "3dda4412-a150-48c5-ae50-ddea634f1bd0",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3012ec64-e934-4043-bb6d-1adc94d695d5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a84fdcd7-0105-4e6d-aa1d-9e887ebe785a",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e618b327-a6ef-464f-b3c2-7eac3a585cf6",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7295e39a-1a19-451c-98d8-89ac9dbaa8df",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "61f10ad4-bb9c-4ea5-8a83-6458142a5bb7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "0a7d8986-5efc-41a5-a3d5-b570b0e50577",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "04233cb0-1400-47e3-ab7b-2bdb8fef29fe",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "ae6227f7-ccce-45e6-8545-766a28b78618",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "47606d00-2b16-49c5-abd1-a0d90fa50a9c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1f3bda92-2742-4246-be80-4ff2522ccbc4",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "d3faf493-2b0d-4efd-854a-024c9ff09dde",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b55d73c7-fef5-4d38-8344-304a32fb2cbf",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "3de7a3b2-ad1e-4c53-9829-2ffed289b8d5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b2dffe7a-5229-471f-8ef3-e76a389f5c5f",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "7931cd4d-c1dd-4750-9a2e-a514f93cb745",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "92735df0-d394-4618-ab5d-8952b9895019",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "17787732-f457-4e98-be23-0487a8f4a3a7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "14872a93-fea9-45eb-82fe-a8f6d261f413",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "32a80e90-9442-4cfd-81c2-960aa410585f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "064f89d0-97bb-47fe-bf41-158ed5c83008",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e45f606c-1bde-4666-9c8e-20692fa91a9a",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "123a33aa-3253-46a2-8e44-af1071f1f1b3",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7db9c8f1-9347-45f5-bd49-2202357ea1f5",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "6339b534-c143-4cfc-b0ae-3fa05506fff7",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "2c6501da-3e54-4660-91b9-ac3c685bb191",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "44bc6e7e-3c3d-4253-93fa-3aff0910c6a8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7e226922-3b71-4bce-9463-2de97b9dd05c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a663f8bd-2b61-4dbd-86d5-c8c04dc2a762",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c8f4b1cf-5dbd-4c6e-a8da-174bc8fb90bf",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "959f7f87-c3b4-4963-9008-1ad5b1e639ba",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "19ab1830-2ea0-4ce6-a7d2-eda204afa039",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "238797e2-799d-4b60-b50d-3e62ac10b067",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "c721d661-1e00-4018-8da5-c63d6695bdd8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "32a2620c-f905-4027-b9d4-8e8dedc85fee",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "7a4dd0aa-fccb-46f6-b610-4607b2187b15",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "d87bbe19-9397-4cc3-9fc3-fa79cf1a455e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "3389a095-acf8-4e72-81f8-4f4eb57b98c0",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "4a9612fa-7d97-49dc-80ab-ff42b068c88d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "4e931b91-4893-48b5-abb1-86da5794d2f0",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "35a2623a-4566-4e79-8a4d-de6de8720c68",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ad0eeff9-f656-4fa5-9c8b-c5ba12c3289f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e3c01abd-0efc-4135-9407-77121dbe49eb",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b8c74ba6-23ec-4dbd-93ab-422aac229c12",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "99def36b-c9e6-4713-ab2f-277a008e8b66",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "09d88e11-d595-4e38-9a9b-cd8cca00eef9",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ],
+        [
+          {
+            "type": "BufferGeometry",
+            "id": "7f784070-4659-4426-8909-c22e59b0dd58",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "339d079b-287e-46b0-84b1-50d26b355788",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6d32e486-e20a-493c-98c5-9470407aa554",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "f8a7ba27-92a1-4955-864e-8d31e21f170d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "2986c1a3-1bd2-4af8-8b02-4a4e6ed6fc7d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "610923bb-8f59-4e1a-8a18-b8a4d65620d6",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "eec6e16e-3f00-4c06-be6e-57779e27a6c0",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d7b1494e-118f-4169-a98a-e7e1afde2c11",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "25f5a6a6-6843-4974-b8be-bda8f4530c2b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a8e95c7f-079e-4a35-b39f-6bd02b0b9244",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "2060f221-94aa-4695-b709-838759bab7de",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "18e6de39-abd8-43af-865d-3994d2cfa9db",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b81cd023-6e76-40be-991e-c3852a175c5c",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "ebfb9917-3e88-4b27-9a3b-1fa136cd1b1d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "67f64615-8668-447c-9336-5c355bd69cea",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "4854336b-c52b-4374-b545-e916c76704c6",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d8b5b7aa-895d-47a5-993c-edcc5951cf1a",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "935724aa-16a9-43b2-b172-1f5162242088",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e89d32a0-5c3b-4be6-b656-3063ae535464",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "642ecc6f-309b-49ec-a5b9-9fcf4df9839c",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "d34c1e49-eecc-4302-9254-975339132116",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ce64a1c2-b099-4318-862f-81837a98ad27",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "31e1bff5-4936-4834-9750-1b4aa49b51c3",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "bce29e40-ab4f-4458-9fba-ff479ad19ca1",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7ec86127-2436-48d5-abc3-ec0fc32f3a58",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "8878b8b6-713e-434e-9ef8-28c8f933416d",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "a5b79444-8869-4b67-94af-a8c951ad96e0",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ba4b9f83-a436-401f-8eb0-4f95e3cce3c7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "8063c1a8-23bd-4d2e-b603-052a006e44df",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "a673bef7-7fc5-4aca-96fa-d8f6d179d134",
+            "count": 1
+          },
+          {
+            "type": "Mesh",
+            "id": "2c03cb7d-ad55-46c4-be49-710839a198a7",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "765fc50e-3d0a-410d-b0ac-8bb7da865d1b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "7fae3ac8-0f77-4ced-a019-9312729b28cf",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "bedbc89c-d4be-4e27-914e-d791ce9d4a62",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "846cd899-7f9f-44cd-a6e4-d868f161a79f",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "14a2206c-cb25-42b2-8b0f-6420436bfe0a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "f8b01ce0-8be4-434e-9301-1bf9170447be",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "436cfa39-a330-49ea-9b26-3342d43f5a42",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4e4a95f6-64b0-418b-a4b8-7b8b8a87d143",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "5bed33b3-303b-4157-90dd-1ecc204fd804",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e98a8854-7b79-4850-b161-b022593fc2a2",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "5cc50f20-8f8d-409d-b53b-085bd4eef146",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "e15ab914-e7d9-42f3-854b-3a24646afa7e",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "45026de4-fbef-4dd1-a106-ad206a697bd8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "73d4a5e0-e313-494b-8c1b-9be444943abd",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e6528378-fbe3-450e-90ac-a58fef4998a8",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "2c1978c5-f195-42e8-bbb0-5ca139b5d155",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "19647441-ef6e-4dfd-a347-a8e5869d4223",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "24d9fbc9-fc7b-4150-8713-1263507ab69e",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "72bac8b5-faea-44e8-9fb7-cf2284c1ac74",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "1bb4b1e5-ea4e-4cbd-bdac-673462500928",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "e9d95132-8822-424a-969c-f9dc03658d18",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "aeb5dab4-893b-409d-b078-3f51afbb874b",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "09f07446-cf14-4545-8174-62dea47a3387",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b4bc8387-3119-45d9-9ff5-aba1df3e3c30",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "a545abfe-77fd-4eb9-a4d9-6ead0ce7016b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "4289df37-9bae-4c42-88d2-d79db5faf9be",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "954ae15b-2342-45a2-8d8b-24ec666f1ebe",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "1134baaa-3345-44fc-abfc-631cedf7cc2a",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "04737f57-db4c-4437-8ffd-f1f772885487",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e0343d6b-e385-4c16-ad56-72e2974b6b17",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "617d7717-c865-44ed-a61d-e0496297a62d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ebe748bb-f7ef-49aa-af4e-3b37e520a7f7",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c4a05d2d-f3be-424f-9904-77cfeb3ffba5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "69ec2697-65b7-40b8-89d6-1e7c1a3a0ebe",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e5136f23-d02f-47d6-88b8-f04f58ca7a0d",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "adfbee59-7785-4a1a-ac79-ad0a8f5fb151",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "fea6d9d0-6e48-44d1-ade2-a646b8fb4019",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "75e4b686-674e-4f74-86a6-aab371881ca0",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "7e5b4fd3-03d9-46a4-a0fb-4400d116c0f1",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "99444e41-f928-433e-ab72-1b839fdfcb54",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "095e805f-6070-4355-81f8-d5f707a831ae",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ec95e4b5-eb60-4bb3-a40a-500be22a0034",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "796638a3-7558-4404-9cdf-13d2d0924f19",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "75500b03-bbff-420e-8a38-9550d74ab095",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "c7d55124-442c-4066-a394-8634e41d0184",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ce961170-75e3-4181-b848-8292b656c0ac",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "01745758-e321-4aff-8a19-5304acaaccd5",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "1c87dfa9-5508-4815-b16d-93425533c483",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "e7c9c20f-3250-455e-b84d-98712f98a39b",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "b636cf02-dede-4661-a742-1513506ec9ba",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3c0153aa-e56f-4f59-90fb-b0193cc52c5e",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "75b65647-f9dd-4b80-a096-360918481574",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "6c23870a-d27f-44c6-8c6c-b762502b3334",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "b9818df3-3120-4dc6-9cc3-04a9487dbe8d",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3c6412db-35b1-491e-a62b-f3ce340e2554",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "973b4cfe-5aa6-4d5d-bd9b-aaa41d0eb32f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "c05843e4-2677-4a04-88c4-a6e4b924384d",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "92ca905b-8aa7-4814-a333-956a0924dc3e",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "3da7504b-e34d-4af8-81f0-123cb7b2e7df",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6099f146-645c-40cd-b868-9b03a5ed8609",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0d640b9d-cb49-401b-b9e6-7c37c9d94525",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "ab1a0b78-e99f-4852-b414-8ea26819c1e2",
+            "count": 1
+          },
+          {
+            "type": 1009,
+            "id": "afc76921-0642-4281-bb43-00667a342723",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "0346d5ef-1e25-463b-a2de-ef9a4557d4b5",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "483415be-04c4-4acd-af09-65573007d801",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "273deaae-bc66-49d7-8f60-217137ccd875",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "39ba0a57-346f-4c19-9374-45a9485c7eb3",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "ddff48f4-1aa6-4689-97ce-17795e76a322",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "674349c7-0853-4141-8a80-cad7c4638eac",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b409400c-b871-4045-b390-a771d25e56b4",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "373a931b-9045-4c61-9341-3cd0fb7f716c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "bcfd2e5c-41e2-4ec6-a59f-c0d527daa21b",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "62fb4f6b-41d9-45a8-9d12-1c8edb222c5c",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "dd48a3a0-ffca-4806-9e1c-f9f536a83614",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "70af39ea-d126-4a49-bf6b-eafe8a55dbef",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "75c16059-ebe1-475a-9828-079d1d6c5431",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "6f77c844-0cbe-4368-965d-0da84eb796c8",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "b926a4b2-b337-450b-887e-1b5d143b0543",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "d9b8d468-07d3-4442-8fb4-f6d1ff1a460f",
+            "count": 1
+          },
+          {
+            "type": "BufferGeometry",
+            "id": "75566f68-7eeb-4565-b5ad-de377d548314",
+            "count": 1
+          },
+          {
+            "type": "MeshStandardMaterial",
+            "id": "f83d291f-3ce6-4d64-ba6f-3782bb82dfbf",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          },
+          {
+            "type": "ImageBitmap",
+            "count": 1
+          }
+        ]
+      ]
+    }
+  ]
+}

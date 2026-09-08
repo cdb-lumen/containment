@@ -33,7 +33,7 @@ describe('supported body-slam contacts',()=>{
   });
   try{
    const events:GameEffect[]=[],g=new DepthGame(e=>events.push(e));g.newRun(1729);g.chooseMutation(expeditionRewardOffers(g.expedition)[0].id);g.switchWeapon('shotgun');
-   Object.assign(g.player,{x:760,y:180});
+   Object.assign(g.player,{x:320,y:180});
    g.update(10,{x:0,y:0,fire:true,angle:-Math.PI/2,autoAim:false});
    for(let i=0;i<20;i++)g.update(20,{x:0,y:0,fire:false,angle:-Math.PI/2,autoAim:false});
    const hits=events.filter(e=>e.type==='hit'&&e.weapon==='shotgun');expect(hits).toHaveLength(8);
@@ -44,9 +44,9 @@ describe('supported body-slam contacts',()=>{
     for(const h of hits){expect(h.wall).toBeDefined();fx.event({...h,type:'wall-slam'});}
     expect(fx.counts.decals).toBeGreaterThan(0);
     fx.update(.001,new T.PerspectiveCamera(),[]);
-    const mark=decal(scene),normal=new T.Vector3(-40,0,310).normalize();
+    const mark=decal(scene),normal=new T.Vector3(0,0,1);
     expect(mark.normal.distanceTo(normal)).toBeLessThan(.0001);
-    expect(mark.p.clone().sub(new T.Vector3(650/32,0,40/32)).dot(normal)).toBeCloseTo(.215,3);
+    expect(mark.p.clone().sub(new T.Vector3(320/32,0,40/32)).dot(normal)).toBeCloseTo(.215,3);
     // The actual right parapet remains too low to support a mark at .8.
     fx.clear();fx.event({...hit(),x:1160,y:440,wall:{x:-1,y:0}});expect(fx.counts.decals).toBe(0);
    }
@@ -85,7 +85,7 @@ describe('supported body-slam contacts',()=>{
   g.update(10,{x:0,y:0,fire:true,angle:0,autoAim:false});for(let i=0;i<10;i++)g.update(20,{x:0,y:0,fire:false,angle:0,autoAim:false});
   const hits=events.filter(e=>e.type==='hit'&&e.weapon==='shotgun');expect(hits).toHaveLength(8);
   expect(new Set(hits.map(e=>e.shotId)).size).toBe(1);expect(hits[0].shotId).toBeTruthy();
-  for(const h of hits){expect(h.wall).toEqual({x:-1,y:0});expect(h.x).toBeCloseTo(1160);expect(h.targetId).toBeUndefined();}
+  for(const h of hits){expect(h.wall!.x).toBeCloseTo(-1);expect(h.wall!.y).toBeCloseTo(0);expect(h.x).toBeCloseTo(1160);expect(h.targetId).toBeUndefined();}
  });
  it('resolves exact front and oblique wall planes and polygon voids',()=>{
   const g=createExpeditionGeometry(new DepthGame().node);
