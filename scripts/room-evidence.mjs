@@ -59,7 +59,15 @@ window.evidence = {
   traversal=traverseEvidenceRoom(room.node);
   fixture=stageEvidenceGame(room.node,e=>renderer.effect(e));game=fixture.game;combat=null;
   await renderer.prepare(game.node);
-  return {enemies:game.enemies.activeCount,modelsPreloaded:true,materialsReady:true,prepared:true,traversal};
+  let passengerExemplar=null;
+  if(game.node.templateId==='passenger-vault'){
+   const owner=(renderer as any).passengerExemplar;await owner.ready;
+   if(owner.state!=='ready')throw Error('Passenger exemplar '+owner.state+': '+String(owner.error));
+   const installed=renderer.scene.getObjectByName('passenger-exemplar');
+   if(!installed||renderer.scene.getObjectByName('passenger-exemplar-fallback'))throw Error('Passenger replacement missing');
+   passengerExemplar={state:owner.state,installed:true,scale:installed.scale.toArray(),mount:installed.position.toArray()};
+  }
+  return {enemies:game.enemies.activeCount,modelsPreloaded:true,materialsReady:true,prepared:true,traversal,passengerExemplar};
  },
  frame(mode) {
   renderer.resize();

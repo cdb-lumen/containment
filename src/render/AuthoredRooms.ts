@@ -80,7 +80,7 @@ class Fabricator{
   const used=new Set(this.parts.keys());for(const value of Object.values(this))if(value instanceof T.Material&&!used.has(value))value.dispose();this.parts.clear();return this.root;
  }
 }
-function edgeArchitecture(f:Fabricator,t:RoomPlan,scar=false){
+function edgeArchitecture(f:Fabricator,t:RoomPlan,scar=false,passenger=false){
  const perimeter=outline(t);
  // Separate armoured cassettes follow each true polygon edge, including sloped facets.
  for(let i=0;i<perimeter.length;i++){
@@ -107,7 +107,10 @@ function edgeArchitecture(f:Fabricator,t:RoomPlan,scar=false){
    const a=p.clone().addScaledVector(inward,.2),b=q.clone().addScaledVector(inward,.2),mid=a.clone().add(b).multiplyScalar(.5);
    f.box(mid.x,-2.15,mid.z,length,3.9,.12,f.shaft,.02,-Math.atan2(q.z-p.z,q.x-p.x));
    for(const y of [-1.2,-2.5,-3.7])f.pipe(a.clone().setY(y),b.clone().setY(y),.065,f.cold);
-   for(let j=0;j<steps;j++){const s=a.clone().lerp(b,(j+.5)/steps).addScaledVector(inward,.14);f.pipe(s.clone().setY(-4),s.clone().setY(-.18),.105,f.shaft);}
+   for(let j=0;j<steps;j++){const s=a.clone().lerp(b,(j+.5)/steps).addScaledVector(inward,.14);
+    // Two west ribs become liner-integrated stiffeners, clear of the native shell.
+    if(passenger&&hole===t.voids?.[0]&&i===4)s.x-=5.5/U;
+    f.pipe(s.clone().setY(-4),s.clone().setY(-.18),.105,f.shaft);}
   }
  }
 }
@@ -418,10 +421,20 @@ function passengerVault(f:Fabricator,t:RoomPlan){
     if([[-.89,-1.43],[.89,-1.43],[-.89,1.43],[.89,1.43]].every(([dx,dz])=>contains(hole,x+dx,z+dz)))candidates.push(z);
    if(!candidates.length)continue;const z=candidates[Math.floor(candidates.length/2)];
    for(const y of [-3.05,-.95]){
-    f.box(x,y,z,1.72,.62,2.8,f.ivory,.18);f.box(x,y+.34,z,1.31,.09,2.34,f.dark,.12);
-    f.ellipsoid(x,y+.48,z-.67,.19,.16,.22,f.skin);f.ellipsoid(x,y+.45,z-.04,.29,.12,.46,f.body);
-    for(const side of [-1,1]){f.pipe(v(x+side*.14,y+.43,z+.25),v(x+side*.16,y+.43,z+.9),.105,f.body);f.box(x+side*.67,y+.39,z,.055,.04,2.05,f.cold,.012);}
-    f.box(x,y+.53,z+.46,1.63,.12,.14,f.edge);f.box(x,y+.39,z+1.15,.46,.04,.12,f.warm,.01);
+    const exemplar=hole===t.voids?.[0]&&Math.abs(x*U-433.6)<.01&&y===-.95;
+    const p=exemplar?new Fabricator():f;
+    p.box(x,y,z,1.72,.62,2.8,p.ivory,.18);p.box(x,y+.34,z,1.31,.09,2.34,p.dark,.12);
+    if(exemplar){
+     // Closed opaque fallback: no exposed passenger during optional loading/failure.
+     p.box(x,y+.47,z,1.5,.32,2.6,p.ivory,.12);
+     p.box(x,y+.65,z-.75,.6,.035,.3,p.dark,.025);
+    }else{
+     p.ellipsoid(x,y+.48,z-.67,.19,.16,.22,p.skin);p.ellipsoid(x,y+.45,z-.04,.29,.12,.46,p.body);
+     for(const side of [-1,1])p.pipe(v(x+side*.14,y+.43,z+.25),v(x+side*.16,y+.43,z+.9),.105,p.body);
+    }
+    for(const side of [-1,1])p.box(x+side*.67,y+.39,z,.055,.04,2.05,p.cold,.012);
+    p.box(x,y+.53,z+.46,1.63,.12,.14,p.edge);p.box(x,y+.39,z+1.15,.46,.04,.12,p.warm,.01);
+    if(exemplar){const fallback=p.finish();fallback.name='passenger-exemplar-fallback';f.root.add(fallback);}
    }
   }
   for(const side of [-1,1])f.pipe(v(b.x+side*(b.w/2-.3),-3.9,b.z0+.4),v(b.x+side*(b.w/2-.3),-3.9,b.z1-.4),.18,f.bronze);
@@ -538,7 +551,7 @@ export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;
  f.add(new T.ExtrudeGeometry(roomDeckShape(t),{depth:.44,steps:1,bevelEnabled:false}),f.deck,v(0,-.46,0),new T.Euler(-Math.PI/2,0,0));
- if(id==='awakening-bay')awakeningEnvelope(f,t);else edgeArchitecture(f,t,id==='breached-loading-bay');deckServices(f,t);
+ if(id==='awakening-bay')awakeningEnvelope(f,t);else edgeArchitecture(f,t,id==='breached-loading-bay',id==='passenger-vault');deckServices(f,t);
  if(id==='awakening-bay')awakeningBay(f,t);else if(id==='passenger-vault')passengerVault(f,t);else if(id==='breached-loading-bay')breachedBay(f,t);else reactorFloor(f,t);
  return f.finish();
 }
