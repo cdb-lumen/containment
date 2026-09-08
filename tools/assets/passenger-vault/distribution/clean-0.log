@@ -1,0 +1,1503 @@
+Blender 4.0.2
+Info: Total files 0 | Changed 0 | Failed 0
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:25: SyntaxWarning: invalid escape sequence '\.'
+  regex_dot = re.compile("\.")
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:27: SyntaxWarning: invalid escape sequence '\]'
+  new_name = "".join([char for char in adjusted_name if char not in "!#$&'()*+,/:;<>?@[\]^`{|}~"])
+Info: Saved "north.blend"
+23:48:18 | ERROR: Draco mesh compression is not available because library could not be found at /usr/bin/4.0/python/lib/python3.12/site-packages/libextern_draco.so
+23:48:18 | INFO: Starting glTF 2.0 export
+23:48:18 | INFO: Extracting primitive: Cube.001
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.002
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.003
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.004
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.005
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.001
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.006
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.007
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.008
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.002
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.003
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.004
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.005
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.009
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.010
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.011
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.006
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.007
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.008
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.009
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.010
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.011
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.012
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.012
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.013
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.014
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.013
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.014
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.015
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.016
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.015
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.016
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.017
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.018
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.019
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.020
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.021
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.022
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.023
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.024
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.025
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.026
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.027
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.028
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.029
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.030
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.017
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.018
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.019
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.020
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.021
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.022
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.031
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.032
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.033
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.023
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.024
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.025
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.026
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.034
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.035
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.036
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.027
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.028
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.029
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.030
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.031
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.032
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.033
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.037
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.038
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.039
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.034
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.035
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.036
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.037
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.040
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.041
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.042
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.043
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.044
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.045
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.046
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.047
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.048
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.049
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.050
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.051
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.052
+23:48:18 | INFO: Primitives created: 1Fra:1 Mem:24.84M (Peak 25.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | source_label
+Fra:1 Mem:25.08M (Peak 25.08M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | deck_plinth
+Fra:1 Mem:25.08M (Peak 25.08M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | back_wall
+Fra:1 Mem:25.09M (Peak 25.09M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | end_-9.335
+Fra:1 Mem:25.11M (Peak 25.11M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | end_9.335
+Fra:1 Mem:27.15M (Peak 27.15M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.56
+Fra:1 Mem:27.15M (Peak 27.15M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.32
+Fra:1 Mem:27.15M (Peak 27.15M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_0_1.51
+Fra:1 Mem:27.26M (Peak 27.26M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_-1.25_0.23
+Fra:1 Mem:27.24M (Peak 27.26M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_-1.25_1.34
+Fra:1 Mem:27.21M (Peak 27.26M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.5_1.02
+Fra:1 Mem:27.23M (Peak 27.26M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_0
+Fra:1 Mem:27.24M (Peak 27.26M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_0
+Fra:1 Mem:27.31M (Peak 27.31M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_0
+Fra:1 Mem:27.27M (Peak 27.31M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_0
+Fra:1 Mem:27.27M (Peak 27.31M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.5_0.26
+Fra:1 Mem:27.28M (Peak 27.31M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_0
+Fra:1 Mem:27.38M (Peak 27.38M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_0
+Fra:1 Mem:27.38M (Peak 27.38M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_0
+Fra:1 Mem:27.34M (Peak 27.38M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.5_1.02
+Fra:1 Mem:27.37M (Peak 27.38M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_0
+Fra:1 Mem:27.37M (Peak 27.38M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_1_-1.51
+Fra:1 Mem:27.37M (Peak 27.38M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_1_1.51
+Fra:1 Mem:27.39M (Peak 27.39M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_-1.25_0.23
+Fra:1 Mem:27.42M (Peak 27.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_-1.25_1.34
+Fra:1 Mem:27.42M (Peak 27.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_1.25_0.23
+Fra:1 Mem:27.39M (Peak 27.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.5_0.26
+Fra:1 Mem:27.42M (Peak 27.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_1
+Fra:1 Mem:27.43M (Peak 27.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_0
+Fra:1 Mem:27.43M (Peak 27.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_2
+Fra:1 Mem:27.43M (Peak 27.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_0.43
+Fra:1 Mem:27.42M (Peak 27.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_3
+Fra:1 Mem:27.41M (Peak 27.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_5
+Fra:1 Mem:27.44M (Peak 27.44M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_6
+Fra:1 Mem:27.44M (Peak 27.44M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_7
+Fra:1 Mem:27.44M (Peak 27.44M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_9
+Fra:1 Mem:27.43M (Peak 27.44M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_10
+Fra:1 Mem:27.44M (Peak 27.44M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_11
+Fra:1 Mem:27.45M (Peak 27.45M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_-0.51
+Fra:1 Mem:27.44M (Peak 27.45M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_0.43
+Fra:1 Mem:27.43M (Peak 27.45M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_-0.5_1.02
+Fra:1 Mem:27.49M (Peak 27.49M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.5_0.26
+Fra:1 Mem:27.48M (Peak 27.49M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.32
+Fra:1 Mem:27.49M (Peak 27.49M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.56
+Fra:1 Mem:27.51M (Peak 27.51M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_10
+Fra:1 Mem:27.56M (Peak 27.56M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_9
+Fra:1 Mem:27.54M (Peak 27.56M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_2_1.51
+Fra:1 Mem:27.54M (Peak 27.56M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_-1.25_0.23
+Fra:1 Mem:27.54M (Peak 27.56M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_-1.25_1.34
+Fra:1 Mem:27.54M (Peak 27.56M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_8
+Fra:1 Mem:27.59M (Peak 27.59M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_1.25_1.34
+Fra:1 Mem:27.61M (Peak 27.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_7
+Fra:1 Mem:27.58M (Peak 27.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_2
+Fra:1 Mem:27.59M (Peak 27.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_2
+Fra:1 Mem:27.61M (Peak 27.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_2
+Fra:1 Mem:27.62M (Peak 27.62M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_2
+Fra:1 Mem:27.60M (Peak 27.62M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_2
+Fra:1 Mem:27.59M (Peak 27.62M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_2
+Fra:1 Mem:27.65M (Peak 27.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_2
+Fra:1 Mem:27.63M (Peak 27.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_2
+Fra:1 Mem:27.63M (Peak 27.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_2
+Fra:1 Mem:27.70M (Peak 27.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_3
+Fra:1 Mem:27.70M (Peak 27.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_3_-1.51
+Fra:1 Mem:27.70M (Peak 27.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_4
+Fra:1 Mem:27.68M (Peak 27.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_-1.25_0.23
+Fra:1 Mem:27.66M (Peak 27.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_1.25_0.23
+Fra:1 Mem:27.68M (Peak 27.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_1.25_1.34
+Fra:1 Mem:27.70M (Peak 27.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_3
+Fra:1 Mem:27.74M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_3
+Fra:1 Mem:27.72M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_3
+Fra:1 Mem:27.70M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_2
+Fra:1 Mem:27.71M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_3
+Fra:1 Mem:27.71M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_1
+Fra:1 Mem:27.72M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_4
+Fra:1 Mem:27.72M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_6
+Fra:1 Mem:27.72M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_0
+Fra:1 Mem:27.73M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_7
+Fra:1 Mem:27.73M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_5
+Fra:1 Mem:27.74M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_9
+Fra:1 Mem:27.74M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_10
+Fra:1 Mem:27.73M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_11
+Fra:1 Mem:27.73M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_-0.51
+Fra:1 Mem:27.74M (Peak 27.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_0.43
+Fra:1 Mem:27.75M (Peak 27.75M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_1.25_1.34
+Fra:1 Mem:27.76M (Peak 27.76M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.5_0.26
+Fra:1 Mem:27.79M (Peak 27.79M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.5_1.02
+Fra:1 Mem:27.81M (Peak 27.81M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.5_0.26
+Fra:1 Mem:27.80M (Peak 27.81M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.32
+Fra:1 Mem:27.83M (Peak 27.83M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_1.25_0.23
+Fra:1 Mem:27.88M (Peak 27.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.56
+Fra:1 Mem:27.86M (Peak 27.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_4_1.51
+Fra:1 Mem:27.84M (Peak 27.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_0.23
+Fra:1 Mem:27.88M (Peak 27.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_-1.25_1.34
+Fra:1 Mem:27.87M (Peak 27.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_1.34
+Fra:1 Mem:27.90M (Peak 27.90M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_1.25_0.23
+Fra:1 Mem:27.91M (Peak 27.91M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_1.25_1.34
+Fra:1 Mem:27.92M (Peak 27.92M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_4
+Fra:1 Mem:27.95M (Peak 27.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_4
+Fra:1 Mem:27.93M (Peak 27.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_-1.25_0.23
+Fra:1 Mem:27.91M (Peak 27.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_4
+Fra:1 Mem:27.93M (Peak 27.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_4
+Fra:1 Mem:27.99M (Peak 27.99M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_4
+Fra:1 Mem:27.98M (Peak 27.99M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_4
+Fra:1 Mem:27.97M (Peak 27.99M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_4
+Fra:1 Mem:28.02M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_5_1.51
+Fra:1 Mem:28.01M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_4
+Fra:1 Mem:28.00M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_5
+Fra:1 Mem:27.98M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:22.26M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:22.26M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:22.26M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:22.26M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:22.35M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:22.35M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:22.35M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:22.35M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:22.35M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:22.35M (Peak 28.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:22.38M (Peak 28.02M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:22.38M (Peak 28.02M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:22.38M (Peak 28.02M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:22.38M (Peak 28.02M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:22.50M (Peak 28.02M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:22.73M (Peak 28.02M) | Time:00:00.01 | Mem:0.05M, Peak:0.05M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:22.71M (Peak 28.02M) | Time:00:00.01 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:22.71M (Peak 28.02M) | Time:00:00.01 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:22.71M (Peak 28.02M) | Time:00:00.01 | Mem:0.49M, Peak:0.49M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:22.71M (Peak 28.02M) | Time:00:00.02 | Mem:0.75M, Peak:0.99M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:22.71M (Peak 28.02M) | Time:00:00.02 | Mem:0.75M, Peak:0.99M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:0.75M, Peak:0.99M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.44M, Peak:1.44M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.44M, Peak:1.44M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.53M, Peak:1.53M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.53M, Peak:1.53M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:23.40M (Peak 28.02M) | Time:00:00.02 | Mem:1.53M, Peak:1.53M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:23.97M (Peak 28.02M) | Time:00:00.03 | Mem:2.09M, Peak:2.09M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:24.97M (Peak 28.02M) | Time:00:00.03 | Mem:3.09M, Peak:3.09M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:24.98M (Peak 28.02M) | Time:00:00.03 | Mem:3.01M, Peak:3.09M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:24.98M (Peak 28.02M) | Time:00:00.03 | Mem:3.10M, Peak:3.10M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:24.98M (Peak 28.02M) | Time:00:00.03 | Mem:3.10M, Peak:3.10M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:24.98M (Peak 28.02M) | Time:00:00.03 | Mem:3.10M, Peak:3.10M | Scene, ViewLayer | Sample 0/16
+Fra:1 Mem:57.96M (Peak 57.96M) | Time:00:00.16 | Remaining:00:01.92 | Mem:36.06M, Peak:36.06M | Scene, ViewLayer | Sample 1/16
+Fra:1 Mem:72.61M (Peak 101.91M) | Time:00:01.31 | Mem:36.06M, Peak:36.06M | Scene, ViewLayer | Sample 16/16
+Fra:1 Mem:72.61M (Peak 101.91M) | Time:00:01.31 | Mem:36.06M, Peak:36.06M | Scene, ViewLayer | Finished
+Saved: '/tmp/passenger-distribution-clean-p9ow9l_q/tools/assets/passenger-vault/distribution/north-closed.png'
+Time: 00:01.49 (Saving: 00:00.18)
+
+Fra:1 Mem:25.76M (Peak 25.76M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | source_label
+Fra:1 Mem:26.05M (Peak 26.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | deck_plinth
+Fra:1 Mem:26.05M (Peak 26.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.32
+Fra:1 Mem:26.11M (Peak 26.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.56
+Fra:1 Mem:26.08M (Peak 26.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_0
+Fra:1 Mem:26.10M (Peak 26.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_0
+Fra:1 Mem:26.11M (Peak 26.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_0
+Fra:1 Mem:26.13M (Peak 26.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_0
+Fra:1 Mem:26.15M (Peak 26.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_0
+Fra:1 Mem:26.18M (Peak 26.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_0
+Fra:1 Mem:26.21M (Peak 26.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_0
+Fra:1 Mem:26.21M (Peak 26.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_1
+Fra:1 Mem:26.23M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_0
+Fra:1 Mem:26.22M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_1
+Fra:1 Mem:26.20M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_2
+Fra:1 Mem:26.19M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_5
+Fra:1 Mem:26.20M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_6
+Fra:1 Mem:26.20M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_7
+Fra:1 Mem:26.21M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_8
+Fra:1 Mem:26.22M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_9
+Fra:1 Mem:26.22M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_10
+Fra:1 Mem:26.21M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_-0.51
+Fra:1 Mem:26.21M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_-0.5_0.26
+Fra:1 Mem:26.22M (Peak 26.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.56
+Fra:1 Mem:26.24M (Peak 26.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.5_0.26
+Fra:1 Mem:26.24M (Peak 26.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.5_1.02
+Fra:1 Mem:26.25M (Peak 26.25M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.32
+Fra:1 Mem:26.28M (Peak 26.28M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.56
+Fra:1 Mem:26.26M (Peak 26.28M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_2
+Fra:1 Mem:26.32M (Peak 26.32M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_2
+Fra:1 Mem:26.33M (Peak 26.33M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_2
+Fra:1 Mem:26.32M (Peak 26.33M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.32
+Fra:1 Mem:26.36M (Peak 26.36M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_2
+Fra:1 Mem:26.30M (Peak 26.36M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_2
+Fra:1 Mem:26.35M (Peak 26.36M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_2
+Fra:1 Mem:26.36M (Peak 26.36M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_2
+Fra:1 Mem:26.39M (Peak 26.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.5_1.02
+Fra:1 Mem:26.34M (Peak 26.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_3
+Fra:1 Mem:26.39M (Peak 26.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_0
+Fra:1 Mem:26.38M (Peak 26.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.5_0.26
+Fra:1 Mem:26.39M (Peak 26.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_2
+Fra:1 Mem:26.44M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_3
+Fra:1 Mem:26.41M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_4
+Fra:1 Mem:26.40M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_5
+Fra:1 Mem:26.39M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_7
+Fra:1 Mem:26.38M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_9
+Fra:1 Mem:26.40M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_10
+Fra:1 Mem:26.43M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_11
+Fra:1 Mem:26.41M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_0.43
+Fra:1 Mem:26.40M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.5_0.26
+Fra:1 Mem:26.43M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.5_0.26
+Fra:1 Mem:26.41M (Peak 26.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.5_1.02
+Fra:1 Mem:26.45M (Peak 26.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.5_0.26
+Fra:1 Mem:26.42M (Peak 26.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.5_1.02
+Fra:1 Mem:26.46M (Peak 26.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.32
+Fra:1 Mem:26.46M (Peak 26.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.56
+Fra:1 Mem:26.48M (Peak 26.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_0.43
+Fra:1 Mem:26.51M (Peak 26.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_4
+Fra:1 Mem:26.53M (Peak 26.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_4
+Fra:1 Mem:26.54M (Peak 26.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_4
+Fra:1 Mem:26.53M (Peak 26.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_4
+Fra:1 Mem:26.48M (Peak 26.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_4
+Fra:1 Mem:26.58M (Peak 26.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_4
+Fra:1 Mem:26.57M (Peak 26.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_4
+Fra:1 Mem:26.57M (Peak 26.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_5
+Fra:1 Mem:26.63M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_11
+Fra:1 Mem:26.58M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_1
+Fra:1 Mem:26.57M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_3
+Fra:1 Mem:26.56M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_4
+Fra:1 Mem:26.56M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_5
+Fra:1 Mem:26.56M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_7
+Fra:1 Mem:26.56M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_9
+Fra:1 Mem:26.56M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:22.25M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:22.26M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:22.26M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:22.26M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:22.34M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:22.34M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:22.34M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:22.34M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:22.34M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:22.34M (Peak 26.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:22.36M (Peak 26.63M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:22.36M (Peak 26.63M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:22.36M (Peak 26.63M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:22.36M (Peak 26.63M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:22.47M (Peak 26.63M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:22.64M (Peak 26.63M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:22.63M (Peak 26.63M) | Time:00:00.00 | Mem:0.18M, Peak:0.18M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:22.63M (Peak 26.63M) | Time:00:00.00 | Mem:0.18M, Peak:0.18M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:22.63M (Peak 26.63M) | Time:00:00.00 | Mem:0.39M, Peak:0.39M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:22.63M (Peak 26.63M) | Time:00:00.01 | Mem:0.65M, Peak:0.86M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:22.63M (Peak 26.63M) | Time:00:00.01 | Mem:0.65M, Peak:0.86M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:23.16M (Peak 26.63M) | Time:00:00.01 | Mem:0.65M, Peak:0.86M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:23.16M (Peak 26.63M) | Time:00:00.01 | Mem:1.19M, Peak:1.19M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:23.16M (Peak 26.63M) | Time:00:00.01 | Mem:1.19M, Peak:1.19M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:23.16M (Peak 26.63M) | Time:00:00.01 | Mem:1.19M, Peak:1.19M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:23.16M (Peak 26.63M) | Time:00:00.01 | Mem:1.19M, Peak:1.19M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:23.16M (Peak 26.63M) | Time:00:00.01 | Mem:1.19M, Peak:1.19M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:23.16M (Peak 26.63M) | Time:00:00.01 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:23.17M (Peak 26.63M) | Time:00:00.01 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:23.17M (Peak 26.63M) | Time:00:00.01 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:23.88M (Peak 26.63M) | Time:00:00.02 | Mem:1.98M, Peak:1.98M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:24.88M (Peak 26.63M) | Time:00:00.02 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:24.88M (Peak 26.63M) | Time:00:00.02 | Mem:2.90M, Peak:2.98M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:24.88M (Peak 26.63M) | Time:00:00.02 | Mem:2.99M, Peak:2.99M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:24.88M (Peak 26.63M) | Time:00:00.02 | Mem:2.99M, Peak:2.99M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:24.89M (Peak 26.63M) | Time:00:00.02 | Mem:2.99M, Peak:2.99M | Scene, ViewLayer | Sample 0/16
+Fra:1 Mem:57.87M (Peak 57.87M) | Time:00:00.18 | Remaining:00:02.32 | Mem:35.95M, Peak:35.95M | Scene, ViewLayer | Sample 1/16
+Fra:1 Mem:72.52M (Peak 101.82M) | Time:00:01.76 | Mem:35.95M, Peak:35.95M | Scene, ViewLayer | Sample 16/16
+Fra:1 Mem:72.52M (Peak 101.82M) | Time:00:01.76 | Mem:35.95M, Peak:35.95M | Scene, ViewLayer | Finished
+Saved: '/tmp/passenger-distribution-clean-p9ow9l_q/tools/assets/passenger-vault/distribution/north-cutaway.png'
+Time: 00:01.84 (Saving: 00:00.08)
+
+
+23:48:18 | INFO: Extracting primitive: Cube.053
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.054
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.055
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.038
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.039
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.040
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.041
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.042
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.043
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.056
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.057
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.058
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.044
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.045
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.046
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.047
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.059
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.060
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.061
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.048
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.049
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.050
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.051
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.052
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.053
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.054
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.062
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.063
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.064
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.055
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.056
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.057
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.058
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.065
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.066
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.067
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.068
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.069
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.070
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.071
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.072
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.073
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.074
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.075
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.076
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.077
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.078
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.079
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cube.080
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.059
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.060
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.061
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.062
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.063
+23:48:18 | INFO: Primitives created: 1
+23:48:18 | INFO: Extracting primitive: Cylinder.064
+23:48:18 | INFO: Primitives created: 1
+23:48:19 | INFO: Finished glTF 2.0 export in 0.13364410400390625 s
+
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.07s
+Info: Saved "south.blend"
+23:48:23 | ERROR: Draco mesh compression is not available because library could not be found at /usr/bin/4.0/python/lib/python3.12/site-packages/libextern_draco.so
+23:48:23 | INFO: Starting glTF 2.0 export
+23:48:23 | INFO: Extracting primitive: Cube.161
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.162
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.163
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.164
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.165
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.130
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.131
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.166
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.167
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.168
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.132
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.133
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.134
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.135
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.169
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.170
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.171
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.136
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.137
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.138
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.139
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.140
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.141
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.142
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.172
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.173
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.174
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.143
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.144
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.145
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.146
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.175
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.176
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.177
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.178
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.179
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.180
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.181
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.182
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.183
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.184
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.185
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.186
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.187
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.188
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.189
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.190
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.147
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.148
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.149
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.150
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.151
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.152
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.191
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.192
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.193
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.153
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.154
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.155
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.156
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.194
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.195
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.196
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.157
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.158
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.159
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.160
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.161
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.162
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.163
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.197
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.198
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.199
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.164
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.165
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.166
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.167
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.200
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.201
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.202
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.203
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.204
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.205
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.206
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.207
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.208
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.209
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.210
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.211
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.212
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.213
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.214
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.215
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.168
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.169
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.170
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.171
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.172
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.173
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.216
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.217
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.218
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.174
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.175
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.176
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.177
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.219
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.220
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.221
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.178
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.179
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.180
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.181
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.182
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.183
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.184
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.222
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.223
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.224
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.185
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.186
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.187
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.188
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.225
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.226
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.227Fra:1 Mem:30.47M (Peak 30.47M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | source_label
+Fra:1 Mem:30.71M (Peak 30.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | deck_plinth
+Fra:1 Mem:30.71M (Peak 30.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | end_-9.335
+Fra:1 Mem:30.72M (Peak 30.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | end_9.335
+Fra:1 Mem:30.74M (Peak 30.74M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.56
+Fra:1 Mem:30.75M (Peak 30.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_0
+Fra:1 Mem:30.80M (Peak 30.80M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_0_-1.51
+Fra:1 Mem:30.78M (Peak 30.80M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_0_1.51
+Fra:1 Mem:30.76M (Peak 30.80M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_-1.25_0.23
+Fra:1 Mem:30.79M (Peak 30.80M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_1.25_0.84
+Fra:1 Mem:30.81M (Peak 30.81M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_0
+Fra:1 Mem:30.82M (Peak 30.82M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_0
+Fra:1 Mem:30.84M (Peak 30.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_0
+Fra:1 Mem:30.84M (Peak 30.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_0
+Fra:1 Mem:30.87M (Peak 30.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_0
+Fra:1 Mem:30.86M (Peak 30.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_0
+Fra:1 Mem:30.87M (Peak 30.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_0
+Fra:1 Mem:30.89M (Peak 30.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_0
+Fra:1 Mem:30.96M (Peak 30.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_0
+Fra:1 Mem:30.96M (Peak 30.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_1
+Fra:1 Mem:30.94M (Peak 30.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_1_-1.51
+Fra:1 Mem:30.91M (Peak 30.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_1_1.51
+Fra:1 Mem:30.92M (Peak 30.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_-1.25_0.23
+Fra:1 Mem:30.93M (Peak 30.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_1.25_0.23
+Fra:1 Mem:30.91M (Peak 30.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_1
+Fra:1 Mem:30.98M (Peak 30.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_1
+Fra:1 Mem:30.98M (Peak 30.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_0
+Fra:1 Mem:31.02M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_1
+Fra:1 Mem:31.01M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_2
+Fra:1 Mem:31.00M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_3
+Fra:1 Mem:30.98M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_4
+Fra:1 Mem:30.97M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_7
+Fra:1 Mem:30.98M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_8
+Fra:1 Mem:31.00M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_9
+Fra:1 Mem:30.99M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_10
+Fra:1 Mem:30.99M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_-0.51
+Fra:1 Mem:31.00M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_0.43
+Fra:1 Mem:31.01M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_-0.75_0.26
+Fra:1 Mem:31.02M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.75_0.26
+Fra:1 Mem:31.02M (Peak 31.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.75_0.62
+Fra:1 Mem:31.06M (Peak 31.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.32
+Fra:1 Mem:31.12M (Peak 31.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.56
+Fra:1 Mem:31.09M (Peak 31.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_2_-1.51
+Fra:1 Mem:31.08M (Peak 31.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_2_1.51
+Fra:1 Mem:31.10M (Peak 31.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_-1.25_0.84
+Fra:1 Mem:31.11M (Peak 31.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.56
+Fra:1 Mem:31.08M (Peak 31.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_1.25_0.84
+Fra:1 Mem:31.10M (Peak 31.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_2
+Fra:1 Mem:31.18M (Peak 31.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_2
+Fra:1 Mem:31.17M (Peak 31.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_2
+Fra:1 Mem:31.19M (Peak 31.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_2
+Fra:1 Mem:31.19M (Peak 31.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_2
+Fra:1 Mem:31.16M (Peak 31.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.32
+Fra:1 Mem:31.17M (Peak 31.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_2
+Fra:1 Mem:31.23M (Peak 31.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_2
+Fra:1 Mem:31.19M (Peak 31.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_2
+Fra:1 Mem:31.22M (Peak 31.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_2
+Fra:1 Mem:31.27M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_3
+Fra:1 Mem:31.24M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_3_1.51
+Fra:1 Mem:31.22M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_-1.25_0.23
+Fra:1 Mem:31.24M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_-1.25_0.84
+Fra:1 Mem:31.26M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_1.25_0.23
+Fra:1 Mem:31.29M (Peak 31.29M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_1.25_0.84
+Fra:1 Mem:31.38M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_3
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.75_0.62
+Fra:1 Mem:31.32M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_3
+Fra:1 Mem:31.29M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_2
+Fra:1 Mem:31.33M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_3
+Fra:1 Mem:31.32M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_4
+Fra:1 Mem:31.32M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.75_0.26
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_5
+Fra:1 Mem:31.33M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_7
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_9
+Fra:1 Mem:31.33M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_0.43
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_10
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_-0.51
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_11
+Fra:1 Mem:31.36M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_-0.51
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.75_0.26
+Fra:1 Mem:31.34M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.75_0.62
+Fra:1 Mem:31.35M (Peak 31.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.75_0.26
+Fra:1 Mem:31.40M (Peak 31.40M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_10
+Fra:1 Mem:31.38M (Peak 31.40M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.75_0.62
+Fra:1 Mem:31.42M (Peak 31.42M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.32
+Fra:1 Mem:31.41M (Peak 31.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_9
+Fra:1 Mem:31.39M (Peak 31.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.56
+Fra:1 Mem:31.40M (Peak 31.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_4_-1.51
+Fra:1 Mem:31.40M (Peak 31.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_8
+Fra:1 Mem:31.43M (Peak 31.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_4_1.51
+Fra:1 Mem:31.42M (Peak 31.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_0.23
+Fra:1 Mem:31.42M (Peak 31.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_0.84
+Fra:1 Mem:31.42M (Peak 31.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_1.25_0.84
+Fra:1 Mem:31.41M (Peak 31.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_7
+Fra:1 Mem:31.49M (Peak 31.49M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_6
+Fra:1 Mem:31.48M (Peak 31.49M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_4
+Fra:1 Mem:31.50M (Peak 31.50M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_4
+Fra:1 Mem:31.52M (Peak 31.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_4
+Fra:1 Mem:31.50M (Peak 31.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_4
+Fra:1 Mem:31.50M (Peak 31.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_4
+Fra:1 Mem:31.49M (Peak 31.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_4
+Fra:1 Mem:31.51M (Peak 31.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_4
+Fra:1 Mem:31.59M (Peak 31.59M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_4
+Fra:1 Mem:31.56M (Peak 31.59M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_4
+Fra:1 Mem:31.58M (Peak 31.59M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_5
+Fra:1 Mem:31.58M (Peak 31.59M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_5_-1.51
+Fra:1 Mem:31.60M (Peak 31.60M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_2
+Fra:1 Mem:31.59M (Peak 31.60M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_-1.25_0.84
+Fra:1 Mem:31.59M (Peak 31.60M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_1.25_0.23
+Fra:1 Mem:31.57M (Peak 31.60M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_5
+Fra:1 Mem:31.61M (Peak 31.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_1
+Fra:1 Mem:31.63M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_0
+Fra:1 Mem:31.61M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:25.87M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:25.87M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:25.87M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:25.87M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:25.96M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:25.96M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:25.96M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:25.96M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:25.96M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:25.96M (Peak 31.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:25.99M (Peak 31.63M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:25.99M (Peak 31.63M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:25.99M (Peak 31.63M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:25.99M (Peak 31.63M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:26.11M (Peak 31.63M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:26.35M (Peak 31.63M) | Time:00:00.01 | Mem:0.05M, Peak:0.05M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:26.32M (Peak 31.63M) | Time:00:00.01 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:26.33M (Peak 31.63M) | Time:00:00.01 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:26.33M (Peak 31.63M) | Time:00:00.01 | Mem:0.49M, Peak:0.49M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:26.33M (Peak 31.63M) | Time:00:00.01 | Mem:0.76M, Peak:1.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:26.33M (Peak 31.63M) | Time:00:00.01 | Mem:0.76M, Peak:1.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:0.76M, Peak:1.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.45M, Peak:1.45M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.54M, Peak:1.54M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.54M, Peak:1.54M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:27.02M (Peak 31.63M) | Time:00:00.01 | Mem:1.54M, Peak:1.54M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:27.60M (Peak 31.63M) | Time:00:00.02 | Mem:2.12M, Peak:2.12M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:28.60M (Peak 31.63M) | Time:00:00.02 | Mem:3.12M, Peak:3.12M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:28.61M (Peak 31.63M) | Time:00:00.02 | Mem:3.04M, Peak:3.12M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:28.61M (Peak 31.63M) | Time:00:00.02 | Mem:3.12M, Peak:3.12M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:28.61M (Peak 31.63M) | Time:00:00.02 | Mem:3.12M, Peak:3.12M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:28.61M (Peak 31.63M) | Time:00:00.02 | Mem:3.12M, Peak:3.12M | Scene, ViewLayer | Sample 0/16
+Fra:1 Mem:61.60M (Peak 61.60M) | Time:00:00.14 | Remaining:00:01.78 | Mem:36.08M, Peak:36.08M | Scene, ViewLayer | Sample 1/16
+Fra:1 Mem:76.25M (Peak 105.54M) | Time:00:01.14 | Mem:36.08M, Peak:36.08M | Scene, ViewLayer | Sample 16/16
+Fra:1 Mem:76.25M (Peak 105.54M) | Time:00:01.14 | Mem:36.08M, Peak:36.08M | Scene, ViewLayer | Finished
+Saved: '/tmp/passenger-distribution-clean-p9ow9l_q/tools/assets/passenger-vault/distribution/south-closed.png'
+Time: 00:01.23 (Saving: 00:00.07)
+
+Fra:1 Mem:29.38M (Peak 29.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | source_label
+Fra:1 Mem:29.68M (Peak 29.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | deck_plinth
+Fra:1 Mem:29.69M (Peak 29.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | end_9.335
+Fra:1 Mem:29.70M (Peak 29.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.32
+Fra:1 Mem:29.71M (Peak 29.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.56
+Fra:1 Mem:29.72M (Peak 29.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_0
+Fra:1 Mem:29.75M (Peak 29.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_0
+Fra:1 Mem:29.73M (Peak 29.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_0
+Fra:1 Mem:29.75M (Peak 29.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_0
+Fra:1 Mem:29.78M (Peak 29.78M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_0
+Fra:1 Mem:29.78M (Peak 29.78M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_0
+Fra:1 Mem:29.85M (Peak 29.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_0
+Fra:1 Mem:29.86M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_1
+Fra:1 Mem:29.85M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_0
+Fra:1 Mem:29.85M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_1
+Fra:1 Mem:29.84M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_3
+Fra:1 Mem:29.81M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_4
+Fra:1 Mem:29.82M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_6
+Fra:1 Mem:29.82M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_7
+Fra:1 Mem:29.83M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_8
+Fra:1 Mem:29.83M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_10
+Fra:1 Mem:29.85M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.56
+Fra:1 Mem:29.84M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_-0.51
+Fra:1 Mem:29.83M (Peak 29.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_-0.75_0.26
+Fra:1 Mem:29.92M (Peak 29.92M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_-0.75_0.62
+Fra:1 Mem:29.92M (Peak 29.92M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.32
+Fra:1 Mem:29.87M (Peak 29.92M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.75_0.26
+Fra:1 Mem:29.93M (Peak 29.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.56
+Fra:1 Mem:29.90M (Peak 29.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.75_0.62
+Fra:1 Mem:29.96M (Peak 29.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_2
+Fra:1 Mem:29.97M (Peak 29.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_2
+Fra:1 Mem:29.92M (Peak 29.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.75_0.26
+Fra:1 Mem:29.95M (Peak 29.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_2
+Fra:1 Mem:29.99M (Peak 29.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_2
+Fra:1 Mem:29.97M (Peak 29.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_2
+Fra:1 Mem:29.98M (Peak 29.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.75_0.62
+Fra:1 Mem:30.04M (Peak 30.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_2
+Fra:1 Mem:30.04M (Peak 30.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_2
+Fra:1 Mem:30.03M (Peak 30.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_3
+Fra:1 Mem:30.02M (Peak 30.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_1
+Fra:1 Mem:30.03M (Peak 30.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_2
+Fra:1 Mem:30.05M (Peak 30.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_3
+Fra:1 Mem:30.06M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_4
+Fra:1 Mem:30.02M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_0.43
+Fra:1 Mem:30.03M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_6
+Fra:1 Mem:30.04M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_7
+Fra:1 Mem:30.04M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_-0.51
+Fra:1 Mem:30.04M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_8
+Fra:1 Mem:30.05M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_9
+Fra:1 Mem:30.05M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_11
+Fra:1 Mem:30.04M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_10
+Fra:1 Mem:30.04M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_-0.51
+Fra:1 Mem:30.04M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_0.43
+Fra:1 Mem:30.05M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.75_0.26
+Fra:1 Mem:30.06M (Peak 30.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_10
+Fra:1 Mem:30.08M (Peak 30.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.75_0.62
+Fra:1 Mem:30.09M (Peak 30.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.75_0.26
+Fra:1 Mem:30.08M (Peak 30.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.75_0.62
+Fra:1 Mem:30.12M (Peak 30.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.32
+Fra:1 Mem:30.15M (Peak 30.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.56
+Fra:1 Mem:30.13M (Peak 30.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_4
+Fra:1 Mem:30.14M (Peak 30.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_4
+Fra:1 Mem:30.11M (Peak 30.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_9
+Fra:1 Mem:30.11M (Peak 30.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_4
+Fra:1 Mem:30.16M (Peak 30.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_4
+Fra:1 Mem:30.20M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_8
+Fra:1 Mem:30.16M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_4
+Fra:1 Mem:30.17M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_4
+Fra:1 Mem:30.19M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_7
+Fra:1 Mem:30.18M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_5
+Fra:1 Mem:30.19M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_6
+Fra:1 Mem:30.17M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_0
+Fra:1 Mem:30.21M (Peak 30.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_1
+Fra:1 Mem:30.19M (Peak 30.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_2
+Fra:1 Mem:30.21M (Peak 30.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_3
+Fra:1 Mem:30.22M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_4
+Fra:1 Mem:30.19M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:25.87M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:25.87M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:25.87M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:25.87M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:25.95M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:25.95M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:25.95M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:25.95M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:25.95M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:25.95M (Peak 30.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:25.97M (Peak 30.22M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:25.97M (Peak 30.22M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:25.97M (Peak 30.22M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:25.97M (Peak 30.22M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:26.08M (Peak 30.22M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:26.25M (Peak 30.22M) | Time:00:00.00 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:26.24M (Peak 30.22M) | Time:00:00.00 | Mem:0.18M, Peak:0.18M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:26.24M (Peak 30.22M) | Time:00:00.00 | Mem:0.18M, Peak:0.18M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:26.24M (Peak 30.22M) | Time:00:00.00 | Mem:0.40M, Peak:0.40M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:26.24M (Peak 30.22M) | Time:00:00.01 | Mem:0.66M, Peak:0.87M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:26.24M (Peak 30.22M) | Time:00:00.01 | Mem:0.66M, Peak:0.87M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:0.66M, Peak:0.87M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.20M, Peak:1.20M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.20M, Peak:1.20M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.20M, Peak:1.20M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.20M, Peak:1.20M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.20M, Peak:1.20M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.28M, Peak:1.28M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.28M, Peak:1.28M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:26.78M (Peak 30.22M) | Time:00:00.01 | Mem:1.28M, Peak:1.28M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:27.51M (Peak 30.22M) | Time:00:00.02 | Mem:2.01M, Peak:2.01M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:28.51M (Peak 30.22M) | Time:00:00.02 | Mem:3.01M, Peak:3.01M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:28.52M (Peak 30.22M) | Time:00:00.02 | Mem:2.93M, Peak:3.01M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:28.52M (Peak 30.22M) | Time:00:00.02 | Mem:3.01M, Peak:3.01M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:28.52M (Peak 30.22M) | Time:00:00.02 | Mem:3.01M, Peak:3.01M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:28.52M (Peak 30.22M) | Time:00:00.02 | Mem:3.01M, Peak:3.01M | Scene, ViewLayer | Sample 0/16
+Fra:1 Mem:61.50M (Peak 61.50M) | Time:00:00.16 | Remaining:00:02.10 | Mem:35.97M, Peak:35.97M | Scene, ViewLayer | Sample 1/16
+Fra:1 Mem:76.15M (Peak 105.45M) | Time:00:01.54 | Mem:35.97M, Peak:35.97M | Scene, ViewLayer | Sample 16/16
+Fra:1 Mem:76.15M (Peak 105.45M) | Time:00:01.54 | Mem:35.97M, Peak:35.97M | Scene, ViewLayer | Finished
+Saved: '/tmp/passenger-distribution-clean-p9ow9l_q/tools/assets/passenger-vault/distribution/south-cutaway.png'
+Time: 00:01.63 (Saving: 00:00.07)
+
+Fra:1 Mem:67.44M (Peak 67.44M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_continuous_deck_plinth
+Fra:1 Mem:67.44M (Peak 67.44M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_rear_service_panel_1
+Fra:1 Mem:67.44M (Peak 67.44M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_rear_service_panel_2
+Fra:1 Mem:67.67M (Peak 67.67M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_rear_service_panel_3
+Fra:1 Mem:67.70M (Peak 67.70M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_sealed_infill_0
+Fra:1 Mem:67.68M (Peak 67.70M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_sealed_infill_1
+Fra:1 Mem:67.64M (Peak 67.70M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_sealed_infill_2
+Fra:1 Mem:67.72M (Peak 67.72M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_sealed_infill_3
+Fra:1 Mem:67.70M (Peak 67.72M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_0_-0.25
+Fra:1 Mem:67.71M (Peak 67.72M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_0_0.25
+Fra:1 Mem:67.76M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_1_-0.25
+Fra:1 Mem:67.69M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_1_0.25
+Fra:1 Mem:67.74M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_2_-0.25
+Fra:1 Mem:67.67M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_2_0.25
+Fra:1 Mem:67.68M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_3_-0.25
+Fra:1 Mem:67.72M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_supply_return_3_0.25
+Fra:1 Mem:67.73M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A_carrier_working_toe_face
+Fra:1 Mem:67.73M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_cavity_wall
+Fra:1 Mem:67.73M (Peak 67.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_cradle_-0.85
+Fra:1 Mem:67.81M (Peak 67.81M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_cradle_0.85
+Fra:1 Mem:67.86M (Peak 67.86M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_inset_gasket
+Fra:1 Mem:68.12M (Peak 68.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_internal_bed
+Fra:1 Mem:67.95M (Peak 68.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_lid_status_recess
+Fra:1 Mem:68.00M (Peak 68.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_lower_pan
+Fra:1 Mem:68.23M (Peak 68.23M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_rear_union_-0.25
+Fra:1 Mem:68.26M (Peak 68.26M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_rear_union_0.25
+Fra:1 Mem:68.27M (Peak 68.27M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_seal_clamp_-0.59_-0.72
+Fra:1 Mem:68.29M (Peak 68.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_seal_clamp_-0.59_0.72
+Fra:1 Mem:68.23M (Peak 68.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_seal_clamp_0.59_-0.72
+Fra:1 Mem:68.24M (Peak 68.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_seal_clamp_0.59_0.72
+Fra:1 Mem:68.26M (Peak 68.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_upward_live_relief_0
+Fra:1 Mem:68.26M (Peak 68.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_upward_live_relief_1
+Fra:1 Mem:68.24M (Peak 68.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_upward_live_relief_2
+Fra:1 Mem:68.31M (Peak 68.31M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_upward_live_relief_3
+Fra:1 Mem:68.34M (Peak 68.34M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_upward_live_relief_5
+Fra:1 Mem:68.40M (Peak 68.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_working_face_live_relief_0
+Fra:1 Mem:68.35M (Peak 68.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_working_face_live_relief_1
+Fra:1 Mem:68.30M (Peak 68.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_working_face_live_relief_2
+Fra:1 Mem:68.29M (Peak 68.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_working_face_live_relief_3
+Fra:1 Mem:68.34M (Peak 68.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_working_face_live_relief_4
+Fra:1 Mem:68.37M (Peak 68.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_working_face_live_relief_5
+Fra:1 Mem:68.36M (Peak 68.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | A1_chamber_working_face_status_recess
+Fra:1 Mem:68.45M (Peak 68.45M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | SOURCE_deck
+Fra:1 Mem:68.45M (Peak 68.45M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | SOURCE_wall.001
+Fra:1 Mem:68.45M (Peak 68.45M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | SOURCE_monitor_placeholder
+Fra:1 Mem:68.45M (Peak 68.45M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | SOURCE_monitor_placeholder.001
+Fra:1 Mem:68.45M (Peak 68.45M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | source_label
+Fra:1 Mem:68.84M (Peak 68.84M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | deck_plinth
+Fra:1 Mem:68.84M (Peak 68.84M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | roof
+Fra:1 Mem:68.85M (Peak 68.85M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | end_9.335
+Fra:1 Mem:68.88M (Peak 68.88M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.32
+Fra:1 Mem:68.88M (Peak 68.88M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.56
+Fra:1 Mem:68.88M (Peak 68.88M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_0_-1.51
+Fra:1 Mem:68.88M (Peak 68.88M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_0_1.51
+Fra:1 Mem:68.90M (Peak 68.90M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_-1.25_0.23
+Fra:1 Mem:68.89M (Peak 68.90M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_1.25_1.34
+Fra:1 Mem:68.90M (Peak 68.90M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_0
+Fra:1 Mem:68.96M (Peak 68.96M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_0
+Fra:1 Mem:68.99M (Peak 68.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_0
+Fra:1 Mem:68.97M (Peak 68.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_0
+Fra:1 Mem:68.97M (Peak 68.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_0
+Fra:1 Mem:68.96M (Peak 68.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_0
+Fra:1 Mem:68.99M (Peak 68.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_0
+Fra:1 Mem:69.04M (Peak 69.04M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_0
+Fra:1 Mem:69.02M (Peak 69.04M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_0
+Fra:1 Mem:69.06M (Peak 69.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_1
+Fra:1 Mem:69.06M (Peak 69.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_1_-1.51
+Fra:1 Mem:69.02M (Peak 69.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_-1.25_1.34
+Fra:1 Mem:69.03M (Peak 69.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_1.25_0.23
+Fra:1 Mem:69.03M (Peak 69.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_1.25_1.34
+Fra:1 Mem:69.05M (Peak 69.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_1
+Fra:1 Mem:69.10M (Peak 69.10M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_1
+Fra:1 Mem:69.12M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_1
+Fra:1 Mem:69.08M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_2
+Fra:1 Mem:69.09M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_4
+Fra:1 Mem:69.08M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_5
+Fra:1 Mem:69.11M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_6
+Fra:1 Mem:69.10M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_8
+Fra:1 Mem:69.10M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_9
+Fra:1 Mem:69.11M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_10
+Fra:1 Mem:69.11M (Peak 69.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_-0.51
+Fra:1 Mem:69.13M (Peak 69.13M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_11
+Fra:1 Mem:69.10M (Peak 69.13M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_-0.5_1.02
+Fra:1 Mem:69.13M (Peak 69.13M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.5_0.26
+Fra:1 Mem:69.17M (Peak 69.17M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.5_1.02
+Fra:1 Mem:69.18M (Peak 69.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.32
+Fra:1 Mem:69.18M (Peak 69.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.56
+Fra:1 Mem:69.22M (Peak 69.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_2
+Fra:1 Mem:69.21M (Peak 69.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_2_-1.51
+Fra:1 Mem:69.21M (Peak 69.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_2_1.51
+Fra:1 Mem:69.19M (Peak 69.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_-1.25_1.34
+Fra:1 Mem:69.19M (Peak 69.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_1.25_1.34
+Fra:1 Mem:69.23M (Peak 69.23M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_2
+Fra:1 Mem:69.30M (Peak 69.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_2
+Fra:1 Mem:69.28M (Peak 69.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_2
+Fra:1 Mem:69.25M (Peak 69.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_2
+Fra:1 Mem:69.26M (Peak 69.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_2
+Fra:1 Mem:69.26M (Peak 69.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_2
+Fra:1 Mem:69.31M (Peak 69.31M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_2
+Fra:1 Mem:69.29M (Peak 69.31M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_2
+Fra:1 Mem:69.33M (Peak 69.33M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_2
+Fra:1 Mem:69.38M (Peak 69.38M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_3
+Fra:1 Mem:69.39M (Peak 69.39M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_3_-1.51
+Fra:1 Mem:69.32M (Peak 69.39M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_3_1.51
+Fra:1 Mem:69.32M (Peak 69.39M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_1.25_1.34
+Fra:1 Mem:69.35M (Peak 69.39M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_3
+Fra:1 Mem:69.40M (Peak 69.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_3
+Fra:1 Mem:69.39M (Peak 69.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_0
+Fra:1 Mem:69.40M (Peak 69.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_1
+Fra:1 Mem:69.42M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_2
+Fra:1 Mem:69.40M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_3
+Fra:1 Mem:69.39M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_4
+Fra:1 Mem:69.39M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_6
+Fra:1 Mem:69.39M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_8
+Fra:1 Mem:69.40M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_9
+Fra:1 Mem:69.41M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_10
+Fra:1 Mem:69.41M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_11
+Fra:1 Mem:69.40M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_-0.51
+Fra:1 Mem:69.41M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.5_0.26
+Fra:1 Mem:69.41M (Peak 69.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.5_1.02
+Fra:1 Mem:69.45M (Peak 69.45M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.5_0.26
+Fra:1 Mem:69.44M (Peak 69.45M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.5_1.02
+Fra:1 Mem:69.48M (Peak 69.48M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.32
+Fra:1 Mem:69.53M (Peak 69.53M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.56
+Fra:1 Mem:69.49M (Peak 69.53M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_4
+Fra:1 Mem:69.49M (Peak 69.53M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_4_-1.51
+Fra:1 Mem:69.50M (Peak 69.53M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_0.23
+Fra:1 Mem:69.49M (Peak 69.53M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_1.34
+Fra:1 Mem:69.51M (Peak 69.53M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_1.25_0.23
+Fra:1 Mem:69.53M (Peak 69.53M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_1.25_1.34
+Fra:1 Mem:69.54M (Peak 69.54M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_4
+Fra:1 Mem:69.53M (Peak 69.54M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_4
+Fra:1 Mem:69.59M (Peak 69.59M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_4
+Fra:1 Mem:69.57M (Peak 69.59M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_4
+Fra:1 Mem:69.53M (Peak 69.59M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_4
+Fra:1 Mem:69.62M (Peak 69.62M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_4
+Fra:1 Mem:69.61M (Peak 69.62M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_4
+Fra:1 Mem:69.65M (Peak 69.65M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_5
+Fra:1 Mem:69.63M (Peak 69.65M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_5_1.51
+Fra:1 Mem:69.62M (Peak 69.65M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_-1.25_0.23
+Fra:1 Mem:69.62M (Peak 69.65M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_1.25_0.23
+Fra:1 Mem:69.63M (Peak 69.65M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_1.25_1.34
+Fra:1 Mem:69.70M (Peak 69.70M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_5
+Fra:1 Mem:69.74M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_5
+Fra:1 Mem:69.71M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_0
+Fra:1 Mem:69.71M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_1
+Fra:1 Mem:69.69M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_3
+Fra:1 Mem:69.68M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_4
+Fra:1 Mem:69.68M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_6
+Fra:1 Mem:69.70M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_7
+Fra:1 Mem:69.70M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_8
+Fra:1 Mem:69.71M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_9
+Fra:1 Mem:69.69M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_11
+Fra:1 Mem:69.71M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_0.43
+Fra:1 Mem:69.70M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.5_0.26
+Fra:1 Mem:69.69M (Peak 69.74M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.5_1.02
+Fra:1 Mem:69.77M (Peak 69.77M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.5_0.26
+Fra:1 Mem:69.76M (Peak 69.77M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.5_1.02
+Fra:1 Mem:69.76M (Peak 69.77M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.32
+Fra:1 Mem:69.74M (Peak 69.77M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.56
+Fra:1 Mem:69.83M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | deck_plinth.001
+Fra:1 Mem:69.80M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | back_wall.001
+Fra:1 Mem:69.82M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | roof.001
+Fra:1 Mem:69.79M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | end_9.001
+Fra:1 Mem:69.79M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.001
+Fra:1 Mem:69.81M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_0.002
+Fra:1 Mem:69.80M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_0.001
+Fra:1 Mem:69.81M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_0_-1.001
+Fra:1 Mem:69.83M (Peak 69.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_0_1.001
+Fra:1 Mem:69.85M (Peak 69.85M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_-1.25_0.001
+Fra:1 Mem:69.87M (Peak 69.87M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_-1.25_0.84
+Fra:1 Mem:69.84M (Peak 69.87M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_0_1.25_0.001
+Fra:1 Mem:69.87M (Peak 69.87M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_0.001
+Fra:1 Mem:69.85M (Peak 69.87M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_0.001
+Fra:1 Mem:69.85M (Peak 69.87M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_0.001
+Fra:1 Mem:69.89M (Peak 69.89M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_0.001
+Fra:1 Mem:69.91M (Peak 69.91M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_0.001
+Fra:1 Mem:69.94M (Peak 69.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_0.001
+Fra:1 Mem:69.92M (Peak 69.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_0.001
+Fra:1 Mem:69.93M (Peak 69.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_0.001
+Fra:1 Mem:69.91M (Peak 69.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_0.001
+Fra:1 Mem:69.94M (Peak 69.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_0.001
+Fra:1 Mem:70.02M (Peak 70.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.002
+Fra:1 Mem:69.96M (Peak 70.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_1.001
+Fra:1 Mem:69.98M (Peak 70.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_-1.25_0.001
+Fra:1 Mem:69.97M (Peak 70.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_-1.25_0.84
+Fra:1 Mem:69.98M (Peak 70.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_1_1.25_0.001
+Fra:1 Mem:70.06M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_1.001
+Fra:1 Mem:70.05M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_1.001
+Fra:1 Mem:70.04M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_5_0.001
+Fra:1 Mem:70.00M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_2.001
+Fra:1 Mem:70.01M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_3.001
+Fra:1 Mem:70.02M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_5.001
+Fra:1 Mem:70.03M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_6.001
+Fra:1 Mem:70.03M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_7.001
+Fra:1 Mem:70.05M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.75_0.62
+Fra:1 Mem:70.04M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_10.001
+Fra:1 Mem:70.03M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_1_11.001
+Fra:1 Mem:70.06M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_1_-0.001
+Fra:1 Mem:70.05M (Peak 70.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_-0.75_0.26
+Fra:1 Mem:70.08M (Peak 70.08M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.75_0.26
+Fra:1 Mem:70.12M (Peak 70.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_1_0.75_0.62
+Fra:1 Mem:70.11M (Peak 70.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_1_0.001
+Fra:1 Mem:70.11M (Peak 70.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_0.75_0.26
+Fra:1 Mem:70.14M (Peak 70.14M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_2.001
+Fra:1 Mem:70.18M (Peak 70.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_2_-1.001
+Fra:1 Mem:70.18M (Peak 70.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_2_1.001
+Fra:1 Mem:70.16M (Peak 70.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_-1.25_0.84
+Fra:1 Mem:70.13M (Peak 70.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.75_0.62
+Fra:1 Mem:70.15M (Peak 70.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_2_1.25_0.84
+Fra:1 Mem:70.17M (Peak 70.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_2.001
+Fra:1 Mem:70.23M (Peak 70.23M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_2.001
+Fra:1 Mem:70.24M (Peak 70.24M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_5_-0.75_0.26
+Fra:1 Mem:70.23M (Peak 70.24M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_2.001
+Fra:1 Mem:70.21M (Peak 70.24M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_2.001
+Fra:1 Mem:70.24M (Peak 70.24M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_2.001
+Fra:1 Mem:70.24M (Peak 70.24M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_2.001
+Fra:1 Mem:70.31M (Peak 70.31M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_branch_2.001
+Fra:1 Mem:70.28M (Peak 70.31M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_0.001
+Fra:1 Mem:70.26M (Peak 70.31M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_2.001
+Fra:1 Mem:70.31M (Peak 70.31M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_5_-0.001
+Fra:1 Mem:70.30M (Peak 70.31M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_3.001
+Fra:1 Mem:70.33M (Peak 70.33M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_3_1.001
+Fra:1 Mem:70.32M (Peak 70.33M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_11.001
+Fra:1 Mem:70.31M (Peak 70.33M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_-1.25_0.84
+Fra:1 Mem:70.30M (Peak 70.33M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_1.25_0.001
+Fra:1 Mem:70.32M (Peak 70.33M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_3_1.25_0.84
+Fra:1 Mem:70.31M (Peak 70.33M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_3.001
+Fra:1 Mem:70.37M (Peak 70.37M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_3.001
+Fra:1 Mem:70.37M (Peak 70.37M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_0.001
+Fra:1 Mem:70.38M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_9.001
+Fra:1 Mem:70.36M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_3.001
+Fra:1 Mem:70.36M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_4.001
+Fra:1 Mem:70.35M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_6.001
+Fra:1 Mem:70.34M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_7.001
+Fra:1 Mem:70.36M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_8.001
+Fra:1 Mem:70.36M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_8.001
+Fra:1 Mem:70.35M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_9.001
+Fra:1 Mem:70.37M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_10.001
+Fra:1 Mem:70.36M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_3_11.001
+Fra:1 Mem:70.38M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_frame_3_-0.001
+Fra:1 Mem:70.36M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_7.001
+Fra:1 Mem:70.37M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.75_0.26
+Fra:1 Mem:70.38M (Peak 70.38M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_-0.75_0.62
+Fra:1 Mem:70.41M (Peak 70.41M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.75_0.26
+Fra:1 Mem:70.41M (Peak 70.41M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_6.001
+Fra:1 Mem:70.43M (Peak 70.43M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | tie_rod_3_0.75_0.62
+Fra:1 Mem:70.41M (Peak 70.43M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.001
+Fra:1 Mem:70.44M (Peak 70.44M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_port_3_0.002
+Fra:1 Mem:70.45M (Peak 70.45M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_5.001
+Fra:1 Mem:70.46M (Peak 70.46M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | panel_4.001
+Fra:1 Mem:70.51M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_4.001
+Fra:1 Mem:70.51M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_4_-1.001
+Fra:1 Mem:70.51M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_4_1.001
+Fra:1 Mem:70.50M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_0.001
+Fra:1 Mem:70.45M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_-1.25_0.84
+Fra:1 Mem:70.46M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_4_1.25_0.84
+Fra:1 Mem:70.50M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_4.001
+Fra:1 Mem:70.47M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_4.001
+Fra:1 Mem:70.51M (Peak 70.51M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_foot_4.001
+Fra:1 Mem:70.52M (Peak 70.52M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | motor_4.001
+Fra:1 Mem:70.51M (Peak 70.52M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_volute_4.001
+Fra:1 Mem:70.57M (Peak 70.57M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | pump_inlet_4.001
+Fra:1 Mem:70.55M (Peak 70.57M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_1.001
+Fra:1 Mem:70.56M (Peak 70.57M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | inlet_drop_4.001
+Fra:1 Mem:70.59M (Peak 70.59M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | exchanger_plate_5_0.001
+Fra:1 Mem:70.58M (Peak 70.59M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_rise_4.001
+Fra:1 Mem:70.59M (Peak 70.59M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | outlet_branch_4.001
+Fra:1 Mem:70.57M (Peak 70.59M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | skid_5.001
+Fra:1 Mem:70.59M (Peak 70.59M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_5_-1.001
+Fra:1 Mem:70.60M (Peak 70.60M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | gasket_5_1.001
+Fra:1 Mem:70.59M (Peak 70.60M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_-1.25_0.001
+Fra:1 Mem:70.62M (Peak 70.62M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | handle_5.001
+Fra:1 Mem:70.62M (Peak 70.62M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_-1.25_0.84
+Fra:1 Mem:70.64M (Peak 70.64M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_1.25_0.001
+Fra:1 Mem:70.64M (Peak 70.64M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | latch_5_1.25_0.84
+Fra:1 Mem:70.62M (Peak 70.64M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:49.82M (Peak 70.64M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:49.82M (Peak 70.64M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:49.82M (Peak 70.64M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:49.82M (Peak 70.64M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:49.91M (Peak 70.64M) | Time:00:00.05 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:49.91M (Peak 70.64M) | Time:00:00.05 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:49.91M (Peak 70.64M) | Time:00:00.05 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:49.91M (Peak 70.64M) | Time:00:00.05 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:49.91M (Peak 70.64M) | Time:00:00.05 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:49.91M (Peak 70.64M) | Time:00:00.05 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:50.10M (Peak 70.64M) | Time:00:00.05 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:50.10M (Peak 70.64M) | Time:00:00.05 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:50.10M (Peak 70.64M) | Time:00:00.05 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:50.10M (Peak 70.64M) | Time:00:00.05 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:50.40M (Peak 70.64M) | Time:00:00.05 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:51.06M (Peak 70.64M) | Time:00:00.05 | Mem:0.21M, Peak:0.21M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.77M, Peak:0.77M | Scene, ViewLayer | Updating Geometry BVH Cube.330 1/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.77M, Peak:0.77M | Scene, ViewLayer | Updating Geometry BVH Cube.334 5/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.79M, Peak:0.79M | Scene, ViewLayer | Updating Geometry BVH Cube.334 5/47 | Building BVH 0%
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.82M, Peak:0.82M | Scene, ViewLayer | Updating Geometry BVH Cube.328 47/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.85M, Peak:0.85M | Scene, ViewLayer | Updating Geometry BVH Cube.336 7/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.84M, Peak:0.85M | Scene, ViewLayer | Updating Geometry BVH Cube.339 10/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.84M, Peak:0.85M | Scene, ViewLayer | Updating Geometry BVH Cube.340 11/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.84M, Peak:0.85M | Scene, ViewLayer | Updating Geometry BVH Cylinder.274 12/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.87M, Peak:0.87M | Scene, ViewLayer | Updating Geometry BVH Cylinder.276 14/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.89M, Peak:0.89M | Scene, ViewLayer | Updating Geometry BVH Cylinder.277 15/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.89M, Peak:0.89M | Scene, ViewLayer | Updating Geometry BVH Cylinder.265 46/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.89M, Peak:0.89M | Scene, ViewLayer | Updating Geometry BVH Cylinder.279 17/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.90M, Peak:0.90M | Scene, ViewLayer | Updating Geometry BVH Cylinder.280 18/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.90M, Peak:0.90M | Scene, ViewLayer | Updating Geometry BVH Cylinder.264 45/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.91M, Peak:0.91M | Scene, ViewLayer | Updating Geometry BVH Cylinder.281 19/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.92M, Peak:0.92M | Scene, ViewLayer | Updating Geometry BVH Cube.341 20/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.93M, Peak:0.93M | Scene, ViewLayer | Updating Geometry BVH chamber_cavity_wall 21/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.93M, Peak:0.93M | Scene, ViewLayer | Updating Geometry BVH chamber_closed_domed_lid 22/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.93M, Peak:0.93M | Scene, ViewLayer | Updating Geometry BVH Cube.322 23/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:0.96M, Peak:0.96M | Scene, ViewLayer | Updating Geometry BVH Cube.323 24/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.01M, Peak:1.01M | Scene, ViewLayer | Updating Geometry BVH chamber_inset_gasket 25/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.01M, Peak:1.02M | Scene, ViewLayer | Updating Geometry BVH Cube.321 26/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.02M, Peak:1.02M | Scene, ViewLayer | Updating Geometry BVH chamber_lower_pan 28/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.09M, Peak:1.10M | Scene, ViewLayer | Updating Geometry BVH Cylinder.272 29/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.10M, Peak:1.10M | Scene, ViewLayer | Updating Geometry BVH Cylinder.273 30/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.10M, Peak:1.10M | Scene, ViewLayer | Updating Geometry BVH Cylinder.263 44/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.11M, Peak:1.11M | Scene, ViewLayer | Updating Geometry BVH Cube.325 32/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.11M, Peak:1.11M | Scene, ViewLayer | Updating Geometry BVH Cube.327 34/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.11M, Peak:1.12M | Scene, ViewLayer | Updating Geometry BVH Cylinder.262 43/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.15M, Peak:1.15M | Scene, ViewLayer | Updating Geometry BVH Cylinder.261 42/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.16M, Peak:1.16M | Scene, ViewLayer | Updating Geometry BVH Cylinder.266 35/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.18M, Peak:1.18M | Scene, ViewLayer | Updating Geometry BVH Cylinder.267 36/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.19M, Peak:1.19M | Scene, ViewLayer | Updating Geometry BVH Cylinder.268 37/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.19M, Peak:1.20M | Scene, ViewLayer | Updating Geometry BVH Cylinder.269 38/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.21M, Peak:1.21M | Scene, ViewLayer | Updating Geometry BVH Cylinder.270 39/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.21M, Peak:1.22M | Scene, ViewLayer | Updating Geometry BVH Cylinder.271 40/47 | Building BVH
+Fra:1 Mem:50.98M (Peak 70.64M) | Time:00:00.05 | Mem:1.24M, Peak:1.24M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:50.99M (Peak 70.64M) | Time:00:00.05 | Mem:1.24M, Peak:1.24M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:50.99M (Peak 70.64M) | Time:00:00.05 | Mem:2.34M, Peak:2.78M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:50.99M (Peak 70.64M) | Time:00:00.05 | Mem:2.34M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:2.34M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.20M, Peak:4.20M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.21M, Peak:4.21M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.21M, Peak:4.21M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.21M, Peak:4.21M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.21M, Peak:4.21M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.29M, Peak:4.29M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.30M, Peak:4.30M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:52.86M (Peak 70.64M) | Time:00:00.05 | Mem:4.30M, Peak:4.30M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:53.78M (Peak 70.64M) | Time:00:00.08 | Mem:5.22M, Peak:5.22M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:54.78M (Peak 70.64M) | Time:00:00.08 | Mem:6.22M, Peak:6.22M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:54.79M (Peak 70.64M) | Time:00:00.08 | Mem:6.14M, Peak:6.22M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:54.79M (Peak 70.64M) | Time:00:00.08 | Mem:6.22M, Peak:6.22M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:54.79M (Peak 70.64M) | Time:00:00.08 | Mem:6.22M, Peak:6.22M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:54.80M (Peak 70.64M) | Time:00:00.08 | Mem:6.22M, Peak:6.22M | Scene, ViewLayer | Sample 0/16
+Fra:1 Mem:87.79M (Peak 87.79M) | Time:00:00.43 | Remaining:00:05.27 | Mem:39.18M, Peak:39.18M | Scene, ViewLayer | Sample 1/16
+Fra:1 Mem:102.44M (Peak 131.73M) | Time:00:04.90 | Mem:39.18M, Peak:39.18M | Scene, ViewLayer | Sample 16/16
+Fra:1 Mem:102.44M (Peak 131.73M) | Time:00:04.90 | Mem:39.18M, Peak:39.18M | Scene, ViewLayer | Finished
+Saved: '/tmp/passenger-distribution-clean-p9ow9l_q/tools/assets/passenger-vault/distribution/room-placement.png'
+Time: 00:04.99 (Saving: 00:00.08)
+
+
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.228
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.229
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.230
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.231
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.232
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.233
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.234
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.235
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.236
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.237
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.238
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.239
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cube.240
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.189
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.190
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.191
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.192
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.193
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Extracting primitive: Cylinder.194
+23:48:23 | INFO: Primitives created: 1
+23:48:23 | INFO: Finished glTF 2.0 export in 0.13421869277954102 s
+
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.08s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.12s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.14s
+DISTRIBUTION_VERIFIED {"north": {"bounds_blender_m": [[-9.375, -1.25, 0.0], [9.375, 1.25, 1.5]], "mesh_objects": 145, "triangles": 4860, "deck_probes": 24, "back_probes": 24, "closed_front_probes": 54, "exposed_fittings": 30, "installed_bounds_game": [300.0, 40.0, 900.0, 120.0]}, "south": {"bounds_blender_m": [[-9.375, -1.25, 0.0], [9.375, 1.25, 1.0]], "mesh_objects": 145, "triangles": 4860, "deck_probes": 24, "back_probes": 24, "closed_front_probes": 54, "exposed_fittings": 30, "installed_bounds_game": [300.0, 759.9999389648438, 900.0, 840.0]}, "room_context": {"carriers": 4, "chambers": 16, "routes": 12}}
+
+Blender quit

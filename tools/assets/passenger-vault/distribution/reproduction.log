@@ -1,0 +1,47 @@
+CLEAN_ROOT /tmp/passenger-distribution-clean-tjr2rj7x
+{"command": ["blender", "-t", "6", "--background", "--factory-startup", "--python-exit-code", "1", "--python", "/tmp/passenger-distribution-clean-tjr2rj7x/tools/assets/passenger-vault/distribution.py", "--", "--output-root", "/tmp/passenger-distribution-clean-tjr2rj7x"], "exit_code": 0}
+{"command": ["blender", "-t", "6", "--background", "--factory-startup", "--python-exit-code", "1", "--python", "/tmp/passenger-distribution-clean-tjr2rj7x/tools/assets/passenger-vault/test_distribution_geometry.py"], "exit_code": 0}
+{"command": ["/home/chernodubv/.hermes/hermes-agent/venv/bin/python3", "/tmp/passenger-distribution-clean-tjr2rj7x/tools/assets/passenger-vault/test_distribution_artifacts.py", "/tmp/passenger-distribution-clean-tjr2rj7x"], "exit_code": 0}
+{
+  "passed": true,
+  "clean_root": "/tmp/passenger-distribution-clean-tjr2rj7x",
+  "glb_sha256": {
+    "distribution-north.glb": "7630daa1470f7890ef010ddd2da5ad03a6ec79e268a1576d529faf8b2c860602",
+    "distribution-south.glb": "fdc1fe47c2362a6d88730fbc82f3a8ddf34e74882a7a78efc9f0d30835d2df2a",
+    "chamber.glb": "029a456996061b42355bff6f15a8ce274b9dbbeced00ea76f41fc972b7e8d840",
+    "row-carrier.glb": "9e8610aa0de331ad527c26a09752b439bf34935e4c9bb448e3de09138416c11b"
+  },
+  "decoded_pngs": {
+    "north-closed.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "fdb7ef665c390078291314a197e63abe0ac6094173c7131a2c599abc3a7dc3a7"
+    },
+    "north-cutaway.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "78516ba6754fe885e1ecb4b6cbf5ac43b90bb25bbe063a407d516a7f8fcf5e2c"
+    },
+    "room-placement.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "606512d343245b5e57461107071f17159b20e94bc80ae425ec72fa41a326665a"
+    },
+    "south-closed.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "ad90dd0c787ba21483ce7785e7939c89909fee926016fb7709142b43358224f2"
+    },
+    "south-cutaway.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "1063c6644db6ac64dadff90376281660a33aad1e50427d9075ad5807160b5d8b"
+    }
+  },
+  "blend_byte_identity_claimed": false
+}
