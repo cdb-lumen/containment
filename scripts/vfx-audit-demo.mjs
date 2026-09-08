@@ -185,9 +185,13 @@ async function record(o) {
   page.on('pageerror',e=>m.errors.push(e.message));page.on('console',e=>{if(e.type()==='error')m.errors.push(e.text());});page.on('response',r=>{if(r.status()>=400)m.errors.push(`${r.status()} ${r.url()}`);});
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:''}));
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=cb=>raf(t=>{if(!window.__vfxGate)cb(t);});});
-  await page.route('**/src/main.ts*',async route=>{const response=await route.fetch();await route.fulfill({response,body:(await response.text())+'\nwindow.__vfxAudit={game,renderer,confirmation,hud,syncScreen};\n'});});
+  await page.route('**/src/main.ts*',async route=>{const response=await route.fetch();await route.fulfill({response,body:(await response.text())+'\nwindow.__vfxAudit={game,renderer,confirmation,hud,syncScreen,productionFrame:frame};\n'});});
   await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/`);await page.waitForFunction(()=>window.__vfxAudit&&document.body.dataset.state==='menu');
   await page.evaluate(()=>{window.__vfxGate=true;});await page.locator('#start').click();m.setup=await page.evaluate(stage,o);
+  // Let the shipping loop synchronize its room revision and recover the HUD.
+  // Never hide loading UI directly: a ready renderer alone leaves main's latch set.
+  await page.waitForFunction(()=>{const d=window.__vfxAudit;d.productionFrame(performance.now());return !d.renderer.roomLoading&&document.getElementById('room-loading').hidden&&document.getElementById('world').getAttribute('aria-busy')==='false';},{},{polling:100});
+  m.setup.recovery=await page.evaluate(()=>{const d=window.__vfxAudit,r=d.renderer,states=[r.sealedBank,r.releasedBerth,r.recoveryKit].filter(Boolean).map(owner=>owner.state);if(states.some(state=>state!=='ready')||r.camera.zoom!==d.nativeZoom)throw Error('Production recovery changed native camera or lost authored art');return {states,zoom:r.camera.zoom,loadingHidden:document.getElementById('room-loading').hidden};});
   // Bounded native-timer preroll stops at a real warning/projectile, before impact.
   m.preroll=[];let ready=!!o.definition.link||!!o.definition.prime;for(let n=0;!ready&&n<200;n++){const state=await page.evaluate(step,{frame:n-200,o});m.preroll.push(state);if(state.bullets.some(b=>b.kind==='hazard')||state.boss.pendingTelegraph){ready=true;break;}}assert(ready,'No native hazard within ten-second preroll');
   if(o.case==='ball-lightning'){

@@ -99,6 +99,12 @@ test('staging waits for current room assets before accepting gameplay camera',as
  assert.equal(d.nativeZoom,undefined,'must not snapshot menu camera while room assets load');
  finish();await pending;assert.equal(d.nativeZoom,1);
 });
+test('recording requires recovered production loading UI, not only camera readiness',()=>{
+ const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');
+ assert(source.includes('d.productionFrame(performance.now())'),'must run shipping recovery frame');
+ assert(source.includes("document.getElementById('room-loading').hidden"),'must reject loading pixels');
+ assert(source.includes("getAttribute('aria-busy')==='false'"),'must require recovered canvas');
+});
 test('recorder bytes retain numeric RNG and contain no redaction tokens',()=>{
  const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');
  assert(!source.includes('****'));assert(source.includes(String(1013904223)));
