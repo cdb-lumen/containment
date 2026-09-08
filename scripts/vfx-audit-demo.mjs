@@ -21,6 +21,7 @@ export const CASES = Object.freeze({
  'ball-lightning': {link:'arc',radial:true,mutations:['arc-filament','ball-lightning'],damage:22,distance:85,fireEvery:4},
  'fragmentation': {link:'impact',radial:true,mutations:['fragmentation'],damage:16,distance:90,weakenPrimary:true},
  'frost-field': {link:'field',radial:true,field:true,mutations:['cryogenic','glacial-wake'],distance:65,weakenPrimary:true},
+ 'toxic-bloom': {link:'poison',radial:true,toxic:true,mutations:['caustic-rounds','toxic-bloom'],distance:65,weakenPrimary:true,damage:5},
  'hot-reload': {prime:true,mutations:['hot-reload']},
 });
 export function options(argv) {
@@ -80,7 +81,7 @@ async function stage(o) {
   if(!pair)throw Error('No legal unobstructed target pair');
   const spawned=pair.map(p=>g.enemies.spawn('stalker',p.x,p.y));if(spawned.some(s=>!s.spawned))throw Error('Target spawn rejected');
   d.primaryId=spawned[0].enemy.id;d.secondaryId=spawned[1].enemy.id;d.secondaryTotal=spawned[1].enemy.health+spawned[1].enemy.armor;
-  if(o.definition.weakenPrimary)g.enemies.applyDamage(d.primaryId,spawned[0].enemy.health+spawned[0].enemy.armor-(o.definition.field?30:1));
+  if(o.definition.weakenPrimary)g.enemies.applyDamage(d.primaryId,spawned[0].enemy.health+spawned[0].enemy.armor-(o.definition.field||o.definition.toxic?30:1));
   d.aim=Math.atan2(pair[0].y-g.player.y,pair[0].x-g.player.x);g.switchWeapon('pistol');hazardSource=pair;
   const setSlow=g.enemies.setSlow.bind(g.enemies);g.enemies.setSlow=(id,value)=>{d.domainEvents.push({owner:'slow',id,value,secondary:id===d.secondaryId,frame:d.frame});return setSlow(id,value);};
   const damage=g.damage.bind(g);g.damage=(id,amount,...rest)=>{const result=damage(id,amount,...rest);d.domainEvents.push({owner:'damage',id,amount,...result,secondary:id===d.secondaryId,frame:d.frame});return result;};
@@ -96,7 +97,7 @@ async function stage(o) {
 function step({frame,o}) {
  const d=window.__vfxAudit,g=d.game,r=d.renderer;d.frame=frame;
  if(o.definition.link&&g.combat.snapshot.magazine===0)g.reload();
- g.update(1000/o.fps,{x:0,y:0,fire:!!o.definition.link&&!d.chargedPreroll&&frame>=5&&(frame-5)%(o.definition.fireEvery??10)===0,angle:d.aim??0,autoAim:false});
+ g.update(1000/o.fps,{x:0,y:0,fire:!!o.definition.link&&(!o.definition.toxic||!!g.enemies.getSnapshot(d.primaryId)?.health)&&!d.chargedPreroll&&frame>=5&&(frame-5)%(o.definition.fireEvery??10)===0,angle:d.aim??0,autoAim:false});
  d.confirmation.update(1/o.fps,g.status==='playing');r.render(g,1/o.fps,false);d.hud();
  if(g.status!=='playing')throw Error(`Left playing: ${g.status}`);
  if(r.camera.zoom!==d.nativeZoom)throw Error('Camera zoom changed');
@@ -105,7 +106,7 @@ function step({frame,o}) {
  let poolShader=null;
  if(g.pools.length){const material=r.poolMeshes.values().next().value?.material;poolShader={material:material?.constructor.name,clock:material?.surfaceTime?.value,compiled:r.renderer.info.programs.some(program=>gl.getShaderSource(program.fragmentShader)?.includes('acidWet'))};}
  const secondary=d.secondaryId?g.enemies.getSnapshot(d.secondaryId):null;
- return {frame,reloading:g.combat.snapshot.reloading,magazine:g.combat.snapshot.magazine,secondaryDamage:secondary?d.secondaryTotal-secondary.health-secondary.armor:0,secondaryStatuses:d.secondaryId?g.boonStatuses(d.secondaryId):null,elapsed:g.elapsed,poolShader,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
+ return {frame,primaryStatuses:d.primaryId?g.boonStatuses(d.primaryId):null,reloading:g.combat.snapshot.reloading,magazine:g.combat.snapshot.magazine,secondaryDamage:secondary?d.secondaryTotal-secondary.health-secondary.armor:0,secondaryStatuses:d.secondaryId?g.boonStatuses(d.secondaryId):null,elapsed:g.elapsed,poolShader,bullets:g.bullets.map(b=>({x:b.x,y:b.y,kind:b.kind,weapon:b.request.weaponId})),pools:g.pools.map(p=>({...p})),boss:g.boss.snapshot,damage:d.initialTotal-g.combat.snapshot.health-g.combat.snapshot.armor,counts:r.effects.counts,zoom:r.camera.zoom,targetPixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}};
 }
 export function verifyEvents(events,frames,o,domainEvents=[]) {
  if(o.definition.prime){
@@ -124,6 +125,15 @@ export function verifyEvents(events,frames,o,domainEvents=[]) {
    if(o.case==='ball-lightning')assert(events.some(e=>e.type==='boon'&&e.boon==='charge'&&e.durationMs===500&&discharge.frame-e.frame>=9),'Missing delayed charge');
    else assert(events.some(e=>e.type==='corpse'),'Missing real direct kill');
   }else assert(events.some(e=>e.type==='boon'&&e.boon===o.definition.link&&Number.isFinite(e.targetX)&&Number.isFinite(e.targetY)),'Missing production link');
+  if(o.definition.toxic){
+   const bloom=events.find(e=>e.type==='boon'&&e.boon==='poison'&&e.radius===100);
+   assert(frames.some(f=>f.frame<bloom.frame&&f.primaryStatuses?.poisoned),'Missing poisoned primary before death');
+   assert(frames.some(f=>f.frame>=bloom.frame&&f.secondaryStatuses?.poisoned),'Missing secondary poison spread');
+   assert(frames.every(f=>f.pools.length===0),'Unexpected persistent hazard');
+   assert(frames.some(f=>f.frame>=bloom.frame&&f.frame<bloom.frame+14&&f.counts.smoke>0),'Missing vapor burst');
+   assert(frames.some(f=>f.frame>bloom.frame+20&&f.counts.smoke===0),'Missing vapor expiry');
+   if(!o.provisional){assert(bloom.frame<=o.frames-60,'Missing three-second aftermath');assert(!frames.at(-1).secondaryStatuses?.poisoned,'Missing poison expiry');}
+  }
   if(o.definition.field){assert(events.some(e=>e.type==='boon'&&e.boon==='field'&&e.radius===75&&e.durationMs===2000),'Missing truthful frost field');assert(domainEvents.some(e=>e.owner==='slow'&&e.secondary&&e.value===.75),'Missing field slow tick');assert(domainEvents.some(e=>e.owner==='slow'&&e.secondary&&e.value===1),'Missing field expiry');assert(frames.every(f=>f.secondaryDamage===0),'Field caused damage');return;}
   assert(domainEvents.some(e=>e.owner==='damage'&&e.secondary&&e.applied&&e.amount===o.definition.damage),'Missing secondary damage');
   assert(frames.some(f=>f.secondaryDamage>0),'Missing secondary health/armor loss');

@@ -134,6 +134,18 @@ export class AttackEffects {
     for(let i=0;i<9;i++){const a=i*2.399;this.particle(this.glow,EFFECT_LIMITS.glow,end,i%2?0x8d9bff:0xcbefff,.065,.18+Math.random()*.16,new T.Vector3(Math.cos(a)*2,.4+Math.random()*2,Math.sin(a)*2),4);}
     return;
    }
+   // Toxic Bloom is immediate spread on poisoned death, never a lingering hazard.
+   // Separated normal-blended atlas wisps share the existing bounded smoke draw.
+   if(e.boon==='poison'&&e.radius!==undefined){
+    p.y=.55;const reach=Math.min(3,e.radius/32);
+    for(let i=0;i<8;i++){
+     const a=i*2.399+(Math.random()-.5)*.55,r=reach*(.12+Math.random()*.22);
+     const pos=p.clone().add(new T.Vector3(Math.cos(a)*r,.08+i*.045,Math.sin(a)*r));
+     const speed=reach*(.55+Math.random()*.5);
+     this.particle(this.smoke,EFFECT_LIMITS.smoke,pos,i%3?0x639b40:0x8caa56,.65+Math.random()*.35,.48+Math.random()*.22,new T.Vector3(Math.cos(a)*speed,.25+Math.random()*.35,Math.sin(a)*speed));
+     const wisp=this.smoke[this.smoke.length-1];wisp.growth=.65;wisp.aspect=.65+Math.random()*.3;
+    }return;
+   }
    // Untargeted radial arc is Ball Lightning's discharge, not a blast ring.
    if(e.boon==='arc'&&e.radius!==undefined){
     p.y=.65;const radius=Math.min(4,e.radius/32);

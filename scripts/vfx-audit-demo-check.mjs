@@ -9,7 +9,7 @@ const impact={type:'acid',angle:0};
 const pool={type:'acid',radius:120};
 const spit=[{type:'hazard-attack',enemyType:'spitter'}];
 const queen=[{type:'area-attack'}];
-test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance','ball-lightning','fragmentation','frost-field','hot-reload']));
+test('catalog keeps each effect in a separate clip',()=>assert.deepEqual(Object.keys(CASES),['acid-impact','acid-pool','ricochet','ice-lance','ball-lightning','fragmentation','frost-field','toxic-bloom','hot-reload']));
 test('options enforce exact arguments, SHA, quality and final length',()=>{
  assert.equal(opt('acid-impact').frames,40);
  assert.equal(options(['--case=acid-pool','--source-sha='+'a'.repeat(40),'--root=/tmp/immutable']).root,'/tmp/immutable');
@@ -75,6 +75,16 @@ test('reload evidence rejects a damaging cascade, missing reload completion or p
  assert.throws(()=>verifyEvents(events,[frames[0]],o),/reload/);
  assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,damage:1})),o),/damage/);
  assert.throws(()=>verifyEvents([...events,{type:'shot'}],frames,o),/firing/);
+});
+test('Toxic Bloom requires poisoned death, spread, no area hazard and expired vapor',()=>{
+ const o=opt('toxic-bloom'),events=[{type:'shot'},{type:'corpse'},{type:'boon',boon:'poison',radius:100,frame:16}];
+ const frames=[{frame:5,zoom:1,primaryStatuses:{poisoned:true},secondaryStatuses:{poisoned:false},secondaryDamage:0,pools:[],counts:{smoke:0}},{frame:16,zoom:1,secondaryStatuses:{poisoned:true},secondaryDamage:0,pools:[],counts:{smoke:8}},{frame:39,zoom:1,secondaryStatuses:{poisoned:true},secondaryDamage:5,pools:[],counts:{smoke:0}}];
+ const damage=[{owner:'damage',secondary:true,applied:true,amount:5}];
+ assert.doesNotThrow(()=>verifyEvents(events,frames,o,damage));
+ assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,primaryStatuses:{}})),o,damage),/poisoned primary/);
+ assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,secondaryStatuses:{}})),o,damage),/spread/);
+ assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,pools:[{}]})),o,damage),/hazard/);
+ assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,counts:{smoke:8}})),o,damage),/vapor expiry/);
 });
 test('recorder bytes retain numeric RNG and contain no redaction tokens',()=>{
  const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');
