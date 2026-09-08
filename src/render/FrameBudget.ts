@@ -10,18 +10,7 @@ export class FramePacer {
   const dt=this.sinceRender;this.sinceRender=0;this.credit=elapsed>.1?0:Math.max(0,this.credit-1/60)%(1/60);return dt;
  }
 }
-export type GraphicsTier='high'|'balanced'|'low';
-/** Rolling windows react to sustained misses, without lowering quality for a single pause. */
-export class FrameBudget {
- private samples=0;private slow=0;private blocked=0;
- reset(){this.samples=this.slow=this.blocked=0;}
- sample(frameSeconds:number,cpuMs:number):boolean{
-  if(!Number.isFinite(frameSeconds)||frameSeconds<=0||frameSeconds>1){this.reset();return false;}
-  this.samples++;if(frameSeconds>.023||cpuMs>19)this.slow++;if(frameSeconds>.075||cpuMs>50)this.blocked++;
-  if(this.samples<45)return false;
-  const reduce=this.slow>=12||this.blocked>=3;this.reset();return reduce;
- }
-}
+export type GraphicsTier='high'|'low';
 
 /** Local, on-demand diagnostics. No per-frame logging, network calls, or HUD allocation. */
 export class FrameDiagnostics {

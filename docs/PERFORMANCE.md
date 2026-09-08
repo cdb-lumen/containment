@@ -13,9 +13,9 @@ Reverse navigation reuses its queue, adjacency and expanded obstacle rectangles.
 ## Graphics workload
 
 - Presentation targets 60 Hz on 60/120/144 Hz displays. Elapsed time is retained; missed frames do not create a backlog of catch-up renders.
-- Automatic starts at balanced on desktop: existing models, normal maps and lighting; no bloom; DPR capped at 1.25; 1024-pixel shadow maps updated at 30 Hz. Touch devices start at Performance.
-- High remains available with bloom and DPR up to 1.5. Performance uses DPR 1 and disables shadows/postprocessing.
-- A rolling 45-render window lowers Automatic quality after repeated frame misses or CPU stalls. A single isolated pause does not trigger a downgrade. Only active, visible gameplay contributes.
+- High is the default on desktop and touch, with bloom, shadows and DPR up to 1.5.
+- Low is manually selected, caps DPR at 1 and disables shadows/postprocessing.
+- Automatic quality and frame-budget downgrades have been removed. WebGL recovery reapplies the selected quality. Reloading starts at High.
 - Hidden tabs stop rendering. WebGL loss handling remains in place.
 
 ## CPU measurements
@@ -41,7 +41,7 @@ PROFILE_GAME=profile.json npm test -- tests/performance-profile.test.ts
 
 ## Verification and diagnostics
 
-Regression coverage checks pure/live event equivalence, history isolation and safety limits, skeleton independence, single resource disposal, pooled corpse revival, 60/120/144 Hz pacing, and adaptive-quality behavior. Existing combat, all 48 boons, collision, navigation, weapon alignment, health-bar and checkpoint tests remain part of the full suite.
+Regression coverage checks pure/live event equivalence, history isolation and safety limits, skeleton independence, single resource disposal, pooled corpse revival, 60/120/144 Hz pacing, and manual High/Low quality selection and recovery. Existing combat, all 48 boons, collision, navigation, weapon alignment, health-bar and checkpoint tests remain part of the full suite.
 
 For future device diagnosis, `window.__containmentPerformance` returns a local snapshot on demand: recent frame times, update CPU times, render-submission CPU times, frames over 50 ms, effective quality, all-pass draw calls/triangles, geometry/texture counts and context-loss state. A fixed 120-sample ring records numbers; it does not write logs, send telemetry or add gameplay UI. Render-submission timing is not GPU execution timing.
 

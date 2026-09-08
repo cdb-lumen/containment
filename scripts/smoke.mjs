@@ -39,11 +39,12 @@ try {
     await page.route('https://fonts.googleapis.com/**', route => route.fulfill({status:200,contentType:'text/css',body:''}));
     await page.goto(origin + prefix);
     await page.waitForFunction(() => document.body.dataset.state === 'menu');
-    // New sessions use fixed High on desktop and touch. Auto remains opt-in.
+    // New sessions use fixed High on desktop and touch; only High and Low exist.
     await page.locator('#settings').click();
     assert.equal(await page.locator('#quality').inputValue(), 'high');
     assert.equal(await page.evaluate(() => window.__containmentPerformance.quality), 'high');
-    for(const [selection,tier] of [['low','low'],['auto',mobile?'low':'balanced'],['high','high']]) {
+    assert.deepEqual(await page.locator('#quality option').allTextContents(), ['High','Low']);
+    for(const [selection,tier] of [['low','low'],['high','high']]) {
       await page.locator('#quality').selectOption(selection);
       assert.equal(await page.evaluate(() => window.__containmentPerformance.quality), tier);
       await page.locator('#settings').click(); await page.locator('#settings').click();
@@ -56,7 +57,7 @@ try {
     assert.equal(await page.locator('#quality').inputValue(), 'high');
     assert.equal(await page.evaluate(() => window.__containmentPerformance.quality), 'high');
     await page.locator('#settings').click();
-    console.log(`Graphics defaults and opt-in selection passed: ${mobile?'touch':'desktop'}`);
+    console.log(`Graphics High/Low defaults and selection passed: ${mobile?'touch':'desktop'}`);
     const selectedVolume = await checkMenuSound(page, mobile);
     const chooseStartingBoon = async (capture = false) => {
       await page.locator('#start').click();

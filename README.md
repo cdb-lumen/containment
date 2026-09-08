@@ -34,4 +34,4 @@ Game and reusable domain systems: cdb-lumen / Containment. Code is MIT licensed,
 
 Adapted Unvanquished models, animations and embedded textures have separate Creative Commons licenses. Preserve [model credits](public/asset-credits.html) and the asset manifests. Environment materials, sound and music attribution are in [audio and environment credits](public/audio-credits.html) and `public/assets/audio/manifest.json`. Barlow fonts by Jeremy Tribby use the SIL Open Font License and load through Google Fonts. Asset licenses are not replaced by the code's MIT license.
 
-Automatic quality reduces effects and resolution on coarse-pointer devices and adapts under rendering load. Browser emulation does not certify physical-device Safari performance.
+Graphics offers High and Low, with High selected on every new page load. Quality never changes automatically; choose Low manually to reduce rendering cost. Browser emulation does not certify physical-device Safari performance.
