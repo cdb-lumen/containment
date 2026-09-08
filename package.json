@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "test": "vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs",
+    "test": "vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs && python3 tools/assets/passenger-vault/test_artifacts.py",
     "test:smoke": "node scripts/smoke.mjs",
     "test:authored-smoke": "node scripts/authored-room-smoke.mjs",
     "test:room-evidence": "node --test scripts/room-evidence-check.mjs scripts/room-demo-check.mjs",

@@ -1,0 +1,283 @@
+{
+  "schema": 1,
+  "gate": "construction candidate; independent review pending",
+  "authority_source": "e0ac00ffad50e5ebc1da9851833b18cfe6978212",
+  "blender_version": "4.0.2",
+  "procedural_seed": 0,
+  "randomness": "none",
+  "delivered": {
+    "carriers": 1,
+    "chambers": 4
+  },
+  "remaining_room_inventory": "3 carriers, 12 chambers, 2 distribution units, 2 consoles, 1 flush kit",
+  "coordinates": "metres; Blender X east, Y north, Z up; glTF Y up, Z south; divide game by32",
+  "mount_A_game": [
+    420,
+    300,
+    0
+  ],
+  "placements": [
+    {
+      "id": "A1",
+      "translation_blender_m": [
+        -2.34375,
+        -0.25,
+        0
+      ],
+      "room_bounds_game": [
+        325,
+        264,
+        365,
+        352
+      ]
+    },
+    {
+      "id": "A2",
+      "translation_blender_m": [
+        -0.78125,
+        -0.25,
+        0
+      ],
+      "room_bounds_game": [
+        375,
+        264,
+        415,
+        352
+      ]
+    },
+    {
+      "id": "A3",
+      "translation_blender_m": [
+        0.78125,
+        -0.25,
+        0
+      ],
+      "room_bounds_game": [
+        425,
+        264,
+        465,
+        352
+      ]
+    },
+    {
+      "id": "A4",
+      "translation_blender_m": [
+        2.34375,
+        -0.25,
+        0
+      ],
+      "room_bounds_game": [
+        475,
+        264,
+        515,
+        352
+      ]
+    }
+  ],
+  "southern_orientation": "Future instance: proper rotation pi about glTF Y, no negative scale; not delivered as a full-row fit gate",
+  "geometry_hashes": {
+    "chamber": "fb6524384c68cc00676490b0e98b2e77c022a32ca54d12bb97809c5440cc9e88",
+    "row-carrier": "c78a1f6044276f8c4b8b9e78a5e8ea44880cc45f37243887adcc6ad0ebee51c4"
+  },
+  "roundtrip": {
+    "chamber": {
+      "passed": true,
+      "bounds_blender_m": [
+        [
+          -0.625,
+          -1.371999979019165,
+          0.18000000715255737
+        ],
+        [
+          0.625,
+          1.3700000047683716,
+          1.2380000352859497
+        ]
+      ],
+      "mesh_objects": 27,
+      "triangles": 3620,
+      "construction": {
+        "bed_pan_gaps_m": [
+          -1.7881393432617188e-07,
+          -2.9802322387695312e-08,
+          8.940696716308594e-08,
+          -2.384185791015625e-07,
+          -2.682209014892578e-07,
+          -1.4901161193847656e-07,
+          -5.960464477539063e-08,
+          1.1920928955078125e-07,
+          1.7881393432617188e-07
+        ],
+        "outward_visible_samples": {
+          "chamber_working_face_status_recess": 9,
+          "chamber_seal_clamp_-0.59_-0.72": 9,
+          "chamber_seal_clamp_-0.59_0.72": 9,
+          "chamber_seal_clamp_0.59_-0.72": 9,
+          "chamber_seal_clamp_0.59_0.72": 9
+        }
+      }
+    },
+    "row-carrier": {
+      "passed": true,
+      "bounds_blender_m": [
+        [
+          -3.125,
+          -1.875,
+          0.0
+        ],
+        [
+          3.125,
+          1.875,
+          0.699999988079071
+        ]
+      ],
+      "mesh_objects": 20,
+      "triangles": 1504
+    }
+  },
+  "validation": {
+    "passed": true,
+    "construction": {
+      "bed_pan_gaps_m": [
+        -1.7881393432617188e-07,
+        0.0,
+        5.960464477539063e-08,
+        -2.384185791015625e-07,
+        -2.682209014892578e-07,
+        -1.1920928955078125e-07,
+        -5.960464477539063e-08,
+        1.1920928955078125e-07,
+        1.7881393432617188e-07
+      ],
+      "outward_visible_samples": {
+        "chamber_working_face_status_recess": 9,
+        "chamber_seal_clamp_-0.59_-0.72": 9,
+        "chamber_seal_clamp_-0.59_0.72": 9,
+        "chamber_seal_clamp_0.59_-0.72": 9,
+        "chamber_seal_clamp_0.59_0.72": 9
+      }
+    },
+    "clearance_probes": 1125,
+    "proxy_intersections": [],
+    "air_prism_surface_intersections": 0,
+    "body_bounds": [
+      [
+        -0.309999942779541,
+        -1.024999976158142,
+        0.41999998688697815
+      ],
+      [
+        0.3099999725818634,
+        1.024999976158142,
+        0.7400000095367432
+      ]
+    ],
+    "internal_air_prism_m": [
+      0.75,
+      2.25,
+      0.42
+    ],
+    "nonmanifold_edges": 0,
+    "row_bounds": [
+      [
+        -3.125,
+        -1.875,
+        0.0
+      ],
+      [
+        3.125,
+        1.875,
+        1.2380000352859497
+      ]
+    ],
+    "cradle_deck_contacts": [
+      [
+        -2.34375,
+        -1.1,
+        0.18
+      ],
+      [
+        -2.34375,
+        0.6,
+        0.18
+      ],
+      [
+        -0.78125,
+        -1.1,
+        0.18
+      ],
+      [
+        -0.78125,
+        0.6,
+        0.18
+      ],
+      [
+        0.78125,
+        -1.1,
+        0.18
+      ],
+      [
+        0.78125,
+        0.6,
+        0.18
+      ],
+      [
+        2.34375,
+        -1.1,
+        0.18
+      ],
+      [
+        2.34375,
+        0.6,
+        0.18
+      ]
+    ],
+    "chamber_triangles": 3620,
+    "carrier_triangles": 1504,
+    "placed_triangles": 15984
+  },
+  "limitations": [
+    "No material or medical/pressure certification",
+    "No runtime integration, full-room fit or gameplay pixels",
+    "Lids remain closed; opening and passenger loading mechanics are not implemented",
+    "Diagnostic grayscale relief cues need future material and shipping-camera readability review"
+  ],
+  "files": {
+    "tools/assets/passenger-vault/passenger-vault.blend": {
+      "bytes": 1888996,
+      "sha256": "5f5bdeb2f80102deccea028f4cb2809109e88fa6e1b5aa792e7e68c7387ea2d2"
+    },
+    "public/assets/passenger-vault/chamber.glb": {
+      "bytes": 234584,
+      "sha256": "029a456996061b42355bff6f15a8ce274b9dbbeced00ea76f41fc972b7e8d840"
+    },
+    "public/assets/passenger-vault/row-carrier.glb": {
+      "bytes": 109896,
+      "sha256": "9e8610aa0de331ad527c26a09752b439bf34935e4c9bb448e3de09138416c11b"
+    },
+    "tools/assets/passenger-vault/evidence/carrier-rear.png": {
+      "bytes": 689394,
+      "sha256": "7e0f3c9ee45570ba3d6dae290c33cbf3b5b477c58d806832dbfdaeaa2942322c"
+    },
+    "tools/assets/passenger-vault/evidence/chamber-closed.png": {
+      "bytes": 710681,
+      "sha256": "9ef031343a2c3b1fb6a9db82a72a184eca8ea17cf567546dd765e04478feb221"
+    },
+    "tools/assets/passenger-vault/evidence/chamber-cutaway.png": {
+      "bytes": 744799,
+      "sha256": "9f76194613b3035957c2b81670cc25c98800f9cd1eff0c6edd264804cace4933"
+    },
+    "tools/assets/passenger-vault/evidence/chamber-section.png": {
+      "bytes": 809353,
+      "sha256": "fed8748de14045092d136751e00ec3794e1ac0e1a8f2c34bdd07e14a4b65f93a"
+    },
+    "tools/assets/passenger-vault/evidence/row-closed.png": {
+      "bytes": 735061,
+      "sha256": "866606261ceebbb4f57872976b3c64eb1eebab020b644bc337084d19c0e57884"
+    },
+    "tools/assets/passenger-vault/evidence/row-top.png": {
+      "bytes": 801996,
+      "sha256": "46d0229eb88527e927b6e97989ba3d7b06f8627e1d4fa18878cd5b888cb540c2"
+    }
+  }
+}
