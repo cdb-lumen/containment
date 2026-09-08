@@ -5,7 +5,7 @@ import {attachReleasedBerth} from './ReleasedBerth';
 import {SceneLighting,ContactShadows} from './SceneLighting';
 import {authoredRoom} from './AuthoredRooms';
 import {ActorPool} from './ActorPool';
-import {FrameBudget,type GraphicsTier} from './FrameBudget';
+import type {GraphicsTier} from './FrameBudget';
 import {EnvironmentMaterials} from './EnvironmentMaterials';
 import {shipEnvironment,environmentObstacle,environmentArchitecture,appendEnvironment,type ShipEnvironment} from './ShipEnvironments';
 import * as T from 'three';
@@ -33,7 +33,7 @@ export class DepthRenderer {
  private lighting=new SceneLighting();private contacts=new ContactShadows();private muzzle:T.PointLight;private muzzleLife=0;
  private pendingShots:GameEffect[]=[];private shotSocket=new T.Vector3();
  private spotlight:T.SpotLight;private focus=new T.Vector3(18,0,14);private raycaster=new T.Raycaster();private ground=new T.Plane(new T.Vector3(0,1,0),0);
- private composer:EffectComposer;private bloom:UnrealBloomPass;private tier:GraphicsTier='balanced';private auto=true;private budget=new FrameBudget();private shadowTime=0;private shadowsDirty=true;private pixelRatio=1;
+ private composer:EffectComposer;private bloom:UnrealBloomPass;private tier:GraphicsTier='high';private shadowTime=0;private shadowsDirty=true;private pixelRatio=1;
  private time=0;private recoil=0;private roomKey='';private temporaryMaterials:T.Material[]=[];
  private bulletMesh:T.InstancedMesh;private dummy=new T.Object3D();
  private pickupMeshes=new Map<number,T.Group>();private exit:T.Group|null=null;
@@ -61,13 +61,12 @@ export class DepthRenderer {
   this.resize();
  }
  get qualityTier(){return this.tier;}
- setQuality(value:'auto'|'high'|'low'){
-  this.auto=value==='auto';this.tier=value==='high'?'high':value==='low'||matchMedia('(pointer:coarse)').matches?'low':'balanced';this.budget.reset();this.applyQuality();
+ setQuality(value:'high'|'low'='high'){
+  this.tier=value==='low'?'low':'high';this.applyQuality();
  }
  private applyQuality(){this.renderer.shadowMap.enabled=this.tier!=='low';this.shadowsDirty=true;this.resize();}
- observeFrame(delta:number,cpuMs:number,active:boolean){if(!active){this.budget.reset();return;}if(this.auto&&this.tier!=='low'&&this.budget.sample(delta,cpuMs)){this.tier='low';this.applyQuality();}}
  resize(){
-  const w=window.innerWidth,h=window.innerHeight,post=this.tier==='high';this.pixelRatio=Math.min(devicePixelRatio||1,post?1.5:this.tier==='balanced'?1.25:1);
+  const w=window.innerWidth,h=window.innerHeight,post=this.tier==='high';this.pixelRatio=Math.min(devicePixelRatio||1,post?1.5:1);
   this.renderer.setPixelRatio(this.pixelRatio);this.renderer.setSize(w,h,false);this.composer.setPixelRatio(post?this.pixelRatio:1);this.composer.setSize(post?w:1,post?h:1);
   const view=h>w?31:22;this.camera.left=-view*w/h/2;this.camera.right=view*w/h/2;this.camera.top=view/2;this.camera.bottom=-view/2;this.camera.near=.1;this.camera.far=120;this.camera.updateProjectionMatrix();
  }

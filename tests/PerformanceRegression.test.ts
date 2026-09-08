@@ -3,7 +3,7 @@ import * as T from 'three';
 import {loadModels} from './loadModels';
 import {marine,freezeCorpse,disposeModel} from '../src/render/models';
 import {ActorPool} from '../src/render/ActorPool';
-import {FramePacer,FrameBudget,FrameDiagnostics} from '../src/render/FrameBudget';
+import {FramePacer,FrameDiagnostics} from '../src/render/FrameBudget';
 import {BuildEventResolver,resolveBuildEvent,createBuildResolutionState,BUILD_LIMITS,type BuildEvent} from '../src/game/roguelike/builds';
 import {MUTATION_IDS} from '../src/game/roguelike/mutationCatalog';
 beforeAll(loadModels);
@@ -41,9 +41,7 @@ describe('frame pacing',()=>{
  it('renders approximately 60 times per second on 60, 120 and 144 Hz displays without losing elapsed time',()=>{
   for(const hz of [60,120,144]){const p=new FramePacer();let frames=0,time=0;for(let i=0;i<hz*10;i++){const dt=p.sample(i*1000/hz);if(dt!==null){frames++;time+=dt;}}expect(frames).toBeGreaterThanOrEqual(599);expect(frames).toBeLessThanOrEqual(601);expect(time).toBeCloseTo(10,1);p.reset();expect(p.sample(50000)).toBe(1/60);}
  });
- it('reacts to sustained misses, ignores a lone stall and bounds diagnostic storage',()=>{
-  const healthy=new FrameBudget();for(let i=0;i<90;i++)expect(healthy.sample(i===8?.1:1/60,5)).toBe(false);
-  const slow=new FrameBudget();let reduced=false;for(let i=0;i<45;i++)reduced=slow.sample(1/30,25)||reduced;expect(reduced).toBe(true);
+ it('paces after stalls and bounds diagnostic storage',()=>{
   const pacer=new FramePacer();pacer.sample(0);pacer.sample(50);expect(pacer.sample(58)).toBeNull();
   const d=new FrameDiagnostics();for(let i=0;i<200;i++)d.record(i===199?100:16.7,2,4);expect(d.snapshot.samples).toBe(120);expect(d.snapshot.stallsOver50ms).toBe(1);
  });
