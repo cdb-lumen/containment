@@ -30,3 +30,20 @@ See [references.md](references.md) for sources and the timing of consultation, [
 Grayscale materials and fixed studio lighting are diagnostic only. No PBR, UV, texture, wear, shipping-camera readability, medical/pressure certification, lid opening, loading mechanics, runtime, performance, full-room routes or release acceptance is claimed. The source-only human proxy is absent from shipping GLBs. No PR58 geometry is an input. Story, layout, runtime and global lighting are unchanged.
 
 Remaining inventory is three carriers, twelve chambers, two distribution units, two consoles and one flush kit. Independent review owns the acceptance verdict.
+
+## Whole-room installed geometry fixture
+
+The historical one-row package and evidence above remain unchanged. The next bounded fixture is `room_fit.py`. It imports the approved chamber/carrier GLBs, shares their meshes across four carriers and sixteen closed chambers, and applies proper half-turns to C/D4 without negative scale. It never writes a shipping asset or runtime file.
+
+```sh
+blender --background --factory-startup --python-exit-code 1 --python tools/assets/passenger-vault/room_fit.py
+blender --background --factory-startup --python-exit-code 1 --python tools/assets/passenger-vault/test_room_fit.py
+python3 tools/assets/passenger-vault/test_room_fit_artifacts.py
+python3 tools/assets/passenger-vault/test_room_fit_reproducibility.py
+```
+
+Outputs are isolated in `room-fit/`: two 1600 x 1200 neutral full-room PNGs, manifest, test logs and clean-root pixel comparison. `-- --output-root PATH` redirects fixture output only. This fixture rejects `--skip-renders` before any output writes; every successful manifest-producing run renders both images. Use the separate Blender test command for geometry-only verification. The reproduction script copies approved GLBs, topology and fixture sources into a new root before invoking absolute script paths. It checks placement/validation equality, unchanged input GLB bytes and decoded PNG identity. This is installed-fixture reproduction, not a new rebuild of the already accepted GLBs. Default `npm test` checks the new evidence contract without requiring Blender; actual mesh regressions use the separate Blender command above.
+
+Measured checks cover actual plate/rear-union orientation, every transformed vertex inside its row and chamber reservation, disjoint chamber AABBs, opposed support/service rays, full plinth extent and deck/top coverage, eight source-derived solids and conservative continuous radius-28 clearance along R1–R4 plus working/rear/console approaches. Source-only 2.05 m actor proxies and radius-28 disks are diagnostic geometry, not shipping passengers. SN/SS/MN/MS remain unchanged neutral boxes, not new equipment. The four underfloor distribution runs remain the reviewed construction assumption and are not built in this gate.
+
+`room-fit/report.md` records results and limitations. Independent review is pending for this full-room candidate. No material, shipping-camera, runtime, gameplay, performance or release acceptance is implied.

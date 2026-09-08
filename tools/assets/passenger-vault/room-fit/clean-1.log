@@ -1,0 +1,87 @@
+test_all_installed_geometry (__main__.RoomFit.test_all_installed_geometry) ... ok
+test_rejects_blocked_route (__main__.RoomFit.test_rejects_blocked_route) ... ok
+test_rejects_disconnected_service (__main__.RoomFit.test_rejects_disconnected_service) ... ok
+test_rejects_duplicate_row (__main__.RoomFit.test_rejects_duplicate_row) ... ok
+test_rejects_empty_inventory (__main__.RoomFit.test_rejects_empty_inventory) ... ok
+test_rejects_empty_mesh_groups (__main__.RoomFit.test_rejects_empty_mesh_groups) ... ok
+test_rejects_false_gap (__main__.RoomFit.test_rejects_false_gap) ... ok
+test_rejects_floating_support (__main__.RoomFit.test_rejects_floating_support) ... ok
+test_rejects_inter_chamber_overlap (__main__.RoomFit.test_rejects_inter_chamber_overlap) ... ok
+test_rejects_mismatched_named_groups (__main__.RoomFit.test_rejects_mismatched_named_groups) ... ok
+test_rejects_missing_chamber (__main__.RoomFit.test_rejects_missing_chamber) ... ok
+test_rejects_missing_row (__main__.RoomFit.test_rejects_missing_row) ... ok
+test_rejects_overhang (__main__.RoomFit.test_rejects_overhang) ... ok
+test_rejects_south_row_wrong_orientation (__main__.RoomFit.test_rejects_south_row_wrong_orientation) ... ok
+test_skip_renders_is_rejected_without_writing (__main__.RoomFit.test_skip_renders_is_rejected_without_writing) ... usage: blender [-h] [--output-root OUTPUT_ROOT]
+blender: error: unrecognized arguments: --skip-renders
+usage: blender [-h] [--output-root OUTPUT_ROOT]
+blender: error: unrecognized arguments: --skip-renders
+ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 3.411s
+
+OK
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.04s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Blender 4.0.2
+
+Blender quit

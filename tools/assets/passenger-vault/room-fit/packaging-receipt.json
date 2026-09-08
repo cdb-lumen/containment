@@ -1,0 +1,8 @@
+{
+  "change": "Only three trailing spaces stripped from recovery-red.log for Git whitespace gate. Original bytes preserved losslessly in recovery-red.log.gz. Historical independent-review hash snapshots remain unchanged. SHA256SUMS refreshed for normalized log; source/assets/pixels/review verdict unchanged.",
+  "historical_checksum_list_sha256": "c1d4ca962bf33b29de9cbc8da9bc5c48136abd7ad1b79d9d52a7f5ade5b2cdac",
+  "current_checksum_list_sha256": "d4721ab69c480ac6bb8edfe359c1570bccf3ea32596d4c5f80dd69a3c40f640b",
+  "original_log_sha256": "bd71d98853864a04ea6a7dbaaeeacdd08f261b50f7046b0095064d53a6c2fab8",
+  "normalized_log_sha256": "b60208dbb75018f28f107dcfbf262f43ad747ef3fb7aa0640e17ac44b3b8c13f",
+  "gzip_sha256": "dc562d8221c898efdf16252c4354eb1e9c2db32f7730ecf01193c7c8e03a746f"
+}

@@ -1,0 +1,204 @@
+test_all_installed_geometry (__main__.RoomFit.test_all_installed_geometry) ... ok
+test_rejects_blocked_route (__main__.RoomFit.test_rejects_blocked_route) ... ok
+test_rejects_disconnected_service (__main__.RoomFit.test_rejects_disconnected_service) ... ok
+test_rejects_duplicate_row (__main__.RoomFit.test_rejects_duplicate_row) ... FAIL
+test_rejects_empty_inventory (__main__.RoomFit.test_rejects_empty_inventory) ... FAIL
+test_rejects_empty_mesh_groups (__main__.RoomFit.test_rejects_empty_mesh_groups) ...
+  test_rejects_empty_mesh_groups (__main__.RoomFit.test_rejects_empty_mesh_groups) (group='carrier') ... ERROR
+  test_rejects_empty_mesh_groups (__main__.RoomFit.test_rejects_empty_mesh_groups) (group='chambers') ... ERROR
+test_rejects_false_gap (__main__.RoomFit.test_rejects_false_gap) ... ok
+test_rejects_floating_support (__main__.RoomFit.test_rejects_floating_support) ... ok
+test_rejects_inter_chamber_overlap (__main__.RoomFit.test_rejects_inter_chamber_overlap) ... ok
+test_rejects_mismatched_named_groups (__main__.RoomFit.test_rejects_mismatched_named_groups) ...
+  test_rejects_mismatched_named_groups (__main__.RoomFit.test_rejects_mismatched_named_groups) (group='carrier_continuous_deck_plinth') ... ERROR
+  test_rejects_mismatched_named_groups (__main__.RoomFit.test_rejects_mismatched_named_groups) (group='chamber_cavity_wall') ... FAIL
+test_rejects_missing_chamber (__main__.RoomFit.test_rejects_missing_chamber) ... ERROR
+test_rejects_missing_row (__main__.RoomFit.test_rejects_missing_row) ... FAIL
+test_rejects_overhang (__main__.RoomFit.test_rejects_overhang) ... ok
+test_rejects_south_row_wrong_orientation (__main__.RoomFit.test_rejects_south_row_wrong_orientation) ... ok
+test_skip_renders_is_rejected_without_writing (__main__.RoomFit.test_skip_renders_is_rejected_without_writing) ...
+  test_skip_renders_is_rejected_without_writing (__main__.RoomFit.test_skip_renders_is_rejected_without_writing) (existing_manifest=False) ... FAIL
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+WHOLE_ROOM_FIT {"chambers": 16, "carriers": 4, "solids": 8, "rows": [{"id": "A", "bounds_blender_m": [[10.0, -11.25, 0.0], [16.25, -7.5, 1.2380000352859497]], "working_face": "south", "chambers": [[[10.15625, -10.996999740600586, 0.18000000715255737], [11.40625, -8.255000114440918, 1.2380000352859497]], [[11.71875, -10.996999740600586, 0.18000000715255737], [12.96875, -8.255000114440918, 1.2380000352859497]], [[13.28125, -10.996999740600586, 0.18000000715255737], [14.53125, -8.255000114440918, 1.2380000352859497]], [[14.84375, -10.996999740600586, 0.18000000715255737], [16.09375, -8.255000114440918, 1.2380000352859497]]]}, {"id": "B", "bounds_blender_m": [[21.25, -11.25, 0.0], [27.5, -7.5, 1.2380000352859497]], "working_face": "south", "chambers": [[[21.40625, -10.996999740600586, 0.18000000715255737], [22.65625, -8.255000114440918, 1.2380000352859497]], [[22.96875, -10.996999740600586, 0.18000000715255737], [24.21875, -8.255000114440918, 1.2380000352859497]], [[24.53125, -10.996999740600586, 0.18000000715255737], [25.78125, -8.255000114440918, 1.2380000352859497]], [[26.09375, -10.996999740600586, 0.18000000715255737], [27.34375, -8.255000114440918, 1.2380000352859497]]]}, {"id": "C", "bounds_blender_m": [[10.0, -20.0, 0.0], [16.25, -16.25, 1.2380000352859497]], "working_face": "north", "chambers": [[[14.84375, -19.2450008392334, 0.18000000715255737], [16.09375, -16.503000259399414, 1.2380000352859497]], [[13.28125, -19.2450008392334, 0.18000000715255737], [14.53125, -16.503000259399414, 1.2380000352859497]], [[11.71875, -19.2450008392334, 0.18000000715255737], [12.96875, -16.503000259399414, 1.2380000352859497]], [[10.15625, -19.2450008392334, 0.18000000715255737], [11.40625, -16.503000259399414, 1.2380000352859497]]]}, {"id": "D4", "bounds_blender_m": [[21.25, -20.0, 0.0], [27.5, -16.25, 1.2380000352859497]], "working_face": "north", "chambers": [[[26.09375, -19.2450008392334, 0.18000000715255737], [27.34375, -16.503000259399414, 1.2380000352859497]], [[24.53125, -19.2450008392334, 0.18000000715255737], [25.78125, -16.503000259399414, 1.2380000352859497]], [[22.96875, -19.2450008392334, 0.18000000715255737], [24.21875, -16.503000259399414, 1.2380000352859497]], [[21.40625, -19.2450008392334, 0.18000000715255737], [22.65625, -16.503000259399414, 1.2380000352859497]]]}], "support_contacts": 64, "service_contacts": 64, "sealed_probes": 140, "access": {"radius_game": 28, "route_segments": 12, "access_segments": 34, "routes": {"R1": [[100, 440], [1100, 440]], "R2": [[100, 440], [260, 440], [260, 180], [960, 180], [960, 440], [1100, 440]], "R3": [[100, 440], [260, 440], [260, 700], [960, 700], [960, 440], [1100, 440]], "R4": [[600, 180], [600, 700]]}, "accesses": [[[345, 440], [345, 400]], [[600, 180], [345, 180]], [[395, 440], [395, 400]], [[600, 180], [395, 180]], [[445, 440], [445, 400]], [[600, 180], [445, 180]], [[495, 440], [495, 400]], [[600, 180], [495, 180]], [[705, 440], [705, 400]], [[600, 180], [705, 180]], [[755, 440], [755, 400]], [[600, 180], [755, 180]], [[805, 440], [805, 400]], [[600, 180], [805, 180]], [[855, 440], [855, 400]], [[600, 180], [855, 180]], [[345, 440], [345, 480]], [[600, 700], [345, 700]], [[395, 440], [395, 480]], [[600, 700], [395, 700]], [[445, 440], [445, 480]], [[600, 700], [445, 700]], [[495, 440], [495, 480]], [[600, 700], [495, 700]], [[705, 440], [705, 480]], [[600, 700], [705, 700]], [[755, 440], [755, 480]], [[600, 700], [755, 700]], [[805, 440], [805, 480]], [[600, 700], [805, 700]], [[855, 440], [855, 480]], [[600, 700], [855, 700]], [[960, 280], [1000, 280]], [[960, 600], [1000, 600]]]}, "mesh_objects": 512, "placed_triangles": 63936, "passed": true}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.03s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+WHOLE_ROOM_FIT {"chambers": 16, "carriers": 4, "solids": 8, "rows": [{"id": "A", "bounds_blender_m": [[10.0, -11.25, 0.0], [16.25, -7.5, 1.2380000352859497]], "working_face": "south", "chambers": [[[10.15625, -10.996999740600586, 0.18000000715255737], [11.40625, -8.255000114440918, 1.2380000352859497]], [[11.71875, -10.996999740600586, 0.18000000715255737], [12.96875, -8.255000114440918, 1.2380000352859497]], [[13.28125, -10.996999740600586, 0.18000000715255737], [14.53125, -8.255000114440918, 1.2380000352859497]], [[14.84375, -10.996999740600586, 0.18000000715255737], [16.09375, -8.255000114440918, 1.2380000352859497]]]}, {"id": "B", "bounds_blender_m": [[21.25, -11.25, 0.0], [27.5, -7.5, 1.2380000352859497]], "working_face": "south", "chambers": [[[21.40625, -10.996999740600586, 0.18000000715255737], [22.65625, -8.255000114440918, 1.2380000352859497]], [[22.96875, -10.996999740600586, 0.18000000715255737], [24.21875, -8.255000114440918, 1.2380000352859497]], [[24.53125, -10.996999740600586, 0.18000000715255737], [25.78125, -8.255000114440918, 1.2380000352859497]], [[26.09375, -10.996999740600586, 0.18000000715255737], [27.34375, -8.255000114440918, 1.2380000352859497]]]}, {"id": "C", "bounds_blender_m": [[10.0, -20.0, 0.0], [16.25, -16.25, 1.2380000352859497]], "working_face": "north", "chambers": [[[14.84375, -19.2450008392334, 0.18000000715255737], [16.09375, -16.503000259399414, 1.2380000352859497]], [[13.28125, -19.2450008392334, 0.18000000715255737], [14.53125, -16.503000259399414, 1.2380000352859497]], [[11.71875, -19.2450008392334, 0.18000000715255737], [12.96875, -16.503000259399414, 1.2380000352859497]], [[10.15625, -19.2450008392334, 0.18000000715255737], [11.40625, -16.503000259399414, 1.2380000352859497]]]}, {"id": "D4", "bounds_blender_m": [[21.25, -20.0, 0.0], [27.5, -16.25, 1.2380000352859497]], "working_face": "north", "chambers": [[[26.09375, -19.2450008392334, 0.18000000715255737], [27.34375, -16.503000259399414, 1.2380000352859497]], [[24.53125, -19.2450008392334, 0.18000000715255737], [25.78125, -16.503000259399414, 1.2380000352859497]], [[22.96875, -19.2450008392334, 0.18000000715255737], [24.21875, -16.503000259399414, 1.2380000352859497]], [[21.40625, -19.2450008392334, 0.18000000715255737], [22.65625, -16.503000259399414, 1.2380000352859497]]]}], "support_contacts": 64, "service_contacts": 64, "sealed_probes": 140, "access": {"radius_game": 28, "route_segments": 12, "access_segments": 34, "routes": {"R1": [[100, 440], [1100, 440]], "R2": [[100, 440], [260, 440], [260, 180], [960, 180], [960, 440], [1100, 440]], "R3": [[100, 440], [260, 440], [260, 700], [960, 700], [960, 440], [1100, 440]], "R4": [[600, 180], [600, 700]]}, "accesses": [[[345, 440], [345, 400]], [[600, 180], [345, 180]], [[395, 440], [395, 400]], [[600, 180], [395, 180]], [[445, 440], [445, 400]], [[600, 180], [445, 180]], [[495, 440], [495, 400]], [[600, 180], [495, 180]], [[705, 440], [705, 400]], [[600, 180], [705, 180]], [[755, 440], [755, 400]], [[600, 180], [755, 180]], [[805, 440], [805, 400]], [[600, 180], [805, 180]], [[855, 440], [855, 400]], [[600, 180], [855, 180]], [[345, 440], [345, 480]], [[600, 700], [345, 700]], [[395, 440], [395, 480]], [[600, 700], [395, 700]], [[445, 440], [445, 480]], [[600, 700], [445, 700]], [[495, 440], [495, 480]], [[600, 700], [495, 700]], [[705, 440], [705, 480]], [[600, 700], [705, 700]], [[755, 440], [755, 480]], [[600, 700], [755, 700]], [[805, 440], [805, 480]], [[600, 700], [805, 700]], [[855, 440], [855, 480]], [[600, 700], [855, 700]], [[960, 280], [1000, 280]], [[960, 600], [1000, 600]]]}, "mesh_objects": 512, "placed_triangles": 63936, "passed": true}  test_skip_renders_is_rejected_without_writing (__main__.RoomFit.test_skip_renders_is_rejected_without_writing) (existing_manifest=True) ... FAIL
+
+======================================================================
+ERROR: test_rejects_empty_mesh_groups (__main__.RoomFit.test_rejects_empty_mesh_groups) (group='carrier')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 56, in test_rejects_empty_mesh_groups
+    self.fit.validate(self.room)
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/room_fit.py", line 150, in validate
+    plinth=names['carrier_continuous_deck_plinth']
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'carrier_continuous_deck_plinth'
+
+======================================================================
+ERROR: test_rejects_empty_mesh_groups (__main__.RoomFit.test_rejects_empty_mesh_groups) (group='chambers')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 56, in test_rejects_empty_mesh_groups
+    self.fit.validate(self.room)
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/room_fit.py", line 127, in validate
+    front=Vector(tuple(sum(p[i] for p in vertices([names['chamber_working_face_status_recess']]))/len(vertices([names['chamber_working_face_status_recess']])) for i in range(3)))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/room_fit.py", line 127, in <genexpr>
+    front=Vector(tuple(sum(p[i] for p in vertices([names['chamber_working_face_status_recess']]))/len(vertices([names['chamber_working_face_status_recess']])) for i in range(3)))
+                                                   ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'chamber_working_face_status_recess'
+
+======================================================================
+ERROR: test_rejects_mismatched_named_groups (__main__.RoomFit.test_rejects_mismatched_named_groups) (group='carrier_continuous_deck_plinth')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 68, in test_rejects_mismatched_named_groups
+    self.fit.validate(self.room)
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/room_fit.py", line 150, in validate
+    plinth=names['carrier_continuous_deck_plinth']
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'carrier_continuous_deck_plinth'
+
+======================================================================
+ERROR: test_rejects_missing_chamber (__main__.RoomFit.test_rejects_missing_chamber)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 45, in test_rejects_missing_chamber
+    self.fit.validate(self.room)
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/room_fit.py", line 162, in validate
+    cn=row['named_chambers'][i]
+       ~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_rejects_duplicate_row (__main__.RoomFit.test_rejects_duplicate_row)
+----------------------------------------------------------------------
+AssertionError: inter-chamber overlap
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 38, in test_rejects_duplicate_row
+    with self.assertRaisesRegex(AssertionError, 'inventory'):
+AssertionError: "inventory" does not match "inter-chamber overlap"
+
+======================================================================
+FAIL: test_rejects_empty_inventory (__main__.RoomFit.test_rejects_empty_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 28, in test_rejects_empty_inventory
+    with self.assertRaisesRegex(AssertionError, 'inventory'):
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_mismatched_named_groups (__main__.RoomFit.test_rejects_mismatched_named_groups) (group='chamber_cavity_wall')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 67, in test_rejects_mismatched_named_groups
+    with self.assertRaisesRegex(AssertionError, 'inventory'):
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_rejects_missing_row (__main__.RoomFit.test_rejects_missing_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 33, in test_rejects_missing_row
+    with self.assertRaisesRegex(AssertionError, 'inventory'):
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_skip_renders_is_rejected_without_writing (__main__.RoomFit.test_skip_renders_is_rejected_without_writing) (existing_manifest=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 84, in test_skip_renders_is_rejected_without_writing
+    with self.assertRaises(SystemExit) as error:
+AssertionError: SystemExit not raised
+
+======================================================================
+FAIL: test_skip_renders_is_rejected_without_writing (__main__.RoomFit.test_skip_renders_is_rejected_without_writing) (existing_manifest=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 84, in test_skip_renders_is_rejected_without_writing
+    with self.assertRaises(SystemExit) as error:
+AssertionError: SystemExit not raised
+
+----------------------------------------------------------------------
+Ran 15 tests in 6.057s
+
+FAILED (failures=6, errors=4)
+Blender 4.0.2
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_room_fit.py", line 136, in <module>
+    raise AssertionError('Whole-room geometry regressions failed')
+AssertionError: Whole-room geometry regressions failed
+
+Error: script failed, file: 'tools/assets/passenger-vault/test_room_fit.py', exiting.
+
+
+Blender quit

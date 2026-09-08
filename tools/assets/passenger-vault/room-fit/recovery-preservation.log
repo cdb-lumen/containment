@@ -1,0 +1,86 @@
+{
+  "whole-room-oblique.png": {
+    "width": 1600,
+    "height": 1200,
+    "channels": 4,
+    "pixels_sha256": "b41839f25b7be4e735ba328c8aa4f33d227f61f4f48bdf50950feac10ccf00b4"
+  },
+  "whole-room-top.png": {
+    "width": 1600,
+    "height": 1200,
+    "channels": 4,
+    "pixels_sha256": "f7fa8325cad306a30375bb1a43e3010c7b88259f34740e1a59e728b594418caa"
+  }
+}
+{
+  "passed": true,
+  "clean_root": "/tmp/passenger-whole-room-w6w0szzp",
+  "commands": [
+    {
+      "command": [
+        "blender",
+        "--background",
+        "--factory-startup",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "/tmp/passenger-whole-room-w6w0szzp/tools/assets/passenger-vault/room_fit.py",
+        "--",
+        "--output-root",
+        "/tmp/passenger-whole-room-w6w0szzp"
+      ],
+      "exit_code": 0,
+      "log": "tools/assets/passenger-vault/room-fit/clean-0.log"
+    },
+    {
+      "command": [
+        "blender",
+        "--background",
+        "--factory-startup",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "/tmp/passenger-whole-room-w6w0szzp/tools/assets/passenger-vault/test_room_fit.py"
+      ],
+      "exit_code": 0,
+      "log": "tools/assets/passenger-vault/room-fit/clean-1.log"
+    },
+    {
+      "command": [
+        "/home/chernodubv/.hermes/hermes-agent/venv/bin/python3",
+        "/tmp/passenger-whole-room-w6w0szzp/tools/assets/passenger-vault/test_room_fit_artifacts.py",
+        "/tmp/passenger-whole-room-w6w0szzp"
+      ],
+      "exit_code": 0,
+      "log": "tools/assets/passenger-vault/room-fit/clean-2.log"
+    }
+  ],
+  "decoded_pngs": {
+    "whole-room-top.png": {
+      "width": 1600,
+      "height": 1200,
+      "channels": 4,
+      "pixels_sha256": "f7fa8325cad306a30375bb1a43e3010c7b88259f34740e1a59e728b594418caa"
+    },
+    "whole-room-oblique.png": {
+      "width": 1600,
+      "height": 1200,
+      "channels": 4,
+      "pixels_sha256": "b41839f25b7be4e735ba328c8aa4f33d227f61f4f48bdf50950feac10ccf00b4"
+    }
+  },
+  "input_glbs": "Copied approved immutable GLBs, not regenerated; original builder reproduction is a separate prior gate",
+  "validation_equal": true,
+  "solids_equal": true,
+  "input_hashes_equal": true,
+  "blend_identity_claimed": false
+}
+
+Historical tracked files byte-identical to HEAD: 93
+Review hashes:
+d023fc3858d309d8104debd8a78813e938e9f6bd279a5386ca2afc7aabce864e  tools/assets/passenger-vault/room-fit/code-pixel-review.md
+54efba6e6cf60e5f3d3c63967bd8be49151b96ac4cdf7a9319f038a6414680bb  tools/assets/passenger-vault/room-fit/spec-review.md
+
+Both decoded RGBA hashes equal the historical reviewed snapshot.
+{"carriers": 4, "chambers": 16, "mesh_objects": 512, "placed_triangles": 63936, "support_contacts": 64, "service_contacts": 64, "sealed_probes": 140}
+Both room-fit reviews unchanged.
