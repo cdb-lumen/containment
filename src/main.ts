@@ -32,7 +32,7 @@ const el=(id:string)=>document.getElementById(id)!;
 el('overlay').innerHTML='<div class="asset-loading"><span>CONTAINMENT / DEPTH</span><div><i id="asset-progress"></i></div></div>';
 try{await preloadAssets(fraction=>{el('asset-progress').style.width=`${fraction*100}%`;});}catch(error){app.innerHTML='<div class="unsupported"><h1>Download interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
 let renderer:DepthRenderer;
-try{renderer=new DepthRenderer(el('world') as HTMLCanvasElement);renderer.setQuality('auto');}catch{app.innerHTML='<div class="unsupported"><h1>3D graphics unavailable</h1><p>Open this game in a browser with WebGL 2 enabled.</p><button onclick="location.reload()">Try again</button></div>';throw new Error('WebGL renderer unavailable');}
+try{renderer=new DepthRenderer(el('world') as HTMLCanvasElement);renderer.setQuality('high');}catch{app.innerHTML='<div class="unsupported"><h1>3D graphics unavailable</h1><p>Open this game in a browser with WebGL 2 enabled.</p><button onclick="location.reload()">Try again</button></div>';throw new Error('WebGL renderer unavailable');}
 let storage:Storage|null=null;try{storage=localStorage;}catch{}
 const marker=document.createElement('div');marker.id='hit-confirmation';marker.hidden=true;marker.setAttribute('aria-hidden','true');app.append(marker);
 const confirmation=new HitConfirmation(marker);for(const event of ['pointermove','pointerdown'] as const)renderer.canvas.addEventListener(event,e=>{if(e.pointerType==='mouse')confirmation.point(e.clientX,e.clientY);});
@@ -42,7 +42,7 @@ const effect=(e:GameEffect)=>{if(e.type==='sync-corpse'){renderer.syncCorpse(e.i
 const game=new DepthGame(effect,storage);const pause=()=>{if(game.status==='playing'){game.pause();input.reset();audio.pauseAll();}else if(game.status==='paused'&&!document.hidden&&!graphicsLost){game.resume();audio.resumeAll();}syncScreen();};
 game.aimVisible=(x,y)=>renderer.visible(x,y);
 try{await renderer.prepare(game.node);}catch(error){el('overlay').innerHTML='<div class="unsupported"><h1>Graphics interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
-const input=new InputController(game,renderer,(toggle)=>{if(game.status==='playing'||toggle&&game.status==='paused')pause();},()=>!graphicsLost&&!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading);let roomRecovering=true;let graphicsLost=false;let lastStatus='',lastRoom=-1,screenKey='',settingsOpen=false;let quality='auto';
+const input=new InputController(game,renderer,(toggle)=>{if(game.status==='playing'||toggle&&game.status==='paused')pause();},()=>!graphicsLost&&!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading);let roomRecovering=true;let graphicsLost=false;let lastStatus='',lastRoom=-1,screenKey='',settingsOpen=false;let quality='high';
 const start=(resume=false)=>{void audio.unlock();audio.resumeAll();input.reset();settingsOpen=false;if(resume){if(!game.continueRun())return;}else game.newRun();syncScreen(true);};
 el('pause').addEventListener('click',pause);document.querySelectorAll<HTMLButtonElement>('[data-weapon]').forEach(b=>b.addEventListener('click',()=>{if(!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading&&!graphicsLost)game.switchWeapon(b.dataset.weapon as WeaponId);b.blur();}));
 el('skip-story').addEventListener('click',()=>{game.skipStory();hud();});

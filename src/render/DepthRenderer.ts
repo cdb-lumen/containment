@@ -33,7 +33,7 @@ export class DepthRenderer {
  private lighting=new SceneLighting();private contacts=new ContactShadows();private muzzle:T.PointLight;private muzzleLife=0;
  private pendingShots:GameEffect[]=[];private shotSocket=new T.Vector3();
  private spotlight:T.SpotLight;private focus=new T.Vector3(18,0,14);private raycaster=new T.Raycaster();private ground=new T.Plane(new T.Vector3(0,1,0),0);
- private composer:EffectComposer;private bloom:UnrealBloomPass;private tier:GraphicsTier='balanced';private auto=true;private budget=new FrameBudget();private shadowTime=0;private shadowsDirty=true;private pixelRatio=1;
+ private composer:EffectComposer;private bloom:UnrealBloomPass;private tier:GraphicsTier='high';private auto=false;private budget=new FrameBudget();private shadowTime=0;private shadowsDirty=true;private pixelRatio=1;
  private time=0;private recoil=0;private roomKey='';private temporaryMaterials:T.Material[]=[];
  private bulletMesh:T.InstancedMesh;private dummy=new T.Object3D();
  private pickupMeshes=new Map<number,T.Group>();private exit:T.Group|null=null;
@@ -61,8 +61,8 @@ export class DepthRenderer {
   this.resize();
  }
  get qualityTier(){return this.tier;}
- setQuality(value:'auto'|'high'|'low'){
-  this.auto=value==='auto';this.tier=value==='high'?'high':value==='low'||matchMedia('(pointer:coarse)').matches?'low':'balanced';this.budget.reset();this.applyQuality();
+ setQuality(value:'auto'|'high'|'low'='high'){
+  this.auto=value==='auto';this.tier=value==='low'?'low':this.auto?(matchMedia('(pointer:coarse)').matches?'low':'balanced'):'high';this.budget.reset();this.applyQuality();
  }
  private applyQuality(){this.renderer.shadowMap.enabled=this.tier!=='low';this.shadowsDirty=true;this.resize();}
  observeFrame(delta:number,cpuMs:number,active:boolean){if(!active){this.budget.reset();return;}if(this.auto&&this.tier!=='low'&&this.budget.sample(delta,cpuMs)){this.tier='low';this.applyQuality();}}
