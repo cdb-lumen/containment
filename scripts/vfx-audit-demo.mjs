@@ -53,8 +53,14 @@ async function stage(o) {
  const build=(o.definition.mutations??[]).reduce(addMutation,createBuild());g.combat.setBuild(build);g.expedition={...g.expedition,build};
  g.pending=[];g.director.update=()=>[];g.clearRequested=false;
  g.enemies=new EnemySystem({balance:{health:o.definition.link?20:1,damage:1,speed:0,eliteHealth:1,eliteDamage:1,specials:true},canMove:()=>false,canAttack:(a,b)=>geometry.hasClearExpeditionShot(g.geometry,a,b)});
- r.setQuality(o.quality);r.loadRoom(g.node);r.render(g,1,false);d.hud();d.syncScreen(true);
- if(g.status!=='playing'||!r.camera.isOrthographicCamera)throw Error('Startup failed');
+ r.setQuality(o.quality);r.loadRoom(g.node);
+ // loadRoom starts fresh optional owners. Rendering while they decode returns
+ // before the menu-to-game camera transition, so never snapshot that stale zoom.
+ const roomOwners=[r.sealedBank,r.releasedBerth,r.recoveryKit].filter(Boolean);
+ await Promise.all(roomOwners.map(owner=>owner.ready));
+ if(roomOwners.some(owner=>owner.state!=='ready'))throw Error(`Room art not ready: ${roomOwners.map(owner=>owner.state).join(',')}`);
+ r.render(g,0,false);d.hud();d.syncScreen(true);
+ if(g.status!=='playing'||!r.camera.isOrthographicCamera||r.camera.zoom!==1)throw Error('Startup failed: expected native gameplay camera');
  d.nativeZoom=r.camera.zoom;d.events=[];d.domainEvents=[];d.frame=-1;
  const effect=r.effect.bind(r);r.effect=e=>{const p=r.camera.position.clone().set(e.x/32,.3,e.y/32).project(r.camera);d.events.push({...e,frame:d.frame,pixel:{x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2}});return effect(e);};
  for(const [owner,name] of [[g.enemies,'enemy'],[g.boss,'queen']]){const update=owner.update.bind(owner);owner.update=(...args)=>{const events=update(...args);d.domainEvents.push(...events.map(e=>({...e,owner:name,frame:d.frame})));return events;};}

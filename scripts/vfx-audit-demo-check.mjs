@@ -86,6 +86,19 @@ test('Toxic Bloom requires poisoned death, spread, no area hazard and expired va
  assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,pools:[{}]})),o,damage),/hazard/);
  assert.throws(()=>verifyEvents(events,frames.map(f=>({...f,counts:{smoke:8}})),o,damage),/vapor expiry/);
 });
+test('staging waits for current room assets before accepting gameplay camera',async()=>{
+ const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');
+ const block=source.slice(source.indexOf(' r.setQuality(o.quality);'),source.indexOf(' const effect=r.effect.bind(r);'));
+ const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
+ const owners=['sealedBank','releasedBerth','recoveryKit'];let finish;
+ const gate=new Promise(resolve=>{finish=resolve;});
+ const r={camera:{zoom:1.23,isOrthographicCamera:true},setQuality(){},loadRoom(){for(const name of owners)this[name]={state:'loading',ready:gate.then(()=>{this[name].state='ready';})};},render(){if(owners.some(name=>this[name].state==='loading'))return;this.camera.zoom=1;}};
+ const d={hud(){},syncScreen(){}};
+ const pending=new AsyncFunction('r','g','d','o',block)(r,{node:{},status:'playing'},d,{quality:'high'});
+ await Promise.resolve();
+ assert.equal(d.nativeZoom,undefined,'must not snapshot menu camera while room assets load');
+ finish();await pending;assert.equal(d.nativeZoom,1);
+});
 test('recorder bytes retain numeric RNG and contain no redaction tokens',()=>{
  const source=readFileSync(new URL('./vfx-audit-demo.mjs',import.meta.url),'utf8');
  assert(!source.includes('****'));assert(source.includes(String(1013904223)));
