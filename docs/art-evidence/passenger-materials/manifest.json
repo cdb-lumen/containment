@@ -1,0 +1,1255 @@
+{
+  "baseCommit": "9f2f37a9b77dd44aef72296144feb26631c70091",
+  "scriptSha256": "f852ec480fa122d825872c6769070c2dae3a802cad8c3b5e1afe189433fd02b2",
+  "assetManifestSha256": "d09fca43f75116f103c876942aa1fd14faa71e788fe7596c404dd417b6658852",
+  "evidenceClass": "NOT INTEGRATED RUNTIME. Local Vite transform replaces only blockout rows with imported accepted-geometry material variants. Production room, floor, services blockout, lighting, high composer, HUD, actor and shipping camera retained. Deterministic inactive encounter, teleported legal inspection positions, no gameplay/performance acceptance. Full-room/closeup are diagnostic projections, not shipping framing. Material variants share frozen camera/light/VFX time.",
+  "transformHashes": {
+    "main": "22fc3c79b5331d5a2f300863c234441357fbab5a4e6dabfcdcfecb3f1acb9a94",
+    "authored": "b8660e80e564f00767092843d22125101286459788150611605487baf204849f"
+  },
+  "results": [
+    {
+      "file": "desktop-opening-neutral.png",
+      "name": "desktop",
+      "view": "opening",
+      "stage": "neutral",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "triangles": 168718,
+        "drawCalls": 120,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "62d49d9448bb4b6b3cc74a18b919bd559ce32965360585e2c6c52e1e980a9234",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-opening-material.png",
+      "name": "desktop",
+      "view": "opening",
+      "stage": "material",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "triangles": 324026,
+        "drawCalls": 204,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "f6cc9dcd6552c99bdfd840ec3b52236b68a3f06add7cc8b05927a858613c42fb",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-opening-wear.png",
+      "name": "desktop",
+      "view": "opening",
+      "stage": "wear",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "triangles": 479334,
+        "drawCalls": 288,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "7fac08b3a3fb9e86bd79a3950614ec58462ea71190a504b7809031a3a6cfea13",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-F1-neutral.png",
+      "name": "desktop",
+      "view": "F1",
+      "stage": "neutral",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "triangles": 232654,
+        "drawCalls": 125,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "12b6b36e1bd2cf247896a51d58e2e128d02a6a687b221c5b93e194ec7ab3acb3",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-F1-material.png",
+      "name": "desktop",
+      "view": "F1",
+      "stage": "material",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "triangles": 387962,
+        "drawCalls": 209,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "a8939e65a664c427385719181468af244f975b7505655c77efa4473d1ab7a2b9",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-F1-wear.png",
+      "name": "desktop",
+      "view": "F1",
+      "stage": "wear",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "triangles": 543270,
+        "drawCalls": 293,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "52579fdb89f1d8d9d89b08a5ea2faf5efb004b2ec2fa6daf889373553b5c2c8c",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-south-loop-neutral.png",
+      "name": "desktop",
+      "view": "south-loop",
+      "stage": "neutral",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            33.57587199468071
+          ],
+          "focus": [
+            18.75,
+            0,
+            14.575871994680709
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "triangles": 233950,
+        "drawCalls": 137,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "ed6f258d8dc400d0c61b977edb058378077a96e39a070f3dc3015d024b23fae1",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-south-loop-material.png",
+      "name": "desktop",
+      "view": "south-loop",
+      "stage": "material",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            33.57587199468071
+          ],
+          "focus": [
+            18.75,
+            0,
+            14.575871994680709
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "triangles": 389906,
+        "drawCalls": 227,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "a9ddcfc2a2aaa6fc141726bb4cbd9630c7378c402f0e44baf796ccb2e36caff9",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-south-loop-wear.png",
+      "name": "desktop",
+      "view": "south-loop",
+      "stage": "wear",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            33.57587199468071
+          ],
+          "focus": [
+            18.75,
+            0,
+            14.575871994680709
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "triangles": 545862,
+        "drawCalls": 317,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "b4624282b35ca801fad61d1d3ba254fd6dce88728c741c368c02baaf52470025",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-full-room-neutral.png",
+      "name": "desktop",
+      "view": "full-room",
+      "stage": "neutral",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.177689428684623,
+          "bottom": -13.817623071315378
+        },
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "triangles": 233950,
+        "drawCalls": 137,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "50b22db9caea448ce65138f1efbe71f16c11fab038e7f18eb9c1050d2266fe6e",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-full-room-material.png",
+      "name": "desktop",
+      "view": "full-room",
+      "stage": "material",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.177689428684623,
+          "bottom": -13.817623071315378
+        },
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "triangles": 389906,
+        "drawCalls": 227,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "acb3e8f153553c46cee3390657e4560707f8b495a716e67dd750fec0492f2c5f",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-full-room-wear.png",
+      "name": "desktop",
+      "view": "full-room",
+      "stage": "wear",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.177689428684623,
+          "bottom": -13.817623071315378
+        },
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "triangles": 545862,
+        "drawCalls": 317,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "301b85fad1273a145e28a706aa8f317727c704a970eee287fe733c733fad5cd6",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-closeup-neutral.png",
+      "name": "desktop",
+      "view": "closeup",
+      "stage": "neutral",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            13.125,
+            26.5,
+            28.625
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            12.924128005319291
+          ],
+          "left": -4.977777777777778,
+          "right": 4.977777777777778,
+          "top": 3.5,
+          "bottom": -3.5
+        },
+        "player": {
+          "x": 420,
+          "y": 400
+        },
+        "triangles": 232654,
+        "drawCalls": 125,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "644e36fdf1b850a587bad3c40c35811690046333f33d54839ec1e362d5664098",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-closeup-material.png",
+      "name": "desktop",
+      "view": "closeup",
+      "stage": "material",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            13.125,
+            26.5,
+            28.625
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            12.924128005319291
+          ],
+          "left": -4.977777777777778,
+          "right": 4.977777777777778,
+          "top": 3.5,
+          "bottom": -3.5
+        },
+        "player": {
+          "x": 420,
+          "y": 400
+        },
+        "triangles": 387962,
+        "drawCalls": 209,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "a13d6d50ae84cd808eae84fb9e887aa69e25955476be1ddf6ea1bdc225a98462",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "desktop-closeup-wear.png",
+      "name": "desktop",
+      "view": "closeup",
+      "stage": "wear",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            13.125,
+            26.5,
+            28.625
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            12.924128005319291
+          ],
+          "left": -4.977777777777778,
+          "right": 4.977777777777778,
+          "top": 3.5,
+          "bottom": -3.5
+        },
+        "player": {
+          "x": 420,
+          "y": 400
+        },
+        "triangles": 543270,
+        "drawCalls": 293,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "be5d61938c14919cbb5a61c3d6feff787bae7970b797a3032f37929f23e95e7b",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-opening-neutral.png",
+      "name": "portrait",
+      "view": "opening",
+      "stage": "neutral",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "triangles": 168718,
+        "drawCalls": 120,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "68f10a59bec3a3c32711f660ee47cc5f6129f9a92a2188a111b1dec9c37f52d5",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-opening-material.png",
+      "name": "portrait",
+      "view": "opening",
+      "stage": "material",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "triangles": 324026,
+        "drawCalls": 204,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "5e24aa163b7dc6b3dde309284e6e90064b32ce30efff527d56725f6901ebaef7",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-opening-wear.png",
+      "name": "portrait",
+      "view": "opening",
+      "stage": "wear",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "triangles": 479334,
+        "drawCalls": 288,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "f1caff8f2393e7140f5429e10acd497c924ba445e28c20662759703a454a0c79",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-F1-neutral.png",
+      "name": "portrait",
+      "view": "F1",
+      "stage": "neutral",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "triangles": 232654,
+        "drawCalls": 125,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "63abaf451d4b4c33163c899613368a41e4281fbbf67e63fec60c004edd7efeec",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-F1-material.png",
+      "name": "portrait",
+      "view": "F1",
+      "stage": "material",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "triangles": 387962,
+        "drawCalls": 209,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "2eccea290b5acd8a17f1538ca8b099e4932bbedb8665e01204ed93d6c00be197",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-F1-wear.png",
+      "name": "portrait",
+      "view": "F1",
+      "stage": "wear",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "triangles": 543270,
+        "drawCalls": 293,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "a3dbac37c8d911204abb2c1040ef2f313d2a19d658f54fa54eb888d817e977ce",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-south-loop-neutral.png",
+      "name": "portrait",
+      "view": "south-loop",
+      "stage": "neutral",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "triangles": 232654,
+        "drawCalls": 125,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "fcb465ed971b031af05625a37389caf9099ecd9343e13e89539aa25d60393b8d",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-south-loop-material.png",
+      "name": "portrait",
+      "view": "south-loop",
+      "stage": "material",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "triangles": 387962,
+        "drawCalls": 209,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "3fc688acf1e768f74d3f865b0be466f28d3bc325015b6a9a75c3e92977ad6517",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-south-loop-wear.png",
+      "name": "portrait",
+      "view": "south-loop",
+      "stage": "wear",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "triangles": 543270,
+        "drawCalls": 293,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "81a870e6e850b7ecb1f49fdd1e41fdc13df7817d2510a4c1f155197572e20afc",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-full-room-neutral.png",
+      "name": "portrait",
+      "view": "full-room",
+      "stage": "neutral",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "neutral",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 2,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 47.34034087099232,
+          "bottom": -44.98027451362307
+        },
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "triangles": 233302,
+        "drawCalls": 131,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "d76fbaa756a67b7b99daa1a4527b504b5c3fb993f319bfd8fe8aedad18ef0de1",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-full-room-material.png",
+      "name": "portrait",
+      "view": "full-room",
+      "stage": "material",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "material",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 47.34034087099232,
+          "bottom": -44.98027451362307
+        },
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "triangles": 389258,
+        "drawCalls": 221,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "bfe35314a3c90154f936671c2d2a106a39e45e8b0172f508557bc2fa2396c7eb",
+      "pixelReview": "pending"
+    },
+    {
+      "file": "portrait-full-room-wear.png",
+      "name": "portrait",
+      "view": "full-room",
+      "stage": "wear",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "variant": "wear",
+        "room": "passenger-vault",
+        "quality": "high",
+        "passengers": 16,
+        "carriers": 4,
+        "fixtureMeshes": 5,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.75,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 47.34034087099232,
+          "bottom": -44.98027451362307
+        },
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "triangles": 545214,
+        "drawCalls": 311,
+        "errors": [],
+        "contextLost": false,
+        "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "sha256": "231ee87c20e340bb29244fad928242414501742918b094519fc4c74d66f7f04c",
+      "pixelReview": "pending"
+    }
+  ],
+  "independentReview": "pending"
+}

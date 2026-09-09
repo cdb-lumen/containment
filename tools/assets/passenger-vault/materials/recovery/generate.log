@@ -1,0 +1,8 @@
+{
+  "status": "candidate, independent review pending, not runtime integrated",
+  "placed_triangles_all_families": 76050,
+  "wear_glb_bytes_all_families": 1658400,
+  "decoded_texture_bytes_with_mips": 2097152,
+  "whole_package_current_unique_material_signatures": 12,
+  "whole_package_material_budget_pass": false
+}

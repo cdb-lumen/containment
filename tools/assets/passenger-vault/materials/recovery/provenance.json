@@ -1,0 +1,25 @@
+{
+  "base_commit": "9f2f37a9b77dd44aef72296144feb26631c70091",
+  "python": "3.11.16",
+  "node": "v22.22.3",
+  "blender_import_version": "4.0.2, retained successful import log",
+  "reconciliation": "Previous asset receipt preserved. Current generator rerun, all asset bytes compared to previous receipt. Older screenshots remain unchanged; current capture reran from final script with inventory assertions.",
+  "sha256": {
+    "tools/assets/passenger-vault/materials.py": "2c9d60ad55240e34a9ea4befc78fc631fa69bf19df560f2e0194b51f2c4c5546",
+    "tools/assets/passenger-vault/material_scene.py": "408c07e708458fa4d4c7ab7a7f653973fcc07274ecccba046028441df04da157",
+    "tools/assets/passenger-vault/test_materials.py": "8ccb7fe5bdc9148e2c552e4bf1f8210a415fbd7352f67dd54cc5d8fefe85389a",
+    "tools/assets/passenger-vault/verify_material_candidate.py": "02f05860f77cc84a6db5a20eed564de42de3f798cba276245b623bb1fb296927",
+    "tools/assets/passenger-vault/materials/material-fixture.blend": "760c014feddf88dc97caf724be14a4d483ef82f8501c47a950933b843e2709bb",
+    "tools/assets/passenger-vault/materials/blender-import.json": "d3bf3523f783d72f1c93bd54d44a34fcd70829b50fd464b2e6875217338be585",
+    "tools/assets/passenger-vault/materials/blender-import.log": "ca7f4df942aef709284ba1605ef0e77a6f419c644dc8f8000bd2d4fb92f2b8d6",
+    "tools/assets/passenger-vault/materials/README.md": "ed9846af718250c82ad0fe03c1a405383b2084305c94a5a7cf4df913c3219145",
+    "public/assets/passenger-vault/materials/CREDITS.md": "45bbeed18419e2419736b54b26305cff6b0cc0f3164ac05d471dee6fb40476ed",
+    "scripts/passenger-material-evidence.mjs": "414dbe2d93bf34e71edeeb98c298bdcb71fb987af20f9d1a29b3ec2fbfb81c5f",
+    "public/assets/passenger-vault/materials/manifest.json": "2868457c3104a3d6044bee78b08499facc7c3f067c2f64695f5e9052139dedce",
+    "docs/art-evidence/passenger-materials/current/manifest.json": "686671c2cf5aad4e040a9c21572021c79d76936509208f56e2e27846e113b09a",
+    "docs/art-evidence/passenger-materials/manifest.json": "d97999e364baad31b78c347c9a16408b2d40dc5fa8a01b8c76ac2d71d3cbcde9",
+    "tools/assets/passenger-vault/materials/recovery/previous-asset-manifest.json": "d09fca43f75116f103c876942aa1fd14faa71e788fe7596c404dd417b6658852",
+    "package.json": "efd734f538542b8aa607063ebbb300508fdeefce63008f88b7123affed7e748c",
+    "package-lock.json": "e2b22163110e6e6d402c5b88c43409503a829e33c467ede47892e46ac2d87ea7"
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "schema": 1,
+  "status": "candidate, independent review pending, not runtime integrated",
+  "base_commit": "9f2f37a9b77dd44aef72296144feb26631c70091",
+  "source_sha256": {
+    "chamber.glb": "029a456996061b42355bff6f15a8ce274b9dbbeced00ea76f41fc972b7e8d840",
+    "distribution-north.glb": "7630daa1470f7890ef010ddd2da5ad03a6ec79e268a1576d529faf8b2c860602",
+    "distribution-south.glb": "fdc1fe47c2362a6d88730fbc82f3a8ddf34e74882a7a78efc9f0d30835d2df2a",
+    "monitor-north.glb": "a2a08ac0d204509f2ade2d71c81fa964bf9199e2951c0e8bd831c1e09bacae60",
+    "monitor-south.glb": "16ed2c3dce7fef41ebc7acb0c701cf41c4cb6b67b5e4198b723e1f32c0195076",
+    "row-carrier.glb": "9e8610aa0de331ad527c26a09752b439bf34935e4c9bb448e3de09138416c11b",
+    "service-finish.glb": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6"
+  },
+  "source_script_sha256": "ed304e0b2230b1bcfc3a5d63dce1305f6a3a9ed3264a3c153534a52410c91d0d",
+  "method": "Append UV/PNG buffers and assign materials only; original POSITION/NORMAL/indices/nodes preserved byte-for-value. Deterministic stdlib PNG encoding.",
+  "material_names": [
+    "PV_shell",
+    "PV_carrier",
+    "PV_metal",
+    "PV_matte_gasket",
+    "PV_live_cyan"
+  ],
+  "shared_materials_candidate": 5,
+  "remaining_material_slots": 3,
+  "whole_package_current_unique_material_signatures": 12,
+  "whole_package_material_budget_pass": false,
+  "material_budget_note": "Five reusable candidate materials. Legacy other-family neutral palettes are not consolidated by this slice; whole-room 8-material gate remains open.",
+  "assignments": {
+    "chamber": {
+      "chamber_lower_pan": 0,
+      "chamber_cavity_wall": 0,
+      "chamber_inset_gasket": 3,
+      "chamber_closed_domed_lid": 0,
+      "chamber_internal_bed": 3,
+      "chamber_cradle_-0.85": 1,
+      "chamber_cradle_0.85": 1,
+      "chamber_seal_clamp_-0.59_-0.72": 2,
+      "chamber_seal_clamp_-0.59_0.72": 2,
+      "chamber_seal_clamp_0.59_-0.72": 2,
+      "chamber_seal_clamp_0.59_0.72": 2,
+      "chamber_working_face_status_recess": 3,
+      "chamber_working_face_live_relief_0": 4,
+      "chamber_working_face_live_relief_1": 4,
+      "chamber_working_face_live_relief_2": 4,
+      "chamber_working_face_live_relief_3": 4,
+      "chamber_working_face_live_relief_4": 4,
+      "chamber_working_face_live_relief_5": 4,
+      "chamber_lid_status_recess": 3,
+      "chamber_upward_live_relief_0": 4,
+      "chamber_upward_live_relief_1": 4,
+      "chamber_upward_live_relief_2": 4,
+      "chamber_upward_live_relief_3": 4,
+      "chamber_upward_live_relief_4": 4,
+      "chamber_upward_live_relief_5": 4,
+      "chamber_rear_union_-0.25": 2,
+      "chamber_rear_union_0.25": 2
+    },
+    "row-carrier": {
+      "carrier_continuous_deck_plinth": 1,
+      "carrier_rear_manifold": 1,
+      "carrier_rear_service_panel_0": 1,
+      "carrier_supply_return_0_-0.25": 2,
+      "carrier_supply_return_0_0.25": 2,
+      "carrier_rear_service_panel_1": 1,
+      "carrier_supply_return_1_-0.25": 2,
+      "carrier_supply_return_1_0.25": 2,
+      "carrier_rear_service_panel_2": 1,
+      "carrier_supply_return_2_-0.25": 2,
+      "carrier_supply_return_2_0.25": 2,
+      "carrier_rear_service_panel_3": 1,
+      "carrier_supply_return_3_-0.25": 2,
+      "carrier_supply_return_3_0.25": 2,
+      "carrier_sealed_infill_0": 1,
+      "carrier_sealed_infill_1": 1,
+      "carrier_sealed_infill_2": 1,
+      "carrier_sealed_infill_3": 1,
+      "carrier_sealed_infill_4": 1,
+      "carrier_working_toe_face": 1
+    }
+  },
+  "triangles": {
+    "chamber": 3620,
+    "distribution-north": 4860,
+    "distribution-south": 4860,
+    "monitor-north": 684,
+    "monitor-south": 684,
+    "row-carrier": 1504,
+    "service-finish": 1026
+  },
+  "placed_triangles_all_families": 76050,
+  "wear_glb_bytes_all_families": 1658400,
+  "decoded_texture_bytes_with_mips": 2097152,
+  "texture_budget_note": "One stage, six RGBA8 allocations including mip chain, shared across both GLBs by content during future integration. Without inter-GLB sharing double this value. Neutral/material/wear are alternative presentations, not simultaneous shipping loads.",
+  "textures": {
+    "material-shell-basecolor.png": {
+      "sha256_rgb": "6c694ae52739d504b4931dd4ea27ee46761093abcdca12445644ef8cc069edc3",
+      "color_space": "sRGB",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "RGB"
+    },
+    "material-shell-orm.png": {
+      "sha256_rgb": "5f799b0e36bc812ff65548377351f4bcb15fbe855cc256a11ffe14a54fba3755",
+      "color_space": "linear Non-Color",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "R=occlusion 1, G=roughness, B=metallic"
+    },
+    "material-carrier-basecolor.png": {
+      "sha256_rgb": "cef693c7adcce341e3b80cd4ff61bc3e88a31b70514cb3f4406136e806e683f1",
+      "color_space": "sRGB",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "RGB"
+    },
+    "material-carrier-orm.png": {
+      "sha256_rgb": "b0f62acd5462fddc79cd02de06ad8ff2f6e1a13567b9bf5700250c607f20155a",
+      "color_space": "linear Non-Color",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "R=occlusion 1, G=roughness, B=metallic"
+    },
+    "material-metal-basecolor.png": {
+      "sha256_rgb": "206e8ce58255799fb7f50f863e93a4e51ea7e8fe36e2f94566f18e14f202dffd",
+      "color_space": "sRGB",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "RGB"
+    },
+    "material-metal-orm.png": {
+      "sha256_rgb": "20062994f84d7b3345320252182511d08fbf83d31f8586b78fc970d1b5811238",
+      "color_space": "linear Non-Color",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "R=occlusion 1, G=roughness, B=metallic"
+    },
+    "wear-shell-basecolor.png": {
+      "sha256_rgb": "ff1469bbadaf89834cad5a2d997cdb9db01fd2e8b80ec4047044bf3bb8e64e77",
+      "color_space": "sRGB",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "RGB"
+    },
+    "wear-shell-orm.png": {
+      "sha256_rgb": "6d11f0fc50203ea2ba82c38984669d3ce6de2d753e541cab9a69a72dde7c4832",
+      "color_space": "linear Non-Color",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "R=occlusion 1, G=roughness, B=metallic"
+    },
+    "wear-carrier-basecolor.png": {
+      "sha256_rgb": "f1427f226bc7bad5353d3c207f62b9e91d60623064960bef07648d5462ae5a60",
+      "color_space": "sRGB",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "RGB"
+    },
+    "wear-carrier-orm.png": {
+      "sha256_rgb": "7ce79218e8de7f0305d33aa15eb50cafabbed89afab40b7e93fb8ace27447516",
+      "color_space": "linear Non-Color",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "R=occlusion 1, G=roughness, B=metallic"
+    },
+    "wear-metal-basecolor.png": {
+      "sha256_rgb": "e33f11f28e9d693dfb664c26f61494e36bc5ed4ab896f554445b561dee827728",
+      "color_space": "sRGB",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "RGB"
+    },
+    "wear-metal-orm.png": {
+      "sha256_rgb": "d04e9c533349f7cb9f6b2ba9dc56b2b3414772a715b32ceaf44b5806fa45692e",
+      "color_space": "linear Non-Color",
+      "size": [
+        256,
+        256
+      ],
+      "channels": "R=occlusion 1, G=roughness, B=metallic"
+    }
+  },
+  "files": {
+    "material-carrier-basecolor.png": {
+      "bytes": 21543,
+      "sha256": "e7b2947b432d19d97ef6ee37cab2fdbd56db3443f3a73f2576355e8d3208f4d6"
+    },
+    "material-carrier-orm.png": {
+      "bytes": 32885,
+      "sha256": "023ba1605595f4debe86b96b4eef248b1971126a9235bf4bb7e1af49ca55e643"
+    },
+    "material-chamber.glb": {
+      "bytes": 441292,
+      "sha256": "026199cb08d1cfdac9e6440ca863b792b62d5d3484ee61f81bf9de81e074bab0"
+    },
+    "material-metal-basecolor.png": {
+      "bytes": 21347,
+      "sha256": "b3851586be07b87e26a62d295326e88abc7fcb6623a16514fbc65ad7862f1b85"
+    },
+    "material-metal-orm.png": {
+      "bytes": 33870,
+      "sha256": "727be5aacbc81ce4f696efd0214636277b4a29609b8d842af240182123aab204"
+    },
+    "material-row-carrier.glb": {
+      "bytes": 286016,
+      "sha256": "02ae3bdff731fb5744abc319fae521c57763e2a64f3893cc4e352e2c625d8ce2"
+    },
+    "material-shell-basecolor.png": {
+      "bytes": 12326,
+      "sha256": "406a95b073ff4c78770fe8701291eb5760eefeb2015c9de5da87f02f2f7b18f9"
+    },
+    "material-shell-orm.png": {
+      "bytes": 27358,
+      "sha256": "6216faa7466e9b847046d6283a135e60e18cf73eda6fdfb25cc964e3396b049a"
+    },
+    "neutral-chamber.glb": {
+      "bytes": 290632,
+      "sha256": "78195cff2463aa7a1e896673376f9dbd77016d2b2f3216cf595251d6e82af920"
+    },
+    "neutral-row-carrier.glb": {
+      "bytes": 135364,
+      "sha256": "42ad4cf1f39dc2b3c2459442a5031200b64ebc0a8745ea28626fdc878ae5d135"
+    },
+    "wear-carrier-basecolor.png": {
+      "bytes": 22879,
+      "sha256": "173f9220e6443436f81a6eef38ce541d0366d1d90d83b75045aa360972782253"
+    },
+    "wear-carrier-orm.png": {
+      "bytes": 36757,
+      "sha256": "6a6662a7685885ba68da7ae4f377600903a2aea454bb763ae707a9e94383fb31"
+    },
+    "wear-chamber.glb": {
+      "bytes": 468064,
+      "sha256": "49c5908ba66360679a44c1e2d1b70bbbd22ad51a5dbb80e0bff588be7cb006f5"
+    },
+    "wear-metal-basecolor.png": {
+      "bytes": 23779,
+      "sha256": "25f74c69f2eac180cf773c24df91f81403a0282f2b10636ce0eb3d27a0a995b1"
+    },
+    "wear-metal-orm.png": {
+      "bytes": 43693,
+      "sha256": "14454be37dd7a08cdb4fd473c8b4978b0ce47c2eabcaf6c9e2db94eef189c13e"
+    },
+    "wear-row-carrier.glb": {
+      "bytes": 312788,
+      "sha256": "2776f2ca921e9d78d573ea200577c54a11bb3104e8d2b0c6e0a8e84b85464c35"
+    },
+    "wear-shell-basecolor.png": {
+      "bytes": 13489,
+      "sha256": "9d38f2c93dd02eb690a0f13d93d6a44fa10c2c7a8906e19b8e3c4a720f87e74a"
+    },
+    "wear-shell-orm.png": {
+      "bytes": 35528,
+      "sha256": "6c877f543990db60eef3376f110b51337426505406e98aee3022afbc1fcf055d"
+    }
+  }
+}
