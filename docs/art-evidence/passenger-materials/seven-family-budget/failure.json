@@ -1,0 +1,6 @@
+{
+  "error": "Error: page.evaluate: Error: Merge failed monitor-north::2749998e-b024-43de-a509-d95aa048e1cc\n    at Object.stage (http://127.0.0.1:46483/assets/index-D7QEZzye.js:4355:19037)\n    at async <anonymous>:316:30",
+  "errors": [
+    "THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index 1. Make sure all geometries have the same number of attributes."
+  ]
+}
