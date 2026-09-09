@@ -1,0 +1,27 @@
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+[
+  {
+    "variant": "north",
+    "panel_bulkhead_overlap_metres": [
+      0.029999971389770508,
+      0.03999999910593033,
+      0.8099999725818634
+    ],
+    "construction_gate": "failed"
+  },
+  {
+    "variant": "south",
+    "panel_bulkhead_overlap_metres": [
+      0.029999971389770508,
+      0.03999999910593033,
+      0.5600000023841858
+    ],
+    "construction_gate": "failed"
+  }
+]
+Blender 4.0.2
+
+Blender quit

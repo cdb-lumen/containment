@@ -1,0 +1,68 @@
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+MONITOR_FAULTS [{"variant": "north", "fault": "display raised 1mm", "rejected": "support display_bezel/operating_display gap 0.001000m"}, {"variant": "north", "fault": "pack raised 100mm", "rejected": "support electronics_tray_0/electronics_pack_0 gap 0.099999m"}, {"variant": "north", "fault": "lower joint overlap 80mm", "rejected": "joint gap/overlap side_south/back_wall: 0.080000m"}, {"variant": "north", "fault": "upper joint overlap 80mm", "rejected": "joint gap/overlap instrument_cheek_south/rear_service_cover: 0.080000m"}, {"variant": "north", "fault": "lower joint separated 10mm", "rejected": "joint gap/overlap side_south/back_wall: -0.010000m"}, {"variant": "north", "fault": "upper joint separated 10mm", "rejected": "joint gap/overlap instrument_cheek_south/rear_service_cover: -0.010000m"}, {"variant": "north", "fault": "inaccessible pack", "rejected": "west maintenance reach {'operating_display': 0.7250000238418579, 'electronics_pack_0': 1.324999988079071, 'electronics_pack_1': 0.7250000238418579}"}, {"variant": "north", "fault": "buried display", "rejected": "buried fitting operating_display"}, {"variant": "north", "fault": "floating base", "rejected": "envelope or scale mismatch"}, {"variant": "north", "fault": "floating worktop", "rejected": "support contact side_north"}, {"variant": "north", "fault": "missing support", "rejected": "exact inventory"}, {"variant": "north", "fault": "buried latch", "rejected": "buried fitting latch_0"}, {"variant": "north", "fault": "inset service panel", "rejected": "closed service face"}, {"variant": "north", "fault": "scale mismatch", "rejected": "envelope or scale mismatch"}, {"variant": "north", "fault": "unexpected mesh", "rejected": "exact inventory"}, {"variant": "south", "fault": "display raised 1mm", "rejected": "support display_bezel/operating_display gap 0.001000m"}, {"variant": "south", "fault": "pack raised 100mm", "rejected": "support electronics_tray_0/electronics_pack_0 gap 0.099999m"}, {"variant": "south", "fault": "lower joint overlap 80mm", "rejected": "joint gap/overlap side_south/back_wall: 0.080000m"}, {"variant": "south", "fault": "upper joint overlap 80mm", "rejected": "joint gap/overlap instrument_cheek_south/rear_service_cover: 0.080000m"}, {"variant": "south", "fault": "lower joint separated 10mm", "rejected": "joint gap/overlap side_south/back_wall: -0.010000m"}, {"variant": "south", "fault": "upper joint separated 10mm", "rejected": "joint gap/overlap instrument_cheek_south/rear_service_cover: -0.010000m"}, {"variant": "south", "fault": "inaccessible pack", "rejected": "west maintenance reach {'operating_display': 0.7250000238418579, 'electronics_pack_0': 1.324999988079071, 'electronics_pack_1': 0.7250000238418579}"}, {"variant": "south", "fault": "buried display", "rejected": "buried fitting operating_display"}, {"variant": "south", "fault": "floating base", "rejected": "envelope or scale mismatch"}, {"variant": "south", "fault": "floating worktop", "rejected": "support contact side_north"}, {"variant": "south", "fault": "missing support", "rejected": "exact inventory"}, {"variant": "south", "fault": "buried latch", "rejected": "buried fitting latch_0"}, {"variant": "south", "fault": "inset service panel", "rejected": "closed service face"}, {"variant": "south", "fault": "scale mismatch", "rejected": "envelope or scale mismatch"}, {"variant": "south", "fault": "unexpected mesh", "rejected": "exact inventory"}]
+Blender 4.0.2
+
+Blender quit

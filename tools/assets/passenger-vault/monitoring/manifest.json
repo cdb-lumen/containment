@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "gate": "source-only geometry candidate; independent review pending",
+  "blender": "4.0.2",
+  "validation": {
+    "north": {
+      "bounds_blender_m": [
+        [
+          -1.875,
+          -1.25,
+          0.0
+        ],
+        [
+          1.875,
+          1.25,
+          1.2100000381469727
+        ]
+      ],
+      "mesh_objects": 22,
+      "triangles": 264,
+      "deck_probes": 9,
+      "support_contacts": 12,
+      "exposed_fittings": 11,
+      "closed_front_probes": 18,
+      "repair_checks": {
+        "butt_joints": 4,
+        "display_support_samples": 18,
+        "pack_support_samples": 4,
+        "west_reach_m": {
+          "operating_display": 0.7250000238418579,
+          "electronics_pack_0": 0.7250000238418579,
+          "electronics_pack_1": 0.7250000238418579
+        },
+        "reference_height_m": 2.05,
+        "maintenance_edge_x": -1.875,
+        "operator_centres_unchanged": [
+          [
+            1000,
+            280
+          ],
+          [
+            1000,
+            600
+          ]
+        ]
+      }
+    },
+    "south": {
+      "bounds_blender_m": [
+        [
+          -1.875,
+          -1.25,
+          0.0
+        ],
+        [
+          1.875,
+          1.25,
+          0.9599999785423279
+        ]
+      ],
+      "mesh_objects": 22,
+      "triangles": 264,
+      "deck_probes": 9,
+      "support_contacts": 12,
+      "exposed_fittings": 11,
+      "closed_front_probes": 18,
+      "repair_checks": {
+        "butt_joints": 4,
+        "display_support_samples": 18,
+        "pack_support_samples": 4,
+        "west_reach_m": {
+          "operating_display": 0.7250000238418579,
+          "electronics_pack_0": 0.7250000238418579,
+          "electronics_pack_1": 0.7250000238418579
+        },
+        "reference_height_m": 2.05,
+        "maintenance_edge_x": -1.875,
+        "operator_centres_unchanged": [
+          [
+            1000,
+            280
+          ],
+          [
+            1000,
+            600
+          ]
+        ]
+      }
+    },
+    "room_context": {
+      "carriers": 4,
+      "chambers": 16,
+      "routes": 12,
+      "monitors": [
+        {
+          "id": "MN",
+          "meshes": 22,
+          "bounds_game": [
+            1040.0,
+            240.0,
+            1160.0,
+            320.0
+          ],
+          "height_game": 38.720001220703125,
+          "west_direction": [
+            -1,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "MS",
+          "meshes": 22,
+          "bounds_game": [
+            1040.0,
+            560.0,
+            1160.0,
+            640.0
+          ],
+          "height_game": 30.719999313354492,
+          "west_direction": [
+            -1,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "files": {
+    "public/assets/passenger-vault/monitor-north.glb": {
+      "sha256": "fd190e6b37bb85fd93430fbe467bab0b87666891a136bd362bcc54fb75a97c2a",
+      "bytes": 32092
+    },
+    "public/assets/passenger-vault/monitor-south.glb": {
+      "sha256": "825d7808c751c29a5891707e25b250b34856f8adfe8f169217eb026e88259b83",
+      "bytes": 32132
+    },
+    "tools/assets/passenger-vault/monitoring/north-closed.png": {
+      "sha256": "dae48315e04e246f5bb9c2343232045efdbf5598f0d8b57600b06a7790becc69",
+      "bytes": 611322
+    },
+    "tools/assets/passenger-vault/monitoring/north-cutaway.png": {
+      "sha256": "6848adf1970c76b69f1df2f0ff85d11ed37659b013f7ed6bbc5e73b33fb47c07",
+      "bytes": 674304
+    },
+    "tools/assets/passenger-vault/monitoring/room-placement.png": {
+      "sha256": "2f48a4a8b6cc96101186f671cb25e5b50b58e7a8df123b655e62f2d1b0cea537",
+      "bytes": 760660
+    },
+    "tools/assets/passenger-vault/monitoring/south-closed.png": {
+      "sha256": "ddd5714a009fc70659cc1904502f71a288fe9545e8ba97845f6675e9decc9065",
+      "bytes": 588052
+    },
+    "tools/assets/passenger-vault/monitoring/south-cutaway.png": {
+      "sha256": "23d87f136adece245cf35f76166a55eff2338911260a336663f2c772af0c06f3",
+      "bytes": 653102
+    },
+    "tools/assets/passenger-vault/monitoring/north.blend": {
+      "sha256": "6d031719bb7a67fe734ec3d2bcd9ceb542428e44ef14cdb2c14e48d21ef8b858",
+      "bytes": 1019964
+    },
+    "tools/assets/passenger-vault/monitoring/south.blend": {
+      "sha256": "cbe2138c8917e9e6fa173d9963cc31731afc8c502c361b6a17a99d7a278ad848",
+      "bytes": 1213764
+    }
+  }
+}
