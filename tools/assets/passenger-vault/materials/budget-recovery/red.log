@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_complete_exported_package_material_ceiling (__main__.MaterialBudget.test_complete_exported_package_material_ceiling)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_material_budget.py", line 49, in test_complete_exported_package_material_ceiling
+    self.assertLessEqual(len(signatures), 8, 'Whole package, not chamber/carrier alone')
+AssertionError: 12 not less than or equal to 8 : Whole package, not chamber/carrier alone
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)
