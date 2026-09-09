@@ -1,0 +1,106 @@
+$ python3 tools/assets/passenger-vault/test_service_finish_artifacts.py
+test_cut_connection (__main__.Contract.test_cut_connection) ... ok
+test_editable_source (__main__.Contract.test_editable_source) ... ok
+test_imported_contract (__main__.Contract.test_imported_contract) ... ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.283s
+
+OK
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_SOURCE {"context_meshes": 10, "editable_quads": true, "kit_meshes": 13, "objects": 23, "semantic_sha256": "9f84cc341124d2cadacdfa013c228ee666380a69bfaa62fe43324ce58d49c114"}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Blender 4.0.2
+Read blend: "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/service-finish/service-finish.blend"
+
+Blender quit
+
+..
+----------------------------------------------------------------------
+Ran 2 tests in 1.213s
+
+OK
+
+exit_code=0
+$ blender -b -t 2 --factory-startup --python-exit-code 1 --python /tmp/passenger-service-finish-clean-q6awl8iu/tools/assets/passenger-vault/test_service_finish.py -- --output-root /tmp/passenger-service-finish-clean-q6awl8iu
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_SOURCE {"context_meshes": 10, "editable_quads": true, "kit_meshes": 13, "objects": 23, "semantic_sha256": "9f84cc341124d2cadacdfa013c228ee666380a69bfaa62fe43324ce58d49c114"}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Blender 4.0.2
+Read blend: "/tmp/passenger-service-finish-clean-q6awl8iu/tools/assets/passenger-vault/service-finish/service-finish.blend"
+
+Blender quit
+test_cut_connection (__main__.Contract.test_cut_connection) ... ok
+test_editable_source (__main__.Contract.test_editable_source) ... ok
+test_imported_contract (__main__.Contract.test_imported_contract) ... ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.276s
+
+OK
+
+exit_code=0
+$ npx vitest run tests/unit/passengerBlockout.test.ts
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout
+
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  09:18:44
+   Duration  2.37s (transform 285ms, setup 0ms, import 375ms, tests 1.86s, environment 0ms)
+
+
+exit_code=0

@@ -1,0 +1,422 @@
+$ blender -t 6 --background --factory-startup --python-exit-code 1 --python /home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/service_finish.py -- --output-root /home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:25: SyntaxWarning: invalid escape sequence '\.'
+  regex_dot = re.compile("\.")
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:27: SyntaxWarning: invalid escape sequence '\]'
+  new_name = "".join([char for char in adjusted_name if char not in "!#$&'()*+,/:;<>?@[\]^`{|}~"])
+Blender 4.0.2
+Fra:1 Mem:11.84M (Peak 11.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_camera_envelope
+Fra:1 Mem:11.84M (Peak 11.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_A
+Fra:1 Mem:11.84M (Peak 11.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_B
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_D4
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_MN
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_A
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_A
+Fra:1 Mem:12.87M (Peak 12.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_B
+Fra:1 Mem:12.87M (Peak 12.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_B
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_C
+Fra:1 Mem:13.89M (Peak 13.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | wall_channel
+Fra:1 Mem:13.97M (Peak 13.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_C
+Fra:1 Mem:13.91M (Peak 13.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | console_south
+Fra:1 Mem:13.91M (Peak 13.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_south
+Fra:1 Mem:13.91M (Peak 13.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | console_north
+Fra:1 Mem:13.98M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:13.14M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:13.14M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:13.14M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:13.14M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:13.14M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:13.14M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:14.28M (Peak 14.28M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.19M, Peak:1.27M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Sample 0/4
+Fra:1 Mem:50.57M (Peak 50.57M) | Time:00:00.12 | Remaining:00:00.33 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 1/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.33 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 4/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.33 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Finished
+Saved: '/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/service-finish/top.png'
+Time: 00:00.41 (Saving: 00:00.07)
+
+Fra:1 Mem:13.86M (Peak 13.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_camera_envelope
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_C
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_D4
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_SN
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | wall_channel
+Fra:1 Mem:13.89M (Peak 13.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_A
+Fra:1 Mem:13.93M (Peak 13.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_B
+Fra:1 Mem:13.96M (Peak 13.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_B
+Fra:1 Mem:14.00M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_C
+Fra:1 Mem:13.92M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_C
+Fra:1 Mem:13.93M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | console_south
+Fra:1 Mem:13.95M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_north
+Fra:1 Mem:13.94M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_south
+Fra:1 Mem:13.96M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | console_north
+Fra:1 Mem:13.98M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:13.06M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:13.06M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:13.06M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:13.06M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:13.15M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:13.17M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:13.17M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:13.17M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:13.17M (Peak 14.00M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:13.17M (Peak 14.00M) | Time:00:00.00 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:13.17M (Peak 14.00M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:13.17M (Peak 14.00M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:13.28M (Peak 14.00M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:14.28M (Peak 14.28M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.19M, Peak:1.27M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Sample 0/4
+Fra:1 Mem:50.57M (Peak 50.57M) | Time:00:00.09 | Remaining:00:00.27 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 1/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.26 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 4/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.26 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Finished
+Saved: '/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/service-finish/oblique.png'
+Time: 00:00.33 (Saving: 00:00.06)
+
+09:07:26 | ERROR: Draco mesh compression is not available because library could not be found at /usr/bin/4.0/python/lib/python3.12/site-packages/libextern_draco.so
+09:07:26 | INFO: Starting glTF 2.0 export
+09:07:26 | INFO: Extracting primitive: feed_A
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: neck_A
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: feed_B
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: neck_B
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: feed_C
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: neck_C
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: feed_D4
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: neck_D4
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: header_north
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: header_south
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: console_north
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: console_south
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Extracting primitive: wall_channel
+09:07:26 | INFO: Primitives created: 2
+09:07:26 | INFO: Finished glTF 2.0 export in 0.016315460205078125 s
+
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+SERVICE_FINISH_BUILT {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+
+Blender quit
+
+$ blender -t 6 --background --factory-startup --python-exit-code 1 --python /home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_service_finish.py -- --output-root /home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout
+test_cut_connection (__main__.Contract.test_cut_connection) ... ok
+test_imported_contract (__main__.Contract.test_imported_contract) ... ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.252s
+
+OK
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Blender 4.0.2
+
+Blender quit
+
+$ blender -t 6 --background --factory-startup --python-exit-code 1 --python /tmp/passenger-service-finish-clean-b82aq8kk/tools/assets/passenger-vault/service_finish.py -- --output-root /tmp/passenger-service-finish-clean-b82aq8kk
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:25: SyntaxWarning: invalid escape sequence '\.'
+  regex_dot = re.compile("\.")
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:27: SyntaxWarning: invalid escape sequence '\]'
+  new_name = "".join([char for char in adjusted_name if char not in "!#$&'()*+,/:;<>?@[\]^`{|}~"])
+Blender 4.0.2
+Fra:1 Mem:11.84M (Peak 11.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_camera_envelope
+Fra:1 Mem:11.84M (Peak 11.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_B
+Fra:1 Mem:11.84M (Peak 11.84M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_C
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_D4
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_MS
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_A
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_A
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_B
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_B
+Fra:1 Mem:11.85M (Peak 11.85M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_C
+Fra:1 Mem:14.03M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_C
+Fra:1 Mem:13.94M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_D4
+Fra:1 Mem:13.91M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_D4
+Fra:1 Mem:13.91M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_south
+Fra:1 Mem:13.93M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | console_north
+Fra:1 Mem:13.98M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:13.06M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:13.06M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:13.06M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:13.06M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:13.14M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:13.14M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:13.14M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:13.14M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:13.14M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:13.14M (Peak 14.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:13.15M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:13.15M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:13.15M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:13.15M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:13.17M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:13.17M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:13.17M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:13.17M (Peak 14.03M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:13.17M (Peak 14.03M) | Time:00:00.00 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:13.17M (Peak 14.03M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:13.17M (Peak 14.03M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:13.28M (Peak 14.03M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:14.28M (Peak 14.28M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.19M, Peak:1.27M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Sample 0/4
+Fra:1 Mem:50.57M (Peak 50.57M) | Time:00:00.12 | Remaining:00:00.35 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 1/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.33 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 4/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.33 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Finished
+Saved: '/tmp/passenger-service-finish-clean-b82aq8kk/tools/assets/passenger-vault/service-finish/top.png'
+Time: 00:00.41 (Saving: 00:00.07)
+
+Fra:1 Mem:13.86M (Peak 13.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_camera_envelope
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_C
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_D4
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_SN
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | CONTEXT_reservation_MN
+Fra:1 Mem:13.87M (Peak 13.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_A
+Fra:1 Mem:13.88M (Peak 13.88M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_A
+Fra:1 Mem:13.88M (Peak 13.88M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_B
+Fra:1 Mem:13.90M (Peak 13.90M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | wall_channel
+Fra:1 Mem:13.91M (Peak 13.91M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_B
+Fra:1 Mem:13.90M (Peak 13.91M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_C
+Fra:1 Mem:13.89M (Peak 13.91M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | feed_D4
+Fra:1 Mem:13.89M (Peak 13.91M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | neck_D4
+Fra:1 Mem:13.91M (Peak 13.91M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | header_south
+Fra:1 Mem:13.95M (Peak 13.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | console_south
+Fra:1 Mem:13.98M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:13.06M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:13.15M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:13.17M (Peak 13.98M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.07M, Peak:0.10M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.19M, Peak:0.19M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing distribution
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:13.28M (Peak 13.98M) | Time:00:00.00 | Mem:0.27M, Peak:0.27M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:14.28M (Peak 14.28M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.19M, Peak:1.27M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:14.29M (Peak 14.29M) | Time:00:00.00 | Mem:1.27M, Peak:1.27M | Scene, ViewLayer | Sample 0/4
+Fra:1 Mem:50.57M (Peak 50.57M) | Time:00:00.10 | Remaining:00:00.28 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 1/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.27 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Sample 4/4
+Fra:1 Mem:66.68M (Peak 98.91M) | Time:00:00.27 | Mem:37.53M, Peak:37.53M | Scene, ViewLayer | Finished
+Saved: '/tmp/passenger-service-finish-clean-b82aq8kk/tools/assets/passenger-vault/service-finish/oblique.png'
+Time: 00:00.34 (Saving: 00:00.06)
+
+09:07:29 | ERROR: Draco mesh compression is not available because library could not be found at /usr/bin/4.0/python/lib/python3.12/site-packages/libextern_draco.so
+09:07:29 | INFO: Starting glTF 2.0 export
+09:07:29 | INFO: Extracting primitive: feed_A
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: neck_A
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: feed_B
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: neck_B
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: feed_C
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: neck_C
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: feed_D4
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: neck_D4
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: header_north
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: header_south
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: console_north
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: console_south
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Extracting primitive: wall_channel
+09:07:29 | INFO: Primitives created: 2
+09:07:29 | INFO: Finished glTF 2.0 export in 0.01607990264892578 s
+
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+SERVICE_FINISH_BUILT {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+
+Blender quit
+
+$ blender -t 6 --background --factory-startup --python-exit-code 1 --python /tmp/passenger-service-finish-clean-b82aq8kk/tools/assets/passenger-vault/test_service_finish.py -- --output-root /tmp/passenger-service-finish-clean-b82aq8kk
+test_cut_connection (__main__.Contract.test_cut_connection) ... ok
+test_imported_contract (__main__.Contract.test_imported_contract) ... ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.254s
+
+OK
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Blender 4.0.2
+
+Blender quit
+
+$ npx vitest run tests/unit/passengerBlockout.test.ts
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout
+
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  09:07:32
+   Duration  2.30s (transform 274ms, setup 0ms, import 361ms, tests 1.82s, environment 0ms)
+
+
+$ npm run build
+
+> containment-depth@2.0.0 build
+> tsc --noEmit && vite build
+
+vite v8.1.4 building client environment for production...
+[2K
+transforming...✓ 80 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.60 kB │ gzip:   0.39 kB
+dist/assets/index-Czxxj7s4.css   22.30 kB │ gzip:   6.11 kB
+dist/assets/index-zrI7huna.js   955.38 kB │ gzip: 262.64 kB
+
+✓ built in 363ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
