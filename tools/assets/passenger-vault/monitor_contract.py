@@ -41,14 +41,16 @@ def check(parts, variant):
     # centre. All serviced equipment lies within 0.75m of the west solid face.
     reaches={key:bounds([n[key]])[1][0]+1.875 for key in ['operating_display','electronics_pack_0','electronics_pack_1']}
     assert all(0<r<=.75 for r in reaches.values()),'west maintenance reach '+str(reaches)
-    # Direct west access to each pack after its recessed removable service
-    # panel is lifted inward. Check actual obstacles along the working rays.
+    # Direct west access with the assembly at its actual translated endpoint.
+    # Ray origins move inversely for moving trees; no geometry is omitted.
     for i,y in enumerate([-.605,.605]):
         z=(bounds([n[f'electronics_pack_{i}']])[0][2]+bounds([n[f'electronics_pack_{i}']])[1][2])/2
         hits=[]
         for key,t0 in t.items():
-            if key in {f'service_panel_{i}',f'latch_{i}',f'panel_seam_{i}'}:continue
-            q,_,_,dist=t0.ray_cast(Vector((-2,y,z)),Vector((1,0,0)))
+            origin=Vector((-2,y,z))
+            if key in {f'service_panel_{i}',f'latch_{i}',f'panel_seam_{i}'}:
+                origin-=Vector((.11,.90 if i==0 else -.90,0))
+            q,_,_,dist=t0.ray_cast(origin,Vector((1,0,0)))
             if q is not None:hits.append((dist,key))
         assert min(hits)[1]==f'electronics_pack_{i}','blocked west pack access'
     return dict(butt_joints=joints,display_support_samples=18,pack_support_samples=4,west_reach_m=reaches,reference_height_m=2.05,maintenance_edge_x=-1.875,operator_centres_unchanged=[[1000,280],[1000,600]])

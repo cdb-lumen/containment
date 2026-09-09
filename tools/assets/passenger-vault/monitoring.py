@@ -14,7 +14,7 @@ import room_fit
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
 HEIGHTS={'north':1.25,'south':1.0}
-NAMES={'deck_plinth','back_wall','side_north','side_south','central_bulkhead','service_worktop','instrument_wedge','operating_display','display_bezel','rear_service_cover','instrument_cheek_north','instrument_cheek_south',*[f'{p}_{i}' for p in ['service_panel','latch','panel_seam','electronics_tray','electronics_pack'] for i in range(2)]}
+NAMES={'service_sill','service_mullion','support_shelf','deck_plinth','back_wall','side_north','side_south','central_bulkhead','service_worktop','instrument_wedge','operating_display','display_bezel','rear_service_cover','instrument_cheek_north','instrument_cheek_south',*[f'{p}_{i}' for p in ['service_panel','latch','panel_seam','electronics_tray','electronics_pack'] for i in range(2)]}
 
 def wedge(name,x0,x1,y0,y1,z0,z1,thickness,material,bottom=None):
     # Constant vertical gauge, rising eastward toward the wall.
@@ -22,6 +22,39 @@ def wedge(name,x0,x1,y0,y1,z0,z1,thickness,material,bottom=None):
     if bottom is not None:v[:4]=[(x,y,bottom) for x,y,z in v[:4]]
     mesh=bpy.data.meshes.new(name);mesh.from_pydata(v,[],[(3,2,1,0),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)]);mesh.update()
     o=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(o);mesh.materials.append(material);return o
+
+def cell_mesh(name, axes, occupied, material):
+    # Boundary of occupied rectangular cells, shared interior faces omitted.
+    vertices0=[]; faces=[]; index={}
+    for cell in sorted(occupied):
+        for axis in range(3):
+            for sign in [-1,1]:
+                neighbor=list(cell);neighbor[axis]+=sign
+                if tuple(neighbor) in occupied:continue
+                other=[a for a in range(3) if a!=axis]
+                corners=[]
+                for u,v in [(0,0),(1,0),(1,1),(0,1)]:
+                    q=list(cell);q[axis]+=sign==1;q[other[0]]+=u;q[other[1]]+=v
+                    xyz=tuple(axes[a][q[a]] for a in range(3))
+                    if xyz not in index:index[xyz]=len(vertices0);vertices0.append(xyz)
+                    corners.append(index[xyz])
+                normal=1 if axis in [0,2] else -1
+                faces.append(corners if normal==sign else corners[::-1])
+    mesh=bpy.data.meshes.new(name);mesh.from_pydata(vertices0,[],faces);mesh.update()
+    o=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(o);mesh.materials.append(material);return o
+
+
+def hollow_panel(name,y,top,material):
+    axes=[[-1.85,-1.848,-1.812,-1.81],[y-.555,y-.553,y+.553,y+.555],[.21,.212,top-.012,top-.01]]
+    return cell_mesh(name,axes,{(x,y,z) for x in range(3) for y in range(3) for z in range(3) if (x,y,z)!=(1,1,1)},material)
+
+
+def front_fitting(name,y,z,material):
+    # Open pull/release loop, 56x31mm aperture, 20mm under-bar space.
+    axes=[[-1.875,-1.869,-1.849],[y-.04,y-.028,y+.028,y+.04],[z-.0275,z-.0155,z+.0155,z+.0275]]
+    cells={(x,y,z) for x in range(2) for y in range(3) for z in range(3) if y!=1 or (x==0 and z!=1)}
+    return cell_mesh(name,axes,cells,material)
+
 
 def author(variant):
     h=HEIGHTS[variant];top=h-.32
@@ -31,7 +64,10 @@ def author(variant):
     B('deck_plinth',(0,0,.06),(3.75,2.5,.12),seal)
     B('back_wall',(1.835,0,(top+.12)/2),(.08,2.5,top-.12))
     for n,y in [('north',1.21),('south',-1.21)]:B('side_'+n,(-.04,y,(top+.12)/2),(3.67,.08,top-.12))
-    B('central_bulkhead',(0,0,(top+.12)/2),(3.6,.08,top-.12),inside)
+    B('central_bulkhead',(.065,0,(top+.12)/2),(3.47,.08,top-.12),inside)
+    B('service_sill',(-1.83,0,.16),(.04,2.34,.08))
+    B('support_shelf',(-1.765,0,.205),(.15,2.34,.01),inside)
+    B('service_mullion',(-1.83,0,(top+.21)/2),(.04,.08,top-.21))
     B('service_worktop',(0,0,top+.04),(3.75,2.5,.08))
     # Broad wedge is structurally seated on the worktop, with a closed back.
     p.append(wedge('instrument_wedge',-1.875,-.95,-1.13,1.13,top+.12,h-.04,.04,shell))
@@ -44,9 +80,9 @@ def author(variant):
     p.append(wedge('display_bezel',-1.80,-1.08,-1.05,1.05,z(-1.80)+.018,z(-1.08)+.018,.018,seal))
     p.append(wedge('operating_display',-1.75,-1.15,-.94,.94,z(-1.75)+.030,z(-1.15)+.030,.012,inside))
     for i,y in enumerate([-.605,.605]):
-        B(f'service_panel_{i}',(-1.81,y,(top+.12)/2),(.08,1.21,top-.12))
-        B(f'panel_seam_{i}',(-1.855,y-.56,(top+.12)/2),(.012,.018,top-.2),seal)
-        B(f'latch_{i}',(-1.863,y,top-.16),(.024,.24,.055),seal)
+        p.append(hollow_panel(f'service_panel_{i}',y,top,shell))
+        B(f'panel_seam_{i}',(-1.855,y-.53,(top+.20)/2),(.012,.018,top-.26),seal)
+        p.append(front_fitting(f'latch_{i}',-1.06 if i==0 else 1.06,top-.16,seal))
         B(f'electronics_tray_{i}',(-1.1,y,.16),(1.4,1.04,.08),inside)
         # South uses a lower electronics enclosure, not a transform squash.
         ph=.36 if variant=='north' else .22
@@ -88,10 +124,10 @@ def validate(parts,variant):
         a=ray('deck_plinth',(x,y,2),(0,0,-1));b0=ray(name,(x,y,-1),(0,0,1));b1=ray(name,(x,y,2),(0,0,-1));c=ray('service_worktop',(x,y,-1),(0,0,1))
         assert abs(a.z-b0.z)<1e-5 and abs(b1.z-c.z)<1e-5,'support contact '+name;contacts+=2
     for i,y in enumerate([-.605,.605]):
-        for z0 in [.13,top/2,top-.01]:
-            for dy in [-.58,0,.58]:
+        for z0 in [.23,(top+.21)/2,top-.03]:
+            for dy in [-.53,0,.53]:
                 assert abs(ray(f'service_panel_{i}',(-3,y+dy,z0),(1,0,0)).x+1.85)<1e-5,'closed service face';closed+=1
-        first(f'latch_{i}',(-3,y,top-.16),(1,0,0));exposed+=1
+        first(f'latch_{i}',(-3,(-1.06 if i==0 else 1.06)-.034,top-.16),(1,0,0));exposed+=1
         a=ray('deck_plinth',(-1.4,y,2),(0,0,-1));b0=ray(f'electronics_tray_{i}',(-1.4,y,-1),(0,0,1))
         assert abs(a.z-b0.z)<1e-5,'tray support';contacts+=1
     slope=.16/.925
@@ -105,23 +141,33 @@ def validate(parts,variant):
         assert abs(a.z-b0.z)<.004,'instrument support';contacts+=1
     from monitor_contract import check
     repairs=check(parts,variant)
+    from monitor_panel_mesh_contract import check as mesh_check
+    repairs['panel_mesh']=mesh_check(parts,variant)
+    from test_monitor_panel_recovery import check_closure,check_path
+    bb={o.name:bounds([o]) for o in parts}
+    assert not check_closure(bb),check_closure(bb)
+    for i in range(2):assert not check_path(bb,i,h),check_path(bb,i,h)
     return dict(bounds_blender_m=b,mesh_objects=len(parts),triangles=triangles,deck_probes=deck,support_contacts=contacts,exposed_fittings=exposed,closed_front_probes=closed,repair_checks=repairs)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--output-root',type=Path,default=ROOT);args=ap.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+    ap=argparse.ArgumentParser();ap.add_argument('--geometry-only',action='store_true');ap.add_argument('--output-root',type=Path,default=ROOT);args=ap.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
     root=args.output_root.resolve();out=root/'tools/assets/passenger-vault/monitoring';public=root/'public/assets/passenger-vault';out.mkdir(parents=True,exist_ok=True);public.mkdir(parents=True,exist_ok=True)
     bpy.context.preferences.filepaths.save_version=0;report={}
     for variant in HEIGHTS:
         reset();parts=author(variant);validate(parts,variant);bpy.ops.wm.save_as_mainfile(filepath=str(out/f'{variant}.blend'));path=public/f'monitor-{variant}.glb';export(path,parts)
         reset();parts=load(path);report[variant]=validate(parts,variant)
+        if args.geometry_only:continue
         render(out/f'{variant}-closed.png',parts,(-6,-6,4),(0,0,.5),5.8,f'SOURCE ONLY | {variant} west-facing console | neutral imported GLB')
-        cut=[o for o in parts if o.name not in {'service_worktop','instrument_wedge','operating_display','display_bezel','side_south','service_panel_0','latch_0','panel_seam_0'}]
-        proxy_material=mat('SOURCE_scale_proxy',.65)
-        proxy=[box('SOURCE_torso',(-2.18,.60,1.38),(.30,.46,.70),proxy_material),box('SOURCE_head',(-2.18,.60,1.90),(.24,.26,.30),proxy_material)]
-        for y in [.46,.74]:proxy.append(box('SOURCE_leg',(-2.18,y,.515),(.24,.18,1.03),proxy_material))
-        proxy.append(rod('SOURCE_reach_dimension',(-1.875,-.95,1.5),(-1.15,-.95,1.5),.009,proxy_material))
-        for x in [-1.875,-1.15]:proxy.append(rod('SOURCE_dimension_tick',(x,-.95,1.45),(x,-.95,1.55),.009,proxy_material))
-        render(out/f'{variant}-cutaway.png',cut+proxy,(-6,-6,4),(0,0,.5),5.8,f'SOURCE ONLY | {variant} west service cutaway | 2.05m reference\nDisplay 1.88m wide x 0.60m deep; far edge / pack reach 0.725m\nTop / near side / one face hidden; proxy and dimension excluded from GLB')
+        before={o.name:bounds([o]) for o in parts}
+        moving={'service_panel_0','latch_0','panel_seam_0'}
+        for o in parts:
+            if o.name in moving:o.location+=Vector((.11,.90,0))
+        bpy.context.view_layer.update()
+        for o in parts:
+            if o.name not in moving:assert bounds([o])==before[o.name]
+        render(out/f'{variant}-cutaway.png',parts,(-7,-3,2.3),(-1.2,0,.5),4.4,f'SOURCE ONLY | {variant} ACTUAL supported open state\nPanel 0 translated +110mm x, +900mm y; all fixed geometry present\nContinuous hold required; limited one-hand service; no runtime acceptance')
+    if args.geometry_only:
+        print('MONITOR_GEOMETRY_ONLY '+json.dumps(report));return
     room=room_fit.assemble(root);prior=room_fit.validate(room);context=[o for o in bpy.data.objects if o.type=='MESH'];neutral=mat('source_room_clay',.32)
     context.append(box('SOURCE_deck',(18.75,-13.75,-.08),(35,25,.16),neutral))
     installed=[]

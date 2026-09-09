@@ -1,0 +1,6 @@
+
+> containment-depth@2.0.0 test
+> vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs && python3 tools/assets/passenger-vault/test_artifacts.py && python3 tools/assets/passenger-vault/test_room_fit_artifacts.py && python3 tools/assets/passenger-vault/test_distribution_artifacts.py && python3 tools/assets/passenger-vault/test_monitor_artifacts.py
+
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout

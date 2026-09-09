@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "clean_root": "/tmp/passenger-monitor-clean-64cajh8n",
+  "glb_hashes": 6,
+  "decoded_pngs": 5,
+  "manifest_files": 9,
+  "copied_sources_equal": 8,
+  "destructive_cases": 42,
+  "stale_provenance": []
+}

@@ -5,11 +5,16 @@ import math
 import struct
 import sys
 import unittest
+import subprocess
+import os
 from pathlib import Path
 ROOT=Path(sys.argv.pop(1)).resolve() if len(sys.argv)>1 else Path(__file__).resolve().parents[3]
-NAMES={'deck_plinth','back_wall','side_north','side_south','central_bulkhead','service_worktop','instrument_wedge','operating_display','display_bezel','rear_service_cover','instrument_cheek_north','instrument_cheek_south',*[f'{p}_{i}' for p in ['service_panel','latch','panel_seam','electronics_tray','electronics_pack'] for i in range(2)]}
+NAMES={'service_sill','service_mullion','support_shelf','deck_plinth','back_wall','side_north','side_south','central_bulkhead','service_worktop','instrument_wedge','operating_display','display_bezel','rear_service_cover','instrument_cheek_north','instrument_cheek_south',*[f'{p}_{i}' for p in ['service_panel','latch','panel_seam','electronics_tray','electronics_pack'] for i in range(2)]}
 
 class MonitorArtifacts(unittest.TestCase):
+    def test_imported_geometry_regression(self):
+        for script in ['test_monitor_geometry.py','test_monitor_panel_recovery.py']:
+            subprocess.run(['blender','-b','-t','2','--factory-startup','--python-exit-code','1','--python',str(ROOT/'tools/assets/passenger-vault'/script)],check=True,timeout=180,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'},stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     def test_exact_package(self):
         out=ROOT/'tools/assets/passenger-vault/monitoring';m=json.loads((out/'manifest.json').read_text())
         expected={f'public/assets/passenger-vault/monitor-{v}.glb' for v in ['north','south']}|{f'tools/assets/passenger-vault/monitoring/{v}.{ext}' for v in ['north','south'] for ext in ['blend']}|{f'tools/assets/passenger-vault/monitoring/{n}.png' for n in ['north-closed','north-cutaway','south-closed','south-cutaway','room-placement']}
@@ -21,8 +26,8 @@ class MonitorArtifacts(unittest.TestCase):
             self.assertEqual(raw[:4],b'glTF');self.assertEqual(struct.unpack_from('<II',raw,4),(2,len(raw)))
             length=struct.unpack_from('<I',raw,12)[0];doc=json.loads(raw[20:20+length]);binary=raw[28+length:]
             self.assertNotIn('images',doc);self.assertNotIn('animations',doc);self.assertEqual(len(doc['materials']),3)
-            self.assertEqual(len(doc['nodes']),22);self.assertEqual({n['name'] for n in doc['nodes']},NAMES)
-            self.assertEqual(len(doc['meshes']),22)
+            self.assertEqual(len(doc['nodes']),25);self.assertEqual({n['name'] for n in doc['nodes']},NAMES)
+            self.assertEqual(len(doc['meshes']),25)
             def accessor(index):
                 a=doc['accessors'][index];v=doc['bufferViews'][a['bufferView']];fmt={5126:'f',5123:'H',5125:'I'}[a['componentType']];count={'SCALAR':1,'VEC3':3}[a['type']];stride=v.get('byteStride',struct.calcsize('<'+fmt)*count);start=v.get('byteOffset',0)+a.get('byteOffset',0)
                 return [struct.unpack_from('<'+fmt*count,binary,start+i*stride) for i in range(a['count'])]
@@ -37,7 +42,7 @@ class MonitorArtifacts(unittest.TestCase):
             self.assertTrue(all(math.isfinite(c) for v in vertices for c in v))
             for axis,low,high in [(0,-1.875,1.875),(1,0,h),(2,-1.25,1.25)]:
                 self.assertAlmostEqual(min(v[axis] for v in vertices),low,places=5);self.assertAlmostEqual(max(v[axis] for v in vertices),high,places=5)
-            self.assertEqual(triangles,264);r=m['validation'][variant];self.assertEqual(r['triangles'],triangles)
+            self.assertEqual(triangles,684);r=m['validation'][variant];self.assertEqual(r['triangles'],triangles)
             self.assertEqual([r[k] for k in ['deck_probes','support_contacts','exposed_fittings','closed_front_probes']],[9,12,11,18])
         self.assertEqual([r['id'] for r in m['validation']['room_context']['monitors']],['MN','MS'])
         self.assertEqual(len(list(out.glob('*.png'))),5)

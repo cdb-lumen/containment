@@ -1,0 +1,15 @@
+Blender 4.0.2
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/monitor_panel_mesh_contract.py", line 50, in <module>
+    m.reset(); print(variant, check(m.load(root/f'public/assets/passenger-vault/monitor-{variant}.glb'),variant))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/monitor_panel_mesh_contract.py", line 19, in check
+    assert abs(volume-expected) < 1e-6, f'panel {i}: not a hollow 2mm skin'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: panel 0: not a hollow 2mm skin
+
+Error: script failed, file: 'tools/assets/passenger-vault/monitor_panel_mesh_contract.py', exiting.
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+
+Blender quit

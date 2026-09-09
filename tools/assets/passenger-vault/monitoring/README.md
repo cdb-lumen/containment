@@ -1,5 +1,11 @@
 # Monitoring pair repair handoff
 
+## Current construction review
+
+The current source-construction gate passes. See [construction final review](construction-final-review.md) and `construction-receipt.json` for the independently executed checks and exact accepted source-artifact hashes. Current exports have 25 meshes and 684 triangles each. Both `cutaway` PNGs now show actual supported panel-open states with all fixed geometry retained. They do not hide the top, display assembly or near side. Materials, runtime, browser and deploy acceptance remain open.
+
+The remainder of this document is the historical pre-recovery handoff. Its FAIL verdict, old counts, old cutaway description and previous logs are superseded for current artifacts by the construction review above, and retained here as history.
+
 Construction gate FAILED after independent re-review. [Final review](final-review.md) accepts the joint and support repairs, but service-panel opening remains unproven. The panel intersects the central bulkhead by 30 mm by 40 mm; removing it from a ray test does not prove an opening path. The parent independently reproduced that overlap in both GLBs. This package is preserved for recovery, not accepted equipment. Worker `9b8013f7b737` is paused after the bounded recovery failed. No materials, runtime or release acceptance.
 
 ## Repaired construction

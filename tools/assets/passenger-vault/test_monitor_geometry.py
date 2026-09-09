@@ -32,13 +32,19 @@ def main():
             'inset service panel':lambda p,n:setattr(n['service_panel_0'].location,'x',-1.5),
             'scale mismatch':lambda p,n:[setattr(o.scale,'z',.8) for o in p],
             'unexpected mesh':lambda p,n:p.append(n['deck_plinth']),
+            'missing sill':lambda p,n:p.remove(n['service_sill']),
+            'missing mullion':lambda p,n:p.remove(n['service_mullion']),
+            'missing bearing shelf':lambda p,n:p.remove(n['support_shelf']),
+            'lost bearing':lambda p,n:setattr(n['support_shelf'].location,'z',n['support_shelf'].location.z-.01),
+            'solid panel instead of hollow skin':lambda p,n:solidify(n['service_panel_0']),
+            'solid front fitting':lambda p,n:solidify(n['latch_0']),
         }
         for name,mutate in faults.items():
             p,n=fresh();mutate(p,n)
             try:m.validate(p,variant)
             except AssertionError as e:results.append(dict(variant=variant,fault=name,rejected=str(e)))
             else:raise AssertionError('fault escaped '+name)
-    assert len(results)==30
+    assert len(results)==42
     print('MONITOR_FAULTS '+json.dumps(results))
 def extend_east(o,delta):
     # Mutate imported vertices without changing inventory or overall envelope.
@@ -46,5 +52,12 @@ def extend_east(o,delta):
     for v in o.data.vertices:
         if abs(v.co.x-maximum)<1e-5:v.co.x+=delta
     o.data.update()
+
+def solidify(o):
+    import monitoring as m
+    lo,hi=m.bounds([o]);material=o.data.materials[0]
+    replacement=m.box('mutation',[(lo[a]+hi[a])/2 for a in range(3)],[hi[a]-lo[a] for a in range(3)],material)
+    o.data=replacement.data;o.matrix_world=replacement.matrix_world.copy()
+    bpy.data.objects.remove(replacement,do_unlink=True)
 
 if __name__=='__main__':main()

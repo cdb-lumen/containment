@@ -1,0 +1,102 @@
+{
+  "probes": [
+    {
+      "variant": "north",
+      "panel": 0,
+      "bare_path_failures": 0,
+      "grip_box_assumption_m": [
+        0.05,
+        0.1,
+        0.1
+      ],
+      "parked_grip_overlap_opposite_m": [
+        0.004999999999999893,
+        0.10000000000000009,
+        0.10000000000000009
+      ],
+      "grip_sweep_overlap_mullion_m": [
+        0.004999999999999893,
+        0.08,
+        0.10000000000000009
+      ],
+      "missing_sill_mullion_failures": 0,
+      "box_volume_m3": 0.03152400000000003,
+      "solid_aluminum_mass_illustrative_kg": 85.11480000000009
+    },
+    {
+      "variant": "north",
+      "panel": 1,
+      "bare_path_failures": 0,
+      "grip_box_assumption_m": [
+        0.05,
+        0.1,
+        0.1
+      ],
+      "parked_grip_overlap_opposite_m": [
+        0.004999999999999893,
+        0.10000000000000009,
+        0.10000000000000009
+      ],
+      "grip_sweep_overlap_mullion_m": [
+        0.004999999999999893,
+        0.08,
+        0.10000000000000009
+      ],
+      "missing_sill_mullion_failures": 0,
+      "box_volume_m3": 0.03152400000000003,
+      "solid_aluminum_mass_illustrative_kg": 85.11480000000009
+    },
+    {
+      "variant": "south",
+      "panel": 0,
+      "bare_path_failures": 0,
+      "grip_box_assumption_m": [
+        0.05,
+        0.1,
+        0.1
+      ],
+      "parked_grip_overlap_opposite_m": [
+        0.004999999999999893,
+        0.10000000000000009,
+        0.10000000000000003
+      ],
+      "grip_sweep_overlap_mullion_m": [
+        0.004999999999999893,
+        0.08,
+        0.10000000000000003
+      ],
+      "missing_sill_mullion_failures": 0,
+      "box_volume_m3": 0.020424000000000022,
+      "solid_aluminum_mass_illustrative_kg": 55.14480000000006
+    },
+    {
+      "variant": "south",
+      "panel": 1,
+      "bare_path_failures": 0,
+      "grip_box_assumption_m": [
+        0.05,
+        0.1,
+        0.1
+      ],
+      "parked_grip_overlap_opposite_m": [
+        0.004999999999999893,
+        0.10000000000000009,
+        0.10000000000000003
+      ],
+      "grip_sweep_overlap_mullion_m": [
+        0.004999999999999893,
+        0.08,
+        0.10000000000000003
+      ],
+      "missing_sill_mullion_failures": 0,
+      "box_volume_m3": 0.020424000000000022,
+      "solid_aluminum_mass_illustrative_kg": 55.14480000000006
+    }
+  ],
+  "hashes": {
+    "test_monitor_panel_recovery.py": "4dac4aad8ed5bfabaafb52c2af42026b678561d8e9e316343282582b50f02b79",
+    "monitoring/panel-recovery-proposal.md": "0c2b3f8a83c121746670344dcda9f655789229b56cadd282d8c36976a5981b9d",
+    "monitoring.py": "4f557f999125a28e946215ab03e54ba841438b06d09edae69ab2d3f2c94f11bc",
+    "monitor_contract.py": "ae8057c0cff621ca86f3f3c748e608223c87ad04345763be21184d20ed314e0b"
+  }
+}

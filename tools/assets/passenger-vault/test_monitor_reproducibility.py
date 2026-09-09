@@ -13,7 +13,7 @@ SOURCE=Path('tools/assets/passenger-vault');OUT=SOURCE/'monitoring';PUBLIC=Path(
 
 def main():
     clean=Path(tempfile.mkdtemp(prefix='passenger-monitor-clean-'));print('CLEAN_ROOT '+str(clean),flush=True)
-    files=[SOURCE/n for n in ['monitoring.py','monitor_contract.py','distribution.py','room_fit.py','test_monitor_geometry.py','test_monitor_artifacts.py']]+[PUBLIC/n for n in ['chamber.glb','row-carrier.glb','distribution-north.glb','distribution-south.glb']]+[Path('src/game/roguelike/authoredRoomTopologies.ts')]
+    files=[SOURCE/n for n in ['monitoring.py','monitor_contract.py','monitor_panel_mesh_contract.py','test_monitor_panel_recovery.py','distribution.py','room_fit.py','test_monitor_geometry.py','test_monitor_artifacts.py']]+[PUBLIC/n for n in ['chamber.glb','row-carrier.glb','distribution-north.glb','distribution-south.glb']]+[Path('src/game/roguelike/authoredRoomTopologies.ts')]
     for p in files:
         (clean/p).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/p,clean/p)
     commands=[['blender','-t','6','--background','--factory-startup','--python-exit-code','1','--python',str(clean/SOURCE/'monitoring.py'),'--','--output-root',str(clean)],['blender','-t','6','--background','--factory-startup','--python-exit-code','1','--python',str(clean/SOURCE/'test_monitor_geometry.py')],[sys.executable,str(clean/SOURCE/'test_monitor_artifacts.py'),str(clean)]]

@@ -1,0 +1,27 @@
+{
+  "review-cpu": {
+    "command": [
+      "python",
+      "tools/assets/passenger-vault/test_monitor_artifacts.py"
+    ],
+    "exit_code": 0,
+    "seconds": 3.27
+  },
+  "review-npm-test": {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit_code": 0,
+    "seconds": 18.53
+  },
+  "review-npm-build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "seconds": 4.28
+  }
+}
