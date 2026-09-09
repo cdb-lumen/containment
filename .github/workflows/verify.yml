@@ -13,8 +13,8 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    # Full desktop/touch WebGL and persisted-audio reload coverage can exceed 15m on software GPUs.
-    timeout-minutes: 30
+    # Software WebGL needs a separate budget per viewport. Steps stay serial.
+    timeout-minutes: 100
     steps:
       - name: Check out repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -34,5 +34,21 @@ jobs:
       - name: Install Blender for imported asset regressions
         run: sudo apt-get update && sudo apt-get install -y blender python3-numpy
 
-      - name: Verify
-        run: npm run verify
+      - name: Tests, evidence checks, and build
+        timeout-minutes: 15
+        run: npm test && npm run test:room-evidence && npm run build
+
+      - name: Desktop smoke
+        id: smoke-desktop
+        timeout-minutes: 35
+        env:
+          SMOKE_VIEWPORT: desktop
+        run: timeout --kill-after=30s 33m npm run test:smoke
+
+      - name: Touch smoke
+        # Still collect touch diagnostics after a failed desktop step.
+        if: ${{ !cancelled() && steps.smoke-desktop.outcome != 'skipped' }}
+        timeout-minutes: 35
+        env:
+          SMOKE_VIEWPORT: touch
+        run: timeout --kill-after=30s 33m npm run test:smoke

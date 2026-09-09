@@ -4,7 +4,9 @@ import {createServer} from 'node:http';
 import {readFile, mkdir} from 'node:fs/promises';
 import {resolve, extname} from 'node:path';
 import {chromium} from 'playwright';
+import {selectSmokeViewports, createSmokePhaseTimer} from './smoke-options.mjs';
 
+const viewports = selectSmokeViewports(process.env.SMOKE_VIEWPORT);
 const prefix = '/containment/';
 const root = resolve('dist');
 const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.jpg':'image/jpeg','.png':'image/png','.glb':'model/gltf-binary','.ogg':'audio/ogg','.mp3':'audio/mpeg','.wav':'audio/wav'};
@@ -18,10 +20,16 @@ const server = createServer(async (req, res) => {
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
 let browser;
+let timing = createSmokePhaseTimer('setup');
 try {
+  timing.start('browser-and-subpath');
   browser = await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
   assert.equal((await fetch(origin + prefix + 'missing.js')).status, 404);
-  for (const mobile of [false, true]) {
+  timing.finish('passed');
+  for (const viewport of viewports) {
+    const mobile = viewport === 'touch';
+    timing = createSmokePhaseTimer(viewport);
+    timing.start('context-and-menu');
     const context = await browser.newContext({viewport:mobile ? {width:390,height:844} : {width:1280,height:720},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
     const page = await context.newPage();
     await observeAudio(page);
@@ -40,6 +48,7 @@ try {
     await page.goto(origin + prefix);
     await page.waitForFunction(() => document.body.dataset.state === 'menu');
     // New sessions use fixed High on desktop and touch; only High and Low exist.
+    timing.start('graphics');
     await page.locator('#settings').click();
     assert.equal(await page.locator('#quality').inputValue(), 'high');
     assert.equal(await page.evaluate(() => window.__containmentPerformance.quality), 'high');
@@ -58,6 +67,7 @@ try {
     assert.equal(await page.evaluate(() => window.__containmentPerformance.quality), 'high');
     await page.locator('#settings').click();
     console.log(`Graphics High/Low defaults and selection passed: ${mobile?'touch':'desktop'}`);
+    timing.start('menu-audio');
     const selectedVolume = await checkMenuSound(page, mobile);
     const chooseStartingBoon = async (capture = false) => {
       await page.locator('#start').click();
@@ -89,7 +99,9 @@ try {
       await page.locator('#resume').click();
       return name;
     };
+    timing.start('starting-boon');
     const startingBoon = await chooseStartingBoon(true);
+    timing.start('gameplay-input');
     await page.waitForFunction(() => document.body.dataset.state === 'playing' && Number(document.querySelector('#magazine').textContent)>0);
     const ammo = await page.locator('#magazine').textContent();
     if(mobile) {
@@ -111,7 +123,9 @@ try {
     }
     await page.locator('#pause').click();
     await page.waitForFunction(() => document.body.dataset.state === 'paused');
+    timing.start('paused-audio');
     await checkPausedSound(page, mobile, selectedVolume);
+    timing.start('credits-and-assets');
     const credits = await page.locator('a', {hasText:'Credits'}).getAttribute('href');
     assert.equal(new URL(credits, page.url()).pathname, prefix+'audio-credits.html');
     assert.equal((await fetch(new URL(credits,page.url()))).status,200);
@@ -130,14 +144,20 @@ try {
     assert.equal([...assets].filter(p=>p.includes('/environment/')).length,9);
     assert.ok([...assets].some(p=>p.includes('/audio/')));
     assert.ok([...assets].every(p=>p.startsWith(prefix)));
+    timing.start('restart');
     await page.locator('#pause').click();
     await page.locator('#menu').click();
     await chooseStartingBoon();
     assert.deepEqual(errors,[]);
     console.log(JSON.stringify({viewport:mobile?'touch 390x844':'desktop 1280x720',startingBoon,restart:'fresh boon selected',state:'playing',assets:assets.size,errors,performance:await page.evaluate(()=>window.__containmentPerformance)}));
+    timing.start('context-close');
     await context.close();
+    timing.finish('passed');
   }
-  console.log('Browser smoke passed: desktop and touch, production Pages subpath, assets, fire, weapon switch, pause/resume, credits.');
+  console.log(`Browser smoke passed: ${viewports.join(' and ')}, production Pages subpath, assets, fire, weapon switch, pause/resume, credits.`);
+} catch (error) {
+  timing.finish('failed');
+  throw error;
 } finally {
   await browser?.close();
   await new Promise(resolve=>server.close(resolve));
