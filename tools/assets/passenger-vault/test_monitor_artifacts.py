@@ -14,7 +14,8 @@ NAMES={'service_sill','service_mullion','support_shelf','deck_plinth','back_wall
 class MonitorArtifacts(unittest.TestCase):
     def test_imported_geometry_regression(self):
         for script in ['test_monitor_geometry.py','test_monitor_panel_recovery.py']:
-            subprocess.run(['blender','-b','-t','2','--factory-startup','--python-exit-code','1','--python',str(ROOT/'tools/assets/passenger-vault'/script)],check=True,timeout=180,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'},stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+            result = subprocess.run(['blender','-b','-t','2','--factory-startup','--python-exit-code','1','--python',str(ROOT/'tools/assets/passenger-vault'/script)],timeout=180,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'},stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
+            self.assertEqual(result.returncode, 0, f'{script} failed:\n{result.stdout}')
     def test_exact_package(self):
         out=ROOT/'tools/assets/passenger-vault/monitoring';m=json.loads((out/'manifest.json').read_text())
         expected={f'public/assets/passenger-vault/monitor-{v}.glb' for v in ['north','south']}|{f'tools/assets/passenger-vault/monitoring/{v}.{ext}' for v in ['north','south'] for ext in ['blend']}|{f'tools/assets/passenger-vault/monitoring/{n}.png' for n in ['north-closed','north-cutaway','south-closed','south-cutaway','room-placement']}
