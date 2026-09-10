@@ -1,0 +1,182 @@
+{
+  "counts": {
+    "accessors": 2056,
+    "animations": 0,
+    "bufferViews": 678,
+    "cameras": 0,
+    "images": 12,
+    "materials": 8,
+    "meshes": 528,
+    "nodes": 530,
+    "samplers": 2,
+    "skins": 0,
+    "textures": 12
+  },
+  "decode_estimate_policy": "RGBA8, complete mip chain for every unique embedded image, including unused images; conservative when sampler disables mipmaps",
+  "decoded_unique_rgba_mip_bytes": 24816312,
+  "families": [
+    {
+      "family": "chamber",
+      "input_bytes": 897948,
+      "input_sha256": "d60dbed48d6a01f330dd358907e72a0c4941f7bcc625afe9a5beee85043ef4d8",
+      "reachable_nodes": 55,
+      "root_node": 55,
+      "triangles_one_instance": 3796,
+      "unbatched_draws_one_instance": 55
+    },
+    {
+      "family": "distribution-north",
+      "input_bytes": 524520,
+      "input_sha256": "672bd21e627e04c64d01b21edfc44f2a8df7a3a02cb6d6b4db58b2d28470ed51",
+      "reachable_nodes": 152,
+      "root_node": 208,
+      "triangles_one_instance": 4932,
+      "unbatched_draws_one_instance": 151
+    },
+    {
+      "family": "distribution-south",
+      "input_bytes": 524692,
+      "input_sha256": "65c3ee02ff26e8a4482cbe9460b1ab771b247fd58ec6f247dcc9e64ba76ff498",
+      "reachable_nodes": 152,
+      "root_node": 361,
+      "triangles_one_instance": 4932,
+      "unbatched_draws_one_instance": 151
+    },
+    {
+      "family": "monitor-north",
+      "input_bytes": 152932,
+      "input_sha256": "1a5c1b577d45564fd1b59142b2648062afa17c1a27bd6845a9bed12b1e968b1b",
+      "reachable_nodes": 31,
+      "root_node": 393,
+      "triangles_one_instance": 756,
+      "unbatched_draws_one_instance": 31
+    },
+    {
+      "family": "monitor-south",
+      "input_bytes": 1261696,
+      "input_sha256": "e938d0290280cdf0a0fcf3e8d06752fb0f824b6569cc1424964ca00940fb81ab",
+      "reachable_nodes": 100,
+      "root_node": 494,
+      "triangles_one_instance": 9308,
+      "unbatched_draws_one_instance": 100
+    },
+    {
+      "family": "row-carrier",
+      "input_bytes": 312788,
+      "input_sha256": "5c8daa443c43aa586abcf9056ad7f76fbe9cea681a9a070d70b9c4af09b7f768",
+      "reachable_nodes": 20,
+      "root_node": 515,
+      "triangles_one_instance": 1504,
+      "unbatched_draws_one_instance": 20
+    },
+    {
+      "family": "service-finish",
+      "input_bytes": 114280,
+      "input_sha256": "dbaf411b53b0a9e7fe1f222fc798b79bb9bd520c68fc3842770143ae53898abe",
+      "reachable_nodes": 13,
+      "root_node": 529,
+      "triangles_one_instance": 1026,
+      "unbatched_draws_one_instance": 26
+    }
+  ],
+  "images": [
+    {
+      "height": 256,
+      "rgba_mip_bytes": 349524,
+      "sha256": "9d38f2c93dd02eb690a0f13d93d6a44fa10c2c7a8906e19b8e3c4a720f87e74a",
+      "width": 256
+    },
+    {
+      "height": 256,
+      "rgba_mip_bytes": 349524,
+      "sha256": "6c877f543990db60eef3376f110b51337426505406e98aee3022afbc1fcf055d",
+      "width": 256
+    },
+    {
+      "height": 256,
+      "rgba_mip_bytes": 349524,
+      "sha256": "173f9220e6443436f81a6eef38ce541d0366d1d90d83b75045aa360972782253",
+      "width": 256
+    },
+    {
+      "height": 256,
+      "rgba_mip_bytes": 349524,
+      "sha256": "6a6662a7685885ba68da7ae4f377600903a2aea454bb763ae707a9e94383fb31",
+      "width": 256
+    },
+    {
+      "height": 256,
+      "rgba_mip_bytes": 349524,
+      "sha256": "25f74c69f2eac180cf773c24df91f81403a0282f2b10636ce0eb3d27a0a995b1",
+      "width": 256
+    },
+    {
+      "height": 256,
+      "rgba_mip_bytes": 349524,
+      "sha256": "a17170c3b4a07b29b8eb97ebab3788b6c9d19ba9190dee76480cf55bc124a146",
+      "width": 256
+    },
+    {
+      "height": 256,
+      "rgba_mip_bytes": 349524,
+      "sha256": "14454be37dd7a08cdb4fd473c8b4978b0ce47c2eabcaf6c9e2db94eef189c13e",
+      "width": 256
+    },
+    {
+      "height": 512,
+      "rgba_mip_bytes": 5592412,
+      "sha256": "54c8f708498f28da5df97a7793884abdb04da366413f9b85c8766d51e570791a",
+      "width": 2048
+    },
+    {
+      "height": 512,
+      "rgba_mip_bytes": 5592412,
+      "sha256": "df9d9123a7eff6045ab73262c971c306536337b1e8241e7b057dc9069cba4074",
+      "width": 2048
+    },
+    {
+      "height": 512,
+      "rgba_mip_bytes": 5592412,
+      "sha256": "72942ea8683308f67ff560700e137fda58d6e7c8b67ad8bf2595929982e4c589",
+      "width": 2048
+    },
+    {
+      "height": 512,
+      "rgba_mip_bytes": 2796204,
+      "sha256": "6d60bd15461d4882e2c7a8f798063c9d4b6c8a915d97a7d3173d40ba4ae7f8ae",
+      "width": 1024
+    },
+    {
+      "height": 512,
+      "rgba_mip_bytes": 2796204,
+      "sha256": "7c7e5d86ae13b2f50760b8a9241a8342540e995a5b47c1e731d8bf23b5143ee6",
+      "width": 1024
+    }
+  ],
+  "integrity": {
+    "accessors_verified": 2056,
+    "all_backing_view_bytes_equal": true,
+    "all_core_semantic_references_equal": true,
+    "node_local_transforms_and_parent_edges_equal": true,
+    "original_inputs_unchanged": true,
+    "texels_modified": false
+  },
+  "limits": {
+    "added_main_pass_draws": 48,
+    "decoded_rgba_mip_bytes": 33554432,
+    "placed_triangles": 100000,
+    "shared_materials": 8,
+    "transfer_bytes": 16777216
+  },
+  "output": "equipment.glb",
+  "output_sha256": "9270cb7b7240644b040b1385cf53d2623005fcfb177314e51ba7dd28d5f0aeac",
+  "placement_budget_status": "NOT VERIFIED: runtime placement multiplicities and batching required; raw per-family draws are not added main-pass draws",
+  "schema": 1,
+  "shared_resource_budget_pass": true,
+  "shared_resource_checks": {
+    "decoded_rgba_mip_bytes": true,
+    "shared_materials": true,
+    "transfer_bytes": true
+  },
+  "transfer_bytes": 2178812
+}
