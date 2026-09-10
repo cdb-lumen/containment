@@ -1,0 +1,617 @@
+{
+  "evidenceClass": "controlled-live-gameplay",
+  "staging": "Actual DepthGame.update and DepthRenderer with native gameplay camera/composer, seeded legal midpoint on a verified spawn-to-exit route. Three stationary high-health brutes with zero-damage attacks and inactive encounter director. Normal move, aim, fire and reload commands, no fabricated effect events. No campaign progression or DOM HUD. Fixed-step software WebGL capture does not measure target-device FPS.",
+  "runtime": {
+    "events": [
+      {
+        "type": "shot",
+        "x": 607.85,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 0
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2803572519957,
+        "y": 440.1663293928316,
+        "angle": 0.0014164078649987401,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 2
+      },
+      {
+        "type": "shot",
+        "x": 619.4000000000001,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 3
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2840343211958,
+        "y": 439.44107106207224,
+        "angle": -0.0052786404500042,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 5
+      },
+      {
+        "type": "shot",
+        "x": 630.9500000000002,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 6
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2913006378297,
+        "y": 440.93541097338084,
+        "angle": 0.009914855054991184,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 7
+      },
+      {
+        "type": "shot",
+        "x": 642.5000000000002,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 9
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2800890390571,
+        "y": 439.91696279960803,
+        "angle": -0.0010031056200151183,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 10
+      },
+      {
+        "type": "shot",
+        "x": 654.0500000000003,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 12
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.3013278621463,
+        "y": 438.71501954610034,
+        "angle": -0.0180325224750231,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 13
+      },
+      {
+        "type": "shot",
+        "x": 665.6000000000004,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 15
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2853928643468,
+        "y": 440.64621539135896,
+        "angle": 0.010826604489967256,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 16
+      },
+      {
+        "type": "shot",
+        "x": 676,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 18
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2834095671531,
+        "y": 439.48616612102234,
+        "angle": -0.010425724725044088,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 18
+      },
+      {
+        "type": "shot",
+        "x": 687.5500000000001,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 21
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2968061864572,
+        "y": 441.1406965553275,
+        "angle": 0.03021048987994289,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 21
+      },
+      {
+        "type": "shot",
+        "x": 699.1000000000001,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 24
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.2801683605701,
+        "y": 440.1141832483333,
+        "angle": 0.004361412912433851,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 24
+      },
+      {
+        "type": "shot",
+        "x": 710.6500000000002,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 27
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.281384622019,
+        "y": 439.6725504436231,
+        "angle": -0.02237620787507351,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 27
+      },
+      {
+        "type": "shot",
+        "x": 722.2000000000003,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 30
+      },
+      {
+        "type": "enemy-attack",
+        "id": 1,
+        "family": "brute",
+        "x": 764,
+        "y": 440,
+        "angle": 3.141592653589793,
+        "frame": 30
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 725.280053455876,
+        "y": 440.0643398801881,
+        "angle": 0.02088617133741914,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 30
+      },
+      {
+        "type": "shot",
+        "x": 733.7500000000003,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 33
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 733.7500000000003,
+        "y": 440,
+        "angle": -0.0058514494500881585,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 33
+      },
+      {
+        "type": "shot",
+        "x": 745.3000000000004,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 36
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 745.3000000000004,
+        "y": 440,
+        "angle": -0.03258907023759552,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 36
+      },
+      {
+        "type": "shot",
+        "x": 755.7,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 0,
+        "frame": 39
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 755.7,
+        "y": 440,
+        "angle": 0.01067330897489713,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 39
+      },
+      {
+        "type": "shot",
+        "x": 767.2500000000001,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 42
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 767.2500000000001,
+        "y": 440,
+        "angle": 3.125528341777183,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 42
+      },
+      {
+        "type": "shot",
+        "x": 778.8000000000002,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 45
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 778.8000000000002,
+        "y": 440,
+        "angle": 3.1687907209896755,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 45
+      },
+      {
+        "type": "shot",
+        "x": 790.3500000000003,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 48
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 790.3500000000003,
+        "y": 440,
+        "angle": 3.142053100202168,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 48
+      },
+      {
+        "type": "shot",
+        "x": 801.9000000000003,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 51
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 801.9000000000003,
+        "y": 440,
+        "angle": 3.1153154794146607,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 51
+      },
+      {
+        "type": "shot",
+        "x": 813.4500000000004,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 54
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.7195709614093,
+        "y": 439.81772393359256,
+        "angle": 3.1585778586271536,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 54
+      },
+      {
+        "type": "shot",
+        "x": 823.85,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 57
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.7194515826058,
+        "y": 440.20608042664634,
+        "angle": 3.131840237839646,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 57
+      },
+      {
+        "type": "shot",
+        "x": 835.4000000000001,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 60
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.704484307146,
+        "y": 438.90396418037864,
+        "angle": 3.1751026170521386,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 60
+      },
+      {
+        "type": "shot",
+        "x": 846.9500000000002,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 63
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.7188412522142,
+        "y": 439.70044685640977,
+        "angle": 3.148364996264631,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 63
+      },
+      {
+        "type": "shot",
+        "x": 858.5000000000002,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 66
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.7039676435184,
+        "y": 441.11413134301165,
+        "angle": 3.121627375477124,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 67
+      },
+      {
+        "type": "shot",
+        "x": 870.0500000000003,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 69
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.688172550436,
+        "y": 438.43038071249947,
+        "angle": 3.1648897546896166,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 70
+      },
+      {
+        "type": "shot",
+        "x": 881.6000000000004,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 72
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.7190488789603,
+        "y": 440.2713925361561,
+        "angle": 3.1381521339021092,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 73
+      },
+      {
+        "type": "shot",
+        "x": 892,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 75
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.6258901883517,
+        "y": 442.697963520398,
+        "angle": 3.1114145131146023,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 76
+      },
+      {
+        "type": "shot",
+        "x": 903.5500000000001,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 78
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.6975052792172,
+        "y": 438.6803465739257,
+        "angle": 3.1546768923270947,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 79
+      },
+      {
+        "type": "shot",
+        "x": 915.1000000000001,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 81
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.6895664179776,
+        "y": 441.5348779719878,
+        "angle": 3.1279392715395873,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 83
+      },
+      {
+        "type": "shot",
+        "x": 926.6500000000002,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 84
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.5451380634528,
+        "y": 436.32430528071734,
+        "angle": 3.1712016507520797,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 86
+      },
+      {
+        "type": "shot",
+        "x": 938.2000000000003,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 87
+      },
+      {
+        "type": "acid",
+        "contact": "armor",
+        "x": 802.7180457003524,
+        "y": 439.6109792480819,
+        "angle": 3.1444640299645727,
+        "weapon": "rifle",
+        "targetId": 1,
+        "frame": 89
+      },
+      {
+        "type": "shot",
+        "x": 1059.0999999999995,
+        "y": 440,
+        "weapon": "rifle",
+        "angle": 3.141592653589793,
+        "frame": 119
+      }
+    ],
+    "travel": 455.09999999999945,
+    "legalChecks": 480,
+    "damage": 480,
+    "elapsed": 5.999999999999987,
+    "activeEnemies": 3
+  },
+  "samples": [
+    {
+      "frame": 0,
+      "file": "passenger-vault-desktop-decoded-0.png",
+      "sha256": "df96ded0680e609dd55574a42f497cf73900a42fdf405278416fbfdb052aafa6"
+    },
+    {
+      "frame": 40,
+      "file": "passenger-vault-desktop-decoded-40.png",
+      "sha256": "25479efb3c84bc989d0ee8fc1b6b6140f974a06862455b39d19cc1ba375f6de7"
+    },
+    {
+      "frame": 80,
+      "file": "passenger-vault-desktop-decoded-80.png",
+      "sha256": "8e60842fe27e3eb37ab2f0760bafcba2ddd0c450a1f05180c60e0af45f494abe"
+    },
+    {
+      "frame": 119,
+      "file": "passenger-vault-desktop-decoded-119.png",
+      "sha256": "54f4d7a78a8cec0e89e7d1aca3fa83a49f32b3bbbfe7d45557adf6653d29d8bd"
+    }
+  ],
+  "sourceStable": true,
+  "errors": [],
+  "decodeErrors": [],
+  "sourceSha": "12d098122a49ef560ef4c1ec63af0805c822d875",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1280,
+        "height": 900,
+        "avg_frame_rate": "20/1",
+        "nb_read_frames": "120"
+      }
+    ],
+    "format": {
+      "duration": "6.000000"
+    }
+  },
+  "video": {
+    "file": "passenger-vault-desktop.mp4",
+    "sha256": "9c687baedd6b325a9848faf81ebcd8fb1d87b66accd048a143d090133d5377d7"
+  },
+  "frames": 120,
+  "pixelReview": "Parent inspected decoded frames0/40/80/119. Technical capture succeeds, but stationary brute overlaps player at frame40. Not final room-video visual acceptance or campaign/HUD/input proof."
+}

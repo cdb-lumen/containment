@@ -1,0 +1,1140 @@
+{
+  "sha": "5c49cd93b576013780c6c2b3415d6091374044de",
+  "evidenceClass": "Production-built app with local-only deterministic room-2 staging and inactive encounter director. Real DepthGame.update traversal; production HUD, high composer and shipping gameplay camera. Camera follow settles through 24 production 50ms render calls at each inspection point. Full-room images explicitly use fitted overview projection, not gameplay framing. No equipment or release acceptance.",
+  "results": [
+    {
+      "name": "desktop",
+      "view": "opening",
+      "file": "desktop-opening.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              156.47727272727275,
+              445.1725915417447
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              156.47727272727275,
+              425.8629577087236
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              156.47727272727275,
+              400.5190633028835
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "checks": 0,
+        "travel": 0,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 92,
+        "triangles": 202688,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "4bc83b61887960bb2b235bff8e566ec85e8db84dd3128d36c211f2b7befe812a",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "F1",
+      "file": "desktop-F1.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              258.75,
+              445.1725915417447
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              258.75,
+              425.8629577087236
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              258.75,
+              400.5190633028835
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "checks": 8,
+        "travel": 80,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 92,
+        "triangles": 202688,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "faba50cba990239776e582b9b4663d3ae5970bcc9042ae0dc27828f16a5a0c55",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "north-loop",
+      "file": "desktop-north-loop.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              640.035007753878,
+              204.07891043843023
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              640.035007753878,
+              184.76927660540915
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              640.035007753878,
+              159.42538219956904
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 600,
+          "y": 180
+        },
+        "checks": 71,
+        "travel": 760,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.749144254905207,
+            26,
+            31.92431371694485
+          ],
+          "focus": [
+            18.749144254905207,
+            0,
+            12.92431371694485
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 98,
+        "triangles": 203336,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "0f0965ebb0a33423b1f96dc2d85486b3acfb941684936e16769007939c916944",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "central-transfer",
+      "file": "desktop-central-transfer.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              640.0000078721,
+              445.17872414995657
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              640.0000078721,
+              425.8690903169355
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              640.0000078721,
+              400.5251959110954
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "checks": 95,
+        "travel": 1020,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.74999980757089,
+            26,
+            32.74981433013492
+          ],
+          "focus": [
+            18.74999980757089,
+            0,
+            13.749814330134917
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 98,
+        "triangles": 203336,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "c316788607e32ab679e8af08766ca068017e62a5962793c68a72fb81ddeba03e",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "south-loop",
+      "file": "desktop-south-loop.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              640.0000000017702,
+              686.2662740240822
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              640.0000000017702,
+              666.9566401910612
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              640.0000000017702,
+              641.612745785221
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "checks": 119,
+        "travel": 1280,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.749999999956728,
+            26,
+            33.57568624130406
+          ],
+          "focus": [
+            18.749999999956728,
+            0,
+            14.575686241304064
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 98,
+        "triangles": 203336,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "f0003e8d247cd1bce093eb5c4bde4337ddd81003a99ea446f329386267eac368",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "exit",
+      "file": "desktop-exit.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              1123.5577350266053,
+              445.1664589338426
+            ],
+            "occluded": true
+          },
+          {
+            "height": 1,
+            "pixel": [
+              1123.5577350266053,
+              425.85682510082154
+            ],
+            "occluded": true
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              1123.5577350266053,
+              400.51293069498143
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 1100,
+          "y": 440
+        },
+        "checks": 189,
+        "travel": 2040,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            22.554699810460757,
+            26,
+            32.750185669855696
+          ],
+          "focus": [
+            22.554699810460757,
+            0,
+            13.750185669855695
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 98,
+        "triangles": 203336,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "cbc446811063b6fd9e5bf48ff879d6ce9183117cc2d2fa8832e2892d15bf6699",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "full-room",
+      "file": "desktop-full-room.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              1108.82325363338,
+              481.8658748674328
+            ],
+            "occluded": true
+          },
+          {
+            "height": 1,
+            "pixel": [
+              1108.82325363338,
+              467.7032638152404
+            ],
+            "occluded": true
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              1108.82325363338,
+              449.114836809238
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 1100,
+          "y": 440
+        },
+        "checks": 189,
+        "travel": 2040,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            22.554952522179416,
+            0,
+            13.750130839335927
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.177689428684623,
+          "bottom": -13.817623071315378
+        },
+        "quality": "high",
+        "drawCalls": 155,
+        "triangles": 305016,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "271c53b3779cb7f772c242af121ff5575af149447c9121e7b8843cbeb0b35d64",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "opening",
+      "file": "portrait-opening.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              104.13870967741939,
+              418.78726450706506
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              104.13870967741939,
+              405.9363225353254
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              104.13870967741939,
+              389.06946119741724
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 100,
+          "y": 440
+        },
+        "checks": 0,
+        "travel": 0,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 92,
+        "triangles": 202688,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "b1a278ebb53f6021d7f637595639054e0649d1891d47ee42ff2493882314c62c",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "F1",
+      "file": "portrait-F1.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              172.20322580645166,
+              418.78726450706506
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              172.20322580645166,
+              405.9363225353254
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              172.20322580645166,
+              389.06946119741724
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 180,
+          "y": 440
+        },
+        "checks": 8,
+        "travel": 80,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 92,
+        "triangles": 202688,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "40c19362529e2fe938ba6eb2bbf79967097786ed62221be13c840f0d468506a8",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "north-loop",
+      "file": "portrait-north-loop.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              195.07522754985783,
+              240.1845348011446
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              195.07522754985783,
+              227.33359282940495
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              195.07522754985783,
+              210.46673149149674
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 600,
+          "y": 180
+        },
+        "checks": 71,
+        "travel": 760,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.74723690278958,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.74723690278958,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 92,
+        "triangles": 202688,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "9f0b51b60dcdc95071eb9caab57d6e51987ef44b9da676bb9d027b3e94b4957e",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "central-transfer",
+      "file": "portrait-central-transfer.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              195.00001691621785,
+              418.78726450706506
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              195.00001691621785,
+              405.9363225353254
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              195.00001691621785,
+              389.06946119741724
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 600,
+          "y": 440
+        },
+        "checks": 95,
+        "travel": 1020,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.749999378669724,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.749999378669724,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 92,
+        "triangles": 202688,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "2d137e34f51dcc858fc3987893524a0a0feeb4f15c1c3cee73f4cc414cc7b06d",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "south-loop",
+      "file": "portrait-south-loop.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              195.00000000380393,
+              597.3899942129856
+            ],
+            "occluded": false
+          },
+          {
+            "height": 1,
+            "pixel": [
+              195.00000000380393,
+              584.539052241246
+            ],
+            "occluded": false
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              195.00000000380393,
+              567.6721909033378
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 600,
+          "y": 700
+        },
+        "checks": 119,
+        "travel": 1280,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.749999999860282,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.749999999860282,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 92,
+        "triangles": 202688,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "b96c9f39a593fa5020c16cbd83599f5e968f95c75eeb5cf95caf21fe02fa77ad",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "exit",
+      "file": "portrait-exit.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              285.9365178724394,
+              418.78726450706506
+            ],
+            "occluded": true
+          },
+          {
+            "height": 1,
+            "pixel": [
+              285.9365178724394,
+              405.9363225353254
+            ],
+            "occluded": true
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              285.9365178724394,
+              389.06946119741724
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 1100,
+          "y": 440
+        },
+        "checks": 189,
+        "travel": 2040,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            31.034914627908034,
+            26,
+            32.75
+          ],
+          "focus": [
+            31.034914627908034,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 98,
+        "triangles": 203336,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "b8898c2ae7253e425ae78a1a455dbab2ef2c12789e356c4604828de262e1da4d",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "full-room",
+      "file": "portrait-full-room.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "equipmentBudget": {
+          "draws": 10,
+          "instances": 25,
+          "triangles": 87706,
+          "materials": 8,
+          "decodedTextureBytes": 18874380
+        },
+        "equipmentState": "ready",
+        "equipmentError": "",
+        "equipmentInstances": 25,
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              337.8445850914205,
+              431.709133748671
+            ],
+            "occluded": true
+          },
+          {
+            "height": 1,
+            "pixel": [
+              337.8445850914205,
+              427.3939631937061
+            ],
+            "occluded": true
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              337.8445850914205,
+              421.7303018403147
+            ],
+            "occluded": false
+          }
+        ],
+        "state": "playing",
+        "room": "passenger-vault",
+        "player": {
+          "x": 1100,
+          "y": 440
+        },
+        "checks": 189,
+        "travel": 2040,
+        "passengers": 16,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            31.035730603423545,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 47.34034087099232,
+          "bottom": -44.98027451362307
+        },
+        "quality": "high",
+        "drawCalls": 155,
+        "triangles": 305016,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "dc4c9294feba8cc9dea970a82b363a75d8342a0194cfa0ce3db1d957070b4970",
+      "pixelReview": "pending"
+    }
+  ]
+}
