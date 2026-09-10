@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1080" viewBox="0 0 1400 1080">
+<title>Residential Gallery whole-map proposal, unvalidated</title>
+<desc>Four retained collision islands within a rectangular room. West entry, east exit, open central lane and perimeter loops. Domestic functions replace generic tables. All dimensions in gameplay units.</desc>
+<rect width="1400" height="1080" fill="#101821"/>
+<g font-family="sans-serif" fill="#e9eff5"><text x="70" y="45" font-size="27">Residential Gallery · story-derived layout proposal</text><text x="70" y="75" font-size="18">UNVALIDATED BLOCKOUT · 1200 × 880 units · 32 units/metre · no camera or lighting change</text></g>
+<g transform="translate(100 110)">
+<rect width="1200" height="880" fill="#26313a" stroke="#a6b5c0" stroke-width="4"/>
+<g fill="none" stroke="#719595" stroke-width="4" stroke-dasharray="12 9"><path d="M100 440V100H1100V440M100 440V780H1100V440M580 100V780"/></g>
+<path d="M100 440H1100" fill="none" stroke="#80ddd0" stroke-width="5"/>
+<path d="M100 440H560L600 420H1040L1100 440" fill="none" stroke="#d8b271" stroke-width="3"/>
+<g fill="#69655b" stroke="#d8b271" stroke-width="3"><rect x="280" y="160" width="240" height="100"/><rect x="280" y="520" width="120" height="200"/><rect x="650" y="270" width="260" height="100"/><rect x="780" y="570" width="140" height="150"/></g>
+<g fill="none" stroke="#f0dac0" stroke-width="6"><path d="M310 254h42m28 0h42m28 0h42M685 364h46m32 0h46m32 0h46M300 526h80"/></g>
+<g font-family="sans-serif" fill="#ffffff" text-anchor="middle" font-size="18"><text x="400" y="193">A · cabin frontage</text><text x="400" y="221">closed thresholds ↓</text><text x="780" y="304">C · cabin frontage</text><text x="780" y="334">closed thresholds ↓</text><text x="340" y="575">B · empty</text><text x="340" y="601">bunk bay</text><text x="340" y="634">bed +</text><text x="340" y="660">storage</text><text x="850" y="606">D · loaded</text><text x="850" y="632">trolley +</text><text x="850" y="658">luggage /</text><text x="850" y="684">bench</text></g>
+<g fill="#8be5cf" stroke="#0f2624" stroke-width="2"><circle cx="100" cy="440" r="16"/><circle cx="1100" cy="440" r="16"/></g>
+<g font-family="sans-serif" fill="#dff5ef" font-size="18"><text x="35" y="410">ENTRY</text><text x="1050" y="410">EXIT</text><text x="420" y="483">Direct movement / shot lane stays open</text><text x="175" y="55">North alternate route</text><text x="175" y="833">South alternate route</text><text x="615" y="165">Cross-link x580</text></g>
+<g fill="#d5967b"><circle cx="100" cy="100" r="10"/><circle cx="1100" cy="100" r="10"/><circle cx="100" cy="780" r="10"/><circle cx="1100" cy="780" r="10"/></g>
+<g font-family="sans-serif" fill="#dcbba9" font-size="16"><text x="115" y="90">breach</text><text x="1030" y="90">breach</text><text x="115" y="766">breach</text><text x="1030" y="766">breach</text></g>
+</g>
+<g font-family="sans-serif" fill="#d5dfe5" font-size="17"><text x="100" y="1024">Ochre solids retain existing collision. Raised props stay inside and must visibly occupy the blocked space.</text><text x="100" y="1053">Dashed loops remain walkable. Thin ochre line is a flush visual guide, not a forced corridor. No exposed sleepers.</text></g>
+</svg>
