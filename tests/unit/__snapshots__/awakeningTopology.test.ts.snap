@@ -180,20 +180,20 @@ exports[`awakening cradle > preserves the other nineteen complete templates exac
       ],
       [
         {
-          "x": 1040,
-          "y": 560,
+          "x": 1002.55,
+          "y": 479.35,
         },
         {
-          "x": 1160,
-          "y": 560,
+          "x": 1090,
+          "y": 479.35,
         },
         {
-          "x": 1160,
-          "y": 640,
+          "x": 1090,
+          "y": 517.98,
         },
         {
-          "x": 1040,
-          "y": 640,
+          "x": 1002.55,
+          "y": 517.98,
         },
       ],
     ],

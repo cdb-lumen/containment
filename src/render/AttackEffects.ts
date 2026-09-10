@@ -3,18 +3,40 @@ import type {WeaponId} from '../game/combat/types';
 import type {Bullet,GameEffect} from '../DepthGame';
 import {WEAPON_APPEARANCE} from './weapons';
 import {electricArc} from './electricArc';
+import {ballLightning} from './ballLightning';
 import {wallSurface} from './wallSurface';
 const UP=new T.Vector3(0,1,0),WHITE=new T.Color(0xffffff);
-type Particle={wall?:T.Vector3;growth?:number;aspect?:number;p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
+type Particle={liquid?:boolean;wall?:T.Vector3;growth?:number;aspect?:number;p:T.Vector3;v:T.Vector3;color:T.Color;age:number;life:number;size:number;stretch:number;spin:number;rotation:number;gravity:number;ground:boolean};
 type Pulse={p:T.Vector3;color:T.Color;age:number;life:number;radius:number;angle:number;slash:boolean;stable:boolean};
 export const EFFECT_LIMITS={glow:360,smoke:80,debris:80,pulses:24,decals:64,beams:320,fire:16} as const;
 const vertex=`attribute float effectFrame; varying float vFrame;attribute float effectAlpha;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
 void main(){vFrame=effectFrame;vUv=uv;vColor=instanceColor;vAlpha=effectAlpha;gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(position,1.0);}`;
 const fragment=`uniform sampler2D map;uniform float inset;uniform float grid;uniform float textured;varying float vFrame;uniform float style;varying vec2 vUv;varying vec3 vColor;varying float vAlpha;
 void main(){vec2 p=vUv*2.0-1.0;float d=length(p);float alpha=vAlpha;vec3 color=vColor;
-if(style<0.5){alpha*=pow(max(0.0,1.0-d),1.8);color*=1.0+2.0*pow(max(0.0,1.0-d),5.0);}
+if(style>3.5){
+ // Dry, disconnected frost deposits, not a liquid disk. The plane and hard
+ // outer clip retain the real radius; a quiet broken fringe indicates its reach.
+ vec2 q=p*2.8+vec2(sin(p.y*7.0),sin(p.x*5.0))*.18;
+ vec2 cell=floor(q+.5);vec2 local=fract(q+.5)-.5;
+ float seed=fract(sin(dot(cell,vec2(127.1,311.7)))*43758.5453);
+ float angle=atan(local.y,local.x)+seed*6.28;float reach=length(local);
+ float spoke=abs(sin(angle*3.0))*reach;
+ float trunk=1.0-smoothstep(.010,.025,spoke);
+ float twig=1.0-smoothstep(.008,.020,abs(sin(reach*43.0+spoke*32.0))*reach);
+ float crystal=max(trunk,twig*.35)*(1.0-smoothstep(.22,.45,reach));
+ float grain=fract(sin(dot(floor(p*95.0),vec2(12.9898,78.233)))*43758.5453);
+ float deposits=sin(p.x*8.0+p.y*3.0)*sin(p.y*9.0-p.x*2.0);
+ float patches=smoothstep(-.12,.48,deposits);
+ float boundary=.86+.08*sin(atan(p.y,p.x)*5.0+.7)+.06*sin(atan(p.y,p.x)*9.0);
+ float brokenEdge=1.0-smoothstep(boundary-.12,min(1.0,boundary+.05),d);
+ alpha*=brokenEdge*patches*(.025+crystal*.34+step(.975,grain)*.065);
+ color=mix(vec3(.18,.34,.39),vec3(.48,.67,.72),crystal);
+ if(d>1.0)discard;
+}
+else if(vFrame<0.0){float drop=length(vec2(p.x/(.76-.18*p.y),p.y));alpha*=1.0-smoothstep(.82,1.0,drop);color*=.72+.28*max(0.0,1.0-drop);color=mix(color,vec3(.64,.78,.33),.35*(1.0-smoothstep(.08,.30,length(p-vec2(-.22,.28)))));}
+else if(style<0.5){alpha*=pow(max(0.0,1.0-d),1.8);color*=1.0+2.0*pow(max(0.0,1.0-d),5.0);}
 else if(style<1.5){float n=.86+.09*sin(p.x*13.0+p.y*7.0)+.05*sin(p.y*19.0-p.x*4.0);alpha*=(1.0-smoothstep(.15,1.0,d/n))*.48;}
-if(textured>.5){float frame=floor(vFrame);vec2 cell=vec2(mod(frame,grid),grid-1.0-floor(frame/grid));vec4 tex=texture2D(map,(cell+clamp(vUv,inset,1.0-inset))/grid);alpha=vAlpha*tex.a*(style>2.5?.9*smoothstep(.0,.12,vUv.y):.42);color=style>2.5?tex.rgb:vColor*(.6+tex.r*.8);}
+if(textured>.5&&vFrame>=0.0){float frame=floor(vFrame);vec2 cell=vec2(mod(frame,grid),grid-1.0-floor(frame/grid));vec4 tex=texture2D(map,(cell+clamp(vUv,inset,1.0-inset))/grid);alpha=vAlpha*tex.a*(style>2.5?.9*smoothstep(.0,.12,vUv.y):.42);color=style>2.5?tex.rgb:vColor*(.6+tex.r*.8);}
 if(alpha<.003)discard;gl_FragColor=vec4(color,alpha);
 #include <tonemapping_fragment>
 #include <colorspace_fragment>
@@ -27,8 +49,10 @@ function pool(scene:T.Scene,geometry:T.BufferGeometry,count:number,style:number,
 }
 /** Bounded GPU instance pools: no lights or draw call per pellet / particle. */
 export class AttackEffects {
+ private fields:Pulse[]=[];private fieldMesh:T.InstancedMesh;
  private fire:Particle[]=[];private fireMesh:T.InstancedMesh;private textures:T.Texture[]=[];
- private arcs:{start:T.Vector3;end:T.Vector3;age:number;seed:number}[]=[];
+ private links:{start:T.Vector3;end:T.Vector3;age:number;frost:boolean}[]=[];
+ private arcs:{start:T.Vector3;end:T.Vector3;age:number;seed:number;ball?:boolean}[]=[];
  private glow:Particle[]=[];private smoke:Particle[]=[];private debris:Particle[]=[];private decals:Particle[]=[];private pulses:Pulse[]=[];
  private glowMesh:T.InstancedMesh;private smokeMesh:T.InstancedMesh;private debrisMesh:T.InstancedMesh;private decalMesh:T.InstancedMesh;private pulseMesh:T.InstancedMesh;private slashMesh:T.InstancedMesh;private beamMesh:T.InstancedMesh;
  private dummy=new T.Object3D();private forward=new T.Vector3();private previous=new WeakMap<Bullet,T.Vector3>();private trailClock=0;private boonBursts=0;private arcBursts=0;
@@ -44,6 +68,7 @@ export class AttackEffects {
   this.beamMesh=pool(scene,new T.CylinderGeometry(1,1,1,5),EFFECT_LIMITS.beams,2,true);
   // Keep the existing pool order stable for renderer diagnostics.
   scene.remove(this.fireMesh);scene.add(this.fireMesh);
+  this.fieldMesh=pool(scene,new T.PlaneGeometry(1,1),4,4);this.fieldMesh.name='frost-fields';
  }
  /** Room loads replace the rendered geometry group. Never retain its disposed predecessor. */
  setWorld(world:T.Object3D){this.world=world;}
@@ -83,6 +108,8 @@ export class AttackEffects {
    for(let i=0;i<3;i++){const a=angle+Math.PI+(i-1)*.8,v=new T.Vector3(Math.cos(a)*2,.5+i*.3,Math.sin(a)*2);this.particle(this.glow,EFFECT_LIMITS.glow,p,blocked?0x8cafbf:0xb7ba72,.045,.14,v,4);}
    return;
   }
+  // Successful bullet damage also uses "acid"; only untargeted hazards spray liquid.
+  if(e.type==='acid'&&e.targetId===undefined){this.acidSplash(e,p);return;}
   if(e.type==='enemy-warning'){
    p.y=.035;const life=(e.durationMs??650)/1000;
    this.pulse(p,0xe9a564,(e.radius??38)/32,life);
@@ -93,13 +120,52 @@ export class AttackEffects {
    if(this.boonBursts++>=8)return;
    const colors={frost:0x8cdeed,arc:0xb3bbff,burn:0xf89847,impact:0xf5dab0,leech:0xbb7385,shield:0x86c9ce,overload:0xf4b96b,poison:0x5dd8b6,charge:0xd6b9f3,blast:0xcbd8dc,combustion:0xffba71,shatter:0xa3eaf3,field:0x75bdcf},color=colors[e.boon??'impact'];
    if(e.targetX!==undefined&&e.targetY!==undefined){
+    if(e.boon==='impact'||e.boon==='frost'){
+     const end=new T.Vector3(e.targetX/32,.8,e.targetY/32),frost=e.boon==='frost';
+     if(this.links.length>=12)this.links.shift();this.links.push({start:p.clone(),end,age:0,frost});
+     this.particle(this.glow,EFFECT_LIMITS.glow,end,color,frost?.28:.18,.09);
+     for(let i=0;i<(frost?7:4);i++){const a=i*2.399,v=new T.Vector3(Math.cos(a)*1.5,.5+Math.random(),Math.sin(a)*1.5);
+      this.particle(frost?this.debris:this.glow,frost?EFFECT_LIMITS.debris:EFFECT_LIMITS.glow,end,color,frost?.075:.04,frost?.35:.16,v,5,frost?3:1);
+     }return;
+    }
     if(this.arcBursts++>=2)return;const end=new T.Vector3(e.targetX/32,.8,e.targetY/32);
     if(this.arcs.length>=6)this.arcs.shift();this.arcs.push({start:p.clone(),end,age:0,seed:Math.floor(Math.random()*65536)});
     this.particle(this.glow,EFFECT_LIMITS.glow,end,0xddeaff,.48,.10);
     for(let i=0;i<9;i++){const a=i*2.399;this.particle(this.glow,EFFECT_LIMITS.glow,end,i%2?0x8d9bff:0xcbefff,.065,.18+Math.random()*.16,new T.Vector3(Math.cos(a)*2,.4+Math.random()*2,Math.sin(a)*2),4);}
     return;
    }
-   if(e.boon==='field'){this.pulse(new T.Vector3(p.x,.025,p.z),color,(e.radius??75)/32,(e.durationMs??2000)/1000,0,false,true);return;}
+   // Toxic Bloom is immediate spread on poisoned death, never a lingering hazard.
+   // Separated normal-blended atlas wisps share the existing bounded smoke draw.
+   if(e.boon==='poison'&&e.radius!==undefined){
+    p.y=.55;const reach=Math.min(3,e.radius/32);
+    for(let i=0;i<8;i++){
+     const a=i*2.399+(Math.random()-.5)*.55,r=reach*(.12+Math.random()*.22);
+     const pos=p.clone().add(new T.Vector3(Math.cos(a)*r,.08+i*.045,Math.sin(a)*r));
+     const speed=reach*(.55+Math.random()*.5);
+     this.particle(this.smoke,EFFECT_LIMITS.smoke,pos,i%3?0x639b40:0x8caa56,.65+Math.random()*.35,.48+Math.random()*.22,new T.Vector3(Math.cos(a)*speed,.25+Math.random()*.35,Math.sin(a)*speed));
+     const wisp=this.smoke[this.smoke.length-1];wisp.growth=.65;wisp.aspect=.65+Math.random()*.3;
+    }return;
+   }
+   // Untargeted radial arc is Ball Lightning's discharge, not a blast ring.
+   if(e.boon==='arc'&&e.radius!==undefined){
+    p.y=.65;const radius=Math.min(4,e.radius/32);
+    this.particle(this.glow,EFFECT_LIMITS.glow,p,0xc4eaff,.5,.12);
+    for(let i=0;i<6;i++){
+     const angle=i*Math.PI/3+(Math.random()-.5)*.85,reach=radius*(.65+Math.random()*.35),end=p.clone().add(new T.Vector3(Math.cos(angle)*reach,Math.random()*.6,Math.sin(angle)*reach));
+     if(this.arcs.length>=6)this.arcs.shift();this.arcs.push({start:p.clone(),end,age:0,seed:Math.floor(Math.random()*65536),ball:true});
+     this.particle(this.glow,EFFECT_LIMITS.glow,end,0x8d9bff,.12,.18);
+    }return;
+   }
+   // Radial impact is Fragmentation. Keep ordinary point impacts and links separate.
+   if(e.boon==='impact'&&e.radius!==undefined){
+    p.y=.65;const speed=Math.min(7,e.radius/32*1.7);
+    this.particle(this.glow,EFFECT_LIMITS.glow,p,0xf5dab0,.28,.07);
+    for(let i=0;i<12;i++){
+     const angle=i*Math.PI/6,s=speed*(.65+Math.random()*.35),v=new T.Vector3(Math.cos(angle)*s,.8+Math.random()*1.5,Math.sin(angle)*s);
+     this.particle(this.debris,EFFECT_LIMITS.debris,p,i%3?0x9d9c8d:0xf5dab0,.085+Math.random()*.045,.65+Math.random()*.2,v,9.8,2.8);
+    }return;
+   }
+   if(e.boon==='field'){if(this.fields.length>=4)this.fields.shift();this.fields.push({p:new T.Vector3(p.x,.026,p.z),color:new T.Color(color),radius:(e.radius??75)/32,life:(e.durationMs??2000)/1000,age:0,angle:0,slash:false,stable:true});return;}
    if(e.boon==='charge'){this.particle(this.glow,EFFECT_LIMITS.glow,p,color,.25,(e.durationMs??450)/1000);return;}
    if(e.boon==='shatter'){
     // Fracture, not combustion: blue-white flash, radial crystals and fleeting vapor.
@@ -110,6 +176,14 @@ export class AttackEffects {
      if(i%2===0)this.particle(this.glow,EFFECT_LIMITS.glow,p,0xb9efff,.07,.16,v.clone().multiplyScalar(1.4));
     }
     for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0xa9ddec,.5,.3,new T.Vector3(Math.cos(a)*1.2,.3,Math.sin(a)*1.2));}return;
+   }
+   // Radius-free overload is non-damaging Hot Reload readiness, not Cascade.
+   if(e.boon==='overload'&&e.radius===undefined){
+    p.y=.85;
+    for(let i=0;i<6;i++){
+     const a=i*Math.PI/3,pos=p.clone().add(new T.Vector3(Math.cos(a)*.44,(i%2)*.12,Math.sin(a)*.44));
+     this.particle(this.glow,EFFECT_LIMITS.glow,pos,color,.32,.65,new T.Vector3(0,.65,0));
+    }return;
    }
    if(e.boon==='blast'||e.boon==='overload'||e.boon==='combustion'){this.event({type:'explosion',x:e.x,y:e.y,radius:e.radius??48,elements:e.boon==='combustion'?['fire']:[]});return;}
    const frost=e.boon==='frost',shield=e.boon==='shield'||e.boon==='leech';
@@ -155,6 +229,17 @@ export class AttackEffects {
    }
   }
  }
+ private acidSplash(e:GameEffect,p:T.Vector3){
+  const area=e.radius!==undefined,r=area?Math.min(3,Math.max(.5,(e.radius??32)/32)):1,count=area?18:10;
+  // Normal-blended procedural drops share the smoke budget, never spark beams.
+  for(let i=0;i<count;i++){
+   const a=i*Math.PI*2/count+(Math.random()-.5)*.25,s=(.8+Math.random()*1.4)*r;
+   const v=new T.Vector3(Math.cos(a)*s,1.6+Math.random()*1.6,Math.sin(a)*s);
+   if(!area){v.x+=Math.cos(e.angle??0)*.8;v.z+=Math.sin(e.angle??0)*.8;}
+   this.particle(this.smoke,EFFECT_LIMITS.smoke,p,i%3?0x689d35:0x96bb4f,.12+Math.random()*.12,.8+Math.random()*.3,v,9.8);
+   const drop=this.smoke[this.smoke.length-1];drop.liquid=true;drop.spin=0;
+  }
+ }
  /** Body-sized contact fan. No explosion atlas, ground ring or radial particle burst. */
  private wallSlam(e:GameEffect,p:T.Vector3){
   let n=new T.Vector3(e.wall!.x,0,e.wall!.y).normalize();
@@ -190,7 +275,14 @@ export class AttackEffects {
   for(const s of list){
    s.age+=dt;if(s.age>=s.life)continue;const t=s.age/s.life;
    if(!s.ground){s.v.y-=s.gravity*dt;s.p.addScaledVector(s.v,dt);s.rotation+=s.spin*dt;if(mode==='debris'&&s.p.y<.035){s.p.y=.035;s.v.y=Math.abs(s.v.y)*.23;s.v.x*=.65;s.v.z*=.65;s.spin*=.55;if(s.v.y<.35&&Math.hypot(s.v.x,s.v.z)<.3){s.ground=true;s.v.set(0,0,0);s.spin=0;}}}
+   if(s.liquid&&s.p.y<=.012){s.p.y=.012;s.ground=true;s.v.set(0,0,0);}
    this.dummy.position.copy(s.p);this.dummy.quaternion.copy(camera.quaternion);
+   if(s.liquid){
+    if(s.ground)this.dummy.rotation.set(-Math.PI/2,0,s.rotation);
+    else{this.forward.copy(s.v).applyQuaternion(this.dummy.quaternion.invert());this.dummy.quaternion.copy(camera.quaternion);this.dummy.rotateZ(Math.atan2(this.forward.y,this.forward.x)-Math.PI/2);}
+    const size=s.size*(s.ground?1.8:1);this.dummy.scale.set(size,size*(s.ground?.8:1.6),1);this.dummy.updateMatrix();
+    mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,s.color);(mesh.geometry.getAttribute('effectFrame') as T.InstancedBufferAttribute).setX(index,-1);alpha.setX(index,.9*Math.min(1,(1-t)*4));index++;continue;
+   }
    if(mode==='decal'||mode==='smoke'&&s.wall){if(s.wall){this.dummy.quaternion.setFromUnitVectors(new T.Vector3(0,0,1),s.wall);this.dummy.rotateZ(s.rotation);}else this.dummy.rotation.set(-Math.PI/2,0,s.rotation);}
    else if(mode==='debris')this.dummy.rotation.set(s.rotation,s.rotation*.7,s.rotation*.4);
    else this.dummy.rotateZ(s.rotation);
@@ -221,20 +313,33 @@ export class AttackEffects {
     if(id==='rocket')this.particle(this.smoke,EFFECT_LIMITS.smoke,p,0x77817d,.25,.6,new T.Vector3(0,.2,0));
    }
   }
+  // Straight kinetic tracer or layered cyan lance. Only arc events branch/restrike.
+  for(const link of this.links){
+   link.age+=dt;const life=link.frost?.24:.12;if(link.age>=life)continue;
+   this.forward.copy(link.end).sub(link.start);const length=this.forward.length();if(length<.002)continue;
+   const fade=1-link.age/life;
+   for(let layer=0;layer<(link.frost?2:1)&&beam<EFFECT_LIMITS.beams;layer++){
+    this.dummy.position.copy(link.start).add(link.end).multiplyScalar(.5);this.dummy.quaternion.setFromUnitVectors(UP,this.forward.normalize());
+    const width=link.frost?(layer?.018:.065):.018;this.dummy.scale.set(width,length,width);this.dummy.updateMatrix();
+    this.beamMesh.setMatrixAt(beam,this.dummy.matrix);this.beamMesh.setColorAt(beam,new T.Color(link.frost?(layer?0xe4fbff:0x8cdeed):0xf5dab0));alpha.setX(beam++,fade*(layer||!link.frost?.85:.35));
+   }
+  }
+  this.links=this.links.filter(link=>link.age<(link.frost?.24:.12));
   // Reuse the bounded beam pool: broad violet corona plus thin blue-white core.
   for(const arc of this.arcs){
-   arc.age+=dt;if(arc.age>=.26)continue;
-   const strike=Math.floor(arc.age/.045),fade=Math.pow(1-arc.age/.26,.6)*(strike%2?.65:1);
-   for(const segment of electricArc(arc.start,arc.end,arc.seed+strike))for(let layer=0;layer<2;layer++){
+   arc.age+=dt;const life=arc.ball?.36:.26;if(arc.age>=life)continue;
+   const strike=Math.floor(arc.age/(arc.ball?.06:.045)),fade=Math.pow(1-arc.age/life,.6)*(strike%2?.65:1);
+   const segments=arc.ball?ballLightning(arc.start,arc.end,arc.seed+strike):electricArc(arc.start,arc.end,arc.seed+strike);
+   for(const segment of segments)for(let layer=0;layer<2;layer++){
     if(beam>=EFFECT_LIMITS.beams)break;
     this.forward.copy(segment.end).sub(segment.start);const length=this.forward.length();
     this.dummy.position.copy(segment.start).add(segment.end).multiplyScalar(.5);this.dummy.quaternion.setFromUnitVectors(UP,this.forward.normalize());
-    const width=(layer?.012:.045)*(segment.branch?.55:1);
+    const width=arc.ball?(layer?.042:.075)*('width' in segment?segment.width as number:1):(layer?.012:.045)*(segment.branch?.55:1);
     this.dummy.scale.set(width,length,width);this.dummy.updateMatrix();this.beamMesh.setMatrixAt(beam,this.dummy.matrix);
     this.beamMesh.setColorAt(beam,new T.Color(layer?0xc4eaff:0x666dff));alpha.setX(beam++,fade*(layer?.95:.22));
    }
   }
-  this.arcs=this.arcs.filter(a=>a.age<.26);
+  this.arcs=this.arcs.filter(a=>a.age<(a.ball?.36:.26));
   // Short velocity-aligned spark streaks share the existing bounded beam draw.
   for(const spark of this.glow){
    if(beam>=EFFECT_LIMITS.beams)break;
@@ -247,13 +352,18 @@ export class AttackEffects {
   this.finish(this.beamMesh,beam);
   this.drawParticles(this.fire,this.fireMesh,dt,camera,'fire');
   this.drawParticles(this.glow,this.glowMesh,dt,camera,'glow');this.drawParticles(this.smoke,this.smokeMesh,dt,camera,'smoke');this.drawParticles(this.debris,this.debrisMesh,dt,camera,'debris');this.drawParticles(this.decals,this.decalMesh,dt,camera,'decal');
+  let field=0;for(const f of this.fields){f.age+=dt;if(f.age>=f.life)continue;
+   this.dummy.position.copy(f.p);this.dummy.rotation.set(-Math.PI/2,0,0);this.dummy.scale.setScalar(f.radius*2);this.dummy.updateMatrix();
+   this.fieldMesh.setMatrixAt(field,this.dummy.matrix);this.fieldMesh.setColorAt(field,f.color);
+   (this.fieldMesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute).setX(field++,Math.min(1,f.age/.12,(f.life-f.age)/.25));
+  }this.fields=this.fields.filter(f=>f.age<f.life);this.finish(this.fieldMesh,field);
   let ring=0,slash=0;for(const pulse of this.pulses){pulse.age+=dt;if(pulse.age>=pulse.life)continue;const t=pulse.age/pulse.life,mesh=pulse.slash?this.slashMesh:this.pulseMesh,index=pulse.slash?slash++:ring++;
    this.dummy.position.copy(pulse.p);this.dummy.rotation.set(-Math.PI/2,0,-pulse.angle);const size=pulse.radius*(pulse.stable?1:pulse.slash?.65+t*.35:.15+t*.85);this.dummy.scale.setScalar(size);this.dummy.updateMatrix();mesh.setMatrixAt(index,this.dummy.matrix);mesh.setColorAt(index,pulse.color);(mesh.geometry.getAttribute('effectAlpha') as T.InstancedBufferAttribute).setX(index,(1-t)*.8);
   }
   this.pulses=this.pulses.filter(p=>p.age<p.life);this.finish(this.pulseMesh,ring);this.finish(this.slashMesh,slash);
  }
- clear(){this.fire=[];this.trailClock=0;this.boonBursts=this.arcBursts=0;this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
+ clear(){this.fields=[];this.fire=[];this.trailClock=0;this.boonBursts=this.arcBursts=0;this.links=[];this.arcs=[];this.glow=[];this.smoke=[];this.debris=[];this.decals=[];this.pulses=[];this.previous=new WeakMap();for(const m of this.meshes())m.count=0;}
  get counts(){return{fire:this.fire.length,glow:this.glow.length,smoke:this.smoke.length,debris:this.debris.length,pulses:this.pulses.length,decals:this.decals.length};}
- private meshes(){return[this.fireMesh,this.glowMesh,this.smokeMesh,this.debrisMesh,this.decalMesh,this.pulseMesh,this.slashMesh,this.beamMesh];}
+ private meshes(){return[this.fireMesh,this.glowMesh,this.smokeMesh,this.debrisMesh,this.decalMesh,this.pulseMesh,this.slashMesh,this.beamMesh,this.fieldMesh];}
  dispose(){for(const t of this.textures)t.dispose();for(const m of this.meshes()){m.geometry.dispose();(m.material as T.Material).dispose();m.removeFromParent();}}
 }
