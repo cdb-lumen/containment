@@ -3,6 +3,7 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {disposeModel} from './meshParts';
 import floorAttributes from './passengerFloor.json';
+import {applyOwnedEquipmentPalette,PASSENGER_FINISHES} from './RoomEquipmentPalette';
 
 export const PASSENGER_FAMILIES=['chamber','row-carrier','distribution-north','distribution-south','monitor-north','monitor-south','service-finish'] as const;
 type Family=typeof PASSENGER_FAMILIES[number];
@@ -25,6 +26,7 @@ function retire(roots:T.Group[]){
  resources.forEach(r=>r.dispose());images.forEach(i=>i.close());
 }
 export function buildPassengerVault(sources:Sources){
+ for(const source of new Set(Object.values(sources)))applyOwnedEquipmentPalette(source,PASSENGER_FINISHES);
  const root=new T.Group();root.name='passenger-vault-equipment';
  const bins=new Map<string,{material:T.Material;parts:T.BufferGeometry[];service:boolean}>(),allocated=new Set<T.BufferGeometry>();
  const materials=new Set<T.Material>(),textures=new Set<T.Texture>();let decodedBytes=0;

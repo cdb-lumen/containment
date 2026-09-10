@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {disposeModel} from './meshParts';
+import {applyOwnedEquipmentPalette,RESIDENTIAL_FINISHES} from './RoomEquipmentPalette';
 
 // Frozen room-3 collision rectangles in gameplay units, with original cutaway heights.
 const ZONES=[
@@ -11,7 +12,7 @@ const ZONES=[
 ] as const;
 const MAX_BYTES=512*1024,MAX_DRAWS=24,MAX_TRIANGLES=8000,MAX_VERTICES=16000,MAX_MATERIALS=7;
 const FALLBACK='residential-gallery-equipment-fallback';
-/** This owner exclusively owns decoded resources; fallback uses shared global MAT/cache. */
+/** This owner exclusively owns decoded resources; disposeModel retires fallback finishes. */
 function retire(root:T.Group){
  const resources=new Set<{dispose():void}>(),images=new Set<ImageBitmap>();
  root.traverse(o=>{if(o instanceof T.Mesh||o instanceof T.Line||o instanceof T.Points){resources.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material]){resources.add(m);for(const t of Object.values(m))if(t instanceof T.Texture){resources.add(t);if(typeof ImageBitmap!=='undefined'&&t.image instanceof ImageBitmap)images.add(t.image);}}if(o instanceof T.SkinnedMesh)resources.add(o.skeleton);}});
@@ -98,6 +99,7 @@ export function attachResidentialGalleryEquipment(room:T.Group,onChanged:()=>voi
  owner.ready=Promise.race([pending,timeout,cancelled]).then(()=>{
   if(!active)return;if(!fallback||fallback.parent!==room)throw Error('stale Residential fallback');
   validateResidentialGalleryEquipment(source!);
+  applyOwnedEquipmentPalette(source!,RESIDENTIAL_FINISHES);
   // Exported roots already contain their final translations. No fitting or second transform.
   source!.name='residential-gallery-equipment';source!.traverse(o=>{if(o instanceof T.Mesh)o.castShadow=o.receiveShadow=true;});
   room.add(source!);disposeModel(fallback);owner.state='ready';

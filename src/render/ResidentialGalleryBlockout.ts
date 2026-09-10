@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {box,MAT} from './meshParts';
+import {applyOwnedEquipmentPalette,RESIDENTIAL_FINISHES} from './RoomEquipmentPalette';
 import type {Footprint} from './ShipEnvironments';
 
 /** Room3 layout experiment. Low cutaway masses, not finished cabin equipment.
@@ -9,9 +10,16 @@ import type {Footprint} from './ShipEnvironments';
 export function residentialGalleryBlockout(f:Footprint,index:number):T.Group{
  const root=new T.Group(),parts=new T.Group();root.name=`residential-gallery-blockout-${index}`;root.add(parts);
  const w=f.width,d=f.height;
+ const finishes=new Map<T.Material,T.MeshStandardMaterial>();
+ const owned=(material:T.Material)=>{
+  let finish=finishes.get(material);if(finish)return finish;
+  const role=Object.entries(MAT).find(([,m])=>m===material)?.[0];
+  finish=(material as T.MeshStandardMaterial).clone();finish.name=`rg_${role}`;finish.userData.actorMaterial=true;
+  finishes.set(material,finish);return finish;
+ };
  // Normalized plan coordinates keep every part inside the existing reservation.
  const b=(name:string,x:number,z:number,width:number,depth:number,bottom:number,height:number,material:T.Material)=>{
-  const mesh=box(parts,x*w,bottom+height/2,z*d,width*w,height,depth*d,material,0);mesh.name=name;return mesh;
+  const mesh=box(parts,x*w,bottom+height/2,z*d,width*w,height,depth*d,owned(material),0);mesh.name=name;return mesh;
  };
  if(index===0||index===2){
   // Backed, roofless cutaway cabin fronts: solid depth, end cheeks and closed south-facing doors.
@@ -50,5 +58,6 @@ export function residentialGalleryBlockout(f:Footprint,index:number):T.Group{
   const seat=b('displaced-bench',.52,.8,.80,.23,.58,.16,MAT.rubber);seat.rotation.y=.10;
   b('bench-end-luggage',.055,.805,.10,.35,.4,.52,MAT.armor);
  }
+ applyOwnedEquipmentPalette(root,RESIDENTIAL_FINISHES);
  root.position.set(f.x,0,f.y);root.userData.footprint={...f};return root;
 }
