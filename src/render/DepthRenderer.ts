@@ -19,6 +19,7 @@ import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import {attachPassengerVault} from './PassengerVault';
 import {MAT,box,ball,rod,marine,alien,nest,disposeModel,freezeCorpse,type ActorModel} from './models';
 import {ROOM_TEMPLATES} from '../game/roguelike/roomTemplates';
 import type {DepthGame,GameEffect} from '../DepthGame';
@@ -72,7 +73,7 @@ export class DepthRenderer {
  }
  /** Load shaders, textures, GPU buffers and common animation actions before combat. */
  async prepare(node:RunNode){
-  this.loadRoom(node);await this.surfaces.ready;
+  this.loadRoom(node);await Promise.all([this.surfaces.ready,this.passengerVault?.ready]);
   const warm:T.Group=new T.Group(),models:ActorModel[]=[];this.scene.add(warm);
   const yieldTask=()=>new Promise<void>(resolve=>setTimeout(resolve,0));
   const shadowEnabled=this.renderer.shadowMap.enabled;
@@ -121,10 +122,12 @@ export class DepthRenderer {
   }
   for(const [mat,list]of buckets){const merged=mergeGeometries(list);list.forEach(g=>g.dispose());if(merged){const mesh=new T.Mesh(merged,mat);mesh.userData.bakedEnvironment=true;mesh.castShadow=true;mesh.receiveShadow=true;this.world.add(mesh);}}
  }
+ private passengerVault:ReturnType<typeof attachPassengerVault>|undefined;
  private sealedBank:ReturnType<typeof attachSealedBank>|undefined;
  private recoveryKit:ReturnType<typeof attachRecoveryKit>|undefined;
  private releasedBerth:ReturnType<typeof attachReleasedBerth>|undefined;
  loadRoom(node:RunNode,environment:ShipEnvironment|undefined=shipEnvironment(node.templateId)){
+  this.passengerVault?.dispose();this.passengerVault=undefined;
   this.sealedBank?.dispose();this.sealedBank=undefined;
   this.recoveryKit?.dispose();this.recoveryKit=undefined;
   this.releasedBerth?.dispose();this.releasedBerth=undefined;
@@ -135,7 +138,7 @@ export class DepthRenderer {
   this.muzzle.intensity=0;this.contacts.begin();this.contacts.end();
   const bespoke=authoredRoom(node.templateId,t);
   const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);
-  if(bespoke){this.world.add(bespoke);if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,()=>{this.shadowsDirty=true;});this.releasedBerth=attachReleasedBerth(bespoke,()=>{this.shadowsDirty=true;});this.recoveryKit=attachRecoveryKit(bespoke,()=>{this.shadowsDirty=true;});}}else{
+  if(bespoke){this.world.add(bespoke);if(node.templateId==='passenger-vault')this.passengerVault=attachPassengerVault(bespoke,()=>{this.shadowsDirty=true;});if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,()=>{this.shadowsDirty=true;});this.releasedBerth=attachReleasedBerth(bespoke,()=>{this.shadowsDirty=true;});this.recoveryKit=attachRecoveryKit(bespoke,()=>{this.shadowsDirty=true;});}}else{
   const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
   box(this.world,w/2,-.57,h/2,w+.6,.5,h+.6,MAT.black);
   // Low foreground parapets and tall rear bulkheads keep combat readable.
@@ -205,7 +208,7 @@ export class DepthRenderer {
   this.effects.event(effect);
  }
  syncCorpse(id:number,x:number,y:number){const corpse=this.corpses.find(c=>c.id===id);if(corpse){corpse.x=x/UNIT;corpse.y=y/UNIT;corpse.vx=corpse.vy=0;}}
- get roomLoading(){return this.recoveryKit?.state==='loading'||this.sealedBank?.state==='loading'||this.releasedBerth?.state==='loading';}
+ get roomLoading(){return this.passengerVault?.state==='loading'||this.recoveryKit?.state==='loading'||this.sealedBank?.state==='loading'||this.releasedBerth?.state==='loading';}
  render(game:DepthGame,delta:number,menu=false){
   if(this.roomKey!==game.node.id)this.loadRoom(game.node);
   // ImageBitmap completion shares browser/GPU scheduling with WebGL. Do not
@@ -269,5 +272,5 @@ export class DepthRenderer {
   if(this.tier==='high')this.composer.render();else this.renderer.render(this.scene,this.camera);
   const autoClear=this.renderer.autoClear;this.renderer.autoClear=false;this.renderer.render(this.hudScene,this.camera);this.renderer.autoClear=autoClear;
  }
- dispose(){this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
+ dispose(){this.passengerVault?.dispose();this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
 }

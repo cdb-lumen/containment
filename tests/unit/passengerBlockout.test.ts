@@ -11,13 +11,15 @@ import {ENEMIES} from '../../src/game/enemies/catalog';
 import {authoredRoom} from '../../src/render/AuthoredRooms';
 import {disposeModel} from '../../src/render/meshParts';
 const nodes=generateRun(3,3).nodes,node=nodes.find(n=>n.templateId==='passenger-vault')!;
-const rectangles=[[320,240,200,120,40],[680,240,200,120,40],[320,520,200,120,40],[680,520,200,120,40],[300,40,600,80,48],[300,760,600,80,32],[1040,240,120,80,40],[1040,560,120,80,32]];
+const rectangles=[[320,240,200,120,40],[680,240,200,120,40],[320,520,200,120,40],[680,520,200,120,40],[300,40,600,80,48],[300,760,600,80,32],[1040,240,120,80,40],[1002.55,479.35,87.45,38.63,58.34]];
 const point=(x:number,y:number)=>({x,y});
 const geometry=()=>createExpeditionGeometry(node);
 const setup=(emit:(e:GameEffect)=>void=()=>{})=>{const game=new DepthGame(emit);game.node=node;game.geometry=geometry();game.navigation=new FacilityNavigation(game.geometry);game.status='playing';Object.assign(game.player,game.geometry.playerSpawn);return game;};
 const routes=[[[100,440],[1100,440]],[[100,440],[260,440],[260,180],[960,180],[960,440],[1100,440]],[[100,440],[260,440],[260,700],[960,700],[960,440],[1100,440]],[[600,180],[600,700]]].map(r=>r.map(([x,y])=>point(x,y)));
 const targets=[point(180,440),point(600,180),point(600,700),point(600,440),point(1100,440)];
-// Exclude only the four faces flush with the hall boundary, not failed probes.
+// Exclude boundary-flush faces and the console east face whose 88-unit
+// drop-attraction probe exceeds the unchanged hall boundary. Its shorter
+// gameplay route remains covered separately.
 const accessibleFaces=rectangles.flatMap(([x,y,w,h],i)=>[
  {face:point(x,y+h/2),normal:point(-1,0),side:'west'},
  {face:point(x+w,y+h/2),normal:point(1,0),side:'east'},

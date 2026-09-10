@@ -43,7 +43,7 @@ export const PASSENGER_BLOCKOUT=Object.freeze([
  {id:'SN',x:300,y:40,w:600,h:80,height:48,row:false},
  {id:'SS',x:300,y:760,w:600,h:80,height:32,row:false},
  {id:'MN',x:1040,y:240,w:120,h:80,height:40,row:false},
- {id:'MS',x:1040,y:560,w:120,h:80,height:32,row:false},
+ {id:'MS',x:1002.55,y:479.35,w:87.45,h:38.63,height:58.34,row:false},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.

@@ -32,7 +32,7 @@ describe('nonintegrated seven-family material fixture',()=>{
   const result=transformAuthored(source);
   expect(result).toContain('continue; // temporary seven-family fixture owns equipment');
   expect(result).not.toContain('for(const x of [420,780])for(const [y,length]');
-  expect(result).toContain('box(600,24,34,1132,48,12,f.paint)');
+  expect(result).toContain('wall(600,24,34,1132,48,12)');
   expect(()=>transformAuthored('wrong source')).toThrow();
  });
  it('refuses absent and existing evidence destinations without modifying them',async()=>{

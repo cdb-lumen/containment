@@ -21,7 +21,8 @@ describe('authored architecture',()=>{
  });
  it('packs exactly four closed chambers into each of four single-tier rows',()=>{
   const group=authoredRoom('passenger-vault',actual('passenger-vault'))!;
-  const chambers=group.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0x9dada6) as T.Mesh;
+  const fallback=group.getObjectByName('passenger-equipment-fallback')!;
+  const chambers=fallback.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0x9dada6) as T.Mesh;
   const p=chambers.geometry.getAttribute('position');
   for(const hole of actual('passenger-vault').voids!.slice(0,4)){
    const x0=hole[0].x/32,z0=hole[0].y/32,z1=hole[2].y/32;

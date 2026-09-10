@@ -408,7 +408,8 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
  const kit=createAwakeningKit();f.root.add(kit);
  (f.root.userData.lightFixtures??=[]).push(...kit.userData.lightFixtures??[]);delete kit.userData.lightFixtures;
 }
-function passengerVault(f:Fabricator,t:RoomPlan){
+function passengerVault(room:Fabricator,t:RoomPlan){
+ const f=new Fabricator();
  const box=(x:number,h:number,y:number,w:number,d:number,l:number,m:T.Material)=>f.box(x/U,h/U,y/U,w/U,d/U,l/U,m,0);
  // Neutral blockout only. A full-height sealed plinth makes the whole row
  // contact conservative, including the infill between closed chamber volumes.
@@ -429,9 +430,13 @@ function passengerVault(f:Fabricator,t:RoomPlan){
  }
  // Flush, neutral route annotations. No raised pipes or extra blockers.
  for(const x of [420,780])for(const [y,length] of [[184,128],[696,128]])box(x,.08,y,3,.16,length,f.seam);
+ const fallback=f.finish();fallback.name='passenger-equipment-fallback';room.root.add(fallback);
+ room.root.userData.sealedPassengers=16;room.root.userData.storyFixtures=fallback.userData.storyFixtures;
+ room.root.userData.lightFixtures=fallback.userData.lightFixtures;delete fallback.userData.lightFixtures;
  // Perimeter volumes are outside the same boundary queried by actors/shots.
- box(600,24,34,1132,48,12,f.paint);box(600,12,846,1132,24,12,f.paint);
- box(34,12,440,12,24,800,f.paint);box(1166,12,440,12,24,800,f.paint);
+ const wall=(x:number,h:number,y:number,w:number,d:number,l:number)=>room.box(x/U,h/U,y/U,w/U,d/U,l/U,room.paint,0);
+ wall(600,24,34,1132,48,12);wall(600,12,846,1132,24,12);
+ wall(34,12,440,12,24,800);wall(1166,12,440,12,24,800);
 }
 function breachedBay(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole);
