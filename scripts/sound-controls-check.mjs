@@ -20,7 +20,7 @@ export async function observeAudio(page) {
   });
 }
 // Keep real rendering enabled, but avoid software-shadow cost during repeated
-// settings interactions. Restore Automatic before the existing gameplay smoke.
+// settings interactions. Restore High before the existing gameplay smoke.
 async function openSettings(page) {
   await page.locator('#settings').click();
   await page.locator('#quality').selectOption('low');
@@ -100,7 +100,7 @@ export async function checkMenuSound(page, mobile) {
   await page.locator('#settings').click(); await openSettings(page);
   assert.equal(Number(await slider(page).inputValue()) / 100, selected);
   console.log(`Sound menu passed: ${viewport}, default 30%, native keyboard/touch, real gain, muted reload, zero reload, channel playback.`);
-  await page.locator('#quality').selectOption('auto');
+  await page.locator('#quality').selectOption('high');
   return selected;
 }
 export async function checkPausedSound(page, mobile, selected) {
