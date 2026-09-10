@@ -1,0 +1,4355 @@
+{
+  "sha": "7d528969195ab94b4deecdedd41f7feb5b32dc5e",
+  "script": "scripts/residential-blockout-evidence.mjs",
+  "budgets": {
+    "blockoutPart": {
+      "meshes": 128,
+      "triangles": 100000,
+      "materials": 8
+    },
+    "world": {
+      "meshes": 256,
+      "triangles": 500000,
+      "materials": 64
+    },
+    "drawCalls": 1000,
+    "renderTriangles": 1000000
+  },
+  "evidenceClass": "Production-built app with local-only deterministic room-3 canonical progression staging and inactive encounter director. Actual DepthGame.update player traversal; production HUD, high composer and shipping gameplay camera, settled through 24 production 50ms render calls per gameplay view. Fitted overview is diagnostic, not gameplay framing.",
+  "limitations": [
+    "Layout fixture, not a campaign playthrough or release acceptance. Prior rooms are cleared programmatically.",
+    "No enemy navigation, combat, shot, pickup, touch-input or objective-completion proof. Only recorded player route segments are exercised.",
+    "Three actor-height ray samples and HUD bounding rectangles are diagnostics, not complete painted-pixel occlusion proof; independent PNG review remains pending.",
+    "Source blockout part counts are observed before production material batching. World budgets describe actual post-batch room meshes, not isolated equipment draw calls. These are bounded blockout ceilings, not final equipment budgets.",
+    "Google Fonts CSS is intercepted with an empty response; production HUD DOM/CSS is retained but fallback font metrics may differ.",
+    "SwiftShader-enabled Chromium counters do not prove real-device FPS. No camera, light, HUD or geometry changes in production source."
+  ],
+  "results": [
+    {
+      "name": "desktop",
+      "view": "entry",
+      "file": "desktop-entry.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              156.47727272727275,
+              445.1725915417447
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              156.47727272727275,
+              425.8629577087236
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              156.47727272727275,
+              400.5190633028835
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 28,
+                "y": 24,
+                "width": 1224,
+                "height": 46
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 142,
+                "width": 360,
+                "height": 108.796875
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 30,
+                "y": 94,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 118,
+                "width": 263.75,
+                "height": 11
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 1125,
+                "y": 694.40625,
+                "width": 125,
+                "height": 99.59375
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 815.90625,
+                "y": 826,
+                "width": 434.09375,
+                "height": 42
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 100,
+          "y": 440,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [],
+        "checks": 0,
+        "travel": 0,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "focus": [
+            14.944444444444445,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 131,
+        "triangles": 110384,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "04b18c0297ed60890dff380f0fae302fc70fe6439fda195ba34309bbbb79983a",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "middle",
+      "file": "desktop-middle.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              640.0292583052485,
+              445.1725915417447
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              640.0292583052485,
+              425.8629577087236
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              640.0292583052485,
+              400.5190633028835
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 28,
+                "y": 24,
+                "width": 1224,
+                "height": 46
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 142,
+                "width": 360,
+                "height": 108.796875
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 30,
+                "y": 94,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 118,
+                "width": 263.75,
+                "height": 11
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 1125,
+                "y": 694.40625,
+                "width": 125,
+                "height": 99.59375
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 815.90625,
+                "y": 826,
+                "width": 434.09375,
+                "height": 42
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 580,
+          "y": 440,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          }
+        ],
+        "checks": 44,
+        "travel": 480,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.124284796982817,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.124284796982817,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 135,
+        "triangles": 110816,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "d1b1b6dac8a5ca04a93699162ad23fe9c75030cc86377c083784dd6bb171a80c",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "exit",
+      "file": "desktop-exit.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              1123.5634910544716,
+              445.1725915417447
+            ],
+            "onScreen": true,
+            "occluded": true,
+            "occluder": {
+              "name": "",
+              "type": "Mesh",
+              "bakedEnvironment": false,
+              "distance": 30.702060742685532
+            },
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              1123.5634910544716,
+              425.8629577087236
+            ],
+            "onScreen": true,
+            "occluded": true,
+            "occluder": {
+              "name": "",
+              "type": "Mesh",
+              "bakedEnvironment": false,
+              "distance": 30.651958997270135
+            },
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              1123.5634910544716,
+              400.5190633028835
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 28,
+                "y": 24,
+                "width": 1224,
+                "height": 46
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 142,
+                "width": 360,
+                "height": 108.796875
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 30,
+                "y": 94,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 118,
+                "width": 263.75,
+                "height": 11
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 1125,
+                "y": 694.40625,
+                "width": 125,
+                "height": 99.59375
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 815.90625,
+                "y": 826,
+                "width": 434.09375,
+                "height": 42
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 1100,
+          "y": 440,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          }
+        ],
+        "checks": 92,
+        "travel": 1000,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            22.554559107557363,
+            26,
+            32.75
+          ],
+          "focus": [
+            22.554559107557363,
+            0,
+            13.75
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 137,
+        "triangles": 111032,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "fa04325f133369f91e126c45d6672fcfd80bb9f3172b8c2ee596c049a4a1b798",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "bunk",
+      "file": "desktop-bunk.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              463.2254482041413,
+              459.18751951002514
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              463.2254482041413,
+              439.8778856770041
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              463.2254482041413,
+              414.53399127116404
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 28,
+                "y": 24,
+                "width": 1224,
+                "height": 46
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 142,
+                "width": 360,
+                "height": 108.796875
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 30,
+                "y": 94,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 118,
+                "width": 263.75,
+                "height": 11
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 1125,
+                "y": 694.40625,
+                "width": 125,
+                "height": 99.59375
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 815.90625,
+                "y": 826,
+                "width": 434.09375,
+                "height": 42
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 340,
+          "y": 480,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 1100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 440
+            },
+            "end": {
+              "x": 340,
+              "y": 440
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 480
+            },
+            "end": {
+              "x": 340,
+              "y": 480
+            },
+            "steps": 4
+          }
+        ],
+        "checks": 166,
+        "travel": 1800,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            14.946155710565433,
+            26,
+            33.57568628305515
+          ],
+          "focus": [
+            14.946155710565433,
+            0,
+            14.57568628305515
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 131,
+        "triangles": 110384,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "d2cc8c8ac67bdf4866f96b062168172c8b634b4ffe27decee6f69cb8c1e2440f",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "packing",
+      "file": "desktop-packing.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              803.9904543110715,
+              510.7901944325027
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              803.9904543110715,
+              491.4805605994816
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              803.9904543110715,
+              466.13666619364153
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 28,
+                "y": 24,
+                "width": 1224,
+                "height": 46
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 142,
+                "width": 360,
+                "height": 108.796875
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 30,
+                "y": 94,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 118,
+                "width": 263.75,
+                "height": 11
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 1125,
+                "y": 694.40625,
+                "width": 125,
+                "height": 99.59375
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 815.90625,
+                "y": 826,
+                "width": 434.09375,
+                "height": 42
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 850,
+          "y": 530,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 1100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 440
+            },
+            "end": {
+              "x": 340,
+              "y": 440
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 480
+            },
+            "end": {
+              "x": 340,
+              "y": 480
+            },
+            "steps": 4
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 480
+            },
+            "target": {
+              "x": 580,
+              "y": 480
+            },
+            "end": {
+              "x": 580,
+              "y": 480
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 480
+            },
+            "end": {
+              "x": 850,
+              "y": 480
+            },
+            "steps": 25
+          },
+          {
+            "start": {
+              "x": 850,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 530
+            },
+            "end": {
+              "x": 850,
+              "y": 530
+            },
+            "steps": 5
+          }
+        ],
+        "checks": 218,
+        "travel": 2360,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            22.553844450173806,
+            26,
+            33.57587195292023
+          ],
+          "focus": [
+            22.553844450173806,
+            0,
+            14.575871952920233
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "quality": "high",
+        "drawCalls": 137,
+        "triangles": 111032,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "821767dc855b81ae1969aa981dd2e664378711cf12c1225f30ca644de2b29c32",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "desktop",
+      "view": "full-room",
+      "file": "desktop-full-room.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              874.4116268166899,
+              550.0001467879305
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              874.4116268166899,
+              535.8375357357381
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              874.4116268166899,
+              517.2491087297358
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 28,
+                "y": 24,
+                "width": 1224,
+                "height": 46
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 142,
+                "width": 360,
+                "height": 108.796875
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 30,
+                "y": 94,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 24,
+                "y": 118,
+                "width": 263.75,
+                "height": 11
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 1125,
+                "y": 694.40625,
+                "width": 125,
+                "height": 99.59375
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 815.90625,
+                "y": 826,
+                "width": 434.09375,
+                "height": 42
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 850,
+          "y": 530,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 1100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 440
+            },
+            "end": {
+              "x": 340,
+              "y": 440
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 480
+            },
+            "end": {
+              "x": 340,
+              "y": 480
+            },
+            "steps": 4
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 480
+            },
+            "target": {
+              "x": 580,
+              "y": 480
+            },
+            "end": {
+              "x": 580,
+              "y": 480
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 480
+            },
+            "end": {
+              "x": 850,
+              "y": 480
+            },
+            "steps": 25
+          },
+          {
+            "start": {
+              "x": 850,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 530
+            },
+            "end": {
+              "x": 850,
+              "y": 530
+            },
+            "steps": 5
+          }
+        ],
+        "checks": 218,
+        "travel": 2360,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            22.554349759972784,
+            0,
+            14.575871965252599
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.177689428684623,
+          "bottom": -13.817623071315378
+        },
+        "quality": "high",
+        "drawCalls": 213,
+        "triangles": 166556,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "916f77b4b8ed5a49506658364a1aba26823857f9a235ca463f319fc81250f030",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "entry",
+      "file": "portrait-entry.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              104.13870967741939,
+              418.78726450706506
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              104.13870967741939,
+              405.9363225353254
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              104.13870967741939,
+              389.06946119741724
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 16,
+                "width": 354,
+                "height": 44
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 128,
+                "width": 354,
+                "height": 107.390625
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 86,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 104,
+                "width": 94.625,
+                "height": 10
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 241,
+                "y": 490.8125,
+                "width": 125,
+                "height": 85.1875
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 40.390625,
+                "y": 790,
+                "width": 309.21875,
+                "height": 40
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 100,
+          "y": 440,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [],
+        "checks": 0,
+        "travel": 0,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            6.462322274881516,
+            26,
+            32.75
+          ],
+          "focus": [
+            6.462322274881516,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 120,
+        "triangles": 106984,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "a517ec889fd4d50b1ad34ba77b60847013a873e7c92f702a121beba651dad453",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "middle",
+      "file": "portrait-middle.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              195.07140117845458,
+              418.78726450706506
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              195.07140117845458,
+              405.9363225353254
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              195.07140117845458,
+              389.06946119741724
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 16,
+                "width": 354,
+                "height": 44
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 128,
+                "width": 354,
+                "height": 107.390625
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 86,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 104,
+                "width": 94.625,
+                "height": 10
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 241,
+                "y": 490.8125,
+                "width": 125,
+                "height": 85.1875
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 40.390625,
+                "y": 790,
+                "width": 309.21875,
+                "height": 40
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 580,
+          "y": 440,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          }
+        ],
+        "checks": 44,
+        "travel": 480,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.12237744486719,
+            26,
+            32.75
+          ],
+          "focus": [
+            18.12237744486719,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 130,
+        "triangles": 110340,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "874f4090d6bb28357bbd032f234e2d8bc5290e34f75a6e7edff041cab108849e",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "exit",
+      "file": "portrait-exit.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              285.9403602996339,
+              418.78726450706506
+            ],
+            "onScreen": true,
+            "occluded": true,
+            "occluder": {
+              "name": "",
+              "type": "Mesh",
+              "bakedEnvironment": false,
+              "distance": 30.702060742685532
+            },
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              285.9403602996339,
+              405.9363225353254
+            ],
+            "onScreen": true,
+            "occluded": true,
+            "occluder": {
+              "name": "",
+              "type": "Mesh",
+              "bakedEnvironment": false,
+              "distance": 30.651958997270135
+            },
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              285.9403602996339,
+              389.06946119741724
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 16,
+                "width": 354,
+                "height": 44
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 128,
+                "width": 354,
+                "height": 107.390625
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 86,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 104,
+                "width": 94.625,
+                "height": 10
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 241,
+                "y": 490.8125,
+                "width": 125,
+                "height": 85.1875
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 40.390625,
+                "y": 790,
+                "width": 309.21875,
+                "height": 40
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 1100,
+          "y": 440,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          }
+        ],
+        "checks": 92,
+        "travel": 1000,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            31.034773496103497,
+            26,
+            32.75
+          ],
+          "focus": [
+            31.034773496103497,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 126,
+        "triangles": 108454,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "0067315081bcaf86a75210cad19f0928f59d8b0a7f80c990b27c71a49ba8cb53",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "bunk",
+      "file": "portrait-bunk.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              194.87504740215252,
+              446.2646075387451
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              194.87504740215252,
+              433.41366556700547
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              194.87504740215252,
+              416.54680422909735
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 16,
+                "width": 354,
+                "height": 44
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 128,
+                "width": 354,
+                "height": 107.390625
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 86,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 104,
+                "width": 94.625,
+                "height": 10
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 241,
+                "y": 490.8125,
+                "width": 125,
+                "height": 85.1875
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 40.390625,
+                "y": 790,
+                "width": 309.21875,
+                "height": 40
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 340,
+          "y": 480,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 1100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 440
+            },
+            "end": {
+              "x": 340,
+              "y": 440
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 480
+            },
+            "end": {
+              "x": 340,
+              "y": 480
+            },
+            "steps": 4
+          }
+        ],
+        "checks": 166,
+        "travel": 1800,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            10.629589491153165,
+            26,
+            32.75
+          ],
+          "focus": [
+            10.629589491153165,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 120,
+        "triangles": 106984,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "b9c6329f207d44b55d4717462cca9cfb6a2ba8e5b413e58bb1be0767e9e5be70",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "packing",
+      "file": "portrait-packing.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              195.09754437302954,
+              480.6112863283452
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              195.09754437302954,
+              467.76034435660563
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              195.09754437302954,
+              450.8934830186974
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 16,
+                "width": 354,
+                "height": 44
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 128,
+                "width": 354,
+                "height": 107.390625
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 86,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 104,
+                "width": 94.625,
+                "height": 10
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 241,
+                "y": 490.8125,
+                "width": 125,
+                "height": 85.1875
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 40.390625,
+                "y": 790,
+                "width": 309.21875,
+                "height": 40
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 850,
+          "y": 530,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 1100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 440
+            },
+            "end": {
+              "x": 340,
+              "y": 440
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 480
+            },
+            "end": {
+              "x": 340,
+              "y": 480
+            },
+            "steps": 4
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 480
+            },
+            "target": {
+              "x": 580,
+              "y": 480
+            },
+            "end": {
+              "x": 580,
+              "y": 480
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 480
+            },
+            "end": {
+              "x": 850,
+              "y": 480
+            },
+            "steps": 25
+          },
+          {
+            "start": {
+              "x": 850,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 530
+            },
+            "end": {
+              "x": 850,
+              "y": 530
+            },
+            "steps": 5
+          }
+        ],
+        "checks": 218,
+        "travel": 2360,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            26.558917209047493,
+            26,
+            32.75
+          ],
+          "focus": [
+            26.558917209047493,
+            0,
+            13.75
+          ],
+          "left": -7.162322274881516,
+          "right": 7.162322274881516,
+          "top": 15.5,
+          "bottom": -15.5
+        },
+        "quality": "high",
+        "drawCalls": 124,
+        "triangles": 108238,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "83eb4eb8067ff60bac1a5ee05b9a935666cf9ec300b4c9000401ea019e8a16dd",
+      "pixelReview": "pending"
+    },
+    {
+      "name": "portrait",
+      "view": "full-room",
+      "file": "portrait-full-room.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "snapshot": {
+        "blockoutParts": [
+          {
+            "index": 0,
+            "name": "residential-gallery-blockout-0",
+            "footprint": {
+              "x": 8.75,
+              "y": 5,
+              "width": 7.5,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 1,
+            "name": "residential-gallery-blockout-1",
+            "footprint": {
+              "x": 8.75,
+              "y": 16.25,
+              "width": 3.75,
+              "height": 6.25
+            },
+            "meshes": 10,
+            "triangles": 120,
+            "materials": 3
+          },
+          {
+            "index": 2,
+            "name": "residential-gallery-blockout-2",
+            "footprint": {
+              "x": 20.3125,
+              "y": 8.4375,
+              "width": 8.125,
+              "height": 3.125
+            },
+            "meshes": 15,
+            "triangles": 180,
+            "materials": 4
+          },
+          {
+            "index": 3,
+            "name": "residential-gallery-blockout-3",
+            "footprint": {
+              "x": 24.375,
+              "y": 17.8125,
+              "width": 4.375,
+              "height": 4.6875
+            },
+            "meshes": 17,
+            "triangles": 204,
+            "materials": 4
+          }
+        ],
+        "worldBudget": {
+          "meshes": 38,
+          "triangles": 42286,
+          "materials": 18
+        },
+        "actorVisibility": [
+          {
+            "height": 0.2,
+            "pixel": [
+              266.4222925457102,
+              452.4687947244476
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 1,
+            "pixel": [
+              266.4222925457102,
+              448.1536241694827
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          },
+          {
+            "height": 2.05,
+            "pixel": [
+              266.4222925457102,
+              442.4899628160914
+            ],
+            "onScreen": true,
+            "occluded": false,
+            "occluder": null,
+            "hudOverlaps": []
+          }
+        ],
+        "hud": {
+          "visible": true,
+          "objective": "Fight through the residential doorways.",
+          "boxes": [
+            {
+              "selector": ".hud-top",
+              "text": "+100ARMOR50HABITATION · 03 / 20Residential galleryⅡ",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 16,
+                "width": 354,
+                "height": 44
+              }
+            },
+            {
+              "selector": "#story-hud",
+              "text": "Passengers alive · AI promises survivalFight through the residential doorways.Packed belongings. Arrival labels for New Earth.Skip",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 128,
+                "width": 354,
+                "height": 107.390625
+              }
+            },
+            {
+              "selector": "#boss-hud",
+              "text": "THE QUEENARMORED · 0s",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#build-strip",
+              "text": "Reactor 3 ◆",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 86,
+                "width": 51.5,
+                "height": 14.390625
+              }
+            },
+            {
+              "selector": "#run-stock",
+              "text": "0 CRE 2 medkits · G 3 grenades13 remaining",
+              "visible": true,
+              "rect": {
+                "x": 18,
+                "y": 104,
+                "width": 94.625,
+                "height": 10
+              }
+            },
+            {
+              "selector": ".weapon-hud",
+              "text": "shotgun08/ 21",
+              "visible": true,
+              "rect": {
+                "x": 241,
+                "y": 490.8125,
+                "width": 125,
+                "height": 85.1875
+              }
+            },
+            {
+              "selector": "#weapon-picker",
+              "text": "1pistol2rifle3shotgun4plasma5rocket",
+              "visible": true,
+              "rect": {
+                "x": 40.390625,
+                "y": 790,
+                "width": 309.21875,
+                "height": 40
+              }
+            },
+            {
+              "selector": "#touch-controls",
+              "text": "MOVE+2◈3↻⊕",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#room-loading",
+              "text": "Preparing room…Combat is on hold.",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#overlay",
+              "text": "",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
+            {
+              "selector": "#signature",
+              "text": "CONTAINMENT / DEPTH",
+              "visible": false,
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            }
+          ]
+        },
+        "state": "playing",
+        "room": "residential-gallery",
+        "player": {
+          "x": 850,
+          "y": 530,
+          "radius": 16
+        },
+        "solids": [
+          {
+            "x": 280,
+            "y": 160,
+            "width": 240,
+            "height": 100
+          },
+          {
+            "x": 280,
+            "y": 520,
+            "width": 120,
+            "height": 200
+          },
+          {
+            "x": 650,
+            "y": 270,
+            "width": 260,
+            "height": 100
+          },
+          {
+            "x": 780,
+            "y": 570,
+            "width": 140,
+            "height": 150
+          }
+        ],
+        "progression": [
+          "awakening-bay",
+          "passenger-vault",
+          "residential-gallery"
+        ],
+        "movements": [
+          {
+            "start": {
+              "x": 100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 44
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 1100,
+              "y": 440
+            },
+            "end": {
+              "x": 1100,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 1100,
+              "y": 440
+            },
+            "target": {
+              "x": 580,
+              "y": 440
+            },
+            "end": {
+              "x": 580,
+              "y": 440
+            },
+            "steps": 48
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 440
+            },
+            "end": {
+              "x": 340,
+              "y": 440
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 440
+            },
+            "target": {
+              "x": 340,
+              "y": 480
+            },
+            "end": {
+              "x": 340,
+              "y": 480
+            },
+            "steps": 4
+          },
+          {
+            "start": {
+              "x": 340,
+              "y": 480
+            },
+            "target": {
+              "x": 580,
+              "y": 480
+            },
+            "end": {
+              "x": 580,
+              "y": 480
+            },
+            "steps": 22
+          },
+          {
+            "start": {
+              "x": 580,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 480
+            },
+            "end": {
+              "x": 850,
+              "y": 480
+            },
+            "steps": 25
+          },
+          {
+            "start": {
+              "x": 850,
+              "y": 480
+            },
+            "target": {
+              "x": 850,
+              "y": 530
+            },
+            "end": {
+              "x": 850,
+              "y": 530
+            },
+            "steps": 5
+          }
+        ],
+        "checks": 218,
+        "travel": 2360,
+        "camera": {
+          "zoom": 1,
+          "position": [
+            18.75,
+            26,
+            32.75
+          ],
+          "focus": [
+            26.559975249887817,
+            0,
+            13.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 47.34034087099232,
+          "bottom": -44.98027451362307
+        },
+        "quality": "high",
+        "drawCalls": 200,
+        "triangles": 163762,
+        "errors": [],
+        "contextLost": false
+      },
+      "errors": [],
+      "sha256": "8a6a44b5f926c4e0d469ad51f4c5c85763adfe025ed3f61b9f7739cc058fe631",
+      "pixelReview": "pending"
+    }
+  ]
+}
