@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Install Blender for imported asset regressions
-        run: sudo apt-get update && sudo apt-get install -y blender python3-numpy
+        run: sudo apt-get update && sudo apt-get install -y blender python3-numpy python3-pil
 
       - name: Tests, evidence checks, and build
         timeout-minutes: 15
