@@ -582,7 +582,8 @@ export class EnemySystem {
     let targetY = player.y;
     let direction = normalized(player.x - enemy.x, player.y - enemy.y);
 
-    if (enemy.type === 'spitter') {
+    // Seek a clear shot before holding range or retreating.
+    if (enemy.type === 'spitter' && this.#canAttack?.(enemy, player) !== false) {
       if (distanceToPlayer < SPITTER_MIN_RANGE) {
         direction = normalized(enemy.x - player.x, enemy.y - player.y);
         targetX = enemy.x + direction.x * SPITTER_MIN_RANGE;
