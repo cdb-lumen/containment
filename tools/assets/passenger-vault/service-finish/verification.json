@@ -1,0 +1,160 @@
+{
+  "base_head": "0a56af7711aa92ccea634acbbda7ef84e018bb27",
+  "clean_root": "/tmp/passenger-service-finish-clean-ievu8y62",
+  "commands": [
+    {
+      "command": [
+        "blender",
+        "-t",
+        "6",
+        "--background",
+        "--factory-startup",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/service_finish.py",
+        "--",
+        "--output-root",
+        "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "blender",
+        "-t",
+        "6",
+        "--background",
+        "--factory-startup",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_service_finish.py",
+        "--",
+        "--output-root",
+        "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "blender",
+        "-t",
+        "6",
+        "--background",
+        "--factory-startup",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "/tmp/passenger-service-finish-clean-ievu8y62/tools/assets/passenger-vault/service_finish.py",
+        "--",
+        "--output-root",
+        "/tmp/passenger-service-finish-clean-ievu8y62"
+      ],
+      "cwd": "/tmp/passenger-service-finish-clean-ievu8y62",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "blender",
+        "-t",
+        "6",
+        "--background",
+        "--factory-startup",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "/tmp/passenger-service-finish-clean-ievu8y62/tools/assets/passenger-vault/test_service_finish.py",
+        "--",
+        "--output-root",
+        "/tmp/passenger-service-finish-clean-ievu8y62"
+      ],
+      "cwd": "/tmp/passenger-service-finish-clean-ievu8y62",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "tests/unit/passengerBlockout.test.ts"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout",
+      "exit_code": 0
+    }
+  ],
+  "asset": {
+    "bytes": 42520,
+    "sha256": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6",
+    "gltf_bounds_m": [
+      [
+        13.0625,
+        0.0,
+        3.0625
+      ],
+      [
+        36.4375,
+        0.0,
+        24.4375
+      ]
+    ],
+    "mesh_nodes": 13,
+    "materials": 2,
+    "embedded_textures": 0
+  },
+  "pngs": {
+    "top.png": {
+      "size": [
+        1200,
+        880
+      ],
+      "rgba_sha256": "d2acb0d3ff80fe04311370257a4ac5bc0b8fe6ca130afbee8012b97033e9a182"
+    },
+    "oblique.png": {
+      "size": [
+        1200,
+        880
+      ],
+      "rgba_sha256": "600669adbbe42bae8cad8c24d703fa540f28827630529f97ca462ed4d1032169"
+    }
+  },
+  "editable_source": {
+    "reopened_both_roots": true,
+    "clean_semantics_identical": true,
+    "blend_byte_identity_claimed": false,
+    "context_meshes": 10,
+    "editable_quads": true,
+    "kit_meshes": 13,
+    "objects": 23,
+    "semantic_sha256": "9f84cc341124d2cadacdfa013c228ee666380a69bfaa62fe43324ce58d49c114",
+    "sha256": "2f514ac41b460dde0d5070857a87864ee59caa296b8218a3e1f73c276508f992",
+    "clean_sha256": "1e9f91e6e733ab20fbfd38ebb1474bfcb56fe244be91bbedac3a51de8327e31d"
+  },
+  "passed": true,
+  "prior_tracked_files_unchanged": 683,
+  "imported_geometry_tests": 10,
+  "layout_tests": 18,
+  "clean_glb_bytes_identical": true,
+  "clean_manifest_geometry_and_sources_identical": true,
+  "png_container_byte_identity_claimed": false,
+  "browser_smoke_run": false,
+  "scope": "source-only construction, not independent acceptance or runtime integration",
+  "evidence_sha256": {
+    "tools/assets/passenger-vault/service_finish.py": "5a691d565816815aa7b028743214ff6586cf39f4036a9b0ce4583c1731c3e5c2",
+    "tools/assets/passenger-vault/test_service_finish.py": "4674925abc43b3fbc7ed4d65a2b1b98424794dd52b4cb1ffc950649a24f8ba50",
+    "tools/assets/passenger-vault/verify_service_finish.py": "9da50b7d6731550f1e3eec4fe2f6e91460f86157ff87da8221950ce011a20679",
+    "tools/assets/passenger-vault/service-finish/manifest.json": "4abc96dfe5380aa3a44f3c370300c7f21cc68e42e936ee8e69e359bb07e9d792",
+    "tools/assets/passenger-vault/service-finish/verification.log": "21fe7dc4fa2ceb5a5967280e3273af76c1528085a669310d3534ff1cc2eb051b"
+  }
+}

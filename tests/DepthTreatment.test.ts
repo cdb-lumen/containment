@@ -12,8 +12,8 @@ it.each(AUTHORED_ROOMS)('keeps authored deck relief dry and environmental ground
  expect(contact!.material).toBeInstanceOf(T.MeshBasicMaterial);expect(contact!.castShadow).toBe(false);expect((contact!.material as T.Material).depthWrite).toBe(false);
  disposeModel(root);
 });
-it('builds lit recessed shaft liners and ribs below deck',()=>{
- const root=authoredRoom('passenger-vault',ROOM_TEMPLATES['passenger-vault'])!;
+it('retains lit recessed shaft liners below the reactor deck',()=>{
+ const root=authoredRoom('overload-floor',ROOM_TEMPLATES['overload-floor'])!;
  const liner=root.children.find(o=>o instanceof T.Mesh&&(o.material as T.Material).name==='shaft-liner') as T.Mesh;
  expect(liner).toBeDefined();const m=liner.material as T.MeshStandardMaterial;
  expect(m.emissiveIntensity).toBeGreaterThan(.1);expect(m.emissiveIntensity).toBeLessThan(.4);

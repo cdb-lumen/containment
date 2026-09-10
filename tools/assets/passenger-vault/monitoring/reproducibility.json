@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "clean_root": "/tmp/passenger-monitor-clean-64cajh8n",
+  "commands": [
+    [
+      "blender",
+      "-t",
+      "6",
+      "--background",
+      "--factory-startup",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "/tmp/passenger-monitor-clean-64cajh8n/tools/assets/passenger-vault/monitoring.py",
+      "--",
+      "--output-root",
+      "/tmp/passenger-monitor-clean-64cajh8n"
+    ],
+    [
+      "blender",
+      "-t",
+      "6",
+      "--background",
+      "--factory-startup",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "/tmp/passenger-monitor-clean-64cajh8n/tools/assets/passenger-vault/test_monitor_geometry.py"
+    ],
+    [
+      "/home/chernodubv/.hermes/hermes-agent/venv/bin/python3",
+      "/tmp/passenger-monitor-clean-64cajh8n/tools/assets/passenger-vault/test_monitor_artifacts.py",
+      "/tmp/passenger-monitor-clean-64cajh8n"
+    ]
+  ],
+  "glb_sha256": {
+    "monitor-north.glb": "a2a08ac0d204509f2ade2d71c81fa964bf9199e2951c0e8bd831c1e09bacae60",
+    "monitor-south.glb": "16ed2c3dce7fef41ebc7acb0c701cf41c4cb6b67b5e4198b723e1f32c0195076",
+    "chamber.glb": "029a456996061b42355bff6f15a8ce274b9dbbeced00ea76f41fc972b7e8d840",
+    "row-carrier.glb": "9e8610aa0de331ad527c26a09752b439bf34935e4c9bb448e3de09138416c11b",
+    "distribution-north.glb": "7630daa1470f7890ef010ddd2da5ad03a6ec79e268a1576d529faf8b2c860602",
+    "distribution-south.glb": "fdc1fe47c2362a6d88730fbc82f3a8ddf34e74882a7a78efc9f0d30835d2df2a"
+  },
+  "decoded_pngs": {
+    "north-closed.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "91de881d626fa508d312f27006e1dd1db1586ef9a35caa4c7a4d9469732738b4"
+    },
+    "north-cutaway.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "fd43a593a235658bab4fdbc0d6c4b6c92b69c395fd6f1f2e53683c3da83f2f8b"
+    },
+    "room-placement.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "54b054eb8aafd8c4a4aa87b1ac6cd523d4d81693453bfc037c15c8ea3e16840d"
+    },
+    "south-closed.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "aeca09a7c0069cb0bcb7eb610c2a9ac77b26f633c3fcdb07f8fd55456f20236e"
+    },
+    "south-cutaway.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "cbd2c5af131457b69591853b386c00dd01a9ee9149d629ff618a9e06ecdd7a5a"
+    }
+  },
+  "blend_byte_identity_claimed": false
+}

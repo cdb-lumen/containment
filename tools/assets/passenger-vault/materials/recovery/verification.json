@@ -1,0 +1,19 @@
+{
+  "status": "CPU audit passed; independent pixel review pending",
+  "asset_files_verified": 18,
+  "decoded_maps_verified": 12,
+  "clean_root": "all GLB, PNG and manifest bytes matched",
+  "screenshots_verified": 27,
+  "matched_camera_groups": 9,
+  "physical_inventory_per_frame": {
+    "chambers": 16,
+    "carriers": 4,
+    "closed_lids": 16,
+    "upward_mesh_segments": 96
+  },
+  "preserved_files": 381,
+  "asset_manifest_sha256": "2868457c3104a3d6044bee78b08499facc7c3f067c2f64695f5e9052139dedce",
+  "evidence_manifest_sha256": "686671c2cf5aad4e040a9c21572021c79d76936509208f56e2e27846e113b09a",
+  "wear_acceptance": "unproven",
+  "whole_room_material_budget_pass": false
+}

@@ -1,0 +1,10 @@
+Blender 4.0.2
+Info: Total files 0 | Changed 0 | Failed 0
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Info: Saved "material-fixture.blend"
+MATERIAL_IMPORT_PASS {"status": "Imported material source validation, independent review pending", "assets": {"chamber": {"meshes": 27, "triangles": 3620, "uv_normals_positions_finite": true}, "row-carrier": {"meshes": 20, "triangles": 1504, "uv_normals_positions_finite": true}}, "images": [{"name": "wear-carrier-basecolor", "color_space": "sRGB", "size": [256, 256]}, {"name": "wear-carrier-basecolor.001", "color_space": "sRGB", "size": [256, 256]}, {"name": "wear-carrier-orm", "color_space": "Non-Color", "size": [256, 256]}, {"name": "wear-carrier-orm.001", "color_space": "Non-Color", "size": [256, 256]}, {"name": "wear-metal-basecolor", "color_space": "sRGB", "size": [256, 256]}, {"name": "wear-metal-basecolor.001", "color_space": "sRGB", "size": [256, 256]}, {"name": "wear-metal-orm", "color_space": "Non-Color", "size": [256, 256]}, {"name": "wear-metal-orm.001", "color_space": "Non-Color", "size": [256, 256]}, {"name": "wear-shell-basecolor", "color_space": "sRGB", "size": [256, 256]}, {"name": "wear-shell-orm", "color_space": "Non-Color", "size": [256, 256]}]}
+
+Blender quit

@@ -1,0 +1,23 @@
+# Passenger Vault equipment plan review
+
+## Verdict
+
+PASS for production specification. No specification must-fix found. This permits equipment construction under the stated gates, not equipment acceptance, release, merge or qualifying asset progress. The new plan and this review do not reset the later-stage anti-stall counter.
+
+Reviewed `passenger-vault-equipment-plan.md` against `passenger-vault-story.md`, `passenger-vault-layout.md`, `../art-evidence/passenger-blockout/final-review.md` and the approved production process. Also read the current neutral row construction and an existing room-asset loader for implementation feasibility. Story and layout passes remain independently established; this review does not re-award them.
+
+Checkout HEAD was `40a8752080e1da5e82306922a381f9f7325e2f08`. Reviewed plan SHA-256 was `dccb559a3949c57bce9488a59ad90c80ad2abe2ca8c68cb479af468965d20a6d`. The plan was untracked at inspection.
+
+## Findings
+
+- Source goals match. The objective stays `Clear the occupied pod rows.` Sixteen closed living passengers, maintained services and no new rescue, failure, timer or betrayal narrative agree with the approved story. Capacity is this room's design choice, not ship population. PR58 geometry, its old count and six-stage breakdown are explicitly excluded.
+- Counts reconcile arithmetically. Sixteen chambers, four carriers, two distribution units, two consoles and one flush kit give 25 installed assembly instances. Four shared row solids plus four service solids give eight interior solids. Seven GLB files describe reusable asset types, not seven installed assemblies.
+- Horizontal fit matches the accepted layout. Each row has 5-unit end margins and 10-unit sealed inter-chamber gaps. Both manifold orientations leave 8 units between manifold and chamber. Service bounds, working directions, rear access, flush feeds and perimeter connections agree with the coordinate plan. Radius-28 working and console centres retain 12 units beyond their standing envelopes to the relevant solid face. The 120/160-unit aisles retain 64/104 units of centre-position width. These are dimensional checks, not fresh traversal evidence.
+- Total height is bounded correctly. Plan lines 24 and 29 define deck-relative elevation and cap the complete row at h40, including carrier, support, chamber, lid, cues and manifold. The chamber's h40 allowance is not an additional height above a raised carrier. SN/MN and deliberately lower SS/MS retain the accepted caps. New handles, fittings and cues must remain inside those same bounds.
+- Chamber space is plausible but deliberately unaccepted. The specified internal footprint is 0.75 by 2.25 m, with 0.20 m length beyond the 2.05 m reference and 0.50 m total exterior allowance in each horizontal dimension. Width/length alone do not establish anatomical clearance. The plan properly requires a source-only lying proxy, cutaway and independent geometry gate before materials. The current neutral renderer's 24-unit-high solid plinth and 16-unit lid volume are collision/readability placeholders, not an approved internal section. Do not copy that plinth into the passenger cavity or stack a full-height chamber on it. Allocate the actual bed, body clearance, shell and lid within the complete h40 row, and prove the carrier/manifold interface in the first fit fixture. No numeric internal height is accepted by this review.
+- Implementation is feasible in principle. Separate reproducible GLBs, shared repeated resources, instancing/batching and one atomic package owner fit the existing Three.js loader approach. The existing loader demonstrates base-path URLs, timeout, fallback and late-result disposal, but is not proof of the new multi-file lifecycle. The specified budgets, two-fetch concurrency, total deadline, complete fallback, pause handling and real failure/reentry tests remain measurable production obligations, not already achieved results.
+- The evidence gates address the final layout review's residual issues. Upward-readable per-chamber cues target southern/entry readability; shipping desktop/portrait views must verify that result. Live combat, actual video, shot agreement, crowd movement, asset validity and hosted verification remain open. No camera, HUD, reward or layout redesign is smuggled in as an equipment fix.
+
+## Scope
+
+Read-only inspection apart from this report. No plan changes, asset work, GPU job, runtime edits, test execution, commit or external updates. Calculations and source reads support this specification verdict; no finished geometry, pixels, device performance or equipment acceptance is claimed.

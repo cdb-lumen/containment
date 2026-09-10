@@ -1,0 +1,31 @@
+{
+  "state": "bounded-controlled-gameplay-pass",
+  "sourceSha": "12d098122a49ef560ef4c1ec63af0805c822d875",
+  "sourceFilesRehashed": 250,
+  "externalHarnessDiffers": true,
+  "frames": 120,
+  "seconds": 6.0,
+  "fps": "20/1",
+  "dimensions": [
+    1280,
+    900
+  ],
+  "playerTravel": 48,
+  "shots": 31,
+  "authoritativeArmorPlusHealthDamage": 480,
+  "separationChecks": 360,
+  "minimumRadiusClearance": 68.0,
+  "fullRouteMinimumClearance": 68,
+  "nativeCameraZoom": 1,
+  "uniqueDecodedActorCropFrames": 120,
+  "decodeErrors": [],
+  "rejectedVideoUnchanged": true,
+  "completedAt": "2026-09-10T12:46:46.968Z",
+  "limitations": [
+    "Controlled stationary high-health brutes, zero-damage attacks, inactive director.",
+    "48-unit initial movement followed by stationary real firing.",
+    "Fixed-step software WebGL, silent MP4, no target-device FPS claim.",
+    "Native desktop renderer/camera, no production DOM HUD or organic campaign/input evidence.",
+    "External harness explicitly differs from committed room-demo; runtime source unmodified."
+  ]
+}

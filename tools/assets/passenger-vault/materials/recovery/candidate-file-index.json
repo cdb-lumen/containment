@@ -1,0 +1,234 @@
+{
+  "docs/art-evidence/passenger-materials/current/desktop-F1-material.png": {
+    "bytes": 475526,
+    "sha256": "a8939e65a664c427385719181468af244f975b7505655c77efa4473d1ab7a2b9"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-F1-neutral.png": {
+    "bytes": 575288,
+    "sha256": "12b6b36e1bd2cf247896a51d58e2e128d02a6a687b221c5b93e194ec7ab3acb3"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-F1-wear.png": {
+    "bytes": 478906,
+    "sha256": "52579fdb89f1d8d9d89b08a5ea2faf5efb004b2ec2fa6daf889373553b5c2c8c"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-closeup-material.png": {
+    "bytes": 398583,
+    "sha256": "a13d6d50ae84cd808eae84fb9e887aa69e25955476be1ddf6ea1bdc225a98462"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-closeup-neutral.png": {
+    "bytes": 581419,
+    "sha256": "644e36fdf1b850a587bad3c40c35811690046333f33d54839ec1e362d5664098"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-closeup-wear.png": {
+    "bytes": 403861,
+    "sha256": "be5d61938c14919cbb5a61c3d6feff787bae7970b797a3032f37929f23e95e7b"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-full-room-material.png": {
+    "bytes": 272224,
+    "sha256": "acb3e8f153553c46cee3390657e4560707f8b495a716e67dd750fec0492f2c5f"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-full-room-neutral.png": {
+    "bytes": 330843,
+    "sha256": "50b22db9caea448ce65138f1efbe71f16c11fab038e7f18eb9c1050d2266fe6e"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-full-room-wear.png": {
+    "bytes": 274718,
+    "sha256": "301b85fad1273a145e28a706aa8f317727c704a970eee287fe733c733fad5cd6"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-opening-material.png": {
+    "bytes": 475350,
+    "sha256": "f6cc9dcd6552c99bdfd840ec3b52236b68a3f06add7cc8b05927a858613c42fb"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-opening-neutral.png": {
+    "bytes": 575016,
+    "sha256": "62d49d9448bb4b6b3cc74a18b919bd559ce32965360585e2c6c52e1e980a9234"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-opening-wear.png": {
+    "bytes": 478719,
+    "sha256": "7fac08b3a3fb9e86bd79a3950614ec58462ea71190a504b7809031a3a6cfea13"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-south-loop-material.png": {
+    "bytes": 481236,
+    "sha256": "a9ddcfc2a2aaa6fc141726bb4cbd9630c7378c402f0e44baf796ccb2e36caff9"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-south-loop-neutral.png": {
+    "bytes": 582018,
+    "sha256": "ed6f258d8dc400d0c61b977edb058378077a96e39a070f3dc3015d024b23fae1"
+  },
+  "docs/art-evidence/passenger-materials/current/desktop-south-loop-wear.png": {
+    "bytes": 485597,
+    "sha256": "b4624282b35ca801fad61d1d3ba254fd6dce88728c741c368c02baaf52470025"
+  },
+  "docs/art-evidence/passenger-materials/current/manifest.json": {
+    "bytes": 319754,
+    "sha256": "686671c2cf5aad4e040a9c21572021c79d76936509208f56e2e27846e113b09a"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-F1-material.png": {
+    "bytes": 121964,
+    "sha256": "2eccea290b5acd8a17f1538ca8b099e4932bbedb8665e01204ed93d6c00be197"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-F1-neutral.png": {
+    "bytes": 134181,
+    "sha256": "63abaf451d4b4c33163c899613368a41e4281fbbf67e63fec60c004edd7efeec"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-F1-wear.png": {
+    "bytes": 122581,
+    "sha256": "a3dbac37c8d911204abb2c1040ef2f313d2a19d658f54fa54eb888d817e977ce"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-full-room-material.png": {
+    "bytes": 59661,
+    "sha256": "bfe35314a3c90154f936671c2d2a106a39e45e8b0172f508557bc2fa2396c7eb"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-full-room-neutral.png": {
+    "bytes": 65100,
+    "sha256": "d76fbaa756a67b7b99daa1a4527b504b5c3fb993f319bfd8fe8aedad18ef0de1"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-full-room-wear.png": {
+    "bytes": 59764,
+    "sha256": "231ee87c20e340bb29244fad928242414501742918b094519fc4c74d66f7f04c"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-opening-material.png": {
+    "bytes": 121952,
+    "sha256": "5e24aa163b7dc6b3dde309284e6e90064b32ce30efff527d56725f6901ebaef7"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-opening-neutral.png": {
+    "bytes": 134148,
+    "sha256": "68f10a59bec3a3c32711f660ee47cc5f6129f9a92a2188a111b1dec9c37f52d5"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-opening-wear.png": {
+    "bytes": 122550,
+    "sha256": "f1caff8f2393e7140f5429e10acd497c924ba445e28c20662759703a454a0c79"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-south-loop-material.png": {
+    "bytes": 115860,
+    "sha256": "3fc688acf1e768f74d3f865b0be466f28d3bc325015b6a9a75c3e92977ad6517"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-south-loop-neutral.png": {
+    "bytes": 148000,
+    "sha256": "fcb465ed971b031af05625a37389caf9099ecd9343e13e89539aa25d60393b8d"
+  },
+  "docs/art-evidence/passenger-materials/current/portrait-south-loop-wear.png": {
+    "bytes": 117599,
+    "sha256": "81a870e6e850b7ecb1f49fdd1e41fdc13df7817d2510a4c1f155197572e20afc"
+  },
+  "package.json": {
+    "bytes": 1334,
+    "sha256": "efd734f538542b8aa607063ebbb300508fdeefce63008f88b7123affed7e748c"
+  },
+  "public/assets/passenger-vault/materials/CREDITS.md": {
+    "bytes": 1542,
+    "sha256": "45bbeed18419e2419736b54b26305cff6b0cc0f3164ac05d471dee6fb40476ed"
+  },
+  "public/assets/passenger-vault/materials/manifest.json": {
+    "bytes": 9833,
+    "sha256": "2868457c3104a3d6044bee78b08499facc7c3f067c2f64695f5e9052139dedce"
+  },
+  "public/assets/passenger-vault/materials/material-carrier-basecolor.png": {
+    "bytes": 21543,
+    "sha256": "e7b2947b432d19d97ef6ee37cab2fdbd56db3443f3a73f2576355e8d3208f4d6"
+  },
+  "public/assets/passenger-vault/materials/material-carrier-orm.png": {
+    "bytes": 32885,
+    "sha256": "023ba1605595f4debe86b96b4eef248b1971126a9235bf4bb7e1af49ca55e643"
+  },
+  "public/assets/passenger-vault/materials/material-chamber.glb": {
+    "bytes": 441292,
+    "sha256": "026199cb08d1cfdac9e6440ca863b792b62d5d3484ee61f81bf9de81e074bab0"
+  },
+  "public/assets/passenger-vault/materials/material-metal-basecolor.png": {
+    "bytes": 21347,
+    "sha256": "b3851586be07b87e26a62d295326e88abc7fcb6623a16514fbc65ad7862f1b85"
+  },
+  "public/assets/passenger-vault/materials/material-metal-orm.png": {
+    "bytes": 33870,
+    "sha256": "727be5aacbc81ce4f696efd0214636277b4a29609b8d842af240182123aab204"
+  },
+  "public/assets/passenger-vault/materials/material-row-carrier.glb": {
+    "bytes": 286016,
+    "sha256": "02ae3bdff731fb5744abc319fae521c57763e2a64f3893cc4e352e2c625d8ce2"
+  },
+  "public/assets/passenger-vault/materials/material-shell-basecolor.png": {
+    "bytes": 12326,
+    "sha256": "406a95b073ff4c78770fe8701291eb5760eefeb2015c9de5da87f02f2f7b18f9"
+  },
+  "public/assets/passenger-vault/materials/material-shell-orm.png": {
+    "bytes": 27358,
+    "sha256": "6216faa7466e9b847046d6283a135e60e18cf73eda6fdfb25cc964e3396b049a"
+  },
+  "public/assets/passenger-vault/materials/neutral-chamber.glb": {
+    "bytes": 290632,
+    "sha256": "78195cff2463aa7a1e896673376f9dbd77016d2b2f3216cf595251d6e82af920"
+  },
+  "public/assets/passenger-vault/materials/neutral-row-carrier.glb": {
+    "bytes": 135364,
+    "sha256": "42ad4cf1f39dc2b3c2459442a5031200b64ebc0a8745ea28626fdc878ae5d135"
+  },
+  "public/assets/passenger-vault/materials/wear-carrier-basecolor.png": {
+    "bytes": 22879,
+    "sha256": "173f9220e6443436f81a6eef38ce541d0366d1d90d83b75045aa360972782253"
+  },
+  "public/assets/passenger-vault/materials/wear-carrier-orm.png": {
+    "bytes": 36757,
+    "sha256": "6a6662a7685885ba68da7ae4f377600903a2aea454bb763ae707a9e94383fb31"
+  },
+  "public/assets/passenger-vault/materials/wear-chamber.glb": {
+    "bytes": 468064,
+    "sha256": "49c5908ba66360679a44c1e2d1b70bbbd22ad51a5dbb80e0bff588be7cb006f5"
+  },
+  "public/assets/passenger-vault/materials/wear-metal-basecolor.png": {
+    "bytes": 23779,
+    "sha256": "25f74c69f2eac180cf773c24df91f81403a0282f2b10636ce0eb3d27a0a995b1"
+  },
+  "public/assets/passenger-vault/materials/wear-metal-orm.png": {
+    "bytes": 43693,
+    "sha256": "14454be37dd7a08cdb4fd473c8b4978b0ce47c2eabcaf6c9e2db94eef189c13e"
+  },
+  "public/assets/passenger-vault/materials/wear-row-carrier.glb": {
+    "bytes": 312788,
+    "sha256": "2776f2ca921e9d78d573ea200577c54a11bb3104e8d2b0c6e0a8e84b85464c35"
+  },
+  "public/assets/passenger-vault/materials/wear-shell-basecolor.png": {
+    "bytes": 13489,
+    "sha256": "9d38f2c93dd02eb690a0f13d93d6a44fa10c2c7a8906e19b8e3c4a720f87e74a"
+  },
+  "public/assets/passenger-vault/materials/wear-shell-orm.png": {
+    "bytes": 35528,
+    "sha256": "6c877f543990db60eef3376f110b51337426505406e98aee3022afbc1fcf055d"
+  },
+  "scripts/passenger-material-evidence.mjs": {
+    "bytes": 11990,
+    "sha256": "414dbe2d93bf34e71edeeb98c298bdcb71fb987af20f9d1a29b3ec2fbfb81c5f"
+  },
+  "tools/assets/passenger-vault/material_scene.py": {
+    "bytes": 2959,
+    "sha256": "408c07e708458fa4d4c7ab7a7f653973fcc07274ecccba046028441df04da157"
+  },
+  "tools/assets/passenger-vault/materials/README.md": {
+    "bytes": 5294,
+    "sha256": "ed9846af718250c82ad0fe03c1a405383b2084305c94a5a7cf4df913c3219145"
+  },
+  "tools/assets/passenger-vault/materials/blender-import.json": {
+    "bytes": 1653,
+    "sha256": "d3bf3523f783d72f1c93bd54d44a34fcd70829b50fd464b2e6875217338be585"
+  },
+  "tools/assets/passenger-vault/materials/material-fixture.blend": {
+    "bytes": 2844061,
+    "sha256": "760c014feddf88dc97caf724be14a4d483ef82f8501c47a950933b843e2709bb"
+  },
+  "tools/assets/passenger-vault/materials/recovery/REPORT.md": {
+    "bytes": 4727,
+    "sha256": "502f377ea68ef6cd5807dbe3421beaefb5f2973835f7a50a0bb232550961e719"
+  },
+  "tools/assets/passenger-vault/materials.py": {
+    "bytes": 10329,
+    "sha256": "2c9d60ad55240e34a9ea4befc78fc631fa69bf19df560f2e0194b51f2c4c5546"
+  },
+  "tools/assets/passenger-vault/test_materials.py": {
+    "bytes": 3755,
+    "sha256": "8ccb7fe5bdc9148e2c552e4bf1f8210a415fbd7352f67dd54cc5d8fefe85389a"
+  },
+  "tools/assets/passenger-vault/verify_material_candidate.py": {
+    "bytes": 5519,
+    "sha256": "02f05860f77cc84a6db5a20eed564de42de3f798cba276245b623bb1fb296927"
+  }
+}

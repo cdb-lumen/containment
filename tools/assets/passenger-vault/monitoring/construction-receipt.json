@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "bounded source construction only",
+  "must_fixes": [],
+  "excluded_acceptance": [
+    "materials",
+    "operating graphics",
+    "runtime",
+    "browser verifier",
+    "deploy",
+    "manufacturing certification"
+  ],
+  "reviewed_at_utc": "2026-09-09T06:08:00.582138+00:00",
+  "head": "9ece1c81d741fc07d87514f865b114c0e5e769fb",
+  "report": "construction-final-review.md",
+  "report_sha256": "b63d45ba7926210118848643a046f6cd660772c0a4a2d8994df1ff85c9f8da54",
+  "artifacts": {
+    "public/assets/passenger-vault/monitor-north.glb": {
+      "sha256": "a2a08ac0d204509f2ade2d71c81fa964bf9199e2951c0e8bd831c1e09bacae60",
+      "bytes": 45552
+    },
+    "public/assets/passenger-vault/monitor-south.glb": {
+      "sha256": "16ed2c3dce7fef41ebc7acb0c701cf41c4cb6b67b5e4198b723e1f32c0195076",
+      "bytes": 45608
+    },
+    "tools/assets/passenger-vault/monitoring/north-closed.png": {
+      "sha256": "36871b1774d602b97d30e5bd38063ac791263f50a75732b6dac2e0caf2f3447c",
+      "bytes": 614772
+    },
+    "tools/assets/passenger-vault/monitoring/north-cutaway.png": {
+      "sha256": "504a556cc37d274b5c1733695e559c988d733b6f67d85fa9150041b170c9e441",
+      "bytes": 696012
+    },
+    "tools/assets/passenger-vault/monitoring/room-placement.png": {
+      "sha256": "7717f8b013733a10f25674f9ba41dd2ae5241720c28c32494322d0822374302c",
+      "bytes": 760664
+    },
+    "tools/assets/passenger-vault/monitoring/south-closed.png": {
+      "sha256": "ada1fa46f5ab57d6b7b3bca49a43390a8e3e33717bfddd2fc5d85b3ffc5a305a",
+      "bytes": 590464
+    },
+    "tools/assets/passenger-vault/monitoring/south-cutaway.png": {
+      "sha256": "78def32da1cfef9c5a696b2fdb6266d575e1aa0fd0d892e0a65e297a258ca6d8",
+      "bytes": 656732
+    },
+    "tools/assets/passenger-vault/monitoring/north.blend": {
+      "sha256": "7135d587a9059a25ccdc935f46cf02f80cc5fe4ab04260332f1ef5f7b0f64b83",
+      "bytes": 1048584
+    },
+    "tools/assets/passenger-vault/monitoring/south.blend": {
+      "sha256": "7f00027797b7ac0141be7a649d8eba4b57ac280ca1d869ddc6d64cce3cd12a3c",
+      "bytes": 1221080
+    }
+  },
+  "source_sha256": {
+    "tools/assets/passenger-vault/monitor_contract.py": "6bb9fe48d7b1059a14d9e1c2a734f761354245d7a3ad421ec8491c7fee72dbc3",
+    "tools/assets/passenger-vault/monitor_panel_mesh_contract.py": "cf9c629cf6d74c073a0b5a5695836054a8b321f30424d3d46dfd0c2c69e248b1",
+    "tools/assets/passenger-vault/monitoring.py": "22fccc5000f24e8881b5ec2c31cdde70c4fe9912e97b0ceebaaa06b465197f2d",
+    "tools/assets/passenger-vault/test_monitor_artifacts.py": "6344681b01ab54059f444897e3bdac07fb1ad093fd34ad6a7d8a00a8ce0769da",
+    "tools/assets/passenger-vault/test_monitor_geometry.py": "cc628cc8c02d0b82266cd25ca43e430389c140b0d4a29138d739ab098cc38ab7",
+    "tools/assets/passenger-vault/test_monitor_panel_recovery.py": "2670518f7812ca65fae3e35835148583d1c79e127689c07da3e300a04accbe30",
+    "tools/assets/passenger-vault/test_monitor_preserved_equipment.py": "05698a4b7343352c68fc2851a58720c65584991f1e85e6745ce9beb08fd7c0ef",
+    "tools/assets/passenger-vault/test_monitor_provenance.py": "0c2ae3e9db12684fcdb5cf9eaa5152a178492bfa43e35d788a6ab6aafcc02a0e",
+    "tools/assets/passenger-vault/test_monitor_reproducibility.py": "7baadafe6a05b5c0a2dad461b9cb288eb1b3112a8e20ee587c10d9369a7da34b"
+  },
+  "logs_sha256": {
+    "review-cpu.log": "a8a14dfeee8a9286d8b4b5d28a27e3b095b1375a7ffd0a811de4c2ac077e3ab4",
+    "review-geometry.log": "e87c3b490fe7f2d8073d4319698a59958f8f383a8726f8269dd7a95ec78004b6",
+    "review-mesh.log": "ea1eb1d8e9a6fc2828a520b9c552d2d6faa17995de664c30347d59b9fddcf675",
+    "review-npm-build.log": "519685084026b52427bd9ba011ee9f77d32eb3868ca4204b7f1929ccfba5caef",
+    "review-npm-test.log": "888a8fbf1e3e1b7b7a760eff646a387df8996a7260c89c4a66005b9f722bb8f3",
+    "review-preservation.log": "c36a7e05661fb51b32354ab7dc5529212710e759fb089d3b62956179a058b325",
+    "review-provenance.log": "8e7be3e22d8700fb30e17d7e4cb76660de86cf62c396b2e95f906cd9234fd693",
+    "review-recovery.log": "b444aca580492434851f441cae5a926de93f3e51265fdd25176d7bb13d8ca1b0"
+  },
+  "execution": {
+    "review-cpu": {
+      "command": [
+        "python",
+        "tools/assets/passenger-vault/test_monitor_artifacts.py"
+      ],
+      "exit_code": 0,
+      "seconds": 3.27
+    },
+    "review-npm-test": {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "seconds": 18.53
+    },
+    "review-npm-build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 4.28
+    }
+  },
+  "integrity": {
+    "passed": true,
+    "clean_root": "/tmp/passenger-monitor-clean-64cajh8n",
+    "glb_hashes": 6,
+    "decoded_pngs": 5,
+    "manifest_files": 9,
+    "copied_sources_equal": 8,
+    "destructive_cases": 42,
+    "stale_provenance": []
+  },
+  "recovery_gates": 8,
+  "failed_recovery_gates": 0,
+  "destructive_mutations_rejected": 42,
+  "preserved_equipment_per_variant": {
+    "north": 15,
+    "south": 15
+  },
+  "open_state_meshes_per_variant": {
+    "north": 25,
+    "south": 25
+  },
+  "pixel_review": [
+    "north-closed.png",
+    "north-cutaway.png",
+    "room-placement.png",
+    "south-closed.png",
+    "south-cutaway.png"
+  ],
+  "canonical_regression": "verify -> npm test -> test_monitor_artifacts.py -> test_monitor_geometry.py and test_monitor_panel_recovery.py -> mesh contract",
+  "provenance_sha256": "70f808d5a2e1b7439116cfd311de19b91dc027699058652ad8da84b0abc0ec26",
+  "reproducibility_sha256": "576af615b71556e03b4ad2e4dd143cd80d6db55a15135aa55dff976a11fc17ba",
+  "rerendered_during_review": false,
+  "committed": false,
+  "pushed": false,
+  "log_preservation": "Raw two whitespace-normalized logs retained as deterministic gzip; construction-npm-test is interrupted, review-npm-test is completed."
+}

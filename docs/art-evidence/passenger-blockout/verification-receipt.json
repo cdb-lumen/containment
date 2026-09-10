@@ -1,0 +1,9 @@
+{
+  "source": "40a8752080e1da5e82306922a381f9f7325e2f08",
+  "local_log_sha256": "ef5190f7d128c58eda10d374bf0ed2e5601fb931553d018404cb544945341f86",
+  "local_verification": "All stages reached success through the terminal Browser smoke passed: desktop and touch marker. Both viewport summaries have errors: []. Original process exited; original numeric exit code was not recovered.",
+  "remote_run": "https://github.com/cdb-lumen/containment/actions/runs/34246425971",
+  "remote_verification": "Cancelled. Check-run annotation: The job has exceeded the maximum execution time of 30m0s",
+  "scope": "Blockout runtime unchanged during equipment-plan documentation. This receipt is not equipment or release acceptance.",
+  "active_owned_gpu_processes_at_readback": 0
+}

@@ -33,6 +33,18 @@ export const AWAKENING_FUNCTIONAL_ENVELOPES:readonly AwakeningFunctionalEnvelope
  {id:'technician',fixture:'interrupted-service',kind:'access',bounds:{x:972,y:650,w:56,h:56},maxHeight:64,contract:'Standing center 1000/678 faces east; 44 units to cabinet working face. Unattended satellite supply station, not bedside monitor kit.'},
  {id:'trolley',fixture:'interrupted-service',kind:'contained-kit',bounds:{x:1044,y:710,w:62,h:36},maxHeight:34,contract:'Tray height18; wheels touch deck, handle included. Detail-stage parked center1079/728, +4 east of aligned storage1075/728; no aisle overhang.'},
 ] satisfies AwakeningFunctionalEnvelope[]).map(e=>Object.freeze({...e,bounds:Object.freeze(e.bounds)})));
+/** Reviewed neutral Passenger Vault reservations. Sealed floor-mounted solids,
+ * not wells. Dimensions and heights are game units; chambers stay single-tier. */
+export const PASSENGER_BLOCKOUT=Object.freeze([
+ {id:'A',x:320,y:240,w:200,h:120,height:40,row:true},
+ {id:'B',x:680,y:240,w:200,h:120,height:40,row:true},
+ {id:'C',x:320,y:520,w:200,h:120,height:40,row:true},
+ {id:'D4',x:680,y:520,w:200,h:120,height:40,row:true},
+ {id:'SN',x:300,y:40,w:600,h:80,height:48,row:false},
+ {id:'SS',x:300,y:760,w:600,h:80,height:32,row:false},
+ {id:'MN',x:1040,y:240,w:120,h:80,height:40,row:false},
+ {id:'MS',x:1002.55,y:479.35,w:87.45,h:38.63,height:58.34,row:false},
+].map(({x,y,w,h,...role})=>Object.freeze({...role,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
  * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */
@@ -45,13 +57,12 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   breaches:polygon([[350,190],[1000,190],[350,730],[1000,550]]),obstacles:Object.freeze([]),
  }),
  'passenger-vault':Object.freeze({
-  boundary:polygon([[80,220],[260,40],[820,40],[1100,220],[1180,440],[1100,660],[820,840],[260,840],[40,620],[40,300]]),
-  // The exposed 160-wide cross-aisle cuts between two cryo banks. The covered
-  // crescent follows the broad outer balcony, with no single mandatory choke.
-  voids:Object.freeze([polygon([[400,240],[760,200],[940,320],[940,360],[400,360]]),polygon([[400,520],[940,520],[940,560],[760,680],[400,640]])]),
+  boundary:polygon([[40,40],[1160,40],[1160,840],[40,840]]),
+  voids:Object.freeze(PASSENGER_BLOCKOUT.map(f=>f.footprint)),
   spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
-  breaches:polygon([[260,140],[980,200],[260,740],[980,680]]),
-  obstacles:Object.freeze([{x:230,y:290,width:70,height:80},{x:230,y:520,width:70,height:80}].map(rect=>Object.freeze(rect))),
+  // Production east/west facing adds +/-56 along the clear rear aisles.
+  breaches:polygon([[260,180],[960,180],[260,700],[960,700]]),
+  obstacles:Object.freeze([]),
  }),
  'breached-loading-bay':Object.freeze({
   boundary:polygon([[40,200],[760,40],[1160,160],[1160,640],[860,840],[280,840],[40,600]]),

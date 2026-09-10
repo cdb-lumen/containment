@@ -1,0 +1,123 @@
+Blender 4.0.2
+Info: Total files 0 | Changed 0 | Failed 0
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:25: SyntaxWarning: invalid escape sequence '\.'
+  regex_dot = re.compile("\.")
+/usr/share/blender/scripts/addons/io_scene_gltf2/io/exp/gltf2_io_image_data.py:27: SyntaxWarning: invalid escape sequence '\]'
+  new_name = "".join([char for char in adjusted_name if char not in "!#$&'()*+,/:;<>?@[\]^`{|}~"])
+Info: Saved "north.blend"
+06:00:25 | ERROR: Draco mesh compression is not available because library could not be found at /usr/bin/4.0/python/lib/python3.12/site-packages/libextern_draco.so
+06:00:25 | INFO: Starting glTF 2.0 export
+06:00:25 | INFO: Extracting primitive: Cube.001
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.003
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.004
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.005
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.006
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.007
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.008
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.009
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: instrument_wedge
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: rear_service_cover
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: instrument_cheek_north
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: instrument_cheek_south
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: display_bezel
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: operating_display
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: service_panel_0
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.010
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: latch_0
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.011
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.012
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: service_panel_1
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.013
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: latch_1
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.014
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.015
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Finished glTF 2.0 export in 0.021225452423095703 s
+
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Info: Saved "south.blend"
+06:00:25 | ERROR: Draco mesh compression is not available because library could not be found at /usr/bin/4.0/python/lib/python3.12/site-packages/libextern_draco.so
+06:00:25 | INFO: Starting glTF 2.0 export
+06:00:25 | INFO: Extracting primitive: Cube.031
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.032
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.033
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.034
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.035
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.036
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.037
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.038
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.039
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: instrument_wedge.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: rear_service_cover.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: instrument_cheek_north.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: instrument_cheek_south.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: display_bezel.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: operating_display.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: service_panel_0.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.040
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: latch_0.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.041
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.042
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: service_panel_1.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.043
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: latch_1.002
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.044
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Extracting primitive: Cube.045
+06:00:25 | INFO: Primitives created: 1
+06:00:25 | INFO: Finished glTF 2.0 export in 0.02045273780822754 s
+
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+MONITOR_GEOMETRY_ONLY {"north": {"bounds_blender_m": [[-1.875, -1.25, 0.0], [1.875, 1.25, 1.2100000381469727]], "mesh_objects": 25, "triangles": 684, "deck_probes": 9, "support_contacts": 12, "exposed_fittings": 11, "closed_front_probes": 18, "repair_checks": {"butt_joints": 4, "display_support_samples": 18, "pack_support_samples": 4, "west_reach_m": {"operating_display": 0.7250000238418579, "electronics_pack_0": 0.7250000238418579, "electronics_pack_1": 0.7250000238418579}, "reference_height_m": 2.05, "maintenance_edge_x": -1.875, "operator_centres_unchanged": [[1000, 280], [1000, 600]], "panel_mesh": {"hollow_panels": 2, "skin_m": 0.002, "front_operable_fittings": 2}}}, "south": {"bounds_blender_m": [[-1.875, -1.25, 0.0], [1.875, 1.25, 0.9599999785423279]], "mesh_objects": 25, "triangles": 684, "deck_probes": 9, "support_contacts": 12, "exposed_fittings": 11, "closed_front_probes": 18, "repair_checks": {"butt_joints": 4, "display_support_samples": 18, "pack_support_samples": 4, "west_reach_m": {"operating_display": 0.7250000238418579, "electronics_pack_0": 0.7250000238418579, "electronics_pack_1": 0.7250000238418579}, "reference_height_m": 2.05, "maintenance_edge_x": -1.875, "operator_centres_unchanged": [[1000, 280], [1000, 600]], "panel_mesh": {"hollow_panels": 2, "skin_m": 0.002, "front_operable_fittings": 2}}}}
+
+Blender quit

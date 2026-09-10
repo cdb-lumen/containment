@@ -1,0 +1,81 @@
+CLEAN_ROOT /tmp/passenger-monitor-clean-m_ygzp4e
+{"command": ["blender", "-t", "6", "--background", "--factory-startup", "--python-exit-code", "1", "--python", "/tmp/passenger-monitor-clean-m_ygzp4e/tools/assets/passenger-vault/monitoring.py", "--", "--output-root", "/tmp/passenger-monitor-clean-m_ygzp4e"], "exit_code": 0}
+{"command": ["blender", "-t", "6", "--background", "--factory-startup", "--python-exit-code", "1", "--python", "/tmp/passenger-monitor-clean-m_ygzp4e/tools/assets/passenger-vault/test_monitor_geometry.py"], "exit_code": 0}
+{"command": ["/home/chernodubv/.hermes/hermes-agent/venv/bin/python3", "/tmp/passenger-monitor-clean-m_ygzp4e/tools/assets/passenger-vault/test_monitor_artifacts.py", "/tmp/passenger-monitor-clean-m_ygzp4e"], "exit_code": 0}
+{
+  "passed": true,
+  "clean_root": "/tmp/passenger-monitor-clean-m_ygzp4e",
+  "commands": [
+    [
+      "blender",
+      "-t",
+      "6",
+      "--background",
+      "--factory-startup",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "/tmp/passenger-monitor-clean-m_ygzp4e/tools/assets/passenger-vault/monitoring.py",
+      "--",
+      "--output-root",
+      "/tmp/passenger-monitor-clean-m_ygzp4e"
+    ],
+    [
+      "blender",
+      "-t",
+      "6",
+      "--background",
+      "--factory-startup",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "/tmp/passenger-monitor-clean-m_ygzp4e/tools/assets/passenger-vault/test_monitor_geometry.py"
+    ],
+    [
+      "/home/chernodubv/.hermes/hermes-agent/venv/bin/python3",
+      "/tmp/passenger-monitor-clean-m_ygzp4e/tools/assets/passenger-vault/test_monitor_artifacts.py",
+      "/tmp/passenger-monitor-clean-m_ygzp4e"
+    ]
+  ],
+  "glb_sha256": {
+    "monitor-north.glb": "fd190e6b37bb85fd93430fbe467bab0b87666891a136bd362bcc54fb75a97c2a",
+    "monitor-south.glb": "825d7808c751c29a5891707e25b250b34856f8adfe8f169217eb026e88259b83",
+    "chamber.glb": "029a456996061b42355bff6f15a8ce274b9dbbeced00ea76f41fc972b7e8d840",
+    "row-carrier.glb": "9e8610aa0de331ad527c26a09752b439bf34935e4c9bb448e3de09138416c11b",
+    "distribution-north.glb": "7630daa1470f7890ef010ddd2da5ad03a6ec79e268a1576d529faf8b2c860602",
+    "distribution-south.glb": "fdc1fe47c2362a6d88730fbc82f3a8ddf34e74882a7a78efc9f0d30835d2df2a"
+  },
+  "decoded_pngs": {
+    "north-closed.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "6809d2736ff6a1f1280e67420ff0bc7094bcdfd1587c677f96f239436a82ce7b"
+    },
+    "north-cutaway.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "d3d2a49097771dbea33420d72df68557a0853f0e96b3b71a679110b39ce0982f"
+    },
+    "room-placement.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "26742c3e2a23d58cf63ef1ea8e85c06384fdf5b18f59ad5baabb3049695797ed"
+    },
+    "south-closed.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "7eb7ee8659e6b638e34d65e2e8c97b06b24f047ec863461d0838adce3ae137c5"
+    },
+    "south-cutaway.png": {
+      "width": 1200,
+      "height": 800,
+      "channels": 4,
+      "pixels_sha256": "899a19a1dd28b44e2bed25da2e9bc3876da68435d6ade3cde03375ded59186ca"
+    }
+  },
+  "blend_byte_identity_claimed": false
+}

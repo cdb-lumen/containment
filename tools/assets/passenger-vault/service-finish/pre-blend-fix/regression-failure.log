@@ -1,0 +1,112 @@
+FF
+======================================================================
+FAIL: test_imported_and_editable_source_regressions (__main__.ServiceFinishArtifacts.test_imported_and_editable_source_regressions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_service_finish_artifacts.py", line 28, in test_imported_and_editable_source_regressions
+    self.assertEqual(result.returncode,0,result.stdout)
+AssertionError: 1 != 0 : test_cut_connection (__main__.Contract.test_cut_connection) ... ok
+test_editable_source (__main__.Contract.test_editable_source) ... FAIL
+test_imported_contract (__main__.Contract.test_imported_contract) ... ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... ok
+
+======================================================================
+FAIL: test_editable_source (__main__.Contract.test_editable_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_service_finish.py", line 92, in test_editable_source
+    self.assertTrue(source.is_file(), 'editable service-finish.blend missing')
+AssertionError: False is not true : editable service-finish.blend missing
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.265s
+
+FAILED (failures=1)
+Blender 4.0.2
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+
+
+======================================================================
+FAIL: test_package_hashes (__main__.ServiceFinishArtifacts.test_package_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_service_finish_artifacts.py", line 17, in test_package_hashes
+    self.assertEqual(set(manifest['files']),expected)
+AssertionError: Items in the second set but not the first:
+'tools/assets/passenger-vault/service-finish/service-finish.blend'
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.161s
+
+FAILED (failures=2)
+test_cut_connection (__main__.Contract.test_cut_connection) ... ok
+test_editable_source (__main__.Contract.test_editable_source) ... FAIL
+test_imported_contract (__main__.Contract.test_imported_contract) ... ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... ok
+
+======================================================================
+FAIL: test_editable_source (__main__.Contract.test_editable_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/test_service_finish.py", line 92, in test_editable_source
+    self.assertTrue(source.is_file(), 'editable service-finish.blend missing')
+AssertionError: False is not true : editable service-finish.blend missing
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.265s
+
+FAILED (failures=1)
+Blender 4.0.2
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s

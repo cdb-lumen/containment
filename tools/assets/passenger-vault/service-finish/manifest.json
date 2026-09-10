@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "gate": "source-only flush construction; independent review pending",
+  "license": "CC0-1.0, original procedural geometry; no external inputs",
+  "blender": "4.0.2",
+  "coordinates": {
+    "origin": "room origin, not centred",
+    "blender": "x/32,-game_y/32,height/32",
+    "gltf": "x/32,height/32,game_y/32"
+  },
+  "geometry": {
+    "mesh_objects": 13,
+    "triangles": 1026,
+    "flush_height_m": 0,
+    "connected_parts": 13,
+    "surface_ray_probes": 325,
+    "row_feeds": 4,
+    "console_connections": 2,
+    "wall_channel_game_x": [
+      1162,
+      1166
+    ]
+  },
+  "scope": "zero-thickness planar cover markings and seams only; no pipes, holes, new collision or runtime changes",
+  "context": "Source-only flat eight-solid reservation silhouettes below kit, retained in the editable blend and PNG diagrams, excluded from GLB; not equipment meshes. East wall footprint exposed to show channel inside wall. No hidden pipes are asserted.",
+  "rebuild": "blender -t 6 --background --factory-startup --python-exit-code 1 --python tools/assets/passenger-vault/service_finish.py -- --output-root ROOT; verify with python3 tools/assets/passenger-vault/verify_service_finish.py",
+  "surface_integration": "Future renderer must resolve coplanar floor markings with a decal/merge strategy; no epsilon height or floor cut introduced here.",
+  "files": {
+    "public/assets/passenger-vault/service-finish.glb": {
+      "sha256": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6",
+      "bytes": 42520
+    },
+    "tools/assets/passenger-vault/service-finish/service-finish.blend": {
+      "sha256": "2f514ac41b460dde0d5070857a87864ee59caa296b8218a3e1f73c276508f992",
+      "bytes": 1111660
+    },
+    "tools/assets/passenger-vault/service-finish/top.png": {
+      "sha256": "e4b2e97e10cc8538530cac186f7770dc3eac266ad6c6d67c29877ecd87a03cac",
+      "bytes": 554506
+    },
+    "tools/assets/passenger-vault/service-finish/oblique.png": {
+      "sha256": "9599b4a0e47ddc4b11cfc828e2e8ee8950fa0a105ab3a1473036dbbfd6557e9c",
+      "bytes": 513497
+    }
+  },
+  "sources": {
+    "service_finish.py": "5a691d565816815aa7b028743214ff6586cf39f4036a9b0ce4583c1731c3e5c2",
+    "test_service_finish.py": "4674925abc43b3fbc7ed4d65a2b1b98424794dd52b4cb1ffc950649a24f8ba50"
+  }
+}

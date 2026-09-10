@@ -1,0 +1,57 @@
+{
+  "source_hashes": {
+    "tools/assets/passenger-vault/service_finish.py": "5a691d565816815aa7b028743214ff6586cf39f4036a9b0ce4583c1731c3e5c2",
+    "tools/assets/passenger-vault/test_service_finish.py": "4674925abc43b3fbc7ed4d65a2b1b98424794dd52b4cb1ffc950649a24f8ba50",
+    "tools/assets/passenger-vault/verify_service_finish.py": "45920967762a6f369acbb32cbd060a8f874a451e98a45de98b96ab417a333872",
+    "tools/assets/passenger-vault/test_service_finish_artifacts.py": "abea873f170ab40344341f2051363660db002aabf52d12a8c437cb36c868c9e4",
+    "tools/assets/passenger-vault/service-finish/service-finish.blend": "70d6502d46db0e48e015fec959d1e212b86d90e1539e9919030bce54be41048e",
+    "tools/assets/passenger-vault/service-finish/top.png": "d59cbfef01dc66c12bad438b1a62a2a332e426063f8213970a0ce2d356bf0dc1",
+    "tools/assets/passenger-vault/service-finish/oblique.png": "b642e00a990ffab07b32917c58ab3f9deea877d6a6d685528a71b72408a610fc",
+    "tools/assets/passenger-vault/service-finish/manifest.json": "44f028b2398e4f646b4d5ca8d806639cbc18f259cdebd3fad964454fd5a2bdc1",
+    "tools/assets/passenger-vault/service-finish/verification.json": "33cf67dac9bd23b6c3068a54dc577526baec59cb0b4ac3c355bccb50d0acbf83",
+    "tools/assets/passenger-vault/service-finish/verification.log": "01071ff15ff0ee4094a77c1816f1e03ff54b219768cc133bb9e0c4ec53ccd836",
+    "tools/assets/passenger-vault/service-finish/spec-review.md": "1132500fefed86fcc6c8dae86a9cb5b0a66e0d6a47e80041c7994d5c9b9a773a",
+    "public/assets/passenger-vault/service-finish.glb": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6",
+    "docs/design/passenger-vault-equipment-plan.md": "dccb559a3949c57bce9488a59ad90c80ad2abe2ca8c68cb479af468965d20a6d",
+    "docs/design/passenger-vault-layout.md": "d61cb8430e50224f0ecbdd6fe5c01f168289798f989f75ad12fcc3f065e5d954",
+    "package.json": "679e2862cda440320b7f1e749235753773af57ac118182083e45ccb4995041b1"
+  },
+  "pixels": {
+    "top.png": {
+      "size": [
+        1200,
+        880
+      ],
+      "rgba_sha256": "d2acb0d3ff80fe04311370257a4ac5bc0b8fe6ca130afbee8012b97033e9a182"
+    },
+    "oblique.png": {
+      "size": [
+        1200,
+        880
+      ],
+      "rgba_sha256": "600669adbbe42bae8cad8c24d703fa540f28827630529f97ca462ed4d1032169"
+    }
+  },
+  "gltf_contract": {
+    "bytes": 42520,
+    "sha256": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6",
+    "gltf_bounds_m": [
+      [
+        13.0625,
+        0.0,
+        3.0625
+      ],
+      [
+        36.4375,
+        0.0,
+        24.4375
+      ]
+    ],
+    "mesh_nodes": 13,
+    "materials": 2,
+    "embedded_textures": 0
+  },
+  "retained_clean_root": "/tmp/passenger-service-finish-clean-q6awl8iu",
+  "retained_clean_comparison": true,
+  "rebuild_run_by_reviewer": false
+}

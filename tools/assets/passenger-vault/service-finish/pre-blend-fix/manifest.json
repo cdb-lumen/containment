@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "gate": "source-only flush construction; independent review pending",
+  "license": "CC0-1.0, original procedural geometry; no external inputs",
+  "blender": "4.0.2",
+  "coordinates": {
+    "origin": "room origin, not centred",
+    "blender": "x/32,-game_y/32,height/32",
+    "gltf": "x/32,height/32,game_y/32"
+  },
+  "geometry": {
+    "mesh_objects": 13,
+    "triangles": 1026,
+    "flush_height_m": 0,
+    "connected_parts": 13,
+    "surface_ray_probes": 325,
+    "row_feeds": 4,
+    "console_connections": 2,
+    "wall_channel_game_x": [
+      1162,
+      1166
+    ]
+  },
+  "scope": "zero-thickness planar cover markings and seams only; no pipes, holes, new collision or runtime changes",
+  "context": "PNG-only flat eight-solid reservation silhouettes below kit, not equipment meshes. East wall footprint exposed to show channel inside wall. No hidden pipes are asserted.",
+  "surface_integration": "Future renderer must resolve coplanar floor markings with a decal/merge strategy; no epsilon height or floor cut introduced here.",
+  "files": {
+    "public/assets/passenger-vault/service-finish.glb": {
+      "sha256": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6",
+      "bytes": 42520
+    },
+    "tools/assets/passenger-vault/service-finish/top.png": {
+      "sha256": "263ec5eac0c9cb71c7ea58a4bc86b72d26e49d5258b7572701a3c2c29f3d0cf1",
+      "bytes": 554374
+    },
+    "tools/assets/passenger-vault/service-finish/oblique.png": {
+      "sha256": "699dd3beb74e02e3e00dac7294d3be015e48d233fedf8062c827f29954732203",
+      "bytes": 513365
+    }
+  },
+  "sources": {
+    "service_finish.py": "8c80cc6b64f99053220238e7ebc45fb4e3ae692ff335dc2cdbae225b5d2b236e",
+    "test_service_finish.py": "a1cd8280e8047a9c55d3d33e3e80ad3a9a1a0d9be591287b8fe9cedaaca96669"
+  }
+}

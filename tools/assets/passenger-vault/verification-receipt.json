@@ -1,0 +1,70 @@
+{
+  "stage": "standalone_geometry_slice_passed",
+  "scope": {
+    "carriers": 1,
+    "chamber_placements": 4,
+    "room_inventory_complete": false
+  },
+  "independent_review": "final-review.md",
+  "reproducibility": {
+    "clean_root": "/tmp/passenger-fix-clean-shuxvr1h",
+    "passed": true,
+    "geometry_hashes": {
+      "chamber": "fb6524384c68cc00676490b0e98b2e77c022a32ca54d12bb97809c5440cc9e88",
+      "row-carrier": "c78a1f6044276f8c4b8b9e78a5e8ea44880cc45f37243887adcc6ad0ebee51c4"
+    },
+    "glb_binary_sha256": {
+      "chamber.glb": "029a456996061b42355bff6f15a8ce274b9dbbeced00ea76f41fc972b7e8d840",
+      "row-carrier.glb": "9e8610aa0de331ad527c26a09752b439bf34935e4c9bb448e3de09138416c11b"
+    },
+    "decoded_pngs": {
+      "carrier-rear.png": {
+        "width": 1200,
+        "height": 900,
+        "channels": 4,
+        "pixels_sha256": "3b64164acad7b7f2edb9d78ad039a2af3fe4ee26a88cb7420b089126a9fda7b9"
+      },
+      "chamber-closed.png": {
+        "width": 1200,
+        "height": 900,
+        "channels": 4,
+        "pixels_sha256": "bcd27379e20b2a9b4e071fbbfd4988be062509896eb7bd6b99d635a53b581e35"
+      },
+      "chamber-cutaway.png": {
+        "width": 1200,
+        "height": 900,
+        "channels": 4,
+        "pixels_sha256": "030ff2d49cbe3d2bbae4b1d3601e6bcce984f1a94465cce3dddee34658224d0d"
+      },
+      "chamber-section.png": {
+        "width": 1200,
+        "height": 900,
+        "channels": 4,
+        "pixels_sha256": "3f6bcc854c697c943e1439add09389afa61d537d3b476c3b22de415ef9f905ff"
+      },
+      "row-closed.png": {
+        "width": 1200,
+        "height": 900,
+        "channels": 4,
+        "pixels_sha256": "f0a5b29c6675dc48fc76d4ed6295f7daca3b5dcb153181cc7760bfffdbbcbd2e"
+      },
+      "row-top.png": {
+        "width": 1200,
+        "height": 900,
+        "channels": 4,
+        "pixels_sha256": "5a21b453b390fbd307b6c8fc5729195252a146b64d15fbe7cb603e7ad1ddbcc5"
+      }
+    },
+    "blend_byte_identity_claimed": false
+  },
+  "parent_pixel_review": "All six PNGs inspected, geometry only. Front plates/clamps exposed, bed supported. Grainy neutral studio renders are not materials or shipping-camera acceptance.",
+  "verification": {
+    "npm_test": "493 Vitest passed, 1 skip;2 Node preview passed;1 Python artifact test passed",
+    "room_tests": "7 passed",
+    "build": "exit0",
+    "blender_geometry": "7 passed in independent re-review and clean-root reproduction",
+    "full_smoke": "Not rerun for unintegrated assets. Last remote runtime head e0ac00f fails desktop console assertion on two GLTF texture blob errors; no touch completion."
+  },
+  "source_unchanged": "src/scripts/tests unchanged against e0ac00f; package.json adds artifact check to default gate",
+  "limits": "No runtime integration, materials/UV/wear, full-room equipment, loading lifecycle, new gameplay video, merge or deployment accepted."
+}

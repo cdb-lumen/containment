@@ -1,0 +1,44 @@
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.07s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.07s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.07s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.07s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.07s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.08s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.08s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.08s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.08s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.09s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.09s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.09s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.10s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.10s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.10s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.11s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.10s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.11s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.11s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.12s
+DISTRIBUTION_FAULTS [{"variant": "north", "fault": "floating skid", "rejected": "skid support gap"}, {"variant": "north", "fault": "buried handle", "rejected": "buried service fitting handle_0"}, {"variant": "north", "fault": "back slot", "rejected": "back wall gap"}, {"variant": "north", "fault": "inset front", "rejected": "sealed front"}, {"variant": "north", "fault": "floating deck", "rejected": "bounds"}, {"variant": "north", "fault": "missing panel", "rejected": "inventory panel_0"}, {"variant": "north", "fault": "oversize roof", "rejected": "bounds"}, {"variant": "north", "fault": "squashed south", "rejected": "bounds"}, {"variant": "north", "fault": "open roof mesh", "rejected": "closed topology roof"}, {"variant": "south", "fault": "floating skid", "rejected": "skid support gap"}, {"variant": "south", "fault": "buried handle", "rejected": "buried service fitting handle_0"}, {"variant": "south", "fault": "back slot", "rejected": "back wall gap"}, {"variant": "south", "fault": "inset front", "rejected": "sealed front"}, {"variant": "south", "fault": "floating deck", "rejected": "bounds"}, {"variant": "south", "fault": "missing panel", "rejected": "inventory panel_0"}, {"variant": "south", "fault": "oversize roof", "rejected": "bounds"}, {"variant": "south", "fault": "squashed south", "rejected": "bounds"}, {"variant": "south", "fault": "open roof mesh", "rejected": "closed topology roof"}]
+Blender 4.0.2
+
+Blender quit

@@ -1,0 +1,19 @@
+Blender 4.0.2
+Traceback (most recent call last):
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/monitoring.py", line 130, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/monitoring.py", line 106, in main
+    reset();parts=author(variant);validate(parts,variant);bpy.ops.wm.save_as_mainfile(filepath=str(out/f'{variant}.blend'));path=public/f'monitor-{variant}.glb';export(path,parts)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/monitoring.py", line 94, in validate
+    first('operating_display',Vector((x,y,z0))+Vector((-slope,0,1))*2,(slope,0,-1));exposed+=1
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/monitoring.py", line 75, in first
+    assert hits and min(hits)[1]==name,'buried fitting '+name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: buried fitting operating_display
+
+Error: script failed, file: '/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/monitoring.py', exiting.
+
+Blender quit

@@ -13,6 +13,8 @@ jobs:
   build:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    # Build and both software-WebGL viewports have separate serial budgets.
+    timeout-minutes: 100
     permissions:
       contents: read
     steps:
@@ -34,8 +36,24 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Verify and build
-        run: npm run verify
+      - name: Install Blender for imported asset regressions
+        run: sudo apt-get update && sudo apt-get install -y blender python3-numpy python3-pil
+
+      - name: Tests, evidence checks, and build
+        timeout-minutes: 15
+        run: npm test && npm run test:room-evidence && npm run build
+
+      - name: Desktop smoke
+        timeout-minutes: 35
+        env:
+          SMOKE_VIEWPORT: desktop
+        run: timeout --kill-after=30s 33m npm run test:smoke
+
+      - name: Touch smoke
+        timeout-minutes: 35
+        env:
+          SMOKE_VIEWPORT: touch
+        run: timeout --kill-after=30s 33m npm run test:smoke
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

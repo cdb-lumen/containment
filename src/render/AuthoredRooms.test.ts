@@ -19,13 +19,15 @@ describe('authored architecture',()=>{
   expect(geometry.size).toBeGreaterThan(5);let disposed=0;for(const resource of [...geometry,...materials])resource.addEventListener('dispose',()=>disposed++);
   disposeModel(group);expect(disposed).toBe(geometry.size+materials.size);
  });
- it('packs occupied pods across both true sloped wells',()=>{
+ it('packs exactly four closed chambers into each of four single-tier rows',()=>{
   const group=authoredRoom('passenger-vault',actual('passenger-vault'))!;
-  const skin=group.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0xb5a48e) as T.Mesh;
-  const p=skin.geometry.getAttribute('position');
-  for(const hole of actual('passenger-vault').voids!){const z0=Math.min(...hole.map(p=>p.y))/32,z1=Math.max(...hole.map(p=>p.y))/32;const columns=new Set<number>();
-   for(let i=0;i<p.count;i++)if(p.getZ(i)>z0&&p.getZ(i)<z1&&p.getY(i)>-1)columns.add(Math.round(p.getX(i)));
-   expect(columns.size).toBeGreaterThanOrEqual(6);
+  const fallback=group.getObjectByName('passenger-equipment-fallback')!;
+  const chambers=fallback.children.find(o=>o instanceof T.Mesh&&(o.material as T.MeshStandardMaterial).color.getHex()===0x9dada6) as T.Mesh;
+  const p=chambers.geometry.getAttribute('position');
+  for(const hole of actual('passenger-vault').voids!.slice(0,4)){
+   const x0=hole[0].x/32,z0=hole[0].y/32,z1=hole[2].y/32;
+   const columns=new Set<number>();for(let i=0;i<p.count;i++)if(p.getZ(i)>z0&&p.getZ(i)<z1&&p.getX(i)>x0&&p.getX(i)<hole[2].x/32){columns.add(Math.floor((p.getX(i)*32-hole[0].x)/50));expect(p.getY(i)).toBeGreaterThanOrEqual(24/32);expect(p.getY(i)).toBeLessThanOrEqual(40/32);}
+   expect(columns.size).toBe(4);
   }disposeModel(group);
  });
  it('exposes raised boarding ribs above the carapace instead of embedding slits',()=>{

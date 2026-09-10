@@ -1,0 +1,33 @@
+{
+  "geometry": {
+    "mesh_objects": 13,
+    "triangles": 1026,
+    "flush_height_m": 0,
+    "connected_parts": 13,
+    "surface_ray_probes": 325,
+    "row_feeds": 4,
+    "console_connections": 2,
+    "wall_channel_game_x": [
+      1162,
+      1166
+    ]
+  },
+  "own_negative_controls": [
+    "missing_feed_A",
+    "missing_feed_B",
+    "missing_feed_C",
+    "missing_feed_D4",
+    "missing_console_north",
+    "missing_console_south",
+    "height_-0.01",
+    "height_0.01",
+    "reversed_imported_winding"
+  ],
+  "own_negative_control_count": 9,
+  "exported_upward_normals": 1104,
+  "source_semantic_sha256": "9f84cc341124d2cadacdfa013c228ee666380a69bfaa62fe43324ce58d49c114",
+  "source_roots_reopened": 2,
+  "reservation_footprints_checked": 8,
+  "glb_nodes": 13,
+  "glb_materials": 2
+}

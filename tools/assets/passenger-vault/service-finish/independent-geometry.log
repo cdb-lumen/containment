@@ -1,0 +1,8 @@
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+INDEPENDENT_REVIEW {"exported_upward_normals": 1104, "geometry": {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}, "glb_materials": 2, "glb_nodes": 13, "own_negative_control_count": 9, "own_negative_controls": ["missing_feed_A", "missing_feed_B", "missing_feed_C", "missing_feed_D4", "missing_console_north", "missing_console_south", "height_-0.01", "height_0.01", "reversed_imported_winding"], "reservation_footprints_checked": 8, "source_roots_reopened": 2, "source_semantic_sha256": "9f84cc341124d2cadacdfa013c228ee666380a69bfaa62fe43324ce58d49c114"}
+Blender 4.0.2
+Read blend: "/home/chernodubv/dev/.cron-worktrees/containment-rooms/passenger-story-layout/tools/assets/passenger-vault/service-finish/service-finish.blend"
+Read blend: "/tmp/passenger-service-finish-clean-q6awl8iu/tools/assets/passenger-vault/service-finish/service-finish.blend"
+
+Blender quit

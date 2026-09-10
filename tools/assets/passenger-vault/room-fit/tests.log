@@ -1,0 +1,48 @@
+test_all_installed_geometry (__main__.RoomFit.test_all_installed_geometry) ... ok
+test_rejects_blocked_route (__main__.RoomFit.test_rejects_blocked_route) ... ok
+test_rejects_disconnected_service (__main__.RoomFit.test_rejects_disconnected_service) ... ok
+test_rejects_false_gap (__main__.RoomFit.test_rejects_false_gap) ... ok
+test_rejects_floating_support (__main__.RoomFit.test_rejects_floating_support) ... ok
+test_rejects_inter_chamber_overlap (__main__.RoomFit.test_rejects_inter_chamber_overlap) ... ok
+test_rejects_overhang (__main__.RoomFit.test_rejects_overhang) ... ok
+test_rejects_south_row_wrong_orientation (__main__.RoomFit.test_rejects_south_row_wrong_orientation) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.211s
+
+OK
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.02s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Blender 4.0.2
+
+Blender quit

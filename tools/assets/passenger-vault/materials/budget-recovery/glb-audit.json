@@ -1,0 +1,894 @@
+{
+  "status": "Exported candidate material-count ceiling met; NOT full material acceptance",
+  "count_method": "All material definitions, with embedded image content hashes and sampler values resolved, not local texture indices. Used count also reported.",
+  "visual_gate": "INCOMPLETE: changed ancillary pixels have not been captured or inspected",
+  "runtime_sharing_draw_calls_memory": "unverified; equal definitions permit sharing but do not implement it",
+  "before": {
+    "unique_definitions": 12,
+    "unique_used_definitions": 12,
+    "groups": {
+      "1113cef1664b8dfab1b8882020e6d3eef7276ae428f5b37b9a3aadd075f5b8ec": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": "9d38f2c93dd02eb690a0f13d93d6a44fa10c2c7a8906e19b8e3c4a720f87e74a",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "metallicFactor": 1,
+            "metallicRoughnessTexture": {
+              "index": "6c877f543990db60eef3376f110b51337426505406e98aee3022afbc1fcf055d",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "roughnessFactor": 1
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 0,
+            "name": "PV_shell",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 0,
+            "name": "PV_shell",
+            "used": false
+          }
+        ]
+      },
+      "d1719b178d565a0bae16945ff0404cbd95b10ad396043c74e290a677e63e5437": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": "173f9220e6443436f81a6eef38ce541d0366d1d90d83b75045aa360972782253",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "metallicFactor": 1,
+            "metallicRoughnessTexture": {
+              "index": "6a6662a7685885ba68da7ae4f377600903a2aea454bb763ae707a9e94383fb31",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "roughnessFactor": 1
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 1,
+            "name": "PV_carrier",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 1,
+            "name": "PV_carrier",
+            "used": true
+          }
+        ]
+      },
+      "4613c108d57bf8f6d8a8654af187f73a97079bf3f4c5f97fda09c1ea0dc4ea03": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": "25f74c69f2eac180cf773c24df91f81403a0282f2b10636ce0eb3d27a0a995b1",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "metallicFactor": 1,
+            "metallicRoughnessTexture": {
+              "index": "14454be37dd7a08cdb4fd473c8b4978b0ce47c2eabcaf6c9e2db94eef189c13e",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "roughnessFactor": 1
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 2,
+            "name": "PV_metal",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 2,
+            "name": "PV_metal",
+            "used": true
+          }
+        ]
+      },
+      "16ef73d606858bcecb0a0b9268f7bf9446ab2ce24bc996bf6cef4d41b758aff8": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.009,
+              0.014,
+              0.016,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.96
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 3,
+            "name": "PV_matte_gasket",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 3,
+            "name": "PV_matte_gasket",
+            "used": false
+          }
+        ]
+      },
+      "97629b45c320a5447c090f2ff7c758f963ceec87c5a600997a44a88932eccf03": {
+        "definition": {
+          "emissiveFactor": [
+            0.025,
+            0.42,
+            0.45
+          ],
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.015,
+              0.38,
+              0.4,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.53
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 4,
+            "name": "PV_live_cyan",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 4,
+            "name": "PV_live_cyan",
+            "used": false
+          }
+        ]
+      },
+      "c2da32cde465d4027650542d70cc66db80acd6fcc7080934d7816d9ec3e7520d": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.1899999976158142,
+              0.1899999976158142,
+              0.1899999976158142,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.7200000286102295
+          }
+        },
+        "members": [
+          {
+            "family": "distribution-north",
+            "slot": 0,
+            "name": "north_neutral_gasket",
+            "used": true
+          },
+          {
+            "family": "distribution-south",
+            "slot": 0,
+            "name": "south_neutral_gasket",
+            "used": true
+          }
+        ]
+      },
+      "fadb3050a2522af9190e01cc8582099469cad4aecf339229b34a78676b8eac09": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.47999998927116394,
+              0.47999998927116394,
+              0.47999998927116394,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.7200000286102295
+          }
+        },
+        "members": [
+          {
+            "family": "distribution-north",
+            "slot": 1,
+            "name": "north_neutral_shell",
+            "used": true
+          },
+          {
+            "family": "distribution-south",
+            "slot": 1,
+            "name": "south_neutral_shell",
+            "used": true
+          },
+          {
+            "family": "monitor-north",
+            "slot": 1,
+            "name": "neutral_shell",
+            "used": true
+          },
+          {
+            "family": "monitor-south",
+            "slot": 1,
+            "name": "neutral_shell.002",
+            "used": true
+          }
+        ]
+      },
+      "147a545b1b12c827ebd73807d28909b3a142a26c1c4dc7dbf4ea97d42562b009": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.3199999928474426,
+              0.3199999928474426,
+              0.3199999928474426,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.7200000286102295
+          }
+        },
+        "members": [
+          {
+            "family": "distribution-north",
+            "slot": 2,
+            "name": "north_neutral_mechanism",
+            "used": true
+          },
+          {
+            "family": "distribution-south",
+            "slot": 2,
+            "name": "south_neutral_mechanism",
+            "used": true
+          }
+        ]
+      },
+      "183e52e103a4f0fb769029c8b3d9d62eaf79a43e5f2e042e0d7aace4b8b6956f": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.1599999964237213,
+              0.1599999964237213,
+              0.1599999964237213,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.7200000286102295
+          }
+        },
+        "members": [
+          {
+            "family": "monitor-north",
+            "slot": 0,
+            "name": "neutral_gasket",
+            "used": true
+          },
+          {
+            "family": "monitor-south",
+            "slot": 0,
+            "name": "neutral_gasket.002",
+            "used": true
+          }
+        ]
+      },
+      "3b86d058026f2de5a54a342c636b13b03cb9136ea3729ef66028bea7b805bd4d": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.30000001192092896,
+              0.30000001192092896,
+              0.30000001192092896,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.7200000286102295
+          }
+        },
+        "members": [
+          {
+            "family": "monitor-north",
+            "slot": 2,
+            "name": "neutral_mechanism",
+            "used": true
+          },
+          {
+            "family": "monitor-south",
+            "slot": 2,
+            "name": "neutral_mechanism.002",
+            "used": true
+          }
+        ]
+      },
+      "16fca519b2dae9d9b455e521ce1903766fe6d02d7ab1a538b8ddef613d014724": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.12999999523162842,
+              0.12999999523162842,
+              0.12999999523162842,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.800000011920929
+          }
+        },
+        "members": [
+          {
+            "family": "service-finish",
+            "slot": 0,
+            "name": "neutral_panel_seam",
+            "used": true
+          }
+        ]
+      },
+      "975373f5b3d8f50446701d7ac1f4a284a6ec84e9714ac59d38b7c5e743e01fc6": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.47999998927116394,
+              0.47999998927116394,
+              0.47999998927116394,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.800000011920929
+          }
+        },
+        "members": [
+          {
+            "family": "service-finish",
+            "slot": 1,
+            "name": "neutral_cover_marking",
+            "used": true
+          }
+        ]
+      }
+    },
+    "families": {
+      "chamber": {
+        "path": "public/assets/passenger-vault/materials/wear-chamber.glb",
+        "sha256": "49c5908ba66360679a44c1e2d1b70bbbd22ad51a5dbb80e0bff588be7cb006f5",
+        "bytes": 468064,
+        "triangles": 3620,
+        "material_definitions": 5,
+        "used_slots": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "row-carrier": {
+        "path": "public/assets/passenger-vault/materials/wear-row-carrier.glb",
+        "sha256": "2776f2ca921e9d78d573ea200577c54a11bb3104e8d2b0c6e0a8e84b85464c35",
+        "bytes": 312788,
+        "triangles": 1504,
+        "material_definitions": 5,
+        "used_slots": [
+          1,
+          2
+        ]
+      },
+      "distribution-north": {
+        "path": "public/assets/passenger-vault/distribution-north.glb",
+        "sha256": "7630daa1470f7890ef010ddd2da5ad03a6ec79e268a1576d529faf8b2c860602",
+        "bytes": 371848,
+        "triangles": 4860,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "distribution-south": {
+        "path": "public/assets/passenger-vault/distribution-south.glb",
+        "sha256": "fdc1fe47c2362a6d88730fbc82f3a8ddf34e74882a7a78efc9f0d30835d2df2a",
+        "bytes": 372020,
+        "triangles": 4860,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "monitor-north": {
+        "path": "public/assets/passenger-vault/monitor-north.glb",
+        "sha256": "a2a08ac0d204509f2ade2d71c81fa964bf9199e2951c0e8bd831c1e09bacae60",
+        "bytes": 45552,
+        "triangles": 684,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "monitor-south": {
+        "path": "public/assets/passenger-vault/monitor-south.glb",
+        "sha256": "16ed2c3dce7fef41ebc7acb0c701cf41c4cb6b67b5e4198b723e1f32c0195076",
+        "bytes": 45608,
+        "triangles": 684,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "service-finish": {
+        "path": "public/assets/passenger-vault/service-finish.glb",
+        "sha256": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6",
+        "bytes": 42520,
+        "triangles": 1026,
+        "material_definitions": 2,
+        "used_slots": [
+          0,
+          1
+        ]
+      }
+    },
+    "glb_bytes": 1658400,
+    "placed_triangles": 76050
+  },
+  "after": {
+    "unique_definitions": 8,
+    "unique_used_definitions": 8,
+    "groups": {
+      "1113cef1664b8dfab1b8882020e6d3eef7276ae428f5b37b9a3aadd075f5b8ec": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": "9d38f2c93dd02eb690a0f13d93d6a44fa10c2c7a8906e19b8e3c4a720f87e74a",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "metallicFactor": 1,
+            "metallicRoughnessTexture": {
+              "index": "6c877f543990db60eef3376f110b51337426505406e98aee3022afbc1fcf055d",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "roughnessFactor": 1
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 0,
+            "name": "PV_shell",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 0,
+            "name": "PV_shell",
+            "used": false
+          }
+        ]
+      },
+      "d1719b178d565a0bae16945ff0404cbd95b10ad396043c74e290a677e63e5437": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": "173f9220e6443436f81a6eef38ce541d0366d1d90d83b75045aa360972782253",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "metallicFactor": 1,
+            "metallicRoughnessTexture": {
+              "index": "6a6662a7685885ba68da7ae4f377600903a2aea454bb763ae707a9e94383fb31",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "roughnessFactor": 1
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 1,
+            "name": "PV_carrier",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 1,
+            "name": "PV_carrier",
+            "used": true
+          }
+        ]
+      },
+      "4613c108d57bf8f6d8a8654af187f73a97079bf3f4c5f97fda09c1ea0dc4ea03": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": "25f74c69f2eac180cf773c24df91f81403a0282f2b10636ce0eb3d27a0a995b1",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "metallicFactor": 1,
+            "metallicRoughnessTexture": {
+              "index": "14454be37dd7a08cdb4fd473c8b4978b0ce47c2eabcaf6c9e2db94eef189c13e",
+              "sampler": {
+                "magFilter": 9729,
+                "minFilter": 9987,
+                "wrapS": 33071,
+                "wrapT": 33071
+              }
+            },
+            "roughnessFactor": 1
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 2,
+            "name": "PV_metal",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 2,
+            "name": "PV_metal",
+            "used": true
+          }
+        ]
+      },
+      "16ef73d606858bcecb0a0b9268f7bf9446ab2ce24bc996bf6cef4d41b758aff8": {
+        "definition": {
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.009,
+              0.014,
+              0.016,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.96
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 3,
+            "name": "PV_matte_gasket",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 3,
+            "name": "PV_matte_gasket",
+            "used": false
+          }
+        ]
+      },
+      "97629b45c320a5447c090f2ff7c758f963ceec87c5a600997a44a88932eccf03": {
+        "definition": {
+          "emissiveFactor": [
+            0.025,
+            0.42,
+            0.45
+          ],
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.015,
+              0.38,
+              0.4,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.53
+          }
+        },
+        "members": [
+          {
+            "family": "chamber",
+            "slot": 4,
+            "name": "PV_live_cyan",
+            "used": true
+          },
+          {
+            "family": "row-carrier",
+            "slot": 4,
+            "name": "PV_live_cyan",
+            "used": false
+          }
+        ]
+      },
+      "5e7fb5f10b820fb03206184b8fa51a9bc0158d061d746c4a8876714d7ba0aa0a": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.16,
+              0.16,
+              0.16,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.72
+          }
+        },
+        "members": [
+          {
+            "family": "distribution-north",
+            "slot": 0,
+            "name": "PV_ancillary_recess",
+            "used": true
+          },
+          {
+            "family": "distribution-south",
+            "slot": 0,
+            "name": "PV_ancillary_recess",
+            "used": true
+          },
+          {
+            "family": "monitor-north",
+            "slot": 0,
+            "name": "PV_ancillary_recess",
+            "used": true
+          },
+          {
+            "family": "monitor-south",
+            "slot": 0,
+            "name": "PV_ancillary_recess",
+            "used": true
+          },
+          {
+            "family": "service-finish",
+            "slot": 0,
+            "name": "PV_ancillary_recess",
+            "used": true
+          }
+        ]
+      },
+      "bb78d93884bba7268b2f365e9f5d115fa5587f95ee7e5a570de43cd0e9a08099": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.48,
+              0.48,
+              0.48,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.72
+          }
+        },
+        "members": [
+          {
+            "family": "distribution-north",
+            "slot": 1,
+            "name": "PV_ancillary_enclosure",
+            "used": true
+          },
+          {
+            "family": "distribution-south",
+            "slot": 1,
+            "name": "PV_ancillary_enclosure",
+            "used": true
+          },
+          {
+            "family": "monitor-north",
+            "slot": 1,
+            "name": "PV_ancillary_enclosure",
+            "used": true
+          },
+          {
+            "family": "monitor-south",
+            "slot": 1,
+            "name": "PV_ancillary_enclosure",
+            "used": true
+          },
+          {
+            "family": "service-finish",
+            "slot": 1,
+            "name": "PV_ancillary_enclosure",
+            "used": true
+          }
+        ]
+      },
+      "0061d5fe70e1340028a4627c6425359469da55a55ff5c8cc5dcc3ba5c81bee55": {
+        "definition": {
+          "doubleSided": true,
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.32,
+              0.32,
+              0.32,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.72
+          }
+        },
+        "members": [
+          {
+            "family": "distribution-north",
+            "slot": 2,
+            "name": "PV_ancillary_mechanism",
+            "used": true
+          },
+          {
+            "family": "distribution-south",
+            "slot": 2,
+            "name": "PV_ancillary_mechanism",
+            "used": true
+          },
+          {
+            "family": "monitor-north",
+            "slot": 2,
+            "name": "PV_ancillary_mechanism",
+            "used": true
+          },
+          {
+            "family": "monitor-south",
+            "slot": 2,
+            "name": "PV_ancillary_mechanism",
+            "used": true
+          }
+        ]
+      }
+    },
+    "families": {
+      "chamber": {
+        "path": "public/assets/passenger-vault/material-budget/chamber.glb",
+        "sha256": "49c5908ba66360679a44c1e2d1b70bbbd22ad51a5dbb80e0bff588be7cb006f5",
+        "bytes": 468064,
+        "triangles": 3620,
+        "material_definitions": 5,
+        "used_slots": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "row-carrier": {
+        "path": "public/assets/passenger-vault/material-budget/row-carrier.glb",
+        "sha256": "2776f2ca921e9d78d573ea200577c54a11bb3104e8d2b0c6e0a8e84b85464c35",
+        "bytes": 312788,
+        "triangles": 1504,
+        "material_definitions": 5,
+        "used_slots": [
+          1,
+          2
+        ]
+      },
+      "distribution-north": {
+        "path": "public/assets/passenger-vault/material-budget/distribution-north.glb",
+        "sha256": "4e74b81851ed4465cd1517a698075a9f9768947c3024d1b0690d4117e9b33c18",
+        "bytes": 371680,
+        "triangles": 4860,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "distribution-south": {
+        "path": "public/assets/passenger-vault/material-budget/distribution-south.glb",
+        "sha256": "d755713e8c67a924c8526fc4fb44d939d5e9b8c846a30f9fd513ef64a8cc3468",
+        "bytes": 371852,
+        "triangles": 4860,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "monitor-north": {
+        "path": "public/assets/passenger-vault/material-budget/monitor-north.glb",
+        "sha256": "a58dee6d50f66e2dde06647548dc13dca029fbc8f7da73db511aa6203e9fdd8e",
+        "bytes": 45396,
+        "triangles": 684,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "monitor-south": {
+        "path": "public/assets/passenger-vault/material-budget/monitor-south.glb",
+        "sha256": "b7844fa20b316484f856bb1275ac071f81ed2c635400f368fb786dfb4c12112e",
+        "bytes": 45440,
+        "triangles": 684,
+        "material_definitions": 3,
+        "used_slots": [
+          0,
+          1,
+          2
+        ]
+      },
+      "service-finish": {
+        "path": "public/assets/passenger-vault/material-budget/service-finish.glb",
+        "sha256": "acca45fbd95fdb3b4725920333344379b0eb367cd1d94180ffe56c1835f90e8c",
+        "bytes": 42408,
+        "triangles": 1026,
+        "material_definitions": 2,
+        "used_slots": [
+          0,
+          1
+        ]
+      }
+    },
+    "glb_bytes": 1657628,
+    "placed_triangles": 76050
+  }
+}

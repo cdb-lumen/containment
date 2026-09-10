@@ -1,0 +1,18 @@
+{
+  "base": "bcbae8053a68623e4e2f46487582ab1015b6e3c3",
+  "tracked_changed": [
+    "package.json"
+  ],
+  "tracked_files_other_than_package_json_unchanged": 824,
+  "prior_preservation_hashes_verified": 381,
+  "historical_assets_and_evidence": "unchanged against HEAD; prior 381-file receipt also checked",
+  "new_exports": {
+    "public/assets/passenger-vault/material-budget/chamber.glb": "49c5908ba66360679a44c1e2d1b70bbbd22ad51a5dbb80e0bff588be7cb006f5",
+    "public/assets/passenger-vault/material-budget/distribution-north.glb": "4e74b81851ed4465cd1517a698075a9f9768947c3024d1b0690d4117e9b33c18",
+    "public/assets/passenger-vault/material-budget/distribution-south.glb": "d755713e8c67a924c8526fc4fb44d939d5e9b8c846a30f9fd513ef64a8cc3468",
+    "public/assets/passenger-vault/material-budget/monitor-north.glb": "a58dee6d50f66e2dde06647548dc13dca029fbc8f7da73db511aa6203e9fdd8e",
+    "public/assets/passenger-vault/material-budget/monitor-south.glb": "b7844fa20b316484f856bb1275ac071f81ed2c635400f368fb786dfb4c12112e",
+    "public/assets/passenger-vault/material-budget/row-carrier.glb": "2776f2ca921e9d78d573ea200577c54a11bb3104e8d2b0c6e0a8e84b85464c35",
+    "public/assets/passenger-vault/material-budget/service-finish.glb": "acca45fbd95fdb3b4725920333344379b0eb367cd1d94180ffe56c1835f90e8c"
+  }
+}

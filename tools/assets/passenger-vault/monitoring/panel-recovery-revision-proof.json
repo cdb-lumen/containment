@@ -1,0 +1,135 @@
+{
+  "runs": [
+    {
+      "mode": "red",
+      "exit": 1,
+      "records": [
+        {
+          "failed_gates": 8,
+          "expected_gates": 8
+        }
+      ]
+    },
+    {
+      "mode": "feasibility",
+      "exit": 0,
+      "records": [
+        {
+          "variant": "north",
+          "panel": 0,
+          "count": 19,
+          "rejected": [
+            "intermediate_latch_sweep",
+            "final_access",
+            "reservation",
+            "service_mullion_missing",
+            "service_mullion_displaced",
+            "service_sill_missing",
+            "service_sill_displaced",
+            "support_shelf_missing",
+            "support_shelf_displaced",
+            "service_panel_0_missing",
+            "service_panel_0_displaced",
+            "service_panel_1_missing",
+            "service_panel_1_displaced",
+            "service_sill_contact",
+            "service_mullion_contact",
+            "support_shelf_contact",
+            "support_removed_bare_path_clear",
+            "grip_blocked_bare_path_clear",
+            "central_grip_hidden"
+          ]
+        },
+        {
+          "variant": "north",
+          "panel": 1,
+          "count": 19,
+          "rejected": [
+            "intermediate_latch_sweep",
+            "final_access",
+            "reservation",
+            "service_mullion_missing",
+            "service_mullion_displaced",
+            "service_sill_missing",
+            "service_sill_displaced",
+            "support_shelf_missing",
+            "support_shelf_displaced",
+            "service_panel_0_missing",
+            "service_panel_0_displaced",
+            "service_panel_1_missing",
+            "service_panel_1_displaced",
+            "service_sill_contact",
+            "service_mullion_contact",
+            "support_shelf_contact",
+            "support_removed_bare_path_clear",
+            "grip_blocked_bare_path_clear",
+            "central_grip_hidden"
+          ]
+        },
+        {
+          "variant": "south",
+          "panel": 0,
+          "count": 19,
+          "rejected": [
+            "intermediate_latch_sweep",
+            "final_access",
+            "reservation",
+            "service_mullion_missing",
+            "service_mullion_displaced",
+            "service_sill_missing",
+            "service_sill_displaced",
+            "support_shelf_missing",
+            "support_shelf_displaced",
+            "service_panel_0_missing",
+            "service_panel_0_displaced",
+            "service_panel_1_missing",
+            "service_panel_1_displaced",
+            "service_sill_contact",
+            "service_mullion_contact",
+            "support_shelf_contact",
+            "support_removed_bare_path_clear",
+            "grip_blocked_bare_path_clear",
+            "central_grip_hidden"
+          ]
+        },
+        {
+          "variant": "south",
+          "panel": 1,
+          "count": 19,
+          "rejected": [
+            "intermediate_latch_sweep",
+            "final_access",
+            "reservation",
+            "service_mullion_missing",
+            "service_mullion_displaced",
+            "service_sill_missing",
+            "service_sill_displaced",
+            "support_shelf_missing",
+            "support_shelf_displaced",
+            "service_panel_0_missing",
+            "service_panel_0_displaced",
+            "service_panel_1_missing",
+            "service_panel_1_displaced",
+            "service_sill_contact",
+            "service_mullion_contact",
+            "support_shelf_contact",
+            "support_removed_bare_path_clear",
+            "grip_blocked_bare_path_clear",
+            "central_grip_hidden"
+          ]
+        }
+      ]
+    }
+  ],
+  "negative_controls_total": 76,
+  "unchanged_hashes": {
+    "tools/assets/passenger-vault/monitoring.py": "4f557f999125a28e946215ab03e54ba841438b06d09edae69ab2d3f2c94f11bc",
+    "public/assets/passenger-vault/monitor-north.glb": "fd190e6b37bb85fd93430fbe467bab0b87666891a136bd362bcc54fb75a97c2a",
+    "public/assets/passenger-vault/monitor-south.glb": "825d7808c751c29a5891707e25b250b34856f8adfe8f169217eb026e88259b83"
+  },
+  "hollow_2mm_aluminum_box_kg": {
+    "north": 9.217540800000005,
+    "south": 6.123340799999994
+  },
+  "test_sha256": "92f9084ab7d1ba8fee64a416fbc36c746b10e5691b4bb600e5c3826569d560ea"
+}

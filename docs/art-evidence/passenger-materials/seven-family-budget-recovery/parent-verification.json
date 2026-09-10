@@ -1,0 +1,18 @@
+{
+  "capture_complete": true,
+  "png_count": 34,
+  "source_hash_count": 232,
+  "manifest_sha256": "f2fc1242f6cb5dfda9397f28f3fbbb594f1ac57eddcae0fb54d9a08b5d3f9fca",
+  "additional_reviewed_hashes": {
+    "scripts/passenger-material-fixture.d.mts": "894fb8b68f31d703ef02ede0d5f844473e14ecc08c2fd1d6339c93edb82efe3b",
+    "tests/unit/passengerMaterialFixture.test.ts": "9b271351a5c347bb220a4716133ecf6f83bf532aee241dc9302c9642e75c7f8f",
+    "docs/art-evidence/passenger-materials/seven-family-budget-recovery/independent-review.md": "929d53c53bc5defa231209d196644fd7b66ceb93bbc7c341b0855c8930b00fb1"
+  },
+  "shipping_src_public_unchanged": true,
+  "parent_test_build_exit": 0,
+  "full_local_browser_verifier": "not run, nonintegrated fixture only",
+  "material_gate": "not_passed",
+  "qualifying_art_progress": false,
+  "review": "independent-review.md; raw capture pending fields preserved, this receipt links completed independent review",
+  "next_approach": "Author actual ancillary material roles and causal wear before another matched capture. Do not count fresh screenshots alone as stage progress."
+}

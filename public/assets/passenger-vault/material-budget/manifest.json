@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "status": "budget candidate only; visual gate incomplete; NOT INTEGRATED RUNTIME",
+  "source_script_sha256": "0a1ceddb2a09e94c78272682604d1a6c7d77f43950ff6798c4fef9fa351f8fc3",
+  "source_sha256": {
+    "public/assets/passenger-vault/materials/wear-chamber.glb": "49c5908ba66360679a44c1e2d1b70bbbd22ad51a5dbb80e0bff588be7cb006f5",
+    "public/assets/passenger-vault/materials/wear-row-carrier.glb": "2776f2ca921e9d78d573ea200577c54a11bb3104e8d2b0c6e0a8e84b85464c35",
+    "public/assets/passenger-vault/distribution-north.glb": "7630daa1470f7890ef010ddd2da5ad03a6ec79e268a1576d529faf8b2c860602",
+    "public/assets/passenger-vault/distribution-south.glb": "fdc1fe47c2362a6d88730fbc82f3a8ddf34e74882a7a78efc9f0d30835d2df2a",
+    "public/assets/passenger-vault/monitor-north.glb": "a2a08ac0d204509f2ade2d71c81fa964bf9199e2951c0e8bd831c1e09bacae60",
+    "public/assets/passenger-vault/monitor-south.glb": "16ed2c3dce7fef41ebc7acb0c701cf41c4cb6b67b5e4198b723e1f32c0195076",
+    "public/assets/passenger-vault/service-finish.glb": "85517cc282d247b4a09d0daf3c56405b80f2417a5da1675e3186080ceb1337b6"
+  },
+  "mapping": {
+    "distribution-north": [
+      {
+        "slot": 0,
+        "source_name": "north_neutral_gasket",
+        "role": "recess"
+      },
+      {
+        "slot": 1,
+        "source_name": "north_neutral_shell",
+        "role": "enclosure"
+      },
+      {
+        "slot": 2,
+        "source_name": "north_neutral_mechanism",
+        "role": "mechanism"
+      }
+    ],
+    "distribution-south": [
+      {
+        "slot": 0,
+        "source_name": "south_neutral_gasket",
+        "role": "recess"
+      },
+      {
+        "slot": 1,
+        "source_name": "south_neutral_shell",
+        "role": "enclosure"
+      },
+      {
+        "slot": 2,
+        "source_name": "south_neutral_mechanism",
+        "role": "mechanism"
+      }
+    ],
+    "monitor-north": [
+      {
+        "slot": 0,
+        "source_name": "neutral_gasket",
+        "role": "recess"
+      },
+      {
+        "slot": 1,
+        "source_name": "neutral_shell",
+        "role": "enclosure"
+      },
+      {
+        "slot": 2,
+        "source_name": "neutral_mechanism",
+        "role": "mechanism"
+      }
+    ],
+    "monitor-south": [
+      {
+        "slot": 0,
+        "source_name": "neutral_gasket.002",
+        "role": "recess"
+      },
+      {
+        "slot": 1,
+        "source_name": "neutral_shell.002",
+        "role": "enclosure"
+      },
+      {
+        "slot": 2,
+        "source_name": "neutral_mechanism.002",
+        "role": "mechanism"
+      }
+    ],
+    "service-finish": [
+      {
+        "slot": 0,
+        "source_name": "neutral_panel_seam",
+        "role": "recess"
+      },
+      {
+        "slot": 1,
+        "source_name": "neutral_cover_marking",
+        "role": "enclosure"
+      }
+    ]
+  },
+  "files": {
+    "chamber.glb": {
+      "sha256": "49c5908ba66360679a44c1e2d1b70bbbd22ad51a5dbb80e0bff588be7cb006f5",
+      "bytes": 468064
+    },
+    "row-carrier.glb": {
+      "sha256": "2776f2ca921e9d78d573ea200577c54a11bb3104e8d2b0c6e0a8e84b85464c35",
+      "bytes": 312788
+    },
+    "distribution-north.glb": {
+      "sha256": "4e74b81851ed4465cd1517a698075a9f9768947c3024d1b0690d4117e9b33c18",
+      "bytes": 371680
+    },
+    "distribution-south.glb": {
+      "sha256": "d755713e8c67a924c8526fc4fb44d939d5e9b8c846a30f9fd513ef64a8cc3468",
+      "bytes": 371852
+    },
+    "monitor-north.glb": {
+      "sha256": "a58dee6d50f66e2dde06647548dc13dca029fbc8f7da73db511aa6203e9fdd8e",
+      "bytes": 45396
+    },
+    "monitor-south.glb": {
+      "sha256": "b7844fa20b316484f856bb1275ac071f81ed2c635400f368fb786dfb4c12112e",
+      "bytes": 45440
+    },
+    "service-finish.glb": {
+      "sha256": "acca45fbd95fdb3b4725920333344379b0eb367cd1d94180ffe56c1835f90e8c",
+      "bytes": 42408
+    }
+  },
+  "package_families": [
+    "chamber",
+    "row-carrier",
+    "distribution-north",
+    "distribution-south",
+    "monitor-north",
+    "monitor-south",
+    "service-finish"
+  ],
+  "material_policy": "Five unchanged chamber/carrier roles plus three shared neutral ancillary roles. Not finished ancillary PBR.",
+  "pixel_evidence": "INCOMPLETE: ancillary pixels changed; previous captures do not validate this package."
+}

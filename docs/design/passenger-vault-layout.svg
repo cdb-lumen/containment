@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1760" height="1240" viewBox="0 0 1760 1240" role="img" aria-labelledby="title desc">
+  <title id="title">Passenger Vault: whole-room layout proposal, unvalidated</title>
+  <desc id="desc">Annotated top-down plan in game units, x east and y south. A flat rectangular hall contains four rows of four closed living-passenger chambers, north and south service distribution, two east monitoring reservations, west entry and east campaign exit. Connected central and outer aisles, underfloor service feeds, hostile approach candidates and shot and pickup probes are marked. Not shipping-camera or gameplay evidence.</desc>
+  <defs>
+    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" fill="none" stroke="#23364a" stroke-width="1"/></pattern>
+    <marker id="routeArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#e9bc62" stroke-width="1.4"/></marker>
+    <marker id="shotArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#ed827a"/></marker>
+    <symbol id="podSouth" viewBox="0 0 40 88"><rect x="1" y="1" width="38" height="86" rx="8" fill="#cad8da" stroke="#68828c" stroke-width="2"/><rect x="8" y="8" width="24" height="72" rx="6" fill="#718990"/><path d="M8 80H32" stroke="#81f2cd" stroke-width="5"/></symbol>
+    <symbol id="podNorth" viewBox="0 0 40 88"><rect x="1" y="1" width="38" height="86" rx="8" fill="#cad8da" stroke="#68828c" stroke-width="2"/><rect x="8" y="8" width="24" height="72" rx="6" fill="#718990"/><path d="M8 8H32" stroke="#81f2cd" stroke-width="5"/></symbol>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#e6eef5}
+      .small{font-size:16px}.tiny{font-size:14px}.label{font-size:18px;font-weight:700}.muted{fill:#a8bbc9}
+      .solid{fill:#334c59;stroke:#8facb6;stroke-width:2}
+      .service{fill:#453e65;stroke:#af9dda;stroke-width:2}
+      .route{fill:none;stroke:#e9bc62;stroke-width:3;stroke-dasharray:12 8;marker-end:url(#routeArrow)}
+      .shot{fill:none;stroke:#ed827a;stroke-width:2;stroke-dasharray:5 7;marker-end:url(#shotArrow)}
+      .feed{fill:none;stroke:#ae9adc;stroke-width:4;stroke-dasharray:6 6}
+      .hostile{fill:#382b36;stroke:#ed827a;stroke-width:2}
+      .pickup{fill:#152630;stroke:#9acef5;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="1760" height="1240" fill="#0e1926"/>
+  <text x="60" y="50" font-size="32" font-weight="700">Passenger Vault / whole-room proposal</text>
+  <text x="60" y="85" font-size="20" fill="#a8bbc9">Clear the occupied pod rows.  |  16 living passengers  |  one flat servicing deck</text>
+  <rect x="60" y="106" width="1640" height="40" rx="4" fill="#48392b"/>
+  <text x="78" y="133" font-size="19" font-weight="700" fill="#ffd58d">UNVALIDATED: shipping-camera blockout + collision / navigation / shots / pickups + independent review still required</text>
+
+  <!-- Plan origin is 60,170. Within this group, 1 SVG unit = 1 game unit. -->
+  <g id="coordinate-plan" transform="translate(60 170)">
+    <rect width="1200" height="880" fill="#12202e"/>
+    <rect id="deck" x="40" y="40" width="1120" height="800" fill="#1c2b38" stroke="#b1c3d1" stroke-width="5"/>
+    <rect x="40" y="40" width="1120" height="800" fill="url(#grid)"/>
+    <text x="40" y="23" class="small muted">N / y decreases</text>
+    <text x="775" y="23" class="small muted">Deck x40..1160 / y40..840 / h0</text>
+
+    <!-- Walkable working strips. These are not additional solids. -->
+    <rect x="280" y="360" width="680" height="160" fill="#294a48" opacity="0.30"/>
+    <rect x="520" y="120" width="160" height="640" fill="#294a48" opacity="0.22"/>
+    <rect x="300" y="120" width="600" height="120" fill="#4b4457" opacity="0.20"/>
+    <rect x="300" y="640" width="600" height="120" fill="#4b4457" opacity="0.20"/>
+
+    <!-- Complete interior solid set: four rows, two rails, two monitors. -->
+    <rect id="bank-A" class="solid" x="320" y="240" width="200" height="120"/>
+    <rect id="bank-B" class="solid" x="680" y="240" width="200" height="120"/>
+    <rect id="bank-C" class="solid" x="320" y="520" width="200" height="120"/>
+    <rect id="bank-D4" class="solid" x="680" y="520" width="200" height="120"/>
+    <rect id="service-SN" class="service" x="300" y="40" width="600" height="80"/>
+    <rect id="service-SS" class="service" x="300" y="760" width="600" height="80"/>
+    <rect id="service-MN" class="service" x="1040" y="240" width="120" height="80"/>
+    <rect id="service-MS" class="service" x="1040" y="560" width="120" height="80"/>
+    <text x="600" y="106" text-anchor="middle" class="label">SN / protected distribution / h48 max</text>
+    <text x="600" y="786" text-anchor="middle" class="label">SS / protected distribution / h32 max</text>
+    <text x="1080" y="273" text-anchor="middle" class="label">MN</text>
+    <text x="1080" y="296" text-anchor="middle" class="tiny">h40</text>
+    <text x="1080" y="593" text-anchor="middle" class="label">MS</text>
+    <text x="1080" y="616" text-anchor="middle" class="tiny">h32</text>
+    <path d="M420 120V248M780 120V248M420 760V632M780 760V632" class="feed"/>
+    <path d="M900 100H1148V780H900M1120 280H1148M1120 600H1148" class="feed"/>
+    <text x="1136" y="732" transform="rotate(-90 1136 732)" class="tiny" fill="#c6b6ed">east wall return + monitoring</text>
+
+    <!-- Occupied positions are closed envelopes, not exposed occupants. -->
+    <g id="chambers">
+      <use href="#podSouth" x="325" y="264" width="40" height="88"/>
+      <use href="#podSouth" x="375" y="264" width="40" height="88"/>
+      <use href="#podSouth" x="425" y="264" width="40" height="88"/>
+      <use href="#podSouth" x="475" y="264" width="40" height="88"/>
+      <use href="#podSouth" x="685" y="264" width="40" height="88"/>
+      <use href="#podSouth" x="735" y="264" width="40" height="88"/>
+      <use href="#podSouth" x="785" y="264" width="40" height="88"/>
+      <use href="#podSouth" x="835" y="264" width="40" height="88"/>
+      <use href="#podNorth" x="325" y="528" width="40" height="88"/>
+      <use href="#podNorth" x="375" y="528" width="40" height="88"/>
+      <use href="#podNorth" x="425" y="528" width="40" height="88"/>
+      <use href="#podNorth" x="475" y="528" width="40" height="88"/>
+      <use href="#podNorth" x="685" y="528" width="40" height="88"/>
+      <use href="#podNorth" x="735" y="528" width="40" height="88"/>
+      <use href="#podNorth" x="785" y="528" width="40" height="88"/>
+      <use href="#podNorth" x="835" y="528" width="40" height="88"/>
+    </g>
+    <text x="420" y="255" text-anchor="middle" class="tiny">A / 4 / rear manifold</text>
+    <text x="780" y="255" text-anchor="middle" class="tiny">B / 4 / rear manifold</text>
+    <text x="420" y="637" text-anchor="middle" class="tiny">C / 4 / rear manifold</text>
+    <text x="780" y="637" text-anchor="middle" class="tiny">D4 / 4 / rear manifold</text>
+    <text x="420" y="385" text-anchor="middle" class="small" fill="#81f2cd">working face south</text>
+    <text x="780" y="385" text-anchor="middle" class="small" fill="#81f2cd">working face south</text>
+    <text x="420" y="506" text-anchor="middle" class="small" fill="#81f2cd">working face north</text>
+    <text x="780" y="506" text-anchor="middle" class="small" fill="#81f2cd">working face north</text>
+
+    <!-- Nominal routes, not an executed navigation result. -->
+    <path id="R1" class="route" d="M100 440H1100"/>
+    <path id="R2" class="route" d="M100 440H260V180H960V440H1100"/>
+    <path id="R3" class="route" d="M100 440H260V700H960V440H1100"/>
+    <path id="R4" class="route" d="M600 180V700"/>
+    <text x="490" y="166" class="label" fill="#e9bc62">R2 / rear access / 120 clear</text>
+    <text x="485" y="730" class="label" fill="#e9bc62">R3 / rear access / 120 clear</text>
+    <text x="360" y="427" class="label" fill="#e9bc62">R1 / 160 clear</text>
+    <text x="620" y="330" class="small" transform="rotate(-90 620 330)" fill="#e9bc62">R4 / 160 clear</text>
+    <text x="938" y="360" class="tiny" transform="rotate(-90 938 360)">east return / 160 min</text>
+
+    <!-- Focal intent and shot probes. -->
+    <path d="M180 440L350 340L350 540Z" fill="#68bac2" fill-opacity="0.10" stroke="#68bac2" stroke-width="1.5"/>
+    <circle cx="180" cy="440" r="5" fill="#8bdae2"/>
+    <text x="156" y="472" class="small" fill="#8bdae2">F1</text>
+    <path class="shot" d="M180 440H1020"/>
+    <path class="shot" d="M600 180V700"/>
+    <text x="725" y="465" class="small" fill="#ed827a">L1 / clear ray</text>
+    <text x="543" y="215" class="small" fill="#ed827a">L2</text>
+    <path class="shot" d="M260 440L420 360"/>
+    <path d="M412 352L428 368M428 352L412 368" stroke="#ed827a" stroke-width="3"/>
+    <text x="297" y="402" class="tiny" fill="#ed827a">blocked</text>
+
+    <!-- Entry and exit remain campaign anchors inside the map boundary. -->
+    <circle cx="100" cy="440" r="16" fill="#91d6e6" stroke="#ebfaff" stroke-width="2"/>
+    <circle cx="100" cy="440" r="28" fill="none" stroke="#91d6e6" stroke-dasharray="4 4"/>
+    <text x="70" y="366" class="label">E / entry</text>
+    <text x="70" y="391" class="small">100,440</text>
+    <rect x="1082" y="422" width="36" height="36" fill="#193b35" stroke="#81f2cd" stroke-width="3"/>
+    <text x="1010" y="366" class="label">X / progression</text>
+    <text x="1044" y="392" class="small">1100,440</text>
+    <text x="70" y="824" class="small muted">No pits. No stacked tiers. No additional west cover blocks.</text>
+
+    <!-- Four hostile approaches; facing/spawn offsets remain to test. -->
+    <g id="hostile-approaches">
+      <circle class="hostile" cx="260" cy="180" r="16"/><text x="217" y="150" class="label" fill="#ed827a">H1</text>
+      <circle class="hostile" cx="960" cy="180" r="16"/><text x="978" y="163" class="label" fill="#ed827a">H2</text>
+      <circle class="hostile" cx="260" cy="700" r="16"/><text x="217" y="741" class="label" fill="#ed827a">H3</text>
+      <circle class="hostile" cx="960" cy="700" r="16"/><text x="980" y="726" class="label" fill="#ed827a">H4</text>
+    </g>
+    <g id="pickup-probes">
+      <path class="pickup" d="M600 430L610 440L600 450L590 440Z"/><text x="614" y="470" class="small">P1</text>
+      <path class="pickup" d="M260 290L270 300L260 310L250 300Z"/><text x="216" y="285" class="small">P2</text>
+      <path class="pickup" d="M960 570L970 580L960 590L950 580Z"/><text x="976" y="579" class="small">P3</text>
+    </g>
+    <g class="small muted" text-anchor="middle">
+      <text x="40" y="868">40</text><text x="320" y="868">320</text><text x="520" y="868">520</text><text x="680" y="868">680</text><text x="880" y="868">880</text><text x="1160" y="868">1160 / x</text>
+    </g>
+    <g class="tiny muted" text-anchor="end"><text x="30" y="46">40</text><text x="30" y="246">240</text><text x="30" y="366">360</text><text x="30" y="526">520</text><text x="30" y="646">640</text><text x="30" y="846">840</text></g>
+  </g>
+
+  <!-- Annotations sit outside the plan so the floor remains inspectable. -->
+  <g transform="translate(1300 196)">
+    <text y="0" font-size="22" font-weight="700">Plan key</text>
+    <rect y="22" width="24" height="20" class="solid"/><text x="36" y="38" class="small">Row solid / closed chambers</text>
+    <rect y="58" width="24" height="20" class="service"/><text x="36" y="74" class="small">Service solid / not a puzzle</text>
+    <path d="M0 108H26" class="feed"/><text x="36" y="114" class="small">Underfloor feed / walk over</text>
+    <path d="M0 146H26" class="route"/><text x="36" y="152" class="small">Connected route proposal</text>
+    <path d="M0 184H26" class="shot"/><text x="36" y="190" class="small">Shot probe / red X = contact</text>
+    <circle cx="12" cy="220" r="10" class="hostile"/><text x="36" y="226" class="small">H = hostile approach candidate</text>
+    <path d="M12 248L22 258L12 268L2 258Z" class="pickup"/><text x="36" y="264" class="small">P = pickup test, not a reward</text>
+    <path d="M0 302H380" stroke="#385064"/>
+    <text y="337" font-size="22" font-weight="700">Capacity and human scale</text>
+    <text y="369" class="small">4 rows × 4 single-tier chambers = 16</text>
+    <text y="398" class="small">Shell reservation 40 × 88 / h40 max</text>
+    <text y="427" class="small">1.25 × 2.75 m / h1.25 m nominal</text>
+    <text y="456" class="small">Internal body reserve 24 × 72</text>
+    <text y="485" class="small">Marine reference: 2.05 m / 65.6 gu</text>
+    <text y="514" class="small">Player r16 / lane test r28</text>
+    <text y="543" class="small">32 game units = 1 renderer unit</text>
+    <text y="571" class="tiny muted">Sources: DepthRenderer.ts:26; models.ts:50</text>
+    <path d="M0 597H380" stroke="#385064"/>
+    <text y="632" font-size="22" font-weight="700">Read the working room</text>
+    <text y="664" class="small">F1: entry → occupied west rows</text>
+    <text y="693" class="small">Green bands: operating live-state cue</text>
+    <text y="722" class="small">Central working faces; rear maintenance</text>
+    <text y="751" class="small">All chambers supported on the deck</text>
+    <text y="780" class="small">No equipment silhouette is approved</text>
+    <text y="821" class="small" fill="#ffd58d">F1 wedge is not a camera frustum.</text>
+    <text y="850" class="small" fill="#ffd58d">This is not a gameplay screenshot.</text>
+  </g>
+  <path d="M60 1090H1700" stroke="#385064"/>
+  <path d="M80 1130H240M80 1121V1139M240 1121V1139" stroke="#e6eef5" stroke-width="3"/>
+  <text x="80" y="1166" class="small">160 game units / 5 nominal metres</text>
+  <text x="515" y="1128" class="label">Retain west-to-east progression and alternate routes.</text>
+  <text x="515" y="1161" class="small muted">Replace wells, lower tiers and crescent balcony with same-deck rows and protected services.</text>
+  <text x="60" y="1210" class="small muted">Coordinate and acceptance specification: passenger-vault-layout.md  |  Draft only. No runtime edits. Equipment production stays gated.</text>
+</svg>
