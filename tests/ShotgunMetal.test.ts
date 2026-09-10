@@ -27,7 +27,7 @@ describe('supported body-slam contacts',()=>{
   const scene=new T.Scene(),world=new T.Group(),fx=new AttackEffects(scene,undefined,world);
   // Exercise loadRoom itself. Only unrelated GPU/actor services are omitted.
   const renderer=Object.assign(Object.create(DepthRenderer.prototype),{
-   scene,world,effects:fx,temporaryMaterials:[],actors:new Map(),nests:new Map(),queen:null,corpses:[],pickupMeshes:new Map(),
+   scene,world,effects:fx,temporaryMaterials:[],actors:new Map(),nests:new Map(),queen:null,corpses:[],pickupMeshes:new Map(),poolMeshes:new Map(),
    afflictions:{clear(){}},muzzle:{intensity:0},contacts:{begin(){},end(){}},surfaces:{theme(){},shipTheme(){}},
    camera:new T.OrthographicCamera(-20,20,15,-15),focus:new T.Vector3(),lighting:{loadRoom(){}},
   });

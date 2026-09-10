@@ -14,7 +14,7 @@ it('shares the bounded beam draw, expires lightning and clears transient shards'
  const scene=new T.Scene(),fx=new AttackEffects(scene),camera=new T.PerspectiveCamera();
  for(let i=0;i<40;i++){fx.event({type:'boon',x:0,y:0,boon:'arc',targetX:160,targetY:0});fx.update(.001,camera,[]);}
  const beams=scene.children[6] as T.InstancedMesh;
- expect(beams.count).toBeGreaterThan(0);expect(beams.count).toBeLessThanOrEqual(EFFECT_LIMITS.beams);expect(scene.children).toHaveLength(8);
+ expect(beams.count).toBeGreaterThan(0);expect(beams.count).toBeLessThanOrEqual(EFFECT_LIMITS.beams);expect(scene.children).toHaveLength(9);
  fx.update(.4,camera,[]);expect(beams.count).toBe(0);
  fx.event({type:'boon',x:0,y:0,boon:'shatter'});expect(fx.counts.debris).toBe(18);
  fx.clear();expect(scene.children.every(m=>(m as T.InstancedMesh).count===0)).toBe(true);fx.dispose();
