@@ -1,0 +1,27 @@
+{
+  "source": "e91cb7d10f7e78bdcd4fa68ff898fa6d8ebb144f",
+  "method": "Shipping built app, checkpoint/UI room entry, active natural encounter director and normal keyboard auto-aim/fire/movement. Appended local observation and shipping-frame fixed-clock exposure. 20fps image-pipe silent software-WebGL capture. No production source changes.",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1280,
+        "height": 900,
+        "pix_fmt": "yuv420p",
+        "avg_frame_rate": "20/1",
+        "nb_frames": "160",
+        "nb_read_frames": "160"
+      }
+    ],
+    "format": {
+      "duration": "8.000000"
+    }
+  },
+  "mp4": {
+    "path": "residential-gallery-desktop.mp4",
+    "sha256": "f07526fa1211d03d76bae6986815c87370273b553cd34ccde30222c3eb42baa5"
+  },
+  "acceptance": "Independent shipping-scale review passed. Seven shots, four kills, reload and player armor loss. Authored equipment ready throughout.",
+  "limitations": "Silent fixed-clock 20fps software-WebGL recording, not realtime or device FPS. Staged prior-room checkpoint; active natural encounter and actual keyboard controls. Cached unchanged production fonts."
+}
