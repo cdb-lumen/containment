@@ -1,8 +1,8 @@
 # Residential Gallery whole-room layout proposal
 
-Status: independently reviewed proposal, approved for a neutral blockout experiment only. Layout remains unpassed. The sourced story passed independent review. Do not begin detailed equipment before gameplay and shipping-camera blockout acceptance.
+Status: story and whole-room neutral layout independently accepted at `1f7a2a9`. The four reservations and blockout heights are frozen for equipment design. Production keyboard combat, reward and progression passed bounded review; native desktop/portrait captures cover every zone. Final authored equipment, appearance and release remain open.
 
-Review identified three blockout risks: apparent walkable gaps inside the bunk/packing solids, cabin fronts without credible backing, and actor occlusion from prop height. Resolve them in whole-room massing, not detailed equipment. Current desktop/phone baseline images show generic seating/table islands, not this proposal; their controlled combat has no DOM HUD or campaign progression evidence.
+The initial proposal identified apparent walkable gaps inside solids, cabin backing and actor occlusion as risks. The accepted blockout fills these reservations with low backed storage and cutaway fronts. The proposal geometry below is retained as the equipment contract; the original reconnaissance is historical, not final equipment evidence.
 
 ## Retain the playable map
 
@@ -39,4 +39,4 @@ Before accepting layout, verify production player movement, every enemy approach
 
 Baseline `de5198e2a80ba66f3ea6de3071c1b82f70bae0ef`, `storyRoomTemplates.ts:9,29-35`, `ShipEnvironments.ts:41-50,163-231` and `DepthRenderer.ts:130-189`.
 
-Next: evaluate the current whole-room baseline, then implement this low-detail domestic blockout with targeted production regressions. Equipment, full verifier, native visual acceptance, actual gameplay video and release remain pending. Refs [#24](https://github.com/cdb-lumen/containment/issues/24).
+Next: integrate the original cabin, bunk/storage and packing equipment within the frozen reservations. Preserve accepted layout evidence and revalidate affected contracts. Final appearance, resource lifecycle, final-source verification, actual gameplay video and release remain pending. Refs [#24](https://github.com/cdb-lumen/containment/issues/24).
