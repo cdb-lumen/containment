@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
+import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
 
 export const SHIP_ENVIRONMENTS=['cryogenics','habitation','security','cargo','communications','engineering','maintenance','infested','containment','reactor'] as const;
 export type ShipEnvironment=typeof SHIP_ENVIRONMENTS[number];
@@ -11,6 +12,7 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 
 /** All models are authored in a local cell, then fitted inside the authoritative collision rectangle. */
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
+ if(environment==='habitation'&&templateId==='residential-gallery')return residentialGalleryBlockout(footprint,index);
  const root=new T.Group();root.name=`${environment}-obstacle-${index}`;
  const long=Math.max(footprint.width,footprint.height),short=Math.min(footprint.width,footprint.height);
  const columns=environment==='reactor'?1:Math.min(4,Math.max(1,Math.floor(short/2)));
@@ -160,12 +162,16 @@ export function appendEnvironment(parent:T.Group,model:T.Group){
 }
 
 /** Flush deck inlays and outboard rear architecture never occupy a walkable tile. */
-export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:number,h:number){
+export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:number,h:number,templateId=''){
+ const residential=env==='habitation'&&templateId==='residential-gallery';
  const accent=env==='habitation'?MAT.bone:env==='infested'?MAT.acid:['security','engineering','containment','maintenance'].includes(env)?MAT.amber:MAT.cyan;
  const inlay=(x:number,z:number,width:number,depth:number,mat:T.Material)=>{const m=box(parent,x,-.007,z,width,.018,depth,mat,0);m.castShadow=false;return m;};
  // Deck language stays readable even when the nearest prop is off camera.
  if(env==='cryogenics'){
   for(let x=.3;x<w-.3;x+=3)for(let z=.3;z<h-.3;z+=3){const tw=Math.min(2.94,w-.3-x),td=Math.min(2.94,h-.3-z);inlay(x+tw/2,z+td/2,tw,td,MAT.armor);}
+ }else if(residential){
+  // Quiet flush route cue; the cabin thresholds, not a cafeteria cross, lead the room.
+  inlay(w/2,h/2,w-1,.06,MAT.edge);
  }else if(env==='habitation'){
   inlay(w/2,h/2,w-1,2.3,MAT.orange);inlay(w/2,h/2,2.3,h-1,MAT.orange);
   for(const side of [-1,1]){inlay(w/2,h/2+side*1.2,w-1,.045,MAT.bone);inlay(w/2+side*1.2,h/2,.045,h-1,MAT.bone);}
@@ -210,10 +216,12 @@ export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:num
   }else if(env==='containment'||env==='security'){
    for(const side of [-1,1]){const rib=box(parent,x+side*1.25,height/2,-.12,.25,height,.24,MAT.armor);rib.rotation.z=side*.16;}
   }
-  if(env==='habitation'){
+  if(env==='habitation'&&!residential){
    box(parent,x,1.25,-.045,1.6,2.4,.06,MAT.orange);
    box(parent,x,1.4,-.003,1.22,1.8,.015,MAT.black,0);
    box(parent,x+.48,1.1,.01,.05,.22,.012,MAT.bone,0);
+  }else if(residential){
+   // Retain the rear envelope without a competing row of false cabin doors.
   }else if(env==='infested'){
    shell(parent,x,1.4,-.45,.7,1.3,.6,MAT.flesh);
   }else{
