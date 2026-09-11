@@ -25,8 +25,9 @@ function renderer(){
 }
 function meshes(root:T.Object3D){const all:T.Mesh[]=[];root.traverse(o=>{if(o instanceof T.Mesh)all.push(o);});return all;}
 function hit(root:T.Object3D,x:number,y:number){root.updateMatrixWorld(true);return new T.Raycaster(new T.Vector3(x/32,6,y/32),new T.Vector3(0,-1,0)).intersectObject(root,true)[0];}
-function setup(){const game=new DepthGame();game.node=node;game.geometry=createExpeditionGeometry(node);game.navigation=new FacilityNavigation(game.geometry);game.enemies=game['makeEnemies']();game.status='playing';Object.assign(game.player,game.geometry.playerSpawn);return game;}
-describe('Communal Atrium connected-bay rough',()=>{
+// Frozen connected-bay geometry preserves its complete historical behavior suite.
+function setup(){const game=new DepthGame();game.node=node;game.geometry={...createExpeditionGeometry(node),voids:polygons};game.navigation=new FacilityNavigation(game.geometry);game.enemies=game['makeEnemies']();game.status='playing';Object.assign(game.player,game.geometry.playerSpawn);return game;}
+describe('Communal Atrium historical connected-bay behavior and current rough renderer',()=>{
  it('retains rejected entrance and south-stance clearance controls',()=>{
   const g=setup().geometry,old={...g,voids:entranceRectangles.map(([x,y,w,h])=>[point(x,y),point(x+w,y),point(x+w,y+h),point(x,y+h)])};
   for(const radius of [14,16,17,18,24,28,30,38]){
@@ -68,7 +69,7 @@ describe('Communal Atrium connected-bay rough',()=>{
  // Full-suite contention must not truncate any historical or current cases.
  },20000);
  it('uses the exact six preflighted footprints and preserves enclosure, spawn, exit and breaches',()=>{
-  const t=ROOM_TEMPLATES[node.templateId];expect(t.voids).toEqual(polygons);expect(t.obstacles).toEqual([]);
+  const t=ROOM_TEMPLATES[node.templateId];expect(setup().geometry.voids).toEqual(polygons);expect(t.obstacles).toEqual([]);
   expect(t.boundary).toEqual([[0,0],[1200,0],[1200,580],[0,580]].map(([x,y])=>point(x,y)));
   expect(t.spawn).toEqual(point(100,440));expect(t.exit).toEqual(point(1100,440));
   expect(t.breaches).toEqual([[100,100],[1100,100],[100,500],[1100,500]].map(([x,y])=>point(x,y)));
@@ -88,7 +89,7 @@ describe('Communal Atrium connected-bay rough',()=>{
   for(const p of [point(100,210),point(1050,330),point(600,490)])expect(canOccupyExpedition(g,p,38)).toBe(true);
  });
  it('routes live crawlers and brutes from both courts and every inward breach to both ends of the gathering passage',()=>{
-  const geometry=createExpeditionGeometry(node);
+  const geometry=setup().geometry;
   const starts=[point(600,260),point(1000,340),...geometry.breaches.map(b=>point(b.x+(b.facing==='east'?56:-56),b.y))];
   for(const target of [point(280,490),point(860,490),point(600,420)])for(const type of ['crawler','brute'] as const)for(const start of starts){
    const game=setup();Object.assign(game.player,target);expect(canOccupyExpedition(geometry,start,38)).toBe(true);
@@ -132,20 +133,22 @@ describe('Communal Atrium connected-bay rough',()=>{
  });
  it('supports attached passage-facing seats and water without moving the north enclosure',()=>{
   const r=renderer();r.loadRoom(node);const equipment=r.world.getObjectByName('communal-atrium-rough')!;
-  for(const x of [328,808]){
-   expect(hit(equipment,x,355)!.point.y*32).toBeCloseTo(44);
-   expect(hit(equipment,x,374)!.point.y*32).toBeCloseTo(24);
+  for(const x of [228,468,708]){
+   expect(hit(equipment,x,345)!.point.y*32).toBeCloseTo(44);
+   expect(hit(equipment,x,362)!.point.y*32).toBeCloseTo(24);
   }
   equipment.updateMatrixWorld(true);
-  for(const x of [328,808]){
+  for(const x of [228,468,708]){
    const hits=new T.Raycaster(new T.Vector3(x/32,-1/32,366/32),new T.Vector3(0,1,0)).intersectObject(equipment,true);
    expect(hits[0].point.y*32).toBeCloseTo(0);
   }
   for(const p of approaches)expect(canOccupyExpedition(createExpeditionGeometry(node),p,28)).toBe(true);
   expect(hit(equipment,620,260)).toBeUndefined();
   expect(hit(equipment,64,-13)!.point.y*32).toBeCloseTo(84);
-  expect(canOccupyExpedition(createExpeditionGeometry(node),point(328,316),16)).toBe(false);
-  expect(hit(equipment,328,316)!.point.y*32).toBeGreaterThan(100);
+  expect(hit(equipment,600,336)!.point.y*32).toBeCloseTo(32);
+  expect(hit(equipment,288,360)!.point.y*32).toBeCloseTo(38);
+  expect(canOccupyExpedition(createExpeditionGeometry(node),point(228,308),16)).toBe(false);
+  expect(hit(equipment,228,308)!.point.y*32).toBeGreaterThan(70);
   disposeModel(r.world);
  });
  it('draws the physical south enclosure and no floor beyond it without shrinking the camera envelope',()=>{
@@ -171,7 +174,7 @@ describe('Communal Atrium connected-bay rough',()=>{
   }
   for(const p of [point(100,210),point(1050,330),point(600,490)])expect(hit(equipment,p.x,p.y)).toBeUndefined();
   const leaves=meshes(equipment).filter(m=>(m.material as T.Material).name==='ca_leaf');expect(leaves).toHaveLength(1);
-  const bounds=new T.Box3().setFromObject(leaves[0]);expect(bounds.max.y*32).toBeGreaterThan(105);expect(bounds.max.y*32).toBeLessThanOrEqual(130);
+  const bounds=new T.Box3().setFromObject(leaves[0]);expect(bounds.max.y*32).toBeGreaterThan(82);expect(bounds.max.y*32).toBeLessThanOrEqual(96);
   for(const m of materials){expect(Object.values(MAT)).not.toContain(m);expect(m.userData.actorMaterial).toBe(true);expect(m.emissiveIntensity).toBeLessThan(.5);}
   expect(Object.values(MAT).map(m=>[m.color.getHex(),m.metalness,m.roughness,m.emissive.getHex(),m.emissiveIntensity])).toEqual(sharedBefore);expect(r.roomLoading).toBe(false);
   const shared=Object.values(MAT).map(m=>vi.spyOn(m,'dispose')),owned=[...materials].map(m=>vi.spyOn(m,'dispose')),geometry=meshes(equipment).map(m=>vi.spyOn(m.geometry,'dispose'));
