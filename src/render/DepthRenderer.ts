@@ -149,11 +149,14 @@ export class DepthRenderer {
   if(node.templateId==='residential-gallery'){this.surfaces.floor.color.setHex(0x747976);this.surfaces.wall.color.setHex(0x788687);}
   if(atrium){this.surfaces.floor.color.setHex(0x77766c);this.surfaces.wall.color.setHex(0x777a6e);this.surfaces.cover.color.setHex(0x64695e);}
   if(bespoke){this.world.add(bespoke);if(node.templateId==='passenger-vault')this.passengerVault=attachPassengerVault(bespoke,()=>{this.shadowsDirty=true;});if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,()=>{this.shadowsDirty=true;});this.releasedBerth=attachReleasedBerth(bespoke,()=>{this.shadowsDirty=true;});this.recoveryKit=attachRecoveryKit(bespoke,()=>{this.shadowsDirty=true;});}}else{
-  const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
-  box(this.world,w/2,-.57,h/2,w+.6,.5,h+.6,MAT.black);
+  // Atrium's straight physical enclosure follows its shared boundary; the
+  // template dimensions below remain the unchanged camera/lighting envelope.
+  const shellH=atrium?Math.max(...t.boundary!.map(p=>p.y))/UNIT:h;
+  const floor=box(this.world,w/2,-.18,shellH/2,w,.32,shellH,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
+  box(this.world,w/2,-.57,shellH/2,w+.6,.5,shellH+.6,MAT.black);
   // Low foreground parapets and tall rear bulkheads keep combat readable.
-  for(let x=1;x<w;x+=2){if(!environment)this.wallPanel(x,0,2.6,2,0);this.wallPanel(x,h,.65,2,0);}
-  for(let z=1;z<h;z+=2){this.wallPanel(0,z,1.1,2,Math.PI/2);this.wallPanel(w,z,1.1,2,Math.PI/2);}
+  for(let x=1;x<w;x+=2){if(!environment)this.wallPanel(x,0,2.6,2,0);this.wallPanel(x,shellH,.65,2,0);}
+  for(let z=1;z<shellH;z+=2){this.wallPanel(0,z,1.1,2,Math.PI/2);this.wallPanel(w,z,1.1,2,Math.PI/2);}
   for(let x=2;x<w-1;x+=5){
    // Keep the existing rear emitters and their light-fixture origins unchanged.
    box(this.world,x,2.2,.21,1.05,.075,.09,MAT.cyan);

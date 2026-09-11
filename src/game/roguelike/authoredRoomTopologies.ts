@@ -45,6 +45,19 @@ export const PASSENGER_BLOCKOUT=Object.freeze([
  {id:'MN',x:1040,y:240,w:120,h:80,height:40,row:false},
  {id:'MS',x:1002.55,y:479.35,w:87.45,h:38.63,height:58.34,row:false},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
+/** Room 4 rough composition. Staggered north garden seating borders a dominant
+ * east/west through-passage. These physical footprints also drive rendering.
+ * No old central planter or detached satellite collision remains. */
+export const COMMUNAL_ATRIUM_BLOCKOUT=Object.freeze([
+ {id:'garden-north',kind:'garden',x:250,y:100,w:260,h:90},
+ {id:'garden-south',kind:'garden',x:650,y:180,w:260,h:90},
+ {id:'seat-north',kind:'seat-south',x:270,y:190,w:220,h:26},
+ {id:'seat-south',kind:'seat-south',x:670,y:270,w:220,h:26},
+ {id:'return-north',kind:'seat-west',x:224,y:120,w:26,h:70},
+ {id:'return-south',kind:'seat-west',x:624,y:200,w:26,h:70},
+ {id:'water',kind:'water',x:510,y:120,w:80,h:60},
+ {id:'welcome',kind:'welcome',x:330,y:84,w:96,h:16},
+].map(({x,y,w,h,...role})=>Object.freeze({...role,x,y,w,h,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
  * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */
@@ -65,11 +78,13 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   obstacles:Object.freeze([]),
  }),
  'communal-atrium':Object.freeze({
-  boundary:polygon([[0,0],[1200,0],[1200,880],[0,880]]),
-  voids:Object.freeze([polygon([[450,440],[470,375],[525,327],[600,310],[675,327],[730,375],[750,440],[730,505],[675,553],[600,570],[525,553],[470,505]])]),
+  // Bring the existing straight south enclosure to the passage, rather than
+  // retaining an unused second room of floor behind the circulation band.
+  boundary:polygon([[0,0],[1200,0],[1200,580],[0,580]]),
+  voids:Object.freeze(COMMUNAL_ATRIUM_BLOCKOUT.map(f=>f.footprint)),
   spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
-  breaches:polygon([[100,100],[1100,100],[100,780],[1100,780]]),
-  obstacles:Object.freeze([{x:260,y:160,width:120,height:100},{x:830,y:610,width:120,height:100}].map(rect=>Object.freeze(rect))),
+  breaches:polygon([[100,100],[1100,100],[100,500],[1100,500]]),
+  obstacles:Object.freeze([]),
  }),
  'breached-loading-bay':Object.freeze({
   boundary:polygon([[40,200],[760,40],[1160,160],[1160,640],[860,840],[280,840],[40,600]]),

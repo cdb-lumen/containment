@@ -1,9 +1,11 @@
 import * as T from 'three';
 import type {Point,RoomTemplate} from '../game/roguelike/types';
+import {COMMUNAL_ATRIUM_BLOCKOUT} from '../game/roguelike/authoredRoomTopologies';
 import {MAT,box,rod,batch,geometries} from './meshParts';
 
-/** Synchronous complete rough room. No optional asset/decode path: the same
- * geometry is always available, including when environment textures fail. */
+/** Synchronous whole-room rough, shared physical footprints with gameplay.
+ * Staggered north garden seating faces the main east/west passage.
+ * No optional decode path or detail-stage fittings. */
 export function communalAtrium(t:RoomTemplate):T.Group{
  const root=new T.Group();root.name='communal-atrium-rough';
  const finish=(name:string,source:T.MeshStandardMaterial,color:number,metalness:number,roughness:number)=>{
@@ -23,42 +25,54 @@ export function communalAtrium(t:RoomTemplate):T.Group{
   const g=new T.ExtrudeGeometry(shape,{depth:(top-bottom)/32,bevelEnabled:false,steps:1,curveSegments:1});g.rotateX(-Math.PI/2);g.translate(0,bottom/32,0);
   const mesh=new T.Mesh(g,m);mesh.castShadow=mesh.receiveShadow=true;root.add(mesh);
  };
- const garden=t.voids![0],inner=garden.map(p=>({x:600+(p.x-600)*.94,y:440+(p.y-440)*.94}));
- solid(garden,0,12,support);solid(garden,12,18,ceramic,inner);solid(inner,12,14,soil);
- pipe(v(530,22,440),v(670,22,440),2,bark);
- // Sparse, separated leaf cards rather than an opaque canopy. All crowns are
- // inset from the shared polygon and the far combat edge remains unobscured.
- for(const [cx,cz,r,height] of [[550,430,28,87],[650,465,32,96]]){
-  pipe(v(cx,14,cz),v(cx+3,height-12,cz-2),3,bark);
-  for(let i=0;i<9;i++){
-   const a=i*2.4,x=cx+Math.cos(a)*r*.43,z=cz+Math.sin(a)*r*.43,y=height-12-(i%3)*10;
-   pipe(v(cx+2,y-10,cz),v(x,y,z),1,bark);
-   const shape=new T.Shape([new T.Vector2(-r*.38/32,0),new T.Vector2(0,r*.2/32),new T.Vector2(r*.38/32,0),new T.Vector2(0,-r*.2/32)]);
-   const g=new T.ShapeGeometry(shape);const mesh=new T.Mesh(g,leaf);mesh.rotation.set(-Math.PI/2+.35,a,.2);mesh.position.copy(v(x,y,z));mesh.castShadow=mesh.receiveShadow=true;root.add(mesh);
+ for(const [index,f] of COMMUNAL_ATRIUM_BLOCKOUT.entries()){
+  const footprint=t.voids![index],cx=f.x+f.w/2,cz=f.y+f.h/2;
+  if(f.kind==='garden'){
+   const inner=footprint.map(p=>({x:p.x+(p.x<cx?5:-5),y:p.y+(p.y<cz?5:-5)}));
+   solid(footprint,0,17,support);solid(footprint,17,23,ceramic,inner);solid(inner,17,19,soil);
+   // Four modest indoor trees fill shallow beds rather than tiny twigs in a
+   // broad dirt disk. Crowns remain inside planted ground, away from walkers.
+   for(const tx of [f.x+65,f.x+195]){
+    pipe(v(tx,19,cz),v(tx+3,111,cz),4,bark);
+    for(let i=0;i<7;i++){
+     const a=i*2.4,reach=i===6?0:21,x=tx+Math.cos(a)*reach,z=cz+Math.sin(a)*reach,y=99+(i%3)*8;
+     pipe(v(tx+2,72+i*4,cz),v(x,y,z),2,bark);
+     const g=new T.IcosahedronGeometry(1,0);g.scale(19/32,14/32,17/32);g.translate(x/32,y/32,z/32);
+     const crown=new T.Mesh(g,leaf);crown.castShadow=crown.receiveShadow=true;root.add(crown);
+    }
+   }
+   // Irrigation lies on the soil, not suspended across the room.
+   pipe(v(f.x+8,21,cz),v(f.x+f.w-8,21,cz),2,bark);
+  }else if(f.kind.startsWith('seat-')){
+   // A continuous seat silhouette plus inset legs, no invisible plinth.
+   const alongX=f.w>f.h;
+   b(cx,21,cz,f.w,6,f.h,seat);
+   if(alongX){
+    for(const dx of [-f.w*.38,0,f.w*.38])b(cx+dx,9,cz,8,18,f.h-6,support);
+    const backZ=f.kind==='seat-south'?f.y+3:f.y+f.h-3;
+    b(cx,34,backZ,f.w,20,6,seat);
+    for(const dx of [-f.w/2+3,f.w/2-3])b(cx+dx,28,cz,6,8,f.h,support);
+   }else{
+    for(const dz of [-f.h*.35,f.h*.35])b(cx,9,cz+dz,f.w-6,18,8,support);
+    b(f.x+f.w-3,34,cz,6,20,f.h,seat);
+   }
+  }else if(f.kind==='water'){
+   // Refreshment counter touches the garden end, with an inset drinking basin
+   // and upright dispenser. All support occupies its actual shared rectangle.
+   solid(footprint,0,32,support);
+   const circle=(radius:number)=>Array.from({length:20},(_,i)=>({x:cx+12+Math.cos(i*Math.PI/10)*radius,y:cz+Math.sin(i*Math.PI/10)*radius}));
+   solid(footprint,32,36,ceramic,circle(19));solid(circle(19),32,33,water);
+   b(f.x+13,44,cz,18,24,32,support);b(f.x+23,49,cz,3,10,18,ceramic);
+   pipe(v(cx+12,34,cz-16),v(cx+12,44,cz-16),2,bark);pipe(v(cx+12,44,cz-16),v(cx+12,44,cz-7),2,bark);
+  }else{
+   solid(footprint,0,62,support);
+   // A small running warm display backs the north garden, not a detached prop.
+   b(cx,47,f.y+f.h-.6,f.w-12,22,1,signal);
   }
  }
- for(const f of t.obstacles)b(f.x+f.width/2,3,f.y+f.height/2,f.width,6,f.height,support);
- const bench=(x:number,z:number,depth:number)=>{
-  for(const dx of [-32,32])b(x+dx,12,z,8,12,depth-2,support);
-  b(x,20,z,88,4,depth,seat);b(x,28,z-depth/2+2,88,12,4,seat);
- };
- bench(322,240.5,25);bench(883,695,18);
- // Three joined facets form a shallow curved housing facing the southwest.
- const housing=[{x:287,y:180},{x:309,y:188},{x:331,y:205},{x:356,y:212}];
- const back=housing.map(p=>({x:p.x+5,y:p.y-7})).reverse();solid([...housing,...back],6,48,support);
- for(let i=0;i<housing.length-1;i++){
-  const a=housing[i],c=housing[i+1],dx=c.x-a.x,dz=c.y-a.y;
-  const panel=b((a.x+c.x)/2-.5,36,(a.y+c.y)/2+.7,Math.hypot(dx,dz)-3,13,1,signal);panel.rotation.y=-Math.atan2(dz,dx);
- }
- // A broad basin recess and a small spout communicate drinking water at rough scale.
- const circle=(radius:number)=>Array.from({length:20},(_,i)=>({x:875+Math.cos(i*Math.PI/10)*radius,y:652+Math.sin(i*Math.PI/10)*radius}));
- solid(circle(15),6,28,support);solid(circle(30),28,36,ceramic,circle(24));solid(circle(24),28,30,water);
- pipe(v(875,30,628),v(875,36,628),2,bark);pipe(v(875,36,628),v(875,36,638),2,bark);
- // Quiet flush promenade cues and enclosed communal rear bays. No false doors.
- for(const z of [240,640])b(600,-.22,z,350,.35,2,ceramic);
+ // The enclosure and passage-facing seats define circulation without detached
+ // floor strokes implying equivalent outer loops.
  for(let x=64;x<t.width;x+=128){b(x,42,-13,126,84,12,support);b(x,42,-5,5,84,5,ceramic);if(x%256===64)b(x,59,-6,48,18,2,ceramic);}
- // Batch all rough components together to eight owned material draws. Retire
- // uncached polygon/card source geometry; cached meshParts stay shared.
  const shared=new Set(geometries.values()),owned=new Set<T.BufferGeometry>();root.traverse(o=>{if(o instanceof T.Mesh&&!shared.has(o.geometry))owned.add(o.geometry);});
  batch(root);owned.forEach(g=>g.dispose());return root;
 }
