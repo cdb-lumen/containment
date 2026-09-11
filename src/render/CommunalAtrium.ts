@@ -4,7 +4,7 @@ import {COMMUNAL_ATRIUM_BLOCKOUT} from '../game/roguelike/authoredRoomTopologies
 import {MAT,box,rod,batch,geometries} from './meshParts';
 
 /** Synchronous whole-room rough, shared physical footprints with gameplay.
- * Staggered north garden seating faces the main east/west passage.
+ * Opposed garden seating faces a shared court above the main passage.
  * No optional decode path or detail-stage fittings. */
 export function communalAtrium(t:RoomTemplate):T.Group{
  const root=new T.Group();root.name='communal-atrium-rough';
@@ -54,7 +54,7 @@ export function communalAtrium(t:RoomTemplate):T.Group{
     for(const dx of [-f.w/2+3,f.w/2-3])b(cx+dx,28,cz,6,8,f.h,support);
    }else{
     for(const dz of [-f.h*.35,f.h*.35])b(cx,9,cz+dz,f.w-6,18,8,support);
-    b(f.x+f.w-3,34,cz,6,20,f.h,seat);
+    b(f.kind==='seat-east'?f.x+3:f.x+f.w-3,34,cz,6,20,f.h,seat);
    }
   }else if(f.kind==='water'){
    // Refreshment counter touches the garden end, with an inset drinking basin

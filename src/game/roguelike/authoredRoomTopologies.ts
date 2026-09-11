@@ -45,16 +45,16 @@ export const PASSENGER_BLOCKOUT=Object.freeze([
  {id:'MN',x:1040,y:240,w:120,h:80,height:40,row:false},
  {id:'MS',x:1002.55,y:479.35,w:87.45,h:38.63,height:58.34,row:false},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
-/** Room 4 rough composition. Staggered north garden seating borders a dominant
- * east/west through-passage. These physical footprints also drive rendering.
+/** Room 4 rough composition. Opposed garden seats frame an offset shared court.
+ * The main passage skirts its south edge. Footprints also drive rendering.
  * No old central planter or detached satellite collision remains. */
 export const COMMUNAL_ATRIUM_BLOCKOUT=Object.freeze([
  {id:'garden-north',kind:'garden',x:250,y:100,w:260,h:90},
- {id:'garden-south',kind:'garden',x:650,y:180,w:260,h:90},
+ {id:'garden-south',kind:'garden',x:450,y:350,w:260,h:90},
  {id:'seat-north',kind:'seat-south',x:270,y:190,w:220,h:26},
- {id:'seat-south',kind:'seat-south',x:670,y:270,w:220,h:26},
+ {id:'seat-south',kind:'seat-north',x:470,y:324,w:220,h:26},
  {id:'return-north',kind:'seat-west',x:224,y:120,w:26,h:70},
- {id:'return-south',kind:'seat-west',x:624,y:200,w:26,h:70},
+ {id:'return-south',kind:'seat-east',x:710,y:350,w:26,h:70},
  {id:'water',kind:'water',x:510,y:120,w:80,h:60},
  {id:'welcome',kind:'welcome',x:330,y:84,w:96,h:16},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,x,y,w,h,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
