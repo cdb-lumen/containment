@@ -36,7 +36,7 @@ describe('Residential Gallery neutral whole-room blockout',()=>{
    expect(occupied/400).toBeGreaterThanOrEqual(.95);expect(substantial/400).toBeGreaterThanOrEqual(.65);
    expect(b.max.y).toBeLessThanOrEqual(1.45);
    expect(world.children.length).toBeLessThanOrEqual(4);
-   world.traverse(o=>{if(o instanceof T.Mesh)expect([MAT.armor,MAT.steel,MAT.rubber,MAT.edge]).toContain(o.material);});
+   world.traverse(o=>{if(o instanceof T.Mesh){const m=o.material as T.MeshStandardMaterial;expect(['rg_armor','rg_steel','rg_rubber','rg_edge']).toContain(m.name);expect(Object.values(MAT)).not.toContain(m);expect(m.userData.actorMaterial).toBe(true);}});
   }finally{disposeModel(world);}
  });
  it('keeps the bunk open above its mattress and lower than its surrounding storage',()=>{

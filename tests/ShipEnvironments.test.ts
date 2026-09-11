@@ -38,14 +38,16 @@ describe('ship environments',()=>{
     expect(world.children.every(o=>o instanceof T.Mesh)).toBe(true);
    }
   });
-  it(`${env} batches to a bounded shared-material set and disposes only owned geometry`,()=>{
+  it(`${env} batches to a bounded material set and disposes only owned resources`,()=>{
    const world=new T.Group();environmentArchitecture(world,env,32,24);
    appendEnvironment(world,environmentObstacle(env,{x:5,y:5,width:4,height:8},0,rooms[env][0]));
    const originals=meshes(world),sharedGeometry=new Set(originals.map(m=>m.geometry));
-   expect(originals.every(m=>Object.values(MAT).includes(m.material as T.MeshStandardMaterial))).toBe(true);
+   const ownedMaterials=new Set(originals.map(m=>m.material as T.MeshStandardMaterial).filter(m=>!Object.values(MAT).includes(m)));
+   if(env==='habitation'){expect(ownedMaterials.size).toBe(4);for(const m of ownedMaterials)expect(m.userData.actorMaterial).toBe(true);}else expect(ownedMaterials.size).toBe(0);
    expect([...sharedGeometry].every(g=>[...geometries.values()].includes(g))).toBe(true);
    const geometrySpies=[...sharedGeometry].map(g=>vi.spyOn(g,'dispose'));
    const materialSpies=Object.values(MAT).map(m=>vi.spyOn(m,'dispose'));
+   const ownedMaterialSpies=[...ownedMaterials].map(m=>vi.spyOn(m,'dispose'));
    try{
     // Exercise the real material batching path without constructing a WebGL context.
     const renderer=Object.create(DepthRenderer.prototype) as {world:T.Group;floorMaterial:T.Material;bakeWorld():void};
@@ -57,6 +59,7 @@ describe('ship environments',()=>{
     disposeModel(world);
     for(const spy of ownedSpies)expect(spy).toHaveBeenCalledTimes(1);
     for(const spy of [...geometrySpies,...materialSpies])expect(spy).not.toHaveBeenCalled();
+    for(const spy of ownedMaterialSpies)expect(spy).toHaveBeenCalledTimes(1);
     renderer.floorMaterial.dispose();
    }finally{vi.restoreAllMocks();}
   });

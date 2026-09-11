@@ -143,6 +143,8 @@ export class DepthRenderer {
   this.muzzle.intensity=0;this.contacts.begin();this.contacts.end();
   const bespoke=authoredRoom(node.templateId,t);
   const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);
+  // Room-local habitation finish; theme() resets it on every subsequent room.
+  if(node.templateId==='residential-gallery'){this.surfaces.floor.color.setHex(0x747976);this.surfaces.wall.color.setHex(0x788687);}
   if(bespoke){this.world.add(bespoke);if(node.templateId==='passenger-vault')this.passengerVault=attachPassengerVault(bespoke,()=>{this.shadowsDirty=true;});if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,()=>{this.shadowsDirty=true;});this.releasedBerth=attachReleasedBerth(bespoke,()=>{this.shadowsDirty=true;});this.recoveryKit=attachRecoveryKit(bespoke,()=>{this.shadowsDirty=true;});}}else{
   const floor=box(this.world,w/2,-.18,h/2,w,.32,h,this.floorMaterial,0);floor.receiveShadow=true;this.surfaces.uv(floor,3.2);
   box(this.world,w/2,-.57,h/2,w+.6,.5,h+.6,MAT.black);

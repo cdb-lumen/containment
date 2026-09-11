@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {PASSENGER_FINISHES} from './RoomEquipmentPalette';
 import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
 import {AWAKENING_BLOCKOUT,PASSENGER_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
@@ -410,6 +411,13 @@ function awakeningBay(f:Fabricator,t:RoomPlan){
 }
 function passengerVault(room:Fabricator,t:RoomPlan){
  const f=new Fabricator();
+ // These finishes belong only to this fallback, never the perimeter or global MAT.
+ f.paint.color.setHex(PASSENGER_FINISHES.PV_shared_enclosure_monitor_atlas.color);
+ f.ivory.color.setHex(PASSENGER_FINISHES.PV_shell.color);
+ f.ivory.name='passenger-fallback-lids';
+ f.dark.color.setHex(PASSENGER_FINISHES.PV_ancillary_recess.color);
+ f.dark.metalness=PASSENGER_FINISHES.PV_ancillary_recess.metalness!;
+ f.dark.roughness=PASSENGER_FINISHES.PV_ancillary_recess.roughness!;
  const box=(x:number,h:number,y:number,w:number,d:number,l:number,m:T.Material)=>f.box(x/U,h/U,y/U,w/U,d/U,l/U,m,0);
  // Neutral blockout only. A full-height sealed plinth makes the whole row
  // contact conservative, including the infill between closed chamber volumes.
