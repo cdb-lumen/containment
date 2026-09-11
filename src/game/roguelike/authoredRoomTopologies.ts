@@ -45,6 +45,17 @@ export const PASSENGER_BLOCKOUT=Object.freeze([
  {id:'MN',x:1040,y:240,w:120,h:80,height:40,row:false},
  {id:'MS',x:1002.55,y:479.35,w:87.45,h:38.63,height:58.34,row:false},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
+/** Room 4 social-frontage rough hypothesis, not visual acceptance.
+ * A low shared back connects seating, small shared surfaces and planting.
+ * Circulation goes around both ends, never through the solid frontage.
+ * These footprints drive both rendering and collision. */
+export const COMMUNAL_ATRIUM_BLOCKOUT=Object.freeze([
+ {id:'common-low-back',kind:'back',x:180,y:330,w:720,h:12},
+ ...[180,300,420,540,660,780].map(x=>({id:`seat-${x}`,kind:'seat-north',x,y:342,w:96,h:28})),
+ ...[276,396,516,636,756,876].map(x=>({id:`shared-surface-${x}`,kind:'table',x,y:342,w:24,h:36})),
+ ...[180,420,660].map(x=>({id:`garden-${x}`,kind:'garden',x,y:286,w:96,h:44})),
+ {id:'attached-water',kind:'water',x:900,y:310,w:60,h:68},
+].map(({x,y,w,h,...role})=>Object.freeze({...role,x,y,w,h,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
  * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */
@@ -62,6 +73,15 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
   // Production east/west facing adds +/-56 along the clear rear aisles.
   breaches:polygon([[260,180],[960,180],[260,700],[960,700]]),
+  obstacles:Object.freeze([]),
+ }),
+ 'communal-atrium':Object.freeze({
+  // Bring the existing straight south enclosure to the passage, rather than
+  // retaining an unused second room of floor behind the circulation band.
+  boundary:polygon([[0,0],[1200,0],[1200,580],[0,580]]),
+  voids:Object.freeze(COMMUNAL_ATRIUM_BLOCKOUT.map(f=>f.footprint)),
+  spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
+  breaches:polygon([[100,100],[1100,100],[100,500],[1100,500]]),
   obstacles:Object.freeze([]),
  }),
  'breached-loading-bay':Object.freeze({

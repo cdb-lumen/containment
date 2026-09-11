@@ -5,17 +5,17 @@ import {createExpeditionGeometry,canOccupyExpedition,hasClearExpeditionShot} fro
 import {FacilityNavigation} from '../../src/game/world/FacilityNavigation';
 import {ProjectileHitTracker} from '../../src/game/combat/CombatSystem';
 import {DepthGame} from '../../src/DepthGame';
-const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay'];
+const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay','communal-atrium'];
 const nodes=generateRun(3,3).nodes;
-const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280}];
+const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280},{x:228,y:308}];
 describe('authored walkable topologies',()=>{
- it('replaces exactly four rectangular footprints with polygon boundaries and real voids',()=>{
+ it('uses exactly five shared polygon topologies with real voids',()=>{
   expect(nodes).toHaveLength(20);
   for(const n of nodes){const t=ROOM_TEMPLATES[n.templateId];if(ids.includes(n.templateId)){
    expect(t).toHaveProperty('boundary');expect(t).toHaveProperty('voids');
    const g=createExpeditionGeometry(n);
    for(const radius of [0,9,28,38]){
-    expect(canOccupyExpedition(g,n.templateId==='passenger-vault'?{x:30,y:50}:{x:50,y:50},radius)).toBe(false);
+    expect(canOccupyExpedition(g,n.templateId==='communal-atrium'?{x:-1,y:50}:n.templateId==='passenger-vault'?{x:30,y:50}:{x:50,y:50},radius)).toBe(false);
     expect(canOccupyExpedition(g,probes[ids.indexOf(n.templateId)],radius)).toBe(false);
    }
   }else{expect(t).not.toHaveProperty('boundary');expect(t).not.toHaveProperty('voids');}}

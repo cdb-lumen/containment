@@ -1,0 +1,81 @@
+{
+  "runtime_commit": "e9dccba4fb230a1142d76265cbd48d709099f5d3",
+  "images": [
+    {
+      "path": "docs/art-evidence/communal-atrium-court/desktop/01-west-entry.png",
+      "sha256": "153fa2007b169175c8076db80cd727a37d54eb52d66a6f5ff4cd38100672cf7a",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "viewport": "desktop",
+      "name": "01-west-entry"
+    },
+    {
+      "path": "docs/art-evidence/communal-atrium-court/desktop/06-north-perimeter.png",
+      "sha256": "63757eae3ad3c858b3faeae610212230e21aa42a765062aad0dd0bb81ff86bb3",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "viewport": "desktop",
+      "name": "06-north-perimeter"
+    },
+    {
+      "path": "docs/art-evidence/communal-atrium-court/desktop/11-shared-court.png",
+      "sha256": "1be344e48b86a52463cb5d973792ba57f565db7b74713b23258565f1b0e688f1",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "viewport": "desktop",
+      "name": "11-shared-court"
+    },
+    {
+      "path": "docs/art-evidence/communal-atrium-court/phone/01-west-entry.png",
+      "sha256": "a5caab2f283bfc275342d51288b69bde51ec47c879e8f9bd4a4721df40f4aae2",
+      "dimensions": [
+        390,
+        844
+      ],
+      "viewport": "phone",
+      "name": "01-west-entry"
+    },
+    {
+      "path": "docs/art-evidence/communal-atrium-court/phone/06-north-perimeter.png",
+      "sha256": "acb3bca8c57f73dc562cc08fccb66459d27da5c3a7406be9002dee3f581c0ddf",
+      "dimensions": [
+        390,
+        844
+      ],
+      "viewport": "phone",
+      "name": "06-north-perimeter"
+    },
+    {
+      "path": "docs/art-evidence/communal-atrium-court/phone/11-shared-court.png",
+      "sha256": "3a2e378b4531047831cc39e1e0bae96010c88c12647bbb20e3e8aa5d04e808bc",
+      "dimensions": [
+        390,
+        844
+      ],
+      "viewport": "phone",
+      "name": "11-shared-court"
+    }
+  ],
+  "source_file_hashes": {
+    "src/render/CommunalAtrium.ts": "679e69f17521e586e243bbaa5acfc698d48df45bbe230ed700e97abcc0f11861",
+    "src/render/DepthRenderer.ts": "708b5a69985bd0d02c259b6c9581d4ac0f62f848abd17d08459a01664d3ea005",
+    "src/game/roguelike/authoredRoomTopologies.ts": "0e801c52341ebd2f8ffdce25ce8acfaff8be60355c6b17273b1d8f1ce2a7c772",
+    "src/render/roomFraming.ts": "d2192711666d706990fb81a7a56fb0b6ac167c0dbbe9af58bb0f19bb654faedb",
+    "src/main.ts": "e7532501ce45779b4ca65ade1ba05dbe79130973a246bd1ed563d9c0a8007fb5",
+    "src/DepthGame.ts": "e69f8c96eb415b9e20145ba60d033674ed075be45e89962c9956f37fc13afe6d"
+  },
+  "capture_provenance": "Captured dirty runtime based on027a7b9; all six recorded runtime file hashes verified equal to runtime_commit. No runtime source edits during capture.",
+  "decision": "Rejected independent bounded composition review. Three positions per viewport, not full-room coverage or actor-matched before/after.",
+  "limits": [
+    "Real dev app with observation-only state hook and synthetic saved checkpoint.",
+    "Cached production font responses; keyboard movement on portrait is not touch acceptance.",
+    "Software WebGL, no device performance claim.",
+    "Final verifier, video and release gates remain open."
+  ]
+}
