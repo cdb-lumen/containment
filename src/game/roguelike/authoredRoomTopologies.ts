@@ -45,16 +45,16 @@ export const PASSENGER_BLOCKOUT=Object.freeze([
  {id:'MN',x:1040,y:240,w:120,h:80,height:40,row:false},
  {id:'MS',x:1002.55,y:479.35,w:87.45,h:38.63,height:58.34,row:false},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
-/** Room 4 shared-table rough hypothesis, not visual acceptance.
- * Opposed seats gather around a table, garden west and refreshment water east.
+/** Room 4 connected-bay rough hypothesis, not visual acceptance.
+ * Passage-facing seating and water attach to each compact garden.
  * These footprints drive both rendering and collision. */
 export const COMMUNAL_ATRIUM_BLOCKOUT=Object.freeze([
- {id:'garden-center',kind:'garden',x:245,y:205,w:110,h:110},
- {id:'welcome',kind:'welcome',x:155,y:182,w:70,h:36},
- {id:'table',kind:'table',x:480,y:225,w:280,h:70},
- {id:'seat-north',kind:'seat-north',x:500,y:176,w:240,h:28},
- {id:'seat-south',kind:'seat-south',x:500,y:316,w:240,h:28},
- {id:'water',kind:'water',x:910,y:232.5,w:80,h:55},
+ {id:'west-garden',kind:'garden',x:280,y:280,w:96,h:72},
+ {id:'west-seat',kind:'seat-north',x:280,y:352,w:96,h:28},
+ {id:'west-refreshment',kind:'water',x:376,y:324,w:64,h:56},
+ {id:'east-garden',kind:'garden',x:760,y:280,w:96,h:72},
+ {id:'east-seat',kind:'seat-north',x:760,y:352,w:96,h:28},
+ {id:'east-refreshment',kind:'water',x:856,y:324,w:64,h:56},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,x,y,w,h,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
