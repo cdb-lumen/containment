@@ -4,7 +4,7 @@ import {COMMUNAL_ATRIUM_BLOCKOUT} from '../game/roguelike/authoredRoomTopologies
 import {MAT,box,rod,batch,geometries} from './meshParts';
 
 /** Synchronous whole-room rough, shared physical footprints with gameplay.
- * Opposed garden seating faces a shared court above the main passage.
+ * Opposed seating and a supported shared table sit above the main passage.
  * No optional decode path or detail-stage fittings. */
 export function communalAtrium(t:RoomTemplate):T.Group{
  const root=new T.Group();root.name='communal-atrium-rough';
@@ -30,8 +30,7 @@ export function communalAtrium(t:RoomTemplate):T.Group{
   if(f.kind==='garden'){
    const inner=footprint.map(p=>({x:p.x+(p.x<cx?5:-5),y:p.y+(p.y<cz?5:-5)}));
    solid(footprint,0,17,support);solid(footprint,17,23,ceramic,inner);solid(inner,17,19,soil);
-   // One tree fills each compact side bed. Keep the sitting surfaces outside
-   // foliage sightlines rather than attaching benches behind the planting.
+   // Keep the garden rough and contained beside the shared gathering table.
    for(const tx of [cx]){
     pipe(v(tx,19,cz),v(tx+3,111,cz),4,bark);
     for(let i=0;i<7;i++){
@@ -43,13 +42,18 @@ export function communalAtrium(t:RoomTemplate):T.Group{
    }
    // Irrigation lies on the soil, not suspended across the room.
    pipe(v(f.x+8,21,cz),v(f.x+f.w-8,21,cz),2,bark);
+  }else if(f.kind==='table'){
+   // Ordinary top on four inset legs. The full tabletop is the shared solid
+   // gameplay silhouette; the space underneath is not an actor passage.
+   b(cx,35,cz,f.w,6,f.h,ceramic);
+   for(const dx of [-f.w/2+28,f.w/2-28])for(const dz of [-f.h/2+14,f.h/2-14])b(cx+dx,16,cz+dz,10,32,10,support);
   }else if(f.kind.startsWith('seat-')){
    // A continuous seat silhouette plus inset legs, no invisible plinth.
    const alongX=f.w>f.h;
    b(cx,21,cz,f.w,6,f.h,seat);
    if(alongX){
     for(const dx of [-f.w*.38,0,f.w*.38])b(cx+dx,9,cz,8,18,f.h-6,support);
-    const backZ=f.kind==='seat-south'?f.y+3:f.y+f.h-3;
+    const backZ=f.kind==='seat-north'?f.y+3:f.y+f.h-3;
     b(cx,34,backZ,f.w,20,6,seat);
     for(const dx of [-f.w/2+3,f.w/2-3])b(cx+dx,28,cz,6,8,f.h,support);
    }else{
@@ -57,7 +61,7 @@ export function communalAtrium(t:RoomTemplate):T.Group{
     b(f.kind==='seat-east'?f.x+3:f.x+f.w-3,34,cz,6,20,f.h,seat);
    }
   }else if(f.kind==='water'){
-   // Refreshment counter touches the garden end, with an inset drinking basin
+   // Refreshment counter east of the table, with an inset drinking basin
    // and upright dispenser. All support occupies its actual shared rectangle.
    solid(footprint,0,32,support);
    const circle=(radius:number)=>Array.from({length:20},(_,i)=>({x:cx+12+Math.cos(i*Math.PI/10)*radius,y:cz+Math.sin(i*Math.PI/10)*radius}));
@@ -66,7 +70,7 @@ export function communalAtrium(t:RoomTemplate):T.Group{
    pipe(v(cx+12,34,cz-16),v(cx+12,44,cz-16),2,bark);pipe(v(cx+12,44,cz-16),v(cx+12,44,cz-7),2,bark);
   }else{
    solid(footprint,0,62,support);
-   // A small running warm display backs the north garden, not a detached prop.
+   // Small welcome display beside the west garden.
    b(cx,47,f.y+f.h-.6,f.w-12,22,1,signal);
   }
  }
