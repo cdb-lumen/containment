@@ -238,6 +238,24 @@ exports[`reviewed Passenger Vault whole-room blockout > preserves all nineteen o
     "width": 1200,
   },
   {
+    "boundary": [
+      {
+        "x": 0,
+        "y": 0,
+      },
+      {
+        "x": 1200,
+        "y": 0,
+      },
+      {
+        "x": 1200,
+        "y": 880,
+      },
+      {
+        "x": 0,
+        "y": 880,
+      },
+    ],
     "breaches": [
       {
         "x": 100,
@@ -265,12 +283,6 @@ exports[`reviewed Passenger Vault whole-room blockout > preserves all nineteen o
     "name": "Communal atrium",
     "obstacles": [
       {
-        "height": 260,
-        "width": 300,
-        "x": 450,
-        "y": 310,
-      },
-      {
         "height": 100,
         "width": 120,
         "x": 260,
@@ -287,6 +299,58 @@ exports[`reviewed Passenger Vault whole-room blockout > preserves all nineteen o
       "x": 100,
       "y": 440,
     },
+    "voids": [
+      [
+        {
+          "x": 450,
+          "y": 440,
+        },
+        {
+          "x": 470,
+          "y": 375,
+        },
+        {
+          "x": 525,
+          "y": 327,
+        },
+        {
+          "x": 600,
+          "y": 310,
+        },
+        {
+          "x": 675,
+          "y": 327,
+        },
+        {
+          "x": 730,
+          "y": 375,
+        },
+        {
+          "x": 750,
+          "y": 440,
+        },
+        {
+          "x": 730,
+          "y": 505,
+        },
+        {
+          "x": 675,
+          "y": 553,
+        },
+        {
+          "x": 600,
+          "y": 570,
+        },
+        {
+          "x": 525,
+          "y": 553,
+        },
+        {
+          "x": 470,
+          "y": 505,
+        },
+      ],
+    ],
     "width": 1200,
   },
   {

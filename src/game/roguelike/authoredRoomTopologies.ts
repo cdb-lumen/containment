@@ -64,6 +64,13 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   breaches:polygon([[260,180],[960,180],[260,700],[960,700]]),
   obstacles:Object.freeze([]),
  }),
+ 'communal-atrium':Object.freeze({
+  boundary:polygon([[0,0],[1200,0],[1200,880],[0,880]]),
+  voids:Object.freeze([polygon([[450,440],[470,375],[525,327],[600,310],[675,327],[730,375],[750,440],[730,505],[675,553],[600,570],[525,553],[470,505]])]),
+  spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
+  breaches:polygon([[100,100],[1100,100],[100,780],[1100,780]]),
+  obstacles:Object.freeze([{x:260,y:160,width:120,height:100},{x:830,y:610,width:120,height:100}].map(rect=>Object.freeze(rect))),
+ }),
  'breached-loading-bay':Object.freeze({
   boundary:polygon([[40,200],[760,40],[1160,160],[1160,640],[860,840],[280,840],[40,600]]),
   // Diagonal lodged hull penetrator divides unequal lobes. Both ends admit
