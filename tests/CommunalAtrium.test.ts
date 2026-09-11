@@ -10,12 +10,12 @@ import {FacilityNavigation} from '../src/game/world/FacilityNavigation';
 import {DepthGame} from '../src/DepthGame';
 import {ProjectileHitTracker} from '../src/game/combat/CombatSystem';
 const node=generateRun(3,3).nodes.find(n=>n.templateId==='communal-atrium')!;
-// Independent expected footprints: inward-facing offset court with the basin
-// at its north end. The main passage now runs outside the southern island.
-const rectangles=[[250,100,260,90],[450,350,260,90],[270,190,220,26],[470,324,220,26],[224,120,26,70],[710,350,26,70],[510,120,80,60],[330,84,96,16]];
+// Detached facing benches, with compact tree beds to either side.
+// Their shared opening stays connected to the southern main passage.
+const rectangles=[[250,100,90,90],[740,350,90,90],[450,190,180,26],[450,350,180,26],[340,120,80,60],[250,84,90,16]];
 const polygons=rectangles.map(([x,y,w,h])=>[{x,y},{x:x+w,y},{x:x+w,y:y+h},{x,y:y+h}]);
 const point=(x:number,y:number)=>({x,y});
-const routes=[[[100,440],[170,440],[170,490],[1010,490],[1010,440],[1100,440]],[[100,440],[170,440],[170,45],[1010,45],[1010,440],[1100,440]],[[100,440],[170,440],[170,530],[1010,530],[1010,440],[1100,440]],[[170,270],[400,270],[600,270],[800,270],[1010,270]],[[400,270],[400,490]],[[800,270],[800,490]]].map(r=>r.map(([x,y])=>point(x,y)));
+const routes=[[[100,440],[170,440],[170,490],[1010,490],[1010,440],[1100,440]],[[100,440],[170,440],[170,45],[1010,45],[1010,440],[1100,440]],[[100,440],[170,440],[170,530],[1010,530],[1010,440],[1100,440]],[[170,270],[400,270],[600,270],[800,270],[1010,270]],[[400,270],[400,490]],[[900,270],[900,490]]].map(r=>r.map(([x,y])=>point(x,y)));
 function renderer(){
  const surfaces=Object.assign(Object.create(EnvironmentMaterials.prototype),{floor:new T.MeshStandardMaterial(),wall:new T.MeshStandardMaterial(),cover:new T.MeshStandardMaterial()});
  return Object.assign(Object.create(DepthRenderer.prototype),{scene:new T.Scene(),world:new T.Group(),effects:{clear(){},setWorld(){}},temporaryMaterials:[],actors:new Map(),nests:new Map(),queen:null,corpses:[],pickupMeshes:new Map(),poolMeshes:new Map(),pendingShots:[],afflictions:{clear(){}},muzzle:{intensity:0},contacts:{begin(){},end(){}},surfaces,floorMaterial:surfaces.floor,camera:new T.OrthographicCamera(-20,20,15,-15),focus:new T.Vector3(),lighting:{loadRoom(){}}});
@@ -46,7 +46,7 @@ describe('Communal Atrium inward-facing garden court rough',()=>{
  });
  it('routes live crawlers and brutes from both courts and every inward breach to both ends of the gathering passage',()=>{
   const geometry=createExpeditionGeometry(node);
-  const starts=[point(380,260),point(780,340),...geometry.breaches.map(b=>point(b.x+(b.facing==='east'?56:-56),b.y))];
+  const starts=[point(380,260),point(900,340),...geometry.breaches.map(b=>point(b.x+(b.facing==='east'?56:-56),b.y))];
   for(const target of [point(280,490),point(860,490),point(550,270)])for(const type of ['crawler','brute'] as const)for(const start of starts){
    const game=setup();Object.assign(game.player,target);expect(canOccupyExpedition(geometry,start,38)).toBe(true);
    const spawned=game.enemies.spawn(type,start.x,start.y);expect(spawned.spawned).toBe(true);if(!spawned.spawned)continue;
@@ -63,16 +63,24 @@ describe('Communal Atrium inward-facing garden court rough',()=>{
   expect(hasClearExpeditionShot(setup().geometry,point(100,440),point(1100,440))).toBe(false);
  });
  it('collects real drops at seat and water approaches and never leaves relocated drops in any fixture',()=>{
-  for(const p of [point(380,250),point(780,330),point(550,220),point(170,145),point(580,270),point(600,490),point(990,330)]){
+  for(const p of [point(380,250),point(900,330),point(550,245),point(170,145),point(580,270),point(600,490),point(990,330)]){
    const game=setup();game.navigation.prepare(game.player,1);expect(game.navigation.reachable(p)).toBe(true);
    expect(game.pickups.spawn('credits',10,p.x,p.y).spawned).toBe(true);Object.assign(game.player,p);const before=game.combat.snapshot.credits;game.update(50);expect(game.pickups.snapshot).toHaveLength(0);expect(game.combat.snapshot.credits).toBe(before+10);
   }
   for(const [x,y,w,h] of rectangles){const game=setup();game.pickups.spawn('armor',10,x+w/2,y+h/2);for(const p of game.pickups.snapshot)expect(canOccupyExpedition(game.geometry,p,16)).toBe(true);}
  });
- it('turns both southern seat backs away from the shared court without moving the north enclosure',()=>{
+ it('exposes detached facing seats in shipping sightlines without moving the north enclosure',()=>{
   const r=renderer();r.loadRoom(node);const equipment=r.world.getObjectByName('communal-atrium-rough')!;
-  for(const [x,y] of [[380,193],[580,347],[713,390]])expect(hit(equipment,x,y)?.point.y! *32).toBeCloseTo(44);
-  for(const [x,y] of [[380,212],[580,328],[732,390]])expect(hit(equipment,x,y)!.point.y*32).toBeCloseTo(24);
+  for(const [x,y] of [[540,193],[540,373]])expect(hit(equipment,x,y)?.point.y! *32).toBeCloseTo(44);
+  for(const [x,y] of [[540,212],[540,354]])expect(hit(equipment,x,y)!.point.y*32).toBeCloseTo(24);
+  equipment.updateMatrixWorld(true);
+  for(const [x,y] of [[490,212],[590,212],[490,354],[590,354]]){
+   const target=new T.Vector3(x/32,24/32,y/32),towardCamera=new T.Vector3(0,26,19).normalize();
+   const visible=new T.Raycaster(target.clone().addScaledVector(towardCamera,10),towardCamera.clone().negate()).intersectObject(equipment,true)[0];
+   expect((visible.object as T.Mesh).material).toMatchObject({name:'ca_upholstery'});
+   expect(visible.point.distanceTo(target)).toBeLessThan(.01);
+  }
+  for(const p of [point(400,350),point(680,350)])expect(canOccupyExpedition(createExpeditionGeometry(node),p,38)).toBe(true);
   expect(hit(equipment,780,225)).toBeUndefined();
   expect(hit(equipment,64,-13)!.point.y*32).toBeCloseTo(84);
   expect(canOccupyExpedition(createExpeditionGeometry(node),point(550,270),38)).toBe(true);

@@ -1,0 +1,115 @@
+{
+  "verifiedAt": "2026-09-11T09:36:07.606Z",
+  "source": {
+    "head": "d061b81a2fb8b6b1576f7f616599b6b7711dd41d",
+    "diff": "687a2fe16c4cf653ba37cb6e5ede9da9814d321efe4348c1f42bf71bfad726cc",
+    "status": "Six tracked runtime/test files modified during capture; hashes below bind the evidence.",
+    "files": {
+      "src/render/CommunalAtrium.ts": "3908bdaf27f6e3b5121dddf5b86818d3dc7fd4429ac59179c89aa286f8983c9c",
+      "src/render/DepthRenderer.ts": "708b5a69985bd0d02c259b6c9581d4ac0f62f848abd17d08459a01664d3ea005",
+      "src/game/roguelike/authoredRoomTopologies.ts": "51a217a8365b08d8f3c102b27ce01962faf2541384c9f4efe5476c0137311748",
+      "src/render/roomFraming.ts": "d2192711666d706990fb81a7a56fb0b6ac167c0dbbe9af58bb0f19bb654faedb",
+      "src/main.ts": "e7532501ce45779b4ca65ade1ba05dbe79130973a246bd1ed563d9c0a8007fb5",
+      "src/DepthGame.ts": "e69f8c96eb415b9e20145ba60d033674ed075be45e89962c9956f37fc13afe6d"
+    }
+  },
+  "expected": 6,
+  "verified": 6,
+  "images": [
+    {
+      "viewport": "desktop",
+      "path": "docs/art-evidence/communal-atrium-detached-seats/desktop/01-west-entry.png",
+      "sha256": "d6e05ac8112ec2737470df99bf7400ec28e146fd5f2774f261bc5485b3902930",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "player": {
+        "x": 100,
+        "y": 440
+      },
+      "enemies": 3
+    },
+    {
+      "viewport": "desktop",
+      "path": "docs/art-evidence/communal-atrium-detached-seats/desktop/06-north-perimeter.png",
+      "sha256": "8e8afcf65718ea616406052e607f2659f40e7de9995d5a57ee2b11d9ac1c4e81",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "player": {
+        "x": 386,
+        "y": 33
+      },
+      "enemies": 9
+    },
+    {
+      "viewport": "desktop",
+      "path": "docs/art-evidence/communal-atrium-detached-seats/desktop/11-shared-court.png",
+      "sha256": "250ef09f6f5a2d3638400d56a69303b5f2055fbaef02725e8bb4ec8632df51fa",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "player": {
+        "x": 551,
+        "y": 264
+      },
+      "enemies": 9
+    },
+    {
+      "viewport": "phone",
+      "path": "docs/art-evidence/communal-atrium-detached-seats/phone/01-west-entry.png",
+      "sha256": "7b4b036bc49a8c595584d6eadb8c635ca8d320fd7c2d5c29e3172e6cba4d31dc",
+      "dimensions": [
+        390,
+        844
+      ],
+      "player": {
+        "x": 100,
+        "y": 440
+      },
+      "enemies": 1
+    },
+    {
+      "viewport": "phone",
+      "path": "docs/art-evidence/communal-atrium-detached-seats/phone/06-north-perimeter.png",
+      "sha256": "ac17adfaab743649172b6d5fadd59c6296ba5749307be8b3ab356612ae5a343c",
+      "dimensions": [
+        390,
+        844
+      ],
+      "player": {
+        "x": 386,
+        "y": 33
+      },
+      "enemies": 9
+    },
+    {
+      "viewport": "phone",
+      "path": "docs/art-evidence/communal-atrium-detached-seats/phone/11-shared-court.png",
+      "sha256": "7cf6a6960402f2a0eb526e5c59d312fc65f4d511945399053b363ae55e482d39",
+      "dimensions": [
+        390,
+        844
+      ],
+      "player": {
+        "x": 551,
+        "y": 264
+      },
+      "enemies": 9
+    }
+  ],
+  "harnessSha256": "edb1e98233b706ae6b2165166e3ea37089690ba3ee0c5a1f97149ffcccef74bd",
+  "cleanup": "both manifests closed",
+  "gate": "Composition rejected by independent native pixel review: benches frame empty floor; garden and water remain peripheral. This is not complete-room acceptance.",
+  "limitations": [
+    "Three positions per viewport, not complete-room coverage.",
+    "Real dev app with observation-only main.ts hook and synthetic saved checkpoint.",
+    "Actors are live and not exact-matched across old/new or desktop/portrait.",
+    "Shipping camera/light unchanged; cached production fonts.",
+    "Software WebGL; portrait keyboard movement is not touch acceptance.",
+    "No full verifier, gameplay video, deployment or acceptance."
+  ]
+}

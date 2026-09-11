@@ -30,9 +30,9 @@ export function communalAtrium(t:RoomTemplate):T.Group{
   if(f.kind==='garden'){
    const inner=footprint.map(p=>({x:p.x+(p.x<cx?5:-5),y:p.y+(p.y<cz?5:-5)}));
    solid(footprint,0,17,support);solid(footprint,17,23,ceramic,inner);solid(inner,17,19,soil);
-   // Four modest indoor trees fill shallow beds rather than tiny twigs in a
-   // broad dirt disk. Crowns remain inside planted ground, away from walkers.
-   for(const tx of [f.x+65,f.x+195]){
+   // One tree fills each compact side bed. Keep the sitting surfaces outside
+   // foliage sightlines rather than attaching benches behind the planting.
+   for(const tx of [cx]){
     pipe(v(tx,19,cz),v(tx+3,111,cz),4,bark);
     for(let i=0;i<7;i++){
      const a=i*2.4,reach=i===6?0:21,x=tx+Math.cos(a)*reach,z=cz+Math.sin(a)*reach,y=99+(i%3)*8;
