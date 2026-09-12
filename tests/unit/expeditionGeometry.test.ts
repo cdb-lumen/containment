@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { createExpeditionGeometry, canOccupyExpedition, hasClearExpeditionShot } from '../../src/game/world/expeditionGeometry';
+import { createExpeditionGeometry, canOccupyExpedition, canTraverseExpedition, hasClearExpeditionShot } from '../../src/game/world/expeditionGeometry';
+import {DepthGame} from '../../src/DepthGame';
+import type {RunNode} from '../../src/game/roguelike/types';
 import { generateRun } from '../../src/game/roguelike/run';
 import { ROOM_TEMPLATES } from '../../src/game/roguelike/roomTemplates';
 import {
@@ -7,6 +9,18 @@ import {
   QUEEN_NEST_SPAWN_DURATION_MS, QUEEN_VULNERABLE_DURATION_MS,
 } from '../../src/game/enemies/QueenBossSystem';
 import type { Point } from '../../src/game/roguelike/types';
+
+// Only the accepted water-adjacent south32 inward request requires the existing
+// production placement search. Never treat its blocked request as an actual spawn.
+function actualInwardSpawn(node:RunNode,point:Point):Point{
+  const geometry=createExpeditionGeometry(node);
+  if(node.templateId!=='communal-atrium'||canOccupyExpedition(geometry,point,28))return point;
+  expect(point).toEqual({x:1044,y:500});
+  const game=new DepthGame();game.node=node;game.geometry=geometry;Object.assign(game.player,geometry.playerSpawn);
+  expect(game['spawn']('brute',point.x,point.y)).toBe(true);
+  const enemy=game.enemies.snapshot.enemies[0];expect(enemy.radius).toBe(28);
+  expect(canOccupyExpedition(geometry,enemy,enemy.radius)).toBe(true);return enemy;
+}
 
 describe('expedition local geometry', () => {
   it('uses authored rectangles verbatim and seals all four exact local boundaries', () => {
@@ -30,7 +44,7 @@ describe('expedition local geometry', () => {
       }
       for (const breach of geometry.breaches) {
         const point = { x: breach.x + (breach.facing === 'east' ? 56 : -56), y: breach.y };
-        expect(canOccupyExpedition(geometry, point, 28)).toBe(true);
+        expect(canOccupyExpedition(geometry, actualInwardSpawn(node,point), 28)).toBe(true);
       }
       expect(hasClearExpeditionShot(geometry, { x: -10, y: -10 }, { x: -5, y: -5 })).toBe(false);
       expect(canOccupyExpedition(geometry, { x: NaN, y: 100 }, 28)).toBe(false);
@@ -45,7 +59,8 @@ describe('expedition local geometry', () => {
       seenTemplates.add(node.templateId);
       const geometry = createExpeditionGeometry(node);
       const key = (point: Point) => `${point.x},${point.y}`;
-      const start = geometry.playerSpawn;
+      const start = {x:Math.round(geometry.playerSpawn.x/10)*10,y:Math.round(geometry.playerSpawn.y/10)*10};
+      expect(canTraverseExpedition(geometry,geometry.playerSpawn,start,28)).toBe(true);
       const queue: Point[] = [start];
       const visited = new Set([key(start)]);
       for (let cursor = 0; cursor < queue.length; cursor += 1) {
@@ -58,12 +73,13 @@ describe('expedition local geometry', () => {
           }
         }
       }
-      expect(visited.has(key(geometry.exitPoint))).toBe(true);
+      const connected=(point:Point)=>queue.some(p=>Math.hypot(p.x-point.x,p.y-point.y)<=15&&canTraverseExpedition(geometry,p,point,28));
+      expect(node.templateId==='communal-atrium'?connected(geometry.exitPoint):visited.has(key(geometry.exitPoint))).toBe(true);
       for (const breach of geometry.breaches) {
-        expect(visited.has(key(breach))).toBe(true);
+        expect(node.templateId==='communal-atrium'?connected(breach):visited.has(key(breach))).toBe(true);
         const offset = { x: breach.x + (breach.facing === 'east' ? 56 : -56), y: breach.y };
-        const closest = { x: Math.round(offset.x / 10) * 10, y: offset.y };
-        expect(visited.has(key(closest))).toBe(true);
+        if(node.templateId==='communal-atrium')expect(connected(actualInwardSpawn(node,offset))).toBe(true);
+        else expect(visited.has(key({x:Math.round(offset.x/10)*10,y:offset.y}))).toBe(true);
       }
     }
     expect(seenTemplates.size).toBe(20);

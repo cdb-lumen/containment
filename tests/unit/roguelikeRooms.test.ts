@@ -64,8 +64,12 @@ describe('roguelike room templates', () => {
         if (clear(template, { x, y })) walkable.add(key(x, y));
       }
     }
-    const queue = [template.spawn];
-    const visited = new Set([key(template.spawn.x, template.spawn.y)]);
+    // Anchors need not lie on the ten-unit sampling grid (south32 spawn x436).
+    const connects = (a:Point,b:Point) => clearPolygonTopology(template,a,b,RADIUS);
+    const start = {x:Math.round(template.spawn.x/STEP)*STEP,y:Math.round(template.spawn.y/STEP)*STEP};
+    expect(clear(template,start)&&connects(template.spawn,start)).toBe(true);
+    const queue = [start];
+    const visited = new Set([key(start.x,start.y)]);
     for (let cursor = 0; cursor < queue.length; cursor += 1) {
       const point = queue[cursor];
       for (const [dx, dy] of [[STEP, 0], [-STEP, 0], [0, STEP], [0, -STEP]]) {
@@ -77,7 +81,10 @@ describe('roguelike room templates', () => {
         }
       }
     }
-    for (const point of [template.exit, ...template.breaches]) expect(visited.has(key(point.x, point.y))).toBe(true);
+    for (const point of [template.exit, ...template.breaches]) {
+      if(template.id==='communal-atrium')expect(queue.some(p=>Math.hypot(p.x-point.x,p.y-point.y)<=STEP&&connects(p,point)),JSON.stringify(point)).toBe(true);
+      else expect(visited.has(key(point.x,point.y))).toBe(true);
+    }
     expect(visited.size).toBe(walkable.size);
   });
 
