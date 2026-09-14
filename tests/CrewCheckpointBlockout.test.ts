@@ -37,6 +37,13 @@ describe('Room5 checkpoint rough',()=>{
   const sill=new T.Box3().setFromObject(named(root,'representative-frame-sill')[0],true);
   expect(sill.intersectsBox(panel)).toBe(true);
   for(const post of posts)expect(sill.intersectsBox(new T.Box3().setFromObject(post,true))).toBe(true);
+  const toes=named(root,'representative-rear-shoe');expect(toes).toHaveLength(2);
+  for(let i=0;i<2;i++){
+   const toe=new T.Box3().setFromObject(toes[i],true),foot=new T.Box3().setFromObject(skids[i],true);
+   expect(toe.min.y).toBeCloseTo(0,5);expect(toe.intersectsBox(foot)).toBe(true);
+   expect(toe.max.y-foot.max.y).toBeGreaterThan(.1);
+   expect(toe.max.z-toe.min.z).toBeGreaterThan(.5);
+  }
   expect(named(model(1),'representative-skid')).toHaveLength(0);
  });
  it('replaces the northern repeat with one guard counter, tucked seat and mounted terminal',()=>{

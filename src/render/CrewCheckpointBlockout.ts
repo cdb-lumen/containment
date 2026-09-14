@@ -52,7 +52,9 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
     b('representative-frame-sill',.5,.29,z,.5,.14,length,MAT.edge);
     b('rear-ballast',1.98,.12,z,.96,.24,length-.42,MAT.steel);
     for(const dz of [-length*.36,length*.36]){
-     b('representative-skid',1.25,.09,z+dz,2.46,.18,.42,MAT.edge);
+     b('representative-skid',1.25,.09,z+dz,2.46,.18,.66,MAT.edge);
+     b('representative-front-shoe',.44,.11,z+dz,.8,.22,.68,MAT.orange);
+     b('representative-rear-shoe',2.14,.17,z+dz,.64,.34,.68,MAT.orange);
      b('representative-frame-post',.61,.71,z+dz,.22,1.1,.24,MAT.edge);
      const brace=rod(parts,new T.Vector3(.65,1.11,z+dz),new T.Vector3(2.22,.16,z+dz),.1,.1,MAT.edge);brace.name='rear-brace';
     }
