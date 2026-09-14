@@ -25,9 +25,23 @@ describe('Room5 checkpoint rough',()=>{
  });
  it('replaces the northern repeat with one guard counter, tucked seat and mounted terminal',()=>{
   const root=model(2);
-  for(const name of ['guard-counter','guard-seat','guard-terminal','secured-equipment-case'])expect(named(root,name)).toHaveLength(1);
+  for(const name of ['guard-counter','guard-seat','guard-terminal','weapon-cradle-bed'])expect(named(root,name)).toHaveLength(1);
   expect(named(root,'ballistic-panel')).toHaveLength(0);
   expect(new T.Box3().setFromObject(root,true).max.y).toBeLessThanOrEqual(1.65);
+ });
+ it('secures an exposed stock, receiver and barrel to a supported cradle instead of a closed case',()=>{
+  const root=model(2),bounds=(name:string)=>{
+   const objects=named(root,name);expect(objects).toHaveLength(1);
+   return new T.Box3().setFromObject(objects[0],true);
+  };
+  expect(named(root,'secured-equipment-case')).toHaveLength(0);
+  const stock=bounds('retained-weapon-stock'),receiver=bounds('retained-weapon-receiver'),barrel=bounds('retained-weapon-barrel'),bed=bounds('weapon-cradle-bed');
+  expect(stock.intersectsBox(receiver)).toBe(true);expect(receiver.intersectsBox(barrel)).toBe(true);
+  expect(stock.min.x).toBeLessThan(receiver.min.x);expect(barrel.max.x).toBeGreaterThan(receiver.max.x);
+  for(const part of [stock,receiver,barrel])expect(bed.containsBox(new T.Box3(new T.Vector3(part.min.x,bed.min.y,part.min.z),new T.Vector3(part.max.x,bed.max.y,part.max.z)))).toBe(true);
+  expect(bed.min.y).toBeCloseTo(bounds('closed-control-cabinet').max.y,5);
+  const locks=named(root,'weapon-retaining-lock');expect(locks).toHaveLength(2);
+  for(const lock of locks){const b=new T.Box3().setFromObject(lock,true);expect(b.intersectsBox(receiver)||b.intersectsBox(barrel)).toBe(true);expect(b.min.y).toBeLessThanOrEqual(bed.max.y);}
  });
  it.each([0,1,2])('keeps all vertices and flattened geometry inside footprint %s with cached resources',index=>{
   const root=model(index),f=footprints[index],world=new T.Group();

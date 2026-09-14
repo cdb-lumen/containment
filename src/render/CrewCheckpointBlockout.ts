@@ -32,8 +32,14 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   b('guard-terminal',1.76,1.36,.94,.88,.49,.16,MAT.black);
   b('unlit-terminal-glass',1.76,1.36,1.025,.72,.34,.018,MAT.shellDark);
   b('terminal-keyboard',1.76,.992,1.27,.62,.04,.22,MAT.edge);
-  b('secured-equipment-case',3.35,1.13,.75,1.22,.32,.6,MAT.shell);
-  for(const x of [2.98,3.72])b('case-retaining-band',x,1.299,.75,.07,.018,.61,MAT.trim);
+  // Exposed inert crew weapon in a bolted cradle, not a loose pickup or case.
+  b('weapon-cradle-bed',3.15,.91,.48,2,.08,.72,MAT.shell);
+  b('retained-weapon-stock',2.55,1.03,.48,.5,.16,.28,MAT.rubber);
+  b('retained-weapon-receiver',2.99,1.04,.48,.45,.18,.19,MAT.edge);
+  b('retained-weapon-barrel',3.59,1.04,.48,.8,.09,.09,MAT.black);
+  b('retained-weapon-grip',2.88,1.01,.66,.12,.12,.26,MAT.rubber);
+  b('retained-weapon-magazine',3.12,1.01,.65,.14,.12,.24,MAT.black);
+  for(const x of [3.01,3.66])b('weapon-retaining-lock',x,1.015,.48,.055,.23,.38,MAT.orange);
  }else{
   // Both lines use the same construction, not an invented canonical attack direction.
   for(let n=0;n<4;n++){
