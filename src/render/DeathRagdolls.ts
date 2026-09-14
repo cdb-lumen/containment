@@ -21,7 +21,7 @@ function selected(name:string,family:string){
 }
 type BonePose={bone:T.Bone;position:T.Vector3;rotation:T.Quaternion;scale:T.Vector3;auto:boolean};
 type Part={bone:T.Bone;body:RAPIER.RigidBody;bindRotation:T.Quaternion};
-type RagdollRecord={model:ActorModel;parts:Part[];joints:RAPIER.ImpulseJoint[];poses:BonePose[];age:number;settled:boolean;falling:boolean;fallSpeed:number;rootPosition:T.Vector3;anchor:T.Vector3};
+type RagdollRecord={model:ActorModel;parts:Part[];joints:RAPIER.ImpulseJoint[];poses:BonePose[];age:number;settled:boolean;falling:boolean;fallSpeed:number;support:T.Vector3;supportLift:number;rootPosition:T.Vector3;anchor:T.Vector3};
 type Room=Pick<RoomTemplate,'width'|'height'|'obstacles'|'boundary'|'voids'>;
 
 /** Presentation-only world. Never fed back into combat, navigation or mutation state. */
@@ -37,7 +37,8 @@ export class DeathRagdolls {
   while(active.length>RAGDOLL_BUDGET[tier])this.retire(active.shift()!);
  }
  private statics:RAPIER.Collider[]=[];
- private collisionMeshes:T.Mesh[]=[];
+ private fallLimit=-32;
+ private supportRay=new RAPIER.Ray({x:0,y:0,z:0},{x:0,y:-1,z:0});
  private collisionMaterial=new T.MeshBasicMaterial({side:T.DoubleSide});
  setRoom(room:Room,world?:T.Object3D){
   this.dispose();if(!ready)return;
@@ -61,14 +62,14 @@ export class DeathRagdolls {
  refreshStatic(world:T.Object3D){
   if(!this.world)return;
   for(const c of this.statics)this.world.removeCollider(c,false);this.statics=[];
-  for(const m of this.collisionMeshes)m.geometry.dispose();this.collisionMeshes=[];
-  world.updateWorldMatrix(true,true);
+  this.fallLimit=-32;world.updateWorldMatrix(true,true);
   world.traverseVisible(o=>{
    if(!(o instanceof T.Mesh)||o instanceof T.SkinnedMesh||o.userData.ragdollCollision===false)return;
    const materials=Array.isArray(o.material)?o.material:[o.material];
    if(materials.every(m=>!m.visible||(m.transparent&&m.opacity<.5)))return;
    const add=(matrix:T.Matrix4)=>{
     let g=o.geometry.clone().applyMatrix4(matrix);g.computeBoundingBox();
+    this.fallLimit=Math.min(this.fallLimit,g.boundingBox!.min.y-32);
     const size=g.boundingBox!.getSize(new T.Vector3());
     // Dense standalone equipment gets a fitted finite-height proxy. Broad deck
     // meshes keep triangles so authored concave cutouts remain open.
@@ -80,10 +81,14 @@ export class DeathRagdolls {
     const index=g.index?new Uint32Array(g.index.array):Uint32Array.from({length:pos.count},(_,i)=>i);
     if(index.length<3){g.dispose();return;}
     this.statics.push(this.world!.createCollider(RAPIER.ColliderDesc.trimesh(vertices,index).setCollisionGroups(STATIC_GROUPS).setFriction(.8)));
-    this.collisionMeshes.push(new T.Mesh(g,this.collisionMaterial));
+    g.dispose();
    };
    if(o instanceof T.InstancedMesh){const matrix=new T.Matrix4();for(let i=0;i<o.count;i++){o.getMatrixAt(i,matrix);add(matrix.premultiply(o.matrixWorld));}}else add(o.matrixWorld);
   });
+  // Rapier 0.20 scene queries share the simulation broad phase. Publish changed
+  // statics with a zero-duration step, without advancing existing bodies.
+  const timestep=this.world.timestep;this.world.timestep=0;this.world.step();this.world.timestep=timestep;
+  for(const r of this.records.values())if(r.settled){r.falling=true;r.fallSpeed=0;}
  }
  add(id:number,model:ActorModel,family:string,velocity:{x:number;z:number}){
   if(!this.world||this.records.has(id))return false;
@@ -123,7 +128,7 @@ export class DeathRagdolls {
    const axisFrame=new T.Quaternion().setFromAxisAngle(new T.Vector3(0,1,0),Math.PI/2);joint.setFrameX1(axisFrame);joint.setFrameX2(frame.multiply(axisFrame));
    joint.setLimits(-1.1,1.1);joint.setContactsEnabled(false);joints.push(joint);
   }
-  this.records.set(id,{model,parts,joints,poses,age:0,settled:false,falling:false,fallSpeed:0,rootPosition:model.root.position.clone(),anchor:new T.Vector3().copy(parts[0].body.translation())});return true;
+  this.records.set(id,{model,parts,joints,poses,age:0,settled:false,falling:false,fallSpeed:0,support:new T.Vector3(),supportLift:.25,rootPosition:model.root.position.clone(),anchor:new T.Vector3().copy(parts[0].body.translation())});return true;
  }
  update(dt:number){
   this.elapsedMs=0;if(!this.world||dt<=0)return;
@@ -136,22 +141,23 @@ export class DeathRagdolls {
    this.accumulator-=STEP;this.steps++;}}
   for(const r of this.records.values()){
    if(r.falling){this.fall(r,delta);continue;}if(r.settled)continue;r.age+=delta;this.apply(r);
-   if(r.parts.every(p=>p.body.isSleeping()))this.retire(r,false);else if(r.age>=6)this.retire(r);
+   if(r.parts.every(p=>p.body.isSleeping()))this.retire(r);else if(r.age>=6)this.retire(r);
   }
   this.elapsedMs=performance.now()-start;
  }
  private fall(r:RagdollRecord,dt:number){
-  r.model.root.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(r.model.root,true);
-  // Bone-only fixtures have no rendered bounds.
-  if(bounds.isEmpty())bounds.setFromCenterAndSize(r.anchor,new T.Vector3(.1,.1,.1));
   r.fallSpeed-=9.81*dt;let dy=r.fallSpeed*dt;
-  const ray=new T.Raycaster(new T.Vector3(),new T.Vector3(0,-1,0),0,-dy+.02);
-  for(const x of [bounds.min.x,(bounds.min.x+bounds.max.x)/2,bounds.max.x])for(const z of [bounds.min.z,(bounds.min.z+bounds.max.z)/2,bounds.max.z]){
-   ray.ray.origin.set(x,bounds.min.y+.01,z);const hit=ray.intersectObjects(this.collisionMeshes,false)[0];
-   if(hit){dy=Math.max(dy,.01-hit.distance);r.falling=false;}
-  }
-  r.model.root.position.y+=dy;r.anchor.y+=dy;r.model.root.updateMatrixWorld(true);
-  // A genuine pit has no invisible support. Continue cheap gravity below view.
+  // The frozen pose only translates. Its cached bottom-center support avoids
+  // rescanning every skinned vertex or accepting an AABB corner across a pit.
+  // Start above shallow solver penetration rather than casting below the floor.
+  const lift=r.supportLift,origin=this.supportRay.origin;
+  origin.x=r.support.x;origin.y=r.support.y+lift;origin.z=r.support.z;
+  const hit=this.world!.castRay(this.supportRay,lift-dy,true,RAPIER.QueryFilterFlags.ONLY_FIXED,GROUPS);
+  r.supportLift=.25;
+  if(hit){dy=lift-hit.timeOfImpact;r.falling=false;r.fallSpeed=0;}
+  r.model.root.position.y+=dy;r.anchor.y+=dy;r.support.y+=dy;r.model.root.updateMatrixWorld(true);
+  // Stop retained renderer-owned corpses below every static, including real pits.
+  if(r.support.y<this.fallLimit){r.falling=false;r.fallSpeed=0;}
  }
  private apply(r:RagdollRecord){
   // Parent-first world -> local mapping retains imported bind matrices and GPU
@@ -164,15 +170,19 @@ export class DeathRagdolls {
   }
   r.anchor.copy(r.parts[0].body.translation());
  }
- private retire(r:RagdollRecord,falling=true){
+ private retire(r:RagdollRecord){
   if(r.settled)return;this.apply(r);
-  for(const p of r.parts){p.body.sleep();this.world!.removeRigidBody(p.body);}r.parts=[];r.joints=[];r.settled=true;r.falling=falling;r.fallSpeed=0;
+  r.model.root.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(r.model.root,true);
+  if(bounds.isEmpty())r.support.copy(r.anchor).y-=.05;
+  else {bounds.getCenter(r.support);r.support.y=bounds.min.y;}
+  r.supportLift=Math.max(.25,(bounds.isEmpty()?r.anchor.y:bounds.max.y)-r.support.y+.25);
+  for(const p of r.parts){p.body.sleep();this.world!.removeRigidBody(p.body);}r.parts=[];r.joints=[];r.settled=true;r.falling=true;r.fallSpeed=0;
  }
  has(id:number){return this.records.has(id);}
  position(id:number){return this.records.get(id)?.anchor;}
  sync(id:number,x:number,z:number){
   const r=this.records.get(id);if(!r)return;const dx=x-r.anchor.x,dz=z-r.anchor.z;
-  if(r.settled){r.model.root.position.x+=dx;r.model.root.position.z+=dz;r.falling=true;r.fallSpeed=0;}else{
+  if(r.settled){r.model.root.position.x+=dx;r.model.root.position.z+=dz;r.support.x+=dx;r.support.z+=dz;r.falling=true;r.fallSpeed=0;}else{
    for(const p of r.parts){const v=p.body.translation();p.body.setTranslation({x:v.x+dx,y:v.y,z:v.z+dz},true);p.body.setLinvel({x:0,y:0,z:0},true);}this.apply(r);
   }
   r.anchor.x=x;r.anchor.z=z;
@@ -187,6 +197,6 @@ export class DeathRagdolls {
  maxJointError(id:number){
   let error=0;for(const j of this.records.get(id)?.joints??[]){const a=j.body1(),b=j.body2(),qa=a.rotation(),qb=b.rotation();const va=new T.Vector3().copy(j.anchor1()).applyQuaternion(new T.Quaternion(qa.x,qa.y,qa.z,qa.w)).add(a.translation());const vb=new T.Vector3().copy(j.anchor2()).applyQuaternion(new T.Quaternion(qb.x,qb.y,qb.z,qb.w)).add(b.translation());error=Math.max(error,va.distanceTo(vb));}return error;
  }
- snapshot(){let active=0,bodies=0,joints=0;for(const r of this.records.values()){if(!r.settled)active++;bodies+=r.parts.length;joints+=r.joints.length;}return{active,bodies,joints,settled:this.records.size-active,budget:RAGDOLL_BUDGET[this.tier],collisionGroups:GROUPS,staticColliders:(this.world?.colliders.len()??0)-bodies,stepMs:this.elapsedMs,steps:this.steps,overflow:this.overflow};}
- dispose(){for(const id of this.records.keys())this.remove(id);this.world?.free();this.world=undefined;this.statics=[];for(const m of this.collisionMeshes)m.geometry.dispose();this.collisionMeshes=[];this.accumulator=0;this.elapsedMs=0;}
+ snapshot(){let active=0,falling=0,bodies=0,joints=0;for(const r of this.records.values()){if(!r.settled)active++;if(r.falling)falling++;bodies+=r.parts.length;joints+=r.joints.length;}return{active,falling,bodies,joints,settled:this.records.size-active-falling,budget:RAGDOLL_BUDGET[this.tier],collisionGroups:GROUPS,staticColliders:(this.world?.colliders.len()??0)-bodies,stepMs:this.elapsedMs,steps:this.steps,overflow:this.overflow};}
+ dispose(){for(const id of this.records.keys())this.remove(id);this.world?.free();this.world=undefined;this.statics=[];this.accumulator=0;this.elapsedMs=0;}
 }

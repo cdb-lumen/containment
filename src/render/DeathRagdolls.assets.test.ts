@@ -1,4 +1,5 @@
-import {beforeAll,it,expect} from 'vitest';
+import {beforeAll,it,expect,vi} from 'vitest';
+import RAPIER from '@dimforge/rapier3d-compat';
 import {readFileSync} from 'node:fs';
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
@@ -12,6 +13,26 @@ beforeAll(async()=>{
   loader.register(()=>({name:'cpu-texture-stub',loadTexture:async()=>new T.Texture()}));
   registerAsset(name,await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),''));
  }
+});
+it('benchmarks two retired GLB corpses against 120 statics without per-frame skin scans',()=>{
+ const p=new DeathRagdolls(),world=new T.Group();
+ for(let i=0;i<120;i++){const mesh=new T.Mesh(new T.BoxGeometry(2,.2,2));mesh.position.set(i%12*3,-.1,Math.floor(i/12)*3);world.add(mesh);}
+ p.setRoom({width:1200,height:1200,obstacles:[]},world);
+ for(let i=0;i<5;i++){const m=alien(i===0?'brute':'crawler');m.root.position.set(5,1000,5);freezeCorpse(m);expect(p.add(i,m,i===0?'brute':'crawler',{x:0,z:0})).toBe(true);}
+ p.setQuality('low');for(let i=2;i<5;i++)p.remove(i);
+ const vertices=vi.spyOn(T.SkinnedMesh.prototype,'getVertexPosition'),rays=vi.spyOn(RAPIER.World.prototype,'castRay'),samples:number[]=[];
+ try{
+  for(let i=0;i<360;i++){p.update(1/60);samples.push(p.snapshot().stepMs);}
+  expect(vertices.mock.calls.length).toBe(0);expect(rays.mock.calls.length).toBe(720);
+  expect(p.snapshot()).toMatchObject({active:0,falling:2,settled:0,staticColliders:120,steps:0});
+  samples.sort((a,b)=>a-b);console.info('retired GLB CPU benchmark',JSON.stringify({frames:samples.length,meanMs:samples.reduce((a,b)=>a+b,0)/samples.length,p95Ms:samples[Math.ceil(samples.length*.95)-1],maxMs:samples.at(-1)}));
+ }finally{vertices.mockRestore();rays.mockRestore();p.dispose();world.traverse(o=>{if(o instanceof T.Mesh)o.geometry.dispose();});}
+});
+for(const family of ['crawler','stalker','spitter','carrier','brute'])it(`${family}: retirement recovers the rendered deck top, not its underside`,()=>{
+ const p=new DeathRagdolls(),world=new T.Group(),floor=new T.Mesh(new T.BoxGeometry(20,.32,20));floor.position.set(10,-.18,10);world.add(floor);p.setRoom({width:640,height:640,obstacles:[]},world);
+ const m=alien(family);m.root.position.set(5,0,5);m.animate(1,1,.4);freezeCorpse(m);p.add(1,m,family,{x:8,z:2});
+ for(let i=0;i<600;i++)p.update(1/60);
+ expect(new T.Box3().setFromObject(m.root,true).min.y).toBeCloseTo(-.02,2);expect(p.snapshot().falling).toBe(0);p.dispose();floor.geometry.dispose();
 });
 for(const family of ['crawler','stalker','spitter','carrier','brute'])it(`${family}: actual GLB skin remains jointed and finite, then returns to the living pool pose`,()=>{
  const p=new DeathRagdolls();p.setRoom({width:640,height:640,obstacles:[]});const m=alien(family);m.root.position.set(5,.5,5);m.root.rotation.y=.73;m.root.scale.setScalar(1.2);m.animate(1,1,.4);m.root.updateMatrixWorld(true);

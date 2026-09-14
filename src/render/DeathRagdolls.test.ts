@@ -1,4 +1,5 @@
-import {beforeAll,describe,it,expect} from 'vitest';
+import {beforeAll,describe,it,expect,vi} from 'vitest';
+import RAPIER from '@dimforge/rapier3d-compat';
 import * as T from 'three';
 import {DeathRagdolls,initDeathPhysics} from './DeathRagdolls';
 import type {ActorModel} from './models';
@@ -10,6 +11,41 @@ function actor(x=5,y=2,z=5,brute=false):ActorModel {
 }
 beforeAll(initDeathPhysics);
 describe('death-only articulated physics',()=>{
+ function retired(y:number,world?:T.Group){
+  const p=new DeathRagdolls();p.setRoom(room,world);const m=actor(5,y,5);
+  m.root.add(new T.Mesh(new T.BoxGeometry(1,.2,1)));
+  p.add(0,m,'crawler',{x:0,z:0});for(let i=1;i<4;i++)p.add(i,actor(15,10,15),'crawler',{x:0,z:0});
+  p.setQuality('low');for(let i=1;i<4;i++)p.remove(i);return{p,m};
+ }
+ it('recovers shallow floor penetration and reports falling separately from settled',()=>{
+  const {p,m}=retired(.05);expect(p.snapshot()).toMatchObject({active:0,falling:1,settled:0});
+  for(let i=0;i<120;i++)p.update(1/60);
+  expect(new T.Box3().setFromObject(m.root,true).min.y).toBeCloseTo(0,3);
+  expect(p.snapshot()).toMatchObject({active:0,falling:0,settled:1});p.dispose();
+ });
+ it('caches retired bounds and uses accelerated static queries before any physics step',()=>{
+  const {p,m}=retired(1);const bounds=vi.spyOn(T.Box3.prototype,'setFromObject'),rays=vi.spyOn(T.Raycaster.prototype,'intersectObjects');
+  try{for(let i=0;i<120;i++)p.update(1/60);expect(bounds).not.toHaveBeenCalled();expect(rays).not.toHaveBeenCalled();expect(m.root.position.y).toBeCloseTo(.1,3);expect(p.snapshot().steps).toBe(0);}finally{bounds.mockRestore();rays.mockRestore();p.dispose();}
+ });
+ it('refreshes query geometry without advancing bodies and rechecks translated support',()=>{
+  const {p,m}=retired(2,new T.Group());const w=new T.Group(),floor=new T.Mesh(new T.BoxGeometry(4,.2,4));floor.position.set(5,.9,5);w.add(floor);p.refreshStatic(w);
+  for(let i=0;i<90;i++)p.update(1/60);expect(m.root.position.y).toBeCloseTo(1.1,3);
+  p.sync(0,12,12);const y=m.root.position.y;for(let i=0;i<60;i++)p.update(1/60);expect(m.root.position.y).toBeLessThan(y-4);p.dispose();
+ });
+ it('does not accept bounds corners as an invisible bridge over a pit',()=>{
+  const w=new T.Group();for(const x of [4.5,5.5]){const ledge=new T.Mesh(new T.BoxGeometry(.2,.2,2));ledge.position.set(x,-.1,5);w.add(ledge);}
+  const {p,m}=retired(.2,w);for(let i=0;i<90;i++)p.update(1/60);expect(m.root.position.y).toBeLessThan(-5);p.dispose();
+ });
+ it('publishes newly created and replaced statics to Rapier queries immediately',()=>{
+  const p=new DeathRagdolls();p.setRoom(room);const world=(p as unknown as {world:RAPIER.World}).world;
+  const ray=new RAPIER.Ray({x:5,y:2,z:5},{x:0,y:-1,z:0});expect(world.castRay(ray,3,true,RAPIER.QueryFilterFlags.ONLY_FIXED,0x00020001)).not.toBeNull();
+  p.refreshStatic(new T.Group());expect(world.castRay(ray,3,true,RAPIER.QueryFilterFlags.ONLY_FIXED,0x00020001)).toBeNull();p.dispose();
+ });
+ it('stops querying a genuine pit once safely below the world',()=>{
+  const {p}=retired(1,new T.Group());for(let i=0;i<240;i++)p.update(1/60);
+  const rays=vi.spyOn(RAPIER.World.prototype,'castRay'),y=p.position(0)!.y;
+  try{for(let i=0;i<60;i++)p.update(1/60);expect(rays.mock.calls.length).toBe(0);expect(p.position(0)!.y).toBe(y);expect(p.snapshot().falling).toBe(0);}finally{rays.mockRestore();p.dispose();}
+ });
  it('preserves live bodies on static refresh and supports the rendered table top',()=>{
   const w=new T.Group(),table=new T.Mesh(new T.BoxGeometry(8,2.4,8));table.position.set(5,1.2,5);w.add(table);
   const p=new DeathRagdolls();p.setRoom(room,w);p.add(1,actor(5,4,5),'crawler',{x:0,z:0});const before=p.inspect(1);p.refreshStatic(w);expect(p.inspect(1)).toEqual(before);
