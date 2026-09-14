@@ -1,0 +1,13 @@
+# Representative crew shield
+
+Accept the second module from north on the west shield line as a bounded representative model. The first attempt improved armor and frame but failed phone foot readability. The second added broad grounded shoes. Independent review and parent inspection agree that the plate, open frame and rear support feet now read at native desktop and phone sizes. Other shield modules are still rough. Final Room5 art is not accepted.
+
+Reviewed model source `670f4eb834b92319fd96839a088144d4b1e1c43a` was rebased onto fresh main `7a3f262`, producing `7cdfe54d3111a5218d04d68565bc18bcad617350`. The representative model and tests are byte-identical across that rebase. The main update contains the separately owned ragdoll feature, not art-worker changes. Four fresh High-quality app originals use unchanged shipping cameras and actual Skip HUD. Both guard-bay PNGs match the independently accepted originals byte for byte. West-shield PNGs differ and were inspected again by the parent, with no new visible model defect.
+
+Only the Room5 procedural model and its focused test changed in this batch. Existing material helpers remain untouched. Layout, collision reservations, guard station, weapon cradle and other rooms remain unchanged. Source is the reproducible procedural asset, with no external load or fallback variant. Tests retain raw/flattened footprint bounds and cached-resource ownership. This is model containment, not a claim that openings inside the reserved obstacle become walkable.
+
+43 focused tests passed before rebase. After rebase, 768 Vitest tests passed with one skipped and TypeScript/Vite build passed. The new assertion first failed against each earlier model. The existing build chunk-size warning remains. No full local release verifier, survival, transport or encounter investigation was run.
+
+First attempt's independent rejection and raw outputs remain local in `representative-shield-20260914`. Second attempt's eight-case capture failed because desktop-expanded-guard-bay timed out; seven completed originals remain preserved. That aggregate is not a pass. Its four valid Skip originals supplied the independent model review. The later fresh-base four-case capture passed with equal before/after snapshots and no recorded errors. This does not repair or relabel the earlier timeout. Static staged poses and software WebGL are not live movement, combat or physical-device evidence.
+
+Next apply the accepted module construction to the remaining shields, preserving the central bay and reservations, then review the complete set. The northern phone story-HUD occlusion and prior Room4 release failures remain open for separate owners. No merge or deployment.
