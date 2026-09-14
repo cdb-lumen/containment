@@ -56,8 +56,6 @@ export function communalAtrium(t:RoomTemplate, fixtures=COMMUNAL_ATRIUM_BLOCKOUT
     const crown=new T.Mesh(g,tree.role==='ca_leaf'?leaf:bark);
     crown.castShadow=crown.receiveShadow=true;root.add(crown);
    }
-   // Irrigation lies on the soil, not suspended across the room.
-   pipe(v(f.x+8,21,cz),v(f.x+f.w-8,21,cz),2,bark);
   }else if(f.kind==='table'){
    // Ordinary top on four inset legs. The full tabletop is the shared solid
    // gameplay silhouette; the space underneath is not an actor passage.

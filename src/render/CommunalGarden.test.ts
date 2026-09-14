@@ -95,9 +95,9 @@ describe('authored communal garden',()=>{
   const corrupted=structuredClone(gardenTrees);corrupted[0].normals[0]+=0.25;
   expect(()=>compare(corrupted)).toThrow();disposeModel(donor);
  });
- it('retains identical loaded and fallback foliage at both garden reservations',async()=>{
+ it.each(['ca_leaf','ca_irrigation'])('retains identical loaded and fallback %s geometry at both garden reservations',async role=>{
   const donor=await source(),fallback=builder.communalAtrium(t),loaded=builder.communalAtrium(t,undefined,donor);
-  const foliage=(root:T.Group)=>meshes(root).filter(m=>(m.material as T.Material).name==='ca_leaf').flatMap(m=>{
+  const foliage=(root:T.Group)=>meshes(root).filter(m=>(m.material as T.Material).name===role).flatMap(m=>{
    const p=m.geometry.attributes.position;
    return Array.from({length:p.count},(_,i)=>[p.getX(i),p.getY(i),p.getZ(i)].map(v=>v.toFixed(3)).join(','));
   }).sort();
