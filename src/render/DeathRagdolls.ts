@@ -19,6 +19,28 @@ function selected(name:string,family:string){
  if(family==='carrier')return /^(leg_(front|middle|back)(001)?|upper_arm(001)?)[LR]$/.test(n);
  return /^(leg\.(back|front)|foot\.(back|front)|shoulder|forearm)\.[rl]$/.test(name)||/^(leg(back|front)|foot(back|front)|shoulder|forearm)[rl]$/.test(n);
 }
+/** Fit every positive skin influence, not only the dominant bone or a segment.
+ * Each unblended influence follows its nearest simulated ancestor rigidly.
+ * Their weighted sum therefore stays above a plane if these boxes do.
+ * Bounds are measured once in the captured bone orientation, in world units.
+ */
+function fitSkin(root:T.Object3D,bones:T.Bone[]){
+ const fits=new Map(bones.map(b=>[b,{bounds:new T.Box3(),origin:b.getWorldPosition(new T.Vector3()),inverseRotation:b.getWorldQuaternion(new T.Quaternion()).invert()}]));
+ root.traverse(o=>{
+  if(!(o instanceof T.SkinnedMesh))return;
+  const positions=o.geometry.getAttribute('position'),indices=o.geometry.getAttribute('skinIndex'),weights=o.geometry.getAttribute('skinWeight');
+  if(!positions||!indices||!weights)return;
+  const owners=o.skeleton.bones.map(b=>{let ancestor:T.Object3D|null=b;while(ancestor&&!fits.has(ancestor as T.Bone))ancestor=ancestor.parent;return ancestor?fits.get(ancestor as T.Bone):undefined;});
+  const transforms=o.skeleton.bones.map((b,i)=>new T.Matrix4().multiplyMatrices(o.matrixWorld,o.bindMatrixInverse).multiply(b.matrixWorld).multiply(o.skeleton.boneInverses[i]).multiply(o.bindMatrix));
+  const point=new T.Vector3();
+  for(let i=0;i<positions.count;i++)for(let slot=0;slot<4;slot++){
+   if(weights.getComponent(i,slot)<=0)continue;
+   const index=indices.getComponent(i,slot),fit=owners[index];if(!fit)continue;
+   point.fromBufferAttribute(positions,i).applyMatrix4(transforms[index]).sub(fit.origin).applyQuaternion(fit.inverseRotation);fit.bounds.expandByPoint(point);
+  }
+ });
+ return fits;
+}
 type BonePose={bone:T.Bone;position:T.Vector3;rotation:T.Quaternion;scale:T.Vector3;auto:boolean};
 type Part={bone:T.Bone;body:RAPIER.RigidBody;bindRotation:T.Quaternion};
 type RagdollRecord={model:ActorModel;parts:Part[];joints:RAPIER.ImpulseJoint[];poses:BonePose[];age:number;settled:boolean;falling:boolean;fallSpeed:number;support:T.Vector3;supportLift:number;rootPosition:T.Vector3;anchor:T.Vector3};
@@ -99,17 +121,15 @@ export class DeathRagdolls {
   if(bones.length<3||bones.length>20)return false;
   model.freeze?.();
   const parts:Part[]=[],joints:RAPIER.ImpulseJoint[]=[],mass=family==='brute'?3.5:family==='carrier'?1.8:1;
-  const speed=Math.hypot(velocity.x,velocity.z),scale=Math.min(1,12/Math.max(speed,.001))/mass;
+  const speed=Math.hypot(velocity.x,velocity.z),scale=Math.min(1,12/Math.max(speed,.001))/mass,fits=fitSkin(model.root,bones);
   for(const bone of bones){
    bone.matrixAutoUpdate=true;const position=bone.getWorldPosition(new T.Vector3()),rotation=bone.getWorldQuaternion(new T.Quaternion());
-   const body=this.world.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setTranslation(position.x,position.y,position.z).setRotation({x:0,y:0,z:0,w:1}).setCanSleep(true).setCcdEnabled(true).setLinearDamping(.6).setAngularDamping(1.8));
-   // Capsule along the first deformation child, with a small end sphere for tips.
-   const child=bone.children.find(o=>o instanceof T.Bone&&!/^ik/i.test(o.name));
-   const end=child?child.getWorldPosition(new T.Vector3()).sub(position):new T.Vector3(0,.12,0);
-   const length=T.MathUtils.clamp(end.length(),.1,.9),radius=T.MathUtils.clamp(model.height*.055,.045,.16);
-   const local=end.clone().normalize();
-   const shapeQ=new T.Quaternion().setFromUnitVectors(new T.Vector3(0,1,0),local);
-   const desc=RAPIER.ColliderDesc.capsule(Math.max(0,length/2-radius),radius).setTranslation(local.x*length/2,local.y*length/2,local.z*length/2).setRotation(shapeQ).setMass(mass*(parts.length===0?3:1)).setCollisionGroups(GROUPS).setFriction(.8).setRestitution(.08);
+   const body=this.world.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setTranslation(position.x,position.y,position.z).setRotation({x:0,y:0,z:0,w:1}).setAdditionalSolverIterations(16).setCanSleep(true).setCcdEnabled(true).setLinearDamping(.6).setAngularDamping(1.8));
+   const bounds=fits.get(bone)!.bounds;
+   // Bone-only fixtures and unweighted controls still need finite inertia.
+   if(bounds.isEmpty())bounds.setFromCenterAndSize(new T.Vector3(),new T.Vector3(.1,.1,.1));
+   const half=bounds.getSize(new T.Vector3()).multiplyScalar(.5).addScalar(.003),center=bounds.getCenter(new T.Vector3()).applyQuaternion(rotation);
+   const desc=RAPIER.ColliderDesc.cuboid(half.x,half.y,half.z).setTranslation(center.x,center.y,center.z).setRotation(rotation).setMass(mass*(parts.length===0?3:1)).setCollisionGroups(GROUPS).setFriction(.8).setRestitution(.08);
    this.world.createCollider(desc,body);
    body.setLinvel({x:velocity.x*scale,y:2.3/Math.sqrt(mass),z:velocity.z*scale},true);
    // Off-center shot torque tips the body. Limbs subsequently respond to joints,
@@ -135,9 +155,8 @@ export class DeathRagdolls {
   let active=false,falling=false;for(const r of this.records.values()){active ||= !r.settled;falling ||= r.falling;}
   if(!active&&!falling)return;const start=performance.now(),delta=Math.min(dt,.05);
   if(active){this.accumulator+=delta;while(this.accumulator+1e-9>=STEP){this.world.timestep=STEP;this.world.step();
-   // Project residual anchor drift after the bounded iterative solve. Small
-   // imported extremities otherwise stretch under large mass/inertia ratios.
-   for(const r of this.records.values())for(const j of r.joints){const a=j.body1(),b=j.body2(),q=a.rotation();const target=new T.Vector3().copy(j.anchor1()).applyQuaternion(new T.Quaternion(q.x,q.y,q.z,q.w)).add(a.translation());b.setTranslation(target,false);}
+   // Contacts and anchors are solved together. Postsolve translations can push
+   // otherwise valid skin proxies through the deck without contact resolution.
    this.accumulator-=STEP;this.steps++;}}
   for(const r of this.records.values()){
    if(r.falling){this.fall(r,delta);continue;}if(r.settled)continue;r.age+=delta;this.apply(r);
