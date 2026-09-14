@@ -23,6 +23,13 @@ describe('death-only articulated physics',()=>{
   expect(new T.Box3().setFromObject(m.root,true).min.y).toBeCloseTo(0,3);
   expect(p.snapshot()).toMatchObject({active:0,falling:0,settled:1});p.dispose();
  });
+ it('does not pull a supported corpse onto furniture above it',()=>{
+  const world=new T.Group(),floor=new T.Mesh(new T.BoxGeometry(20,.2,20)),overhead=new T.Mesh(new T.BoxGeometry(4,.05,4));
+  floor.position.set(10,-.1,10);overhead.position.set(5,.35,5);world.add(floor,overhead);
+  const {p,m}=retired(.1,world);for(let i=0;i<30;i++)p.update(1/60);
+  expect(new T.Box3().setFromObject(m.root,true).min.y).toBeCloseTo(0,3);
+  expect(p.snapshot()).toMatchObject({active:0,falling:0,settled:1});p.dispose();
+ });
  it('caches retired bounds and uses accelerated static queries before any physics step',()=>{
   const {p,m}=retired(1);const bounds=vi.spyOn(T.Box3.prototype,'setFromObject'),rays=vi.spyOn(T.Raycaster.prototype,'intersectObjects');
   try{for(let i=0;i<120;i++)p.update(1/60);expect(bounds).not.toHaveBeenCalled();expect(rays).not.toHaveBeenCalled();expect(m.root.position.y).toBeCloseTo(.1,3);expect(p.snapshot().steps).toBe(0);}finally{bounds.mockRestore();rays.mockRestore();p.dispose();}
@@ -48,7 +55,9 @@ describe('death-only articulated physics',()=>{
  });
  it('preserves live bodies on static refresh and supports the rendered table top',()=>{
   const w=new T.Group(),table=new T.Mesh(new T.BoxGeometry(8,2.4,8));table.position.set(5,1.2,5);w.add(table);
-  const p=new DeathRagdolls();p.setRoom(room,w);p.add(1,actor(5,4,5),'crawler',{x:0,z:0});const before=p.inspect(1);p.refreshStatic(w);expect(p.inspect(1)).toEqual(before);
+  const p=new DeathRagdolls();p.setRoom(room,w);p.add(1,actor(5,4,5),'crawler',{x:0,z:0});const before=p.inspect(1);
+  const physics=(p as unknown as {world:RAPIER.World}).world,state=()=>{const bodies:unknown[]=[];physics.forEachRigidBody(b=>bodies.push({handle:b.handle,linear:b.linvel(),angular:b.angvel(),sleeping:b.isSleeping()}));return bodies;};
+  const velocities=state();p.refreshStatic(w);expect(p.inspect(1)).toEqual(before);expect(state()).toEqual(velocities);
   for(let i=0;i<120;i++)p.update(1/60);expect(p.position(1)!.y).toBeGreaterThan(2.2);p.dispose();
  });
  it('keeps concave proxy floor holes open and downgraded airborne corpses falling',()=>{

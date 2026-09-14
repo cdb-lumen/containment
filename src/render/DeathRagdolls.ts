@@ -194,7 +194,8 @@ export class DeathRagdolls {
   r.model.root.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(r.model.root,true);
   if(bounds.isEmpty())r.support.copy(r.anchor).y-=.05;
   else {bounds.getCenter(r.support);r.support.y=bounds.min.y;}
-  r.supportLift=Math.max(.25,(bounds.isEmpty()?r.anchor.y:bounds.max.y)-r.support.y+.25);
+  // Recover only shallow contact slop. A ray above the whole body can catch an overhead table.
+  r.supportLift=.25;
   for(const p of r.parts){p.body.sleep();this.world!.removeRigidBody(p.body);}r.parts=[];r.joints=[];r.settled=true;r.falling=true;r.fallSpeed=0;
  }
  has(id:number){return this.records.has(id);}

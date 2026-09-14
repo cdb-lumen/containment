@@ -43,7 +43,8 @@ for(const family of ['crawler','stalker','spitter','carrier','brute'])for(const 
    m.root.updateMatrixWorld(true);let minY=Infinity;
    m.root.traverse(o=>{if(o instanceof T.SkinnedMesh)for(let k=0;k<o.geometry.getAttribute('position').count;k++)minY=Math.min(minY,o.getVertexPosition(k,new T.Vector3()).applyMatrix4(o.matrixWorld).y);});
    expect(minY,`frame ${frame+1}`).toBeGreaterThanOrEqual(-.025);
+   if(p.snapshot().active>0)expect(m.root.position.distanceTo(root)).toBeLessThan(1e-8);
   }
-  expect(m.root.position.distanceTo(root)).toBeLessThan(1e-8);
+  expect(m.root.position.x).toBe(root.x);expect(m.root.position.z).toBe(root.z);
  }finally{p.dispose();floor.geometry.dispose();}
 });
