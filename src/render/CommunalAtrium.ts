@@ -4,6 +4,7 @@ import {COMMUNAL_ATRIUM_BLOCKOUT} from '../game/roguelike/authoredRoomTopologies
 import {MAT,box,rod} from './meshParts';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import gardenTrees from './garden-trees.json';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 /** Split garden court: fit each authored bed independently in loaded and fallback modes. */
 export function communalAtrium(t:RoomTemplate, fixtures=COMMUNAL_ATRIUM_BLOCKOUT, garden?:T.Group):T.Group{
@@ -20,6 +21,10 @@ export function communalAtrium(t:RoomTemplate, fixtures=COMMUNAL_ATRIUM_BLOCKOUT
  const own=(g:T.BufferGeometry)=>{allocated.add(g);return g;};
  try{
  const b=(x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material)=>box(root,x/32,y/32,z/32,w/32,h/32,d/32,m,0);
+ const padded=(x:number,y:number,z:number,w:number,h:number,d:number,r:number,m:T.Material)=>{
+  const g=own(new RoundedBoxGeometry(w/32,h/32,d/32,1,r/32));
+  g.translate(x/32,y/32,z/32);const mesh=new T.Mesh(g,m);mesh.castShadow=mesh.receiveShadow=true;root.add(mesh);
+ };
  const v=(x:number,y:number,z:number)=>new T.Vector3(x/32,y/32,z/32);
  const pipe=(a:T.Vector3,c:T.Vector3,r:number,m:T.Material)=>rod(root,a,c,r/32,r/32,m);
  const solid=(points:readonly Point[],bottom:number,top:number,m:T.Material,hole?:readonly Point[])=>{
@@ -57,24 +62,31 @@ export function communalAtrium(t:RoomTemplate, fixtures=COMMUNAL_ATRIUM_BLOCKOUT
     crown.castShadow=crown.receiveShadow=true;root.add(crown);
    }
   }else if(f.kind==='table'){
-   // Ordinary top on four inset legs. The full tabletop is the shared solid
-   // gameplay silhouette; the space underneath is not an actor passage.
-   b(cx,21,cz,f.w,6,f.h,ceramic);
+   // Ceramic top on a recessed steel apron, with the reviewed top height.
+   // The space beneath remains a solid gameplay reservation, not a passage.
+   padded(cx,22,cz,f.w,4,f.h,.8,ceramic);
+   b(cx,19,cz,f.w-3,2,f.h-3,support);
    for(const dx of [-f.w/2+6,f.w/2-6])for(const dz of [-f.h/2+6,f.h/2-6])b(cx+dx,9,cz+dz,8,18,8,support);
   }else if(f.kind.startsWith('seat-')){
-   // A continuous seat silhouette plus inset legs, no invisible plinth.
+   // A padded insert above a full-width metal seat pan. Keep the old envelope,
+   // support contacts and outward-facing backs; no fixture moves.
    const alongX=f.w>f.h;
-   b(cx,11.4,cz,f.w,6,f.h,seat);
+   b(cx,9.4,cz,f.w,2,f.h,support);
+   padded(cx,12.4,cz,f.w-2,4,f.h-2,1,seat);
    if(alongX){
     for(const dx of [-Math.min(f.w*.38,f.w/2-4),0,Math.min(f.w*.38,f.w/2-4)])b(cx+dx,4.2,cz,8,8.4,f.h-6,support);
-    const backZ=f.kind==='seat-north'?f.y+3:f.y+f.h-3;
-    b(cx,24.4,backZ,f.w,20,6,seat);
-    for(const dx of [-f.w/2+3,f.w/2-3])b(cx+dx,18.4,cz,6,8,f.h,support);
+    const backZ=f.kind==='seat-north'?f.y+3:f.y+f.h-3,front=f.kind==='seat-north'?1:-1;
+    padded(cx,24.4,backZ-front*.75,f.w,20,1.5,.6,support);
+    padded(cx,24.4,backZ-front*2.25,f.w-3,17,1.5,.6,seat);
+    padded(cx,24.4,backZ+front*1.5,f.w-3,17,3,1,seat);
+    for(const dx of [-f.w/2+1,f.w/2-1])b(cx+dx,18.4,cz,2,8,f.h,support);
    }else{
     for(const dz of [-Math.min(f.h*.38,f.h/2-4),0,Math.min(f.h*.38,f.h/2-4)])b(cx,4.2,cz+dz,f.w-6,8.4,8,support);
-    const backX=f.kind==='seat-west'?f.x+3:f.x+f.w-3;
-    b(backX,24.4,cz,6,20,f.h,seat);
-    for(const dz of [-f.h/2+3,f.h/2-3])b(cx,18.4,cz+dz,f.w,8,6,support);
+    const backX=f.kind==='seat-west'?f.x+3:f.x+f.w-3,front=f.kind==='seat-west'?1:-1;
+    padded(backX-front*.75,24.4,cz,1.5,20,f.h,.6,support);
+    padded(backX-front*2.25,24.4,cz,1.5,17,f.h-3,.6,seat);
+    padded(backX+front*1.5,24.4,cz,3,17,f.h-3,1,seat);
+    for(const dz of [-f.h/2+1,f.h/2-1])b(cx,18.4,cz+dz,f.w,8,2,support);
    }
   }else if(f.kind==='water'){
    // Refreshment counter south of the paired garden and dining court.
