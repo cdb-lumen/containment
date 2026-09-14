@@ -9,9 +9,13 @@ const footprints=room.obstacles.map(f=>({x:f.x/32,y:f.y/32,width:f.width/32,heig
 const model=(index:number)=>environmentObstacle('security',footprints[index],index,'crew-checkpoint');
 const named=(root:T.Object3D,name:string)=>{const result:T.Object3D[]=[];root.traverse(o=>{if(o.name===name)result.push(o);});return result;};
 describe('Room5 checkpoint rough',()=>{
- it('keeps the shipping room, collision rectangles and arrival/exit envelope',()=>{
+ it('joins the cover and counter around a central bay without changing the arrival/exit envelope',()=>{
   expect([room.width,room.height,room.spawn,room.exit]).toEqual([1200,880,{x:100,y:440},{x:1100,y:440}]);
-  expect(room.obstacles).toEqual([{x:300,y:150,width:80,height:400},{x:690,y:340,width:80,height:390},{x:510,y:180,width:160,height:80}]);
+  expect(room.obstacles).toEqual([{x:450,y:260,width:80,height:320},{x:690,y:260,width:80,height:320},{x:530,y:260,width:160,height:80}]);
+  const [west,east,desk]=room.obstacles;
+  expect(west.x+west.width).toBe(desk.x);
+  expect(desk.x+desk.width).toBe(east.x);
+  expect(east.x-west.x-west.width).toBe(160);
  });
  it.each([0,1])('builds low longitudinal cover with grounded diagonal braces at reservation %s',index=>{
   const root=model(index),plates=named(root,'ballistic-panel'),braces=named(root,'rear-brace');
