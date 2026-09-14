@@ -20,8 +20,24 @@ describe('Room5 checkpoint rough',()=>{
  it.each([0,1])('builds low longitudinal cover with grounded diagonal braces at reservation %s',index=>{
   const root=model(index),plates=named(root,'ballistic-panel'),braces=named(root,'rear-brace');
   expect(plates).toHaveLength(4);expect(braces).toHaveLength(8);
-  for(const panel of plates){const b=new T.Box3().setFromObject(panel,true);expect(b.max.z-b.min.z).toBeGreaterThan(2);expect(b.max.x-b.min.x).toBeLessThan(.35);expect(b.max.y).toBeLessThanOrEqual(1.3);}
+  for(const [n,panel] of plates.entries()){const b=new T.Box3().setFromObject(panel,true);expect(b.max.z-b.min.z).toBeGreaterThan(2);expect(b.max.x-b.min.x).toBeCloseTo(index===0&&n===1?.48:.24,5);expect(b.max.y).toBeLessThanOrEqual(1.3);}
   for(const brace of braces){const b=new T.Box3().setFromObject(brace,true);expect(b.min.y).toBeLessThan(.3);expect(b.max.y).toBeGreaterThan(.9);expect(b.max.x-b.min.x).toBeGreaterThan(1);}
+ });
+ it('gives the representative west shield thick armor and a connected frame on exposed grounded skids',()=>{
+  const root=model(0),panel=new T.Box3().setFromObject(named(root,'ballistic-panel')[1],true);
+  expect(panel.max.x-panel.min.x).toBeCloseTo(.48,5);
+  const skids=named(root,'representative-skid'),posts=named(root,'representative-frame-post');
+  expect(skids).toHaveLength(2);expect(posts).toHaveLength(2);
+  for(let i=0;i<2;i++){
+   const foot=new T.Box3().setFromObject(skids[i],true),post=new T.Box3().setFromObject(posts[i],true);
+   expect(foot.min.y).toBeCloseTo(0,5);expect(foot.max.y).toBeLessThan(panel.min.y);
+   expect(foot.intersectsBox(post)).toBe(true);expect(post.intersectsBox(panel)).toBe(true);
+   expect(foot.max.x-foot.min.x).toBeGreaterThan(2);
+  }
+  const sill=new T.Box3().setFromObject(named(root,'representative-frame-sill')[0],true);
+  expect(sill.intersectsBox(panel)).toBe(true);
+  for(const post of posts)expect(sill.intersectsBox(new T.Box3().setFromObject(post,true))).toBe(true);
+  expect(named(model(1),'representative-skid')).toHaveLength(0);
  });
  it('replaces the northern repeat with one guard counter, tucked seat and mounted terminal',()=>{
   const root=model(2);

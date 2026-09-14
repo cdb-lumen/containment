@@ -44,6 +44,21 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   // Both lines use the same construction, not an invented canonical attack direction.
   for(let n=0;n<4;n++){
    const z=(n+.5)*d/4,length=d/4-.04;
+   // Approve this west module at native scale before finishing the remaining set.
+   if(index===0&&n===1){
+    b('ballistic-panel',.36,.76,z,.48,.98,length,MAT.shell);
+    b('shield-top-edge',.36,1.27,z,.6,.06,length,MAT.edge);
+    b('lower-face-armor',.095,.42,z,.05,.36,length-.14,MAT.armor);
+    b('representative-frame-sill',.5,.29,z,.5,.14,length,MAT.edge);
+    b('rear-ballast',1.98,.12,z,.96,.24,length-.42,MAT.steel);
+    for(const dz of [-length*.36,length*.36]){
+     b('representative-skid',1.25,.09,z+dz,2.46,.18,.42,MAT.edge);
+     b('representative-frame-post',.61,.71,z+dz,.22,1.1,.24,MAT.edge);
+     const brace=rod(parts,new T.Vector3(.65,1.11,z+dz),new T.Vector3(2.22,.16,z+dz),.1,.1,MAT.edge);brace.name='rear-brace';
+    }
+    b('crew-mark',.107,.99,z,.025,.18,.46,MAT.bone);
+    continue;
+   }
    b('ballast-base',1.25,.18,z,2.48,.36,length,MAT.steel);
    b('ballistic-panel',.36,.76,z,.24,.98,length,MAT.shell);
    b('shield-top-edge',.36,1.27,z,.3,.06,length,MAT.edge);
