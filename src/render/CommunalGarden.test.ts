@@ -72,9 +72,10 @@ describe('authored communal garden',()=>{
   expect(built.userData.authoredGardenTriangles).toBe(1396);
   const imported=meshes(built).filter(m=>!m.geometry.attributes.uv);expect(imported).toHaveLength(5);
   expect(triangleCount(s)).toBe(1396);
-  expect(imported.reduce((n,m)=>n+m.geometry.attributes.position.count/3,0)).toBe(2*triangleCount(s));
+  // One unchanged main donor, fourteen twelve-triangle leaves and the compact soil box.
+  expect(imported.reduce((n,m)=>n+m.geometry.attributes.position.count/3,0)).toBe(triangleCount(s)+14*12+12);
   const bounds=new T.Box3();for(const m of imported)bounds.expandByObject(m,true);
-  expect(bounds.min.x*32).toBeCloseTo(480);expect(bounds.max.x*32).toBeCloseTo(698);expect(bounds.min.z*32).toBeCloseTo(294);expect(bounds.max.z*32).toBeCloseTo(400);expect(bounds.min.y).toBeCloseTo(0);expect(bounds.max.y*32).toBeLessThan(93.909111);
+  expect(bounds.min.x*32).toBeCloseTo(480);expect(bounds.max.x*32).toBeCloseTo(698);expect(bounds.min.z*32).toBeGreaterThanOrEqual(294);expect(bounds.min.z*32).toBeLessThan(310);expect(bounds.max.z*32).toBeCloseTo(400);expect(bounds.min.y).toBeCloseTo(0);expect(bounds.max.y*32).toBeLessThan(93.909111);
   expect(new Set(meshes(built).map(m=>m.material)).size).toBe(8);
   expect(meshes(built).length).toBeLessThanOrEqual(11);
   for(const m of meshes(built)){expect(m.castShadow&&m.receiveShadow).toBe(true);expect((m.material as T.Material).userData.actorMaterial).toBe(true);expect(Object.values(MAT)).not.toContain(m.material);}

@@ -36,12 +36,35 @@ export function communalAtrium(t:RoomTemplate, fixtures=COMMUNAL_ATRIUM_BLOCKOUT
  for(const [index,inputFixture] of fixtures.entries()){
   // Build both garden modes in the authored 144x64 frame. Rotate a longitudinal
   // bed before fitting its shared collision footprint; keep plant height unchanged.
-  const isGarden=inputFixture.kind==='garden';
+  const compact=inputFixture.id==='corridor-garden';
+  const isGarden=inputFixture.kind==='garden'&&!compact;
   const longitudinal=isGarden&&inputFixture.h>inputFixture.w;
   const f=isGarden?{...inputFixture,w:144,h:64}:inputFixture;
   const firstGardenChild=root.children.length;
   const footprint=[{x:f.x,y:f.y},{x:f.x+f.w,y:f.y},{x:f.x+f.w,y:f.y+f.h},{x:f.x,y:f.y+f.h}],cx=f.x+f.w/2,cz=f.y+f.h/2;
-  if(f.kind==='garden'&&garden){
+  if(compact){
+   // Two low rosettes, authored at this bed's scale rather than squeezed trees.
+   // Keep the existing rim, soil datum and collision reservation in both modes.
+   const inner=footprint.map(p=>({x:p.x+(p.x<cx?5*f.w/144:-5*f.w/144),y:p.y+(p.y<cz?5*f.h/64:-5*f.h/64)}));
+   solid(footprint,0,17,support);solid(footprint,17,23,ceramic,inner);solid(inner,17,19,soil);
+   // Factor-only soil shares the loaded donor's existing material batch.
+   (root.children[root.children.length-1] as T.Mesh).geometry.deleteAttribute('uv');
+   const positions:number[]=[],indices:number[]=[];
+   for(const [plant,offset] of [-3.8,3.8].entries())for(let j=0;j<7;j++){
+    const angle=j*Math.PI*2/7+plant*.47,reach=4.5+(j%3)*.55,height=11+(j%3)*2;
+    const start=positions.length/3;
+    for(let k=0;k<=4;k++){
+     const s=k/4,r=reach*s,width=Math.sin(Math.PI*s)*1.9;
+     const y=19+height*Math.sin(s*Math.PI*.65);
+     for(const side of [-1,0,1])positions.push((cx+offset+Math.cos(angle)*r-Math.sin(angle)*width*side)/32,(y-(side===0?0:width*.35))/32,(cz+Math.sin(angle)*r+Math.cos(angle)*width*side)/32);
+    }
+    for(let k=0;k<4;k++)for(let side=0;side<2;side++){
+     const a=start+k*3+side,b=a+3;if(k>0)indices.push(a,b,a+1);if(k<3)indices.push(a+1,b,b+1);
+    }
+   }
+   const g=own(new T.BufferGeometry());g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setIndex(indices);g.computeVertexNormals();
+   const foliage=new T.Mesh(g,leaf);foliage.castShadow=foliage.receiveShadow=true;root.add(foliage);
+  }else if(f.kind==='garden'&&garden){
    const roles:Record<string,T.Material>={ca_support:support,ca_ceramic:ceramic,ca_soil:soil,ca_leaf:leaf,ca_irrigation:bark};
    garden.updateWorldMatrix(true,true);let triangles=0;
    garden.traverse(o=>{if(o instanceof T.Mesh){
