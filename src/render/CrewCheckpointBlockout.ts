@@ -44,8 +44,7 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   // Both lines use the same construction, not an invented canonical attack direction.
   for(let n=0;n<4;n++){
    const z=(n+.5)*d/4,length=d/4-.04;
-   // Approve this west module at native scale before finishing the remaining set.
-   if(index===0&&n===1){
+   // Repeat the accepted west module without changing the reserved footprint.
     b('ballistic-panel',.36,.76,z,.48,.98,length,MAT.shell);
     b('shield-top-edge',.36,1.27,z,.6,.06,length,MAT.edge);
     b('lower-face-armor',.095,.42,z,.05,.36,length-.14,MAT.armor);
@@ -59,19 +58,6 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
      const brace=rod(parts,new T.Vector3(.65,1.11,z+dz),new T.Vector3(2.22,.16,z+dz),.1,.1,MAT.edge);brace.name='rear-brace';
     }
     b('crew-mark',.107,.99,z,.025,.18,.46,MAT.bone);
-    continue;
-   }
-   b('ballast-base',1.25,.18,z,2.48,.36,length,MAT.steel);
-   b('ballistic-panel',.36,.76,z,.24,.98,length,MAT.shell);
-   b('shield-top-edge',.36,1.27,z,.3,.06,length,MAT.edge);
-   b('lower-face-armor',.215,.42,z,.05,.36,length-.14,MAT.armor);
-   for(const dz of [-length*.36,length*.36]){
-    const brace=rod(parts,new T.Vector3(.52,1.11,z+dz),new T.Vector3(2.22,.22,z+dz),.075,.075,MAT.edge);brace.name='rear-brace';
-    b('anchor-foot',2.22,.08,z+dz,.42,.16,.3,MAT.black);
-    b('shield-upright',.52,.77,z+dz,.13,.98,.14,MAT.edge);
-   }
-   // One restrained non-emissive recognition patch per panel, not glowing shelf caps.
-   b('crew-mark',.226,.99,z,.025,.18,.46,MAT.bone);
   }
  }
  parts.scale.set(f.width/w,Math.min(1,f.width/w,f.height/d),f.height/d);
