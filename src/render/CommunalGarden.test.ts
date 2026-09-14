@@ -3,6 +3,7 @@ import * as T from 'three';
 import {readFileSync,existsSync} from 'node:fs';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import * as builder from './CommunalAtrium';
+import gardenTrees from './garden-trees.json';
 import {DepthRenderer} from './DepthRenderer';
 import {ROOM_TEMPLATES} from '../game/roguelike/roomTemplates';
 import {MAT,disposeModel} from './meshParts';
@@ -67,16 +68,41 @@ describe('authored communal garden',()=>{
   const s=await source(),rough=builder.communalAtrium(t),built=(builder.communalAtrium as any)(t,undefined,s);
   const triangleCount=(r:T.Object3D)=>meshes(r).reduce((n,m)=>n+(m.geometry.index?.count??m.geometry.attributes.position.count)/3,0);
   expect(triangleCount(built)).not.toBe(triangleCount(rough));
-  expect(built.userData.authoredGardenTriangles).toBe(1224);
+  // The seven-pad replacement has 1396 triangles within the unchanged 1500 cap.
+  expect(built.userData.authoredGardenTriangles).toBe(1396);
   const imported=meshes(built).filter(m=>!m.geometry.attributes.uv);expect(imported).toHaveLength(5);
-  expect(triangleCount(s)).toBe(1224);
-  expect(imported.reduce((n,m)=>n+m.geometry.attributes.position.count/3,0)).toBe(2448);
+  expect(triangleCount(s)).toBe(1396);
+  expect(imported.reduce((n,m)=>n+m.geometry.attributes.position.count/3,0)).toBe(2*triangleCount(s));
   const bounds=new T.Box3();for(const m of imported)bounds.expandByObject(m,true);
   expect(bounds.min.x*32).toBeCloseTo(480);expect(bounds.max.x*32).toBeCloseTo(698);expect(bounds.min.z*32).toBeCloseTo(294);expect(bounds.max.z*32).toBeCloseTo(400);expect(bounds.min.y).toBeCloseTo(0);expect(bounds.max.y*32).toBeLessThan(93.909111);
   expect(new Set(meshes(built).map(m=>m.material)).size).toBe(8);
   expect(meshes(built).length).toBeLessThanOrEqual(11);
   for(const m of meshes(built)){expect(m.castShadow&&m.receiveShadow).toBe(true);expect((m.material as T.Material).userData.actorMaterial).toBe(true);expect(Object.values(MAT)).not.toContain(m.material);}
   disposeModel(rough);disposeModel(built);
+ });
+ it('preserves exported split normals and indexed triangles in fallback data',async()=>{
+  const donor=await source();
+  const compare=(rows:typeof gardenTrees)=>{
+   expect(rows).toHaveLength(17);
+   for(const row of rows){
+    const mesh=donor.getObjectByName(row.name) as T.Mesh;expect(mesh).toBeInstanceOf(T.Mesh);
+    expect(row.positions).toEqual(Array.from(mesh.geometry.attributes.position.array));
+    expect(row.normals).toEqual(Array.from(mesh.geometry.attributes.normal.array));
+    expect(row.indices).toEqual(Array.from(mesh.geometry.index!.array));
+   }
+  };
+  compare(gardenTrees);
+  const corrupted=structuredClone(gardenTrees);corrupted[0].normals[0]+=0.25;
+  expect(()=>compare(corrupted)).toThrow();disposeModel(donor);
+ });
+ it('retains identical loaded and fallback foliage at both garden reservations',async()=>{
+  const donor=await source(),fallback=builder.communalAtrium(t),loaded=builder.communalAtrium(t,undefined,donor);
+  const foliage=(root:T.Group)=>meshes(root).filter(m=>(m.material as T.Material).name==='ca_leaf').flatMap(m=>{
+   const p=m.geometry.attributes.position;
+   return Array.from({length:p.count},(_,i)=>[p.getX(i),p.getY(i),p.getZ(i)].map(v=>v.toFixed(3)).join(','));
+  }).sort();
+  const actual=foliage(fallback);expect(actual.length).toBeGreaterThan(1000);expect(actual).toEqual(foliage(loaded));
+  disposeModel(fallback);disposeModel(loaded);disposeModel(donor);
  });
  it('freezes the existing loading gate for garden only',()=>{const get=Object.getOwnPropertyDescriptor(DepthRenderer.prototype,'roomLoading')!.get!;for(const state of ['loading','ready','fallback','disposed'])expect(get.call({communalGarden:{state}})).toBe(state==='loading');});
 });

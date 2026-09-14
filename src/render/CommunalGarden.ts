@@ -5,7 +5,7 @@ import {communalAtrium} from './CommunalAtrium';
 import {disposeModel} from './meshParts';
 
 const MAX_BYTES=128*1024;
-const PARTS=new Map<string,string>([['bed_support','ca_support'],['soil','ca_soil'],...Array.from({length:2},(_,i)=>[`rim_end_${i}`,'ca_ceramic']),...Array.from({length:4},(_,i)=>[`rim_long_${Math.floor(i/2)}_${i%2}`,'ca_ceramic']),...Array.from({length:3},(_,t)=>[[`tree${t}_trunk`,'ca_irrigation'],...Array.from({length:4},(_,j)=>[`tree${t}_branch${j}`,'ca_irrigation']),...Array.from({length:7},(_,j)=>[`tree${t}_crown${j}`,'ca_leaf'])]).flat()] as [string,string][]);
+const PARTS=new Map<string,string>([['bed_support','ca_support'],['soil','ca_soil'],...Array.from({length:2},(_,i)=>[`rim_end_${i}`,'ca_ceramic']),...Array.from({length:4},(_,i)=>[`rim_long_${Math.floor(i/2)}_${i%2}`,'ca_ceramic']),...Array.from({length:3},(_,t)=>[[`tree${t}_trunk`,'ca_irrigation'],...Array.from({length:[2,3,2][t]},(_,j)=>[`tree${t}_branch${j}`,'ca_irrigation']),...Array.from({length:[2,3,2][t]},(_,j)=>[`tree${t}_crown${j}`,'ca_leaf'])]).flat()] as [string,string][]);
 /** Decoded donors are exclusive and texture-free. Room finishes remain separately owned. */
 function retire(source:T.Group){const resources=new Set<T.BufferGeometry|T.Material>();source.traverse(o=>{if(o instanceof T.Mesh){resources.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material])resources.add(m);}});source.removeFromParent();resources.forEach(r=>r.dispose());}
 export function validateCommunalGarden(source:T.Group){

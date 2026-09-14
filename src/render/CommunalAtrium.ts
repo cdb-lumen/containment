@@ -3,6 +3,7 @@ import type {Point,RoomTemplate} from '../game/roguelike/types';
 import {COMMUNAL_ATRIUM_BLOCKOUT} from '../game/roguelike/authoredRoomTopologies';
 import {MAT,box,rod} from './meshParts';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import gardenTrees from './garden-trees.json';
 
 /** Split garden court: fit each authored bed independently in loaded and fallback modes. */
 export function communalAtrium(t:RoomTemplate, fixtures=COMMUNAL_ATRIUM_BLOCKOUT, garden?:T.Group):T.Group{
@@ -46,15 +47,14 @@ export function communalAtrium(t:RoomTemplate, fixtures=COMMUNAL_ATRIUM_BLOCKOUT
   }else if(f.kind==='garden'){
    const inner=footprint.map(p=>({x:p.x+(p.x<cx?5:-5),y:p.y+(p.y<cz?5:-5)}));
    solid(footprint,0,17,support);solid(footprint,17,23,ceramic,inner);solid(inner,17,19,soil);
-   // Low planting pockets stay inside the shallow preflight footprint.
-   for(const tx of (f.w<=96?[f.x+32,f.x+f.w-32]:Array.from({length:Math.ceil((f.w-64)/64)+1},(_,i)=>f.x+32+i*(f.w-64)/Math.ceil((f.w-64)/64)))){const tz=cz;
-    pipe(v(tx,19,tz),v(tx+3,78,tz),4,bark);
-    for(let i=0;i<7;i++){
-     const a=i*2.4,reach=i===6?0:12,x=tx+Math.cos(a)*reach,z=tz+Math.sin(a)*8,y=68+(i%3)*7;
-     pipe(v(tx+2,48+i*4,tz),v(x,y,z),2,bark);
-     const g=own(new T.IcosahedronGeometry(1,0));g.scale(14/32,14/32,12/32);g.translate(x/32,y/32,z/32);
-     const crown=new T.Mesh(g,leaf);crown.castShadow=crown.receiveShadow=true;root.add(crown);
-    }
+   // Generated from the authored export's roundtripped tree meshes.
+   for(const tree of gardenTrees){
+    const g=own(new T.BufferGeometry());
+    g.setAttribute('position',new T.Float32BufferAttribute(tree.positions,3));
+    g.setAttribute('normal',new T.Float32BufferAttribute(tree.normals,3));g.setIndex(tree.indices);
+    g.translate(cx/32,0,cz/32);
+    const crown=new T.Mesh(g,tree.role==='ca_leaf'?leaf:bark);
+    crown.castShadow=crown.receiveShadow=true;root.add(crown);
    }
    // Irrigation lies on the soil, not suspended across the room.
    pipe(v(f.x+8,21,cz),v(f.x+f.w-8,21,cz),2,bark);

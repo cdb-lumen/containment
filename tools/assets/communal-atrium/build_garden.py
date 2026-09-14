@@ -45,30 +45,37 @@ box('soil',-67,67,-27,27,17,19,'ca_soil')
 for side,(y0,y1) in enumerate(((-32,-27),(27,32))):
     for j,(x0,x1) in enumerate(((-72,-.3),(.3,72))): box('rim_long_%d_%d'%(side,j),x0,x1,y0,y1,17,23,'ca_ceramic')
 for j,(x0,x1) in enumerate(((-72,-67),(67,72))): box('rim_end_%d'%j,x0,x1,-27,27,17,23,'ca_ceramic')
-# Exact donor ico planes, in normalized glTF x/up/gameY axes.
-a=json.loads((src/'baseline-ico.json').read_text()); planes=[]
-for k in range(0,len(a),9):
-    aa,bb,cc=[Vector(a[k+i:k+i+3]) for i in (0,3,6)]; n=(bb-aa).cross(cc-aa).normalized()
-    if n.dot(aa)<0:n=-n
-    planes.append((n,n.dot(aa)))
+# Construction replacement after the two retained ico-crown cosmetic attempts.
+# Each tree has an exposed fork and separately shaped foliage pads. Coordinates
+# retain the three soil anchors and the old 144x64, <=96-high reservation.
+a=json.loads((src/'baseline-ico.json').read_text())
 centers={}
-for t,tx in enumerate((-40,0,40)):
-    branch('tree%d_trunk'%t,[(tx,0,19),(tx+.8,0,39),(tx+1.4,.3,56),(tx+2,0,75)],[3.6,3.2,2.7,1.5])
-    # Cosmetic attempt 2: restore the seven rough crown pockets at near-donor
-    # mass. Keep existing trunks/branches byte-for-byte in design coordinates.
-    # Small unequal contractions retain faceted lobe separation, not leaf detail.
-    for j,i in enumerate((0,2,4,6,1,3,5)):
-        ang=i*2.4; reach=0 if i==6 else 12
-        c=(tx+math.cos(ang)*reach,math.sin(ang)*8,68+(i%3)*7); name='tree%d_crown%d'%(t,j); centers[name]=c
-        if j<4:
-            branch('tree%d_branch%d'%(t,j),[(tx+1.2,0,46+j*4),((tx+c[0])/2,c[1]*.5,58+j*3),c],[1.8,1.35,.6])
-        unique=list(dict.fromkeys(tuple(a[k:k+3]) for k in range(0,len(a),3)))
-        vv=[]
-        for q,p in enumerate(unique):
-            v=Vector(p)*(0.94+0.015*((q+t+i)%4))
-            vv.append((c[0]+v.x*14,c[1]+v.z*12,c[2]+v.y*14))
-        ff=[tuple(unique.index(tuple(a[k+s:k+s+3])) for s in (0,3,6)) for k in range(0,len(a),9)]
-        mesh(name,vv,ff,'ca_leaf')
+def crown(name,c,size,phase):
+    # Unequal perimeter lobes and offset ring centres form broad leaf clusters,
+    # not scaled spheres. Low undersides leave the branch junctions visible.
+    n=12; verts=[]
+    for ring,(height,radius,dx,dy) in enumerate(((-1,.24,0,0),(-.55,.82,-.08,0),(.05,1,0,0),(.68,.68,.12,-.06),(1,.16,.15,-.08))):
+        for k in range(n):
+            angle=k*math.tau/n
+            edge=1+.12*math.sin(angle*3+phase)+.065*math.cos(angle*5-phase)
+            verts.append((c[0]+size[0]*(math.cos(angle)*radius*edge+dx),c[1]+size[1]*(math.sin(angle)*radius*edge+dy),c[2]+size[2]*(height+.06*math.sin(angle*2+phase))))
+    faces=[tuple(reversed(range(n))),tuple(4*n+k for k in range(n))]
+    for ring in range(4):
+        for k in range(n): faces.append((ring*n+k,ring*n+(k+1)%n,(ring+1)*n+(k+1)%n,(ring+1)*n+k))
+    centers[name]=c
+    return mesh(name,verts,faces,'ca_leaf')
+# Left spreading fork, middle upright tiers, right leaning crown.
+trees=[
+    (-40,[(0,0,19),(-1,0,37),(-6,1,54),(-10,2,74)],[( (-13,1,77),(12,13,8),.3),((11,-7,69),(10,11,7),1.5)]),
+    (0,[(0,0,19),(2,1,42),(0,2,61),(3,1,84)],[((3,1,83),(10,11,9),2.1),((-12,-8,67),(9,10,6),.7),((13,7,74),(8,10,6),1.2)]),
+    (40,[(0,0,19),(-2,-1,40),(4,-2,58),(11,-2,77)],[((12,-2,79),(12,14,8),1.8),((-11,7,71),(10,10,7),2.8)]),
+]
+for t,(tx,path,pads) in enumerate(trees):
+    branch('tree%d_trunk'%t,[(tx+x,y,z) for x,y,z in path],[3.6,3,2.2,1])
+    for j,(local,size,phase) in enumerate(pads):
+        c=(tx+local[0],local[1],local[2]); fork=path[2]
+        branch('tree%d_branch%d'%(t,j),[(tx+fork[0],fork[1],fork[2]-6),(tx+(fork[0]+local[0])*.5,local[1]*.45,local[2]-14),c],[2.3,1.7,.7])
+        crown('tree%d_crown%d'%(t,j),c,size,phase)
 bpy.context.scene.unit_settings.system='METRIC'; bpy.context.scene.unit_settings.scale_length=1
 bpy.ops.wm.save_as_mainfile(filepath=str(out/'signature-garden.blend'))
 bpy.ops.export_scene.gltf(filepath=str(out/'signature-garden.glb'),export_format='GLB',export_yup=True,export_normals=True,export_texcoords=False,export_materials='EXPORT',export_cameras=False,export_lights=False,export_extras=False)
@@ -97,15 +104,20 @@ def validate():
         key='tree%d_trunk'%t; assert key in objects,'missing-trunk'
         vv=gameverts(objects[key]); assert min(v.z for v in vv)<=19.0001 and max(v.z for v in vv)>=74,'trunk soil contact/height'
         assert objects[key].data.materials[0].name.startswith('ca_irrigation')
-    for name,c in centers.items():
-        for v in gameverts(objects[name]):
-            local=Vector(((v.x-c[0])/14,(v.z-c[2])/14,(v.y-c[1])/12))
-            assert all(n.dot(local)<=d+1e-5 for n,d in planes),'foliage outside original lobe'
+    # Old per-ico containment belongs to the retained rejected construction.
+    # Replacement foliage instead obeys the unchanged whole garden envelope.
+    assert len(centers)==7 and all(name in objects for name in centers),'missing-crown'
+    for t,(tx,path,pads) in enumerate(trees):
+        vv=gameverts(objects['tree%d_trunk'%t]); base=[v for v in vv if v.z<23]
+        assert base and abs(sum(v.x for v in base)/len(base)-tx)<.15,'moved-anchor'
+        crowns=[v for name in centers if name.startswith('tree%d_'%t) for v in gameverts(objects[name])]
+        assert min(v.z for v in crowns)>59,'buried-fork'
+        assert max(v.z for v in crowns)>80,'missing-green-mass'
     for o in objects.values():
         for v in o.data.vertices: assert all(math.isfinite(c) for c in v.normal) and .99<v.normal.length<1.01,'normal'
         for p in o.data.polygons: assert p.area>1e-12,'degenerate'
     assert abs(min(v.z for v in gameverts(objects['bed_support'])))<1e-5
-    return {'local_game_bounds':[lo,hi],'world_game_bounds':[[lo[0]+584,lo[1]+336,lo[2]],[hi[0]+584,hi[1]+336,hi[2]]],'meshes':len(objects),'triangles':sum(len(p.vertices)-2 for o in objects.values() for p in o.data.polygons),'trunks':3,'crown_lobes':len(centers),'finite_unit_normals':True,'foliage_contained_in_retained_original_lobes':True}
+    return {'local_game_bounds':[lo,hi],'world_game_bounds':[[lo[0]+584,lo[1]+336,lo[2]],[hi[0]+584,hi[1]+336,hi[2]]],'meshes':len(objects),'triangles':sum(len(p.vertices)-2 for o in objects.values() for p in o.data.polygons),'trunks':3,'crown_lobes':len(centers),'finite_unit_normals':True,'foliage_contained_in_retained_garden_envelope':True}
 result=validate(); negatives=[]
 def rejected(label):
     try: validate()
@@ -115,6 +127,24 @@ def rejected(label):
 o=objects['bed_support']; o.location.x+=10; bpy.context.view_layer.update(); rejected('out-of-envelope'); o.location.x-=10; bpy.context.view_layer.update()
 o=objects.pop('tree1_trunk'); rejected('missing-trunk'); objects['tree1_trunk']=o
 validate()
+# Read exported split normals directly. Blender's imported vertex.normal can
+# average custom loop normals and change the fallback's shading.
+binary=raw[28+n:]
+def accessor(index):
+    a=doc['accessors'][index]; view=doc['bufferViews'][a['bufferView']]
+    width={'SCALAR':1,'VEC3':3}[a['type']]; fmt={5123:'H',5125:'I',5126:'f'}[a['componentType']]
+    size=struct.calcsize(fmt); stride=view.get('byteStride',size*width)
+    start=view.get('byteOffset',0)+a.get('byteOffset',0)
+    return [v for i in range(a['count']) for v in struct.unpack_from('<'+fmt*width,binary,start+i*stride)]
+fallback=[]
+for node in sorted(doc['nodes'],key=lambda node:node['name']):
+    name=node['name']
+    if not name.startswith('tree'): continue
+    assert not any(k in node for k in ('matrix','translation','rotation','scale'))
+    primitives=doc['meshes'][node['mesh']]['primitives']; assert len(primitives)==1
+    primitive=primitives[0]
+    fallback.append({'name':name,'role':'ca_leaf' if 'crown' in name else 'ca_irrigation','positions':accessor(primitive['attributes']['POSITION']),'normals':accessor(primitive['attributes']['NORMAL']),'indices':accessor(primitive['indices'])})
+(out/'garden-trees.json').write_text(json.dumps(fallback,separators=(',',':'))+'\n')
 result.update({'passed':True,'negative_controls':negatives,'material_roles':list(roles),'textures':0,'glb_bytes':len(raw),'blender':bpy.app.version_string,'appearance_accepted':False,'integration_accepted':False,'native_capture':False})
 (out/'validation.json').write_text(json.dumps(result,indent=2)+'\n')
 print('GARDEN_VALIDATION '+json.dumps(result))
