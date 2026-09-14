@@ -1,5 +1,6 @@
 import {describe,it,expect,vi} from 'vitest';
 import * as T from 'three';
+import {readFileSync} from 'node:fs';
 import {DepthRenderer} from '../src/render/DepthRenderer';
 import {EnvironmentMaterials} from '../src/render/EnvironmentMaterials';
 import {MAT,disposeModel,geometries} from '../src/render/meshParts';
@@ -19,12 +20,12 @@ function hit(root:T.Object3D,x:number,y:number){root.updateMatrixWorld(true);ret
 const materialState=()=>Object.values(MAT).map(m=>[m.color.getHex(),m.metalness,m.roughness,m.emissive.getHex(),m.emissiveIntensity]);
 
 describe('accepted south32 CPU rendering and ownership',()=>{
- it('shares twelve immutable fixtures, including the south32 dining group, with gameplay',()=>{
-  expect(COMMUNAL_ATRIUM_BLOCKOUT).toHaveLength(12);expect(Object.isFrozen(COMMUNAL_ATRIUM_BLOCKOUT)).toBe(true);
+ it('shares eleven immutable reviewed y556 fixtures with gameplay',()=>{
+  expect(COMMUNAL_ATRIUM_BLOCKOUT).toHaveLength(11);expect(Object.isFrozen(COMMUNAL_ATRIUM_BLOCKOUT)).toBe(true);
   expect(COMMUNAL_ATRIUM_BLOCKOUT.map(f=>[f.id,f.x,f.y,f.w,f.h])).toEqual([
-   ['shared-table',800,416,144,48],['north-seat-0',808,400,28,16],['north-seat-1',856,400,28,16],['north-seat-2',904,400,28,16],
-   ['south-seat-0',808,472,28,16],['south-seat-1',856,472,28,16],['south-seat-2',904,472,28,16],['shared-garden',512,304,144,64],
-   ['shared-water',1008,440,60,40],['entry-welcome',388,192,64,16],['garden-seat-0',464,312,16,28],['garden-seat-1',688,312,16,28],
+   ['shared-table',940,384,48,60],['north-seat-0',924,388,16,20],['north-seat-1',924,420,16,20],
+   ['south-seat-0',996,388,16,20],['south-seat-1',996,420,16,20],['shared-garden',480,310,218,90],
+   ['shared-water',777,448,60,40],['entry-welcome',320,300,64,16],['garden-seat-0',516,400,28,16],['garden-seat-1',572,400,28,16],['corridor-garden',678,294,20,16],
   ]);
   for(const f of COMMUNAL_ATRIUM_BLOCKOUT){expect(Object.isFrozen(f)).toBe(true);expect(Object.isFrozen(f.footprint)).toBe(true);}
   expect(ROOM_TEMPLATES[node.templateId].voids).toEqual(COMMUNAL_ATRIUM_BLOCKOUT.map(f=>f.footprint));
@@ -38,25 +39,27 @@ describe('accepted south32 CPU rendering and ownership',()=>{
     expect(canOccupyExpedition(createExpeditionGeometry(node),{x,y},0)).toBe(false);
     expect(hit(implicit,x,y)?.point.y,`${f.id} ${x}/${y}`).toBeGreaterThan(0);
    }
-   expect(hit(implicit,872,440)!.point.y*32).toBeCloseTo(24);
-   expect(hit(implicit,820,412)!.point.y*32).toBeCloseTo(14.4);
-   expect(hit(implicit,500,190)!.point.y*32).toBeCloseTo(84);
+   expect(hit(implicit,964,414)!.point.y*32).toBeCloseTo(24);
+   expect(hit(implicit,936,398)!.point.y*32).toBeCloseTo(14.4);
+   expect(hit(implicit,500,214)!.point.y*32).toBeCloseTo(84);
   }finally{disposeModel(implicit);disposeModel(explicit);}
  });
  it('draws only the physical floor, keeps south wall collision visible, and authors finite physical UVs',()=>{
   const r=renderer();r.loadRoom(node);
   try{
    expect(ROOM_TEMPLATES[node.templateId].height).toBe(880);
-   for(const [x,y] of [[100,440],[600,650],[600,800],[1000,250]])expect(hit(r.world,x,y)).toBeUndefined();
+   for(const [x,y] of [[100,440],[600,650],[600,800],[1000,220]])expect(hit(r.world,x,y)).toBeUndefined();
    expect(hit(r.world,600,528)!.point.y*32).toBeCloseTo(-.64);
    expect(hit(r.world,600,581)!.point.y*32).toBeGreaterThan(16);
    const wall=new T.Raycaster(new T.Vector3(600/32,.5,570/32),new T.Vector3(0,0,1),0,20/32).intersectObject(r.world,true);expect(wall.length).toBeGreaterThan(0);
    for(const m of meshes(r.world)){const uv=m.geometry.getAttribute('uv');if(uv)expect(Array.from(uv.array).every(Number.isFinite)).toBe(true);}
-  }finally{disposeModel(r.world);}
+  }finally{r.communalGarden?.dispose();disposeModel(r.world);}
  });
- it('bounds aggregate geometry and owned finishes, releases exactly once, and resets tint without loading freeze',()=>{
-  const before=materialState(),r=renderer();r.loadRoom(node);
-  const equipment=r.world.getObjectByName('communal-atrium-rough')!;expect(equipment).toBeDefined();
+ it.each(['ready','fallback'])('bounds aggregate %s geometry and owned finishes, releases once and resets tint after bounded loading',async state=>{
+  vi.spyOn(globalThis,'fetch').mockResolvedValue(state==='ready'?new Response(readFileSync('public/assets/communal-atrium/signature-garden.glb')):new Response('',{status:404}));
+  const before=materialState(),r=renderer();r.loadRoom(node);expect(r.roomLoading).toBe(true);await r.communalGarden.ready;expect(r.communalGarden.state).toBe(state);
+  const equipment=r.world.getObjectByName(state==='ready'?'communal-atrium-authored':'communal-atrium-rough')!;expect(equipment).toBeDefined();
+  for(const f of COMMUNAL_ATRIUM_BLOCKOUT)for(let ix=0;ix<5;ix++)for(let iy=0;iy<5;iy++)expect(hit(equipment,f.x+(ix+.5)*f.w/5,f.y+(iy+.5)*f.h/5)?.point.y).toBeGreaterThan(0);
   const all=meshes(r.world),materials=new Set(meshes(equipment).map(m=>m.material as T.MeshStandardMaterial));
   expect(materials.size).toBe(8);expect(all.length).toBeLessThanOrEqual(32);
   const triangles=all.reduce((n,m)=>n+(m.geometry.index?.count??m.geometry.getAttribute('position').count)/3,0);expect(triangles).toBeLessThan(45000);

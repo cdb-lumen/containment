@@ -1,5 +1,6 @@
 import {roomFocus} from './roomFraming';
 import {communalAtrium} from './CommunalAtrium';
+import {attachCommunalGarden} from './CommunalGarden';
 import {attachSealedBank} from './SealedChamberBank';
 import {attachRecoveryKit} from './RecoveryKit';
 import {attachReleasedBerth} from './ReleasedBerth';
@@ -76,7 +77,7 @@ export class DepthRenderer {
  }
  /** Load shaders, textures, GPU buffers and common animation actions before combat. */
  async prepare(node:RunNode){
-  this.loadRoom(node);await Promise.all([this.surfaces.ready,this.passengerVault?.ready,this.residentialGalleryEquipment?.ready]);
+  this.loadRoom(node);await Promise.all([this.surfaces.ready,this.passengerVault?.ready,this.residentialGalleryEquipment?.ready,this.communalGarden?.ready]);
   const warm:T.Group=new T.Group(),models:ActorModel[]=[];this.scene.add(warm);
   const yieldTask=()=>new Promise<void>(resolve=>setTimeout(resolve,0));
   const shadowEnabled=this.renderer.shadowMap.enabled;
@@ -126,11 +127,13 @@ export class DepthRenderer {
   for(const [mat,list]of buckets){const merged=mergeGeometries(list);list.forEach(g=>g.dispose());if(merged){const mesh=new T.Mesh(merged,mat);mesh.userData.bakedEnvironment=true;mesh.castShadow=true;mesh.receiveShadow=true;this.world.add(mesh);}}
  }
  private passengerVault:ReturnType<typeof attachPassengerVault>|undefined;
+ private communalGarden:ReturnType<typeof attachCommunalGarden>|undefined;
  private residentialGalleryEquipment:ReturnType<typeof attachResidentialGalleryEquipment>|undefined;
  private sealedBank:ReturnType<typeof attachSealedBank>|undefined;
  private recoveryKit:ReturnType<typeof attachRecoveryKit>|undefined;
  private releasedBerth:ReturnType<typeof attachReleasedBerth>|undefined;
  loadRoom(node:RunNode,environment:ShipEnvironment|undefined=shipEnvironment(node.templateId)){
+  this.communalGarden?.dispose();this.communalGarden=undefined;
   this.passengerVault?.dispose();this.passengerVault=undefined;
   this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;
   this.clearPools();
@@ -182,7 +185,7 @@ export class DepthRenderer {
    // keep wall/cover/edge roles, with their interior face on the boundary.
    for(let i=1;i<t.boundary!.length;i++){
     const p=t.boundary![i],q=t.boundary![(i+1)%t.boundary!.length],dx=(q.x-p.x)/UNIT,dz=(q.y-p.y)/UNIT,length=Math.hypot(dx,dz);
-    const height=p.y===shellH*UNIT&&q.y===shellH*UNIT?.65:1.1;
+    const height=dx<0&&dz>=0?.65:1.1;
     const g=new T.Group();g.position.set((p.x+q.x)/2/UNIT,0,(p.y+q.y)/2/UNIT);g.rotation.y=-Math.atan2(dz,dx);
     this.surfaces.uv(box(g,0,height/2,-.28,length,height,.32,this.surfaces.wall,0),2);
     box(g,0,height/2,-.06,length,height,.12,this.surfaces.cover,0);
@@ -236,6 +239,7 @@ export class DepthRenderer {
   this.bakeWorld();
   }
   if(node.templateId==='residential-gallery')this.residentialGalleryEquipment=attachResidentialGalleryEquipment(this.world,()=>{this.shadowsDirty=true;});
+  if(atrium)this.communalGarden=attachCommunalGarden(this.world,t,()=>{this.shadowsDirty=true;});
   this.exit=new T.Group();this.exit.position.set(t.exit.x/UNIT,0,t.exit.y/UNIT);this.world.add(this.exit);
   for(const side of [-1,1]){box(this.exit,0,.7,side*.7,.12,1.4,.18,MAT.steel);box(this.exit,.08,.7,side*.7,.04,1.05,.05,MAT.cyan,.01);}
   box(this.exit,0,1.5,0,.2,.2,1.6,MAT.dark);box(this.exit,0,.035,0,1.7,.02,1.55,MAT.dark);
@@ -267,7 +271,7 @@ export class DepthRenderer {
   this.effects.event(effect);
  }
  syncCorpse(id:number,x:number,y:number){const corpse=this.corpses.find(c=>c.id===id);if(corpse){corpse.x=x/UNIT;corpse.y=y/UNIT;corpse.vx=corpse.vy=0;}}
- get roomLoading(){return this.residentialGalleryEquipment?.state==='loading'||this.passengerVault?.state==='loading'||this.recoveryKit?.state==='loading'||this.sealedBank?.state==='loading'||this.releasedBerth?.state==='loading';}
+ get roomLoading(){return this.communalGarden?.state==='loading'||this.residentialGalleryEquipment?.state==='loading'||this.passengerVault?.state==='loading'||this.recoveryKit?.state==='loading'||this.sealedBank?.state==='loading'||this.releasedBerth?.state==='loading';}
  render(game:DepthGame,delta:number,menu=false){
   if(this.roomKey!==game.node.id)this.loadRoom(game.node);
   // ImageBitmap completion shares browser/GPU scheduling with WebGL. Do not
@@ -342,5 +346,5 @@ export class DepthRenderer {
   for(const[id,mesh]of this.poolMeshes)if(!poolIds.has(id)){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();this.poolMeshes.delete(id);}
  }
  private clearPools(){for(const mesh of this.poolMeshes.values()){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();}this.poolMeshes.clear();}
- dispose(){this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;this.passengerVault?.dispose();this.clearPools();this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
+ dispose(){this.communalGarden?.dispose();this.communalGarden=undefined;this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;this.passengerVault?.dispose();this.clearPools();this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
 }

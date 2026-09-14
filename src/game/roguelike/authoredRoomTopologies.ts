@@ -49,7 +49,7 @@ export const PASSENGER_BLOCKOUT=Object.freeze([
  * A low shared back connects seating, small shared surfaces and planting.
  * Circulation goes around both ends, never through the solid frontage.
  * These footprints drive both rendering and collision. */
-export const COMMUNAL_ATRIUM_BLOCKOUT=Object.freeze([{"id":"shared-table","kind":"table","x":800,"y":416,"w":144,"h":48,"top":24},{"id":"north-seat-0","kind":"seat-north","x":808,"y":400,"w":28,"h":16,"seatTop":14.4,"table":"shared-table"},{"id":"north-seat-1","kind":"seat-north","x":856,"y":400,"w":28,"h":16,"seatTop":14.4,"table":"shared-table"},{"id":"north-seat-2","kind":"seat-north","x":904,"y":400,"w":28,"h":16,"seatTop":14.4,"table":"shared-table"},{"id":"south-seat-0","kind":"seat-south","x":808,"y":472,"w":28,"h":16,"seatTop":14.4,"table":"shared-table"},{"id":"south-seat-1","kind":"seat-south","x":856,"y":472,"w":28,"h":16,"seatTop":14.4,"table":"shared-table"},{"id":"south-seat-2","kind":"seat-south","x":904,"y":472,"w":28,"h":16,"seatTop":14.4,"table":"shared-table"},{"id":"shared-garden","kind":"garden","x":512,"y":304,"w":144,"h":64},{"id":"shared-water","kind":"water","x":1008,"y":440,"w":60,"h":40},{"id":"entry-welcome","kind":"welcome","x":388,"y":192,"w":64,"h":16},{"id":"garden-seat-0","kind":"seat-west","x":464,"y":312,"w":16,"h":28,"seatTop":14.4,"table":"shared-garden"},{"id":"garden-seat-1","kind":"seat-east","x":688,"y":312,"w":16,"h":28,"seatTop":14.4,"table":"shared-garden"}].map(({x,y,w,h,...role})=>Object.freeze({...role,x,y,w,h,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
+export const COMMUNAL_ATRIUM_BLOCKOUT=Object.freeze([{"id":"shared-table","kind":"table","x":940,"y":384,"w":48,"h":60,"top":24},{"id":"north-seat-0","kind":"seat-west","x":924,"y":388,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"north-seat-1","kind":"seat-west","x":924,"y":420,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"south-seat-0","kind":"seat-east","x":996,"y":388,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"south-seat-1","kind":"seat-east","x":996,"y":420,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"shared-garden","kind":"garden","x":480,"y":310,"w":218,"h":90},{"id":"shared-water","kind":"water","x":777,"y":448,"w":60,"h":40},{"id":"entry-welcome","kind":"welcome","x":320,"y":300,"w":64,"h":16},{"id":"garden-seat-0","kind":"seat-south","x":516,"y":400,"w":28,"h":16,"seatTop":14.4,"table":"shared-garden"},{"id":"garden-seat-1","kind":"seat-south","x":572,"y":400,"w":28,"h":16,"seatTop":14.4,"table":"shared-garden"},{"id":"corridor-garden","kind":"garden","x":678,"y":294,"w":20,"h":16}].map(({x,y,w,h,...role})=>Object.freeze({...role,x,y,w,h,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
  * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */
@@ -70,9 +70,9 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   obstacles:Object.freeze([]),
  }),
  'communal-atrium':Object.freeze({
-  // Bring the existing straight south enclosure to the passage, rather than
-  // retaining an unused second room of floor behind the circulation band.
-  boundary:polygon([[248, 192], [782, 192], [782, 256], [1200, 360], [1200, 580], [336, 580], [336, 360], [248, 256]]),
+  // Shallow visible court with a shared garden and dining group. Keep the horizontal
+  // bulkhead first: CommunalAtrium owns it; DepthRenderer owns every other edge.
+  boundary:polygon([[192, 216], [782, 216], [1200, 288], [1200, 556], [932, 556], [882, 580], [192, 580]]),
   voids:Object.freeze(COMMUNAL_ATRIUM_BLOCKOUT.map(f=>f.footprint)),
   spawn:Object.freeze({x:436,y:440}),exit:Object.freeze({x:1100,y:440}),
   breaches:polygon([[320,256],[736,256],[436,500],[1100,500]]),

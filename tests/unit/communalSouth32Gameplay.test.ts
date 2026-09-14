@@ -11,6 +11,9 @@ import {expeditionRewardOffers} from '../../src/game/roguelike/expedition';
 const node=generateRun(3,3).nodes.find(n=>n.templateId==='communal-atrium')!;
 const point=(x:number,y:number)=>({x,y});
 const geometry=()=>createExpeditionGeometry(node);
+// Retained south32 solids are test-only controls, never shipping topology.
+const oldWater=[point(1008,440),point(1068,440),point(1068,480),point(1008,480)];
+const oldGarden=[point(512,304),point(656,304),point(656,368),point(512,368)];
 const setup=()=>{const game=new DepthGame();game.node=node;game.geometry=geometry();game.navigation=new FacilityNavigation(game.geometry);game.enemies=game['makeEnemies']();game.status='playing';Object.assign(game.player,game.geometry.playerSpawn);return game;};
 const targets=[point(436,440),point(584,256),point(744,360),point(744,528),point(980,528),point(1100,440)];
 const route=[point(436,440),point(436,528),point(1100,528),point(1100,440)];
@@ -19,10 +22,10 @@ describe('accepted Communal Atrium south32 gameplay',()=>{
  it('installs the exact inset physical polygon without changing the shipping envelope',()=>{
   const t=ROOM_TEMPLATES[node.templateId],g=geometry();
   expect([t.width,t.height]).toEqual([1200,880]);
-  expect(t.boundary).toEqual([[248,192],[782,192],[782,256],[1200,360],[1200,580],[336,580],[336,360],[248,256]].map(([x,y])=>point(x,y)));
+  expect(t.boundary).toEqual([[192,216],[782,216],[1200,288],[1200,556],[932,556],[882,580],[192,580]].map(([x,y])=>point(x,y)));
   expect(g.playerSpawn).toEqual(point(436,440));expect(g.exitPoint).toEqual(point(1100,440));
-  expect(t.voids).toHaveLength(12);expect(t.obstacles).toEqual([]);
-  for(const p of [point(100,440),point(600,700),point(880,440),point(584,336),point(1038,460)])expect(canOccupyExpedition(g,p,16)).toBe(false);
+  expect(t.voids).toHaveLength(11);expect(t.obstacles).toEqual([]);
+  for(const p of [point(100,440),point(600,700),point(964,414),point(584,336),point(807,468)])expect(canOccupyExpedition(g,p,16)).toBe(false);
  });
  it('walks the main southern passage with production input and finite actor clearance',()=>{
   const game=setup();
@@ -58,11 +61,14 @@ describe('accepted Communal Atrium south32 gameplay',()=>{
   for(const breach of g.breaches)for(const radius of [16,ENEMIES.crawler.radius,ENEMIES.brute.radius]){
    expect(canOccupyExpedition(g,breach,radius)).toBe(true);
   }
-  const requested=point(1044,500);expect(canOccupyExpedition(g,requested,ENEMIES.brute.radius)).toBe(false);
+  // The old water-adjacent request is now open; keep it as a negative control.
+  expect(canOccupyExpedition(g,point(1044,500),ENEMIES.brute.radius)).toBe(true);
+  expect(canOccupyExpedition({...g,voids:[...g.voids!,oldWater]},point(1044,500),ENEMIES.brute.radius)).toBe(false);
+  const requested=point(807,500);expect(canOccupyExpedition(g,requested,ENEMIES.brute.radius)).toBe(false);
   const game=setup();expect(game['spawn']('brute',requested.x,requested.y)).toBe(true);
   const actual=game.enemies.snapshot.enemies[0];expect(canOccupyExpedition(g,actual,actual.radius)).toBe(true);
   expect(point(actual.x,actual.y)).not.toEqual(requested);
-  expect(canOccupyExpedition(g,g.exitPoint,28)).toBe(true);expect(canOccupyExpedition(g,g.exitPoint,38)).toBe(false);
+  expect(canOccupyExpedition(g,g.exitPoint,28)).toBe(true);expect(canOccupyExpedition(g,g.exitPoint,38)).toBe(true);
  });
  it('rejects a deliberately disconnected navigation control',()=>{
   const g=geometry(),blocked={...g,voids:[...g.voids!,[point(720,192),point(780,192),point(780,580),point(720,580)]]};
@@ -92,9 +98,17 @@ describe('accepted Communal Atrium south32 gameplay',()=>{
   expect(game.pickups.snapshot).toHaveLength(0);expect(game.combat.snapshot.credits).toBe(before+10);
  });
  it('prevents garden-corner magnet-through-solid and collects from a legal input-driven approach',()=>{
-  const game=setup();Object.assign(game.player,point(532,392));
+  const game=setup();
+  // Old south32 player/drop coordinates now overlap the reviewed garden.
+  const oldGeometry={...game.geometry,voids:[oldGarden]};
+  expect(canOccupyExpedition(oldGeometry,point(532,392),16)).toBe(true);
+  expect(canOccupyExpedition(oldGeometry,point(488,360),16)).toBe(true);
+  expect(canTraverseExpedition(oldGeometry,point(488,360),point(532,392),16)).toBe(false);
+  expect(canOccupyExpedition(game.geometry,point(532,392),16)).toBe(false);
+  expect(game.pickups.spawn('credits',10,488,360)).toEqual({spawned:false,reason:'invalid'});
+  Object.assign(game.player,point(500,424));
   expect(canOccupyExpedition(game.geometry,game.player,16)).toBe(true);
-  expect(game.pickups.spawn('credits',10,488,360).spawned).toBe(true);
+  expect(game.pickups.spawn('credits',10,456,392).spawned).toBe(true);
   expect(canTraverseExpedition(game.geometry,game.pickups.snapshot[0],game.player,16)).toBe(false);
   for(let i=0;i<10;i++)game.update(50);
   expect(game.pickups.snapshot).toHaveLength(1);
