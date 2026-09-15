@@ -52,6 +52,7 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
     const length=[1.8,2.15,1.65,2][n];
     b('forced-gate-leaf',1.48+n*.12,.35+n*.31,d-.2-length/2,.16,.28,length,MAT.armor);
    }
+   b('gate-leaf-strap',1.65,.83,d-.4,.7,1.4,.2,MAT.edge);
    for(const y of [.3,1.25])b('gate-hinge',1.12,y,d-.28,1,.15,.2,MAT.orange);
   }else{
    for(const x of [.25,.8])b('broken-latch',x,.85,.09,.22,.18,.18,MAT.orange);
