@@ -1,0 +1,31 @@
+{
+  "runtime_source": "7cdfe54d3111a5218d04d68565bc18bcad617350",
+  "independent_review_source": "670f4eb834b92319fd96839a088144d4b1e1c43a",
+  "pairs": [
+    {
+      "file": "desktop-skip-west-shield.png",
+      "byte_identical": false
+    },
+    {
+      "file": "desktop-skip-guard-bay.png",
+      "byte_identical": true
+    },
+    {
+      "file": "phone-skip-west-shield.png",
+      "byte_identical": false
+    },
+    {
+      "file": "phone-skip-guard-bay.png",
+      "byte_identical": true
+    }
+  ],
+  "fresh_captures": 4,
+  "prior_capture_passed": false,
+  "prior_completed": 7,
+  "prior_requested": 8,
+  "strict_fresh_passed": true,
+  "runtime_owned_processes": [],
+  "vitest_passed": 768,
+  "vitest_skipped": 1,
+  "build": "passed"
+}

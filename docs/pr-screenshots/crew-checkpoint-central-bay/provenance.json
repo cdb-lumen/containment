@@ -1,0 +1,350 @@
+{
+  "base_head": "e0ca1dc1dc124f3515c5074db47f1b07e7e0cf5e",
+  "candidate_source_sha256": {
+    "src/game/roguelike/storyRoomTemplates.ts": "3352bc7cc1d173ba73a6a3b26aaee1017e35e3015afcc10543cfce441215983f",
+    "tests/CrewCheckpointBlockout.test.ts": "0e52a018b0d181ce17207c5f918c916d776aa21c7933011cd825a6f064042fb9"
+  },
+  "source_scope": "Only Room5 obstacle row and its test changed. Model source, all other templates and shared behavior unchanged.",
+  "images": [
+    {
+      "file": "desktop-overview.png",
+      "sha256": "dc153e277fc5e3b53de10eebe6414ec9c92ee9276560c1d758d08348f9aeea05",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    {
+      "file": "desktop-gameplay.png",
+      "sha256": "f0c32bd9b67e0e737bb19aea8e9d7f7fbc6afa05378e0b24504be3ef3ef950fe",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    {
+      "file": "phone-overview.png",
+      "sha256": "65788198fa314a8eeaf62d4aae165b624d54ff299bb8d2811e1f0bce47676c47",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "phone-gameplay.png",
+      "sha256": "656cfbd62bd95d3d68a9f41c7917228f88f93f0353a3f19f621f31353d2a3441",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "focused_tests": 41,
+  "build": "pass with existing chunk-size warning",
+  "checks": [
+    {
+      "view": "desktop",
+      "mode": "overview",
+      "traversal": {
+        "steps": 384,
+        "distance": 1318.647615158761,
+        "exitDistance": 0,
+        "legalChecks": 384
+      },
+      "combat": null,
+      "errors": [],
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5173/src/render/afflictions.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5173/src/render/ResidentialGalleryEquipment.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5173/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5173/src/render/ActorPool.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5173/src/render/AwakeningServiceFinish.ts",
+        "http://127.0.0.1:5173/src/render/AttackEffects.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5173/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5173/src/render/PassengerVault.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/environments/RoomEnvironment.js",
+        "http://127.0.0.1:5173/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5173/src/game/combat/enemyContact.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5173/src/game/world/polygonGeometry.ts",
+        "http://127.0.0.1:5173/src/render/EnemyHealthBars.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js",
+        "http://127.0.0.1:5173/src/render/meshParts.ts",
+        "http://127.0.0.1:5173/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5173/src/game/world/wallContact.ts",
+        "http://127.0.0.1:5173/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/authoredRoomTopologies.ts",
+        "http://127.0.0.1:5173/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5173/src/render/models.ts",
+        "http://127.0.0.1:5173/src/render/ShipEnvironments.ts",
+        "http://127.0.0.1:5173/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5173/src/render/weapons.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5173/src/render/acidPool.ts",
+        "http://127.0.0.1:5173/src/render/EnvironmentMaterials.ts",
+        "http://127.0.0.1:5173/src/game/waves/EncounterDirector.ts",
+        "http://127.0.0.1:5173/src/render/RoomEquipmentPalette.ts"
+      ]
+    },
+    {
+      "view": "desktop",
+      "mode": "gameplay",
+      "traversal": {
+        "steps": 384,
+        "distance": 1318.647615158761,
+        "exitDistance": 0,
+        "legalChecks": 384
+      },
+      "combat": {
+        "steps": 25,
+        "deltaMs": 16.666666666666668,
+        "shots": 4,
+        "damage": 48,
+        "enemyDistance": 64.53412058498888,
+        "playerDistance": 30.799999999999272,
+        "playerDisplacement": 30.799999999999272,
+        "legalChecks": 100,
+        "activeEnemies": 3,
+        "bullets": 1,
+        "player": {
+          "x": 580,
+          "y": 638.7999999999993
+        },
+        "staged": [
+          {
+            "x": 740,
+            "y": 608,
+            "id": 1
+          },
+          {
+            "x": 693.1370849898476,
+            "y": 721.1370849898476,
+            "id": 2
+          },
+          {
+            "x": 580,
+            "y": 768,
+            "id": 3
+          }
+        ],
+        "events": [
+          "shot",
+          "acid",
+          "shot",
+          "acid",
+          "shot",
+          "acid",
+          "shot"
+        ]
+      },
+      "errors": [],
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5173/src/render/afflictions.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5173/src/render/ResidentialGalleryEquipment.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5173/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5173/src/render/ActorPool.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5173/src/render/AwakeningServiceFinish.ts",
+        "http://127.0.0.1:5173/src/render/AttackEffects.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5173/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5173/src/render/PassengerVault.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/environments/RoomEnvironment.js",
+        "http://127.0.0.1:5173/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5173/src/game/combat/enemyContact.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5173/src/game/world/polygonGeometry.ts",
+        "http://127.0.0.1:5173/src/render/EnemyHealthBars.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js",
+        "http://127.0.0.1:5173/src/render/meshParts.ts",
+        "http://127.0.0.1:5173/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5173/src/game/world/wallContact.ts",
+        "http://127.0.0.1:5173/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/authoredRoomTopologies.ts",
+        "http://127.0.0.1:5173/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5173/src/render/models.ts",
+        "http://127.0.0.1:5173/src/render/ShipEnvironments.ts",
+        "http://127.0.0.1:5173/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5173/src/render/weapons.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5173/src/render/acidPool.ts",
+        "http://127.0.0.1:5173/src/render/EnvironmentMaterials.ts",
+        "http://127.0.0.1:5173/src/game/waves/EncounterDirector.ts",
+        "http://127.0.0.1:5173/src/render/RoomEquipmentPalette.ts"
+      ]
+    },
+    {
+      "view": "phone",
+      "mode": "overview",
+      "traversal": {
+        "steps": 384,
+        "distance": 1318.647615158761,
+        "exitDistance": 0,
+        "legalChecks": 384
+      },
+      "combat": null,
+      "errors": [],
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/src/render/EnvironmentMaterials.ts",
+        "http://127.0.0.1:5173/src/render/weapons.ts",
+        "http://127.0.0.1:5173/src/render/acidPool.ts",
+        "http://127.0.0.1:5173/src/render/ReleasedBerth.ts",
+        "http://127.0.0.1:5173/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5173/src/render/ResidentialGalleryEquipment.ts",
+        "http://127.0.0.1:5173/src/game/world/wallContact.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5173/src/render/AuthoredRooms.ts",
+        "http://127.0.0.1:5173/src/game/combat/enemyContact.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/environments/RoomEnvironment.js",
+        "http://127.0.0.1:5173/src/render/ActorPool.ts",
+        "http://127.0.0.1:5173/src/render/SealedChamberBank.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5173/src/render/SceneLighting.ts",
+        "http://127.0.0.1:5173/src/render/EnemyHealthBars.ts",
+        "http://127.0.0.1:5173/src/game/waves/EncounterDirector.ts",
+        "http://127.0.0.1:5173/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5173/src/render/PassengerVault.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5173/src/render/ShipEnvironments.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5173/src/render/models.ts",
+        "http://127.0.0.1:5173/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5173/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5173/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5173/src/render/AttackEffects.ts",
+        "http://127.0.0.1:5173/src/render/RecoveryKit.ts",
+        "http://127.0.0.1:5173/src/game/world/polygonGeometry.ts",
+        "http://127.0.0.1:5173/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5173/src/render/afflictions.ts"
+      ]
+    },
+    {
+      "view": "phone",
+      "mode": "gameplay",
+      "traversal": {
+        "steps": 384,
+        "distance": 1318.647615158761,
+        "exitDistance": 0,
+        "legalChecks": 384
+      },
+      "combat": {
+        "steps": 25,
+        "deltaMs": 16.666666666666668,
+        "shots": 4,
+        "damage": 48,
+        "enemyDistance": 64.53412058498888,
+        "playerDistance": 30.799999999999272,
+        "playerDisplacement": 30.799999999999272,
+        "legalChecks": 100,
+        "activeEnemies": 3,
+        "bullets": 1,
+        "player": {
+          "x": 580,
+          "y": 638.7999999999993
+        },
+        "staged": [
+          {
+            "x": 740,
+            "y": 608,
+            "id": 1
+          },
+          {
+            "x": 693.1370849898476,
+            "y": 721.1370849898476,
+            "id": 2
+          },
+          {
+            "x": 580,
+            "y": 768,
+            "id": 3
+          }
+        ],
+        "events": [
+          "shot",
+          "acid",
+          "shot",
+          "acid",
+          "shot",
+          "acid",
+          "shot"
+        ]
+      },
+      "errors": [],
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/src/render/EnvironmentMaterials.ts",
+        "http://127.0.0.1:5173/src/render/weapons.ts",
+        "http://127.0.0.1:5173/src/render/acidPool.ts",
+        "http://127.0.0.1:5173/src/render/ReleasedBerth.ts",
+        "http://127.0.0.1:5173/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5173/src/render/ResidentialGalleryEquipment.ts",
+        "http://127.0.0.1:5173/src/game/world/wallContact.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5173/src/render/AuthoredRooms.ts",
+        "http://127.0.0.1:5173/src/game/combat/enemyContact.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/environments/RoomEnvironment.js",
+        "http://127.0.0.1:5173/src/render/ActorPool.ts",
+        "http://127.0.0.1:5173/src/render/SealedChamberBank.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5173/src/render/SceneLighting.ts",
+        "http://127.0.0.1:5173/src/render/EnemyHealthBars.ts",
+        "http://127.0.0.1:5173/src/game/waves/EncounterDirector.ts",
+        "http://127.0.0.1:5173/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5173/src/render/PassengerVault.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5173/src/render/ShipEnvironments.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5173/src/render/models.ts",
+        "http://127.0.0.1:5173/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5173/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5173/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5173/src/render/AttackEffects.ts",
+        "http://127.0.0.1:5173/src/render/RecoveryKit.ts",
+        "http://127.0.0.1:5173/src/game/world/polygonGeometry.ts",
+        "http://127.0.0.1:5173/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5173/@fs/home/chernodubv/dev/.worktrees/containment-boons/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5173/src/render/afflictions.ts"
+      ]
+    }
+  ],
+  "accepted": "bounded layout replacement only",
+  "limits": "Fitted overviews and staged production-camera views without DOM HUD. No complete-room, interior contact, touch, encounter or release acceptance. Existing capture duplicate-module abort records retained, not a strict release network pass."
+}
