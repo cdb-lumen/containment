@@ -2,10 +2,9 @@ import * as T from 'three';
 import {box,rod,MAT} from './meshParts';
 import type {Footprint} from './ShipEnvironments';
 
-/** Room5 whole-room rough. Renderer metres, unchanged collision reservations.
- * Chest-high shield faces run along the line, with exposed rear struts and
- * low ballast filling the reserved depth. The north island is a guard station.
- * Procedural source is the reproducible asset; no external loading dependency.
+/** Room5 west-facing checkpoint. Wall-connected armor protects the eastern
+ * crew station; a forced gate leaves the campaign passage open.
+ * Procedural source is the reproducible asset, without external loading.
  */
 export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
  const root=new T.Group(),parts=new T.Group();root.name=`crew-checkpoint-blockout-${index}`;root.add(parts);
@@ -41,7 +40,22 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   b('retained-weapon-magazine',3.12,1.01,.65,.14,.12,.24,MAT.black);
   for(const x of [3.01,3.66])b('weapon-retaining-lock',x,1.015,.48,.055,.23,.38,MAT.orange);
  }else{
-  // Both lines use the same construction, not an invented canonical attack direction.
+  // One connected line faces the west arrival; the east side retains its braces.
+  const wallZ=index===0?.1:d-.1,gateZ=index===0?d-.2:.2;
+  b('wall-anchor',.65,.7,wallZ,1.3,1.4,.2,MAT.edge);
+  b('gate-jamb',.65,.9,gateZ,1.3,1.8,.4,MAT.steel);
+  b('gate-jamb-cap',.65,1.84,gateZ,1.3,.08,.4,MAT.orange);
+  if(index===0){
+   // The gate was driven back against its protected side, not neatly opened.
+   // Unequal torn slats and a sheared upper hinge retain the physical failure.
+   for(let n=0;n<4;n++){
+    const length=[1.8,2.15,1.65,2][n];
+    b('forced-gate-leaf',1.48+n*.12,.35+n*.31,d-.2-length/2,.16,.28,length,MAT.armor);
+   }
+   for(const y of [.3,1.25])b('gate-hinge',1.12,y,d-.28,1,.15,.2,MAT.orange);
+  }else{
+   for(const x of [.25,.8])b('broken-latch',x,.85,.09,.22,.18,.18,MAT.orange);
+  }
   for(let n=0;n<4;n++){
    const z=(n+.5)*d/4,length=d/4-.04;
    // Repeat the accepted west module without changing the reserved footprint.
@@ -60,6 +74,11 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
     b('crew-mark',.107,.99,z,.025,.18,.46,MAT.bone);
   }
  }
- parts.scale.set(f.width/w,Math.min(1,f.width/w,f.height/d),f.height/d);
+ if(station){
+  // Preserve the complete counter and weapon assembly, turn its working side east.
+  const fit=new T.Group();root.add(fit);fit.add(parts);
+  parts.rotation.y=Math.PI/2;parts.position.z=w;
+  fit.scale.set(f.width/d,Math.min(1,f.width/d,f.height/w),f.height/w);
+ }else parts.scale.set(f.width/w,Math.min(1,f.width/w,f.height/d),f.height/d);
  root.position.set(f.x,0,f.y);root.userData.footprint={...f};return root;
 }

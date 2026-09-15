@@ -317,22 +317,22 @@ exports[`reviewed Passenger Vault whole-room blockout > preserves all nineteen o
     "name": "Crew checkpoint",
     "obstacles": [
       {
-        "height": 320,
+        "height": 384,
         "width": 80,
-        "x": 450,
-        "y": 260,
-      },
-      {
-        "height": 320,
-        "width": 80,
-        "x": 690,
-        "y": 260,
-      },
-      {
-        "height": 80,
-        "width": 160,
         "x": 530,
-        "y": 260,
+        "y": 0,
+      },
+      {
+        "height": 368,
+        "width": 80,
+        "x": 530,
+        "y": 512,
+      },
+      {
+        "height": 160,
+        "width": 80,
+        "x": 610,
+        "y": 224,
       },
     ],
     "spawn": {
