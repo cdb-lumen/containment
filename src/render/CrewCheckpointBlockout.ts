@@ -46,13 +46,14 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   b('gate-jamb',.65,.9,gateZ,1.3,1.8,.4,MAT.steel);
   b('gate-jamb-cap',.65,1.84,gateZ,1.3,.08,.4,MAT.orange);
   if(index===0){
-   // The gate was driven back against its protected side, not neatly opened.
-   // Unequal torn slats and a sheared upper hinge retain the physical failure.
+   // A broad torn leaf was driven sideways behind the jamb. Its unequal
+   // broken top remains visible from the shipping camera, unlike edge-on slats.
    for(let n=0;n<4;n++){
-    const length=[1.8,2.15,1.65,2][n];
-    b('forced-gate-leaf',1.48+n*.12,.35+n*.31,d-.2-length/2,.16,.28,length,MAT.armor);
+    const height=[1.35,1.12,.95,.72][n];
+    b('forced-gate-leaf',.88+n*.43,.2+height/2,d-.23,.42,height,.2,MAT.armor);
    }
-   b('gate-leaf-strap',1.65,.83,d-.4,.7,1.4,.2,MAT.edge);
+   b('gate-leaf-strap',1.55,.3,d-.33,1.8,.16,.18,MAT.edge);
+   b('gate-leaf-spine',1.12,.78,d-.33,.2,1.32,.18,MAT.orange);
    for(const y of [.3,1.25])b('gate-hinge',1.12,y,d-.28,1,.15,.2,MAT.orange);
   }else{
    for(const x of [.25,.8])b('broken-latch',x,.85,.09,.22,.18,.18,MAT.orange);
