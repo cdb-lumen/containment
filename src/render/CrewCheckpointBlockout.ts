@@ -9,11 +9,22 @@ import type {Footprint} from './ShipEnvironments';
 export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
  const root=new T.Group(),parts=new T.Group();root.name=`crew-checkpoint-blockout-${index}`;root.add(parts);
  // Author at shipping scale, then shrink only for smaller fallback reservations.
- const station=index===2,w=station?5:2.5,d=station?2.5:12.5;
+ const station=index===2,fallen=index===3,w=fallen?3.5:station?5:2.5,d=fallen?.875:station?2.5:12.5;
  const b=(name:string,x:number,y:number,z:number,width:number,height:number,depth:number,material:T.Material)=>{
   const mesh=box(parts,x,y,z,width,height,depth,material,0);mesh.name=name;return mesh;
  };
- if(station){
+ if(fallen){
+  // Broken continuation lies on the crew side at the south gate foot.
+  // Six unequal edges replace an intact rectangular door parked at the wall.
+  b('fallen-gate-ground-rail',1.7,.09,.72,3.4,.18,.28,MAT.edge);
+  for(let n=0;n<6;n++){
+   const length=[3.35,2.85,3.12,2.62,3.38,2.96][n],z=.075+n*.14;
+   b('fallen-gate-strip',length/2,.2+n*.055,z,length,.12,.145,MAT.armor);
+  }
+  b('fallen-gate-cross-strap',.6,.33,.43,.14,.48,.85,MAT.edge);
+  b('fallen-gate-cross-strap',2.35,.33,.43,.14,.48,.85,MAT.edge);
+  b('sheared-gate-hinge',.18,.43,.72,.3,.18,.26,MAT.orange);
+ }else if(station){
   b('station-plinth',2.5,.09,1.25,4.98,.18,2.48,MAT.black);
   b('closed-control-cabinet',2.5,.48,.46,4.8,.78,.8,MAT.steel);
   b('guard-counter',2.5,.91,1.11,4.8,.12,.72,MAT.orange);
@@ -46,13 +57,12 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   b('gate-jamb',.65,.9,gateZ,1.3,1.8,.4,MAT.steel);
   b('gate-jamb-cap',.65,1.84,gateZ,1.3,.08,.4,MAT.orange);
   if(index===0){
-   // The gate was driven back against its protected side, not neatly opened.
-   // Unequal torn slats and a sheared upper hinge retain the physical failure.
+   // Upright torn courses end at the gate, opposite the fallen continuation.
    for(let n=0;n<4;n++){
-    const length=[1.8,2.15,1.65,2][n];
-    b('forced-gate-leaf',1.48+n*.12,.35+n*.31,d-.2-length/2,.16,.28,length,MAT.armor);
+    const length=[1.7,1.15,1.55,.85][n];
+    b('forced-gate-leaf',.3+length/2,.35+n*.36,d-.22,length,.34,.42,MAT.armor);
    }
-   b('gate-leaf-strap',1.65,.83,d-.4,.7,1.4,.2,MAT.edge);
+   b('gate-leaf-strap',.5,.87,d-.32,.5,1.62,.6,MAT.edge);
    for(const y of [.3,1.25])b('gate-hinge',1.12,y,d-.28,1,.15,.2,MAT.orange);
   }else{
    for(const x of [.25,.8])b('broken-latch',x,.85,.09,.22,.18,.18,MAT.orange);

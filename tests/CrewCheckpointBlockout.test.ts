@@ -138,7 +138,23 @@ describe('Room5 checkpoint rough',()=>{
   const station=model(2),seat=new T.Box3().setFromObject(named(station,'guard-seat')[0],true),screen=new T.Box3().setFromObject(named(station,'guard-terminal')[0],true);
   expect(seat.getCenter(new T.Vector3()).x).toBeGreaterThan(screen.getCenter(new T.Vector3()).x);
  });
- it.each([0,1,2])('keeps all vertices and flattened geometry inside footprint %s with cached resources',index=>{
+ it('places the fallen gate beside the crossing with floor support and a clear radius28 passage',()=>{
+  expect(room.obstacles).toHaveLength(4);
+  const f=footprints[3],root=model(3),sheet=named(root,'fallen-gate-strip');
+  expect(sheet).toHaveLength(6);
+  const bounds=new T.Box3().setFromObject(root,true);
+  expect(bounds.min.y).toBeCloseTo(0,5);
+  expect(bounds.max.x-bounds.min.x).toBeGreaterThan(3);
+  expect(bounds.max.z-bounds.min.z).toBeGreaterThan(.7);
+  expect(bounds.max.y).toBeLessThan(.8);
+  expect(f.y*32-440).toBeGreaterThanOrEqual(28);
+  const geometry=createExpeditionGeometry(generateRun(137).nodes[4]);
+  expect(canTraverseExpedition(geometry,{x:100,y:440},{x:1100,y:440},28)).toBe(true);
+  expect(canOccupyExpedition(geometry,{x:(f.x+f.width/2)*32,y:(f.y+f.height/2)*32},16)).toBe(false);
+  const widths=sheet.map(s=>new T.Box3().setFromObject(s,true).getSize(new T.Vector3()).x);
+  expect(new Set(widths.map(v=>v.toFixed(3))).size).toBeGreaterThan(3);
+ });
+ it.each([0,1,2,3])('keeps all vertices and flattened geometry inside footprint %s with cached resources',index=>{
   const root=model(index),f=footprints[index],world=new T.Group();
   const check=(object:T.Object3D)=>{const b=new T.Box3().setFromObject(object,true);expect(b.min.x).toBeGreaterThanOrEqual(f.x-1e-5);expect(b.max.x).toBeLessThanOrEqual(f.x+f.width+1e-5);expect(b.min.z).toBeGreaterThanOrEqual(f.y-1e-5);expect(b.max.z).toBeLessThanOrEqual(f.y+f.height+1e-5);expect(b.min.y).toBeGreaterThanOrEqual(-1e-5);};
   check(root);expect(root.userData.footprint).toEqual(f);appendEnvironment(world,root);check(world);
