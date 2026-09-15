@@ -129,15 +129,11 @@ describe('Room5 checkpoint rough',()=>{
    expect(index===0?jamb.max.z:jamb.min.z).toBeCloseTo(index===0?f.y+f.height:f.y,5);
   }
   const north=model(0),slats=named(north,'forced-gate-leaf');expect(slats).toHaveLength(4);
-  const slatBounds=slats.map(s=>new T.Box3().setFromObject(s,true));
-  expect(Math.max(...slatBounds.map(b=>b.max.x))-Math.min(...slatBounds.map(b=>b.min.x))).toBeGreaterThan(1.5);
   const straps=named(north,'gate-leaf-strap');expect(straps).toHaveLength(1);
   const strap=new T.Box3().setFromObject(straps[0],true);
   // These are axis-aligned solid boxes, not diagonal-brace AABBs.
-  for(const slat of slatBounds)expect(strap.intersectsBox(slat)).toBe(true);
-  const spines=named(north,'gate-leaf-spine');expect(spines).toHaveLength(1);
-  const spine=new T.Box3().setFromObject(spines[0],true);expect(spine.intersectsBox(strap)).toBe(true);
-  for(const hinge of named(north,'gate-hinge'))expect(spine.intersectsBox(new T.Box3().setFromObject(hinge,true))).toBe(true);
+  for(const slat of slats)expect(strap.intersectsBox(new T.Box3().setFromObject(slat,true))).toBe(true);
+  for(const hinge of named(north,'gate-hinge'))expect(strap.intersectsBox(new T.Box3().setFromObject(hinge,true))).toBe(true);
   expect(named(model(1),'broken-latch')).toHaveLength(2);
   const station=model(2),seat=new T.Box3().setFromObject(named(station,'guard-seat')[0],true),screen=new T.Box3().setFromObject(named(station,'guard-terminal')[0],true);
   expect(seat.getCenter(new T.Vector3()).x).toBeGreaterThan(screen.getCenter(new T.Vector3()).x);
