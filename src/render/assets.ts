@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {initDeathPhysics} from './DeathRagdolls';
 import {GLTFLoader,type GLTF} from 'three/addons/loaders/GLTFLoader.js';
 import {clone} from 'three/addons/utils/SkeletonUtils.js';
 export const ASSET_NAMES=['marine','dretch','basilisk','marauder','dragoon','tyrant','pistol','rifle','shotgun','plasma','rocket'] as const;
@@ -8,7 +9,9 @@ export function registerAsset(name:AssetName,asset:GLTF){
  asset.scene.traverse(o=>{if(o instanceof T.Mesh){o.geometry.userData.sharedAsset=true;o.castShadow=o.receiveShadow=true;o.frustumCulled=false;const materials=Array.isArray(o.material)?o.material:[o.material];for(const m of materials)if(m instanceof T.MeshStandardMaterial){for(const map of [m.map,m.normalMap])if(map)map.anisotropy=4;}}});
  templates.set(name,asset);
 }
-export async function preloadAssets(progress:(fraction:number)=>void=()=>{}){
+export async function preloadAssets(progress:(fraction:number)=>void=()=>{},initializePhysics:()=>Promise<void>=initDeathPhysics){
+ // Physics is optional presentation. Asset loading must survive WASM failure.
+ try{await initializePhysics();}catch{/* Frozen-pose toss remains available. */}
  const loader=new GLTFLoader();let completed=0;
  // Four concurrent transfers keep startup responsive on mobile connections.
  const queue=[...ASSET_NAMES];await Promise.all(Array.from({length:4},async()=>{while(queue.length){const name=queue.shift()!;if(!templates.has(name))registerAsset(name,await loader.loadAsync(`${import.meta.env.BASE_URL}assets/models/${name}.glb`));progress(++completed/ASSET_NAMES.length);}}));

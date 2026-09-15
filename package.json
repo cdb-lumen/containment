@@ -9,11 +9,12 @@
     "test": "vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs && python3 tools/assets/passenger-vault/test_artifacts.py && python3 tools/assets/passenger-vault/test_room_fit_artifacts.py && python3 tools/assets/passenger-vault/test_distribution_artifacts.py && python3 tools/assets/passenger-vault/test_monitor_artifacts.py && python3 tools/assets/passenger-vault/test_service_finish_artifacts.py && python3 tools/assets/passenger-vault/test_materials.py && python3 tools/assets/passenger-vault/test_material_budget.py && python3 tools/assets/passenger-vault/test_bundle_runtime.py",
     "test:smoke": "node scripts/smoke.mjs",
     "test:authored-smoke": "node scripts/authored-room-smoke.mjs",
-    "test:room-evidence": "node --test scripts/room-evidence-check.mjs scripts/room-demo-check.mjs scripts/vfx-audit-demo-check.mjs",
+    "test:room-evidence": "node --test scripts/room-evidence-check.mjs scripts/room-demo-check.mjs scripts/vfx-audit-demo-check.mjs && node scripts/ragdoll-demo.mjs --self-test",
     "test:vfx": "node tests/render-afflictions.mjs",
     "verify": "npm test && npm run test:room-evidence && npm run build && npm run test:smoke"
   },
   "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.20.0",
     "three": "0.185.0"
   },
   "devDependencies": {

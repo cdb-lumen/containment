@@ -5,7 +5,7 @@ import {DepthRenderer} from '../src/render/DepthRenderer';
 // Keep quality selection real; replace only GPU resizing.
 function renderer(){
  const instance=Object.create(DepthRenderer.prototype) as DepthRenderer;
- Object.assign(instance,{renderer:{shadowMap:{enabled:false}},resize:vi.fn()});
+ Object.assign(instance,{renderer:{shadowMap:{enabled:false}},resize:vi.fn(),corpses:[]});
  return instance;
 }
 afterEach(()=>vi.unstubAllGlobals());

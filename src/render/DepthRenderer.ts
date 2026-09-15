@@ -25,6 +25,7 @@ import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {attachPassengerVault} from './PassengerVault';
 import {attachResidentialGalleryEquipment} from './ResidentialGalleryEquipment';
 import {MAT,box,ball,rod,marine,alien,nest,disposeModel,freezeCorpse,type ActorModel} from './models';
+import {DeathRagdolls} from './DeathRagdolls';
 import {ROOM_TEMPLATES} from '../game/roguelike/roomTemplates';
 import type {DepthGame,GameEffect} from '../DepthGame';
 import type {RunNode} from '../game/roguelike/types';
@@ -33,6 +34,8 @@ type Corpse={model:ActorModel;x:number;y:number;vx:number;vy:number;height:numbe
 export class DepthRenderer {
  readonly renderer:T.WebGLRenderer;readonly scene=new T.Scene();readonly camera=new T.OrthographicCamera();
  private afflictions=new AfflictionBatches(new T.TextureLoader());private healthBars=new EnemyHealthBars();private hudScene=new T.Scene();private world=new T.Group();private actors=new Map<number,ActorModel>();private nests=new Map<number,T.Group>();private queen:ActorModel|null=null;
+ private ragdolls=new DeathRagdolls();private staticDirty=false;private corpseIds=new Set<number>();
+ private staticLoaded(owner:T.Group){return()=>{if(this.world!==owner)return;this.shadowsDirty=true;this.staticDirty=true;};}
  private actorPool=new ActorPool();private player=marine();private corpses:Corpse[]=[];private effects:AttackEffects;
  private surfaces:EnvironmentMaterials;private floorMaterial:T.MeshStandardMaterial;
  private lighting=new SceneLighting();private contacts=new ContactShadows();private muzzle:T.PointLight;private muzzleLife=0;
@@ -67,7 +70,7 @@ export class DepthRenderer {
  }
  get qualityTier(){return this.tier;}
  setQuality(value:'high'|'low'='high'){
-  this.tier=value==='low'?'low':'high';this.applyQuality();
+  this.tier=value==='low'?'low':'high';this.ragdolls?.setQuality(this.tier);while(this.corpses.length>(this.tier==='low'?6:12)){const c=this.corpses.shift()!;this.ragdolls.remove(c.id);this.actorPool.release(c.model);}this.applyQuality();
  }
  private applyQuality(){this.renderer.shadowMap.enabled=this.tier!=='low';this.shadowsDirty=true;this.resize();}
  resize(){
@@ -142,16 +145,17 @@ export class DepthRenderer {
   this.releasedBerth?.dispose();this.releasedBerth=undefined;
   this.roomKey=node.id;this.shadowsDirty=true;disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.temporaryMaterials=[];this.world=new T.Group();this.scene.add(this.world);this.effects.setWorld(this.world);
   for(const m of this.actors.values())this.actorPool.release(m);this.actors.clear();for(const n of this.nests.values())disposeModel(n);this.nests.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;
-  for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];for(const p of this.pickupMeshes.values())disposeModel(p);this.pickupMeshes.clear();this.effects.clear();this.afflictions.clear();this.pendingShots=[];this.muzzleLife=0;this.recoil=0;
+  this.ragdolls?.dispose();for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];for(const p of this.pickupMeshes.values())disposeModel(p);this.pickupMeshes.clear();this.effects.clear();this.afflictions.clear();this.pendingShots=[];this.muzzleLife=0;this.recoil=0;
   const t=ROOM_TEMPLATES[node.templateId],w=t.width/UNIT,h=t.height/UNIT;
   const atrium=node.templateId==='communal-atrium';
+  this.corpseIds?.clear();this.staticDirty=false;const staticLoaded=this.staticLoaded(this.world);
   this.muzzle.intensity=0;this.contacts.begin();this.contacts.end();
   const bespoke=authoredRoom(node.templateId,t);
   const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);
   // Room-local habitation finish; theme() resets it on every subsequent room.
   if(node.templateId==='residential-gallery'){this.surfaces.floor.color.setHex(0x747976);this.surfaces.wall.color.setHex(0x788687);}
   if(atrium){this.surfaces.floor.color.setHex(0x77766c);this.surfaces.wall.color.setHex(0x777a6e);this.surfaces.cover.color.setHex(0x64695e);}
-  if(bespoke){this.world.add(bespoke);if(node.templateId==='passenger-vault')this.passengerVault=attachPassengerVault(bespoke,()=>{this.shadowsDirty=true;});if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,()=>{this.shadowsDirty=true;});this.releasedBerth=attachReleasedBerth(bespoke,()=>{this.shadowsDirty=true;});this.recoveryKit=attachRecoveryKit(bespoke,()=>{this.shadowsDirty=true;});}}else{
+  if(bespoke){this.world.add(bespoke);if(node.templateId==='passenger-vault')this.passengerVault=attachPassengerVault(bespoke,staticLoaded);if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,staticLoaded);this.releasedBerth=attachReleasedBerth(bespoke,staticLoaded);this.recoveryKit=attachRecoveryKit(bespoke,staticLoaded);}}else{
   // Atrium's straight physical enclosure follows its shared boundary; the
   // template dimensions below remain the unchanged camera/lighting envelope.
   const shellH=atrium?Math.max(...t.boundary!.map(p=>p.y))/UNIT:h;
@@ -238,8 +242,8 @@ export class DepthRenderer {
   if(environment&&!atrium)environmentArchitecture(this.world,environment,w,h,node.templateId);
   this.bakeWorld();
   }
-  if(node.templateId==='residential-gallery')this.residentialGalleryEquipment=attachResidentialGalleryEquipment(this.world,()=>{this.shadowsDirty=true;});
-  if(atrium)this.communalGarden=attachCommunalGarden(this.world,t,()=>{this.shadowsDirty=true;});
+  if(node.templateId==='residential-gallery')this.residentialGalleryEquipment=attachResidentialGalleryEquipment(this.world,staticLoaded);
+  if(atrium)this.communalGarden=attachCommunalGarden(this.world,t,staticLoaded);
   this.exit=new T.Group();this.exit.position.set(t.exit.x/UNIT,0,t.exit.y/UNIT);this.world.add(this.exit);
   for(const side of [-1,1]){box(this.exit,0,.7,side*.7,.12,1.4,.18,MAT.steel);box(this.exit,.08,.7,side*.7,.04,1.05,.05,MAT.cyan,.01);}
   box(this.exit,0,1.5,0,.2,.2,1.6,MAT.dark);box(this.exit,0,.035,0,1.7,.02,1.55,MAT.dark);
@@ -249,6 +253,7 @@ export class DepthRenderer {
   }
   const initial=roomFocus(t.spawn.x/UNIT,t.spawn.y/UNIT,w,h,this.camera.right-this.camera.left,this.camera.top-this.camera.bottom,node.templateId);
   this.focus.set(initial.x,0,initial.z);this.lighting.loadRoom(this.world,w,h);
+  this.ragdolls?.setRoom(t,this.world);this.staticDirty=false;
  }
  private wallPanel(x:number,z:number,height:number,length:number,rotation:number){
   const g=new T.Group();g.position.set(x,0,z);g.rotation.y=rotation;
@@ -266,11 +271,13 @@ export class DepthRenderer {
   if(effect.type==='enemy-attack'){if(effect.id===-1)this.queen?.attack?.();else this.actors.get(effect.id!)?.attack?.();}
   if((effect.contact==='damage'||effect.contact==='armor')&&effect.targetId!==undefined){if(effect.targetId===-1)this.queen?.hit?.();else this.actors.get(effect.targetId)?.hit?.();}
   if(effect.type==='corpse'){
-   let existing=this.actors.get(effect.id!);if(!existing&&effect.family){existing=this.actorPool.take(effect.family);existing.root.position.set(x,0,z);this.scene.add(existing.root);}if(existing){freezeCorpse(existing);this.actors.delete(effect.id!);this.corpses.push({model:existing,id:effect.id!,x,y:z,vx:(effect.vx??0)/UNIT,vy:(effect.vy??0)/UNIT,height:.2,lift:3,spin:2.4,age:0});if(this.corpses.length>(matchMedia('(pointer:coarse)').matches?6:12)){this.actorPool.release(this.corpses.shift()!.model);}}
+   if(effect.id===undefined)return;
+   this.corpseIds??=new Set();if(this.corpseIds.has(effect.id))return;this.corpseIds.add(effect.id);
+   let existing=this.actors.get(effect.id!);if(!existing&&effect.family){existing=this.actorPool.take(effect.family,effect.elite);existing.root.position.set(x,0,z);this.scene.add(existing.root);}if(existing){existing.root.position.set(x,0,z);freezeCorpse(existing);this.ragdolls.add(effect.id!,existing,effect.family??existing.root.name.replace('alien-',''),{x:(effect.vx??0)/UNIT,z:(effect.vy??0)/UNIT});this.actors.delete(effect.id!);this.corpses.push({model:existing,id:effect.id!,x,y:z,vx:(effect.vx??0)/UNIT,vy:(effect.vy??0)/UNIT,height:.2,lift:3,spin:2.4,age:0});if(this.corpses.length>(this.tier==='low'?6:12)){const oldest=this.corpses.shift()!;this.ragdolls.remove(oldest.id);this.actorPool.release(oldest.model);}}
   }
   this.effects.event(effect);
  }
- syncCorpse(id:number,x:number,y:number){const corpse=this.corpses.find(c=>c.id===id);if(corpse){corpse.x=x/UNIT;corpse.y=y/UNIT;corpse.vx=corpse.vy=0;}}
+ syncCorpse(id:number,x:number,y:number){const corpse=this.corpses.find(c=>c.id===id);if(corpse){corpse.x=x/UNIT;corpse.y=y/UNIT;corpse.vx=corpse.vy=0;if(this.ragdolls.has(id))this.ragdolls.sync(id,x/UNIT,y/UNIT);else{corpse.model.root.position.x=x/UNIT;corpse.model.root.position.z=y/UNIT;}}}
  get roomLoading(){return this.communalGarden?.state==='loading'||this.residentialGalleryEquipment?.state==='loading'||this.passengerVault?.state==='loading'||this.recoveryKit?.state==='loading'||this.sealedBank?.state==='loading'||this.releasedBerth?.state==='loading';}
  render(game:DepthGame,delta:number,menu=false){
   if(this.roomKey!==game.node.id)this.loadRoom(game.node);
@@ -309,7 +316,9 @@ export class DepthRenderer {
   if(this.queen){this.queen.setExposed?.(q.vulnerable);this.queen.setAffliction?.(q.defeated?{chilled:false,burning:false,poisoned:false,frozen:false}:game.boonStatuses(-1));this.queen.root.position.set(q.x/UNIT,0,q.y/UNIT);this.queen.animate(this.time,.4,q.rotation);if(q.defeated){this.queen.root.rotation.z=1.25;this.queen.root.position.y=-.35;}}
   const nestIds=new Set<number>();for(const n of q.nests){nestIds.add(n.id);let model=this.nests.get(n.id);if(!model){model=nest();this.nests.set(n.id,model);this.scene.add(model);}model.position.set(n.x/UNIT,0,n.y/UNIT);model.scale.y=1+Math.sin(this.time*3+n.id)*.035;}
   for(const[id,model]of this.nests)if(!nestIds.has(id)){disposeModel(model);this.nests.delete(id);}
-  for(const c of this.corpses){if(c.age>2&&Math.abs(c.vx)+Math.abs(c.vy)<.02&&c.height<=.08)continue;c.age+=dt;const moved=game.moveCorpse({x:c.x*UNIT,y:c.y*UNIT,radius:14},c.vx*dt*UNIT,c.vy*dt*UNIT);c.x=moved.x/UNIT;c.y=moved.y/UNIT;if(moved.blocked){c.vx*=-.22;c.vy*=-.22;}c.vx*=Math.exp(-3.8*dt);c.vy*=Math.exp(-3.8*dt);c.lift-=9.8*dt;c.height=Math.max(.08,c.height+c.lift*dt);if(c.height<=.08)c.lift=0;
+  if(this.staticDirty){this.ragdolls.refreshStatic(this.world);this.staticDirty=false;}
+  this.ragdolls.update(dt);
+  for(const c of this.corpses){if(this.ragdolls.has(c.id)){const position=this.ragdolls.position(c.id)!;c.x=position.x;c.y=position.z;continue;}if(dt<=0)continue;if(c.age>2&&Math.abs(c.vx)+Math.abs(c.vy)<.02&&c.height<=.08)continue;c.age+=dt;const moved=game.moveCorpse({x:c.x*UNIT,y:c.y*UNIT,radius:14},c.vx*dt*UNIT,c.vy*dt*UNIT);c.x=moved.x/UNIT;c.y=moved.y/UNIT;if(moved.blocked){c.vx*=-.22;c.vy*=-.22;}c.vx*=Math.exp(-3.8*dt);c.vy*=Math.exp(-3.8*dt);c.lift-=9.8*dt;c.height=Math.max(.08,c.height+c.lift*dt);if(c.height<=.08)c.lift=0;
    c.model.root.position.set(c.x,c.height,c.y);c.model.body.rotation.z=Math.min(Math.PI*.78,c.age*5);c.model.root.rotation.y+=c.spin*dt*Math.exp(-c.age*3);
   }
   this.muzzleLife-=dt;this.muzzle.intensity=this.muzzleLife>0?6*Math.min(1,this.muzzleLife/.035):0;
@@ -346,5 +355,5 @@ export class DepthRenderer {
   for(const[id,mesh]of this.poolMeshes)if(!poolIds.has(id)){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();this.poolMeshes.delete(id);}
  }
  private clearPools(){for(const mesh of this.poolMeshes.values()){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();}this.poolMeshes.clear();}
- dispose(){this.communalGarden?.dispose();this.communalGarden=undefined;this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;this.passengerVault?.dispose();this.clearPools();this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
+ dispose(){this.ragdolls.dispose();for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];this.corpseIds?.clear();for(const model of this.actors.values())this.actorPool.release(model);this.actors.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;this.communalGarden?.dispose();this.communalGarden=undefined;this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;this.passengerVault?.dispose();this.clearPools();this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
 }
