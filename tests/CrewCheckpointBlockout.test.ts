@@ -128,11 +128,17 @@ describe('Room5 checkpoint rough',()=>{
    expect(jamb.max.y).toBeGreaterThan(1.6);
    expect(index===0?jamb.max.z:jamb.min.z).toBeCloseTo(index===0?f.y+f.height:f.y,5);
   }
-  const north=model(0),slats=named(north,'forced-gate-leaf');expect(slats).toHaveLength(4);
+  const north=model(0),slats=named(north,'forced-gate-leaf');expect(slats).toHaveLength(1);
   const straps=named(north,'gate-leaf-strap');expect(straps).toHaveLength(1);
   const strap=new T.Box3().setFromObject(straps[0],true);
-  // These are axis-aligned solid boxes, not diagonal-brace AABBs.
-  for(const slat of slats)expect(strap.intersectsBox(new T.Box3().setFromObject(slat,true))).toBe(true);
+  // One continuous plate spans the old gaps between horizontal courses.
+  const plate=slats[0] as T.Mesh;
+  const f=footprints[0];
+  for(const y of [.53,.89,1.25]){
+   const ray=new T.Raycaster(new T.Vector3(f.x+1,y,f.y+f.height+1),new T.Vector3(0,0,-1));
+   expect(ray.intersectObject(plate).length).toBeGreaterThan(0);
+  }
+  expect(strap.intersectsBox(new T.Box3().setFromObject(plate,true))).toBe(true);
   for(const hinge of named(north,'gate-hinge'))expect(strap.intersectsBox(new T.Box3().setFromObject(hinge,true))).toBe(true);
   expect(named(model(1),'broken-latch')).toHaveLength(2);
   const station=model(2),seat=new T.Box3().setFromObject(named(station,'guard-seat')[0],true),screen=new T.Box3().setFromObject(named(station,'guard-terminal')[0],true);

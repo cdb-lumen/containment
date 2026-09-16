@@ -76,11 +76,19 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   b('gate-jamb',.65,.9,gateZ,1.3,1.8,.4,MAT.steel);
   b('gate-jamb-cap',.65,1.84,gateZ,1.3,.08,.4,MAT.orange);
   if(index===0){
-   // Upright torn courses end at the gate, opposite the fallen continuation.
-   for(let n=0;n<4;n++){
-    const length=[1.7,1.15,1.55,.85][n];
-    b('forced-gate-leaf',.3+length/2,.35+n*.36,d-.22,length,.34,.42,MAT.armor);
-   }
+   // A single torn plate stays captured by the hinge strap. Its irregular
+   // free edge replaces the disconnected horizontal courses of the rough.
+   const remnantGeometry=geometry('room5-connected-gate-remnant-v1',()=>{
+    const outline=new T.Shape();
+    outline.moveTo(.3,.18);outline.lineTo(1.88,.18);
+    outline.lineTo(1.62,.49);outline.lineTo(1.91,.68);
+    outline.lineTo(1.35,.83);outline.lineTo(1.68,1.12);
+    outline.lineTo(1.21,1.22);outline.lineTo(1.38,1.6);
+    outline.lineTo(.3,1.6);outline.closePath();
+    return new T.ExtrudeGeometry(outline,{depth:.14,bevelEnabled:false,steps:1});
+   });
+   const remnant=new T.Mesh(remnantGeometry,MAT.armor);remnant.name='forced-gate-leaf';
+   remnant.position.z=d-.3;remnant.castShadow=remnant.receiveShadow=true;parts.add(remnant);
    b('gate-leaf-strap',.5,.87,d-.32,.5,1.62,.6,MAT.edge);
    for(const y of [.3,1.25])b('gate-hinge',1.12,y,d-.28,1,.15,.2,MAT.orange);
   }else{
