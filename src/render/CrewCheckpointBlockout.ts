@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {box,rod,MAT} from './meshParts';
+import {box,rod,geometry,MAT} from './meshParts';
 import type {Footprint} from './ShipEnvironments';
 
 /** Room5 west-facing checkpoint. Wall-connected armor protects the eastern
@@ -9,21 +9,40 @@ import type {Footprint} from './ShipEnvironments';
 export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
  const root=new T.Group(),parts=new T.Group();root.name=`crew-checkpoint-blockout-${index}`;root.add(parts);
  // Author at shipping scale, then shrink only for smaller fallback reservations.
- const station=index===2,fallen=index===3,w=fallen?3.5:station?5:2.5,d=fallen?.875:station?2.5:12.5;
+ const station=index===2,fallen=index===3,w=fallen?2.75:station?5:2.5,d=fallen?3.5:station?2.5:12.5;
  const b=(name:string,x:number,y:number,z:number,width:number,height:number,depth:number,material:T.Material)=>{
   const mesh=box(parts,x,y,z,width,height,depth,material,0);mesh.name=name;return mesh;
  };
  if(fallen){
-  // Broken continuation lies on the crew side at the south gate foot.
-  // Six unequal edges replace an intact rectangular door parked at the wall.
-  b('fallen-gate-ground-rail',1.7,.09,.72,3.4,.18,.28,MAT.edge);
-  for(let n=0;n<6;n++){
-   const length=[3.35,2.85,3.12,2.62,3.38,2.96][n],z=.075+n*.14;
-   b('fallen-gate-strip',length/2,.2+n*.055,z,length,.12,.145,MAT.armor);
-  }
-  b('fallen-gate-cross-strap',.6,.33,.43,.14,.48,.85,MAT.edge);
-  b('fallen-gate-cross-strap',2.35,.33,.43,.14,.48,.85,MAT.edge);
-  b('sheared-gate-hinge',.18,.43,.72,.3,.18,.26,MAT.orange);
+  // A full-width leaf has fallen south along the crew side of the partition.
+  // The far corner is pulled upward; the plate remains attached to its frame.
+  b('fallen-gate-ground-rail',1.35,.09,.13,2.7,.18,.26,MAT.edge);
+  b('fallen-gate-ground-rail',2.59,.09,1.75,.22,.18,3.42,MAT.edge);
+  b('fallen-gate-side-frame',.14,.09,1.13,.22,.18,2.16,MAT.edge);
+  const a=new T.Vector3(.14,.12,2.2),c=new T.Vector3(.46,.48,3.13),e=new T.Vector3(2.59,.12,3.36);
+  const bent=rod(parts,a,c,.11,.11,MAT.edge);bent.name='fallen-gate-displaced-corner';
+  const end=rod(parts,c,e,.11,.11,MAT.edge);end.name='fallen-gate-torn-end-frame';
+  const plateGeometry=geometry('room5-broad-torn-leaf-v1',()=>{
+   const outline=new T.Shape();
+   outline.moveTo(.13,.16);outline.lineTo(2.6,.16);outline.lineTo(2.6,3.34);
+   outline.lineTo(2.22,3.28);outline.lineTo(2.02,2.83);outline.lineTo(1.83,3.13);
+   outline.lineTo(1.47,2.68);outline.lineTo(1.29,3.12);outline.lineTo(.48,3.13);
+   outline.lineTo(.14,2.17);outline.closePath();
+   const g=new T.ExtrudeGeometry(outline,{depth:.07,bevelEnabled:false,steps:1});
+   const p=g.getAttribute('position');
+   for(let i=0;i<p.count;i++){
+    const x=p.getX(i),z=p.getY(i),thickness=p.getZ(i);
+    const lift=.39*Math.max(0,(z-2.17)/.96)*Math.max(0,(2.59-x)/2.13);
+    p.setXYZ(i,x,.17+thickness+lift,z);
+   }
+   // Axis swap reverses handedness. Reverse each triangle before recalculating normals.
+   const index=Array.from({length:p.count},(_,i)=>i);
+   for(let i=0;i<index.length;i+=3)[index[i+1],index[i+2]]=[index[i+2],index[i+1]];
+   g.setIndex(index);g.computeVertexNormals();return g;
+  });
+  const infill=new T.Mesh(plateGeometry,MAT.armor);infill.name='fallen-gate-infill';
+  infill.castShadow=infill.receiveShadow=true;parts.add(infill);
+  b('sheared-gate-hinge',.2,.25,.32,.3,.18,.26,MAT.orange);
  }else if(station){
   b('station-plinth',2.5,.09,1.25,4.98,.18,2.48,MAT.black);
   b('closed-control-cabinet',2.5,.48,.46,4.8,.78,.8,MAT.steel);

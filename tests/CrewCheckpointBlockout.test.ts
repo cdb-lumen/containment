@@ -140,19 +140,25 @@ describe('Room5 checkpoint rough',()=>{
  });
  it('places the fallen gate beside the crossing with floor support and a clear radius28 passage',()=>{
   expect(room.obstacles).toHaveLength(4);
-  const f=footprints[3],root=model(3),sheet=named(root,'fallen-gate-strip');
-  expect(sheet).toHaveLength(6);
+  const f=footprints[3],root=model(3),sheet=named(root,'fallen-gate-infill');
+  expect(sheet).toHaveLength(1);
+  expect(room.obstacles[3]).toEqual({x:610,y:484,width:88,height:112});
+  const infill=new T.Box3().setFromObject(sheet[0],true);
+  expect(infill.max.x-infill.min.x).toBeGreaterThan(2);
+  expect(infill.max.z-infill.min.z).toBeGreaterThan(2.8);
+  expect(named(root,'fallen-gate-strip')).toHaveLength(0);
   const bounds=new T.Box3().setFromObject(root,true);
   expect(bounds.min.y).toBeCloseTo(0,5);
-  expect(bounds.max.x-bounds.min.x).toBeGreaterThan(3);
+  expect(Math.max(bounds.max.x-bounds.min.x,bounds.max.z-bounds.min.z)).toBeGreaterThan(3);
   expect(bounds.max.z-bounds.min.z).toBeGreaterThan(.7);
   expect(bounds.max.y).toBeLessThan(.8);
   expect(f.y*32-440).toBeGreaterThanOrEqual(28);
   const geometry=createExpeditionGeometry(generateRun(137).nodes[4]);
   expect(canTraverseExpedition(geometry,{x:100,y:440},{x:1100,y:440},28)).toBe(true);
   expect(canOccupyExpedition(geometry,{x:(f.x+f.width/2)*32,y:(f.y+f.height/2)*32},16)).toBe(false);
-  const widths=sheet.map(s=>new T.Box3().setFromObject(s,true).getSize(new T.Vector3()).x);
-  expect(new Set(widths.map(v=>v.toFixed(3))).size).toBeGreaterThan(3);
+  const corner=new T.Box3().setFromObject(named(root,'fallen-gate-displaced-corner')[0],true);
+  expect(corner.max.y).toBeGreaterThan(.45);
+  expect(corner.intersectsBox(infill)).toBe(true);
  });
  it.each([0,1,2,3])('keeps all vertices and flattened geometry inside footprint %s with cached resources',index=>{
   const root=model(index),f=footprints[index],world=new T.Group();
