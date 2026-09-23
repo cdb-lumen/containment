@@ -40,6 +40,20 @@ describe('Armory room-owned equipment rough',()=>{
    expect(frontHit(.24,.24)).toBeDefined();
   }
  });
+ it('supports a separate issue-case lid and leaves its carry-handle opening clear',()=>{
+  const model=environmentObstacle('security',footprints[2],2,'armory');model.updateMatrixWorld(true);
+  const part=(name:string)=>{const value=model.getObjectByName(name);expect(value,name).toBeDefined();return value!;};
+  const bounds=(name:string)=>new T.Box3().setFromObject(part(name),true);
+  expect(bounds('issue-case-body').min.y).toBeCloseTo(bounds('issue-worktop').max.y,4);
+  expect(bounds('issue-case-lid').min.y).toBeCloseTo(bounds('issue-case-body').max.y,4);
+  expect(bounds('issue-case-lid').max.x).toBeGreaterThan(bounds('issue-case-body').max.x);
+  const handle=part('issue-case-handle'),b=new T.Box3().setFromObject(handle,true),center=b.getCenter(new T.Vector3());
+  const top=new T.Raycaster(center.clone().add(new T.Vector3(0,3,0)),new T.Vector3(0,-1,0)).intersectObject(model,true)[0];
+  expect(top?.object).toBe(handle);
+  const opening=center.clone();opening.z-=.105;
+  const through=new T.Raycaster(opening.clone().add(new T.Vector3(0,3,0)),new T.Vector3(0,-1,0)).intersectObject(model,true)[0];
+  expect(through?.object).toBe(part('issue-worktop'));
+ });
  it('replaces repeated cells with four distinct equipment assemblies',()=>{
   const names=footprints.map((f,i)=>environmentObstacle('security',f,i,'armory').name);
   expect(names).toEqual(['armory-secured-weapons','armory-armor-fitting','armory-issue-bench','armory-ammunition-store']);

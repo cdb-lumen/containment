@@ -70,14 +70,32 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
    b(x,.48,.1,.75,.12,.66,MAT.black);
   }
  }else if(role===2){
-  // Low issue/work bench: open knee space, two pedestals, a supported equipment case.
-  for(const x of [-w/2+.55,w/2-.55])b(x,.53,0,.9,.72,d-.25,MAT.steel);
-  b(0,.96,0,w-.12,.16,d-.12,MAT.bone);
-  b(-1.2,1.17,-.1,1.6,.25,.95,MAT.black);
-  for(const x of [-1.72,-.68])b(x,1.18,.39,.13,.18,.07,MAT.trim);
-  b(1.2,1.07,.3,1.1,.06,.85,MAT.rubber);
-  b(1.2,1.15,.3,.85,.12,.3,MAT.edge);
-  b(1.2,1.15,-.15,.75,.12,.12,MAT.black);
+  // Issue counter: drawer pedestals, a closed transport case and a parts tray.
+  // Keep the low worktop, knee space and original collision footprint.
+  for(const x of [-w/2+.55,w/2-.55]){
+   b(x,.53,0,.9,.72,d-.25,MAT.steel);
+   for(const y of [.36,.66]){
+    b(x,y,d/2-.11,.76,.24,.045,MAT.edge,.015);
+    b(x,y+.015,d/2-.075,.32,.045,.04,MAT.black,.01);
+   }
+  }
+  b(0,.96,0,w-.12,.16,d-.12,MAT.bone).name='issue-worktop';
+  // The lid lip, ribs and open carry handle replace the featureless black block.
+  b(-1.2,1.2,-.18,1.72,.32,1.08,MAT.black,.07).name='issue-case-body';
+  b(-1.2,1.42,-.18,1.8,.12,1.16,MAT.edge,.05).name='issue-case-lid';
+  b(-1.2,1.485,-.18,1.56,.05,.9,MAT.steel,.035);
+  for(const x of [-1.75,-1.2,-.65])b(x,1.525,-.18,.09,.05,.78,MAT.black,.015);
+  for(const x of [-1.83,-.57])b(x,1.35,.41,.12,.25,.08,MAT.trim,.015);
+  for(const x of [-1.52,-.88])b(x,1.23,.54,.09,.08,.34,MAT.edge,.015);
+  b(-1.2,1.23,.69,.64,.09,.09,MAT.black,.02).name='issue-case-handle';
+  // A recessed mat and two separate magazines leave the bench's right side usable.
+  b(1.2,1.075,.1,1.65,.07,1.35,MAT.rubber,.04);
+  for(const x of [.4,2])b(x,1.15,.1,.06,.15,1.35,MAT.edge,.015);
+  for(const z of [-.545,.745])b(1.2,1.15,z,1.65,.15,.06,MAT.edge,.015);
+  for(const x of [.83,1.49]){
+   b(x,1.19,.12,.3,.16,.72,MAT.steel,.035);
+   b(x,1.285,-.15,.32,.04,.16,MAT.black,.01);
+  }
  }else{
   // Ammunition drawers and two low palletized sealed cases, not another gun rack.
   b(0,.97,-1.55,w-.25,1.58,1.8,MAT.steel);
