@@ -25,6 +25,28 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
    // Broad side profiles lean toward the elevated view, on separate backed mounts.
    const gun=new T.Group();gun.name='stored-rifle';gun.position.set(-2.65+i*2.65,1.05,.38);gun.rotation.set(-.72,0,.24);body.add(gun);
    const p=(name:string,x:number,y:number,z:number,ww:number,h:number,dd:number,m:T.Material)=>{const part=box(gun,x,y,z,ww,h,dd,m,.025);part.name=name;return part;};
+   if(i===1){
+    const profile=(name:string,points:number[][],depth:number,m:T.Material)=>{
+     const shape=new T.Shape(points.map(([x,y])=>new T.Vector2(x,y)));
+     const geometry=new T.ExtrudeGeometry(shape,{depth,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.012,bevelThickness:.012,curveSegments:1});
+     geometry.translate(0,0,-depth/2);geometry.computeBoundingBox();
+     const center=geometry.boundingBox!.getCenter(new T.Vector3());geometry.translate(-center.x,-center.y,-center.z);
+     const part=new T.Mesh(geometry,m);part.position.copy(center);part.name=name;part.castShadow=true;part.receiveShadow=true;gun.add(part);return part;
+    };
+    // Pale furniture surrounds a separate dark receiver. The lower grip remains
+    // exposed below the small receiver clamp, not buried in a full-height pad.
+    profile('stock',[[-1.08,-.17],[-1.08,.12],[-.82,.12],[-.65,.055],[-.49,.055],[-.49,-.025],[-.7,-.045],[-.83,-.17]],.15,MAT.bone);
+    p('butt-pad',-1.09,-.025,0,.055,.32,.17,MAT.rubber);
+    profile('receiver',[[-.52,-.09],[-.52,.105],[-.4,.16],[.14,.16],[.23,.08],[.23,-.1],[-.24,-.1],[-.34,-.05]],.22,MAT.steel);
+    profile('handguard',[[.23,-.055],[.23,.13],[.51,.13],[.63,.065],[.63,-.055]],.18,MAT.bone);
+    p('barrel',.85,.05,0,.52,.075,.08,MAT.black);
+    p('muzzle',1.12,.05,0,.12,.13,.12,MAT.edge);
+    profile('magazine',[[.075,-.085],[.25,-.085],[.28,-.33],[.21,-.44],[.065,-.4]],.14,MAT.edge);
+    profile('grip',[[-.48,-.055],[-.32,-.075],[-.39,-.37],[-.55,-.34]],.15,MAT.bone);
+    p('sight',-.13,.22,0,.21,.09,.09,MAT.black);
+    p('cradle',-.12,.015,-.19,.5,.22,.18,MAT.rubber);
+    p('retainer',-.15,.025,.16,.045,.22,.065,MAT.trim);
+   }else{
    p('stock',-.79,-.04,0,.55,.32,.18,MAT.bone);
    p('stock-neck',-.47,.02,0,.2,.13,.14,MAT.edge);
    p('receiver',-.14,.02,0,.55,.25,.22,MAT.edge);
@@ -36,6 +58,7 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
    p('sight',-.13,.21,0,.25,.1,.1,MAT.black);
    p('cradle',-.12,0,-.19,.7,.65,.18,MAT.rubber);
    p('retainer',-.15,.01,.15,.065,.3,.08,MAT.trim);
+   }
    // Mount bears on the shelf; the rifle stays secured rather than floating.
    b(-2.65+i*2.65,.69,.38,.28,.52,.38,MAT.edge);
   }

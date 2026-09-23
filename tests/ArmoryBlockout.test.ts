@@ -4,6 +4,20 @@ import {environmentObstacle,appendEnvironment} from '../src/render/ShipEnvironme
 
 const footprints=[{x:8.75,y:5.625,width:8.75,height:3.125},{x:23.125,y:5.625,width:5.625,height:3.125},{x:8.75,y:18.75,width:5.625,height:3.125},{x:23.125,y:16.5625,width:5.625,height:5.3125}];
 describe('Armory room-owned equipment rough',()=>{
+ it('keeps the representative grip and magazine distinct from its receiver and mount',()=>{
+  const model=environmentObstacle('security',footprints[0],0,'armory');
+  const rifles:T.Object3D[]=[];model.traverse(o=>{if(o.name==='stored-rifle')rifles.push(o);});
+  const rifle=rifles[1].clone(true);rifle.position.set(0,0,0);rifle.rotation.set(0,0,0);rifle.updateMatrixWorld(true);
+  const bounds=(name:string)=>new T.Box3().setFromObject(rifle.getObjectByName(name)!,true);
+  expect(bounds('magazine').min.x-bounds('grip').max.x).toBeGreaterThan(.25);
+  expect(bounds('grip').min.y).toBeLessThan(bounds('cradle').min.y-.12);
+  const grip=rifle.getObjectByName('grip') as T.Mesh;
+  const receiver=rifle.getObjectByName('receiver') as T.Mesh;
+  expect(grip.material).not.toBe(receiver.material);
+  const target=grip.getWorldPosition(new T.Vector3());
+  const hit=new T.Raycaster(target.clone().add(new T.Vector3(0,0,3)),new T.Vector3(0,0,-1)).intersectObject(rifle,true)[0];
+  expect(hit?.object).toBe(grip);
+ });
  it('replaces repeated cells with four distinct equipment assemblies',()=>{
   const names=footprints.map((f,i)=>environmentObstacle('security',f,i,'armory').name);
   expect(names).toEqual(['armory-secured-weapons','armory-armor-fitting','armory-issue-bench','armory-ammunition-store']);
