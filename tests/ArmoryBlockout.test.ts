@@ -21,6 +21,25 @@ describe('Armory room-owned equipment rough',()=>{
   expect(hit?.object).toBe(grip);
   }
  });
+ it('gives each armor shell a tapered waist and an open neck above its chest',()=>{
+  const model=environmentObstacle('security',footprints[1],1,'armory');model.updateMatrixWorld(true);
+  const shells:T.Mesh[]=[];model.traverse(o=>{if(o.name==='armor-chest')shells.push(o as T.Mesh);});
+  expect(shells).toHaveLength(3);
+  for(const shell of shells){
+   const positions=shell.geometry.getAttribute('position');
+   const xs=(low:number,high:number)=>Array.from({length:positions.count},(_,i)=>i).filter(i=>positions.getY(i)>=low&&positions.getY(i)<=high).map(i=>positions.getX(i));
+   const waist=xs(-.4,-.25),chest=xs(.1,.3);
+   expect(waist.length).toBeGreaterThan(0);expect(chest.length).toBeGreaterThan(0);
+   expect(Math.max(...chest)-Math.min(...chest)).toBeGreaterThan(Math.max(...waist)-Math.min(...waist)+.15);
+   const frontHit=(x:number,y:number)=>{
+    const target=shell.localToWorld(new T.Vector3(x,y,.5));
+    return new T.Raycaster(target,new T.Vector3(0,0,-1)).intersectObject(shell)[0];
+   };
+   expect(frontHit(0,0)).toBeDefined();
+   expect(frontHit(0,.29)).toBeUndefined();
+   expect(frontHit(.24,.24)).toBeDefined();
+  }
+ });
  it('replaces repeated cells with four distinct equipment assemblies',()=>{
   const names=footprints.map((f,i)=>environmentObstacle('security',f,i,'armory').name);
   expect(names).toEqual(['armory-secured-weapons','armory-armor-fitting','armory-issue-bench','armory-ammunition-store']);

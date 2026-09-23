@@ -54,9 +54,17 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
   b(0,1.02,-1.22,w-.2,1.5,.2,MAT.steel);
   for(const x of [-1.55,0,1.55]){
    b(x,.79,.1,.14,1.05,.14,MAT.edge);
-   b(x,1.13,.1,.65,.68,.35,MAT.rubber);
-   b(x,1.18,.33,.55,.46,.17,MAT.bone);
-   for(const side of [-1,1]){const shoulder=b(x+side*.4,1.38,.15,.28,.22,.4,MAT.bone);shoulder.rotation.z=side*-.3;}
+   b(x,1.13,.1,.54,.64,.35,MAT.rubber);
+   // Neck and arm cutouts leave a shaped chest shell, not a square bib.
+   const chest=new T.Shape([[-.23,-.34],[.23,-.34],[.33,-.08],[.4,.12],[.31,.31],[.16,.31],[.12,.17],[-.12,.17],[-.16,.31],[-.31,.31],[-.4,.12],[-.33,-.08]].map(([xx,yy])=>new T.Vector2(xx,yy)));
+   const shell=new T.Mesh(new T.ExtrudeGeometry(chest,{depth:.14,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.018,bevelThickness:.018,curveSegments:1}),MAT.bone);
+   shell.name='armor-chest';shell.position.set(x,1.18,.27);shell.castShadow=true;shell.receiveShadow=true;body.add(shell);
+   // Separate waist band and shoulder caps retain the dark flexible joints.
+   b(x,.81,.32,.49,.1,.2,MAT.edge);
+   for(const side of [-1,1]){
+    b(x+side*.4,1.38,.12,.18,.13,.2,MAT.rubber);
+    const shoulder=b(x+side*.48,1.38,.17,.28,.27,.39,MAT.bone,.07);shoulder.rotation.z=side*-.4;
+   }
    ball(body,x,1.68,.1,.23,.22,.23,MAT.bone);
    b(x,1.69,.29,.34,.1,.05,MAT.black,.01);
    b(x,.48,.1,.75,.12,.66,MAT.black);
