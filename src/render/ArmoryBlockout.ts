@@ -57,14 +57,24 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
    b(x,1.13,.1,.54,.64,.35,MAT.rubber);
    // Neck and arm cutouts leave a shaped chest shell, not a square bib.
    const chest=new T.Shape([[-.23,-.34],[.23,-.34],[.33,-.08],[.4,.12],[.31,.31],[.16,.31],[.12,.17],[-.12,.17],[-.16,.31],[-.31,.31],[-.4,.12],[-.33,-.08]].map(([xx,yy])=>new T.Vector2(xx,yy)));
-   const shell=new T.Mesh(new T.ExtrudeGeometry(chest,{depth:.14,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.018,bevelThickness:.018,curveSegments:1}),MAT.bone);
+   const shell=new T.Mesh(new T.ExtrudeGeometry(chest,{depth:.06,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.018,bevelThickness:.018,curveSegments:1}),MAT.rubber);
    shell.name='armor-chest';shell.position.set(x,1.18,.27);shell.castShadow=true;shell.receiveShadow=true;body.add(shell);
-   // Separate waist band and shoulder caps retain the dark flexible joints.
-   b(x,.81,.32,.49,.1,.2,MAT.edge);
+   // Separate rigid plates sit on the shaped flexible carrier. Open sternum and
+   // waist joints prevent the torso reading as one flat, full-width bib.
+   const plate=(name:string,points:number[][],z:number,depth:number)=>{
+    const shape=new T.Shape(points.map(([xx,yy])=>new T.Vector2(xx,yy)));
+    const part=new T.Mesh(new T.ExtrudeGeometry(shape,{depth,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.015,bevelThickness:.015,curveSegments:1}),MAT.bone);
+    part.name=name;part.position.set(x,1.18,z);part.castShadow=true;part.receiveShadow=true;body.add(part);return part;
+   };
    for(const side of [-1,1]){
-    b(x+side*.4,1.38,.12,.18,.13,.2,MAT.rubber);
-    const shoulder=b(x+side*.48,1.38,.17,.28,.27,.39,MAT.bone,.07);shoulder.rotation.z=side*-.4;
+    plate('armor-upper-plate',[[.055,-.035],[.26,-.035],[.35,.11],[.285,.27],[.175,.27],[.145,.14],[.055,.115]].map(([xx,yy])=>[xx*side,yy]),.335,.1);
+    // Low sloping shoulder shells cover the arm attachment rather than stand
+    // upright beside the helmet. Their dark inner mount remains visible below.
+    b(x+side*.39,1.34,.13,.2,.14,.22,MAT.rubber);
+    plate('armor-shoulder',[[.33,.17],[.4,.27],[.51,.24],[.59,.07],[.54,-.015],[.4,.025]].map(([xx,yy])=>[xx*side,yy]),.12,.24);
    }
+   plate('armor-abdomen-plate',[[-.25,-.15],[.25,-.15],[.205,-.31],[-.205,-.31]],.345,.08);
+   b(x,.81,.32,.49,.1,.2,MAT.edge);
    ball(body,x,1.68,.1,.23,.22,.23,MAT.bone);
    b(x,1.69,.29,.34,.1,.05,MAT.black,.01);
    b(x,.48,.1,.75,.12,.66,MAT.black);

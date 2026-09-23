@@ -40,6 +40,18 @@ describe('Armory room-owned equipment rough',()=>{
    expect(frontHit(.24,.24)).toBeDefined();
   }
  });
+ it('exposes flexible torso joints between separate chest and abdomen plates',()=>{
+  const model=environmentObstacle('security',footprints[1],1,'armory');model.updateMatrixWorld(true);
+  const backs:T.Mesh[]=[];model.traverse(o=>{if(o.name==='armor-chest')backs.push(o as T.Mesh);});
+  expect(backs).toHaveLength(3);
+  for(const back of backs){
+   const hit=(x:number,y:number)=>new T.Raycaster(back.localToWorld(new T.Vector3(x,y,2)),new T.Vector3(0,0,-1)).intersectObject(model,true)[0]?.object;
+   expect(hit(.18,.1)?.name).toBe('armor-upper-plate');
+   expect(hit(0,-.23)?.name).toBe('armor-abdomen-plate');
+   expect(hit(0,-.09)).toBe(back);
+   expect(hit(0,.08)).toBe(back);
+  }
+ });
  it('supports a separate issue-case lid and leaves its carry-handle opening clear',()=>{
   const model=environmentObstacle('security',footprints[2],2,'armory');model.updateMatrixWorld(true);
   const part=(name:string)=>{const value=model.getObjectByName(name);expect(value,name).toBeDefined();return value!;};
