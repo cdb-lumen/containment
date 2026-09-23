@@ -105,10 +105,20 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
    b(x-.52,y,-.56,.16,.18,.04,MAT.bone,.01);
   }
   for(const x of [-1.35,1.35]){
-   b(x,.3,1.25,2.3,.24,2.1,MAT.rubber);
-   b(x,.72,1.25,2.15,.6,1.9,MAT.orange);
-   b(x,1.06,1.25,2.22,.12,1.96,MAT.edge);
-   for(const offset of [-.65,.65])b(x+offset,.75,2.23,.1,.7,.07,MAT.black);
+   const id=x<0?'left':'right';
+   b(x,.3,1.25,2.3,.24,2.1,MAT.rubber).name=`ammo-${id}-pallet`;
+   b(x,.72,1.25,2.15,.6,1.9,MAT.orange,.08).name=`ammo-${id}-body`;
+   b(x,1.08,1.25,2.22,.12,1.96,MAT.edge,.06).name=`ammo-${id}-lid`;
+   // Recessed coated panel within a protective rim; a raised bail is supported
+   // by two feet rather than painted onto the lid.
+   b(x,1.155,1.25,1.86,.03,1.6,MAT.orange,.055).name=`ammo-${id}-panel`;
+   for(const offset of [-.68,.68]){
+    b(x+offset,1.17,1.25,.12,.1,1.76,MAT.edge,.02);
+    b(x+offset,.91,2.24,.18,.4,.09,MAT.black,.02);
+    b(x+offset,1.04,2.3,.12,.13,.065,MAT.trim,.01);
+   }
+   for(const offset of [-.38,.38])b(x+offset,1.24,1.25,.12,.24,.2,MAT.edge,.025);
+   b(x,1.39,1.25,.88,.12,.18,MAT.black,.035).name=`ammo-${id}-handle`;
   }
  }
  // Horizontal fit only; do not stretch human-scale heights to fill a larger cell.

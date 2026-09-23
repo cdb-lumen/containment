@@ -54,6 +54,19 @@ describe('Armory room-owned equipment rough',()=>{
   const through=new T.Raycaster(opening.clone().add(new T.Vector3(0,3,0)),new T.Vector3(0,-1,0)).intersectObject(model,true)[0];
   expect(through?.object).toBe(part('issue-worktop'));
  });
+ it('supports ammunition case lids and exposes raised handles above recessed top panels',()=>{
+  const model=environmentObstacle('security',footprints[3],3,'armory');model.updateMatrixWorld(true);
+  for(const id of ['left','right']){
+   const part=(suffix:string)=>{const p=model.getObjectByName(`ammo-${id}-${suffix}`);expect(p).toBeDefined();return p!;};
+   const bounds=(suffix:string)=>new T.Box3().setFromObject(part(suffix),true);
+   expect(bounds('body').min.y).toBeCloseTo(bounds('pallet').max.y,4);
+   expect(bounds('lid').min.y).toBeCloseTo(bounds('body').max.y,4);
+   expect(bounds('handle').min.y).toBeGreaterThan(bounds('panel').max.y+.08);
+   const center=bounds('handle').getCenter(new T.Vector3());
+   const hit=new T.Raycaster(center.clone().add(new T.Vector3(0,3,0)),new T.Vector3(0,-1,0)).intersectObject(model,true)[0];
+   expect(hit?.object).toBe(part('handle'));
+  }
+ });
  it('replaces repeated cells with four distinct equipment assemblies',()=>{
   const names=footprints.map((f,i)=>environmentObstacle('security',f,i,'armory').name);
   expect(names).toEqual(['armory-secured-weapons','armory-armor-fitting','armory-issue-bench','armory-ammunition-store']);
