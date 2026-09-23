@@ -25,7 +25,6 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
    // Broad side profiles lean toward the elevated view, on separate backed mounts.
    const gun=new T.Group();gun.name='stored-rifle';gun.position.set(-2.65+i*2.65,1.05,.38);gun.rotation.set(-.72,0,.24);body.add(gun);
    const p=(name:string,x:number,y:number,z:number,ww:number,h:number,dd:number,m:T.Material)=>{const part=box(gun,x,y,z,ww,h,dd,m,.025);part.name=name;return part;};
-   if(i===1){
     const profile=(name:string,points:number[][],depth:number,m:T.Material)=>{
      const shape=new T.Shape(points.map(([x,y])=>new T.Vector2(x,y)));
      const geometry=new T.ExtrudeGeometry(shape,{depth,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.012,bevelThickness:.012,curveSegments:1});
@@ -46,19 +45,7 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
     p('sight',-.13,.22,0,.21,.09,.09,MAT.black);
     p('cradle',-.12,.015,-.19,.5,.22,.18,MAT.rubber);
     p('retainer',-.15,.025,.16,.045,.22,.065,MAT.trim);
-   }else{
-   p('stock',-.79,-.04,0,.55,.32,.18,MAT.bone);
-   p('stock-neck',-.47,.02,0,.2,.13,.14,MAT.edge);
-   p('receiver',-.14,.02,0,.55,.25,.22,MAT.edge);
-   p('handguard',.36,.03,0,.5,.19,.2,MAT.bone);
-   p('barrel',.85,.05,0,.52,.075,.08,MAT.black);
-   p('muzzle',1.12,.05,0,.12,.13,.12,MAT.edge);
-   p('magazine',.02,-.27,0,.19,.4,.15,MAT.black).rotation.z=.16;
-   p('grip',-.35,-.23,0,.13,.3,.14,MAT.rubber).rotation.z=-.25;
-   p('sight',-.13,.21,0,.25,.1,.1,MAT.black);
-   p('cradle',-.12,0,-.19,.7,.65,.18,MAT.rubber);
-   p('retainer',-.15,.01,.15,.065,.3,.08,MAT.trim);
-   }
+
    // Mount bears on the shelf; the rifle stays secured rather than floating.
    b(-2.65+i*2.65,.69,.38,.28,.52,.38,MAT.edge);
   }
