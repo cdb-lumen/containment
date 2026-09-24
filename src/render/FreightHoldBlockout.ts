@@ -32,9 +32,20 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   for(const x of [-1.17,-.13])for(const z of [-.97,.03])b(x,1.76,z,.075,1.05,.075,MAT.edge,0);
   b(-.65,2.29,-.47,1.24,.12,1.22,MAT.orange);
   b(-.62,1.33,.42,.72,.18,.25,MAT.edge);
-  p(v(.15,1.16,.45),v(.9,2.05,.45),.16,MAT.orange);
-  p(v(.9,2.05,.45),v(1.55,.7,.45),.14,MAT.orange);
-  p(v(.22,1.33,.66),v(.83,1.89,.66),.055,MAT.edge);
+  // Box-section arms meet at exposed transverse pins, not round pipe elbows.
+  const boomMember=(name:string,a:T.Vector3,c:T.Vector3,w:number)=>{
+   const mid=a.clone().add(c).multiplyScalar(.5);
+   const member=b(mid.x,mid.y,mid.z,w,a.distanceTo(c),.34,MAT.orange,.035);
+   member.rotation.z=-Math.atan2(c.x-a.x,c.y-a.y);member.name=name;
+  };
+  boomMember('folded-boom',v(.15,1.16,.45),v(.9,2.05,.45),.42);
+  boomMember('folded-stick',v(.9,2.05,.45),v(1.55,.7,.45),.32);
+  for(const [name,x,y] of [['boom-base',.15,1.16],['boom-elbow',.9,2.05],['bucket-pin',1.55,.7]] as const){
+   p(v(x,y,.18),v(x,y,.72),.18,MAT.edge).name=name;
+   p(v(x,y,.73),v(x,y,.77),.09,MAT.black);
+  }
+  p(v(.22,1.33,.8),v(.57,1.63,.8),.085,MAT.black);
+  p(v(.57,1.63,.8),v(.83,1.89,.8),.045,MAT.edge);
   const lock=b(.96,.64,.46,.14,.75,.8,MAT.red);lock.name='transport-lock';
   // Open scoop: rear and cheek plates, floor, and separately exposed cutting teeth.
   const bucket=new T.Group();bucket.name='bucket';load.add(bucket);

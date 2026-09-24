@@ -64,6 +64,24 @@ it('gives every freight case a supported inset lid, exposed rim and paired restr
  }
 });
 
+it('connects squared excavator boom members through exposed transverse pivot hubs',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[1];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},1,'freight-hold');
+ const boom=model.getObjectByName('folded-boom') as T.Mesh;
+ const stick=model.getObjectByName('folded-stick') as T.Mesh;
+ expect(boom).toBeDefined();expect(stick).toBeDefined();
+ const bounds=(o:T.Object3D)=>new T.Box3().setFromObject(o,true);
+ const elbow=model.getObjectByName('boom-elbow')!;expect(elbow).toBeDefined();
+ expect(bounds(boom).intersectsBox(bounds(elbow))).toBe(true);
+ expect(bounds(stick).intersectsBox(bounds(elbow))).toBe(true);
+ const pin=bounds(elbow),arm=bounds(boom);
+ expect(pin.min.z).toBeLessThan(arm.min.z);expect(pin.max.z).toBeGreaterThan(arm.max.z);
+ expect(boom.geometry.type).not.toBe('CylinderGeometry');
+ expect(stick.geometry.type).not.toBe('CylinderGeometry');
+ const bucket=model.getObjectByName('bucket')!;
+ expect(bounds(stick).intersectsBox(bounds(bucket))).toBe(true);
+});
+
 it('keeps the central aisle and outer freight circuits clear for player and brute radii',()=>{
  const node=generateRun(1729,3).nodes.find(n=>n.templateId==='freight-hold')!;
  const g=createExpeditionGeometry(node);
