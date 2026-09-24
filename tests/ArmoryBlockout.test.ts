@@ -68,6 +68,20 @@ describe('Armory room-owned equipment rough',()=>{
    expect(front(.06)-front(.22)).toBeGreaterThan(.05);
   }
  });
+ it('exposes a tall sloping abdominal face below the chest without extending the rack footprint',()=>{
+  const model=environmentObstacle('security',footprints[1],1,'armory');model.updateMatrixWorld(true);
+  const plates:T.Mesh[]=[];model.traverse(o=>{if(o.name==='armor-abdomen-plate')plates.push(o as T.Mesh);});
+  expect(plates).toHaveLength(3);
+  for(const plate of plates){
+   const bounds=new T.Box3().setFromObject(plate,true);
+   expect(bounds.max.y-bounds.min.y).toBeGreaterThan(.28);
+   const front=(y:number)=>new T.Raycaster(plate.localToWorld(new T.Vector3(0,y,2)),new T.Vector3(0,0,-1)).intersectObject(plate)[0];
+   expect(front(-.18)).toBeDefined();expect(front(-.36)).toBeDefined();
+   expect(front(-.36).point.z-front(-.18).point.z).toBeGreaterThan(.07);
+   const target=front(-.3).point,origin=target.clone().add(new T.Vector3(0,8,10));
+   expect(new T.Raycaster(origin,target.clone().sub(origin).normalize()).intersectObject(model,true)[0]?.object).toBe(plate);
+  }
+ });
  it('supports a separate issue-case lid and leaves its carry-handle opening clear',()=>{
   const model=environmentObstacle('security',footprints[2],2,'armory');model.updateMatrixWorld(true);
   const part=(name:string)=>{const value=model.getObjectByName(name);expect(value,name).toBeDefined();return value!;};

@@ -82,7 +82,14 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
     b(x+side*.39,1.34,.13,.2,.14,.22,MAT.rubber);
     plate('armor-shoulder',[[.33,.17],[.4,.27],[.51,.24],[.59,.07],[.54,-.015],[.4,.025]].map(([xx,yy])=>[xx*side,yy]),.12,.24);
    }
-   plate('armor-abdomen-plate',[[-.25,-.15],[.25,-.15],[.205,-.31],[-.205,-.31]],.345,.08);
+   // A shallow lower shell slopes out below the chest, leaving the dark waist
+   // joint visible while giving the abdomen a face rather than a bottom strip.
+   const abdomen=plate('armor-abdomen-plate',[[-.245,-.12],[.245,-.12],[.19,-.43],[-.19,-.43]],.39,.055);
+   const lowerVertices=abdomen.geometry.getAttribute('position');
+   for(let i=0;i<lowerVertices.count;i++){
+    lowerVertices.setZ(i,lowerVertices.getZ(i)+(-.12-lowerVertices.getY(i))*.6);
+   }
+   lowerVertices.needsUpdate=true;abdomen.geometry.computeVertexNormals();
    b(x,.81,.32,.49,.1,.2,MAT.edge);
    ball(body,x,1.68,.1,.23,.22,.23,MAT.bone);
    b(x,1.69,.29,.34,.1,.05,MAT.black,.01);
