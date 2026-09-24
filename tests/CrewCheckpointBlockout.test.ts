@@ -212,6 +212,33 @@ describe('Room5 checkpoint rough',()=>{
   const counter=new T.Box3().setFromObject(mesh('guard-counter'),true),keyboard=new T.Box3().setFromObject(mesh('terminal-keyboard'),true);
   expect(keyboard.min.y).toBeCloseTo(counter.max.y,5);
  });
+ it('exposes the terminal face to shipping camera rays across the screen',()=>{
+  const root=model(2),glass=named(root,'unlit-terminal-glass')[0] as T.Mesh;
+  glass.geometry.computeBoundingBox();const bounds=glass.geometry.boundingBox!;
+  // DepthRenderer uses this fixed orthographic camera offset for every focus.
+  const towardCamera=new T.Vector3(0,26,19).normalize();
+  for(const u of [.1,.5,.9])for(const v of [.1,.5,.9]){
+   const target=glass.localToWorld(new T.Vector3(T.MathUtils.lerp(bounds.min.x,bounds.max.x,u),T.MathUtils.lerp(bounds.min.y,bounds.max.y,v),bounds.max.z));
+   const hit=new T.Raycaster(target.clone().addScaledVector(towardCamera,10),towardCamera.clone().negate()).intersectObject(root,true)[0];
+   expect(hit?.object.name,`screen sample ${u},${v}`).toBe('unlit-terminal-glass');
+   // Hitting the thin top/side of the glass is not seeing its screen face.
+   expect(hit.face!.normal.z,`front face at ${u},${v}`).toBeCloseTo(1,5);
+   expect(hit.point.distanceTo(target)).toBeLessThan(1e-5);
+  }
+  const normal=new T.Vector3(0,0,1).applyNormalMatrix(new T.Matrix3().getNormalMatrix(glass.matrixWorld));
+  expect(normal.dot(towardCamera),'projected face area must not collapse to an edge').toBeGreaterThan(.35);
+ });
+ it('keeps the tilted monitor attached to its stand above the keyboard',()=>{
+  const root=model(2),mesh=(name:string)=>named(root,name)[0] as T.Mesh;
+  const stem=mesh('terminal-stem'),housing=mesh('guard-terminal'),foot=mesh('terminal-foot');
+  stem.geometry.computeBoundingBox();housing.geometry.computeBoundingBox();foot.geometry.computeBoundingBox();
+  for(const [y,support] of [[stem.geometry.boundingBox!.min.y,foot],[stem.geometry.boundingBox!.max.y,housing]] as const){
+   const joint=stem.localToWorld(new T.Vector3(0,y,0));
+   expect(support.geometry.boundingBox!.containsPoint(support.worldToLocal(joint))).toBe(true);
+  }
+  const screenBounds=new T.Box3().setFromObject(housing,true),keyboardBounds=new T.Box3().setFromObject(mesh('terminal-keyboard'),true);
+  expect(screenBounds.min.y).toBeGreaterThan(keyboardBounds.max.y);
+ });
  it.each([0,1,2,3])('keeps all vertices and flattened geometry inside footprint %s with cached resources',index=>{
   const root=model(index),f=footprints[index],world=new T.Group();
   const check=(object:T.Object3D)=>{const b=new T.Box3().setFromObject(object,true);expect(b.min.x).toBeGreaterThanOrEqual(f.x-1e-5);expect(b.max.x).toBeLessThanOrEqual(f.x+f.width+1e-5);expect(b.min.z).toBeGreaterThanOrEqual(f.y-1e-5);expect(b.max.z).toBeLessThanOrEqual(f.y+f.height+1e-5);expect(b.min.y).toBeGreaterThanOrEqual(-1e-5);};

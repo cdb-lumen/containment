@@ -75,9 +75,14 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   b('seat-back',2.5,.85,2.23,.84,.6,.18,MAT.bone);
   b('terminal-foot',1.76,1.005,.95,.52,.07,.36,MAT.black);
   b('terminal-stem',1.76,1.15,.94,.12,.28,.12,MAT.edge);
-  b('guard-terminal',1.76,1.36,.94,.88,.49,.16,MAT.black);
+  const monitor=new T.Group();monitor.position.set(1.76,1.36,.94);parts.add(monitor);
+  const housing=b('guard-terminal',1.76,1.36,.94,.88,.49,.16,MAT.black);
   // A pale nonemissive face stays distinct without implying a live pickup.
-  b('unlit-terminal-glass',1.76,1.36,1.025,.72,.34,.018,MAT.armor);
+  const glass=b('unlit-terminal-glass',1.76,1.36,1.025,.72,.34,.018,MAT.armor);
+  for(const mesh of [housing,glass]){mesh.position.sub(monitor.position);monitor.add(mesh);}
+  // Tip the complete screen upward toward the seated operator. The existing
+  // stem still enters the housing, while the shipping camera sees its face.
+  monitor.rotation.x=-Math.PI/6;
   b('terminal-keyboard',1.76,.99,1.27,.62,.04,.22,MAT.bone);
   // Exposed inert crew weapon in a bolted cradle, not a loose pickup or case.
   b('weapon-cradle-bed',3.15,.91,.48,2,.08,.72,MAT.shell);
