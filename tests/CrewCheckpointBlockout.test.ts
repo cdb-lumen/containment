@@ -157,7 +157,8 @@ describe('Room5 checkpoint rough',()=>{
   expect(bounds.min.y).toBeCloseTo(0,5);
   expect(Math.max(bounds.max.x-bounds.min.x,bounds.max.z-bounds.min.z)).toBeGreaterThan(3);
   expect(bounds.max.z-bounds.min.z).toBeGreaterThan(.7);
-  expect(bounds.max.y).toBeLessThan(.8);
+  expect(bounds.max.y).toBeGreaterThan(1);
+  expect(bounds.max.y).toBeLessThan(1.65);
   expect(f.y*32-440).toBeGreaterThanOrEqual(28);
   const geometry=createExpeditionGeometry(generateRun(137).nodes[4]);
   expect(canTraverseExpedition(geometry,{x:100,y:440},{x:1100,y:440},28)).toBe(true);
@@ -165,6 +166,51 @@ describe('Room5 checkpoint rough',()=>{
   const corner=new T.Box3().setFromObject(named(root,'fallen-gate-displaced-corner')[0],true);
   expect(corner.max.y).toBeGreaterThan(.45);
   expect(corner.intersectsBox(infill)).toBe(true);
+ });
+ it('keeps the plate flat before the bend and samples the twisted corner without a diagonal crease',()=>{
+  const root=model(3),leaf=named(root,'fallen-gate-infill')[0],f=footprints[3];
+  const height=(x:number,z:number)=>{
+   const hits=new T.Raycaster(new T.Vector3(f.x+x,3,f.y+z),new T.Vector3(0,-1,0)).intersectObject(leaf);
+   expect(hits.length).toBeGreaterThan(0);return hits[0].point.y;
+  };
+  const flat=height(1,.5);
+  for(const x of [.48,1,1.5,2])for(const z of [.5,1,1.5,2,2.16,2.17,2.18,2.4,2.6]){
+   const lift=.39*Math.max(0,(z-2.17)/.96)*Math.max(0,(2.59-x)/2.13);
+   expect(height(x,z)-flat,`surface at ${x},${z}`).toBeCloseTo(lift,2);
+  }
+  for(const [x,z] of [[.48,2.8],[.48,3],[1,2.8],[1,3],[2.4,3.1]]){
+   const lift=.39*(z-2.17)/.96*(2.59-x)/2.13;
+   expect(height(x,z)-flat,`torn corner at ${x},${z}`).toBeCloseTo(lift,2);
+  }
+  expect(flat).toBeCloseTo(1.17,5);
+  const down=new T.Raycaster(new T.Vector3(f.x+1,3,f.y+1),new T.Vector3(0,-1,0)).intersectObject(leaf)[0];
+  const up=new T.Raycaster(new T.Vector3(f.x+1,0,f.y+1),new T.Vector3(0,1,0)).intersectObject(leaf)[0];
+  expect(down.point.y-up.point.y).toBeCloseTo(.16,5);
+ });
+ it.each([.8,.95])('matches blocked production shots with visible wreck metal at height %s',height=>{
+  const root=model(3),geometry=createExpeditionGeometry(generateRun(137).nodes[4]);root.updateWorldMatrix(true,true);
+  const shots:number[][]=[ [650,440,650,680] ];
+  for(const x of [610.5,614,630,650,675,697.5])shots.push([x,440,x,680],[x,680,x,440]);
+  for(const z of [484.5,490,520,560,590,595.5])shots.push([605,z,710,z],[710,z,605,z]);
+  shots.push([605,475,710,605],[710,605,605,475]);
+  for(const [x,z,tx,tz] of shots){
+   expect(hasClearExpeditionShot(geometry,{x,y:z},{x:tx,y:tz})).toBe(false);
+   const a=new T.Vector3(x/32,height,z/32),b=new T.Vector3(tx/32,height,tz/32);
+   expect(new T.Raycaster(a,b.clone().sub(a).normalize(),0,a.distanceTo(b)).intersectObject(root,true).length,`shot ${x},${z} to ${tx},${tz}`).toBeGreaterThan(0);
+  }
+  expect(new T.Raycaster(new T.Vector3(100/32,height,440/32),new T.Vector3(1,0,0),0,1000/32).intersectObject(root,true)).toHaveLength(0);
+ });
+ it('separates the control face and upholstered seat from the base without a full orange counter',()=>{
+  const root=model(2),mesh=(name:string)=>named(root,name)[0] as T.Mesh<T.BufferGeometry,T.MeshStandardMaterial>;
+  const luminance=(name:string)=>{const c=mesh(name).material.color;return .2126*c.r+.7152*c.g+.0722*c.b;};
+  expect(luminance('guard-seat')-luminance('station-plinth')).toBeGreaterThan(.08);
+  expect(mesh('seat-back').material).toBe(mesh('guard-seat').material);
+  expect(mesh('guard-counter').material).not.toBe(MAT.orange);
+  expect(luminance('unlit-terminal-glass')-luminance('guard-terminal')).toBeGreaterThan(.12);
+  const seat=new T.Box3().setFromObject(mesh('guard-seat'),true),back=new T.Box3().setFromObject(mesh('seat-back'),true);
+  expect(seat.intersectsBox(back)).toBe(true);
+  const counter=new T.Box3().setFromObject(mesh('guard-counter'),true),keyboard=new T.Box3().setFromObject(mesh('terminal-keyboard'),true);
+  expect(keyboard.min.y).toBeCloseTo(counter.max.y,5);
  });
  it.each([0,1,2,3])('keeps all vertices and flattened geometry inside footprint %s with cached resources',index=>{
   const root=model(index),f=footprints[index],world=new T.Group();

@@ -14,53 +14,71 @@ export function crewCheckpointBlockout(f:Footprint,index:number):T.Group{
   const mesh=box(parts,x,y,z,width,height,depth,material,0);mesh.name=name;return mesh;
  };
  if(fallen){
-  // A full-width leaf has fallen south along the crew side of the partition.
-  // The far corner is pulled upward; the plate remains attached to its frame.
-  b('fallen-gate-ground-rail',1.35,.09,.13,2.7,.18,.26,MAT.edge);
-  b('fallen-gate-ground-rail',2.59,.09,1.75,.22,.18,3.42,MAT.edge);
-  b('fallen-gate-side-frame',.14,.09,1.13,.22,.18,2.16,MAT.edge);
-  const a=new T.Vector3(.14,.12,2.2),c=new T.Vector3(.46,.48,3.13),e=new T.Vector3(2.59,.12,3.36);
+  // The torn leaf rests on its collapsed armored housing, not a thin floor
+  // decal. The solid housing communicates the unchanged 2D shot blocker.
+  b('collapsed-gate-housing',1.375,.52,1.75,2.75,1.04,3.5,MAT.steel);
+  b('fallen-gate-ground-rail',1.375,.09,1.75,2.75,.18,3.5,MAT.edge);
+  b('fallen-gate-head-frame',1.35,1.04,.13,2.7,.22,.26,MAT.edge);
+  b('fallen-gate-side-frame',2.59,1.04,1.75,.22,.22,3.42,MAT.edge);
+  b('fallen-gate-side-frame',.14,1.04,1.13,.22,.22,2.16,MAT.edge);
+  const a=new T.Vector3(.14,1.08,2.2),c=new T.Vector3(.46,1.44,3.13),e=new T.Vector3(2.59,1.08,3.36);
   const bent=rod(parts,a,c,.11,.11,MAT.edge);bent.name='fallen-gate-displaced-corner';
   const end=rod(parts,c,e,.11,.11,MAT.edge);end.name='fallen-gate-torn-end-frame';
-  const plateGeometry=geometry('room5-broad-torn-leaf-v1',()=>{
-   const outline=new T.Shape();
-   outline.moveTo(.13,.16);outline.lineTo(2.6,.16);outline.lineTo(2.6,3.34);
-   outline.lineTo(2.22,3.28);outline.lineTo(2.02,2.83);outline.lineTo(1.83,3.13);
-   outline.lineTo(1.47,2.68);outline.lineTo(1.29,3.12);outline.lineTo(.48,3.13);
-   outline.lineTo(.14,2.17);outline.closePath();
-   const g=new T.ExtrudeGeometry(outline,{depth:.07,bevelEnabled:false,steps:1});
-   const p=g.getAttribute('position');
-   for(let i=0;i<p.count;i++){
-    const x=p.getX(i),z=p.getY(i),thickness=p.getZ(i);
-    const lift=.39*Math.max(0,(z-2.17)/.96)*Math.max(0,(2.59-x)/2.13);
-    p.setXYZ(i,x,.17+thickness+lift,z);
+  const plateGeometry=geometry('room5-broad-torn-leaf-v2',()=>{
+   const flat=[[.13,.16],[2.6,.16],[2.6,2.17],[.14,2.17]];
+   const bend=[[.14,2.17],[2.6,2.17],[2.6,3.34],[2.22,3.28],[2.02,2.83],[1.83,3.13],[1.47,2.68],[1.29,3.12],[.48,3.13]];
+   const positions:number[]=[],uv:number[]=[];
+   // Split at the bend first. Refine only its curved triangles so a lifted
+   // corner cannot interpolate across the untouched flat armor.
+   const face=(a:T.Vector3,b:T.Vector3,c:T.Vector3,steps:number)=>{
+    if(steps){
+     const ab=a.clone().add(b).multiplyScalar(.5),bc=b.clone().add(c).multiplyScalar(.5),ca=c.clone().add(a).multiplyScalar(.5);
+     face(a,ab,ca,steps-1);face(ab,b,bc,steps-1);face(ca,bc,c,steps-1);face(ab,bc,ca,steps-1);return;
+    }
+    for(const p of [a,b,c]){
+     const lift=.39*Math.max(0,(p.z-2.17)/.96)*Math.max(0,(2.59-p.x)/2.13);
+     positions.push(p.x,p.y+lift,p.z);uv.push(p.x,p.z);
+    }
+   };
+   const point=(p:number[],y:number)=>new T.Vector3(p[0],y,p[1]);
+   for(const [section,steps] of [[flat,0],[bend,3]] as const){
+    const contour=section.map(p=>new T.Vector2(p[0],p[1]));
+    for(const [a,b,c] of T.ShapeUtils.triangulateShape(contour,[])){
+     face(point(section[a],1.17),point(section[c],1.17),point(section[b],1.17),steps);
+     face(point(section[a],1.01),point(section[b],1.01),point(section[c],1.01),steps);
+    }
    }
-   // Axis swap reverses handedness. Reverse each triangle before recalculating normals.
-   const index=Array.from({length:p.count},(_,i)=>i);
-   for(let i=0;i<index.length;i+=3)[index[i+1],index[i+2]]=[index[i+2],index[i+1]];
-   g.setIndex(index);g.computeVertexNormals();return g;
+   const outline=[...flat.slice(0,3),...bend.slice(2),bend[0]];
+   for(let i=0;i<outline.length;i++){
+    const a=outline[i],b=outline[(i+1)%outline.length],steps=Math.max(a[1],b[1])>2.17?3:0;
+    face(point(a,1.01),point(a,1.17),point(b,1.17),steps);
+    face(point(a,1.01),point(b,1.17),point(b,1.01),steps);
+   }
+   const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));
+   g.setAttribute('uv',new T.Float32BufferAttribute(uv,2));g.computeVertexNormals();return g;
   });
   const infill=new T.Mesh(plateGeometry,MAT.armor);infill.name='fallen-gate-infill';
   infill.castShadow=infill.receiveShadow=true;parts.add(infill);
-  b('sheared-gate-hinge',.2,.25,.32,.3,.18,.26,MAT.orange);
+  b('sheared-gate-hinge',.2,1.2,.32,.3,.18,.26,MAT.orange);
  }else if(station){
   b('station-plinth',2.5,.09,1.25,4.98,.18,2.48,MAT.black);
   b('closed-control-cabinet',2.5,.48,.46,4.8,.78,.8,MAT.steel);
-  b('guard-counter',2.5,.91,1.11,4.8,.12,.72,MAT.orange);
+  b('guard-counter',2.5,.91,1.11,4.8,.12,.72,MAT.edge);
   for(const x of [.5,4.5]){
    b('counter-pedestal',x,.49,1.51,.8,.8,1.76,MAT.steel);
    b('cabinet-door',x,.52,2.399,.66,.64,.025,MAT.edge);
    b('cabinet-handle',x,.68,2.42,.24,.035,.04,MAT.bone);
   }
   // Tucked seat makes the staffed side legible without implying a walkable bay.
-  b('seat-pedestal',2.5,.32,1.92,.38,.28,.4,MAT.black);
-  b('guard-seat',2.5,.53,1.92,.72,.16,.7,MAT.rubber);
-  b('seat-back',2.5,.83,2.23,.74,.52,.13,MAT.orange);
+  b('seat-pedestal',2.5,.32,1.92,.38,.28,.4,MAT.edge);
+  b('guard-seat',2.5,.53,1.92,.84,.16,.76,MAT.bone);
+  b('seat-back',2.5,.85,2.23,.84,.6,.18,MAT.bone);
   b('terminal-foot',1.76,1.005,.95,.52,.07,.36,MAT.black);
   b('terminal-stem',1.76,1.15,.94,.12,.28,.12,MAT.edge);
   b('guard-terminal',1.76,1.36,.94,.88,.49,.16,MAT.black);
-  b('unlit-terminal-glass',1.76,1.36,1.025,.72,.34,.018,MAT.shellDark);
-  b('terminal-keyboard',1.76,.992,1.27,.62,.04,.22,MAT.edge);
+  // A pale nonemissive face stays distinct without implying a live pickup.
+  b('unlit-terminal-glass',1.76,1.36,1.025,.72,.34,.018,MAT.armor);
+  b('terminal-keyboard',1.76,.99,1.27,.62,.04,.22,MAT.bone);
   // Exposed inert crew weapon in a bolted cradle, not a loose pickup or case.
   b('weapon-cradle-bed',3.15,.91,.48,2,.08,.72,MAT.shell);
   b('retained-weapon-stock',2.55,1.03,.48,.5,.16,.28,MAT.rubber);
