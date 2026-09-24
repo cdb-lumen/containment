@@ -5,6 +5,35 @@ import {STORY_ROOM_TEMPLATES} from '../src/game/roguelike/storyRoomTemplates';
 import {generateRun} from '../src/game/roguelike/run';
 import {createExpeditionGeometry,canTraverseExpedition,canOccupyExpedition,hasClearExpeditionShot} from '../src/game/world/expeditionGeometry';
 
+it('supports folded steel crawler shoes around exposed end wheels',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[1];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},1,'freight-hold');
+ model.updateMatrixWorld(true);
+ const tracks:T.Object3D[]=[];model.traverse(o=>{if(o.name==='steel-crawler')tracks.push(o);});
+ expect(tracks).toHaveLength(2);
+ const bounds=(o:T.Object3D)=>new T.Box3().setFromObject(o,true);
+ const frame=model.getObjectByName('crawler-bridge')!;expect(frame).toBeDefined();
+ for(const track of tracks){
+  const shoes=track.children.filter(o=>o.name==='folded-shoe') as T.Mesh[];
+  expect(shoes.length).toBeGreaterThan(20);
+  for(const shoe of shoes){
+   expect((shoe.material as T.MeshStandardMaterial).metalness).toBeGreaterThan(.5);
+   shoe.geometry.computeBoundingBox();const size=shoe.geometry.boundingBox!.getSize(new T.Vector3());
+   expect(size.y).toBeGreaterThan(.15);expect(size.z).toBeGreaterThan(.5);
+  }
+  const wheels=track.children.filter(o=>o.name==='crawler-wheel');expect(wheels).toHaveLength(4);
+  expect(bounds(frame).intersectsBox(bounds(track))).toBe(true);
+  const load=track.parent!;
+  for(const wheel of [wheels[0],wheels[3]]){
+   const center=bounds(wheel).getCenter(new T.Vector3());
+   const local=load.worldToLocal(center.clone());
+   const start=load.localToWorld(new T.Vector3(local.x,local.y,Math.sign(local.z)*1.8));
+   const hits=new T.Raycaster(start,center.sub(start).normalize(),0,2).intersectObject(track,true);
+   expect(hits.length).toBeGreaterThan(0);expect(hits[0].object.name).toBe('crawler-wheel');
+  }
+ }
+});
+
 it('groups seed stock and machinery with supporting freight inside aligned bays',()=>{
  const room=STORY_ROOM_TEMPLATES['freight-hold'];
  expect(room.obstacles).toHaveLength(5);

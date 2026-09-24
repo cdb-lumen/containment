@@ -21,12 +21,35 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   for(const x of [-1.6,1.6])for(const z of [-1.13,1.13])p(v(x,.3,z),v(x,1.65,z*.5),.045,MAT.edge);
  }else if(index===1){
   // Compact tracked chassis, operator cab and folded boom; bucket rests on its skid.
-  for(const z of [-1,1]){
-   b(-.65,.6,z,2.8,.65,.65,MAT.rubber,.22);
-   for(const x of [-1.65,-.95,-.25,.45])p(v(x,.62,z-.34),v(x,.62,z+.34),.22,MAT.edge);
+  // Folded steel shoes carry the track surface; there is no solid rubber side slab.
+  for(const z of [-1.18,1.18]){
+   const track=new T.Group();track.name='steel-crawler';load.add(track);
+   for(const x of [-1.65,-.98,-.32,.35]){
+    rod(track,v(x,.64,z-.345),v(x,.64,z+.345),.295,.295,MAT.steel).name='crawler-wheel';
+   }
+   const section=new T.Shape();section.moveTo(-.145,.045);section.lineTo(.145,.045);
+   section.lineTo(.145,-.14);section.lineTo(.085,-.14);section.lineTo(.085,-.025);
+   section.lineTo(-.085,-.025);section.lineTo(-.085,-.14);section.lineTo(-.145,-.14);section.closePath();
+   const shoe=(x:number,y:number,angle:number)=>{
+    const geometry=new T.ExtrudeGeometry(section,{depth:.64,bevelEnabled:false});geometry.translate(0,0,-.32);
+    const mesh=new T.Mesh(geometry,MAT.edge);mesh.name='folded-shoe';mesh.position.set(x,y,z);mesh.rotation.z=angle;
+    mesh.castShadow=true;mesh.receiveShadow=true;track.add(mesh);
+   };
+   for(let i=0;i<8;i++){
+    shoe(-1.65+(i+.5)*.25,.995,0);shoe(-1.65+(i+.5)*.25,.285,Math.PI);
+   }
+   for(const [x,direction] of [[-1.65,-1],[.35,1]])for(let i=0;i<4;i++){
+    const angle=-Math.PI/2+(i+.5)*Math.PI/4;
+    shoe(x+direction*.355*Math.cos(angle),.64+.355*Math.sin(angle),direction*(angle-Math.PI/2));
+   }
   }
-  b(-.8,1.02,0,2.65,.38,1.6,MAT.orange,.12);
-  b(-1.55,1.43,-.2,.75,.5,1.3,MAT.orange);
+  const frame=new T.Group();frame.name='crawler-bridge';load.add(frame);
+  for(const x of [-1.3,0])box(frame,x,.79,0,.38,.26,2.65,MAT.steel,.035);
+  rod(frame,v(-.65,.73,0),v(-.65,.97,0),.6,.6,MAT.black);
+  // Retain the linked-chassis candidate upper body and its supported rear counterweight.
+  b(-.55,1.035,-.04,1.9,.25,1.25,MAT.orange,.07);
+  b(.13,1.13,.45,.48,.35,.46,MAT.orange,.04);
+  b(-1.48,1.25,-.12,.72,.64,1.22,MAT.orange,.2);
   const cab=new T.Group();cab.name='cab';load.add(cab);
   const cb=(name:string,x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material)=>{
    const part=box(cab,x,y,z,w,h,d,m,.025);part.name=name;return part;
