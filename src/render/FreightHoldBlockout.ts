@@ -27,11 +27,26 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   }
   b(-.8,1.02,0,2.65,.38,1.6,MAT.orange,.12);
   b(-1.55,1.43,-.2,.75,.5,1.3,MAT.orange);
-  const cab=b(-.65,1.67,-.47,1.1,1.16,1.05,MAT.black,.08);cab.name='cab';
-  // Window framing and roof create a legible seated operator volume.
-  for(const x of [-1.17,-.13])for(const z of [-.97,.03])b(x,1.76,z,.075,1.05,.075,MAT.edge,0);
-  b(-.65,2.29,-.47,1.24,.12,1.22,MAT.orange);
-  b(-.62,1.33,.42,.72,.18,.25,MAT.edge);
+  const cab=new T.Group();cab.name='cab';load.add(cab);
+  const cb=(name:string,x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material)=>{
+   const part=box(cab,x,y,z,w,h,d,m,.025);part.name=name;return part;
+  };
+  // East-facing seat and controls, with an open near side above the boarding step.
+  cb('operator-floor',-.65,1.23,-.44,1.32,.14,1.08,MAT.edge);
+  cb('seat-pedestal',-.87,1.38,-.48,.35,.22,.45,MAT.steel);
+  cb('operator-seat',-.78,1.52,-.48,.59,.16,.58,MAT.rubber);
+  cb('operator-back',-1.06,1.77,-.48,.15,.55,.6,MAT.rubber);
+  cb('control-plinth',-.15,1.5,-.5,.2,.42,.54,MAT.steel);
+  cb('control-grip',-.29,1.77,-.24,.12,.16,.08,MAT.black);
+  cb('boarding-step',-.65,1.04,.23,.75,.12,.35,MAT.edge);
+  cb('canopy-rear',-1.18,1.85,-.7,.1,1.16,.1,MAT.edge);
+  cb('canopy-front',-.14,1.85,-.85,.1,1.16,.1,MAT.edge);
+  // Narrow chamfered canopy leaves the side opening and control station exposed.
+  const outline=new T.Shape();outline.moveTo(-1.32,-.98);outline.lineTo(-.18,-.98);
+  outline.lineTo(.02,-.77);outline.lineTo(-.16,-.22);outline.lineTo(-1.2,-.22);outline.lineTo(-1.32,-.38);outline.closePath();
+  const canopyGeometry=new T.ExtrudeGeometry(outline,{depth:.1,bevelEnabled:false});
+  canopyGeometry.rotateX(Math.PI/2);canopyGeometry.translate(0,2.47,0);
+  const canopy=new T.Mesh(canopyGeometry,MAT.orange);canopy.name='operator-canopy';canopy.castShadow=true;canopy.receiveShadow=true;cab.add(canopy);
   // Box-section arms meet at exposed transverse pins, not round pipe elbows.
   const boomMember=(name:string,a:T.Vector3,c:T.Vector3,w:number)=>{
    const mid=a.clone().add(c).multiplyScalar(.5);

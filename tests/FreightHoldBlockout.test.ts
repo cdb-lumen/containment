@@ -82,6 +82,28 @@ it('connects squared excavator boom members through exposed transverse pivot hub
  expect(bounds(stick).intersectsBox(bounds(bucket))).toBe(true);
 });
 
+it('opens the operator station side and faces its supported seat toward the boom',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[1];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},1,'freight-hold');
+ const cab=model.getObjectByName('cab')!;
+ const seat=cab.getObjectByName('operator-seat');expect(seat).toBeDefined();
+ const bounds=(name:string)=>new T.Box3().setFromObject(cab.getObjectByName(name)!,true);
+ const cushion=bounds('operator-seat'),back=bounds('operator-back'),floor=bounds('operator-floor'),pedestal=bounds('seat-pedestal');
+ expect(back.max.x).toBeLessThan(cushion.max.x);expect(back.intersectsBox(cushion)).toBe(true);
+ expect(pedestal.intersectsBox(cushion)).toBe(true);expect(pedestal.intersectsBox(floor)).toBe(true);
+ const roof=bounds('operator-canopy');
+ for(const name of ['canopy-rear','canopy-front'])expect(bounds(name).intersectsBox(roof)).toBe(true);
+ // A finite clear side opening above the step, tested by several horizontal rays.
+ model.updateMatrixWorld(true);
+ const load=cab.parent!;
+ for(const x of [-.85,-.6,-.35])for(const y of [1.45,1.8]){
+  const start=load.localToWorld(new T.Vector3(x,y,.4));
+  const end=load.localToWorld(new T.Vector3(x,y,-.08));
+  const ray=new T.Raycaster(start,end.clone().sub(start).normalize(),0,start.distanceTo(end));
+  expect(ray.intersectObject(cab,true)).toHaveLength(0);
+ }
+});
+
 it('keeps the central aisle and outer freight circuits clear for player and brute radii',()=>{
  const node=generateRun(1729,3).nodes.find(n=>n.templateId==='freight-hold')!;
  const g=createExpeditionGeometry(node);
