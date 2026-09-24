@@ -42,6 +42,28 @@ it('seats the representative inset lid inside an exposed rim with two retaining 
  }
 });
 
+it('gives every freight case a supported inset lid, exposed rim and paired restraints',()=>{
+ for(const index of [3,4]){
+  const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[index];
+  const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},index,'freight-hold');
+  const lids:T.Object3D[]=[];model.traverse(o=>{if(o.name==='case-inset-lid')lids.push(o);});
+  expect(lids).toHaveLength(index===3?4:2);
+  for(const lid of lids){
+   const group=lid.parent!;
+   const bounds=(name:string)=>new T.Box3().setFromObject(group.getObjectByName(name)!,true);
+   const top=new T.Box3().setFromObject(lid,true),rim=bounds('case-rim'),seat=bounds('case-lid-seat');
+   expect(top.min.x).toBeGreaterThan(rim.min.x+.05);expect(top.max.x).toBeLessThan(rim.max.x-.05);
+   expect(top.min.z).toBeGreaterThan(rim.min.z+.05);expect(top.max.z).toBeLessThan(rim.max.z-.05);
+   expect(top.min.y).toBeCloseTo(seat.max.y,5);expect(top.max.y).toBeGreaterThan(rim.max.y+.04);
+   for(const side of ['left','right']){
+    const strap=bounds(`case-strap-${side}`);
+    expect(strap.min.y).toBeLessThanOrEqual(top.max.y);expect(strap.max.y).toBeGreaterThan(top.max.y);
+    expect(strap.min.z).toBeLessThan(top.min.z);expect(strap.max.z).toBeGreaterThan(top.max.z);
+   }
+  }
+ }
+});
+
 it('keeps the central aisle and outer freight circuits clear for player and brute radii',()=>{
  const node=generateRun(1729,3).nodes.find(n=>n.templateId==='freight-hold')!;
  const g=createExpeditionGeometry(node);
