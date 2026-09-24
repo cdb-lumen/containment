@@ -104,6 +104,33 @@ it('opens the operator station side and faces its supported seat toward the boom
  }
 });
 
+it('forms an open excavator scoop with sloping cheeks and supported cutting teeth',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[1];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},1,'freight-hold');
+ const bucket=model.getObjectByName('bucket')!;model.updateMatrixWorld(true);
+ const ray=(a:T.Vector3,b:T.Vector3)=>{
+  const start=bucket.localToWorld(a),end=bucket.localToWorld(b);
+  return new T.Raycaster(start,end.clone().sub(start).normalize(),0,start.distanceTo(end)).intersectObject(bucket,true);
+ };
+ // The forward cheek slopes down rather than enclosing a rectangular tray.
+ expect(ray(new T.Vector3(2.1,.7,1.5),new T.Vector3(2.1,.7,.85))).toHaveLength(0);
+ expect(ray(new T.Vector3(1.6,.7,1.5),new T.Vector3(1.6,.7,.85)).length).toBeGreaterThan(0);
+ // Open cavity has a continuous bearing floor, not a closed top or hollow outline.
+ for(const x of [1.7,1.9,2.1]){
+  const hits=ray(new T.Vector3(x,1.1,.45),new T.Vector3(x,.25,.45));
+  expect(hits.length).toBeGreaterThan(0);
+  const height=bucket.worldToLocal(hits[0].point.clone()).y;
+  expect(height).toBeCloseTo(.43,4);
+ }
+ const lip=bucket.getObjectByName('cutting-lip');expect(lip).toBeDefined();
+ const teeth=bucket.children.filter(o=>o.name.startsWith('cutting-tooth-'));expect(teeth).toHaveLength(4);
+ const lipBounds=new T.Box3().setFromObject(lip!,true);
+ for(const tooth of teeth){
+  const b=new T.Box3().setFromObject(tooth,true);
+  expect(b.intersectsBox(lipBounds)).toBe(true);expect(b.max.x).toBeGreaterThan(lipBounds.max.x);
+ }
+});
+
 it('keeps the central aisle and outer freight circuits clear for player and brute radii',()=>{
  const node=generateRun(1729,3).nodes.find(n=>n.templateId==='freight-hold')!;
  const g=createExpeditionGeometry(node);

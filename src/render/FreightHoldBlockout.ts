@@ -62,12 +62,20 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   p(v(.22,1.33,.8),v(.57,1.63,.8),.085,MAT.black);
   p(v(.57,1.63,.8),v(.83,1.89,.8),.045,MAT.edge);
   const lock=b(.96,.64,.46,.14,.75,.8,MAT.red);lock.name='transport-lock';
-  // Open scoop: rear and cheek plates, floor, and separately exposed cutting teeth.
+  // Folded steel scoop with a chamfered heel and tapered side cheeks.
   const bucket=new T.Group();bucket.name='bucket';load.add(bucket);
-  box(bucket,1.83,.37,.45,1.03,.16,1.3,MAT.edge,.02);
-  box(bucket,1.38,.64,.45,.14,.6,1.3,MAT.steel,.02);
-  for(const z of [-.17,1.07])box(bucket,1.82,.56,z,1.02,.44,.12,MAT.steel,.02);
-  for(const z of [0,.3,.6,.9])box(bucket,2.35,.36,z,.25,.12,.16,MAT.edge,0);
+  const plate=(name:string,points:number[][],z:number,depth:number,m:T.Material)=>{
+   const shape=new T.Shape();points.forEach(([x,y],i)=>i?shape.lineTo(x,y):shape.moveTo(x,y));shape.closePath();
+   const geometry=new T.ExtrudeGeometry(shape,{depth,bevelEnabled:false});geometry.translate(0,0,z);
+   const mesh=new T.Mesh(geometry,m);mesh.name=name;mesh.castShadow=true;mesh.receiveShadow=true;bucket.add(mesh);
+  };
+  plate('scoop-shell',[[1.31,.94],[1.31,.52],[1.48,.29],[2.36,.29],[2.36,.43],[1.62,.43],[1.49,.58],[1.49,.94]],-.2,1.3,MAT.edge);
+  for(const z of [-.2,.98])plate('scoop-cheek',[[1.32,.92],[1.64,.88],[2.37,.43],[2.37,.3],[1.48,.3],[1.32,.48]],z,.12,MAT.steel);
+  const lip=box(bucket,2.29,.39,.45,.17,.12,1.3,MAT.armor,.01);lip.name='cutting-lip';
+  for(const [i,z] of [0,.3,.6,.9].entries()){
+   plate(`cutting-tooth-${i}`,[[2.24,.45],[2.475,.34],[2.475,.3],[2.24,.33]],z-.08,.16,MAT.armor);
+  }
+  for(const z of [.19,.65])box(bucket,1.5,.71,z,.38,.3,.1,MAT.orange,.025);
   for(const x of [-1.8,.42])for(const z of [-1.5,1.5])p(v(x,.3,z),v(x,.86,z*.65),.05,MAT.edge);
  }else if(index===2){
   // Stowed lifting yoke and cable reel share a low handling skid.
