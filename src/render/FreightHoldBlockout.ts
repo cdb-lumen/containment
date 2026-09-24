@@ -85,9 +85,26 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   for(const x of [-1.08,.3]){
    const bow=new T.Mesh(new T.TorusGeometry(.28,.09,8,16,Math.PI),MAT.edge);
    bow.rotation.x=Math.PI/2;bow.position.set(x,.45,.47);bow.name='shackle-bow';shackles.add(bow);
-   for(const side of [-1,1])rod(shackles,v(x+side*.28,.45,.47),v(x+side*.28,.45,-.05),.09,.09,MAT.edge);
-   p(v(x-.4,.45,-.05),v(x+.4,.45,-.05),.12,MAT.armor).name='shackle-pin';
-   p(v(x+.4,.45,-.05),v(x+.48,.45,-.05),.17,MAT.edge);
+   // Rounded forged shoulders taper into the retained bow arms.
+   for(const side of [-1,1]){
+    rod(shackles,v(x+side*.28,.45,.47),v(x+side*.28,.45,.29),.09,.135,MAT.edge);
+    const profile=[new T.Vector2(.105,-.13),new T.Vector2(.13,-.13),
+     new T.Vector2(.17,-.1),new T.Vector2(.205,-.05),new T.Vector2(.215,0),
+     new T.Vector2(.205,.05),new T.Vector2(.17,.1),new T.Vector2(.13,.13),
+     new T.Vector2(.105,.13),new T.Vector2(.105,-.13)];
+    const geometry=new T.LatheGeometry(profile,24);geometry.rotateZ(Math.PI/2);
+    const eye=new T.Mesh(geometry,MAT.edge);eye.position.set(x+side*.28,.45,.22);
+    eye.name='shackle-eye';eye.castShadow=true;eye.receiveShadow=true;shackles.add(eye);
+   }
+   // The pin crosses a bored lug connected to the beam, with one quiet end cap.
+   const lug=new T.Shape();lug.moveTo(.17,-.18);lug.lineTo(-.22,-.18);
+   lug.absarc(-.22,0,.18,-Math.PI/2,-Math.PI*1.5,true);lug.lineTo(.17,.18);lug.closePath();
+   const bore=new T.Path();bore.absarc(-.22,0,.105,0,Math.PI*2,true);lug.holes.push(bore);
+   const geometry=new T.ExtrudeGeometry(lug,{depth:.3,bevelEnabled:false,curveSegments:16});
+   geometry.rotateY(Math.PI/2);geometry.translate(x-.15,.45,0);
+   const mesh=new T.Mesh(geometry,MAT.orange);mesh.name='beam-lug';mesh.castShadow=true;mesh.receiveShadow=true;shackles.add(mesh);
+   p(v(x-.42,.45,.22),v(x+.42,.45,.22),.095,MAT.armor).name='shackle-pin';
+   p(v(x+.42,.45,.22),v(x+.46,.45,.22),.11,MAT.steel);
   }
   // One open arch continues into a broad beam-mounted foot without a central post.
   const eye=new T.Shape();eye.moveTo(-.94,.75);eye.lineTo(.16,.75);

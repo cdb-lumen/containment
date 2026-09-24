@@ -144,9 +144,38 @@ it('stows substantial open load shackles pinned to the lifting beam',()=>{
   expect(new T.Raycaster(start,end.clone().sub(start).normalize(),0,start.distanceTo(end)).intersectObject(shackles!,true)).toHaveLength(0);
  }
  const pins:T.Object3D[]=[];model.traverse(o=>{if(o.name==='shackle-pin')pins.push(o);});expect(pins).toHaveLength(2);
- for(const pin of pins)expect(new T.Box3().setFromObject(pin,true).intersectsBox(new T.Box3().setFromObject(beam,true))).toBe(true);
+ // The forward pin now transfers through a beam-connected lug, not through the beam body.
+ const lugs:T.Object3D[]=[];model.traverse(o=>{if(o.name==='beam-lug')lugs.push(o);});expect(lugs).toHaveLength(2);
+ for(const [i,pin] of pins.entries()){
+  expect(new T.Box3().setFromObject(pin,true).intersectsBox(new T.Box3().setFromObject(lugs[i],true))).toBe(true);
+  expect(new T.Box3().setFromObject(lugs[i],true).intersectsBox(new T.Box3().setFromObject(beam,true))).toBe(true);
+ }
  const bows:T.Object3D[]=[];shackles!.traverse(o=>{if(o.name==='shackle-bow')bows.push(o);});expect(bows).toHaveLength(2);
  for(const bow of bows){const size=new T.Box3().setFromObject(bow,true).getSize(new T.Vector3());expect(size.x).toBeGreaterThan(.5);expect(size.z).toBeGreaterThan(.3);}
+});
+
+it('encloses forward shackle pins in bored arm eyes and beam-connected lugs',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[2];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},2,'freight-hold');
+ model.updateMatrixWorld(true);
+ const beam=model.getObjectByName('lowered-yoke')!,load=beam.parent!;
+ const eyes:T.Object3D[]=[],lugs:T.Object3D[]=[],pins:T.Object3D[]=[];
+ model.traverse(o=>{if(o.name==='shackle-eye')eyes.push(o);if(o.name==='beam-lug')lugs.push(o);if(o.name==='shackle-pin')pins.push(o);});
+ expect(eyes).toHaveLength(4);expect(lugs).toHaveLength(2);
+ const bounds=(o:T.Object3D)=>new T.Box3().setFromObject(o,true);
+ for(const [i,x] of [-1.08,.3].entries()){
+  expect(bounds(lugs[i]).intersectsBox(bounds(beam))).toBe(true);
+  expect(bounds(pins[i]).intersectsBox(bounds(beam))).toBe(false);
+  const hits=(object:T.Object3D,y:number,z:number)=>{
+   const a=load.localToWorld(new T.Vector3(x-.6,y,z)),b=load.localToWorld(new T.Vector3(x+.6,y,z));
+   return new T.Raycaster(a,b.clone().sub(a).normalize(),0,a.distanceTo(b)).intersectObject(object,true);
+  };
+  for(const part of [lugs[i],...eyes.slice(i*2,i*2+2)]){
+   expect(hits(part,.45,.22)).toHaveLength(0);
+   expect(hits(part,.59,.22).length).toBeGreaterThan(0);
+  }
+  expect(hits(pins[i],.45,.22).length).toBeGreaterThan(0);
+ }
 });
 
 it('joins narrow pickup legs into a broad foot around a clear aperture',()=>{
@@ -180,5 +209,22 @@ it('keeps the central aisle and outer freight circuits clear for player and brut
   const center={x:f.x+f.width/2,y:f.y+f.height/2};
   expect(canOccupyExpedition(g,center,16)).toBe(false);
   expect(hasClearExpeditionShot(g,{x:100,y:440},center)).toBe(false);
+ }
+});
+
+it('rounds the shackle eye shoulder instead of stacking flat pin collars',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[2];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},2,'freight-hold');
+ model.updateMatrixWorld(true);
+ const eyes:T.Mesh[]=[];model.traverse(o=>{if(o.name==='shackle-eye')eyes.push(o as T.Mesh);});
+ expect(eyes).toHaveLength(4);
+ for(const eye of eyes){
+  const heightAt=(x:number)=>{
+   const a=eye.localToWorld(new T.Vector3(x,.5,0)),b=eye.localToWorld(new T.Vector3(x,0,0));
+   const hits=new T.Raycaster(a,b.clone().sub(a).normalize(),0,a.distanceTo(b)).intersectObject(eye);
+   expect(hits.length).toBeGreaterThan(0);return eye.worldToLocal(hits[0].point.clone()).y;
+  };
+  expect(heightAt(0)).toBeGreaterThan(heightAt(.105)+.025);
+  expect(heightAt(0)).toBeGreaterThan(heightAt(-.105)+.025);
  }
 });
