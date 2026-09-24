@@ -26,6 +26,22 @@ it('groups seed stock and machinery with supporting freight inside aligned bays'
  expect(environmentObstacle('cargo',{x:0,y:0,width:5,height:4},1,'breached-loading-bay').getObjectByName('bucket')).toBeUndefined();
 });
 
+it('seats the representative inset lid inside an exposed rim with two retaining straps',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[3];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},3,'freight-hold');
+ const lid=model.getObjectByName('case-inset-lid');expect(lid).toBeDefined();
+ const bounds=(name:string)=>new T.Box3().setFromObject(model.getObjectByName(name)!,true);
+ const top=bounds('case-inset-lid'),rim=bounds('case-rim'),seat=bounds('case-lid-seat');
+ expect(top.min.x).toBeGreaterThan(rim.min.x+.05);expect(top.max.x).toBeLessThan(rim.max.x-.05);
+ expect(top.min.z).toBeGreaterThan(rim.min.z+.05);expect(top.max.z).toBeLessThan(rim.max.z-.05);
+ expect(top.min.y).toBeCloseTo(seat.max.y,5);expect(top.max.y).toBeGreaterThan(rim.max.y+.04);
+ for(const side of ['left','right']){
+  const strap=bounds(`case-strap-${side}`);
+  expect(strap.min.y).toBeLessThanOrEqual(top.max.y);expect(strap.max.y).toBeGreaterThan(top.max.y);
+  expect(strap.min.z).toBeLessThan(top.min.z);expect(strap.max.z).toBeGreaterThan(top.max.z);
+ }
+});
+
 it('keeps the central aisle and outer freight circuits clear for player and brute radii',()=>{
  const node=generateRun(1729,3).nodes.find(n=>n.templateId==='freight-hold')!;
  const g=createExpeditionGeometry(node);

@@ -54,6 +54,28 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   const count=index===3?4:2,step=(width-.2)/count;
   for(let i=0;i<count;i++){
    const x=-width/2+.1+step*(i+.5),height=i%2===0?1.4:1.75;
+   if(index===3&&i===0){
+    // One inset-lid transport case, retained within the accepted skid envelope.
+    const cw=step-.12,cd=depth-.35;
+    box(cases,x,.96,0,cw,1.32,cd,MAT.armor,.06);
+    const seat=box(cases,x,1.65,0,cw,.06,cd,MAT.black,0);seat.name='case-lid-seat';
+    const rim=new T.Group();rim.name='case-rim';cases.add(rim);
+    for(const side of [-1,1]){
+     box(rim,x+side*(cw/2-.06),1.7,0,.12,.12,cd,MAT.edge,.012);
+     box(rim,x,1.7,side*(cd/2-.06),cw-.24,.12,.12,MAT.edge,.012);
+    }
+    const lid=box(cases,x,1.76,0,cw-.42,.16,cd-.42,MAT.steel,.04);lid.name='case-inset-lid';
+    for(const side of [-1,1]){
+     const sx=x+side*.55,strap=box(cases,sx,1.855,0,.13,.04,cd-.1,MAT.orange,.01);
+     strap.name=side<0?'case-strap-left':'case-strap-right';
+     for(const z of [-1,1]){
+      box(cases,sx,1.08,z*(cd/2-.015),.13,1.56,.065,MAT.orange,.01);
+      box(cases,sx,1.53,z*(cd/2+.025),.23,.22,.11,MAT.black,.025);
+      box(cases,sx,1.54,z*(cd/2+.085),.13,.1,.02,MAT.edge,.005);
+     }
+    }
+    continue;
+   }
    box(cases,x,.3+height/2,0,step-.12,height,depth-.35,MAT.armor,.07);
    box(cases,x,.34+height,0,step-.04,.12,depth-.25,MAT.steel,.035);
    for(const z of [-depth/2+.24,depth/2-.24]){
