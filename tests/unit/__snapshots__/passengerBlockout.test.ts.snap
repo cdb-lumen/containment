@@ -427,28 +427,34 @@ exports[`reviewed Passenger Vault whole-room blockout > preserves all nineteen o
     "name": "Freight hold",
     "obstacles": [
       {
-        "height": 180,
-        "width": 260,
-        "x": 280,
+        "height": 110,
+        "width": 210,
+        "x": 260,
+        "y": 230,
+      },
+      {
+        "height": 150,
+        "width": 200,
+        "x": 680,
+        "y": 530,
+      },
+      {
+        "height": 80,
+        "width": 120,
+        "x": 520,
+        "y": 600,
+      },
+      {
+        "height": 140,
+        "width": 340,
+        "x": 550,
         "y": 180,
       },
       {
-        "height": 180,
-        "width": 260,
-        "x": 670,
-        "y": 180,
-      },
-      {
-        "height": 180,
-        "width": 260,
-        "x": 280,
-        "y": 520,
-      },
-      {
-        "height": 180,
-        "width": 260,
-        "x": 670,
-        "y": 520,
+        "height": 140,
+        "width": 180,
+        "x": 260,
+        "y": 550,
       },
     ],
     "spawn": {

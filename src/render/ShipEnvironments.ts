@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
+import {freightHoldBlockout,freightBayMarkings} from './FreightHoldBlockout';
 
 export const SHIP_ENVIRONMENTS=['cryogenics','habitation','security','cargo','communications','engineering','maintenance','infested','containment','reactor'] as const;
 export type ShipEnvironment=typeof SHIP_ENVIRONMENTS[number];
@@ -12,6 +13,7 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 
 /** All models are authored in a local cell, then fitted inside the authoritative collision rectangle. */
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
+ if(environment==='cargo'&&templateId==='freight-hold')return freightHoldBlockout(footprint,index);
  if(environment==='habitation'&&templateId==='residential-gallery')return residentialGalleryBlockout(footprint,index);
  const root=new T.Group();root.name=`${environment}-obstacle-${index}`;
  const long=Math.max(footprint.width,footprint.height),short=Math.min(footprint.width,footprint.height);
@@ -179,6 +181,8 @@ export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:num
   for(let lane=0;lane<4;lane++){const x=w*.3+lane*.15;inlay(x,h/2,.055,h-1,lane===0?MAT.cyan:MAT.black);inlay(w*.55,h*.3+lane*.15,w*.5,.045,MAT.edge);}
  }else if(env==='engineering'){
   for(const z of [h*.3,h*.7]){inlay(w/2,z,w-2,.09,MAT.trim);for(let x=3;x<w-2;x+=3)inlay(x,z+.3,.65,.06,MAT.bone);}
+ }else if(env==='cargo'&&templateId==='freight-hold'){
+  parent.add(freightBayMarkings());
  }else if(env==='cargo'||env==='security'){
   for(const x of [w*.25,w*.75])for(const z of [h*.25,h*.75]){
    for(const side of [-1,1]){inlay(x+side*1.5,z,.065,3,MAT.trim);inlay(x,z+side*1.5,3,.065,MAT.trim);}
