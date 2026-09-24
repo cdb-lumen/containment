@@ -45,6 +45,15 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 #story-hud p{margin:0}#story-status{color:var(--cyan);font-size:10px;letter-spacing:.03em}#room-objective{margin-top:6px!important;color:var(--cream)}#story-presentation{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--muted)}#skip-story{pointer-events:auto;flex-shrink:0;min-width:44px;min-height:44px;border:1px solid var(--line);background:#132329;color:var(--cream)}
 #destroy-ship{background:#a13f32;color:#fff;margin-top:12px}
 @media(max-width:700px){#story-hud{top:128px;left:18px;width:calc(100vw - 36px);font-size:11px}#story-status{font-size:10px}}
+/* On narrow portrait phones, Skip shares all three text rows instead of
+   adding a 44px dialogue row over the north edge of the playfield. */
+@media(max-width:430px) and (orientation:portrait){
+  #story-hud{display:grid;grid-template-columns:minmax(0,1fr) 44px;column-gap:8px;row-gap:2px;padding:4px 8px}
+  #story-status,#room-objective,#story-line{grid-column:1}
+  #room-objective{margin-top:0!important}
+  #story-presentation{display:contents}
+  #skip-story{grid-column:2;grid-row:1 / 4;align-self:center}
+}
 @media(max-height:520px) and (orientation:landscape){#story-hud{top:110px;width:260px;font-size:10px}#story-status{font-size:9px}}
 /* Path, effect, condition, then owned synergy. All three choices are peers. */
 .choice-panel .choice-card{padding:22px 22px 38px;min-width:0;text-align:left}

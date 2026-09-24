@@ -1,0 +1,11 @@
+# Crew checkpoint shield set
+
+Accept the shield set at `e98b1e701d207c23d33e8dc368bfec58bdbbec79` as a bounded model stage. Independent review and parent inspection of all four native originals agree. Both lines now use the accepted thick armor, open frames and grounded shoes. The guard station and weapon cradle remain unchanged. Phone overlays still limit some lower/right equipment coverage. This is not final Room5 art acceptance.
+
+Only `src/render/CrewCheckpointBlockout.ts` and its focused test changed. No collision reservations, topology, other room or shared system changed. The procedural model is its reproducible source and has no new external loading/fallback variant. Tests retain footprint containment, cached resource ownership and representative support assertions, and add grounded support checks across both lines. Open spaces within the model do not become walkable.
+
+The new tests first failed on the old model, with two and zero skids instead of eight per line. After implementation, 770 Vitest tests passed with one skipped. The existing Node preview suite passed both tests, and TypeScript/Vite build passed with its existing chunk-size warning. An initial bare Vitest invocation incorrectly collected the Node preview file and failed with `No test suite found`; rerunning the package-declared Vitest exclusion and Node runner passed. No shared test infrastructure was changed. No full release verifier was run.
+
+Four source-pinned native High-quality desktop/phone stills passed with equal before/after snapshots and no recorded errors. These are staged legal positions, actual Skip HUD and unchanged shipping cameras in software WebGL, not live movement, crowd readability or physical-device evidence. Prior failed captures remain preserved. Independent review recomputed all four PNG hashes and all 219 source pins.
+
+Next perform a bounded final Room5 art inventory and affected-map review against the accepted rough, shield set and guard station. Reuse valid unchanged evidence. Do not require encounter survival or reopen shared systems. Northern phone story-HUD actor occlusion and earlier Room4 release failures remain open for separate owners. No merge or deployment.

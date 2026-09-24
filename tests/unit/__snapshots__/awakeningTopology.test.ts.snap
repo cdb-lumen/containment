@@ -337,22 +337,28 @@ exports[`awakening cradle > preserves the other nineteen complete templates exac
     "name": "Crew checkpoint",
     "obstacles": [
       {
-        "height": 400,
+        "height": 384,
         "width": 80,
-        "x": 300,
-        "y": 150,
+        "x": 530,
+        "y": 0,
       },
       {
-        "height": 390,
+        "height": 368,
         "width": 80,
-        "x": 690,
-        "y": 340,
+        "x": 530,
+        "y": 512,
       },
       {
-        "height": 80,
-        "width": 160,
-        "x": 510,
-        "y": 180,
+        "height": 160,
+        "width": 80,
+        "x": 610,
+        "y": 224,
+      },
+      {
+        "height": 112,
+        "width": 88,
+        "x": 610,
+        "y": 484,
       },
     ],
     "spawn": {
