@@ -1,0 +1,157 @@
+import * as T from 'three';
+import {MAT,box,ball} from './meshParts';
+import type {Footprint} from './ShipEnvironments';
+
+/** Room6 rough. Four human-scale assemblies replace repeated generic rack cells.
+ * The existing collision rectangles, route, room envelope and shared materials stay unchanged.
+ */
+export function armoryBlockout(f:Footprint,index:number):T.Group{
+ const root=new T.Group(),body=new T.Group();root.add(body);
+ const role=index%4;
+ root.name=['armory-secured-weapons','armory-armor-fitting','armory-issue-bench','armory-ammunition-store'][role];
+ const w=role===0?8.75:5.625,d=role===3?5.3125:3.125;
+ const b=(x:number,y:number,z:number,ww:number,h:number,dd:number,m:T.Material,r=.035)=>box(body,x,y,z,ww,h,dd,m,r);
+ // A continuous raised toe plinth gives the unchanged blocked footprint a physical owner.
+ b(0,.09,0,w,.18,d,MAT.black);
+ if(role===0){
+  // Closed end cheeks and a lock rail enclose individual gun bays. The open front
+  // exposes stocks, receivers and magazines instead of hiding them behind dense bars.
+  b(0,1.14,-d/2+.16,w,2.1,.24,MAT.steel);
+  for(const x of [-w/2+.1,w/2-.1])b(x,1.19,0,.2,2.2,d,MAT.edge);
+  // Shallow rear cap leaves the elevated shipping view into the locked rack open.
+  b(0,2.25,-d/2+.2,w,.16,.4,MAT.steel);
+  b(0,.36,.2,w-.4,.14,1.8,MAT.edge);
+  for(let i=0;i<3;i++){
+   // Broad side profiles lean toward the elevated view, on separate backed mounts.
+   const gun=new T.Group();gun.name='stored-rifle';gun.position.set(-2.65+i*2.65,1.05,.38);gun.rotation.set(-.72,0,.24);body.add(gun);
+   const p=(name:string,x:number,y:number,z:number,ww:number,h:number,dd:number,m:T.Material)=>{const part=box(gun,x,y,z,ww,h,dd,m,.025);part.name=name;return part;};
+    const profile=(name:string,points:number[][],depth:number,m:T.Material)=>{
+     const shape=new T.Shape(points.map(([x,y])=>new T.Vector2(x,y)));
+     const geometry=new T.ExtrudeGeometry(shape,{depth,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.012,bevelThickness:.012,curveSegments:1});
+     geometry.translate(0,0,-depth/2);geometry.computeBoundingBox();
+     const center=geometry.boundingBox!.getCenter(new T.Vector3());geometry.translate(-center.x,-center.y,-center.z);
+     const part=new T.Mesh(geometry,m);part.position.copy(center);part.name=name;part.castShadow=true;part.receiveShadow=true;gun.add(part);return part;
+    };
+    // Pale furniture surrounds a separate dark receiver. The lower grip remains
+    // exposed below the small receiver clamp, not buried in a full-height pad.
+    profile('stock',[[-1.08,-.17],[-1.08,.12],[-.82,.12],[-.65,.055],[-.49,.055],[-.49,-.025],[-.7,-.045],[-.83,-.17]],.15,MAT.bone);
+    p('butt-pad',-1.09,-.025,0,.055,.32,.17,MAT.rubber);
+    profile('receiver',[[-.52,-.09],[-.52,.105],[-.4,.16],[.14,.16],[.23,.08],[.23,-.1],[-.24,-.1],[-.34,-.05]],.22,MAT.steel);
+    profile('handguard',[[.23,-.055],[.23,.13],[.51,.13],[.63,.065],[.63,-.055]],.18,MAT.bone);
+    p('barrel',.85,.05,0,.52,.075,.08,MAT.black);
+    p('muzzle',1.12,.05,0,.12,.13,.12,MAT.edge);
+    profile('magazine',[[.075,-.085],[.25,-.085],[.28,-.33],[.21,-.44],[.065,-.4]],.14,MAT.edge);
+    profile('grip',[[-.48,-.055],[-.32,-.075],[-.39,-.37],[-.55,-.34]],.15,MAT.bone);
+    p('sight',-.13,.22,0,.21,.09,.09,MAT.black);
+    p('cradle',-.12,.015,-.19,.5,.22,.18,MAT.rubber);
+    p('retainer',-.15,.025,.16,.045,.22,.065,MAT.trim);
+
+   // Mount bears on the shelf; the rifle stays secured rather than floating.
+   b(-2.65+i*2.65,.69,.38,.28,.52,.38,MAT.edge);
+  }
+ }else if(role===1){
+  b(0,.3,0,w-.2,.24,d-.2,MAT.steel);
+  b(0,1.02,-1.22,w-.2,1.5,.2,MAT.steel);
+  for(const x of [-1.55,0,1.55]){
+   b(x,.79,.1,.14,1.05,.14,MAT.edge);
+   b(x,1.13,.1,.54,.64,.35,MAT.rubber);
+   // Neck and arm cutouts leave a shaped chest shell, not a square bib.
+   const chest=new T.Shape([[-.23,-.34],[.23,-.34],[.33,-.08],[.4,.12],[.31,.31],[.16,.31],[.12,.17],[-.12,.17],[-.16,.31],[-.31,.31],[-.4,.12],[-.33,-.08]].map(([xx,yy])=>new T.Vector2(xx,yy)));
+   const shell=new T.Mesh(new T.ExtrudeGeometry(chest,{depth:.06,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.018,bevelThickness:.018,curveSegments:1}),MAT.rubber);
+   shell.name='armor-chest';shell.position.set(x,1.18,.27);shell.castShadow=true;shell.receiveShadow=true;body.add(shell);
+   // Separate rigid plates sit on the shaped flexible carrier. Open sternum and
+   // waist joints prevent the torso reading as one flat, full-width bib.
+   const plate=(name:string,points:number[][],z:number,depth:number)=>{
+    const shape=new T.Shape(points.map(([xx,yy])=>new T.Vector2(xx,yy)));
+    const part=new T.Mesh(new T.ExtrudeGeometry(shape,{depth,steps:1,bevelEnabled:true,bevelSegments:1,bevelSize:.015,bevelThickness:.015,curveSegments:1}),MAT.bone);
+    part.name=name;part.position.set(x,1.18,z);part.castShadow=true;part.receiveShadow=true;body.add(part);return part;
+   };
+   for(const side of [-1,1]){
+    const breast=plate('armor-upper-plate',[[.025,-.035],[.26,-.035],[.35,.11],[.285,.27],[.175,.27],[.145,.14],[.025,.115]].map(([xx,yy])=>[xx*side,yy]),.335,.3);
+    // A deep lower chest returns toward the collar and outer ribs. This shapes
+    // the protective volume itself rather than drawing relief onto a flat bib.
+    const vertices=breast.geometry.getAttribute('position');
+    for(let i=0;i<vertices.count;i++){
+     const y=vertices.getY(i),xx=Math.abs(vertices.getX(i)),z=vertices.getZ(i);
+     const fullness=1-.48*Math.max(0,Math.min(1,(y+.035)/.305))-.18*Math.max(0,Math.min(1,(xx-.15)/.2));
+     vertices.setZ(i,z*fullness);
+    }
+    vertices.needsUpdate=true;breast.geometry.computeVertexNormals();
+    // Low sloping shoulder shells cover the arm attachment rather than stand
+    // upright beside the helmet. Their dark inner mount remains visible below.
+    b(x+side*.39,1.34,.13,.2,.14,.22,MAT.rubber);
+    plate('armor-shoulder',[[.33,.17],[.4,.27],[.51,.24],[.59,.07],[.54,-.015],[.4,.025]].map(([xx,yy])=>[xx*side,yy]),.12,.24);
+   }
+   // A shallow lower shell slopes out below the chest, leaving the dark waist
+   // joint visible while giving the abdomen a face rather than a bottom strip.
+   const abdomen=plate('armor-abdomen-plate',[[-.245,-.12],[.245,-.12],[.19,-.43],[-.19,-.43]],.39,.055);
+   const lowerVertices=abdomen.geometry.getAttribute('position');
+   for(let i=0;i<lowerVertices.count;i++){
+    lowerVertices.setZ(i,lowerVertices.getZ(i)+(-.12-lowerVertices.getY(i))*.6);
+   }
+   lowerVertices.needsUpdate=true;abdomen.geometry.computeVertexNormals();
+   b(x,.81,.32,.49,.1,.2,MAT.edge);
+   ball(body,x,1.68,.1,.23,.22,.23,MAT.bone);
+   b(x,1.69,.29,.34,.1,.05,MAT.black,.01);
+   b(x,.48,.1,.75,.12,.66,MAT.black);
+  }
+ }else if(role===2){
+  // Issue counter: drawer pedestals, a closed transport case and a parts tray.
+  // Keep the low worktop, knee space and original collision footprint.
+  for(const x of [-w/2+.55,w/2-.55]){
+   b(x,.53,0,.9,.72,d-.25,MAT.steel);
+   for(const y of [.36,.66]){
+    b(x,y,d/2-.11,.76,.24,.045,MAT.edge,.015);
+    b(x,y+.015,d/2-.075,.32,.045,.04,MAT.black,.01);
+   }
+  }
+  b(0,.96,0,w-.12,.16,d-.12,MAT.bone).name='issue-worktop';
+  // The lid lip, ribs and open carry handle replace the featureless black block.
+  b(-1.2,1.2,-.18,1.72,.32,1.08,MAT.black,.07).name='issue-case-body';
+  b(-1.2,1.42,-.18,1.8,.12,1.16,MAT.edge,.05).name='issue-case-lid';
+  b(-1.2,1.485,-.18,1.56,.05,.9,MAT.steel,.035);
+  for(const x of [-1.75,-1.2,-.65])b(x,1.525,-.18,.09,.05,.78,MAT.black,.015);
+  for(const x of [-1.83,-.57])b(x,1.35,.41,.12,.25,.08,MAT.trim,.015);
+  for(const x of [-1.52,-.88])b(x,1.23,.54,.09,.08,.34,MAT.edge,.015);
+  b(-1.2,1.23,.69,.64,.09,.09,MAT.black,.02).name='issue-case-handle';
+  // A recessed mat and two separate magazines leave the bench's right side usable.
+  b(1.2,1.075,.1,1.65,.07,1.35,MAT.rubber,.04);
+  for(const x of [.4,2])b(x,1.15,.1,.06,.15,1.35,MAT.edge,.015);
+  for(const z of [-.545,.745])b(1.2,1.15,z,1.65,.15,.06,MAT.edge,.015);
+  for(const x of [.83,1.49]){
+   b(x,1.19,.12,.3,.16,.72,MAT.steel,.035);
+   b(x,1.285,-.15,.32,.04,.16,MAT.black,.01);
+  }
+ }else{
+  // Ammunition drawers and two low palletized sealed cases, not another gun rack.
+  b(0,.97,-1.55,w-.25,1.58,1.8,MAT.steel);
+  for(const x of [-1.75,0,1.75])for(const y of [.55,1.18]){
+   b(x,y,-.62,1.55,.5,.08,MAT.edge);
+   b(x,y,-.53,.45,.065,.1,MAT.black);
+   b(x-.52,y,-.56,.16,.18,.04,MAT.bone,.01);
+  }
+  for(const x of [-1.35,1.35]){
+   const id=x<0?'left':'right';
+   b(x,.3,1.25,2.3,.24,2.1,MAT.rubber).name=`ammo-${id}-pallet`;
+   b(x,.72,1.25,2.15,.6,1.9,MAT.orange,.08).name=`ammo-${id}-body`;
+   b(x,1.08,1.25,2.22,.12,1.96,MAT.edge,.06).name=`ammo-${id}-lid`;
+   // Recessed coated panel within a protective rim; a raised bail is supported
+   // by two feet rather than painted onto the lid.
+   b(x,1.155,1.25,1.86,.03,1.6,MAT.orange,.055).name=`ammo-${id}-panel`;
+   for(const offset of [-.68,.68]){
+    b(x+offset,1.17,1.25,.12,.1,1.76,MAT.edge,.02);
+    b(x+offset,.91,2.24,.18,.4,.09,MAT.black,.02);
+    b(x+offset,1.04,2.3,.12,.13,.065,MAT.trim,.01);
+   }
+   for(const offset of [-.38,.38])b(x+offset,1.24,1.25,.12,.24,.2,MAT.edge,.025);
+   b(x,1.39,1.25,.88,.12,.18,MAT.black,.035).name=`ammo-${id}-handle`;
+  }
+ }
+ // Horizontal fit only; do not stretch human-scale heights to fill a larger cell.
+ // Tiny synthetic footprint controls scale uniformly down without leaking geometry.
+ const s=Math.min(1,f.width/w,f.height/d);
+ body.scale.set(f.width/w,s,f.height/d);
+ root.position.set(f.x+f.width/2,0,f.y+f.height/2);
+ root.userData.footprint={...f};
+ return root;
+}
