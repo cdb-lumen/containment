@@ -160,6 +160,19 @@ it('forms an open excavator scoop with sloping cheeks and supported cutting teet
  }
 });
 
+it('separates rounded shackle shoulders from the crosspiece while retaining its pickup bearing',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[2];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},2,'freight-hold');
+ model.updateMatrixWorld(true);
+ const bounds=(o:T.Object3D)=>new T.Box3().setFromObject(o,true);
+ const beam=bounds(model.getObjectByName('lowered-yoke')!);
+ const pickup=bounds(model.getObjectByName('master-link')!);
+ expect(beam.intersectsBox(pickup)).toBe(true);
+ const eyes:T.Object3D[]=[];model.traverse(o=>{if(o.name==='shackle-eye')eyes.push(o);});
+ expect(eyes).toHaveLength(4);
+ for(const eye of eyes)expect(bounds(eye).min.z-beam.max.z).toBeGreaterThan(.1);
+});
+
 it('stows substantial open load shackles pinned to the lifting beam',()=>{
  const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[2];
  const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},2,'freight-hold');

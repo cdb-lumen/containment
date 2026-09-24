@@ -102,7 +102,7 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   for(const x of [-1.8,.42])for(const z of [-1.5,1.5])p(v(x,.3,z),v(x,.86,z*.65),.05,MAT.edge);
  }else if(index===2){
   // A stowed spreader with two pinned bow shackles, not a bare H-frame.
-  const yoke=b(-.39,.55,-.12,2.02,.5,.34,MAT.orange);yoke.name='lowered-yoke';
+  const yoke=b(-.39,.55,-.30,2.02,.5,.34,MAT.orange);yoke.name='lowered-yoke';
   for(const x of [-1.08,.3])b(x,.35,-.35,.48,.18,.65,MAT.rubber);
   const shackles=new T.Group();shackles.name='load-shackles';load.add(shackles);
   for(const x of [-1.08,.3]){
@@ -120,8 +120,8 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
     eye.name='shackle-eye';eye.castShadow=true;eye.receiveShadow=true;shackles.add(eye);
    }
    // The pin crosses a bored lug connected to the beam, with one quiet end cap.
-   const lug=new T.Shape();lug.moveTo(.17,-.18);lug.lineTo(-.22,-.18);
-   lug.absarc(-.22,0,.18,-Math.PI/2,-Math.PI*1.5,true);lug.lineTo(.17,.18);lug.closePath();
+   const lug=new T.Shape();lug.moveTo(.35,-.18);lug.lineTo(-.22,-.18);
+   lug.absarc(-.22,0,.18,-Math.PI/2,-Math.PI*1.5,true);lug.lineTo(.35,.18);lug.closePath();
    const bore=new T.Path();bore.absarc(-.22,0,.105,0,Math.PI*2,true);lug.holes.push(bore);
    const geometry=new T.ExtrudeGeometry(lug,{depth:.3,bevelEnabled:false,curveSegments:16});
    geometry.rotateY(Math.PI/2);geometry.translate(x-.15,.45,0);
@@ -139,7 +139,7 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   bore.quadraticCurveTo(-.73,1.65,-.39,1.65);
   bore.quadraticCurveTo(-.05,1.65,-.05,1.34);bore.lineTo(-.05,.9);bore.closePath();eye.holes.push(bore);
   const eyeGeometry=new T.ExtrudeGeometry(eye,{depth:.16,bevelEnabled:false,curveSegments:12});
-  eyeGeometry.translate(0,0,-.2);
+  eyeGeometry.translate(0,0,-.38);
   const pickup=new T.Mesh(eyeGeometry,MAT.edge);pickup.name='master-link';
   pickup.castShadow=true;pickup.receiveShadow=true;load.add(pickup);
   p(v(.94,.67,-.56),v(.94,.67,.56),.37,MAT.black);
