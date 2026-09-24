@@ -131,6 +131,24 @@ it('forms an open excavator scoop with sloping cheeks and supported cutting teet
  }
 });
 
+it('stows substantial open load shackles pinned to the lifting beam',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[2];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},2,'freight-hold');
+ const beam=model.getObjectByName('lowered-yoke')!;
+ const shackles=model.getObjectByName('load-shackles');expect(shackles).toBeDefined();
+ model.updateMatrixWorld(true);
+ const load=beam.parent!;
+ for(const x of [-1.08,.3]){
+  const start=load.localToWorld(new T.Vector3(x,1.3,.47));
+  const end=load.localToWorld(new T.Vector3(x,.2,.47));
+  expect(new T.Raycaster(start,end.clone().sub(start).normalize(),0,start.distanceTo(end)).intersectObject(shackles!,true)).toHaveLength(0);
+ }
+ const pins:T.Object3D[]=[];model.traverse(o=>{if(o.name==='shackle-pin')pins.push(o);});expect(pins).toHaveLength(2);
+ for(const pin of pins)expect(new T.Box3().setFromObject(pin,true).intersectsBox(new T.Box3().setFromObject(beam,true))).toBe(true);
+ const bows:T.Object3D[]=[];shackles!.traverse(o=>{if(o.name==='shackle-bow')bows.push(o);});expect(bows).toHaveLength(2);
+ for(const bow of bows){const size=new T.Box3().setFromObject(bow,true).getSize(new T.Vector3());expect(size.x).toBeGreaterThan(.5);expect(size.z).toBeGreaterThan(.3);}
+});
+
 it('keeps the central aisle and outer freight circuits clear for player and brute radii',()=>{
  const node=generateRun(1729,3).nodes.find(n=>n.templateId==='freight-hold')!;
  const g=createExpeditionGeometry(node);

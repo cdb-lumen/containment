@@ -78,9 +78,19 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
   for(const z of [.19,.65])box(bucket,1.5,.71,z,.38,.3,.1,MAT.orange,.025);
   for(const x of [-1.8,.42])for(const z of [-1.5,1.5])p(v(x,.3,z),v(x,.86,z*.65),.05,MAT.edge);
  }else if(index===2){
-  // Stowed lifting yoke and cable reel share a low handling skid.
-  const yoke=b(-.35,.43,0,1.95,.22,.28,MAT.orange);yoke.name='lowered-yoke';
-  for(const x of [-1.1,.4]){b(x,.43,0,.2,.22,1.5,MAT.orange);for(const z of [-.62,.62])ring(load,x,.65,z,.1,.025,MAT.edge).rotation.x=Math.PI/2;}
+  // A stowed spreader with two pinned bow shackles, not a bare H-frame.
+  const yoke=b(-.39,.55,-.12,2.02,.5,.34,MAT.orange);yoke.name='lowered-yoke';
+  for(const x of [-1.08,.3])b(x,.35,-.35,.48,.18,.65,MAT.rubber);
+  const shackles=new T.Group();shackles.name='load-shackles';load.add(shackles);
+  for(const x of [-1.08,.3]){
+   const bow=new T.Mesh(new T.TorusGeometry(.28,.09,8,16,Math.PI),MAT.edge);
+   bow.rotation.x=Math.PI/2;bow.position.set(x,.45,.47);bow.name='shackle-bow';shackles.add(bow);
+   for(const side of [-1,1])rod(shackles,v(x+side*.28,.45,.47),v(x+side*.28,.45,-.05),.09,.09,MAT.edge);
+   p(v(x-.4,.45,-.05),v(x+.4,.45,-.05),.12,MAT.armor).name='shackle-pin';
+   p(v(x+.4,.45,-.05),v(x+.48,.45,-.05),.17,MAT.edge);
+  }
+  const pickup=ring(load,-.39,1.02,-.12,.29,.095,MAT.edge);pickup.name='master-link';
+  b(-.39,.76,-.12,.46,.18,.28,MAT.orange);
   p(v(.94,.67,-.56),v(.94,.67,.56),.37,MAT.black);
   for(const z of [-.56,.56])p(v(.94,.67,z-.025),v(.94,.67,z+.025),.48,MAT.edge);
  }else{
