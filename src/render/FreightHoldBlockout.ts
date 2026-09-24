@@ -89,8 +89,19 @@ export function freightHoldBlockout(f:Footprint,index:number):T.Group{
    p(v(x-.4,.45,-.05),v(x+.4,.45,-.05),.12,MAT.armor).name='shackle-pin';
    p(v(x+.4,.45,-.05),v(x+.48,.45,-.05),.17,MAT.edge);
   }
-  const pickup=ring(load,-.39,1.02,-.12,.29,.095,MAT.edge);pickup.name='master-link';
-  b(-.39,.76,-.12,.46,.18,.28,MAT.orange);
+  // One open arch continues into a broad beam-mounted foot without a central post.
+  const eye=new T.Shape();eye.moveTo(-.94,.75);eye.lineTo(.16,.75);
+  eye.lineTo(.16,.88);eye.lineTo(.07,.88);eye.lineTo(.07,1.34);
+  eye.quadraticCurveTo(.07,1.78,-.39,1.78);
+  eye.quadraticCurveTo(-.85,1.78,-.85,1.34);
+  eye.lineTo(-.85,.88);eye.lineTo(-.94,.88);eye.closePath();
+  const bore=new T.Path();bore.moveTo(-.73,.9);bore.lineTo(-.73,1.34);
+  bore.quadraticCurveTo(-.73,1.65,-.39,1.65);
+  bore.quadraticCurveTo(-.05,1.65,-.05,1.34);bore.lineTo(-.05,.9);bore.closePath();eye.holes.push(bore);
+  const eyeGeometry=new T.ExtrudeGeometry(eye,{depth:.16,bevelEnabled:false,curveSegments:12});
+  eyeGeometry.translate(0,0,-.2);
+  const pickup=new T.Mesh(eyeGeometry,MAT.edge);pickup.name='master-link';
+  pickup.castShadow=true;pickup.receiveShadow=true;load.add(pickup);
   p(v(.94,.67,-.56),v(.94,.67,.56),.37,MAT.black);
   for(const z of [-.56,.56])p(v(.94,.67,z-.025),v(.94,.67,z+.025),.48,MAT.edge);
  }else{

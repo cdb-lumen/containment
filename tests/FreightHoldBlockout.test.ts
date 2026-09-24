@@ -149,6 +149,19 @@ it('stows substantial open load shackles pinned to the lifting beam',()=>{
  for(const bow of bows){const size=new T.Box3().setFromObject(bow,true).getSize(new T.Vector3());expect(size.x).toBeGreaterThan(.5);expect(size.z).toBeGreaterThan(.3);}
 });
 
+it('joins narrow pickup legs into a broad foot around a clear aperture',()=>{
+ const f=STORY_ROOM_TEMPLATES['freight-hold'].obstacles[2];
+ const model=environmentObstacle('cargo',{x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32},2,'freight-hold');
+ const eye=model.getObjectByName('master-link')!,load=eye.parent!;model.updateMatrixWorld(true);
+ const hits=(x:number,y:number)=>{
+  const a=load.localToWorld(new T.Vector3(x,y,.5)),b=load.localToWorld(new T.Vector3(x,y,-.5));
+  return new T.Raycaster(a,b.clone().sub(a).normalize(),0,a.distanceTo(b)).intersectObject(eye,true);
+ };
+ for(const x of [-.79,.01])for(const y of [.78,.86,.94,1.02,1.1,1.18,1.26,1.34])expect(hits(x,y).length).toBeGreaterThan(0);
+ for(const x of [-.59,-.39,-.19])for(const y of [.98,1.12,1.26,1.38])expect(hits(x,y)).toHaveLength(0);
+ for(const x of [-.79,-.59,-.39,-.19,.01])expect(hits(x,.78).length).toBeGreaterThan(0);
+});
+
 it('keeps the central aisle and outer freight circuits clear for player and brute radii',()=>{
  const node=generateRun(1729,3).nodes.find(n=>n.templateId==='freight-hold')!;
  const g=createExpeditionGeometry(node);
