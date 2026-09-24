@@ -67,7 +67,16 @@ export function armoryBlockout(f:Footprint,index:number):T.Group{
     part.name=name;part.position.set(x,1.18,z);part.castShadow=true;part.receiveShadow=true;body.add(part);return part;
    };
    for(const side of [-1,1]){
-    plate('armor-upper-plate',[[.055,-.035],[.26,-.035],[.35,.11],[.285,.27],[.175,.27],[.145,.14],[.055,.115]].map(([xx,yy])=>[xx*side,yy]),.335,.1);
+    const breast=plate('armor-upper-plate',[[.025,-.035],[.26,-.035],[.35,.11],[.285,.27],[.175,.27],[.145,.14],[.025,.115]].map(([xx,yy])=>[xx*side,yy]),.335,.3);
+    // A deep lower chest returns toward the collar and outer ribs. This shapes
+    // the protective volume itself rather than drawing relief onto a flat bib.
+    const vertices=breast.geometry.getAttribute('position');
+    for(let i=0;i<vertices.count;i++){
+     const y=vertices.getY(i),xx=Math.abs(vertices.getX(i)),z=vertices.getZ(i);
+     const fullness=1-.48*Math.max(0,Math.min(1,(y+.035)/.305))-.18*Math.max(0,Math.min(1,(xx-.15)/.2));
+     vertices.setZ(i,z*fullness);
+    }
+    vertices.needsUpdate=true;breast.geometry.computeVertexNormals();
     // Low sloping shoulder shells cover the arm attachment rather than stand
     // upright beside the helmet. Their dark inner mount remains visible below.
     b(x+side*.39,1.34,.13,.2,.14,.22,MAT.rubber);

@@ -52,6 +52,22 @@ describe('Armory room-owned equipment rough',()=>{
    expect(hit(0,.08)).toBe(back);
   }
  });
+ it('gives the breastplates a convex protective volume rather than flat strips',()=>{
+  const model=environmentObstacle('security',footprints[1],1,'armory');model.updateMatrixWorld(true);
+  const plates:T.Mesh[]=[];model.traverse(o=>{if(o.name==='armor-upper-plate')plates.push(o as T.Mesh);});
+  expect(plates).toHaveLength(6);
+  for(const plate of plates){
+   const bounds=new T.Box3().setFromObject(plate,true);
+   expect(bounds.max.z-bounds.min.z).toBeGreaterThan(.25);
+   const side=plate.geometry.getAttribute('position').getX(0)<0?-1:1;
+   const front=(y:number)=>{
+    const origin=plate.localToWorld(new T.Vector3(.18*side,y,2));
+    const hit=new T.Raycaster(origin,new T.Vector3(0,0,-1)).intersectObject(plate)[0];
+    expect(hit).toBeDefined();return hit.point.z;
+   };
+   expect(front(.06)-front(.22)).toBeGreaterThan(.05);
+  }
+ });
  it('supports a separate issue-case lid and leaves its carry-handle opening clear',()=>{
   const model=environmentObstacle('security',footprints[2],2,'armory');model.updateMatrixWorld(true);
   const part=(name:string)=>{const value=model.getObjectByName(name);expect(value,name).toBeDefined();return value!;};
