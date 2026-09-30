@@ -1,0 +1,407 @@
+
+> containment-depth@2.0.0 test
+> vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs && python3 tools/assets/passenger-vault/test_artifacts.py && python3 tools/assets/passenger-vault/test_room_fit_artifacts.py && python3 tools/assets/passenger-vault/test_distribution_artifacts.py && python3 tools/assets/passenger-vault/test_monitor_artifacts.py && python3 tools/assets/passenger-vault/test_service_finish_artifacts.py && python3 tools/assets/passenger-vault/test_materials.py && python3 tools/assets/passenger-vault/test_material_budget.py && python3 tools/assets/passenger-vault/test_bundle_runtime.py
+
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3
+
+
+ Test Files  83 passed | 1 skipped (84)
+      Tests  770 passed | 1 skipped (771)
+   Start at  21:08:31
+   Duration  12.44s (transform 3.02s, setup 0ms, import 12.47s, tests 57.94s, environment 10ms)
+
+TAP version 13
+# Subtest: preview hooks replace only shell loop and local branches, not saddles or production source
+ok 1 - preview hooks replace only shell loop and local branches, not saddles or production source
+  ---
+  duration_ms: 9.367155
+  type: 'test'
+  ...
+# {
+#   "bounds": {
+#     "min": [
+#       465.5200004577637,
+#       16,
+#       253.72000122070312
+#     ],
+#     "max": [
+#       514.4799995422363,
+#       38.207999765872955,
+#       336.2799987792969
+#     ]
+#   },
+#   "feet": [
+#     {
+#       "min": [
+#         465.5200004577637,
+#         16,
+#         261.1599998474121
+#       ],
+#       "max": [
+#         473.5200004577637,
+#         17.919999957084656,
+#         273.1599998474121
+#       ],
+#       "vertices": 216
+#     },
+#     {
+#       "min": [
+#         465.5200004577637,
+#         16,
+#         316.8400001525879
+#       ],
+#       "max": [
+#         473.5200004577637,
+#         17.919999957084656,
+#         328.8400001525879
+#       ],
+#       "vertices": 216
+#     },
+#     {
+#       "min": [
+#         506.4799995422363,
+#         16,
+#         261.1599998474121
+#       ],
+#       "max": [
+#         514.4799995422363,
+#         17.919999957084656,
+#         273.1599998474121
+#       ],
+#       "vertices": 216
+#     },
+#     {
+#       "min": [
+#         506.4799995422363,
+#         16,
+#         316.8400001525879
+#       ],
+#       "max": [
+#         514.4799995422363,
+#         17.919999957084656,
+#         328.8400001525879
+#       ],
+#       "vertices": 216
+#     }
+#   ],
+#   "adapterBounds": {
+#     "min": [
+#       477.679999768734,
+#       11.199999988079062,
+#       246.19999998807907
+#     ],
+#     "max": [
+#       526.8000000119209,
+#       24.419999319314957,
+#       343.80000001192093
+#     ]
+#   },
+#   "segments": [
+#     {
+#       "min": [
+#         478.4799996614456,
+#         11.19999998807907,
+#         246.19999998807907
+#       ],
+#       "max": [
+#         490.0000001192093,
+#         12.80000001192093,
+#         247.80000001192093
+#       ]
+#     },
+#     {
+#       "min": [
+#         477.679999768734,
+#         11.19999998807907,
+#         247
+#       ],
+#       "max": [
+#         479.27999979257584,
+#         12.80000001192093,
+#         257.99217224121094
+#       ]
+#     },
+#     {
+#       "min": [
+#         477.679999768734,
+#         12.000000196695328,
+#         257.19217222929
+#       ],
+#       "max": [
+#         479.27999979257584,
+#         24.419999319314957,
+#         258.79217225313187
+#       ]
+#     },
+#     {
+#       "min": [
+#         490,
+#         11.199999988079067,
+#         342.19999998807907
+#       ],
+#       "max": [
+#         526,
+#         12.800000011920933,
+#         343.80000001192093
+#       ]
+#     },
+#     {
+#       "min": [
+#         525.1999999880791,
+#         11.199999988079062,
+#         255
+#       ],
+#       "max": [
+#         526.8000000119209,
+#         12.800000011920938,
+#         343
+#       ]
+#     },
+#     {
+#       "min": [
+#         493.8400001525879,
+#         11.199999988079067,
+#         254.19999998807907
+#       ],
+#       "max": [
+#         526,
+#         12.800000011920933,
+#         255.80000001192093
+#       ]
+#     },
+#     {
+#       "min": [
+#         493.04000014066696,
+#         11.199999988079071,
+#         255
+#       ],
+#       "max": [
+#         494.6400001645088,
+#         12.800000011920929,
+#         257.99217224121094
+#       ]
+#     },
+#     {
+#       "min": [
+#         493.04000014066696,
+#         12.000000196695328,
+#         257.19217222929
+#       ],
+#       "max": [
+#         494.6400001645088,
+#         24.419999319314957,
+#         258.79217225313187
+#       ]
+#     }
+#   ],
+#   "routes": [
+#     {
+#       "circuit": "SUPPLY",
+#       "points": [
+#         [
+#           490,
+#           12,
+#           247
+#         ],
+#         [
+#           478.4799997806549,
+#           12,
+#           247
+#         ],
+#         [
+#           478.4799997806549,
+#           12,
+#           257.99217224121094
+#         ],
+#         [
+#           478.4799997806549,
+#           24.419999516010286,
+#           257.99217224121094
+#         ]
+#       ],
+#       "unionBounds": {
+#         "min": [
+#           477.0389332771301,
+#           24.319999516010284,
+#           255.50379943847656
+#         ],
+#         "max": [
+#           479.9210662841797,
+#           25.92740136384964,
+#           260.4805450439453
+#         ],
+#         "vertices": 315
+#       },
+#       "endpoint": [
+#         478.4799997806549,
+#         24.419999516010286,
+#         257.99217224121094
+#       ],
+#       "connection": "header axis to underside manifold feed and actual union bottom"
+#     },
+#     {
+#       "circuit": "RETURN",
+#       "points": [
+#         [
+#           490,
+#           12,
+#           343
+#         ],
+#         [
+#           526,
+#           12,
+#           343
+#         ],
+#         [
+#           526,
+#           12,
+#           255
+#         ],
+#         [
+#           493.8400001525879,
+#           12,
+#           255
+#         ],
+#         [
+#           493.8400001525879,
+#           12,
+#           257.99217224121094
+#         ],
+#         [
+#           493.8400001525879,
+#           24.419999516010286,
+#           257.99217224121094
+#         ]
+#       ],
+#       "unionBounds": {
+#         "min": [
+#           492.39893341064453,
+#           24.319999516010284,
+#           255.50379943847656
+#         ],
+#         "max": [
+#           495.28106689453125,
+#           25.92740136384964,
+#           260.4805450439453
+#         ],
+#         "vertices": 315
+#       },
+#       "endpoint": [
+#         493.8400001525879,
+#         24.419999516010286,
+#         257.99217224121094
+#       ],
+#       "connection": "header axis to underside manifold feed and actual union bottom"
+#     }
+#   ],
+#   "scale": 1,
+#   "supportTop": 16,
+#   "interiorFit": "not established"
+# }
+# Subtest: actual GLB native bounds, all feet supported, actual unions connected, contained adapters
+ok 2 - actual GLB native bounds, all feet supported, actual unions connected, contained adapters
+  ---
+  duration_ms: 74.828579
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 602.350996
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+OK
+.
+----------------------------------------------------------------------
+Ran 1 test in 5.847s
+
+OK
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.013s
+
+OK
+..
+----------------------------------------------------------------------
+Ran 2 tests in 5.851s
+
+OK
+..
+----------------------------------------------------------------------
+Ran 2 tests in 1.184s
+
+OK
+test_cut_connection (__main__.Contract.test_cut_connection) ... ok
+test_editable_source (__main__.Contract.test_editable_source) ... ok
+test_imported_contract (__main__.Contract.test_imported_contract) ... ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.275s
+
+OK
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_SOURCE {"context_meshes": 10, "editable_quads": true, "kit_meshes": 13, "objects": 23, "semantic_sha256": "9f84cc341124d2cadacdfa013c228ee666380a69bfaa62fe43324ce58d49c114"}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Data are loaded, start creating Blender stuff
+glTF import finished in 0.01s
+Blender 4.0.2
+Read blend: "/home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3/tools/assets/passenger-vault/service-finish/service-finish.blend"
+
+Blender quit
+
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.053s
+
+OK
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.075s
+
+OK
+test_actual_gltfloader_world_triangles_and_batches (__main__.BundleAudit.test_actual_gltfloader_world_triangles_and_batches) ... ok
+test_all_resources_including_unused_survive_dedup (__main__.BundleAudit.test_all_resources_including_unused_survive_dedup) ... ok
+test_all_seven_source_graphs_and_resource_bindings (__main__.BundleAudit.test_all_seven_source_graphs_and_resource_bindings) ... ok
+test_corruption_controls (__main__.BundleAudit.test_corruption_controls) ... ok
+test_determinism_and_existing_runtime_manifest (__main__.BundleAudit.test_determinism_and_existing_runtime_manifest) ... ok
+test_png_decode_and_resource_dedup (__main__.BundleAudit.test_png_decode_and_resource_dedup) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.401s
+
+OK
+GLTFLoader CPU: {"batches":[{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_shell","primitives":3},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_matte_gasket","primitives":36},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_carrier","primitives":14},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_live_cyan","primitives":12},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_metal","primitives":94},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_ancillary_recess","primitives":2},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_shared_enclosure_monitor_atlas","primitives":188},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_ancillary_mechanism","primitives":172},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array","material":"PV_ancillary_recess","primitives":13}],"compatibleAttributeBatches":9,"families":[{"family":"chamber","primitives":55,"triangles":3796},{"family":"distribution-north","primitives":151,"triangles":4932},{"family":"distribution-south","primitives":151,"triangles":4932},{"family":"monitor-north","primitives":31,"triangles":756},{"family":"monitor-south","primitives":100,"triangles":9308},{"family":"row-carrier","primitives":20,"triangles":1504},{"family":"service-finish","primitives":26,"triangles":1026}],"imageBitmapAdapter":"dimensions only; Pillow validates PNG decoding separately","loadedTextureRgbaMipBytes":14680056,"textureObjects":9,"textures":[{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-shell-basecolor","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-shell-orm","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-carrier-basecolor","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-carrier-orm","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-metal-basecolor","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-metal-orm","rgbaMipBytes":349524,"width":256},{"generateMipmaps":false,"height":512,"minFilter":1006,"name":"monitor-atlas-basecolor","rgbaMipBytes":4194304,"width":2048},{"generateMipmaps":false,"height":512,"minFilter":1006,"name":"monitor-atlas-emission","rgbaMipBytes":4194304,"width":2048},{"generateMipmaps":false,"height":512,"minFilter":1006,"name":"monitor-atlas-orm","rgbaMipBytes":4194304,"width":2048}],"uniqueMaterials":8}
+PASS: 8 negative controls: transform, position, uv, indices, material, texture, sampler, image
+PASS: 12 real PNG decodes; RGBA8 full mip bytes=24816312, MiB=23.666679

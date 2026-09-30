@@ -1,0 +1,109 @@
+{
+  "head": "c149239bd76f4aa74abf5565cd853540851685ff",
+  "permit": {
+    "source": "parent-delegated valid scheduler preflight",
+    "stage_index": 4,
+    "completed_start": 909,
+    "attempt": 3,
+    "max": 4
+  },
+  "sources": {
+    "src/render/AuthoredRooms.ts": {
+      "sha256": "6e98e4e82baf0754a23fca3e0bc751be9891d91123befae42e113e3241db788b",
+      "baseSha256": "7a048c2a7173342d04a16920508bdec113f13387fc5e761d39b1c827005f38de",
+      "unchanged": false
+    },
+    "src/render/Room8Models.test.ts": {
+      "sha256": "25c294fc971f50bd78d76a2192aa451328b1fcc64c4ad22318c8146ba3acb947",
+      "baseSha256": "81c71f7942ac56fda97ddd93652743faa7475c3d1aff11cfb4a43974b035a9f0",
+      "unchanged": false
+    },
+    "src/game/roguelike/authoredRoomTopologies.ts": {
+      "sha256": "6e23f62996875cf1e8e2389b22ac9d268fd0157cd8fa936a3ab4c311065937d8",
+      "baseSha256": "6e23f62996875cf1e8e2389b22ac9d268fd0157cd8fa936a3ab4c311065937d8",
+      "unchanged": true
+    },
+    "src/game/roguelike/storyRooms.ts": {
+      "sha256": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+      "baseSha256": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+      "unchanged": true
+    },
+    "src/game/roguelike/roomTemplates.ts": {
+      "sha256": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+      "baseSha256": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+      "unchanged": true
+    }
+  },
+  "checks": {
+    "everything_outside_room8_growth_unchanged": true,
+    "only_two_allowed_files_changed": [
+      "src/render/AuthoredRooms.ts",
+      "src/render/Room8Models.test.ts"
+    ],
+    "both_captures_source_and_image_hashes_match": true,
+    "same_camera_and_player_novel_after_pixels": true
+  },
+  "images": {
+    "before/desktop-in-scene.png": {
+      "sha256": "6414f9965567ebdaf76ddafcc72cd60c900b10cd46791d30add79b996dddd90f",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 764674
+    },
+    "before/overview.png": {
+      "sha256": "7e6de508970ec5b251811ced9329b23d360e2667bb12d2241e23a6f72c9b30f6",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 472896
+    },
+    "desktop-in-scene.png": {
+      "sha256": "d437625e5748fe10a5ee78cf93c6648a9b057cd7662f95690453750d4aa9f9f9",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 758577
+    },
+    "overview.png": {
+      "sha256": "011a0038ba4de554482b78aab996cd50d7733d0f0b2a9e1479165de6f85f0ff2",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 469223
+    },
+    "model-comparison.png": {
+      "sha256": "3ea701f7d078d1c6cb2c331c51683a357ab72637ec90ce4f20d7ec95bd3b205d",
+      "size": [
+        1600,
+        1390
+      ],
+      "bytes": 686590
+    },
+    "model-contact-sheet.png": {
+      "sha256": "d7d5ce208efd060bee60dcb33ac665c37f112585fc45153aad15c34af0daf0e3",
+      "size": [
+        1600,
+        1030
+      ],
+      "bytes": 445159
+    }
+  },
+  "tests": {
+    "focused": {
+      "passed": 26,
+      "failed": 0,
+      "log": "focused-tests.log"
+    },
+    "build": {
+      "exit": 0,
+      "log": "build.log",
+      "warning": "existing large chunk warning"
+    },
+    "full_verify": "not run"
+  }
+}

@@ -32,16 +32,12 @@ describe('authored architecture',()=>{
    expect(columns.size).toBe(4);
   }disposeModel(group);
  });
- it('replaces regular boarding hoops with rooted crusts and six thick hull folds',()=>{
-  const group=authoredRoom('breached-loading-bay',actual('breached-loading-bay'))!,growth=materialMesh(group,'room8-seam-growth'),metal=materialMesh(group,'room8-torn-metal');
-  expect(materialMesh(group,'boarding-ribs')).toBeUndefined();expect(growth).toBeDefined();expect(metal).toBeDefined();
-  group.updateMatrixWorld(true);const ray=new T.Raycaster(),p=growth.geometry.getAttribute('position');let rooted=0;
-  const seal=materialMesh(group,'room8-hull-seal');
-  for(let i=0;i<p.count;i++){if(Math.abs(p.getY(i)-.25)>.001)continue;ray.set(new T.Vector3(p.getX(i),.3,p.getZ(i)),new T.Vector3(0,-1,0));expect(ray.intersectObject(seal).length).toBeGreaterThan(0);rooted++;}
-  expect(rooted).toBeGreaterThan(60);
-  // Each closed fold has 20 triangles, with root buried at .13 and top at .25.
-  const m=metal.geometry.getAttribute('position');expect(m.count).toBe(6*20*3);
-  for(let i=0;i<6;i++){const ys=Array.from({length:60},(_,j)=>m.getY(i*60+j));expect(Math.min(...ys)).toBeCloseTo(.13);expect(Math.max(...ys)).toBeGreaterThan(.65);}
+ it('exposes raised boarding ribs above the carapace instead of embedding slits',()=>{
+  const group=authoredRoom('breached-loading-bay',actual('breached-loading-bay'))!,ribs=materialMesh(group,'boarding-ribs'),shell=materialMesh(group,'boarding-carapace');
+  expect(ribs).toBeDefined();expect(shell).toBeDefined();group.updateMatrixWorld(true);
+  const p=ribs.geometry.getAttribute('position'),ray=new T.Raycaster();let exposed=0;
+  for(let i=0;i<p.count;i+=30){if(p.getY(i)<1.4)continue;ray.set(new T.Vector3(p.getX(i),6,p.getZ(i)),new T.Vector3(0,-1,0));const hit=ray.intersectObject(shell)[0];if(hit&&p.getY(i)>hit.point.y+.045)exposed++;}
+  expect(exposed).toBeGreaterThan(20);shell.geometry.computeBoundingBox();expect(shell.geometry.boundingBox!.max.y).toBeGreaterThan(2);
   disposeModel(group);
  });
  it.each(['passenger-vault','breached-loading-bay','overload-floor'] as const)('gives %s quiet world-scaled steel textures with owned disposal',id=>{

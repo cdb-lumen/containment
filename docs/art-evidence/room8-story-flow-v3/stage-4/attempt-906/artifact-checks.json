@@ -1,0 +1,78 @@
+{
+  "base": "e54d86af8c1d3bea95d86dce3982cd2dc1d6604c",
+  "changedTrackedFiles": [
+    "src/render/AuthoredRooms.test.ts",
+    "src/render/AuthoredRooms.ts"
+  ],
+  "newTest": "src/render/Room8Models.test.ts",
+  "outsideBreachedBayIdentical": true,
+  "allOtherTrackedSourceIdentical": true,
+  "trackedSourceFileCount": 88,
+  "images": [
+    {
+      "file": "overview.png",
+      "sha256": "42b4c2e8ae7802548449de9afc4dfa4b76ef7fc434b4b7f27800d5ebecf4098d",
+      "changedPixelBoundingBox": [
+        359,
+        305,
+        1140,
+        753
+      ],
+      "class": "novel stage4 runtime after",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 491944
+    },
+    {
+      "file": "before-overview-stage3-pinned.png",
+      "sha256": "16a73ea917ad1b1b382ab314e59e11b2c6df729faedf0fd5613b30af37c74795",
+      "class": "exact pinned stage3 before",
+      "commit": "e54d86af8c1d3bea95d86dce3982cd2dc1d6604c",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 490178
+    },
+    {
+      "file": "desktop-in-scene.png",
+      "sha256": "770b7e319aa0a636cebb9e1b73f16b1f14b8ca092883ca4c53dc7ce38c6ded10",
+      "changedPixelBoundingBox": [
+        269,
+        176,
+        1280,
+        786
+      ],
+      "class": "novel stage4 runtime after",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 791164
+    },
+    {
+      "file": "before-desktop-stage3-pinned.png",
+      "sha256": "51b525245c200bcd2185d93da66ac7d6685096e8f858f717c02ed267c92ccddf",
+      "class": "exact pinned stage3 before",
+      "commit": "e54d86af8c1d3bea95d86dce3982cd2dc1d6604c",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 787100
+    },
+    {
+      "file": "completed-model-contact-sheet.png",
+      "sha256": "f05f94df5b0c1ed105636066614793a0513e5b79dad5ba1d87321f43068f7b41",
+      "class": "labeled context crops of final after renders",
+      "size": [
+        1440,
+        1160
+      ],
+      "bytes": 629209
+    }
+  ],
+  "capturePassed": true
+}

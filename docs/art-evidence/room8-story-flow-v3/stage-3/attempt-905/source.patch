@@ -1,0 +1,68 @@
+diff --git a/src/render/AuthoredRooms.ts b/src/render/AuthoredRooms.ts
+index b3ed1d1..0b3554b 100644
+--- a/src/render/AuthoredRooms.ts
++++ b/src/render/AuthoredRooms.ts
+@@ -447,11 +447,61 @@ function passengerVault(room:Fabricator,t:RoomPlan){
+  wall(34,12,440,12,24,800);wall(1166,12,440,12,24,800);
+ }
+ function breachedBay(f:Fabricator,t:RoomPlan){
+- // Stage2: closed repair bed, lodged boarding body and two freight masses.
++ // Stage3: working freight apron, reinforced hull and a contained boarding scar.
++ // All apron relief is flush. Raised details remain inside existing solid cover.
++ f.deck.color.setHex(0x354246);
++ f.chitin.color.setHex(0x293c30);f.ribs.color.setHex(0x788167);
++ const apron=f.paint.clone();apron.name='room8-freight-apron';apron.color.setHex(0x485357);apron.roughness=.91;
++ const markings=f.stencil.clone();markings.name='room8-apron-markings';markings.color.setHex(0xbaa16a);
++ const rubber=f.dark.clone();rubber.name='room8-docking-channels';rubber.roughness=.96;
++ const flush=(x:number,z:number,w:number,d:number,m:T.Material,y=.005)=>f.box(x/U,y,z/U,w/U,.008,d/U,m,0);
++ // Low-contrast modular loading plates give the empty fighting apron a purpose.
++ for(const [x,z,w,d]of [[280,470,210,160],[630,645,370,96],[900,690,170,80],[300,310,160,80]]){
++  flush(x,z,w,d,apron);
++  for(const side of [-1,1]){
++   flush(x+side*(w/2-5),z,2,d-12,f.edge,.013);
++   for(const end of [-1,1])flush(x+side*(w/2-17),z+end*(d/2-6),22,3,markings,.016);
++  }
++ }
++ // Recessed freight guide channels stop before the turning space and scar.
++ for(const x of [245,430]){
++  flush(x,585,7,110,rubber,.016);flush(x+2,585,1.5,110,f.edge,.022);
++  for(let z=540;z<=630;z+=18)flush(x,z,11,2,f.bronze,.025);
++ }
++ for(const x of [610,790]){
++  flush(x,738,7,96,rubber,.016);flush(x+2,738,1.5,96,f.edge,.022);
++ }
++ // A dashed freight boundary reads as paint, not an invisible barrier.
++ for(let x=470;x<990;x+=34)flush(x,710,19,3,markings,.017);
++ for(let z=355;z<570;z+=30)flush(182,z,3,16,markings,.017);
++ // Rear wall reinforcement stays on the existing perimeter. No new lane solids.
++ const perimeter=outline(t);
++ for(let i=0;i<2;i++){
++  const a=perimeter[i],b=perimeter[i+1],angle=-Math.atan2(b.y-a.y,b.x-a.x),length=Math.hypot(b.x-a.x,b.y-a.y),n=Math.ceil(length/100);
++  for(let j=0;j<n;j++){
++   const s=(j+.5)/n,x=(a.x+(b.x-a.x)*s)/U,z=(a.y+(b.y-a.y)*s)/U;
++   f.box(x,.45,z,.28,1.55,.62,f.dark,.035,angle);
++   f.box(x,.49,z,.11,1.43,.67,f.edge,.02,angle);
++   f.box(x,1.22,z,.46,.1,.7,f.bronze,.025,angle);
++  }
++ }
+  // The collision polygon is solid cover, never an exposed opening to space.
+- const seal=f.paint.clone();seal.name='room8-hull-seal';seal.color.setHex(0x657477);
++ const seal=f.paint.clone();seal.name='room8-hull-seal';seal.color.setHex(0x4f6165);
+  for(const hole of t.voids??[]){const b=bounds(hole);
+   f.slab(hole,-.04,.28,seal);
++  // Overlapping repair welds and captive bolts read as a closed steel patch.
++  for(let z=b.z0+.25;z<b.z1;z+=.78)for(let x=b.x0+.25;x<b.x1;x+=.3){
++   if(!contains(hole,x-.15,z)||!contains(hole,x+.15,z))continue;
++   f.box(x,.247,z,.27,.014,.025,f.seam,0);
++  }
++  for(let i=0;i<hole.length;i++){
++   const a=hole[i],q=hole[(i+1)%hole.length],length=Math.hypot(q.x-a.x,q.y-a.y)/U;
++   for(let j=.35;j<length;j+=.65){
++    const s=j/length,x=(a.x+(q.x-a.x)*s)/U,z=(a.y+(q.y-a.y)*s)/U;
++    const p=v(x,.26,z).lerp(v(b.x,.26,b.z),.065);
++    f.pipe(p,p.clone().setY(.3),.045,f.bolts);
++   }
++  }
+   const growth=f.chitin;
+   // Rough growth follows the south boarding seam, contained inside solid cover.
+   const a=hole[3],end=hole[4];

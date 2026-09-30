@@ -540,6 +540,12 @@ exports[`awakening cradle > preserves the other nineteen complete templates exac
         "x": 300,
         "y": 600,
       },
+      {
+        "height": 50,
+        "width": 120,
+        "x": 640,
+        "y": 740,
+      },
     ],
     "spawn": {
       "x": 140,

@@ -71,7 +71,7 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   voids:Object.freeze([polygon([[440,300],[610,220],[940,460],[820,570],[560,470]])]),
   spawn:Object.freeze({x:140,y:440}),exit:Object.freeze({x:1080,y:520}),
   breaches:polygon([[220,260],[1000,240],[300,740],[860,720]]),
-  obstacles:Object.freeze([{x:300,y:600,width:100,height:70}].map(rect=>Object.freeze(rect))),
+  obstacles:Object.freeze([{x:300,y:600,width:100,height:70},{x:640,y:740,width:120,height:50}].map(rect=>Object.freeze(rect))),
  }),
  'overload-floor':Object.freeze({
   boundary:polygon([[40,320],[180,200],[360,200],[420,40],[780,40],[840,200],[1020,200],[1160,320],[1160,680],[1000,820],[800,820],[720,720],[480,720],[400,820],[200,820],[40,680]]),

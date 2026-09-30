@@ -1,0 +1,28 @@
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3
+
+
+ Test Files  81 passed | 1 skipped (82)
+      Tests  762 passed | 1 skipped (763)
+   Start at  20:02:57
+   Duration  11.95s (transform 2.99s, setup 0ms, import 12.52s, tests 54.60s, environment 10ms)
+
+
+> containment-depth@2.0.0 build
+> tsc --noEmit && vite build
+
+vite v8.1.4 building client environment for production...
+[2K
+transforming...✓ 89 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.60 kB │ gzip:     0.39 kB
+dist/assets/index-Czxxj7s4.css     22.30 kB │ gzip:     6.11 kB
+dist/assets/index-Da4Vgy-9.js   3,857.13 kB │ gzip: 1,370.85 kB
+
+✓ built in 460ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

@@ -1,0 +1,66 @@
+{
+  "repository": "chernodub/hermes-obsidian",
+  "branch": "main",
+  "commit": "652338a3bdba6f06075e0e9eee52d796e023f1b0",
+  "base_commit": "0537005e47fdaed5b32517afdb43efb04eb56552",
+  "changed_files": [
+    "Projects/Containment.md"
+  ],
+  "remote_sha": "652338a3bdba6f06075e0e9eee52d796e023f1b0",
+  "remote_exact_bytes_match": true,
+  "note_sha256": "87380cf5a55f8c5218da517ce890c8e57066feb2cc5b4f4815492b7e84cb9f86",
+  "remote_blob_sha": "eab81748fa727315c827a9bda6934d17f6f7757b",
+  "wikilinks_checked": 44,
+  "unresolved_wikilinks": [],
+  "diff_check": "passed",
+  "primary_fingerprints_before": {
+    "/home/chernodubv/hermes-obsidian": {
+      "head": "87a26ba8467a08dcba62b678cd7d0e54c263cc66",
+      "status": "",
+      "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "index_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "untracked": {}
+    },
+    "/home/chernodubv/dev/hermes-obsidian": {
+      "head": "698dab1fee5b138d6cb8d1da21ae953f31356374",
+      "status": " M Projects/Containment.md\n",
+      "diff_sha256": "b4a0168701ca129a7c751a60e05b3e3c7172f74afaf1f966bccab44c4ea643c5",
+      "index_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "untracked": {}
+    }
+  },
+  "primary_fingerprints_after": {
+    "/home/chernodubv/hermes-obsidian": {
+      "head": "87a26ba8467a08dcba62b678cd7d0e54c263cc66",
+      "status": "",
+      "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "index_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "untracked": {}
+    },
+    "/home/chernodubv/dev/hermes-obsidian": {
+      "head": "698dab1fee5b138d6cb8d1da21ae953f31356374",
+      "status": " M Projects/Containment.md\n",
+      "diff_sha256": "b4a0168701ca129a7c751a60e05b3e3c7172f74afaf1f966bccab44c4ea643c5",
+      "index_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "untracked": {}
+    }
+  },
+  "primary_fingerprints_unchanged": true,
+  "worktree_removed": true,
+  "guard_accepted": {
+    "0": 902,
+    "1": 903,
+    "2": 904,
+    "3": 905
+  },
+  "current_permit": {
+    "stage_index": 4,
+    "completed_start": 906
+  },
+  "stage4_accepted": false,
+  "independent_review_and_guard_receipt": "pending",
+  "stage5_authorized": false,
+  "containment_merge_or_deploy": false,
+  "runtime_or_guard_modified": false,
+  "verified_at": "2026-09-29T21:07:27.514585+00:00"
+}

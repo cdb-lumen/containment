@@ -503,36 +503,39 @@ function breachedBay(f:Fabricator,t:RoomPlan){
    }
   }
   const growth=f.chitin.clone();growth.name='room8-seam-growth';growth.color.setHex(0x46523a);
-  // One continuous rooted tissue sheet. Lobes and branching folds are height
-  // variations in the same surface, never plates carried on cylinder supports.
-  growth.metalness=.08;growth.roughness=.93;
-  const axis=v(.81,0,.586).normalize(),across=v(-axis.z,0,axis.x),origin=v(b.x,0,b.z);
-  const gaussian=(x:number)=>Math.exp(-(x*x));
-  const positions:number[]=[],uvs:number[]=[],indices:number[]=[],longSteps=112,crossSteps=48;
-  for(let i=0;i<=longSteps;i++){
-   const s=i/longSteps,along=-6.5+s*12.4,envelope=Math.sin(Math.PI*s)**.55;
-   const drift=.25*Math.sin(s*11)-.13;
-   // Unequal fingers spread sideways into the weld bed. A narrow living seam
-   // joins the large colonies without making a regular capsule outline.
-   const left=(.58+1.1*gaussian((s-.27)/.12)+.7*gaussian((s-.69)/.095))*envelope;
-   const right=(.52+1.25*gaussian((s-.48)/.105)+.86*gaussian((s-.82)/.09))*envelope;
-   for(let j=0;j<=crossSteps;j++){
-    const q=j/crossSteps,w=-left+(left+right)*q;
-    const foot=Math.sin(Math.PI*q),end=Math.sin(Math.PI*s);
-    const center=.17*Math.sin(s*17),ridge=gaussian((w-center)/.52);
-    const colonies=.66+1.15*gaussian((s-.3)/.10)+.83*gaussian((s-.64)/.075);
-    const folds=.13*(1+Math.sin(s*61+w*6+Math.sin(s*19)))*Math.exp(-Math.abs(w)*.75);
-    const height=.25+end**.6*foot**.72*(.18+colonies*ridge+folds);
-    const p=origin.clone().addScaledVector(axis,along).addScaledVector(across,w+drift).setY(height);
-    positions.push(p.x,p.y,p.z);uvs.push(s,q);
+  // Three unequal colonies share a low root along the sealed boarding seam.
+  // Each branches inward into the body instead of repeating isolated beads.
+  const a=hole[3],end=hole[4];
+  const seam=(s:number,inset=.12)=>v((a.x+(end.x-a.x)*s)/U,.32,(a.y+(end.y-a.y)*s)/U).lerp(v(b.x,.32,b.z),inset);
+  let previous=seam(.09);
+  for(const s of [.2,.33,.44,.57,.72,.88]){const p=seam(s);f.pipe(previous,p,.09,growth,.13);previous=p;}
+  for(const [s,size,inset]of [[.19,.46,.13],[.47,.64,.17],[.79,.34,.11]]){
+   const p=seam(s,inset),root=seam(s);
+   f.pipe(root,p,.16,growth,.22);f.ellipsoid(p.x,.4,p.z,size,.27,size*.65,growth);
+   for(const side of [-1,1]){
+    const q=seam(s+side*.045,inset+.07);
+    f.pipe(p,q,.13,growth,.055);f.ellipsoid(q.x,.37,q.z,size*.42,.15,size*.3,growth);
    }
   }
-  for(let i=0;i<longSteps;i++)for(let j=0;j<crossSteps;j++){
-   const a=i*(crossSteps+1)+j,b=a+crossSteps+1;
-   indices.push(a,a+1,b,a+1,b+1,b);
+  // Offset, unequal crusts follow the scar, with roots on the intact seal.
+  const axis=v(.81,0,.586).normalize(),across=v(-axis.z,0,axis.x),origin=v(b.x,0,b.z);
+  const crusts=[[-5.0,-.25,1.45,.7,.62],[-3.1,.38,1.75,1.05,1.48],[-.9,-.48,1.9,1.35,.96],[1.35,.25,1.55,.82,1.9],[3.1,-.36,1.65,1.12,1.18],[4.8,.22,1.15,.58,.58]];
+  const roots:T.Vector3[]=[];
+  for(const [along,offset,length,width,height]of crusts){
+   const center=origin.clone().addScaledVector(axis,along).addScaledVector(across,offset);
+   const rim=[[-1,-.3],[-.62,-1],[.35,-.78],[1,-.16],[.63,.64],[-.28,1]];
+   const bottom=rim.map(([u,w])=>center.clone().addScaledVector(axis,u*length).addScaledVector(across,w*width).setY(.25));
+   const ridge=[center.clone().addScaledVector(axis,-length*.48).addScaledVector(across,-width*.15).setY(.25+height*.78),center.clone().addScaledVector(axis,length*.35).addScaledVector(across,width*.19).setY(.25+height)];
+   const points=[...bottom,...ridge],faces=[[0,1,6],[1,2,6],[2,7,6],[2,3,7],[3,4,7],[4,5,7],[5,6,7],[5,0,6]];
+   const positions:number[]=[];
+   for(const face of faces)for(const i of [...face].reverse()){const p=points[i];positions.push(p.x,p.y,p.z);}
+   const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Array(positions.length/3*2).fill(0),2));g.computeVertexNormals();f.add(g,growth);
+   const root=center.clone().setY(.40);roots.push(root);
+   const near=Array.from({length:19},(_,i)=>seam(.05+i*.05,.16)).reduce((a,p)=>p.distanceToSquared(root)<a.distanceToSquared(root)?p:a);
+   f.pipe(near,root,.12,growth,.22);
+   if(height>1)f.pipe(ridge[0],ridge[1],.075,f.chitin,.13);
   }
-  const tissue=new T.BufferGeometry();tissue.setAttribute('position',new T.Float32BufferAttribute(positions,3));
-  tissue.setAttribute('uv',new T.Float32BufferAttribute(uvs,2));tissue.setIndex(indices);tissue.computeVertexNormals();f.add(tissue,growth);
+  for(let i=1;i<roots.length;i++)f.pipe(roots[i-1],roots[i],.23,growth,.18);
   const torn=f.edge.clone();torn.name='room8-torn-metal';torn.color.setHex(0x687773);torn.roughness=.88;
   // Six unequal folded remnants, each with an embedded root and closed thickness.
   const remnants=[[0,.27,1.75,.95,.62],[1,.62,1.15,.74,1.12],[2,.3,.82,.68,.43],[3,.24,1.4,1.05,.9],[3,.72,.92,.78,.52],[4,.55,1.65,.87,1.22]];

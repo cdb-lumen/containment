@@ -1,0 +1,63 @@
+{
+  "kind": "continuous planar draft geometry, not shipping navigation or gameplay",
+  "source": "7a3f262886104fb024de9684958b3f85a8859f34",
+  "radius_tested": [
+    16,
+    28,
+    38
+  ],
+  "routes_min_clearance": {
+    "north": 66.16378963469015,
+    "south": 52.951356487309695
+  },
+  "retained_breach_connections": [
+    [
+      [
+        220,
+        260
+      ],
+      [
+        240,
+        320
+      ]
+    ],
+    [
+      [
+        1000,
+        240
+      ],
+      [
+        1020,
+        360
+      ]
+    ],
+    [
+      [
+        300,
+        740
+      ],
+      [
+        970,
+        640
+      ]
+    ],
+    [
+      [
+        860,
+        720
+      ],
+      [
+        970,
+        640
+      ]
+    ]
+  ],
+  "negative_controls": [
+    "solid scar",
+    "freight occupancy",
+    "wall margin",
+    "crossed segments"
+  ],
+  "failures": 0,
+  "errors": 0
+}

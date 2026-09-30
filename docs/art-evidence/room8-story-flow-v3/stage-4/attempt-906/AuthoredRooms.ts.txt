@@ -503,54 +503,68 @@ function breachedBay(f:Fabricator,t:RoomPlan){
    }
   }
   const growth=f.chitin.clone();growth.name='room8-seam-growth';growth.color.setHex(0x46523a);
-  // One continuous rooted tissue sheet. Lobes and branching folds are height
-  // variations in the same surface, never plates carried on cylinder supports.
-  growth.metalness=.08;growth.roughness=.93;
-  const axis=v(.81,0,.586).normalize(),across=v(-axis.z,0,axis.x),origin=v(b.x,0,b.z);
-  const gaussian=(x:number)=>Math.exp(-(x*x));
-  const positions:number[]=[],uvs:number[]=[],indices:number[]=[],longSteps=112,crossSteps=48;
-  for(let i=0;i<=longSteps;i++){
-   const s=i/longSteps,along=-6.5+s*12.4,envelope=Math.sin(Math.PI*s)**.55;
-   const drift=.25*Math.sin(s*11)-.13;
-   // Unequal fingers spread sideways into the weld bed. A narrow living seam
-   // joins the large colonies without making a regular capsule outline.
-   const left=(.58+1.1*gaussian((s-.27)/.12)+.7*gaussian((s-.69)/.095))*envelope;
-   const right=(.52+1.25*gaussian((s-.48)/.105)+.86*gaussian((s-.82)/.09))*envelope;
-   for(let j=0;j<=crossSteps;j++){
-    const q=j/crossSteps,w=-left+(left+right)*q;
-    const foot=Math.sin(Math.PI*q),end=Math.sin(Math.PI*s);
-    const center=.17*Math.sin(s*17),ridge=gaussian((w-center)/.52);
-    const colonies=.66+1.15*gaussian((s-.3)/.10)+.83*gaussian((s-.64)/.075);
-    const folds=.13*(1+Math.sin(s*61+w*6+Math.sin(s*19)))*Math.exp(-Math.abs(w)*.75);
-    const height=.25+end**.6*foot**.72*(.18+colonies*ridge+folds);
-    const p=origin.clone().addScaledVector(axis,along).addScaledVector(across,w+drift).setY(height);
-    positions.push(p.x,p.y,p.z);uvs.push(s,q);
+  // Three unequal colonies share a low root along the sealed boarding seam.
+  // Each branches inward into the body instead of repeating isolated beads.
+  const a=hole[3],end=hole[4];
+  const seam=(s:number,inset=.12)=>v((a.x+(end.x-a.x)*s)/U,.32,(a.y+(end.y-a.y)*s)/U).lerp(v(b.x,.32,b.z),inset);
+  let previous=seam(.09);
+  for(const s of [.2,.33,.44,.57,.72,.88]){const p=seam(s);f.pipe(previous,p,.09,growth,.13);previous=p;}
+  for(const [s,size,inset]of [[.19,.46,.13],[.47,.64,.17],[.79,.34,.11]]){
+   const p=seam(s,inset),root=seam(s);
+   f.pipe(root,p,.16,growth,.22);f.ellipsoid(p.x,.4,p.z,size,.27,size*.65,growth);
+   for(const side of [-1,1]){
+    const q=seam(s+side*.045,inset+.07);
+    f.pipe(p,q,.13,growth,.055);f.ellipsoid(q.x,.37,q.z,size*.42,.15,size*.3,growth);
    }
   }
-  for(let i=0;i<longSteps;i++)for(let j=0;j<crossSteps;j++){
-   const a=i*(crossSteps+1)+j,b=a+crossSteps+1;
-   indices.push(a,a+1,b,a+1,b+1,b);
+  // Cross-section loft: a narrow dorsal keel, high shoulders and rolled-under
+  // flanks. Both shell and ribs use this SAME profile, so ribs cannot sink into it.
+  const axis=v(.81,0,.586).normalize(),across=v(-axis.z,0,axis.x),origin=v(b.x,0,b.z);
+  const inset=hole.map(p=>({x:b.x*U+(p.x-b.x*U)*.86,y:b.z*U+(p.y-b.z*U)*.86}));
+  const projection=inset.map(p=>v(p.x/U,0,p.y/U).sub(origin).dot(axis));
+  const lo=Math.min(...projection)+.35,hi=Math.max(...projection)-.35;
+  const sections:T.Vector3[][]=[];
+  for(let along=lo;along<=hi;along+=.72){
+   const center=origin.clone().addScaledVector(axis,along);if(!contains(inset,center.x,center.z))continue;
+   const widths=[-1,1].map(side=>{let w=0;while(w<8&&contains(inset,center.x+across.x*(w+.05)*side,center.z+across.z*(w+.05)*side))w+=.05;return Math.max(.02,w-.16);});
+   const taper=Math.sin(Math.PI*(along-lo+.3)/(hi-lo+.6)),crown=.35+2.15*Math.pow(Math.max(0,taper),.55);
+   const section:T.Vector3[]=[];
+   for(let j=0;j<=12;j++){const s=(j-6)/6,width=widths[s<0?0:1];section.push(center.clone().addScaledVector(across,s*width*.9*(.12+.88*Math.pow(Math.max(0,taper),.7))).setY(-.35+(crown+.35)*Math.pow(Math.max(0,1-s*s),.65)));}
+   sections.push(section);
   }
-  const tissue=new T.BufferGeometry();tissue.setAttribute('position',new T.Float32BufferAttribute(positions,3));
-  tissue.setAttribute('uv',new T.Float32BufferAttribute(uvs,2));tissue.setIndex(indices);tissue.computeVertexNormals();f.add(tissue,growth);
-  const torn=f.edge.clone();torn.name='room8-torn-metal';torn.color.setHex(0x687773);torn.roughness=.88;
-  // Six unequal folded remnants, each with an embedded root and closed thickness.
-  const remnants=[[0,.27,1.75,.95,.62],[1,.62,1.15,.74,1.12],[2,.3,.82,.68,.43],[3,.24,1.4,1.05,.9],[3,.72,.92,.78,.52],[4,.55,1.65,.87,1.22]];
-  for(const [edge,s,width,depth,rise]of remnants){
-   const a=hole[edge],q=hole[(edge+1)%hole.length],tangent=v(q.x-a.x,0,q.y-a.y).normalize();
-   const p=v((a.x+(q.x-a.x)*s)/U,.25,(a.y+(q.y-a.y)*s)/U);
-   const inward=v(b.x-p.x,0,b.z-p.z).normalize();p.addScaledVector(inward,.18);
-   const profile=[[-.5,0,0],[.5,0,0],[.43,.5,.88],[.24,.9,1],[-.19,.78,.82],[-.46,.42,.74]];
-   const top=profile.map(([u,d,h])=>p.clone().addScaledVector(tangent,u*width).addScaledVector(inward,d*depth).add(v(0,h*rise,0)));
-   const bottom=top.map(p=>p.clone().add(v(0,-.12,0))),points=[...top,...bottom];
-   const faces=[[0,1,2],[0,2,5],[5,2,3],[5,3,4],[6,8,7],[6,11,8],[11,9,8],[11,10,9]];
-   for(let j=0;j<6;j++){const k=(j+1)%6;faces.push([j,j+6,k],[k,j+6,k+6]);}
-   const positions:number[]=[];for(const face of faces)for(const i of [...face].reverse()){const p=points[i];positions.push(p.x,p.y,p.z);}
-   const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Array(positions.length/3*2).fill(0),2));g.computeVertexNormals();f.add(g,torn);
-   for(const j of [2,3,4])f.pipe(top[j],top[j+1],.025,f.rust);
+  const vertices:number[]=[];
+  for(let k=0;k<sections.length-1;k++)for(let j=0;j<12;j++){
+   const a=sections[k][j],b=sections[k+1][j],c=sections[k][j+1],d=sections[k+1][j+1];
+   for(const p of [a,c,b,c,d,b])vertices.push(p.x,p.y,p.z);
   }
-  for(let i=0;i<hole.length;i++){const a=hole[i],q=hole[(i+1)%hole.length],x=(a.x+q.x)/2/U,z=(a.y+q.y)/2/U,angle=-Math.atan2(q.y-a.y,q.x-a.x);
+  for(const [index,direction]of [[0,-1],[sections.length-1,1]]){const section=sections[index];if(!section)continue;const tip=section[6].clone().addScaledVector(axis,direction*.22).setY(-.32);for(let j=0;j<12;j++)for(const p of direction<0?[tip,section[j+1],section[j]]:[tip,section[j],section[j+1]])vertices.push(p.x,p.y,p.z);}
+  const carapace=new T.BufferGeometry();carapace.setAttribute('position',new T.Float32BufferAttribute(vertices,3));carapace.setAttribute('uv',new T.Float32BufferAttribute(new Array(vertices.length/3*2).fill(0),2));carapace.computeVertexNormals();f.add(carapace,f.chitin);
+  for(let k=1;k<sections.length-1;k++){
+   const section=sections[k],crown=section[6];
+   // Missing bands and short flank ribs interrupt the old cage-like rhythm.
+   // Ribs stay on the loft, with asymmetric terminations and thicker roots.
+   if(k%5!==2)for(let j=k%3===0?2:0;j<(k%4===0?10:12);j++){
+    const lift=v(0,.075,0),radius=.07+(k%3)*.018;
+    f.pipe(section[j].clone().add(lift),section[j+1].clone().add(lift),radius,f.ribs,radius*.85);
+   }
+   if(k%3!==1)f.ellipsoid(crown.x,crown.y+.08,crown.z,.22,.13,.19,f.chitin);
+   if(k<sections.length-2)f.pipe(crown.clone().add(v(0,.04,0)),sections[k+1][6].clone().add(v(0,.04,0)),.09,f.dark);
+  }
+  const torn=f.edge.clone();torn.name='room8-torn-metal';torn.color.setHex(0x8a9995);torn.roughness=.72;
+  // Torn plates have notched silhouettes and folded inner tips, not square tiles.
+  for(let i=0;i<hole.length;i++){const a=hole[i],q=hole[(i+1)%hole.length],x=(a.x+q.x)/2/U,z=(a.y+q.y)/2/U,angle=-Math.atan2(q.y-a.y,q.x-a.x),len=Math.hypot(q.x-a.x,q.y-a.y)/U;
    const tangent=v(Math.cos(-angle),0,Math.sin(-angle)),inward=v(b.x-x,0,b.z-z).normalize();
+   for(let s=-len/2+.6,n=0;s<len/2-.4;s+=.83+(n++%3)*.16){
+    const p=v(x,.22,z).addScaledVector(tangent,s).addScaledVector(inward,.08),fold=(n+i)%3;
+    const profile=[[-.3,0],[.31,0],[.26,.2],[.09,.16],[-.04,.42+fold*.08],[-.22,.3]];
+    const points=profile.map(([u,d])=>p.clone().addScaledVector(tangent,u).addScaledVector(inward,d).add(v(0,d*(.5+fold*.22),0)));
+    const positions:number[]=[];
+    const faces=T.ShapeUtils.triangulateShape(profile.map(([u,d])=>new T.Vector2(u,d)),[]);
+    for(const face of faces)for(const index of face){const p=points[index];positions.push(p.x,p.y,p.z);}
+    const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Array(positions.length/3*2).fill(0),2));g.computeVertexNormals();
+    torn.side=T.DoubleSide;f.add(g,torn);
+    for(let j=1;j<points.length;j++)f.pipe(points[j],points[(j+1)%points.length],.018,f.rust);
+   }
    const anchor=v(x,0,z).addScaledVector(inward,.25),toe=anchor.clone().addScaledVector(inward,.8);
    f.box(anchor.x,.32,anchor.z,.7,.5,.66,f.paint,.035,angle);f.box(anchor.x,.6,anchor.z,.58,.06,.5,f.bronze,.02,angle);
    f.pipe(anchor.clone().setY(.56),toe.clone().setY(.26),.12,f.edge);f.box(toe.x,.23,toe.z,.58,.25,.38,f.dark,.025,angle);

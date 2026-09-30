@@ -1,0 +1,78 @@
+{
+  "head": "2502fe91f79f3a8635bca08a09be2a4309f32055",
+  "branch": "art/breached-loading-bay-v3",
+  "sourceFilesVerifiedUnchanged": 223,
+  "changedSourceFiles": [],
+  "canonicalInputChanges": [],
+  "gitStatus": "",
+  "images": [
+    {
+      "file": "desktop-entry-static.png",
+      "sha256": "ebee77b46cf148d057e94ab6b58bba5482e92e7d632daa187b95f1bcf77ab00a",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 718513,
+      "novelAgainstPriorStoryFlowPngs": true,
+      "evidenceClass": "Static checkpoint runtime, not gameplay"
+    },
+    {
+      "file": "desktop-north-static.png",
+      "sha256": "3fb829fc3daf96f84d9b344f9cc5e21b15197cb6886b22499b47cc02506e176c",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 753703,
+      "novelAgainstPriorStoryFlowPngs": true,
+      "evidenceClass": "Static checkpoint runtime, not gameplay"
+    },
+    {
+      "file": "desktop-south-static.png",
+      "sha256": "370a9d833097cab02ef3ba2c02baaf1430cefae3a8069799d69a54ad7eb68fba",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 747335,
+      "novelAgainstPriorStoryFlowPngs": true,
+      "evidenceClass": "Static checkpoint runtime, not gameplay"
+    },
+    {
+      "file": "overview-static.png",
+      "sha256": "aa2b94833f9427a3b7b33d40c8d77e9fee8b54068d744777a3b21daa6804baac",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 457176,
+      "novelAgainstPriorStoryFlowPngs": true,
+      "evidenceClass": "Static checkpoint runtime, not gameplay"
+    }
+  ],
+  "imageCount": 4,
+  "priorDistinctPngHashesChecked": 24,
+  "tests": {
+    "passed": 26,
+    "filesPassed": 4,
+    "failures": 0,
+    "errors": 0,
+    "typecheckExit": 0
+  },
+  "capture": {
+    "passed": true,
+    "browserErrors": [],
+    "abortedRequests": [],
+    "origin": "http://127.0.0.1:5173/",
+    "pid": 404650
+  },
+  "cleanup": {
+    "capturePidExists": false,
+    "capturePortOpen": false,
+    "ownedProcessesRemaining": [],
+    "unrelatedProcessesUntouched": [
+      "1074861    1039 node /home/chernodubv/dev/.worktrees/containment-boons/node_modules/.bin/vite --host 127.0.0.1 --port 5193"
+    ]
+  }
+}
