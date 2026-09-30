@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {relayRacksRoom} from './RelayRacksRoom';
 import {PASSENGER_FINISHES} from './RoomEquipmentPalette';
 import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
 import {AWAKENING_BLOCKOUT,PASSENGER_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
@@ -9,7 +10,7 @@ type Point=Readonly<{x:number;y:number}>;
 type Outline=readonly Point[];
 type RoomPlan=Readonly<{width:number;height:number;boundary?:Outline;voids?:readonly Outline[];obstacles:readonly {x:number;y:number;width:number;height:number}[]}>;
 const U=32,TAU=Math.PI*2;
-export const AUTHORED_ROOMS=['awakening-bay','passenger-vault','breached-loading-bay','overload-floor'] as const;
+export const AUTHORED_ROOMS=['awakening-bay','passenger-vault','breached-loading-bay','relay-racks','overload-floor'] as const;
 const outline=(t:RoomPlan):Outline=>t.boundary??[{x:0,y:0},{x:t.width,y:0},{x:t.width,y:t.height},{x:0,y:t.height}];
 const path=(points:Outline)=>points.map(p=>new T.Vector2(p.x/U,-p.y/U));
 /** The collision template is the sole source of deck edges and cut-outs. */
@@ -552,6 +553,7 @@ function deckServices(f:Fabricator,t:RoomPlan){
  }
 }
 export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
+ if(id==='relay-racks')return relayRacksRoom();
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;
  const deckPlan=id==='passenger-vault'?{...t,voids:[]}:t;

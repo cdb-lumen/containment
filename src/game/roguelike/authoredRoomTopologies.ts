@@ -1,5 +1,6 @@
 import type {Point, RoomTemplate} from './types';
 import type {StoryTemplateId} from './storyRooms';
+import {RELAY_RACKS_FOOTPRINTS} from './relayRacksLayout';
 
 const polygon=(vertices:readonly (readonly [number,number])[]):readonly Point[]=>Object.freeze(vertices.map(([x,y])=>Object.freeze({x,y})));
 /** Stable story roles; these same footprints drive solids and neutral meshes. */
@@ -72,6 +73,11 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   spawn:Object.freeze({x:140,y:440}),exit:Object.freeze({x:1080,y:520}),
   breaches:polygon([[220,260],[1000,240],[300,740],[860,720]]),
   obstacles:Object.freeze([{x:300,y:600,width:100,height:70}].map(rect=>Object.freeze(rect))),
+ }),
+ 'relay-racks':Object.freeze({
+  spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
+  breaches:polygon([[100,100],[1100,100],[100,780],[1100,780]]),
+  obstacles:RELAY_RACKS_FOOTPRINTS,
  }),
  'overload-floor':Object.freeze({
   boundary:polygon([[40,320],[180,200],[360,200],[420,40],[780,40],[840,200],[1020,200],[1160,320],[1160,680],[1000,820],[800,820],[720,720],[480,720],[400,820],[200,820],[40,680]]),

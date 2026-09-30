@@ -579,22 +579,34 @@ exports[`reviewed Passenger Vault whole-room blockout > preserves all nineteen o
     "name": "Relay racks",
     "obstacles": [
       {
-        "height": 530,
+        "height": 170,
         "width": 100,
         "x": 300,
         "y": 160,
       },
       {
-        "height": 420,
+        "height": 170,
         "width": 100,
-        "x": 540,
-        "y": 300,
+        "x": 300,
+        "y": 550,
       },
       {
-        "height": 500,
+        "height": 170,
         "width": 100,
         "x": 800,
         "y": 160,
+      },
+      {
+        "height": 170,
+        "width": 100,
+        "x": 800,
+        "y": 550,
+      },
+      {
+        "height": 160,
+        "width": 100,
+        "x": 550,
+        "y": 360,
       },
     ],
     "spawn": {
