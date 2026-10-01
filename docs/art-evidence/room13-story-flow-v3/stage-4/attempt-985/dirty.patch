@@ -1,0 +1,112 @@
+diff --git a/src/render/CoolantPlantBlockout.ts b/src/render/CoolantPlantBlockout.ts
+index 15a46e8..8fc5bbb 100644
+--- a/src/render/CoolantPlantBlockout.ts
++++ b/src/render/CoolantPlantBlockout.ts
+@@ -29,7 +29,7 @@ export function coolantPlantBlockout(footprint:Footprint,index:number):T.Group{
+  };
+  const bend=(points:T.Vector3[],radius:number)=>{
+   const key=`coolant-bend:${radius}:${points.map(p=>p.toArray().join(',')).join('/')}`;
+-  const mesh=new T.Mesh(geometry(key,()=>new T.TubeGeometry(new T.CatmullRomCurve3(points),12,radius,8,false)),m.stainless);mesh.castShadow=mesh.receiveShadow=true;cell.add(mesh);
++  const mesh=new T.Mesh(geometry(key,()=>new T.TubeGeometry(new T.CatmullRomCurve3(points),12,radius,8,false)),m.stainless);mesh.castShadow=mesh.receiveShadow=true;cell.add(mesh);return mesh;
+  };
+  const valve=(x:number,y:number,z:number)=>{
+   pipe(v(x,y-.2,z),v(x,y,z),.06,m.stainless);
+@@ -53,6 +53,14 @@ export function coolantPlantBlockout(footprint:Footprint,index:number):T.Group{
+     pipe(v(x,y,z-.12),v(x,y,z+.12),.055,m.dark);
+    }
+   }
++  // Raised channel covers separate the end heads from the shell flange.
++  for(const z of [-1.53,1.53])pipe(v(0,1.28,z-.035),v(0,1.28,z+.035),.64,m.frame).name='exchanger-channel-head';
++  // The expansion vessel branches directly off the shell, not onto a walking route.
++  b(-1.3,.36,-.15,.72,.32,.9,m.frame);
++  pipe(v(-1.3,.55,-.15),v(-1.3,1.8,-.15),.34,m.enamel).name='expansion-vessel';
++  for(const y of [.61,1.7])pipe(v(-1.3,y-.04,-.15),v(-1.3,y+.04,-.15),.37,m.stainless);
++  pipe(v(-1.3,1.8,-.15),v(-1.3,1.96,-.15),.11,m.stainless);
++  bend([v(-.68,1.28,.35),v(-1.05,1.28,.35),v(-1.3,1.16,.3),v(-1.3,.75,-.15)],.12).name='expansion-branch';
+   // Curved outlet drops and a separate return riser remain within the skid.
+   bend([v(0,1.28,1.52),v(0,1.25,1.7),v(0,.85,1.72),v(0,.24,1.72)],.19);
+   bend([v(.7,1.1,-.85),v(1.3,1.1,-.85),v(1.48,.75,-.7),v(1.48,.24,-.7)],.16);
+@@ -63,14 +71,44 @@ export function coolantPlantBlockout(footprint:Footprint,index:number):T.Group{
+   b(.5,.74,1.5,.08,.12,.012,m.mineral);
+  }else if(index<4){
+   b(0,.32,0,3.3,.24,2.8,m.frame);
+-  pipe(v(-.87,1.02,-.48),v(-.87,1.02,.48),.7,m.enamel);
+-  pipe(v(-.87,1.02,-.53),v(-.87,1.02,-.47),.62,m.stainless);
+-  pipe(v(-.25,1.02,0),v(.35,1.02,0),.18,m.stainless);
+-  pipe(v(.35,1.02,0),v(1.55,1.02,0),.47,m.enamel);
++  // Volute lies in the YZ plane. Its impeller, coupling and motor share X.
++  const voluteGeometry=geometry('coolant-volute',()=>{
++   const shape=new T.Shape();shape.moveTo(.62,-.3);
++   shape.bezierCurveTo(.88,.05,.7,.68,.28,.77);
++   shape.lineTo(-.55,.77);shape.lineTo(-.55,.43);
++   shape.bezierCurveTo(-1,.05,-.64,-.68,-.12,-.68);
++   shape.bezierCurveTo(.23,-.73,.5,-.57,.62,-.3);
++   return new T.ExtrudeGeometry(shape,{depth:.5,bevelEnabled:true,bevelSegments:1,steps:1,bevelSize:.06,bevelThickness:.06,curveSegments:16});
++  });
++  const volute=new T.Mesh(voluteGeometry,m.enamel);volute.rotation.y=Math.PI/2;volute.position.set(-1.22,1.02,0);volute.name='pump-volute';volute.castShadow=volute.receiveShadow=true;cell.add(volute);
++  pipe(v(-1.32,1.02,0),v(-1.23,1.02,0),.63,m.stainless);
++  pipe(v(-1.36,1.02,0),v(-1.32,1.02,0),.48,m.frame);
++  for(let i=0;i<8;i++){
++   const a=i*Math.PI/4,y=1.02+Math.cos(a)*.54,z=Math.sin(a)*.54;
++   pipe(v(-1.4,y,z),v(-1.33,y,z),.052,m.dark);
++  }
++  b(-.96,.4,0,.8,.4,1.2,m.frame);
++  pipe(v(-.72,1.02,0),v(.35,1.02,0),.13,m.stainless).name='motor-coupling';
++  for(const x of [-.46,-.16])pipe(v(x-.065,1.02,0),v(x+.065,1.02,0),.27,m.stainless);
++  pipe(v(-.39,1.02,0),v(-.23,1.02,0),.23,m.dark);
++  // Open guard rails leave the two coupling flanges legible from above.
++  for(const z of [-.33,.33])b(-.31,.83,z,.75,.12,.08,m.amber);
++  pipe(v(.35,1.02,0),v(1.55,1.02,0),.47,m.enamel).name='pump-motor';
+   for(const x of [.48,.68,.88,1.08,1.28,1.48])pipe(v(x-.025,1.02,0),v(x+.025,1.02,0),.5,m.frame);
+   b(.94,.57,0,1.35,.3,1.3,m.frame);
+-  for(const sign of [-1,1])bend([v(-.87,1.02,sign*.48),v(-.87,1.02,sign*1.25),v(-.87,.75,sign*1.65),v(-.87,.2,sign*1.65)],.2);
+-  valve(-.87,1.33,1.2);
++  pipe(v(1.55,1.02,0),v(1.66,1.02,0),.43,m.stainless);
++  // Tangential outlet leaves the scroll shoulder; axial suction turns below deck.
++  bend([v(-.96,1.64,.43),v(-.96,1.64,1.1),v(-.96,1.3,1.55),v(-.96,.2,1.55)],.19).name='tangential-discharge';
++  bend([v(-1.36,1.02,0),v(-1.65,1.02,0),v(-1.65,.85,-.9),v(-1.35,.65,-1.38),v(.7,.65,-1.38)],.17);
++  valve(-.96,1.84,1.1);
++  // Permanent cutaway housing exposes a ribbed basket, entirely on the skid.
++  pipe(v(.7,.3,-1.38),v(.7,.48,-1.38),.33,m.frame);
++  const housing=new T.Mesh(geometry('coolant-strainer-cutaway',()=>new T.CylinderGeometry(.37,.37,.58,16,1,true,Math.PI/2,Math.PI)),m.enamel);
++  housing.position.set(.7,.76,-1.38);housing.name='strainer-cutaway';housing.castShadow=housing.receiveShadow=true;cell.add(housing);
++  const basket=new T.Group();basket.name='strainer-basket';cell.add(basket);
++  for(const y of [.5,.74,1.04]){const hoop=ring(basket,.7,y,-1.38,.28,.025,m.stainless);hoop.rotation.x=-Math.PI/2;}
++  for(let i=0;i<10;i++){const a=i*Math.PI/5;pipe(v(.7+Math.cos(a)*.28,.5,-1.38+Math.sin(a)*.28),v(.7+Math.cos(a)*.28,1.04,-1.38+Math.sin(a)*.28),.022,m.stainless);}
++  bend([v(.7,.65,-1.38),v(1.4,.65,-1.38),v(1.6,.4,-1.38),v(1.6,.2,-1.38)],.17);
+   b(.96,1.55,0,.55,.1,.42,m.frame);
+   b(1,1.61,0,.18,.025,.15,m.amber);
+   b(-.57,.56,.5,.12,.15,.018,m.mineral);
+diff --git a/tests/CoolantPlantBlockout.test.ts b/tests/CoolantPlantBlockout.test.ts
+index 971a7c9..a269c27 100644
+--- a/tests/CoolantPlantBlockout.test.ts
++++ b/tests/CoolantPlantBlockout.test.ts
+@@ -11,6 +11,28 @@ const node={id:'coolant-test',templateId:'coolant-plant',depth:12,kind:'combat',
+ const footprints=[[300,210,150,150],[750,210,150,150],[300,540,150,150],[750,540,150,150],[550,390,100,100]];
+ function bake(world:T.Group){const renderer=Object.create(DepthRenderer.prototype) as {world:T.Group;floorMaterial:T.Material;bakeWorld():void};renderer.world=world;renderer.floorMaterial=new T.MeshStandardMaterial();renderer.bakeWorld();renderer.floorMaterial.dispose();return world;}
+ describe('coolant plant room visuals',()=>{
++ it('builds coaxial volute, coupling and motor with a tangential discharge',()=>{
++  for(const index of [2,3]){
++   const model=coolantPlantBlockout({x:0,y:0,width:4,height:4},index);
++   const volute=model.getObjectByName('pump-volute') as T.Mesh;
++   expect(volute).toBeDefined();expect(volute.geometry.type).toBe('ExtrudeGeometry');
++   const shaft=model.getObjectByName('motor-coupling') as T.Mesh;
++   const motor=model.getObjectByName('pump-motor') as T.Mesh;
++   expect(shaft).toBeDefined();expect(motor).toBeDefined();
++   expect(shaft.position.y).toBe(motor.position.y);expect(shaft.position.z).toBe(motor.position.z);
++   expect(model.getObjectByName('tangential-discharge')).toBeDefined();
++   expect(model.getObjectByName('strainer-cutaway')).toBeDefined();
++   expect(model.getObjectByName('strainer-basket')).toBeDefined();
++  }
++ });
++ it('connects expansion vessels to both exchanger shells inside the retained skids',()=>{
++  for(const index of [0,1]){
++   const model=coolantPlantBlockout({x:0,y:0,width:4,height:4},index);
++   expect(model.getObjectByName('expansion-vessel')).toBeDefined();
++   expect(model.getObjectByName('expansion-branch')).toBeDefined();
++   expect(model.getObjectByName('exchanger-channel-head')).toBeDefined();
++  }
++ });
+  it('keeps service covers non-emissive and breaks their finish into grate slots',()=>{
+   const services=coolantPlantServices(),materials=new Set<T.MeshStandardMaterial>();
+   services.traverse(o=>{if(o instanceof T.Mesh)materials.add(o.material as T.MeshStandardMaterial);});

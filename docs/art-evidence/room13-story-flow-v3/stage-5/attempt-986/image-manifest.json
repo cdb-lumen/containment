@@ -1,0 +1,238 @@
+{
+  "evidenceClass": "controlled simulation",
+  "staging": "Controlled legal actors on a spawn-to-exit route verified with actual DepthGame.update. Fixed-step production combat and renderer; inactive encounter director, no boss, no campaign progression, no DOM HUD or real touch input. Overview fits room; gameplay retains production camera/composition.",
+  "images": [
+    {
+      "file": "final-overview.png",
+      "original": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-5/attempt-986/capture/13-coolant-plant-overview.png",
+      "sha256": "b982af57a2692c55998db4c6b3dfeaff408b0e21f2c9adc6a805e190e0224fa7",
+      "pixels": [
+        1280,
+        900
+      ],
+      "bytes": 466145,
+      "identicalToStage4": true,
+      "metrics": {
+        "drawCalls": 66,
+        "triangles": 95163,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 580,
+          "y": 512
+        },
+        "enemies": 3,
+        "combat": null,
+        "composition": "production-high-composer"
+      },
+      "traversal": {
+        "steps": 328,
+        "distance": 1126.6476151587638,
+        "exitDistance": 0,
+        "legalChecks": 328
+      },
+      "errors": [],
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/src/render/RoomEquipmentPalette.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/environments/RoomEnvironment.js",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5173/src/render/PassengerVault.ts",
+        "http://127.0.0.1:5173/src/render/DeathRagdolls.ts",
+        "http://127.0.0.1:5173/src/game/world/wallContact.ts",
+        "http://127.0.0.1:5173/src/render/AwakeningServiceFinish.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5173/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5173/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5173/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5173/src/render/ResidentialGalleryEquipment.ts",
+        "http://127.0.0.1:5173/src/render/ShipEnvironments.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/authoredRoomTopologies.ts",
+        "http://127.0.0.1:5173/src/render/afflictions.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5173/src/render/models.ts",
+        "http://127.0.0.1:5173/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5173/src/game/world/polygonGeometry.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5173/src/render/acidPool.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+        "http://127.0.0.1:5173/src/game/waves/EncounterDirector.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5173/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js",
+        "http://127.0.0.1:5173/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5173/src/game/combat/enemyContact.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5173/src/render/meshParts.ts",
+        "http://127.0.0.1:5173/src/render/AttackEffects.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+        "http://127.0.0.1:5173/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5173/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5173/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5173/src/render/weapons.ts",
+        "http://127.0.0.1:5173/src/render/EnemyHealthBars.ts"
+      ]
+    },
+    {
+      "file": "final-desktop.png",
+      "original": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-5/attempt-986/capture/13-coolant-plant-gameplay.png",
+      "sha256": "3ed754365ebfdb77ed36f63ff62781fe5cbda69276bb01810104a3aeed860da8",
+      "pixels": [
+        1280,
+        900
+      ],
+      "bytes": 870660,
+      "identicalToStage4": false,
+      "metrics": {
+        "drawCalls": 69,
+        "triangles": 95053,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            17.95288816020797,
+            26,
+            33.531180950630585
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 580,
+          "y": 542.7999999999993
+        },
+        "enemies": 3,
+        "combat": {
+          "steps": 25,
+          "deltaMs": 16.666666666666668,
+          "shots": 4,
+          "damage": 48,
+          "enemyDistance": 63.71695220071891,
+          "playerDistance": 30.799999999999272,
+          "playerDisplacement": 30.799999999999272,
+          "legalChecks": 100,
+          "activeEnemies": 3,
+          "bullets": 1,
+          "player": {
+            "x": 580,
+            "y": 542.7999999999993
+          },
+          "staged": [
+            {
+              "x": 740,
+              "y": 512,
+              "id": 1
+            },
+            {
+              "x": 693.1370849898476,
+              "y": 625.1370849898476,
+              "id": 2
+            },
+            {
+              "x": 580,
+              "y": 672,
+              "id": 3
+            }
+          ],
+          "events": [
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot"
+          ]
+        },
+        "composition": "production-high-composer"
+      },
+      "traversal": {
+        "steps": 328,
+        "distance": 1126.6476151587638,
+        "exitDistance": 0,
+        "legalChecks": 328
+      },
+      "errors": [],
+      "abortedDuplicateModules": [
+        "http://127.0.0.1:5173/src/render/RoomEquipmentPalette.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/environments/RoomEnvironment.js",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "http://127.0.0.1:5173/src/render/PassengerVault.ts",
+        "http://127.0.0.1:5173/src/render/DeathRagdolls.ts",
+        "http://127.0.0.1:5173/src/game/world/wallContact.ts",
+        "http://127.0.0.1:5173/src/render/AwakeningServiceFinish.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRooms.ts",
+        "http://127.0.0.1:5173/src/game/pickups/PickupSystem.ts",
+        "http://127.0.0.1:5173/src/game/combat/CombatSystem.ts",
+        "http://127.0.0.1:5173/src/game/enemies/EnemySystem.ts",
+        "http://127.0.0.1:5173/src/render/ResidentialGalleryEquipment.ts",
+        "http://127.0.0.1:5173/src/render/ShipEnvironments.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/authoredRoomTopologies.ts",
+        "http://127.0.0.1:5173/src/render/afflictions.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "http://127.0.0.1:5173/src/render/models.ts",
+        "http://127.0.0.1:5173/node_modules/three/build/three.core.js",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+        "http://127.0.0.1:5173/src/game/world/polygonGeometry.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/expedition.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+        "http://127.0.0.1:5173/src/render/acidPool.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+        "http://127.0.0.1:5173/src/game/waves/EncounterDirector.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/builds.ts",
+        "http://127.0.0.1:5173/src/game/world/facilityGeometry.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js",
+        "http://127.0.0.1:5173/src/game/roguelike/MutationRuntime.ts",
+        "http://127.0.0.1:5173/src/game/combat/enemyContact.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/storyRoomTemplates.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/progression.ts",
+        "http://127.0.0.1:5173/src/render/meshParts.ts",
+        "http://127.0.0.1:5173/src/render/AttackEffects.ts",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+        "http://127.0.0.1:5173/node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+        "http://127.0.0.1:5173/src/game/roguelike/run.ts",
+        "http://127.0.0.1:5173/src/game/roguelike/checkpoints.ts",
+        "http://127.0.0.1:5173/src/game/enemies/QueenBossSystem.ts",
+        "http://127.0.0.1:5173/src/game/input/aimAssist.ts",
+        "http://127.0.0.1:5173/src/render/weapons.ts",
+        "http://127.0.0.1:5173/src/render/EnemyHealthBars.ts"
+      ]
+    }
+  ]
+}

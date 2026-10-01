@@ -2,6 +2,7 @@ import {describe,expect,it,vi} from 'vitest';
 import * as T from 'three';
 import {SHIP_ENVIRONMENTS,appendEnvironment,environmentArchitecture,environmentObstacle,shipEnvironment,type ShipEnvironment} from '../src/render/ShipEnvironments';
 import {MAT,disposeModel,geometries} from '../src/render/meshParts';
+import {COOLANT_MAT} from '../src/render/CoolantPlantBlockout';
 import {DepthRenderer} from '../src/render/DepthRenderer';
 
 // Independent route contract: do not derive expected IDs from the renderer table.
@@ -42,11 +43,14 @@ describe('ship environments',()=>{
    const world=new T.Group();environmentArchitecture(world,env,32,24);
    appendEnvironment(world,environmentObstacle(env,{x:5,y:5,width:4,height:8},0,rooms[env][0]));
    const originals=meshes(world),sharedGeometry=new Set(originals.map(m=>m.geometry));
-   const ownedMaterials=new Set(originals.map(m=>m.material as T.MeshStandardMaterial).filter(m=>!Object.values(MAT).includes(m)));
+   const cachedMaterials=[...Object.values(MAT),...Object.values(COOLANT_MAT)];
+   const coolantMaterials=new Set(originals.map(m=>m.material).filter(m=>Object.values(COOLANT_MAT).includes(m as T.MeshStandardMaterial)));
+   expect(coolantMaterials.size).toBe(env==='maintenance'?7:0);
+   const ownedMaterials=new Set(originals.map(m=>m.material as T.MeshStandardMaterial).filter(m=>!cachedMaterials.includes(m)));
    if(env==='habitation'){expect(ownedMaterials.size).toBe(4);for(const m of ownedMaterials)expect(m.userData.actorMaterial).toBe(true);}else expect(ownedMaterials.size).toBe(0);
    expect([...sharedGeometry].every(g=>[...geometries.values()].includes(g))).toBe(true);
    const geometrySpies=[...sharedGeometry].map(g=>vi.spyOn(g,'dispose'));
-   const materialSpies=Object.values(MAT).map(m=>vi.spyOn(m,'dispose'));
+   const materialSpies=cachedMaterials.map(m=>vi.spyOn(m,'dispose'));
    const ownedMaterialSpies=[...ownedMaterials].map(m=>vi.spyOn(m,'dispose'));
    try{
     // Exercise the real material batching path without constructing a WebGL context.

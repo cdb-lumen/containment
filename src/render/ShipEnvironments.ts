@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
+import {COOLANT_MAT,coolantPlantBlockout,coolantPlantServices} from './CoolantPlantBlockout';
 
 export const SHIP_ENVIRONMENTS=['cryogenics','habitation','security','cargo','communications','engineering','maintenance','infested','containment','reactor'] as const;
 export type ShipEnvironment=typeof SHIP_ENVIRONMENTS[number];
@@ -12,6 +13,7 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 
 /** All models are authored in a local cell, then fitted inside the authoritative collision rectangle. */
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
+ if(environment==='maintenance'&&templateId==='coolant-plant')return coolantPlantBlockout(footprint,index);
  if(environment==='habitation'&&templateId==='residential-gallery')return residentialGalleryBlockout(footprint,index);
  const root=new T.Group();root.name=`${environment}-obstacle-${index}`;
  const long=Math.max(footprint.width,footprint.height),short=Math.min(footprint.width,footprint.height);
@@ -163,6 +165,8 @@ export function appendEnvironment(parent:T.Group,model:T.Group){
 
 /** Flush deck inlays and outboard rear architecture never occupy a walkable tile. */
 export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:number,h:number,templateId=''){
+ const coolant=env==='maintenance'&&templateId==='coolant-plant';
+ if(coolant)appendEnvironment(parent,coolantPlantServices());
  const residential=env==='habitation'&&templateId==='residential-gallery';
  const accent=env==='habitation'?MAT.bone:env==='infested'?MAT.acid:['security','engineering','containment','maintenance'].includes(env)?MAT.amber:MAT.cyan;
  const inlay=(x:number,z:number,width:number,depth:number,mat:T.Material)=>{const m=box(parent,x,-.007,z,width,.018,depth,mat,0);m.castShadow=false;return m;};
@@ -183,7 +187,7 @@ export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:num
   for(const x of [w*.25,w*.75])for(const z of [h*.25,h*.75]){
    for(const side of [-1,1]){inlay(x+side*1.5,z,.065,3,MAT.trim);inlay(x,z+side*1.5,3,.065,MAT.trim);}
   }
- }else if(env==='maintenance'){
+ }else if(env==='maintenance'&&templateId!=='coolant-plant'){
   // One upward-facing layer: dark gaps abut the bars rather than sharing
   // the old slab's top face. The cached unit plane has no hidden box faces.
   const grate=(x:number,z:number,width:number,depth:number,mat:T.Material)=>{
@@ -206,13 +210,13 @@ export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:num
  }
  for(let x=2;x<w;x+=4){
   const height=env==='cargo'?3.4:env==='containment'?3:2.65;
-  box(parent,x,height/2,-.4,Math.min(3.96,w-x+2),height,.35,env==='cryogenics'?MAT.armor:env==='habitation'?MAT.bone:MAT.steel,env==='cryogenics'?.18:.04);
+  box(parent,x,height/2,-.4,Math.min(3.96,w-x+2),height,.35,coolant?COOLANT_MAT.enamel:env==='cryogenics'?MAT.armor:env==='habitation'?MAT.bone:MAT.steel,env==='cryogenics'?.18:.04);
   box(parent,x,height/2,-.13,.3,height,.22,env==='cryogenics'?MAT.armor:MAT.edge);
   if(env==='cargo'){
    box(parent,x,3.5,-.35,3.95,.2,.5,MAT.trim);
    rod(parent,v(x-1.8,2.7,-.1),v(x+1.8,3.35,-.1),.065,.065,MAT.edge);
   }else if(env==='maintenance'){
-   rod(parent,v(x-2,1.45,-.21),v(Math.min(w,x+2),1.45,-.21),.2,.2,MAT.copper);
+   rod(parent,v(x-2,1.45,-.21),v(Math.min(w,x+2),1.45,-.21),.2,.2,coolant?COOLANT_MAT.stainless:MAT.copper);
   }else if(env==='containment'||env==='security'){
    for(const side of [-1,1]){const rib=box(parent,x+side*1.25,height/2,-.12,.25,height,.24,MAT.armor);rib.rotation.z=side*.16;}
   }
@@ -225,7 +229,7 @@ export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:num
   }else if(env==='infested'){
    shell(parent,x,1.4,-.45,.7,1.3,.6,MAT.flesh);
   }else{
-   box(parent,x,2.1,-.04,env==='communications'?1.8:1,.12,.06,accent);
+   box(parent,x,2.1,-.04,env==='communications'?1.8:1,.12,.06,coolant?COOLANT_MAT.cool:accent);
    if(env==='engineering')box(parent,x,1.3,-.035,2,1.1,.05,MAT.black);
   }
  }

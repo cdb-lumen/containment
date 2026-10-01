@@ -1,0 +1,731 @@
+{
+  "kind": "analytic layout validation, not production movement",
+  "summary": {
+    "checks": 87,
+    "passed": 87,
+    "failures": 0
+  },
+  "results": [
+    {
+      "name": "source head pinned",
+      "passed": true,
+      "head": "95133d4a4a80a876042d5d4fcf88c72f610c0211"
+    },
+    {
+      "name": "no tracked source edits before generation",
+      "passed": true
+    },
+    {
+      "name": "actual topology retained",
+      "passed": true,
+      "boundary": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          880
+        ],
+        [
+          0,
+          880
+        ]
+      ],
+      "polygon_voids": [],
+      "rectangular_blockers": [
+        [
+          300,
+          210,
+          150,
+          150
+        ],
+        [
+          750,
+          210,
+          150,
+          150
+        ],
+        [
+          300,
+          540,
+          150,
+          150
+        ],
+        [
+          750,
+          540,
+          150,
+          150
+        ],
+        [
+          550,
+          390,
+          100,
+          100
+        ]
+      ],
+      "note": "No authored Room13 polygon override at this HEAD. Rectangle and five solids, not a custom figure-eight shell."
+    },
+    {
+      "name": "r16 west circuit",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 34.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r16 reverse west circuit",
+      "passed": true
+    },
+    {
+      "name": "r16 east circuit",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 34.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r16 reverse east circuit",
+      "passed": true
+    },
+    {
+      "name": "r16 central north bypass",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 34.0,
+      "continuous_segments": 3
+    },
+    {
+      "name": "r16 central south bypass",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 34.0,
+      "continuous_segments": 3
+    },
+    {
+      "name": "r16 spawn to exit north",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 34.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r16 spawn to exit south",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 34.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r16 complete figure eight",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 34.0,
+      "continuous_segments": 16
+    },
+    {
+      "name": "r16 reverse complete figure eight",
+      "passed": true
+    },
+    {
+      "name": "r16 occupancy spawn",
+      "passed": true,
+      "center": [
+        100,
+        440
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy exit",
+      "passed": true,
+      "center": [
+        1100,
+        440
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy west service",
+      "passed": true,
+      "center": [
+        500,
+        285
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r16 occupancy east service",
+      "passed": true,
+      "center": [
+        700,
+        285
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r16 occupancy west return service",
+      "passed": true,
+      "center": [
+        500,
+        615
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r16 occupancy east return service",
+      "passed": true,
+      "center": [
+        700,
+        615
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r16 occupancy saddle north",
+      "passed": true,
+      "center": [
+        600,
+        330
+      ],
+      "clearance": 60.0
+    },
+    {
+      "name": "r16 occupancy saddle south",
+      "passed": true,
+      "center": [
+        600,
+        550
+      ],
+      "clearance": 60.0
+    },
+    {
+      "name": "r16 occupancy breach 0",
+      "passed": true,
+      "center": [
+        100,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy breach 1",
+      "passed": true,
+      "center": [
+        1100,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy breach 2",
+      "passed": true,
+      "center": [
+        100,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy breach 3",
+      "passed": true,
+      "center": [
+        1100,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy breach inward 0",
+      "passed": true,
+      "center": [
+        156,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy breach inward 1",
+      "passed": true,
+      "center": [
+        1044,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy breach inward 2",
+      "passed": true,
+      "center": [
+        156,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 occupancy breach inward 3",
+      "passed": true,
+      "center": [
+        1044,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r16 grid connectivity",
+      "passed": true,
+      "grid_step": 10,
+      "free_nodes": 8480,
+      "components": 1,
+      "component_sizes": [
+        8480
+      ],
+      "anchors_reachable": {
+        "spawn": true,
+        "exit": true,
+        "west service": true,
+        "east service": true,
+        "west return service": true,
+        "east return service": true,
+        "saddle north": true,
+        "saddle south": true,
+        "breach 0": true,
+        "breach 1": true,
+        "breach 2": true,
+        "breach 3": true,
+        "breach inward 0": true,
+        "breach inward 1": true,
+        "breach inward 2": true,
+        "breach inward 3": true
+      },
+      "limitation": "Grid connectivity with analytically checked edges. Not a proof about every continuous free-space point or production actor movement."
+    },
+    {
+      "name": "r28 west circuit",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 22.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r28 reverse west circuit",
+      "passed": true
+    },
+    {
+      "name": "r28 east circuit",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 22.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r28 reverse east circuit",
+      "passed": true
+    },
+    {
+      "name": "r28 central north bypass",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 22.0,
+      "continuous_segments": 3
+    },
+    {
+      "name": "r28 central south bypass",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 22.0,
+      "continuous_segments": 3
+    },
+    {
+      "name": "r28 spawn to exit north",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 22.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r28 spawn to exit south",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 22.0,
+      "continuous_segments": 5
+    },
+    {
+      "name": "r28 complete figure eight",
+      "passed": true,
+      "minimum_center_clearance": 50.0,
+      "minimum_circle_edge_margin": 22.0,
+      "continuous_segments": 16
+    },
+    {
+      "name": "r28 reverse complete figure eight",
+      "passed": true
+    },
+    {
+      "name": "r28 occupancy spawn",
+      "passed": true,
+      "center": [
+        100,
+        440
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy exit",
+      "passed": true,
+      "center": [
+        1100,
+        440
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy west service",
+      "passed": true,
+      "center": [
+        500,
+        285
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r28 occupancy east service",
+      "passed": true,
+      "center": [
+        700,
+        285
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r28 occupancy west return service",
+      "passed": true,
+      "center": [
+        500,
+        615
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r28 occupancy east return service",
+      "passed": true,
+      "center": [
+        700,
+        615
+      ],
+      "clearance": 50.0
+    },
+    {
+      "name": "r28 occupancy saddle north",
+      "passed": true,
+      "center": [
+        600,
+        330
+      ],
+      "clearance": 60.0
+    },
+    {
+      "name": "r28 occupancy saddle south",
+      "passed": true,
+      "center": [
+        600,
+        550
+      ],
+      "clearance": 60.0
+    },
+    {
+      "name": "r28 occupancy breach 0",
+      "passed": true,
+      "center": [
+        100,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy breach 1",
+      "passed": true,
+      "center": [
+        1100,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy breach 2",
+      "passed": true,
+      "center": [
+        100,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy breach 3",
+      "passed": true,
+      "center": [
+        1100,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy breach inward 0",
+      "passed": true,
+      "center": [
+        156,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy breach inward 1",
+      "passed": true,
+      "center": [
+        1044,
+        100
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy breach inward 2",
+      "passed": true,
+      "center": [
+        156,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 occupancy breach inward 3",
+      "passed": true,
+      "center": [
+        1044,
+        780
+      ],
+      "clearance": 100
+    },
+    {
+      "name": "r28 grid connectivity",
+      "passed": true,
+      "grid_step": 10,
+      "free_nodes": 7740,
+      "components": 1,
+      "component_sizes": [
+        7740
+      ],
+      "anchors_reachable": {
+        "spawn": true,
+        "exit": true,
+        "west service": true,
+        "east service": true,
+        "west return service": true,
+        "east return service": true,
+        "saddle north": true,
+        "saddle south": true,
+        "breach 0": true,
+        "breach 1": true,
+        "breach 2": true,
+        "breach 3": true,
+        "breach inward 0": true,
+        "breach inward 1": true,
+        "breach inward 2": true,
+        "breach inward 3": true
+      },
+      "limitation": "Grid connectivity with analytically checked edges. Not a proof about every continuous free-space point or production actor movement."
+    },
+    {
+      "name": "north legal cross shot",
+      "passed": true,
+      "from_point": [
+        500,
+        330
+      ],
+      "to_point": [
+        700,
+        330
+      ],
+      "minimum_clearance": 50.0
+    },
+    {
+      "name": "south legal cross shot",
+      "passed": true,
+      "from_point": [
+        500,
+        550
+      ],
+      "to_point": [
+        700,
+        550
+      ],
+      "minimum_clearance": 50.0
+    },
+    {
+      "name": "west service shot",
+      "passed": true,
+      "from_point": [
+        200,
+        440
+      ],
+      "to_point": [
+        500,
+        440
+      ],
+      "minimum_clearance": 50.0
+    },
+    {
+      "name": "east service shot",
+      "passed": true,
+      "from_point": [
+        700,
+        440
+      ],
+      "to_point": [
+        1000,
+        440
+      ],
+      "minimum_clearance": 50.0
+    },
+    {
+      "name": "negative control central solid blocks straight route",
+      "passed": true
+    },
+    {
+      "name": "negative control oversized circle rejects 100 unit slot",
+      "passed": true
+    },
+    {
+      "name": "negative control outside room rejected",
+      "passed": true
+    },
+    {
+      "name": "contained role A1 heat exchanger",
+      "passed": true
+    },
+    {
+      "name": "contained role B1 heat exchanger",
+      "passed": true
+    },
+    {
+      "name": "contained role A2 pump / return",
+      "passed": true
+    },
+    {
+      "name": "contained role B2 pump / return",
+      "passed": true
+    },
+    {
+      "name": "contained role S low service saddle",
+      "passed": true
+    },
+    {
+      "name": "A vertical network enters both equipment solids",
+      "passed": true
+    },
+    {
+      "name": "A y410 attached junction and saddle port",
+      "passed": true
+    },
+    {
+      "name": "A y470 attached junction and saddle port",
+      "passed": true
+    },
+    {
+      "name": "B vertical network enters both equipment solids",
+      "passed": true
+    },
+    {
+      "name": "B y410 attached junction and saddle port",
+      "passed": true
+    },
+    {
+      "name": "B y470 attached junction and saddle port",
+      "passed": true
+    },
+    {
+      "name": "service paths separated from entry annotation",
+      "passed": true
+    },
+    {
+      "name": "no new service collision footprints",
+      "passed": true
+    },
+    {
+      "name": "negative control detached branch rejected",
+      "passed": true
+    },
+    {
+      "name": "visible continuous cyan A exchanger to pump",
+      "passed": true,
+      "pixels_checked": 221
+    },
+    {
+      "name": "visible continuous cyan B exchanger to pump",
+      "passed": true,
+      "pixels_checked": 221
+    },
+    {
+      "name": "visible continuous cyan A supply to saddle",
+      "passed": true,
+      "pixels_checked": 176
+    },
+    {
+      "name": "visible continuous cyan A return to saddle",
+      "passed": true,
+      "pixels_checked": 176
+    },
+    {
+      "name": "visible continuous cyan B supply to saddle",
+      "passed": true,
+      "pixels_checked": 176
+    },
+    {
+      "name": "visible continuous cyan B return to saddle",
+      "passed": true,
+      "pixels_checked": 176
+    },
+    {
+      "name": "PNG decoded",
+      "passed": true,
+      "size": [
+        1800,
+        1320
+      ],
+      "mode": "RGB"
+    },
+    {
+      "name": "source bytes unchanged after generation",
+      "passed": true
+    },
+    {
+      "name": "source git status unchanged by generation",
+      "passed": true
+    }
+  ],
+  "method": "Exact segment-to-rectangle Euclidean clearance. Named routes also pass conservative expanded-rectangle traversal. The 10-unit grid uses circular occupancy and continuous Euclidean edge checks consistently. No polygon override exists for Room13 at pinned HEAD.",
+  "development_note": "Initial grid used circular nodes with square-expanded edges, leaving 20 artificial isolated corner nodes at radius28. Corrected the grid to use Euclidean circle clearance for both nodes and edges. Named route checks retain the stricter square-expanded test. No room geometry changed.",
+  "not_tested": [
+    "Runtime player or enemy movement",
+    "Pursuit or combat",
+    "3D mesh/collision matching",
+    "Render integration"
+  ],
+  "source_sha256": {
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/authoredRoomTopologies.ts": "933296fee8d6a456a518f25ca796c759a4ffa09f9386353af7cca961115630ac",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/world/expeditionGeometry.ts": "61592cc4e947e8d6873488407235e1ab117585e59d10141916de3efe00ef316b",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/render/AuthoredRooms.ts": "e7dbcaf948fe5ab6d6dd9b5e1e255cf1fd32da2fbc27a108990088fde07e8da4",
+    "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/rollout-sources/room13-brief.json": "885ad49b154b8c07f5ac133b3c7b6579c92f01d99c8b7f16263a51f477c08383",
+    "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-0/attempt-980/brief.md": "a573b0a933e29365e9095a95472eee26238e0a0584e3e1b3910e6140a8c91b05",
+    "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-0/attempt-980/draw_story.py": "3dc5cd103f42318a6e9cbe13c8060051206f51d024d23d272f31dc6c916ccebf"
+  },
+  "generator_sha256": "1501edeb7f0b1c916e93943f0268f2a5dd1273c2a62f800f600e839c2dedaa6c",
+  "png_sha256": "dfba6366d15ab08e5c25866eed90a67f79d0a2937310dd3a73cf19ec1ca76791"
+}
