@@ -1,0 +1,250 @@
+{
+  "task": "room17-story-flow-v3",
+  "stage": 1,
+  "attempt": 1016,
+  "source_commit": "7a3f262886104fb024de9684958b3f85a8859f34",
+  "source_sha256": {
+    "src/game/roguelike/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+    "src/game/roguelike/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "src/game/roguelike/authoredRoomTopologies.ts": "933296fee8d6a456a518f25ca796c759a4ffa09f9386353af7cca961115630ac",
+    "src/game/roguelike/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "src/game/world/expeditionGeometry.ts": "61592cc4e947e8d6873488407235e1ab117585e59d10141916de3efe00ef316b",
+    "src/game/world/polygonGeometry.ts": "f041fae2658b2de86bf8281d72b605fcb402ec18ebd8c7f11c0f57c9086cb18a",
+    "src/game/input/aimAssist.ts": "0db9fe4f64c5914d10f34776342ba1c048a8f65430f03e26aa5f9772015e53e7",
+    "src/game/enemies/catalog.ts": "f42acc96608cc251ac955f45439ebe082a124a120b6ce0da364037866df0a0f1"
+  },
+  "canonical_brief_sha256": "a8ef7779e1105b64b39253dd4a4ec23b3b32c96f9e10fc3b9bc5cad31a94a3d7",
+  "template": "shielding-gate",
+  "bounds": [
+    0,
+    0,
+    1200,
+    880
+  ],
+  "spawn": [
+    100,
+    440
+  ],
+  "exit": [
+    1100,
+    440
+  ],
+  "breaches": [
+    [
+      100,
+      100
+    ],
+    [
+      1100,
+      100
+    ],
+    [
+      100,
+      780
+    ],
+    [
+      1100,
+      780
+    ]
+  ],
+  "solids": [
+    {
+      "id": "S1",
+      "rect": [
+        300,
+        140,
+        100,
+        310
+      ]
+    },
+    {
+      "id": "S2",
+      "rect": [
+        520,
+        590,
+        160,
+        150
+      ]
+    },
+    {
+      "id": "S3",
+      "rect": [
+        800,
+        340,
+        100,
+        360
+      ]
+    }
+  ],
+  "visual_reservations": [
+    {
+      "id": "G1",
+      "owner": "S1",
+      "rect": [
+        310,
+        345,
+        80,
+        90
+      ],
+      "purpose": "Nested static leaves and west screw drive"
+    },
+    {
+      "id": "G2",
+      "owner": "S3",
+      "rect": [
+        810,
+        345,
+        80,
+        90
+      ],
+      "purpose": "Nested static leaves and east screw drive"
+    }
+  ],
+  "threshold": {
+    "rect": [
+      400,
+      350,
+      400,
+      90
+    ],
+    "axis": [
+      [
+        600,
+        320
+      ],
+      [
+        600,
+        480
+      ]
+    ],
+    "purpose": "Existing floor between S1 and S3. No overhead bridge or new collider."
+  },
+  "routes": [
+    {
+      "id": "A",
+      "name": "Stepped gate approach",
+      "half_width": 50,
+      "points": [
+        [
+          100,
+          440
+        ],
+        [
+          220,
+          520
+        ],
+        [
+          450,
+          520
+        ],
+        [
+          600,
+          520
+        ],
+        [
+          600,
+          250
+        ],
+        [
+          1000,
+          250
+        ],
+        [
+          1100,
+          440
+        ]
+      ]
+    },
+    {
+      "id": "B",
+      "name": "North alternate",
+      "half_width": 50,
+      "points": [
+        [
+          100,
+          440
+        ],
+        [
+          100,
+          70
+        ],
+        [
+          1000,
+          70
+        ],
+        [
+          1100,
+          440
+        ]
+      ]
+    },
+    {
+      "id": "C",
+      "name": "South alternate",
+      "half_width": 50,
+      "points": [
+        [
+          100,
+          440
+        ],
+        [
+          200,
+          800
+        ],
+        [
+          1000,
+          800
+        ],
+        [
+          1100,
+          440
+        ]
+      ]
+    }
+  ],
+  "activities": [
+    {
+      "id": "1",
+      "name": "Approach and evade",
+      "center": [
+        200,
+        520
+      ],
+      "radius": 60
+    },
+    {
+      "id": "2",
+      "name": "Defensive encounter space",
+      "center": [
+        600,
+        510
+      ],
+      "radius": 50
+    },
+    {
+      "id": "3",
+      "name": "Gate exit and regroup",
+      "center": [
+        600,
+        250
+      ],
+      "radius": 60
+    },
+    {
+      "id": "4",
+      "name": "Advance toward reactor",
+      "center": [
+        1000,
+        510
+      ],
+      "radius": 60
+    }
+  ],
+  "contract": {
+    "topology": "unchanged",
+    "reservations": "visual only, contained in existing solid footprints",
+    "activity_spaces": "editorial use zones, not spawn or encounter scripting",
+    "routes": "editorial CPU-tested corridors, not pathfinding or combat evidence",
+    "detail": "no detailed models or runtime edits"
+  }
+}

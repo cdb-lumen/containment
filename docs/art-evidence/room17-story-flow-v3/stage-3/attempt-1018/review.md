@@ -1,0 +1,9 @@
+# Room17 room visuals, attempt1018
+
+Parent verdict: passed for stage3 only. Both original 1280x900 PNGs were inspected through the vision tool. Dark grey cassettes replace the pale backing slabs, narrow steel edges distinguish contact surfaces, and ochre crowns tie the assemblies together. Both screw drives remain visible. The open center and alternate lanes retain visible floor with no new crossbeam or threshold obstruction.
+
+Independent reviewer also passed the bounded room-visuals stage with reservations. The long banks still outweigh the smaller gate heads. Locking wedges and dosimeter wells are not yet individually legible at overview scale. Existing floor rings compete with the machinery. These remain model-iteration considerations, not final-model acceptance. No shared floor, lighting, camera, HUD or gameplay change was made.
+
+Parent reran the three focused Vitest files: 35 tests passed, exit0. Fresh base is 7a3f262886104fb024de9684958b3f85a8859f34 and is an ancestor of candidate HEAD a8cd2a9fac4d4e462a7b2d5e91a916ae399ec752. Candidate runtime bytes are pinned separately because captures precede the publication commit. Independent review verified every pinned runtime file and source-snapshot copy. Author logs record npm test with 766 Vitest tests passed and one skipped plus Node/Python checks; build and source-pinned capture passed. Initial RED checks remain in the external attempt directory. Existing eight corner discrepancies from the layout stage are preserved, not repaired or waived.
+
+Evidence is controlled simulation with staged actors, fixed-step production combat and production gameplay camera/composer, without DOM HUD, encounter director, campaign progression or touch input. It is not ordinary live gameplay acceptance. Full browser verifier and phone smoke were not run. No human room acceptance, merge or deployment. Next is model iteration under a new permit.
