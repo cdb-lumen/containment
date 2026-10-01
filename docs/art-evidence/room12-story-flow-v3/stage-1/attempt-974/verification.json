@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "repeat_render_byte_equal": true,
+    "decoded_rgb_2400x1840": true,
+    "png_under_8_mib": true,
+    "both_radii_pass": true,
+    "all_routes_count": true,
+    "record_to_ai_separation_210": true,
+    "solid_route_negative_control": true,
+    "disconnected_wall_negative_control": true,
+    "source_restored_after_negative": true,
+    "purpose_symbols_inside_retained_reservations": true,
+    "sources_unchanged": true
+  },
+  "failures": 0,
+  "errors": 0,
+  "artifacts": {
+    "room12-layout.png": "7e9bdc436b774195b6072efb1b272e23e579cf9744b033e56377ac98e7786230",
+    "layout-geometry.json": "fd4588037356afc72910f2b4eccacbdee4a1ffb9385057b77004948a0a45e714",
+    "geometry-checks.json": "771a1625c9e58328ffe966d7bfe0a04444deb8103f104d44a1dae30d8aff1827"
+  },
+  "negative_control_components": 2,
+  "scope": "Artifact and static bounded geometry checks only. No game process, combat or navigation execution."
+}

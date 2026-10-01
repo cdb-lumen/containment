@@ -1,0 +1,60 @@
+{
+  "commands": {
+    "focused_exit": 0,
+    "npm_test_exit": 0,
+    "npm_run_build_exit": 0,
+    "npm_run_test_room_evidence_exit": 0,
+    "before_capture": "reused actual ce78d baseline, hashes verified",
+    "capture_after_exit": 0,
+    "motion_final_exit": 0
+  },
+  "test_summary": [
+    " Test Files  82 passed | 1 skipped (83)",
+    "      Tests  774 passed | 1 skipped (775)",
+    "# tests 2",
+    "# pass 2",
+    "# fail 0",
+    "Ran 1 test in 0.007s",
+    "OK",
+    "Ran 1 test in 5.654s",
+    "OK",
+    "Ran 1 test in 0.014s",
+    "OK",
+    "Ran 2 tests in 3.176s",
+    "OK",
+    "Ran 2 tests in 1.156s",
+    "OK",
+    "Ran 10 tests in 0.274s",
+    "OK",
+    "Ran 2 tests in 0.053s",
+    "OK",
+    "Ran 4 tests in 0.075s",
+    "OK",
+    "Ran 6 tests in 1.408s",
+    "OK"
+  ],
+  "same_camera_and_combat": true,
+  "motion_return_pairs_identical": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "motion_frames": 9,
+  "changed_files": [
+    "src/render/SafetyInterlockArchitecture.ts",
+    "src/render/SafetyInterlockBlockout.ts",
+    "tests/SafetyInterlockArchitecture.test.ts",
+    "tests/SafetyInterlockBlockout.test.ts"
+  ],
+  "limitations": [
+    "Controlled simulation, not campaign playthrough or ordinary input.",
+    "Render-only motion sweep, not live actor movement.",
+    "No full browser smoke or release acceptance.",
+    "Plate dates the local record only. Existing story presentation retains rescue/acknowledgement/promise ordering."
+  ],
+  "retained_failures": [
+    "Expected budget-correction RED: 2 failed, 8 passed. Material identity and original cap both failed before correction."
+  ],
+  "review_status": "Awaiting parent independent re-review. Historical independent pass is invalid."
+}

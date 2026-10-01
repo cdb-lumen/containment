@@ -1,0 +1,232 @@
+{
+  "template_id": "safety-interlock-station",
+  "boundary": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      880
+    ],
+    [
+      0,
+      880
+    ]
+  ],
+  "width": 1200,
+  "height": 880,
+  "obstacles": [
+    [
+      330,
+      210,
+      160,
+      140
+    ],
+    [
+      700,
+      210,
+      160,
+      140
+    ],
+    [
+      480,
+      580,
+      240,
+      120
+    ]
+  ],
+  "voids": [],
+  "spawn": [
+    100,
+    440
+  ],
+  "exit": [
+    1100,
+    440
+  ],
+  "breaches": [
+    [
+      100,
+      100
+    ],
+    [
+      1100,
+      100
+    ],
+    [
+      100,
+      780
+    ],
+    [
+      1100,
+      780
+    ]
+  ],
+  "roles": [
+    "Sealed local recorder",
+    "Disconnected AI side",
+    "Split contactor + local battery"
+  ],
+  "routes": {
+    "direct": [
+      [
+        100,
+        440
+      ],
+      [
+        1100,
+        440
+      ]
+    ],
+    "north bypass": [
+      [
+        100,
+        440
+      ],
+      [
+        100,
+        140
+      ],
+      [
+        1100,
+        140
+      ],
+      [
+        1100,
+        440
+      ]
+    ],
+    "south bypass": [
+      [
+        100,
+        440
+      ],
+      [
+        100,
+        760
+      ],
+      [
+        1100,
+        760
+      ],
+      [
+        1100,
+        440
+      ]
+    ],
+    "record approach": [
+      [
+        410,
+        440
+      ],
+      [
+        410,
+        395
+      ]
+    ],
+    "AI-side approach": [
+      [
+        780,
+        440
+      ],
+      [
+        780,
+        395
+      ]
+    ],
+    "contactor approach": [
+      [
+        600,
+        440
+      ],
+      [
+        600,
+        535
+      ]
+    ],
+    "breach 1 ingress": [
+      [
+        100,
+        100
+      ],
+      [
+        100,
+        440
+      ]
+    ],
+    "breach 2 ingress": [
+      [
+        1100,
+        100
+      ],
+      [
+        1100,
+        440
+      ]
+    ],
+    "breach 3 ingress": [
+      [
+        100,
+        780
+      ],
+      [
+        100,
+        440
+      ]
+    ],
+    "breach 4 ingress": [
+      [
+        1100,
+        780
+      ],
+      [
+        1100,
+        440
+      ]
+    ]
+  },
+  "anchors": {
+    "spawn": [
+      100,
+      440
+    ],
+    "exit": [
+      1100,
+      440
+    ],
+    "breach 1": [
+      100,
+      100
+    ],
+    "breach 2": [
+      1100,
+      100
+    ],
+    "breach 3": [
+      100,
+      780
+    ],
+    "breach 4": [
+      1100,
+      780
+    ],
+    "record viewing point": [
+      410,
+      395
+    ],
+    "AI-side viewing point": [
+      780,
+      395
+    ],
+    "contactor viewing point": [
+      600,
+      535
+    ]
+  },
+  "authored_override": false
+}
