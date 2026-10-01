@@ -5,6 +5,7 @@ import {createExpeditionGeometry,canOccupyExpedition,hasClearExpeditionShot} fro
 import {FacilityNavigation} from '../../src/game/world/FacilityNavigation';
 import {ProjectileHitTracker} from '../../src/game/combat/CombatSystem';
 import {DepthGame} from '../../src/DepthGame';
+import diagnosticLayout from '../fixtures/diagnostic-gallery-layout.json';
 const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay'];
 const nodes=generateRun(3,3).nodes;
 const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280}];
@@ -18,6 +19,12 @@ describe('authored walkable topologies',()=>{
     expect(canOccupyExpedition(g,n.templateId==='passenger-vault'?{x:30,y:50}:{x:50,y:50},radius)).toBe(false);
     expect(canOccupyExpedition(g,probes[ids.indexOf(n.templateId)],radius)).toBe(false);
    }
+  }else if(n.templateId==='diagnostic-gallery'){
+   // Room11 keeps its rectangular shell but reserves three furniture polygons.
+   expect(t).not.toHaveProperty('boundary');expect(t.obstacles).toEqual([]);
+   expect(t.voids).toEqual(diagnosticLayout.solids.map(s=>s.polygon));
+   const g=createExpeditionGeometry(n);
+   for(const radius of [0,9,28,38])for(const p of [{x:600,y:150},{x:350,y:440},{x:850,y:440}])expect(canOccupyExpedition(g,p,radius)).toBe(false);
   }else{expect(t).not.toHaveProperty('boundary');expect(t).not.toHaveProperty('voids');}}
  });
  it('connects spawn, exit and inward-offset breaches for larger actors',()=>{

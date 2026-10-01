@@ -1,0 +1,125 @@
+{
+  "source_unchanged": true,
+  "evidence_class": "controlled-live-simulation",
+  "staging": "Controlled legal actors on a spawn-to-exit route verified with actual DepthGame.update. Fixed-step production combat and renderer; inactive encounter director, no boss, no campaign progression, no DOM HUD or real touch input. Overview fits room; gameplay retains production camera/composition.",
+  "images": [
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-3/attempt-993/overview.png",
+      "sha256": "edd24c8a9c59f46da0bdc453a85bcab4ec509bb06b1c15edd3c9aebf2d98b6d9",
+      "metrics": {
+        "drawCalls": 72,
+        "triangles": 81369,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 580,
+          "y": 320
+        },
+        "enemies": 3,
+        "combat": null,
+        "composition": "production-high-composer"
+      },
+      "errors": []
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-3/attempt-993/desktop-in-scene.png",
+      "sha256": "114319453416236da9eb3258a4ed127711af74dacdd0f698d69770f2f781344f",
+      "metrics": {
+        "drawCalls": 75,
+        "triangles": 81237,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            17.95288816020797,
+            26,
+            31.968819049369415
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 580,
+          "y": 350.80000000000064
+        },
+        "enemies": 3,
+        "combat": {
+          "steps": 25,
+          "deltaMs": 16.666666666666668,
+          "shots": 4,
+          "damage": 48,
+          "enemyDistance": 68.91955030347212,
+          "playerDistance": 30.800000000000637,
+          "playerDisplacement": 30.800000000000637,
+          "legalChecks": 100,
+          "activeEnemies": 3,
+          "bullets": 1,
+          "player": {
+            "x": 580,
+            "y": 350.80000000000064
+          },
+          "staged": [
+            {
+              "x": 740,
+              "y": 320,
+              "id": 1
+            },
+            {
+              "x": 693.1370849898476,
+              "y": 433.1370849898476,
+              "id": 2
+            },
+            {
+              "x": 580,
+              "y": 480,
+              "id": 3
+            }
+          ],
+          "events": [
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot"
+          ]
+        },
+        "composition": "production-high-composer"
+      },
+      "errors": []
+    }
+  ]
+}

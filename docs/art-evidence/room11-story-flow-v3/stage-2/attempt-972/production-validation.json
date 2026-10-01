@@ -1,0 +1,17 @@
+{
+  "source": "production geometry, no in-memory substitution",
+  "radii": {
+    "16": {
+      "reachable": 2059,
+      "total": 2059,
+      "routes": true,
+      "breachOffsets": true
+    },
+    "28": {
+      "reachable": 1993,
+      "total": 1993,
+      "routes": true,
+      "breachOffsets": true
+    }
+  }
+}
