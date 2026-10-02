@@ -1,0 +1,161 @@
+{
+  "sourcePinsUnchangedAfterCapture": true,
+  "sourceState": "uncommitted Room15 candidate; HEAD alone does not identify rendered source",
+  "baseHead": "98449b5a30842f57aa7399c84d2c04915fa6854e",
+  "images": [
+    {
+      "path": "15-infested-workshop-overview.png",
+      "sha256": "8a450bf19a891d104662687acae69cb097e24339da008609e1b98187fc2abad4",
+      "bytes": 437729,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "metrics": {
+        "drawCalls": 66,
+        "triangles": 89411,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 604,
+          "y": 440
+        },
+        "enemies": 3,
+        "combat": null,
+        "composition": "production-high-composer"
+      }
+    },
+    {
+      "path": "15-infested-workshop-gameplay.png",
+      "sha256": "5d34aa76ceb2f2ea09634ed86365cbc08d812c858c45ea1b8d76446744a16c82",
+      "bytes": 800972,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "metrics": {
+        "drawCalls": 73,
+        "triangles": 89711,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            18.662302835540853,
+            26,
+            33.39928234964976
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 604,
+          "y": 470.80000000000064
+        },
+        "enemies": 3,
+        "combat": {
+          "steps": 25,
+          "deltaMs": 16.666666666666668,
+          "shots": 4,
+          "damage": 48,
+          "enemyDistance": 68.89798194811486,
+          "playerDistance": 30.800000000000637,
+          "playerDisplacement": 30.800000000000637,
+          "legalChecks": 100,
+          "activeEnemies": 3,
+          "bullets": 1,
+          "player": {
+            "x": 604,
+            "y": 470.80000000000064
+          },
+          "staged": [
+            {
+              "x": 764,
+              "y": 440,
+              "id": 1
+            },
+            {
+              "x": 717.1370849898476,
+              "y": 553.1370849898476,
+              "id": 2
+            },
+            {
+              "x": 456.1792747981941,
+              "y": 501.2293491784144,
+              "id": 3
+            }
+          ],
+          "events": [
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot"
+          ]
+        },
+        "composition": "production-high-composer"
+      }
+    }
+  ],
+  "npmTest": {
+    "exit": 0,
+    "vitest": "762 passed, 1 skipped",
+    "pythonTestCounts": [
+      "1",
+      "1",
+      "1",
+      "2",
+      "2",
+      "10",
+      "2",
+      "4",
+      "6"
+    ],
+    "nodeSummary": [
+      "# tests 2",
+      "# pass 2",
+      "# fail 0",
+      "# skipped 0"
+    ]
+  },
+  "build": {
+    "exit": 0,
+    "warning": "existing large bundle warning"
+  },
+  "scoped": "37 passed",
+  "routes": "11 assertions pass; radius16 and radius28 anchors and segments pass; stronger diagnostics retained",
+  "publication": "none; parent must commit source and pin publication links"
+}

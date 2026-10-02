@@ -1,0 +1,116 @@
+{
+  "source_commit": "88704f1d61e82b8634a25eb9a582c0df60c0fb95",
+  "runtime_unchanged": true,
+  "source_pins_verified": 337,
+  "image_count": 5,
+  "initial_capture_exit": 1,
+  "south_recovery_exit": 0,
+  "south_recovery_process": "proc_ba3614abc2ec",
+  "commands": [
+    {
+      "name": "prepare",
+      "command": [
+        "python3",
+        "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/prepare-capture.py"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3",
+      "pid": 962328,
+      "start": "2026-10-02T07:51:15.442796+00:00",
+      "end": "2026-10-02T07:51:17.443407+00:00",
+      "exit_code": 0,
+      "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/prepare.log"
+    },
+    {
+      "name": "npm-test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3",
+      "pid": 962334,
+      "start": "2026-10-02T07:51:17.443749+00:00",
+      "end": "2026-10-02T07:51:43.448108+00:00",
+      "exit_code": 0,
+      "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/npm-test.log"
+    },
+    {
+      "name": "npm-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3",
+      "pid": 963099,
+      "start": "2026-10-02T07:51:43.448497+00:00",
+      "end": "2026-10-02T07:51:49.449549+00:00",
+      "exit_code": 0,
+      "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/npm-build.log"
+    },
+    {
+      "name": "room-evidence-tests",
+      "command": [
+        "npm",
+        "run",
+        "test:room-evidence"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3",
+      "pid": 963148,
+      "start": "2026-10-02T07:51:49.449950+00:00",
+      "end": "2026-10-02T07:51:51.450794+00:00",
+      "exit_code": 0,
+      "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/room-evidence-tests.log"
+    },
+    {
+      "name": "focused",
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "tests/InfestedWorkshop.test.ts",
+        "tests/ShipEnvironments.test.ts",
+        "tests/unit/roguelikeRooms.test.ts",
+        "tests/unit/authoredTopology.test.ts",
+        "--reporter=verbose"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3",
+      "pid": 963205,
+      "start": "2026-10-02T07:51:51.451136+00:00",
+      "end": "2026-10-02T07:51:53.451992+00:00",
+      "exit_code": 0,
+      "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/focused.log"
+    },
+    {
+      "name": "capture",
+      "command": [
+        "node",
+        "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/capture-stage5.mjs",
+        "--rooms=infested-workshop",
+        "--gameplay-all",
+        "--viewport=desktop",
+        "--out=/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/capture"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3",
+      "pid": 963273,
+      "start": "2026-10-02T07:51:53.452350+00:00",
+      "end": "2026-10-02T07:57:56.234321+00:00",
+      "exit_code": 1,
+      "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-5/attempt-1037/capture.log"
+    }
+  ],
+  "parent": {
+    "at": "2026-10-02T08:07:23.903802+00:00",
+    "source_files_verified": 337,
+    "routes_exit": 0,
+    "runtime_unchanged": true,
+    "prior_acknowledgements_preserved": true,
+    "current_worker": "9b8013f7b737",
+    "run_identity": "room15-story-flow-v3-stage5-attempt1037",
+    "room11_hold_preserved": true,
+    "room12_revision_not_reopened": true
+  },
+  "initial_capture_failure_preserved": true,
+  "full_browser_verifier": "not run",
+  "every_lane_combat": "not verified",
+  "owned_capture_processes_remaining": 0
+}

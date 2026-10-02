@@ -1,0 +1,25 @@
+{
+  "scope": "Local draft. No publication, acceptance or runtime edit.",
+  "canonical_hashes_match": true,
+  "runtime_unchanged": true,
+  "worktree_writes_scoped": true,
+  "git_whitespace_pass": true,
+  "production_checks": 11,
+  "failures": 0,
+  "errors": 0,
+  "deterministic_png": true,
+  "png": {
+    "size": [
+      1800,
+      1280
+    ],
+    "bytes": 133128,
+    "sha256": "460b5c8dfc17985cb1a11d83dfba059a32bfba322a99440ef894a7240e6aef1f"
+  },
+  "commands": [
+    "node --loader docs/art-evidence/room15-story-flow-v3/stage-1/attempt-1005/ts-loader.mjs docs/art-evidence/room15-story-flow-v3/stage-1/attempt-1005/validate-layout.mjs",
+    "python3 docs/art-evidence/room15-story-flow-v3/stage-1/attempt-1005/render_layout.py",
+    "git diff --check"
+  ],
+  "limitations": "No browser, GPU, live combat, model fit, full verifier or human acceptance. Corner-grid and larger-radius diagnostics are retained in test-results.json."
+}

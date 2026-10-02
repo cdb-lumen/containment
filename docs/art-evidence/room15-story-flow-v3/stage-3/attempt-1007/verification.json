@@ -1,0 +1,351 @@
+{
+  "sourcesVerified": 164,
+  "sourcePinsUnchangedAfterCapture": true,
+  "sourceState": "uncommitted Room15 stage3 candidate; HEAD alone does not identify rendered source",
+  "head": "20aa2a8208d82ee1b912909e82111e02c1930572",
+  "base": "7a3f262886104fb024de9684958b3f85a8859f34",
+  "changedFiles": [
+    "src/render/InfestedWorkshopArchitecture.ts",
+    "src/render/InfestedWorkshopMaterials.ts",
+    "src/render/InfestedWorkshop.ts",
+    "src/render/ShipEnvironments.ts",
+    "tests/InfestedWorkshop.test.ts",
+    "tests/ShipEnvironments.test.ts"
+  ],
+  "images": [
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-3/attempt-1007/15-infested-workshop-overview.png",
+      "sha256": "c6cd0e3bb407cbba130aa10454e5bd31afd2fccc362163914267403f65d111e3",
+      "bytes": 443398,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "metrics": {
+        "drawCalls": 67,
+        "triangles": 89067,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [
+          [
+            -0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            -0.8790436005625878,
+            -0.8213163638943304
+          ],
+          [
+            0.8790436005625878,
+            0.6651611502837083
+          ],
+          [
+            0.8790436005625878,
+            -0.8213163638943304
+          ]
+        ],
+        "camera": {
+          "position": [
+            18.75,
+            36,
+            39.75
+          ],
+          "left": -21.330000000000002,
+          "right": 21.330000000000002,
+          "top": 16.168637357688716,
+          "bottom": -13.826675142311284
+        },
+        "player": {
+          "x": 604,
+          "y": 440
+        },
+        "enemies": 3,
+        "combat": null,
+        "composition": "production-high-composer"
+      }
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/infested-workshop/story-flow-v3/stage-3/attempt-1007/15-infested-workshop-gameplay.png",
+      "sha256": "ee584d649f566b2d2ec1c70398fdf3e7f6b1b294ae4d98acf4663d7ad259eb7b",
+      "bytes": 861976,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "metrics": {
+        "drawCalls": 74,
+        "triangles": 89367,
+        "webglError": 0,
+        "contextLost": false,
+        "corners": [],
+        "camera": {
+          "position": [
+            18.662302835540853,
+            26,
+            33.39928234964976
+          ],
+          "left": -15.644444444444444,
+          "right": 15.644444444444444,
+          "top": 11,
+          "bottom": -11
+        },
+        "player": {
+          "x": 604,
+          "y": 470.80000000000064
+        },
+        "enemies": 3,
+        "combat": {
+          "steps": 25,
+          "deltaMs": 16.666666666666668,
+          "shots": 4,
+          "damage": 48,
+          "enemyDistance": 68.89798194811486,
+          "playerDistance": 30.800000000000637,
+          "playerDisplacement": 30.800000000000637,
+          "legalChecks": 100,
+          "activeEnemies": 3,
+          "bullets": 1,
+          "player": {
+            "x": 604,
+            "y": 470.80000000000064
+          },
+          "staged": [
+            {
+              "x": 764,
+              "y": 440,
+              "id": 1
+            },
+            {
+              "x": 717.1370849898476,
+              "y": 553.1370849898476,
+              "id": 2
+            },
+            {
+              "x": 456.1792747981941,
+              "y": 501.2293491784144,
+              "id": 3
+            }
+          ],
+          "events": [
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot",
+            "acid",
+            "shot"
+          ]
+        },
+        "composition": "production-high-composer"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "tests/InfestedWorkshop.test.ts",
+        "tests/ShipEnvironments.test.ts",
+        "tests/StoryRoute.test.ts"
+      ],
+      "exit": 0,
+      "log": "scoped-tests.log"
+    },
+    {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit": 0,
+      "log": "npm-test.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "log": "build.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:room-evidence"
+      ],
+      "exit": 0,
+      "log": "evidence-tests.log"
+    }
+  ],
+  "routeResultsEqualStage2": true,
+  "routeAssertions": 11,
+  "radii": {
+    "16": {
+      "occupancyFailures": 0,
+      "segmentFailures": 0,
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 2073,
+        "reached": 2073,
+        "unreachable": []
+      }
+    },
+    "28": {
+      "occupancyFailures": 0,
+      "segmentFailures": 0,
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 1868,
+        "reached": 1860,
+        "unreachable": [
+          {
+            "x": 680,
+            "y": 140,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 260,
+            "y": 200,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 260,
+            "y": 380,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 680,
+            "y": 420,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 460,
+            "y": 540,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 680,
+            "y": 540,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 460,
+            "y": 740,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 680,
+            "y": 740,
+            "zeroLengthSweep": false
+          }
+        ]
+      }
+    },
+    "38": {
+      "occupancyFailures": 0,
+      "segmentFailures": 0,
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 1806,
+        "reached": 1804,
+        "unreachable": [
+          {
+            "x": 820,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 820,
+            "y": 720,
+            "zeroLengthSweep": false
+          }
+        ]
+      }
+    },
+    "48": {
+      "occupancyFailures": 1,
+      "segmentFailures": 4,
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 1490,
+        "reached": 1476,
+        "unreachable": [
+          {
+            "x": 660,
+            "y": 120,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 860,
+            "y": 120,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 240,
+            "y": 180,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 500,
+            "y": 180,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 240,
+            "y": 400,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 500,
+            "y": 400,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 660,
+            "y": 440,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 860,
+            "y": 440,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 440,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 700,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 1040,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 1040,
+            "y": 720,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 440,
+            "y": 760,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 700,
+            "y": 760,
+            "zeroLengthSweep": false
+          }
+        ]
+      }
+    }
+  },
+  "publication": "none; parent owns independent review, publication and receipt"
+}

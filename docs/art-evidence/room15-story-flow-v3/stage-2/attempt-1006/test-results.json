@@ -1,0 +1,2068 @@
+{
+  "scope": "Production occupancy and swept-route tests. Sampled graph and larger radii are diagnostics, not live combat.",
+  "checks": [
+    {
+      "name": "authoritative rectangular boundary retained",
+      "pass": true,
+      "detail": {
+        "width": 1200,
+        "height": 880
+      }
+    },
+    {
+      "name": "four original obstacle footprints",
+      "pass": true,
+      "detail": [
+        {
+          "x": 280,
+          "y": 220,
+          "width": 190,
+          "height": 140
+        },
+        {
+          "x": 480,
+          "y": 560,
+          "width": 180,
+          "height": 160
+        },
+        {
+          "x": 700,
+          "y": 160,
+          "width": 130,
+          "height": 240
+        },
+        {
+          "x": 850,
+          "y": 550,
+          "width": 150,
+          "height": 140
+        }
+      ]
+    },
+    {
+      "name": "contained equipment A",
+      "pass": true,
+      "detail": {
+        "envelope": {
+          "x": 288,
+          "y": 228,
+          "width": 174,
+          "height": 124
+        },
+        "solid": {
+          "x": 280,
+          "y": 220,
+          "width": 190,
+          "height": 140
+        }
+      }
+    },
+    {
+      "name": "contained equipment B",
+      "pass": true,
+      "detail": {
+        "envelope": {
+          "x": 708,
+          "y": 168,
+          "width": 114,
+          "height": 224
+        },
+        "solid": {
+          "x": 700,
+          "y": 160,
+          "width": 130,
+          "height": 240
+        }
+      }
+    },
+    {
+      "name": "contained equipment C",
+      "pass": true,
+      "detail": {
+        "envelope": {
+          "x": 488,
+          "y": 568,
+          "width": 164,
+          "height": 144
+        },
+        "solid": {
+          "x": 480,
+          "y": 560,
+          "width": 180,
+          "height": 160
+        }
+      }
+    },
+    {
+      "name": "contained equipment D",
+      "pass": true,
+      "detail": {
+        "envelope": {
+          "x": 858,
+          "y": 558,
+          "width": 134,
+          "height": 124
+        },
+        "solid": {
+          "x": 850,
+          "y": 550,
+          "width": 150,
+          "height": 140
+        }
+      }
+    },
+    {
+      "name": "anchor occupancy radius 16",
+      "pass": true,
+      "detail": {
+        "tested": 14
+      }
+    },
+    {
+      "name": "route sweeps radius 16",
+      "pass": true,
+      "detail": {
+        "tested": 24
+      }
+    },
+    {
+      "name": "anchor occupancy radius 28",
+      "pass": true,
+      "detail": {
+        "tested": 14
+      }
+    },
+    {
+      "name": "route sweeps radius 28",
+      "pass": true,
+      "detail": {
+        "tested": 24
+      }
+    },
+    {
+      "name": "production navigation anchor reachability",
+      "pass": true,
+      "detail": [
+        {
+          "point": {
+            "x": 1100,
+            "y": 440
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 100,
+            "id": "layout-room15:breach-0",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 100,
+            "id": "layout-room15:breach-1",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 780,
+            "id": "layout-room15:breach-2",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 780,
+            "id": "layout-room15:breach-3",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 375,
+            "y": 400
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 650,
+            "y": 280
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 570,
+            "y": 510
+          },
+          "reachable": true
+        },
+        {
+          "point": {
+            "x": 925,
+            "y": 490
+          },
+          "reachable": true
+        }
+      ]
+    }
+  ],
+  "failures": 0,
+  "errors": 0,
+  "radii": {
+    "16": {
+      "occupancy": [
+        {
+          "point": {
+            "x": 100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 100,
+            "id": "layout-room15:breach-0",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 100,
+            "id": "layout-room15:breach-1",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 780,
+            "id": "layout-room15:breach-2",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 780,
+            "id": "layout-room15:breach-3",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        }
+      ],
+      "segments": [
+        {
+          "route": "main",
+          "from": {
+            "x": 100,
+            "y": 440
+          },
+          "to": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 100,
+            "y": 100
+          },
+          "to": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 156,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1100,
+            "y": 100
+          },
+          "to": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1044,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 100,
+            "y": 780
+          },
+          "to": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 156,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1100,
+            "y": 780
+          },
+          "to": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1044,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-A",
+          "from": {
+            "x": 375,
+            "y": 440
+          },
+          "to": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 600,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 650,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-C",
+          "from": {
+            "x": 570,
+            "y": 440
+          },
+          "to": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-D",
+          "from": {
+            "x": 925,
+            "y": 440
+          },
+          "to": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        },
+        {
+          "route": "north-loop",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "south-loop",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        }
+      ],
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 2073,
+        "reached": 2073,
+        "unreachable": []
+      }
+    },
+    "28": {
+      "occupancy": [
+        {
+          "point": {
+            "x": 100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 100,
+            "id": "layout-room15:breach-0",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 100,
+            "id": "layout-room15:breach-1",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 780,
+            "id": "layout-room15:breach-2",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 780,
+            "id": "layout-room15:breach-3",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        }
+      ],
+      "segments": [
+        {
+          "route": "main",
+          "from": {
+            "x": 100,
+            "y": 440
+          },
+          "to": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 100,
+            "y": 100
+          },
+          "to": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 156,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1100,
+            "y": 100
+          },
+          "to": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1044,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 100,
+            "y": 780
+          },
+          "to": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 156,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1100,
+            "y": 780
+          },
+          "to": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1044,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-A",
+          "from": {
+            "x": 375,
+            "y": 440
+          },
+          "to": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 600,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 650,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-C",
+          "from": {
+            "x": 570,
+            "y": 440
+          },
+          "to": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-D",
+          "from": {
+            "x": 925,
+            "y": 440
+          },
+          "to": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        },
+        {
+          "route": "north-loop",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "south-loop",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        }
+      ],
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 1868,
+        "reached": 1860,
+        "unreachable": [
+          {
+            "x": 680,
+            "y": 140,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 260,
+            "y": 200,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 260,
+            "y": 380,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 680,
+            "y": 420,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 460,
+            "y": 540,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 680,
+            "y": 540,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 460,
+            "y": 740,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 680,
+            "y": 740,
+            "zeroLengthSweep": false
+          }
+        ]
+      }
+    },
+    "38": {
+      "occupancy": [
+        {
+          "point": {
+            "x": 100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 100,
+            "id": "layout-room15:breach-0",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 100,
+            "id": "layout-room15:breach-1",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 780,
+            "id": "layout-room15:breach-2",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 780,
+            "id": "layout-room15:breach-3",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        }
+      ],
+      "segments": [
+        {
+          "route": "main",
+          "from": {
+            "x": 100,
+            "y": 440
+          },
+          "to": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 100,
+            "y": 100
+          },
+          "to": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 156,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1100,
+            "y": 100
+          },
+          "to": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1044,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 100,
+            "y": 780
+          },
+          "to": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 156,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1100,
+            "y": 780
+          },
+          "to": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1044,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-A",
+          "from": {
+            "x": 375,
+            "y": 440
+          },
+          "to": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 600,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 650,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-C",
+          "from": {
+            "x": 570,
+            "y": 440
+          },
+          "to": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-D",
+          "from": {
+            "x": 925,
+            "y": 440
+          },
+          "to": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        },
+        {
+          "route": "north-loop",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "south-loop",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        }
+      ],
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 1806,
+        "reached": 1804,
+        "unreachable": [
+          {
+            "x": 820,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 820,
+            "y": 720,
+            "zeroLengthSweep": false
+          }
+        ]
+      }
+    },
+    "48": {
+      "occupancy": [
+        {
+          "point": {
+            "x": 100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 100,
+            "id": "layout-room15:breach-0",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 100,
+            "id": "layout-room15:breach-1",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 100,
+            "y": 780,
+            "id": "layout-room15:breach-2",
+            "unlockWave": 0,
+            "facing": "east"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1100,
+            "y": 780,
+            "id": "layout-room15:breach-3",
+            "unlockWave": 0,
+            "facing": "west"
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": false
+        },
+        {
+          "point": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "point": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        }
+      ],
+      "segments": [
+        {
+          "route": "main",
+          "from": {
+            "x": 100,
+            "y": 440
+          },
+          "to": {
+            "x": 1100,
+            "y": 440
+          },
+          "pass": false
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 100,
+            "y": 100
+          },
+          "to": {
+            "x": 156,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 156,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1100,
+            "y": 100
+          },
+          "to": {
+            "x": 1044,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1044,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "north-east",
+          "from": {
+            "x": 1000,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": false
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 100,
+            "y": 780
+          },
+          "to": {
+            "x": 156,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 156,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 200,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-west",
+          "from": {
+            "x": 200,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1100,
+            "y": 780
+          },
+          "to": {
+            "x": 1044,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1044,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "south-east",
+          "from": {
+            "x": 1060,
+            "y": 440
+          },
+          "to": {
+            "x": 600,
+            "y": 440
+          },
+          "pass": false
+        },
+        {
+          "route": "activity-A",
+          "from": {
+            "x": 375,
+            "y": 440
+          },
+          "to": {
+            "x": 375,
+            "y": 400
+          },
+          "pass": false
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 600,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 440
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-B",
+          "from": {
+            "x": 650,
+            "y": 440
+          },
+          "to": {
+            "x": 650,
+            "y": 280
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-C",
+          "from": {
+            "x": 570,
+            "y": 440
+          },
+          "to": {
+            "x": 570,
+            "y": 510
+          },
+          "pass": true
+        },
+        {
+          "route": "activity-D",
+          "from": {
+            "x": 925,
+            "y": 440
+          },
+          "to": {
+            "x": 925,
+            "y": 490
+          },
+          "pass": true
+        },
+        {
+          "route": "north-loop",
+          "from": {
+            "x": 200,
+            "y": 100
+          },
+          "to": {
+            "x": 1000,
+            "y": 100
+          },
+          "pass": true
+        },
+        {
+          "route": "south-loop",
+          "from": {
+            "x": 200,
+            "y": 780
+          },
+          "to": {
+            "x": 1060,
+            "y": 780
+          },
+          "pass": true
+        }
+      ],
+      "sampledConnectivity": {
+        "step": 20,
+        "nodes": 1490,
+        "reached": 1476,
+        "unreachable": [
+          {
+            "x": 660,
+            "y": 120,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 860,
+            "y": 120,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 240,
+            "y": 180,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 500,
+            "y": 180,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 240,
+            "y": 400,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 500,
+            "y": 400,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 660,
+            "y": 440,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 860,
+            "y": 440,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 440,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 700,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 1040,
+            "y": 520,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 1040,
+            "y": 720,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 440,
+            "y": 760,
+            "zeroLengthSweep": false
+          },
+          {
+            "x": 700,
+            "y": 760,
+            "zeroLengthSweep": false
+          }
+        ]
+      }
+    }
+  },
+  "navigation": [
+    {
+      "point": {
+        "x": 1100,
+        "y": 440
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 100,
+        "y": 100,
+        "id": "layout-room15:breach-0",
+        "unlockWave": 0,
+        "facing": "east"
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 1100,
+        "y": 100,
+        "id": "layout-room15:breach-1",
+        "unlockWave": 0,
+        "facing": "west"
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 100,
+        "y": 780,
+        "id": "layout-room15:breach-2",
+        "unlockWave": 0,
+        "facing": "east"
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 1100,
+        "y": 780,
+        "id": "layout-room15:breach-3",
+        "unlockWave": 0,
+        "facing": "west"
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 375,
+        "y": 400
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 650,
+        "y": 280
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 570,
+        "y": 510
+      },
+      "reachable": true
+    },
+    {
+      "point": {
+        "x": 925,
+        "y": 490
+      },
+      "reachable": true
+    }
+  ]
+}
