@@ -1,0 +1,29 @@
+{
+  "verified_at": "2026-10-02T03:47:13.243325+00:00",
+  "head": "6dc9336ff8d47267def1b1646c02df62c8215311",
+  "runtime_pin": "cc9687618aa5e6a3ff136125ccdeedb6b306717196d953e0af24aa89522a4586",
+  "source_pin_count": 336,
+  "changed_since_capture": [
+    "tests/ManualControlBlockout.test.ts"
+  ],
+  "current_test_sha256": "45549daa63d06422cdacc5fa62de01bc72a02374666360c2b2fda87ebf0acc89",
+  "images": [
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/room19-story-flow-v3/stage-3/attempt-1030/capture/19-manual-control-chamber-overview.png",
+      "sha256": "2ebaffc626a42bc8d5aed0487358044c96d6854bfa0af12b2b5fda6fb7b6c5cc",
+      "mode": "overview",
+      "drawCalls": 77,
+      "errors": []
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/room19-story-flow-v3/stage-3/attempt-1030/capture/19-manual-control-chamber-gameplay.png",
+      "sha256": "81b3a59ebcd1be519454dbbdf295b2e89ba4a23e0530809af6ba7b88784dc8dc",
+      "mode": "gameplay",
+      "drawCalls": 83,
+      "errors": []
+    }
+  ],
+  "cleanup_processes": "    PID    PPID ELAPSED COMMAND\n 915901 3004945     439 node /home/chernodubv/.hermes/lsp/bin/typescript-language-server --stdio\n 915913  915901     439 /home/chernodubv/.hermes/node/bin/node /home/chernodubv/dev/.cron-worktrees/containment-rooms/manual-control-chamber-v3/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /tmp/aea06003038719310fb6c9a6e7d5c62f/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc\n 915914  915901     439 /home/chernodubv/.hermes/node/bin/node /home/chernodubv/dev/.cron-worktrees/containment-rooms/manual-control-chamber-v3/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --cancellationPipeName /tmp/24a929aba8db26040039d7e3c4ab92f6/tscancellation* --locale en --validateDefaultNpmLocation --useNodeIpc\n 915927  915914     439 /home/chernodubv/.hermes/node/bin/node /home/chernodubv/dev/.cron-worktrees/containment-rooms/manual-control-chamber-v3/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /home/chernodubv/.cache/typescript/6.0 --typesMapLocation /home/chernodubv/dev/.cron-worktrees/containment-rooms/manual-control-chamber-v3/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation\n1074861    1039 2224430 node /home/chernodubv/dev/.worktrees/containment-boons/node_modules/.bin/vite --host 127.0.0.1 --port 5193\n",
+  "git_status": " M src/render/ManualControlBlockout.ts\n M tests/ManualControlBlockout.test.ts\n M tests/ShipEnvironments.test.ts\n",
+  "status": "Frozen per parent request. Visibility regression is RED. Do not claim stage passed."
+}

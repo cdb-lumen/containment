@@ -43,7 +43,7 @@ describe('ship environments',()=>{
    appendEnvironment(world,environmentObstacle(env,{x:5,y:5,width:4,height:8},0,rooms[env][0]));
    const originals=meshes(world),sharedGeometry=new Set(originals.map(m=>m.geometry));
    const ownedMaterials=new Set(originals.map(m=>m.material as T.MeshStandardMaterial).filter(m=>!Object.values(MAT).includes(m)));
-   if(env==='habitation'){expect(ownedMaterials.size).toBe(4);for(const m of ownedMaterials)expect(m.userData.actorMaterial).toBe(true);}else expect(ownedMaterials.size).toBe(0);
+   if(['residential-gallery','manual-control-chamber'].includes(rooms[env][0])){expect(ownedMaterials.size).toBe(4);for(const m of ownedMaterials)expect(m.userData.actorMaterial).toBe(true);}else expect(ownedMaterials.size).toBe(0);
    expect([...sharedGeometry].every(g=>[...geometries.values()].includes(g))).toBe(true);
    const geometrySpies=[...sharedGeometry].map(g=>vi.spyOn(g,'dispose'));
    const materialSpies=Object.values(MAT).map(m=>vi.spyOn(m,'dispose'));

@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
+import {manualControlBlockout,manualControlArchitecture} from './ManualControlBlockout';
 
 export const SHIP_ENVIRONMENTS=['cryogenics','habitation','security','cargo','communications','engineering','maintenance','infested','containment','reactor'] as const;
 export type ShipEnvironment=typeof SHIP_ENVIRONMENTS[number];
@@ -12,6 +13,7 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 
 /** All models are authored in a local cell, then fitted inside the authoritative collision rectangle. */
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
+ if(environment==='reactor'&&templateId==='manual-control-chamber')return manualControlBlockout(footprint,index);
  if(environment==='habitation'&&templateId==='residential-gallery')return residentialGalleryBlockout(footprint,index);
  const root=new T.Group();root.name=`${environment}-obstacle-${index}`;
  const long=Math.max(footprint.width,footprint.height),short=Math.min(footprint.width,footprint.height);
@@ -163,6 +165,7 @@ export function appendEnvironment(parent:T.Group,model:T.Group){
 
 /** Flush deck inlays and outboard rear architecture never occupy a walkable tile. */
 export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:number,h:number,templateId=''){
+ if(env==='reactor'&&templateId==='manual-control-chamber'){manualControlArchitecture(parent,w);return;}
  const residential=env==='habitation'&&templateId==='residential-gallery';
  const accent=env==='habitation'?MAT.bone:env==='infested'?MAT.acid:['security','engineering','containment','maintenance'].includes(env)?MAT.amber:MAT.cyan;
  const inlay=(x:number,z:number,width:number,depth:number,mat:T.Material)=>{const m=box(parent,x,-.007,z,width,.018,depth,mat,0);m.castShadow=false;return m;};
