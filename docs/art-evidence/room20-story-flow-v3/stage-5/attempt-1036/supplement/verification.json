@@ -1,0 +1,110 @@
+{
+  "head": "4712bd3076a7fe2b8a3542c9cb055549c692d662",
+  "sourceFilesChecked": 269,
+  "originalEvidenceFilesChecked": 24,
+  "changedSource": [],
+  "changedOriginalEvidence": [],
+  "gitStatus": "",
+  "screenshots": [
+    {
+      "file": "20-overload-floor-far-north.png",
+      "sha256": "4427dfc536f151651e1a6d654dcb4871b02c7181199e1abc5599ce5f80d3bb02",
+      "player": {
+        "x": 600,
+        "y": 180,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          18.74998716760869,
+          26,
+          31.92413079017224
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "zoom": 1,
+        "left": -15.644444444444444,
+        "right": 15.644444444444444,
+        "top": 11,
+        "bottom": -11
+      },
+      "enemies": 3,
+      "drawCalls": 74
+    },
+    {
+      "file": "20-overload-floor-west.png",
+      "sha256": "739b8c18ff9fe0da53786e79db83db8845c20cb640eb281b7c17b66e87f347f8",
+      "player": {
+        "x": 340,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          14.944457276792482,
+          26,
+          32.74999721515644
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "zoom": 1,
+        "left": -15.644444444444444,
+        "right": 15.644444444444444,
+        "top": 11,
+        "bottom": -11
+      },
+      "enemies": 3,
+      "drawCalls": 68
+    },
+    {
+      "file": "20-overload-floor-east.png",
+      "sha256": "3a3b2823f873995e7165902abb0531724595efc300a081d64f21b0d9759270e5",
+      "player": {
+        "x": 860,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          22.555529890816214,
+          26,
+          32.74999999999061
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "zoom": 1,
+        "left": -15.644444444444444,
+        "right": 15.644444444444444,
+        "top": 11,
+        "bottom": -11
+      },
+      "enemies": 3,
+      "drawCalls": 74
+    }
+  ],
+  "temporaryEntriesRemaining": []
+}

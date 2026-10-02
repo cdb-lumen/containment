@@ -1,0 +1,42 @@
+{
+  "head": "84ec5e959183207c0d2d7300d6e34fb64c2e1872",
+  "source_aggregate_sha256": "fe141df45df0df03ad967a59508d44845d3eddc7cc90350e7755071cc8028699",
+  "source_stable": true,
+  "modified_files": [
+    "src/render/AuthoredRooms.ts",
+    "src/render/OverloadShell.test.ts",
+    "src/render/OverloadShell.ts"
+  ],
+  "artifacts": [
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-3/attempt-1034/20-overload-floor-overview.png",
+      "sha256": "38a6efced576d16eebab877c8aecdbf2a3fd1a3f88ee66cc4ccbcd71a0bf9453",
+      "bytes": 394986,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "drawCalls": 72
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-3/attempt-1034/20-overload-floor-gameplay.png",
+      "sha256": "3ce581b27c98d5842eabbbabe0e657aa7d31f0f40315b6a5bb712b5f7edc1d60",
+      "bytes": 669877,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "drawCalls": 79
+    }
+  ],
+  "capture_label": "Static controlled simulation with staged actors. Desktop uses production camera and composer; DOM HUD omitted. Not a campaign playthrough or fatal-ending validation.",
+  "checks": {
+    "focused": "20 passed",
+    "npm_test": "765 Vitest passed, 1 skipped; Node and Python checks passed",
+    "build": "exit 0; existing large bundle warning",
+    "routes": "179 passed, 0 failures, 0 errors",
+    "diff_check": "passed",
+    "capture_errors": 0
+  },
+  "review": "Implementer inspected both originals. Parent independent review still required."
+}

@@ -1,0 +1,13 @@
+# Room20 overall parent review
+
+Verdict: passed bounded static art validation, pending human room acceptance. This is not release acceptance.
+
+I inspected all five original PNGs, including the new far-north, west and east production-camera stills. The reactor remains the focal point inside the connected three-lobed deck. Coolant pipes, ceramic-mounted bus conductors and the forward restraint have distinct shapes and visible connections. The segmented bronze rings surround the pale axial column. Deck grilles and perimeter framing remain subordinate. No visible floating assembly, clipped main machine or evacuation marker was demonstrated. Dark areas hide some structure; this is not certification of every hidden joint.
+
+The initial independent review failed because the two original views lacked far-lobe inspection. That review remains unchanged. Three additional legal player placements resolve the coverage gap, as independently confirmed in independent-supplement-review.md. The production camera keeps its fixed orientation; far-lobe coverage does not mean a reverse camera angle. The supplement preserves staged enemies, repositions only the player and settles the unchanged renderer with 36 render-only frames. It is not traversal or combat evidence. The external capture's first dependency-resolution timeout remains in its local failed-run log.
+
+Technical worker execution passed npm test, build, room-evidence tests, 179 route checks and 26 focused tests. Independent CPU review passed 40 tests. Parent reran 36 tests across five files, including StoryRoute, both Room20 model suites, AuthoredRooms and authored topology, with exit zero. Working and cumulative whitespace checks passed. Source pins and image hashes are checked again during publication against exact committed blobs.
+
+StoryRoute exercises separate fatal authorization, Skip behavior and the no-escape ending through actual CPU game state with accelerated enemy clearing. It is not a browser ending playthrough. Initial capture includes a short controlled combat probe and legal route traversal, not a dense holdout. Actual overload lighting, dense live combat, integrated browser fatal ending, touch and full browser verifier remain unverified release work. No HUD or mobile art gate was imposed.
+
+No runtime source changed in this overall attempt. Rooms1-7, topology, shared systems, camera, HUD and gameplay remain unchanged. The fresh overview matches stage4 bytes; the desktop and three supplemental originals differ without artificial pixel changes. Publication retains these facts and the initial failed review. Final human acceptance must use the production receipt queue. No human decision, merge or deployment is inferred.

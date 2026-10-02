@@ -1,0 +1,104 @@
+{
+  "base": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/scripts/room-evidence.mjs",
+  "baseSha256": "a5214bfa0da825f7b1c0d992baba62f19566b74fd2521193bf82ec187ef668fa",
+  "adaptedSha256": "394477166035c2d3df7964daf8c7b36bf90ffc6bf9001430ca46d48259038193",
+  "changes": [
+    {
+      "change": "Pin external entry Three import",
+      "old": "from 'three'",
+      "new": "from '/@fs/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/node_modules/three/build/three.module.js'"
+    },
+    {
+      "change": "Pin Vite import",
+      "old": "from 'vite'",
+      "new": "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/node_modules/vite/dist/node/index.js'"
+    },
+    {
+      "change": "Pin Playwright import",
+      "old": "from 'playwright'",
+      "new": "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/node_modules/playwright/index.mjs'"
+    },
+    {
+      "change": "Pin inherited options",
+      "old": "from './room-evidence-options.mjs'",
+      "new": "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/scripts/room-evidence-options.mjs'"
+    },
+    {
+      "change": "External cache",
+      "old": "configFile:false, base:'/'",
+      "new": "configFile:false, cacheDir:\"/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-5/attempt-1036/supplement/vite-cache\", base:'/'"
+    },
+    {
+      "change": "Allow external entry",
+      "old": "preTransformRequests:false}",
+      "new": "preTransformRequests:false,fs:{allow:[root,\"/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-5/attempt-1036/supplement\"]}}"
+    },
+    {
+      "change": "External temporary entry",
+      "old": "mkdtemp(resolve(root,'.room-evidence-'))",
+      "new": "mkdtemp(resolve(out,'.room-evidence-'))"
+    },
+    {
+      "change": "External entry URL",
+      "old": "server.resolvedUrls.local[0]+relative(root,temp)+'/index.html'",
+      "new": "server.resolvedUrls.local[0]+'@fs'+temp+'/index.html'"
+    },
+    {
+      "change": "No traversal execution",
+      "old": "  traversal=traverseEvidenceRoom(room.node);",
+      "new": "  traversal=null;"
+    },
+    {
+      "change": "Static legal player placement; 36 unchanged renderer calls at 0.05s; no game update",
+      "old": " if(mode==='gameplay'&&!combat)combat=fightEvidenceGame(fixture,(g,dt)=>renderer.render(g,dt,false));",
+      "new": " const positions={'far-north':{x:600,y:180},'west':{x:340,y:440},'east':{x:860,y:440}};\n  const initialPlayer={...game.player};const actorsBefore=JSON.stringify(game.enemies.snapshot);\n  Object.assign(game.player,positions[mode]);\n  if(!canOccupyExpedition(game.geometry,game.player,game.player.radius))throw new Error('Illegal staged position');\n  for(let i=0;i<36;i++)renderer.render(game,.05,false);\n  if(JSON.stringify(game.enemies.snapshot)!==actorsBefore)throw new Error('Actor state changed');"
+    },
+    {
+      "change": "Record staging and actors",
+      "old": "enemies:game.enemies.activeCount,combat:mode==='gameplay'?combat:null",
+      "new": "enemies:game.enemies.activeCount,initialPlayer,settling:{frames:36,deltaSeconds:.05,totalSeconds:1.8,simulationUpdates:0},snapshot:window.evidence.snapshot(),combat:null"
+    },
+    {
+      "change": "Snapshot camera and actor state on both sides of screenshot",
+      "old": " async stage(room) {",
+      "new": " snapshot() {return {player:{...game.player},enemies:game.enemies.snapshot,camera:{position:renderer.camera.position.toArray(),quaternion:renderer.camera.quaternion.toArray(),zoom:renderer.camera.zoom,left:renderer.camera.left,right:renderer.camera.right,top:renderer.camera.top,bottom:renderer.camera.bottom},legal:canOccupyExpedition(game.geometry,game.player,game.player.radius)};},\n async stage(room) {"
+    },
+    {
+      "change": "Only production-camera static viewpoints; inherited overview excluded",
+      "old": "for(const mode of captureModes(room,rooms.length,options))",
+      "new": "for(const mode of ['far-north','west','east'])"
+    },
+    {
+      "change": "Pre-screenshot legal occupancy and state",
+      "old": "const bytes=await page.screenshot",
+      "new": "const before=await page.evaluate(()=>window.evidence.snapshot());assert.equal(before.legal,true);\n          const bytes=await page.screenshot"
+    },
+    {
+      "change": "Post-screenshot state and occupancy invariants",
+      "old": "assert.equal(bytes.readUInt32BE(16)",
+      "new": "const after=await page.evaluate(()=>window.evidence.snapshot());assert.deepEqual(after,before);assert.equal(after.legal,true);\n          assert.equal(bytes.readUInt32BE(16)"
+    },
+    {
+      "change": "Persist both snapshots",
+      "old": "viewport,readiness,metrics,errors:",
+      "new": "viewport,readiness,metrics,before,after,errors:"
+    },
+    {
+      "change": "Truthful evidence class",
+      "old": "evidenceClass:'controlled-live-simulation'",
+      "new": "evidenceClass:'static-staged-production-camera'"
+    },
+    {
+      "change": "Describe limitations",
+      "old": "Controlled legal actors on a spawn-to-exit route verified with actual DepthGame.update. Fixed-step production combat and renderer; inactive encounter director, no boss, no campaign progression, no DOM HUD or real touch input. Overview fits room; gameplay retains production camera/composition.",
+      "new": "Static staged inspection only. Inherited stageEvidenceGame creates three legal brutes, retained without simulation updates, removal or repositioning. Player alone repositioned to legal north, west and east anchors. Each capture has 36 render-only calls at 0.05 seconds, then a zero-delta final production draw. No combat, traversal, campaign, DOM HUD or overview capture. Shipping camera follows player through unchanged renderer, never directly manipulated."
+    }
+  ],
+  "dependencies": {
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/node_modules/vite/dist/node/index.js": "c7ea52906f843318d7971209ce62bd24bab60590275e8f415c5564fa35cb82dc",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/node_modules/playwright/index.mjs": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/scripts/room-evidence-options.mjs": "f6511ff6ec2402a88a1011df2eb7b495252c3e175da44a1841e874626c8e03e3",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/scripts/room-evidence-scene.mjs": "f2720c10080425dfaac25cb05f053b7ecb6193ea308b2593e2549f13f84621c7",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3/node_modules/three/build/three.module.js": "bbf5ed13fe4373f5bd38b14ea8e62e9f157327da5638edc6d3863e08b167c9c7"
+  }
+}

@@ -1,4 +1,6 @@
 import * as T from 'three';
+import {createOverloadDraft,batchOverloadDraft} from './OverloadDraft';
+import {createOverloadShell} from './OverloadShell';
 import {PASSENGER_FINISHES} from './RoomEquipmentPalette';
 import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
 import {AWAKENING_BLOCKOUT,PASSENGER_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
@@ -494,28 +496,12 @@ function breachedBay(f:Fabricator,t:RoomPlan){
  equipment(f,t,'cargo');
 }
 function reactorFloor(f:Fabricator,t:RoomPlan){
- for(const hole of t.voids??[]){const b=bounds(hole),radius=Math.min(b.w,b.d)*.42;
-  f.pipe(v(b.x,-4.5,b.z),v(b.x,-.5,b.z),radius*.7,f.dark);
-  for(const y of [-3.3,-1.4,.15]){f.ring(b.x,y,b.z,radius,.15,f.edge);f.ring(b.x,y+.2,b.z,radius*.83,.055,f.cold);}
-  f.pipe(v(b.x,-3.9,b.z),v(b.x,.65,b.z),radius*.32,f.cold);
-  f.ring(b.x,.72,b.z,radius*.45,.19,f.bronze);f.ring(b.x,.86,b.z,radius*.66,.13,f.ivory);
-  for(let i=0;i<12;i++){const a=i*TAU/12,dx=Math.cos(a),dz=Math.sin(a);
-   f.pipe(v(b.x+dx*radius*.82,-3.4,b.z+dz*radius*.82),v(b.x+dx*radius*.61,.55,b.z+dz*radius*.61),.16,f.bronze);
-   // Suspended clamps are contained inside the non-walkable well.
-   if(i%2===0){const x=b.x+dx*radius,z=b.z+dz*radius;
-    f.box(x,.15,z,.78,.65,1.5,f.paint,.07,-a);f.box(x,.51,z,.64,.1,1.3,f.edge,.025,-a);
-    f.box(x,.58,z,.43,.05,.72,f.dark,.025,-a);
-    for(const side of [-1,1])for(const end of [-1,1]){const bx=x+dx*side*.25-dz*end*.52,bz=z+dz*side*.25+dx*end*.52;f.pipe(v(bx,.55,bz),v(bx,.65,bz),.065,f.bolts);}
-    for(let j=-2;j<=2;j++)f.box(x-dz*j*.19,.63,z+dx*j*.19,.36,.035,.05,f.bronze,.008,-a);
-    f.pipe(v(b.x+dx*radius*.5,.88,b.z+dz*radius*.5),v(x,.15,z),.10,f.edge);
-    for(const side of [-1,1]){const start=v(x-dz*side*.25,-.3,z+dx*side*.25),elbow=start.clone().add(v(dx*.25,-1.2,dz*.25));f.pipe(start,elbow,.09,f.bronze);f.pipe(elbow,elbow.clone().add(v(-dx*.9,-.6,-dz*.9)),.09,f.paint);}
-    f.box(x,.65,z,.14,.025,.14,i%4===0?f.warm:f.cold,.01);
-   }
-  }
-  for(let i=0;i<3;i++){const a=i*TAU/3+.3,dx=Math.cos(a),dz=Math.sin(a);for(const offset of [-.2,.2])f.pipe(v(b.x+dx*radius*.75,-1,b.z+dz*radius*.75+offset),v(b.x+dx*radius*1.1,-2.8,b.z+dz*radius*1.1+offset),.18,f.paint);}
- }
+ const shell=batchOverloadDraft(createOverloadShell(t));
+ f.root.add(...shell.children);
+ const draft=batchOverloadDraft(createOverloadDraft());
+ f.root.userData.overloadDraftRoles=draft.userData.overloadDraftRoles;
+ f.root.add(...draft.children);
  const b=bounds(outline(t));f.sign('CORE / MANUAL OVERLOAD',b.x,1.36,b.z0+.35,7);
- equipment(f,t,'reactor');
 }
 /** Coherent equipment assemblies inside exact collision footprints; no arbitrary object stretching. */
 function equipment(f:Fabricator,t:RoomPlan,kind:'cryo'|'cargo'|'reactor'){

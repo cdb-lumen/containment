@@ -1,0 +1,50 @@
+{
+  "source_head": "ec0226c81016a9f8e2803d33a703b383a5f749cd",
+  "source_before_aggregate": "fe141df45df0df03ad967a59508d44845d3eddc7cc90350e7755071cc8028699",
+  "source_after_aggregate": "892f4d053b5eb4906f43e123135a8264518d259105c5a60c16b1e2ef20590a89",
+  "changed_runtime_and_test_files": [
+    "src/render/OverloadDraft.test.ts",
+    "src/render/OverloadDraft.ts"
+  ],
+  "stable_capture_sources": true,
+  "matched_cameras": true,
+  "images": [
+    {
+      "path": "before/20-overload-floor-overview.png",
+      "sha256": "38a6efced576d16eebab877c8aecdbf2a3fd1a3f88ee66cc4ccbcd71a0bf9453",
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "path": "before/20-overload-floor-gameplay.png",
+      "sha256": "5c89dec776a04b7719fd97028f3a8deaff705e56eb0ac310b1849f81fae2a414",
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "path": "20-overload-floor-overview.png",
+      "sha256": "3655049957eeac4d5b04ee20b0b62d8edbbdf3e45d63efd87417b0e60bc988d6",
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "path": "20-overload-floor-gameplay.png",
+      "sha256": "df0266480742a425acfadd2214225a39693db27d1764405981a2a006c232b3aa",
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "path": "model-contact-sheet.png",
+      "sha256": "f1df4b5a69c0c11ab09d5032c5d88b29f798443c2422c8a5110106056b9b062a",
+      "width": 1600,
+      "height": 1100
+    }
+  ],
+  "routes": {
+    "total": 179,
+    "passed": 179,
+    "failures": 0,
+    "errors": 0
+  },
+  "scope": "Uncommitted stage4 candidate, no publication or acceptance. Independent review pending."
+}

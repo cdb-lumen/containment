@@ -1,0 +1,47 @@
+{
+  "source_aggregate_sha256": "4c98aca5077a907a0f65bf21fd1f2135014f8b7db8bb870b85ceb95cab5ca017",
+  "source_pins_match": true,
+  "changed_source_files": [
+    "src/render/AuthoredRooms.ts",
+    "src/render/OverloadDraft.test.ts",
+    "src/render/OverloadDraft.ts"
+  ],
+  "pngs": [
+    {
+      "file": "20-overload-floor-overview.png",
+      "sha256": "d99c9b4f39edfcb525d4f0ba91bb8b4f2b2d9272e4661f2bfbd5f0850ace0ffb",
+      "bytes": 334805,
+      "dimensions": [
+        1280,
+        900
+      ]
+    },
+    {
+      "file": "20-overload-floor-gameplay.png",
+      "sha256": "aac11427d7002ecf380fae19c50569bbe34a6c186adf5eeded1e5084b4af4d81",
+      "bytes": 601774,
+      "dimensions": [
+        1280,
+        900
+      ]
+    }
+  ],
+  "scope_room_count": 1,
+  "capture_rows": 2,
+  "owned_runtime_processes": [],
+  "parent_focused_tests": {
+    "passed": 18,
+    "failed": 0
+  },
+  "independent_focused_tests": {
+    "passed": 18,
+    "failed": 0
+  },
+  "independent_routes": {
+    "passed": 179,
+    "failed": 0
+  },
+  "npm_test": "exit0; 763 Vitest passed, 1 skipped; Node/Python checks passed",
+  "build": "exit0",
+  "full_browser_verifier": "not run"
+}
