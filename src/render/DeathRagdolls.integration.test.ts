@@ -3,6 +3,8 @@ import * as T from 'three';
 import {GLTFLoader,type GLTF} from 'three/addons/loaders/GLTFLoader.js';
 import {DepthRenderer} from './DepthRenderer';
 import {DepthGame,type GameEffect} from '../DepthGame';
+import {ProjectileHitTracker} from '../game/combat/CombatSystem';
+import RAPIER from '@dimforge/rapier3d-compat';
 import {DeathRagdolls,initDeathPhysics} from './DeathRagdolls';
 import {alien,type ActorModel} from './models';
 import {ActorPool} from './ActorPool';
@@ -17,6 +19,33 @@ function fixture(){
 }
 function game(){const g=new DepthGame();g.node={...g.node,id:'test'};g.status='playing';return g;}
 beforeAll(initDeathPhysics);
+// Real lethal projectile -> corpse event -> renderer -> Rapier transfer. These
+// numeric bounds are regression limits, not substitutes for gameplay-camera review.
+it('reduces native shotgun launch and spin without erasing the stronger rocket throw',()=>{
+ const launch=(weapon:'shotgun'|'rocket')=>{
+  const r=fixture(),events:GameEffect[]=[],g=new DepthGame(e=>{events.push(e);if(e.type==='corpse')r.effect(e);});
+  const internals=g as unknown as {makeEnemies():typeof g.enemies;updateBullets(dt:number):void};
+  g.geometry={...g.geometry,bounds:{x:0,y:0,width:1200,height:880},blockers:[],voids:undefined,boundary:[{x:0,y:0},{x:1200,y:0},{x:1200,y:880},{x:0,y:880}]};
+  g.enemies=internals.makeEnemies();g.status='playing';Object.assign(g.player,{x:300,y:440,angle:0});
+  const spawn=g.enemies.spawn('crawler',470,440,false);expect(spawn.spawned).toBe(true);if(!spawn.spawned)throw Error('spawn');
+  const id=spawn.enemy.id;g.enemies.applyDamage(id,spawn.enemy.health+spawn.enemy.armor-1);r.actors.set(id,model());
+  g.combat.switchWeapon(weapon);const requests=g.combat.fire(0);expect(requests.length).toBeGreaterThan(0);
+  g.bullets=requests.map(request=>({x:300,y:440,life:3,kind:'player',request,tracker:new ProjectileHitTracker(request.penetration)}));
+  try{
+   for(let i=0;i<100&&!events.some(e=>e.type==='corpse');i++)internals.updateBullets(.01);
+   expect(events.filter(e=>e.type==='corpse')).toHaveLength(1);expect(g.enemies.getSnapshot(id)).toBeNull();
+   const world=(r.ragdolls as unknown as {world:RAPIER.World}).world;
+   const rows:{linear:number;angular:number;vertical:number}[]=[];
+   world.forEachRigidBody(b=>{const v=b.linvel(),w=b.angvel();rows.push({linear:Math.hypot(v.x,v.z),angular:Math.hypot(w.x,w.z),vertical:v.y});});
+   expect(rows.length).toBeGreaterThanOrEqual(3);return rows[0];
+  }finally{r.dispose();}
+ };
+ const shotgun=launch('shotgun'),rocket=launch('rocket');
+ expect(rocket.linear).toBeGreaterThan(shotgun.linear*1.5);
+ expect(shotgun.linear).toBeLessThan(4);expect(rocket.linear).toBeLessThanOrEqual(8.001);
+ expect(shotgun.angular).toBeLessThan(.5);expect(rocket.angular).toBeLessThan(1);
+ expect(shotgun.vertical).toBeLessThan(1.5);
+});
 afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();});
 it('transfers a living skin at authoritative death coordinates once and syncs joints',()=>{
  const r=fixture(),m=model();m.root.position.set(1,0,2);r.actors.set(7,m);
