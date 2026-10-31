@@ -13,8 +13,10 @@ describe('authored architecture',()=>{
   const geometry=new T.ShapeGeometry(shape),pos=geometry.getAttribute('position'),index=geometry.index!;
   for(let i=0;i<index.count;i+=3){let x=0,z=0;for(let j=0;j<3;j++){x+=pos.getX(index.getX(i+j))/3;z-=pos.getY(index.getX(i+j))/3;}expect(x>450/32&&x<700/32&&z>300/32&&z<550/32).toBe(false);}geometry.dispose();
  });
+ // Room8 adds four independently owned finishes for seam growth, torn metal,
+ // freight supports and exit cladding. Other rooms retain the existing budget.
  it.each(['awakening-bay','passenger-vault','breached-loading-bay','overload-floor'] as const)('batches %s and releases every owned GPU resource once',id=>{
-  const group=authoredRoom(id,actual(id))!;expect(group).toBeInstanceOf(T.Group);expect(group.children.length).toBeLessThan(22);
+  const group=authoredRoom(id,actual(id))!;expect(group).toBeInstanceOf(T.Group);expect(group.children.length).toBeLessThan(id==='breached-loading-bay'?26:22);
   const geometry=new Set<T.BufferGeometry>(),materials=new Set<T.Material>();group.traverse(o=>{if(o instanceof T.Mesh){geometry.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material])materials.add(m);}});
   expect(geometry.size).toBeGreaterThan(5);let disposed=0;for(const resource of [...geometry,...materials])resource.addEventListener('dispose',()=>disposed++);
   disposeModel(group);expect(disposed).toBe(geometry.size+materials.size);
@@ -30,12 +32,16 @@ describe('authored architecture',()=>{
    expect(columns.size).toBe(4);
   }disposeModel(group);
  });
- it('exposes raised boarding ribs above the carapace instead of embedding slits',()=>{
-  const group=authoredRoom('breached-loading-bay',actual('breached-loading-bay'))!,ribs=materialMesh(group,'boarding-ribs'),shell=materialMesh(group,'boarding-carapace');
-  expect(ribs).toBeDefined();expect(shell).toBeDefined();group.updateMatrixWorld(true);
-  const p=ribs.geometry.getAttribute('position'),ray=new T.Raycaster();let exposed=0;
-  for(let i=0;i<p.count;i+=30){if(p.getY(i)<1.4)continue;ray.set(new T.Vector3(p.getX(i),6,p.getZ(i)),new T.Vector3(0,-1,0));const hit=ray.intersectObject(shell)[0];if(hit&&p.getY(i)>hit.point.y+.045)exposed++;}
-  expect(exposed).toBeGreaterThan(20);shell.geometry.computeBoundingBox();expect(shell.geometry.boundingBox!.max.y).toBeGreaterThan(2);
+ it('replaces regular boarding hoops with rooted crusts and six thick hull folds',()=>{
+  const group=authoredRoom('breached-loading-bay',actual('breached-loading-bay'))!,growth=materialMesh(group,'room8-seam-growth'),metal=materialMesh(group,'room8-torn-metal');
+  expect(materialMesh(group,'boarding-ribs')).toBeUndefined();expect(growth).toBeDefined();expect(metal).toBeDefined();
+  group.updateMatrixWorld(true);const ray=new T.Raycaster(),p=growth.geometry.getAttribute('position');let rooted=0;
+  const seal=materialMesh(group,'room8-hull-seal');
+  for(let i=0;i<p.count;i++){if(Math.abs(p.getY(i)-.25)>.001)continue;ray.set(new T.Vector3(p.getX(i),.3,p.getZ(i)),new T.Vector3(0,-1,0));expect(ray.intersectObject(seal).length).toBeGreaterThan(0);rooted++;}
+  expect(rooted).toBeGreaterThan(60);
+  // Each closed fold has 20 triangles, with root buried at .13 and top at .25.
+  const m=metal.geometry.getAttribute('position');expect(m.count).toBe(6*20*3);
+  for(let i=0;i<6;i++){const ys=Array.from({length:60},(_,j)=>m.getY(i*60+j));expect(Math.min(...ys)).toBeCloseTo(.13);expect(Math.max(...ys)).toBeGreaterThan(.65);}
   disposeModel(group);
  });
  it.each(['passenger-vault','breached-loading-bay','overload-floor'] as const)('gives %s quiet world-scaled steel textures with owned disposal',id=>{
@@ -43,7 +49,7 @@ describe('authored architecture',()=>{
   const map=deck.material.map as T.DataTexture,rough=deck.material.roughnessMap as T.DataTexture;expect(map).toBeInstanceOf(T.DataTexture);expect(rough).toBeInstanceOf(T.DataTexture);
   expect(map.wrapS).toBe(T.RepeatWrapping);expect(new Set(map.image.data).size).toBeGreaterThan(8);
   const p=deck.geometry.getAttribute('position'),uv=deck.geometry.getAttribute('uv');for(let i=0;i<p.count;i+=21){expect(uv.getX(i)).toBeCloseTo(p.getX(i)/8,4);expect(uv.getY(i)).toBeCloseTo(p.getZ(i)/8,4);}
-  let disposed=0;map.addEventListener('dispose',()=>disposed++);rough.addEventListener('dispose',()=>disposed++);disposeModel(group);expect(disposed).toBe(2);expect(group.children.length).toBeLessThan(22);
+  let disposed=0;map.addEventListener('dispose',()=>disposed++);rough.addEventListener('dispose',()=>disposed++);disposeModel(group);expect(disposed).toBe(2);expect(group.children.length).toBeLessThan(id==='breached-loading-bay'?26:22);
  });
  it('adds bolted reactor clamp housings',()=>{const group=authoredRoom('overload-floor',actual('overload-floor'))!;expect(materialMesh(group,'reactor-fasteners')).toBeDefined();disposeModel(group);});
  it('builds shared story footprints with sealed banks and no exposed bodies',()=>{

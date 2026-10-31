@@ -1,0 +1,549 @@
+{
+  "source": "11ea751aa3063635fc40bd0b76fe5febf5698a8c",
+  "method": "Unmodified production createExpeditionGeometry, canOccupyExpedition, canTraverseExpedition and DepthGame.moveCorpse. Same movement method called by player update. Radius 28 is a clearance probe, not AI routing. No encounter updates.",
+  "obstacles": [
+    {
+      "x": 450,
+      "y": 260,
+      "width": 80,
+      "height": 320
+    },
+    {
+      "x": 690,
+      "y": 260,
+      "width": 80,
+      "height": 320
+    },
+    {
+      "x": 530,
+      "y": 260,
+      "width": 160,
+      "height": 80
+    }
+  ],
+  "routes": [
+    {
+      "name": "south_to_bay",
+      "radius": 16,
+      "coords": [
+        [
+          610,
+          640
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        true
+      ],
+      "steps": 120,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 60,
+      "minEdgeClearance": 44,
+      "end": {
+        "x": 610,
+        "y": 400
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_west_to_bay",
+      "radius": 16,
+      "coords": [
+        [
+          610,
+          200
+        ],
+        [
+          400,
+          200
+        ],
+        [
+          400,
+          640
+        ],
+        [
+          610,
+          640
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "steps": 550,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 50,
+      "minEdgeClearance": 34,
+      "end": {
+        "x": 610,
+        "y": 400
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_east_to_bay",
+      "radius": 16,
+      "coords": [
+        [
+          610,
+          200
+        ],
+        [
+          820,
+          200
+        ],
+        [
+          820,
+          640
+        ],
+        [
+          610,
+          640
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "steps": 550,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 50,
+      "minEdgeClearance": 34,
+      "end": {
+        "x": 610,
+        "y": 400
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_exterior_crossing",
+      "radius": 16,
+      "coords": [
+        [
+          100,
+          440
+        ],
+        [
+          100,
+          200
+        ],
+        [
+          1100,
+          200
+        ],
+        [
+          1100,
+          440
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true
+      ],
+      "steps": 740,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 60,
+      "minEdgeClearance": 44,
+      "end": {
+        "x": 1100,
+        "y": 440
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "south_exterior_crossing",
+      "radius": 16,
+      "coords": [
+        [
+          100,
+          440
+        ],
+        [
+          100,
+          640
+        ],
+        [
+          1100,
+          640
+        ],
+        [
+          1100,
+          440
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true
+      ],
+      "steps": 700,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 60,
+      "minEdgeClearance": 44,
+      "end": {
+        "x": 1100,
+        "y": 440
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_direct_blocked",
+      "radius": 16,
+      "coords": [
+        [
+          610,
+          200
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        false
+      ],
+      "steps": 100,
+      "blockedSteps": 78,
+      "allPositionsLegal": true,
+      "minCenterClearance": 16,
+      "minEdgeClearance": 0,
+      "end": {
+        "x": 610,
+        "y": 244
+      },
+      "distanceToGoal": 156
+    },
+    {
+      "name": "south_to_bay",
+      "radius": 28,
+      "coords": [
+        [
+          610,
+          640
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        true
+      ],
+      "steps": 120,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 60,
+      "minEdgeClearance": 32,
+      "end": {
+        "x": 610,
+        "y": 400
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_west_to_bay",
+      "radius": 28,
+      "coords": [
+        [
+          610,
+          200
+        ],
+        [
+          400,
+          200
+        ],
+        [
+          400,
+          640
+        ],
+        [
+          610,
+          640
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "steps": 550,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 50,
+      "minEdgeClearance": 22,
+      "end": {
+        "x": 610,
+        "y": 400
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_east_to_bay",
+      "radius": 28,
+      "coords": [
+        [
+          610,
+          200
+        ],
+        [
+          820,
+          200
+        ],
+        [
+          820,
+          640
+        ],
+        [
+          610,
+          640
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "steps": 550,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 50,
+      "minEdgeClearance": 22,
+      "end": {
+        "x": 610,
+        "y": 400
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_exterior_crossing",
+      "radius": 28,
+      "coords": [
+        [
+          100,
+          440
+        ],
+        [
+          100,
+          200
+        ],
+        [
+          1100,
+          200
+        ],
+        [
+          1100,
+          440
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true
+      ],
+      "steps": 740,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 60,
+      "minEdgeClearance": 32,
+      "end": {
+        "x": 1100,
+        "y": 440
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "south_exterior_crossing",
+      "radius": 28,
+      "coords": [
+        [
+          100,
+          440
+        ],
+        [
+          100,
+          640
+        ],
+        [
+          1100,
+          640
+        ],
+        [
+          1100,
+          440
+        ]
+      ],
+      "segmentsClear": [
+        true,
+        true,
+        true
+      ],
+      "steps": 700,
+      "blockedSteps": 0,
+      "allPositionsLegal": true,
+      "minCenterClearance": 60,
+      "minEdgeClearance": 32,
+      "end": {
+        "x": 1100,
+        "y": 440
+      },
+      "distanceToGoal": 0
+    },
+    {
+      "name": "north_direct_blocked",
+      "radius": 28,
+      "coords": [
+        [
+          610,
+          200
+        ],
+        [
+          610,
+          400
+        ]
+      ],
+      "segmentsClear": [
+        false
+      ],
+      "steps": 100,
+      "blockedSteps": 84,
+      "allPositionsLegal": true,
+      "minCenterClearance": 28,
+      "minEdgeClearance": 0,
+      "end": {
+        "x": 610,
+        "y": 232
+      },
+      "distanceToGoal": 168
+    }
+  ],
+  "contacts": [
+    {
+      "name": "counter_south",
+      "radius": 16,
+      "x": 610,
+      "y": 358.82352941176475,
+      "blocked": true,
+      "legal": true,
+      "edgeClearance": 2.8235294117647527
+    },
+    {
+      "name": "west_inner",
+      "radius": 16,
+      "x": 551.1764705882354,
+      "y": 400,
+      "blocked": true,
+      "legal": true,
+      "edgeClearance": 5.176470588235361
+    },
+    {
+      "name": "east_inner",
+      "radius": 16,
+      "x": 668.8235294117646,
+      "y": 400,
+      "blocked": true,
+      "legal": true,
+      "edgeClearance": 5.176470588235361
+    },
+    {
+      "name": "exact_contact_occupancy",
+      "radius": 16,
+      "west": true,
+      "westPenetrationRejected": true,
+      "east": true,
+      "eastPenetrationRejected": true,
+      "counter": true,
+      "counterPenetrationRejected": true
+    },
+    {
+      "name": "counter_south",
+      "radius": 28,
+      "x": 610,
+      "y": 370.5882352941177,
+      "blocked": true,
+      "legal": true,
+      "edgeClearance": 2.5882352941176805
+    },
+    {
+      "name": "west_inner",
+      "radius": 28,
+      "x": 562.9411764705883,
+      "y": 400,
+      "blocked": true,
+      "legal": true,
+      "edgeClearance": 4.941176470588289
+    },
+    {
+      "name": "east_inner",
+      "radius": 28,
+      "x": 657.0588235294117,
+      "y": 400,
+      "blocked": true,
+      "legal": true,
+      "edgeClearance": 4.941176470588289
+    },
+    {
+      "name": "exact_contact_occupancy",
+      "radius": 28,
+      "west": true,
+      "westPenetrationRejected": true,
+      "east": true,
+      "eastPenetrationRejected": true,
+      "counter": true,
+      "counterPenetrationRejected": true
+    }
+  ],
+  "shots": [
+    {
+      "name": "south_bay",
+      "clear": true
+    },
+    {
+      "name": "counter_blocks_north",
+      "clear": false
+    },
+    {
+      "name": "west_cover_blocks",
+      "clear": false
+    },
+    {
+      "name": "east_cover_blocks",
+      "clear": false
+    },
+    {
+      "name": "north_exterior",
+      "clear": true
+    }
+  ],
+  "unexpectedRouteFailures": 0
+}
