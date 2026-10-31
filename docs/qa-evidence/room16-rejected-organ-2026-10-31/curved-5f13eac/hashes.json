@@ -1,0 +1,13 @@
+{
+  "capture.mjs": "98e62890cd704e59110211be68b6ac2c11394b0637c572c8674727e4e36763ee",
+  "review.md": "8d5d220972d6d603fa86e42288053b0edd70eff1d9c5909a18aa864ff09b5cf7",
+  "README.md": "a1ac0a189ad2bfa6f10c854a07cfa133e553362bec69b25b3f9e29876f7f21e1",
+  "after/room-overview.png": "a873a66f507ed0c6cea78f5d3db6038401cd71141923229051314aeddd589d66",
+  "after/manifest.json": "96e60275bf256a669ab5e065f99fae1a7613d7930dee586291a687278f9e0898",
+  "after/center-native.png": "161aabaa0acaebe0ce3112ce3a1cf16e796e8eef4863a1bb6cd78517746a0477",
+  "after/north-approach-native.png": "9639fb448d46dfc6a43a640000047ffe4db26dec4a017b74c3bf34b523ff3e63",
+  "before/room-overview.png": "ddf81d029953d600cea01fe0c0747c57ff49919d60154c9279ca82d4801f641b",
+  "before/manifest.json": "639f2e9d8dcd7a2dafacfc54762c5464822025f86bcfd2c890ed24dfca1e8ded",
+  "before/center-native.png": "09abe10c32326cd08651b46fa96e3290023ac94082cf5675ab6a5c9b570d385d",
+  "before/north-approach-native.png": "f25637c4728d8cdfc50a801cd1123789c2979199ed9dad011e4159eb29b9629d"
+}

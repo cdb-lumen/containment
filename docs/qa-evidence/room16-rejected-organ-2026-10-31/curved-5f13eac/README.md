@@ -1,0 +1,1 @@
+Rejected visual candidate5f13eac. Shared camera/UI matched baseline5ae4e30; static only. Three unresolved P2 findings: triangulation streaks, molded Y silhouette/cut plates, and weak human cabinet identity/engulfment. No gameplay or art acceptance.
