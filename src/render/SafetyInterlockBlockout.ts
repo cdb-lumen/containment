@@ -180,7 +180,7 @@ export function safetyInterlockBlockout(footprint:Footprint,index:number):T.Grou
   for(const x of [-.55,.55]){
    const rib=rod(panel,v(x-.35,.155,-1.10),v(x+.35,.155,-.20),.035,.035,ivory);rib.name='panel-pressed-rib';
   }
-  for(const x of [-1.5,1.5]){
+  for(const x of [-1.8,1.8]){
    b('panel-hinge',x,1.10,-1.20,.48,.22,.30,copper);
    const stay=rod(cell,v(x,1.02,-.75),v(x,1.86,-1.69),.065,.065,orange);stay.name='panel-stay';
   }
