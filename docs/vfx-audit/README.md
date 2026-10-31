@@ -2,7 +2,11 @@
 
 **No VFX changes from this pass may merge before Viktor approves their demos.**
 
-## Scope
+## Current status — 2026-10-31
+
+[Current-status overlay](current-status.json) separates source-confirmed shipped PR53 changes, historical approval records, media availability and pending current native review. [Remaining work and evidence limits](current-gaps.md) explains the outstanding scope. The catalog and queue below describe the pinned historical baseline; their old implementation descriptions are not current defect reports. PR53 already shipped the selected acid, link, lightning, reload, Fragmentation, frost and Toxic Bloom changes.
+
+## Historical baseline scope
 
 Baseline: `73a055adf03d33d87641b81593cc03e863e9c7af`.
 
@@ -10,7 +14,7 @@ The source catalog contains 74 implemented VFX families/components and one inact
 
 [Full machine-readable catalog](catalog.json) includes triggers, variants, source references, current rendering methods, recommendations and sprite/particle decisions for every entry. Recommendations are source-level judgments, not claims that every effect has failed visual QA.
 
-## First review batch
+## Historical first review batch
 
 - `acid-contact`: untargeted spitter impact becomes falling liquid droplets instead of additive sparks.
 - `queen-acid-blast`: the supported legacy queen area attack becomes radial liquid spray instead of an explosion ring.
@@ -18,7 +22,7 @@ The source catalog contains 74 implemented VFX families/components and one inact
 
 These three catalog components appear in two demos: spitter impact and queen splash/lingering pool. Targeted weapon damage also uses the `acid` event name; the approved small target-contact effect stays unchanged.
 
-## Next candidates, one at a time
+## Historical candidate queue (see current overlay before acting)
 
 1. Ricochet and Ice Lance currently enter the same electric-link renderer. Give each its own shape and a separate trigger-verified clip.
 2. Ball Lightning detonation falls through to a generic ring; reload priming reuses an explosion. Separate priming from damaging discharge.

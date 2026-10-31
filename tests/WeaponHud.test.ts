@@ -9,7 +9,7 @@ import {weaponHudSide,type ScreenBox} from '../src/WeaponHud';
 const css=readFileSync(new URL('../src/style.css',import.meta.url),'utf8').replace(/@import[^;]+;/g,'');
 const main=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
 const markup=main.slice(main.indexOf('<div class="weapon-hud"'),main.indexOf('<div id="weapon-picker"'));
-const script=ts.transpileModule(readFileSync(new URL('../src/WeaponHud.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replace(/^export /gm,'')+'\nwindow.__placeWeaponHud=positionWeaponHud;';
+const script=ts.transpileModule(readFileSync(new URL('../src/WeaponHud.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replace(/^export /gm,'')+'\nwindow.__placeWeaponHud=positionWeaponHud; window.__captureWeaponPointer=captureWeaponPointer;';
 const intersects=(a:ScreenBox,b:ScreenBox)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
 let browser:Browser;
 beforeAll(async()=>{browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--disable-gpu','--disable-webgl']});});
@@ -69,4 +69,38 @@ it('recalculates an already relocated panel after a desktop window resize',async
   expect(await panel.getAttribute('data-side')).toBe('right');expect(intersects(final,resized)).toBe(false);
   expect(final.left).toBeGreaterThanOrEqual(0);expect(final.right).toBeLessThanOrEqual(600);expect(final.bottom).toBeLessThanOrEqual(600);
  }finally{await page.close();}
+});
+
+it('clears all lower controls at the recorded armory frame746 and mirrored/narrow desktop poses',async()=>{
+ const controls=main.slice(main.indexOf('<div id="weapon-picker"'),main.indexOf('<div id="room-loading"')).replace(/\$\{\(\['pistol'[\s\S]*?join\(''\)\}/, ['pistol','rifle','shotgun','plasma','rocket'].map((id,i)=>`<button data-weapon="${id}" aria-label="Equip ${id}"><small>${i+1}</small><span>${id}</span></button>`).join(''));
+ for(const [width,height] of [[1280,900],[960,540],[600,600]]){
+  const page=await mount(width,height);
+  try{
+   await page.locator('#hud').evaluate((el,html)=>el.insertAdjacentHTML('beforeend',html),controls);
+   for(const player of [{left:width-73.7337876049503,top:height-145.886189163229,right:width-32.8246966958593,bottom:height-63.3756156464713},{left:33,top:height-146,right:74,bottom:height-63},{left:width/2-21,top:height-80,right:width/2+21,bottom:height-5}]){
+    await page.evaluate(player=>{(window as any).__placeWeaponHud(document.querySelector('.weapon-hud'),player,innerWidth);},player);
+    for(const selector of ['.weapon-hud','#weapon-picker','.desktop-hint']){
+     const box=await page.locator(selector).evaluate(el=>el.getBoundingClientRect().toJSON());
+     expect(intersects(box,player),`${width} ${selector}`).toBe(false);
+     expect(box.left).toBeGreaterThanOrEqual(0);expect(box.right).toBeLessThanOrEqual(width);
+     expect(box.top).toBeGreaterThanOrEqual(0);expect(box.bottom).toBeLessThanOrEqual(height);
+    }
+   }
+   expect(await page.locator('[data-weapon]').count()).toBe(5);
+   await page.evaluate(()=>{document.body.dataset.state='playing';document.querySelectorAll<HTMLButtonElement>('[data-weapon]').forEach(button=>{(window as any).__captureWeaponPointer(button);button.addEventListener('click',()=>{document.body.dataset.equipped=button.dataset.weapon;});});});
+   const rifle=page.getByRole('button',{name:'Equip rifle',exact:true});
+   const target=await rifle.boundingBox();expect(target).not.toBeNull();
+   await page.mouse.move(target!.x+target!.width/2,target!.y+target!.height/2);
+   await page.mouse.down();
+   await page.evaluate(()=>{const picker=document.getElementById('weapon-picker')!;const box=picker.getBoundingClientRect();(window as any).__placeWeaponHud(document.querySelector('.weapon-hud'),box,innerWidth);});
+   const moved=await rifle.boundingBox();expect(moved!.x).not.toBe(target!.x);
+   await page.mouse.up();
+   expect(await page.locator('body').getAttribute('data-equipped')).toBe('rifle');
+   await page.getByRole('button',{name:'Equip shotgun',exact:true}).focus();
+   await page.keyboard.press('Enter');
+   expect(await page.locator('body').getAttribute('data-equipped')).toBe('shotgun');
+   await page.evaluate(()=>{document.body.dataset.state='paused';});
+   expect(await page.getByRole('button',{name:'Equip rifle',exact:true}).evaluate(el=>getComputedStyle(el).pointerEvents)).toBe('none');
+  }finally{await page.close();}
+ }
 });
