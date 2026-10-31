@@ -162,9 +162,9 @@ export function safetyInterlockBlockout(footprint:Footprint,index:number):T.Grou
   plug.add(b('plug-collar',.84,.66,1.37,.15,.55,.75,ivory));
   const pins=new T.Group();pins.name='exposed-plug-pins';plug.add(pins);
   for(const z of [1.19,1.37,1.55]){
-   const pin=rod(pins,v(.49,.60,z),v(.80,.60,z),.045,.045,copper);pin.name='connector-pin';
+   const pin=rod(pins,v(.49,.60,z),v(.80,.60,z),.045,.045,ivory);pin.name='connector-pin';
   }
-  cable('disconnected-lead',[[1.59,.66,1.37],[1.92,.52,1.34],[2.19,.48,.78],[2.17,.58,-.58],[1.98,.70,-.86]],.12,orange);
+  cable('disconnected-lead',[[1.556,.66,1.222],[1.92,.52,1.34],[2.19,.48,.78],[2.17,.58,-.58],[1.98,.70,-.86]],.12,orange);
   b('ai-cable-gland',1.98,.70,-.86,.3,.3,.34,orange);
   // Hinged back access door, deliberately held open. Its layered underside
   // faces the player; the recorder remains the only pale, sealed assembly.
@@ -187,10 +187,18 @@ export function safetyInterlockBlockout(footprint:Footprint,index:number):T.Grou
   for(const z of [.85,1.91])b('socket-protective-lip',-.80,.58,z,2.65,.39,.13,steel);
   b('lead-support-front',2.12,.49,.86,.33,.24,.24,orange);
   b('lead-support-rear',2.15,.56,-.45,.33,.25,.24,orange);
-  // Scuffed access lips and pull grip only, not uniform noise on the casing.
-  for(const [x,z,w] of [[-1.35,1.91,.46],[-.38,1.91,.29],[-2.12,.32,.22]])b('service-edge-wear',x,.785,z,w,.025,.10,ivory);
-  b('plug-pull-grip',1.25,.96,1.37,.48,.10,.43,steel);
-  b('plug-grip-wear',1.25,1.019,1.37,.26,.018,.20,ivory);
+  // Thin irregular abrasion follows the lip surface instead of adding pale fittings.
+  for(const [x,z,w] of [[-1.35,1.91,.46],[-.38,1.91,.29]]){
+   plate('service-edge-wear',outline([[x-w/2,z-.035],[x-w*.13,z-.047],[x+w*.09,z-.023],[x+w/2,z-.038],[x+w*.38,z+.025],[x-w*.25,z+.018]]),.777,.004,ivory);
+  }
+  plug.add(b('plug-pull-grip',1.25,.96,1.37,.48,.10,.43,steel));
+  plate('plug-grip-wear',outline([[1.12,1.32],[1.22,1.29],[1.28,1.33],[1.39,1.31],[1.35,1.38],[1.20,1.40]]),1.012,.004,ivory,plug);
+  // The loose connector lies diagonally across the tray; retain the real cable
+  // attachment and exposed pins, with clear air between it and the empty sockets.
+  const plugPivot=new T.Vector3(1.25,.66,1.37);
+  for(const child of plug.children)child.position.sub(plugPivot);
+  plug.position.copy(plugPivot);plug.rotation.y=.45;
+
  }else{
   root.name='split-contactor-battery';
   b('island-base',0,.15,0,7.25,.3,3.5,steel);
