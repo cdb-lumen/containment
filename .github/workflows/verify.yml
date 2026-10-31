@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Software WebGL needs a separate budget per viewport. Steps stay serial.
     timeout-minutes: 120
     steps:
