@@ -16,8 +16,8 @@ describe('room camera framing',()=>{
   raycaster.setFromCamera(new T.Vector2(1,1),camera);
   const corner=raycaster.ray.intersectPlane(ground,new T.Vector3())!;
   const low=roomFocus(-100,-100,60,60,20,16),high=roomFocus(100,100,60,60,20,16);
-  expect(low.x).toBeCloseTo(Math.abs(corner.x)-.7,10);expect(low.z).toBeCloseTo(Math.abs(corner.z)-.7,10);
-  expect(high.x).toBeCloseTo(60-low.x,10);expect(high.z).toBeCloseTo(60-low.z,10);
+  expect(low.x).toBeCloseTo(Math.abs(corner.x)-.7,10);expect(low.z).toBeCloseTo(Math.abs(corner.z)-2.2,10);
+  expect(high.x).toBeCloseTo(60-low.x,10);expect(high.z).toBeCloseTo(60-(Math.abs(corner.z)-.7),10);
   expect(roomFocus(low.x,low.z,60,60,20,16)).toEqual(low);
   expect(roomFocus(high.x,high.z,60,60,20,16)).toEqual(high);
  });
