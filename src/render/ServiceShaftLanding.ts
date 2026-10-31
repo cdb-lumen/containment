@@ -89,7 +89,7 @@ export function serviceShaftLanding(t:RoomTemplate):T.Group{
   beam(wheel,[x,99,408],[x,99,452],3,zinc).name='axle';
   for(const [z,name] of [[411,'bearing-rear'],[449,'bearing-front']] as const){
    box(wheel,x,94,z,16,19,8,steel).name=name;
-   box(wheel,x,80,z,26,7,12,zinc);
+   box(wheel,x,81,z,26,9,12,zinc).name=`${name}-pad`;
   }
   for(const angle of [0,Math.PI/2,Math.PI,Math.PI*1.5]){
    beam(wheel,[x+6*Math.cos(angle),99+6*Math.sin(angle),435],[x+20*Math.cos(angle),99+20*Math.sin(angle),435],2.5,zinc).name='spoke';

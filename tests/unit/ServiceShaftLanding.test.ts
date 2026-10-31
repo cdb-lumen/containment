@@ -2,7 +2,7 @@ import {describe,it,expect} from 'vitest';
 import * as T from 'three';
 import {serviceShaftLanding} from '../../src/render/ServiceShaftLanding';
 import {ROOM_TEMPLATES} from '../../src/game/roguelike/roomTemplates';
-import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition} from '../../src/game/world/expeditionGeometry';
+import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition,hasClearExpeditionShot} from '../../src/game/world/expeditionGeometry';
 import {appendEnvironment} from '../../src/render/ShipEnvironments';
 import {DepthRenderer} from '../../src/render/DepthRenderer';
 import {disposeModel} from '../../src/render/meshParts';
@@ -77,13 +77,50 @@ describe('Room14 accepted C balcony rough placement',()=>{
   expect(template.spawn).toEqual({x:100,y:440});expect(template.exit).toEqual({x:1100,y:440});
   expect(template.breaches).toEqual([[100,100],[1100,100],[100,780],[1100,780]].map(([x,y])=>({x,y})));
  });
- for(const radius of [16,28,30])it(`retains full C and progression sweeps at radius ${radius}`,()=>{
+ for(const radius of [16,28,30,38])it(`retains full C and progression sweeps at radius ${radius}`,()=>{
   const route=[[1044,740],[180,740],[180,140],[1040,140],[1040,440],[1100,440]].map(([x,y])=>({x,y}));
   for(let i=1;i<route.length;i++)expect(canTraverseExpedition(geometry,route[i-1],route[i],radius)).toBe(true);
   expect(canTraverseExpedition(geometry,template.spawn,{x:180,y:440},radius)).toBe(true);
   expect(canTraverseExpedition(geometry,{x:180,y:440},{x:280,y:405},radius)).toBe(true);
   expect(canOccupyExpedition(geometry,{x:600,y:440},radius)).toBe(false);
   expect(canTraverseExpedition(geometry,{x:1040,y:440},{x:1040,y:740},radius)).toBe(false);
+ });
+ it('keeps radius38 actors clear at every canonical breach emergence and endpoint',()=>{
+  for(const p of [geometry.playerSpawn,geometry.exitPoint])expect(canOccupyExpedition(geometry,p,38)).toBe(true);
+  for(const b of geometry.breaches){const inward={x:b.x+(b.facing==='east'?56:-56),y:b.y};expect(canTraverseExpedition(geometry,b,inward,38)).toBe(true);}
+ });
+ it('does not bridge the open east mouth or concave shoulder with deck triangles',()=>{
+  const root=serviceShaftLanding(template);root.updateMatrixWorld(true);const floor=root.getObjectByName('connected-balcony')!.children[0] as T.Mesh;
+  const p=floor.geometry.getAttribute('position'),indices=floor.geometry.index?Array.from(floor.geometry.index.array):Array.from({length:p.count},(_,i)=>i);
+  for(let i=0;i<indices.length;i+=3){
+   const v=indices.slice(i,i+3).map(k=>new T.Vector3().fromBufferAttribute(p,k).applyMatrix4(floor.matrixWorld));
+   if(!v.every(q=>Math.abs(q.y)<1e-6))continue;
+   for(const w of [[1/3,1/3,1/3],[.6,.2,.2],[.2,.6,.2],[.2,.2,.6]]){
+    const q=v[0].clone().multiplyScalar(w[0]).addScaledVector(v[1],w[1]).addScaledVector(v[2],w[2]);expect(canOccupyExpedition(geometry,{x:q.x*32,y:q.z*32},0)).toBe(true);
+   }
+  }
+  for(const phase of ['before','after']){
+   const model=phase==='before'?root:bake(root);model.updateMatrixWorld(true);
+   for(const [x,y] of [[899,239],[899,241],[901,539],[901,541],[1199,539],[1199,541],[1199,639],[1199,641],[339,440],[341,440]]){
+    const hits=new T.Raycaster(new T.Vector3(x/32,5,y/32),new T.Vector3(0,-1,0)).intersectObject(model,true);
+    expect(hits.some(h=>Math.abs(h.point.y)<1e-5),phase+' '+x+'/'+y).toBe(canOccupyExpedition(geometry,{x,y},0));
+   }
+   if(phase==='after')disposeModel(model);
+  }
+  expect(hasClearExpeditionShot(geometry,{x:180,y:740},{x:1040,y:740})).toBe(true);
+  expect(hasClearExpeditionShot(geometry,{x:180,y:440},{x:1040,y:440})).toBe(false);
+  expect(hasClearExpeditionShot(geometry,{x:1040,y:440},{x:1040,y:740})).toBe(false);
+ });
+ it('supports both sheave bearings on their pads without floating gaps',()=>{
+  const root=serviceShaftLanding(template);root.updateMatrixWorld(true);
+  for(const x of [478,682])for(const [z,name] of [[411,'bearing-rear'],[449,'bearing-front']] as const){
+   const wheel=root.getObjectByName('sheave-'+x)!,bearing=wheel.getObjectByName(name)!;
+   const pad=wheel.getObjectByName(name+'-pad')!;expect(pad).toBeDefined();
+   expect(new T.Box3().setFromObject(pad).min.y*32).toBeCloseTo(76.5);
+   expect(new T.Raycaster(new T.Vector3(x/32,84/32,(z-20)/32),new T.Vector3(0,0,1)).intersectObject(pad).length).toBeGreaterThan(0);
+   expect(new T.Box3().setFromObject(pad).expandByScalar(1e-6).intersectsBox(new T.Box3().setFromObject(bearing)),x+' '+name).toBe(true);
+  }
+  disposeModel(root);
  });
  it('crosses the full C using actual updates with pursuing brutes and dropped pickups',()=>{
   const game=new DepthGame();game.node=generateRun(1729).nodes.find(n=>n.templateId==='service-shaft-landing')!;
