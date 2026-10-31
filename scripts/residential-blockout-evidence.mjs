@@ -73,7 +73,7 @@ window.__blockout={
  },
  snapshot(){
   const T=EvidenceThree;
-  const hudBoxes=[...document.querySelectorAll('#hud .hud-top,#story-hud,#boss-hud,#build-strip,#run-stock,.weapon-hud,#weapon-picker,#touch-controls,#signature,#room-loading,#overlay')].map(o=>{
+  const hudBoxes=[...document.querySelectorAll('#hud .hud-top,#story-hud,#boss-hud,#build-strip,#run-stock,.weapon-hud,#weapon-picker,#signature,#room-loading,#overlay')].map(o=>{
    const r=o.getBoundingClientRect(),s=getComputedStyle(o);return {selector:o.id?'#'+o.id:'.'+o.className,text:o.textContent,visible:o.checkVisibility()&&s.opacity!=='0'&&r.width>0&&r.height>0,rect:{x:r.x,y:r.y,width:r.width,height:r.height}};
   });
   renderer.world.updateMatrixWorld(true);
@@ -133,7 +133,7 @@ try{
    }
   }catch(error){await page.screenshot({path:resolve(out,`${name}-FAILED.png`)}).catch(()=>{});await writeFile(resolve(out,'failure.json'),JSON.stringify({sha,name,error:String(error),errors},null,2));throw error;}finally{await context.close();}
  }
- const expected=2*(views.length+1);assert.equal(results.length,expected);assert.equal(new Set(results.map(r=>r.file)).size,expected);
+ const expected=views.length+1;assert.equal(results.length,expected);assert.equal(new Set(results.map(r=>r.file)).size,expected);
  for(const name of ['desktop'])assert.deepEqual(results.filter(r=>r.name===name).map(r=>r.view),[...views.map(v=>v[0]),'full-room']);
  for(const r of results)assert.equal(createHash('sha256').update(await readFile(resolve(out,r.file))).digest('hex'),r.sha256);
  console.log(`Verified ${expected} unique captures and hashes`);

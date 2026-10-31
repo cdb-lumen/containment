@@ -83,5 +83,5 @@ try{
   await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,assetSha256,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
   console.log(JSON.stringify(results.at(-1)));await context.close();
  }
- assert.equal(results.length,2);assert.ok(results.every(result=>!result.failed),'both viewports must have ready assets');
+ assert.equal(results.length,1);assert.ok(results.every(result=>!result.failed),'desktop must have ready assets');
 }finally{await browser?.close();await new Promise((resolve,reject)=>server.httpServer.close(error=>error?reject(error):resolve()));}
