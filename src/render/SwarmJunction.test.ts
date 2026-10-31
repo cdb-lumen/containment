@@ -20,7 +20,8 @@ describe('Room16 room visuals',()=>{
   const root=model(),plates=meshes(root).filter(m=>m.name==='organ-bed');expect(plates).toHaveLength(1);
   const lip=meshes(root).find(m=>m.name==='sensory-carapace-lip')!;expect(lip).toBeDefined();
   const layered=meshes(root).filter(m=>m.name.startsWith('carapace-overlap-')||/^root-.*-(cut|sheath)$/.test(m.name)||m.name==='distributor-engulfing-fold');
-  expect(layered).toHaveLength(11);
+  expect(layered).toHaveLength(7); // Four rejected applied plates were removed.
+  expect(meshes(root).some(m=>m.name.startsWith('carapace-overlap-'))).toBe(false);
   const badEdges=(indices:number[])=>{
    const edges=new Map<string,number[]>();
    for(let i=0;i<indices.length;i+=3)for(let j=0;j<3;j++){
@@ -141,6 +142,21 @@ describe('Room16 room visuals',()=>{
   expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-roof-service-panel');
   ray.set(new T.Vector3(674/32,5,234/32),new T.Vector3(0,-1,0));
   expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-engulfing-fold');
+  disposeModel(root);
+ });
+ it('opens the terminal borders and crosses the cabinet roof while retaining exposed hardware',()=>{
+  const root=model(),ray=new T.Raycaster();
+  // These witnesses fell outside the rejected small inset caps and narrow fold.
+  for(const [x,z,name] of [[397,146,'root-west-cut'],[800,143,'root-east-cut'],[611,364,'root-south-cut'],[653,228,'distributor-engulfing-fold'],[674,234,'distributor-engulfing-fold'],[649,237,'distributor-roof-service-panel']] as const){
+   ray.set(new T.Vector3(x/32,5,z/32),new T.Vector3(0,-1,0));
+   const hits=ray.intersectObject(root,true);
+   expect(hits[0]?.object.name,`${x},${z}`).toBe(name);
+   if(name==='distributor-engulfing-fold'){
+    const support=hits.find(h=>h.object.name==='severed-distributor');
+    expect(support).toBeDefined();expect(hits[0].point.y).toBeGreaterThan(support!.point.y);
+    expect(hits[0].point.y-support!.point.y).toBeLessThan(2.3/32);
+   }
+  }
   disposeModel(root);
  });
  it('uses a varying organic heightfield, differentiated materials and recessed wall bays',()=>{

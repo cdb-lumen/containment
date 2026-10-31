@@ -34,36 +34,27 @@ export function swarmJunctionBlockout(){
  // The silhouette and heightfield are one sealed body. Every top triangle is
  // constrained to the shared concave contour; no contracted ring crosses a bay.
  const shellHeight=(p:Point)=>{
-  let distance=Infinity;
-  for(let i=0;i<SWARM_ORGAN.length;i++){
-   const a=SWARM_ORGAN[i],b=SWARM_ORGAN[(i+1)%SWARM_ORGAN.length],dx=b.x-a.x,dy=b.y-a.y;
-   const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy)));
-   distance=Math.min(distance,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));
-  }
   const cavity=Math.hypot((p.x-600)/44,(p.y-260)/34);
-  const tipDistance=Math.min(...[[392,135],[799,134],[606,359]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)));
-  const tipRise=Math.max(0,Math.min(1,(tipDistance-17)/15));
-  // Unequal longitudinal crowns make the roots swell into the hub instead of
-  // sharing one uniform molded rim. Keep the sealed shot-plane mass intact.
-  const west=Math.exp(-(((p.x-488)/78)**2+((p.y-205)/55)**2));
-  const east=Math.exp(-(((p.x-724)/58)**2+((p.y-197)/42)**2));
-  const south=Math.exp(-(((p.x-596)/24)**2+((p.y-322)/34)**2));
-  const crown=Math.min(1,.42+.58*west+.36*east+.49*south);
+  // Three bent, unequal volumes continue all the way to the contour. Avoid a
+  // constant-height manufactured rim and separate decorative plate inserts.
+  const westT=Math.max(0,Math.min(1,(p.x-392)/182));
+  const westAxis=135+westT*119+11*Math.sin(westT*Math.PI);
+  const west=Math.exp(-1*((p.y-westAxis)/(19+20*westT))**2)*
+   Math.exp(-1*((p.x-493)/110)**4)*(.35+.65*Math.sin(westT*Math.PI));
+  const eastT=Math.max(0,Math.min(1,(800-p.x)/161));
+  const eastAxis=134+eastT*114-13*Math.sin(eastT*Math.PI*1.3);
+  const east=Math.exp(-1*((p.y-eastAxis)/(17+13*eastT))**2)*
+   Math.exp(-1*((p.x-724)/105)**4)*(.45+.55*Math.sin(eastT*Math.PI*1.7)**2);
+  const southT=Math.max(0,Math.min(1,(355-p.y)/71));
+  const southAxis=606-13*Math.sin(southT*Math.PI);
+  const south=Math.exp(-1*((p.x-southAxis)/(15+14*southT))**2)*Math.exp(-1*((p.y-322)/49)**4);
   const cabinet=Math.max(0,1-Math.hypot((p.x-655)/40,(p.y-241)/36));
-  return 31+12*Math.tanh(distance/12)*Math.max(0,Math.min(1,(cavity-1)*2))*tipRise*crown*(1-.85*cabinet);
+  const tipDistance=Math.min(...[[392,135],[799,134],[606,359]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)));
+  const tipRelief=.25+.75*Math.min(1,tipDistance/30);
+  const crown=Math.max(west,east,south)*tipRelief;
+  return 31+13.4*crown*Math.max(0,Math.min(1,(cavity-1)*2))*(1-.9*cabinet);
  };
  add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),chitin);
- // A few large, unequal overlapping shields follow the roots. They use the
- // same heightfield at their edges and remain wholly inside the sealed body.
- for(const [name,points] of [
-  ['west-shoulder',[[431,153],[463,177],[505,207],[488,222],[460,198],[438,181]]],
-  ['west-hub',[[493,205],[531,226],[554,243],[545,268],[523,253],[505,230]]],
-  ['east-root',[[742,167],[773,142],[796,139],[780,162],[752,184],[727,207],[714,211]]],
-  ['south-root',[[587,301],[610,301],[619,322],[611,345],[600,352],[592,334]]],
- ] as const){
-  const contour=points.map(([x,y])=>({x,y}));
-  add(`carapace-overlap-${name}`,organicShell(contour,p=>Math.min(44.4,shellHeight(p)+1.6)),name==='east-root'?rib:chitin);
- }
  // Broad irregular exposed cross-sections with a dark retained outer sheath.
  for(const [name,points] of [
   ['west',[[380,130],[391,123],[401,127],[408,138],[397,148],[387,142]]],
@@ -78,9 +69,17 @@ export function swarmJunctionBlockout(){
    for(let i=0;i<positions.count;i++)if(positions.getY(i)<1e-8)positions.setY(i,30/U);
    g.computeVertexNormals();return g;
   };
-  add(`root-${name}-sheath`,cutShell(contour,p=>36+.1*(p.y-cy)),dark);
-  const inner=contour.map(p=>({x:cx+(p.x-cx)*.78,y:cy+(p.y-cy)*.78}));
-  add(`root-${name}-cut`,cutShell(inner,p=>37+.1*(p.y-cy)),rib);
+  const outward=new T.Vector2(cx-600,cy-260).normalize();
+  const cutHeight=(p:Point)=>39+3*Math.tanh(((p.x-cx)*outward.x+(p.y-cy)*outward.y)/9)
+   +1.2*Math.sin((p.x-cx)*.19+(p.y-cy)*.27);
+  add(`root-${name}-sheath`,cutShell(contour,p=>35+.7*Math.sin((p.x-cx)*.2)),dark);
+  // The ragged tissue reaches the front edge in several places: the retained
+  // sheath is interrupted, rather than a closed border around a small cap.
+  const inner=contour.map((p,i)=>{
+   const exposed=p.y>=cy||i===0,scale=exposed?1:.72;
+   return {x:cx+(p.x-cx)*scale,y:cy+(p.y-cy)*scale};
+  });
+  add(`root-${name}-cut`,cutShell(inner,cutHeight),rib);
  }
  // A dished organic lip encloses an actual low, broad sensory cavity. Four
  // closed rings give an outward shell, steep inner wall and sealed underside.
@@ -114,8 +113,8 @@ export function swarmJunctionBlockout(){
  box('distributor-roof-service-panel',640,228,29,20,42.5,.4,dark);
  for(const x of [643,653,663])box('distributor-roof-bus',x,231,3,13,42.9,1.2,metal);
  for(const x of [640,670])box('distributor-housing-fastener',x,225,2,2,42.5,1.1,metal);
- const engulf=[[666,219],[674,220],[680,227],[676,241],[670,250],[664,244],[670,232]].map(([x,y])=>({x,y}));
- add('distributor-engulfing-fold',organicShell(engulf,p=>42+2.4*Math.exp(-(((p.y-233)/12)**2))),tendon);
+ const engulf=[[654,218],[667,219],[680,228],[676,245],[665,245],[660,237],[643,231],[641,225]].map(([x,y])=>({x,y}));
+ add('distributor-engulfing-fold',organicShell(engulf,p=>42+2.4*Math.exp(-1*(((p.y-233)/12)**2))),tendon);
  for(let i=0;i<3;i++)box('hub-split-conduit',628+i*3,235+i*9,10,3,32,3,tendon);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[400,135],[550,250]],[[870,90],[800,135],[650,250]],[[600,620],[600,370],[600,280]]];

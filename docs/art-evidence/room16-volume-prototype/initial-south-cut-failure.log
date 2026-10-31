@@ -1,0 +1,35 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ❯ src/render/SwarmJunction.test.ts (21 tests | 1 failed) 6007ms
+     × exposes the three severed terminal tops and the cabinet connector face to the shipping camera 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > exposes the three severed terminal tops and the cabinet connector face to the shipping camera
+AssertionError: root-south-cut top: expected 'organ-bed' to be 'root-south-cut' // Object.is equality
+
+Expected: "root-south-cut"
+Received: "organ-bed"
+
+ ❯ src/render/SwarmJunction.test.ts:120:72
+    118|    if(name!=='distributor-front-panel'){
+    119|     ray.set(new T.Vector3(center.x,5,center.z),new T.Vector3(0,-1,0));
+    120|     expect(ray.intersectObject(root,true)[0]?.object.name,name+' top')…
+       |                                                                        ^
+    121|    }
+    122|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 25 passed (26)
+   Start at  19:17:04
+   Duration  7.30s (transform 965ms, setup 0ms, import 1.23s, tests 6.32s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
