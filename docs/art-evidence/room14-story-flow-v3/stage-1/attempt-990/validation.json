@@ -1,0 +1,1293 @@
+{
+  "scope": "Diagram and CPU geometry only. Not runtime integration or live combat.",
+  "productionHelpers": [
+    "createExpeditionGeometry",
+    "canOccupyExpedition",
+    "canTraverseExpedition",
+    "FacilityNavigation"
+  ],
+  "baseline": {
+    "id": "service-shaft-landing",
+    "name": "Service shaft landing",
+    "width": 1200,
+    "height": 880,
+    "spawn": {
+      "x": 100,
+      "y": 440
+    },
+    "exit": {
+      "x": 1100,
+      "y": 440
+    },
+    "obstacles": [
+      {
+        "x": 290,
+        "y": 180,
+        "width": 250,
+        "height": 210
+      },
+      {
+        "x": 660,
+        "y": 500,
+        "width": 250,
+        "height": 200
+      },
+      {
+        "x": 300,
+        "y": 600,
+        "width": 180,
+        "height": 100
+      }
+    ],
+    "breaches": [
+      {
+        "x": 100,
+        "y": 100
+      },
+      {
+        "x": 1100,
+        "y": 100
+      },
+      {
+        "x": 100,
+        "y": 780
+      },
+      {
+        "x": 1100,
+        "y": 780
+      }
+    ]
+  },
+  "candidate": {
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 880
+    },
+    "voids": [
+      [
+        {
+          "x": 340,
+          "y": 240
+        },
+        {
+          "x": 900,
+          "y": 240
+        },
+        {
+          "x": 900,
+          "y": 540
+        },
+        {
+          "x": 1200,
+          "y": 540
+        },
+        {
+          "x": 1200,
+          "y": 640
+        },
+        {
+          "x": 340,
+          "y": 640
+        }
+      ]
+    ]
+  },
+  "results": [
+    {
+      "name": "Preserved envelope, spawn, exit and breach anchors",
+      "passed": true
+    },
+    {
+      "name": "Exact canonical below-landing story",
+      "passed": true
+    },
+    {
+      "name": "baseline: all scoped anchors occupy at radius 16",
+      "passed": true
+    },
+    {
+      "name": "baseline: every sweep-legal lattice cell connected at radius 16",
+      "passed": true
+    },
+    {
+      "name": "baseline: exact scoped anchors connect to reachable lattice at radius 16",
+      "passed": true
+    },
+    {
+      "name": "baseline: all scoped anchors occupy at radius 28",
+      "passed": true
+    },
+    {
+      "name": "baseline: every sweep-legal lattice cell connected at radius 28",
+      "passed": true
+    },
+    {
+      "name": "baseline: exact scoped anchors connect to reachable lattice at radius 28",
+      "passed": true
+    },
+    {
+      "name": "baseline: all scoped anchors occupy at radius 30",
+      "passed": true
+    },
+    {
+      "name": "baseline: every sweep-legal lattice cell connected at radius 30",
+      "passed": true
+    },
+    {
+      "name": "baseline: exact scoped anchors connect to reachable lattice at radius 30",
+      "passed": true
+    },
+    {
+      "name": "proposal: all scoped anchors occupy at radius 16",
+      "passed": true
+    },
+    {
+      "name": "proposal: every sweep-legal lattice cell connected at radius 16",
+      "passed": true
+    },
+    {
+      "name": "proposal: exact scoped anchors connect to reachable lattice at radius 16",
+      "passed": true
+    },
+    {
+      "name": "proposal: all scoped anchors occupy at radius 28",
+      "passed": true
+    },
+    {
+      "name": "proposal: every sweep-legal lattice cell connected at radius 28",
+      "passed": true
+    },
+    {
+      "name": "proposal: exact scoped anchors connect to reachable lattice at radius 28",
+      "passed": true
+    },
+    {
+      "name": "proposal: all scoped anchors occupy at radius 30",
+      "passed": true
+    },
+    {
+      "name": "proposal: every sweep-legal lattice cell connected at radius 30",
+      "passed": true
+    },
+    {
+      "name": "proposal: exact scoped anchors connect to reachable lattice at radius 30",
+      "passed": true
+    },
+    {
+      "name": "proposal: every progression segment swept at radius 16",
+      "passed": true
+    },
+    {
+      "name": "proposal: every full_c segment swept at radius 16",
+      "passed": true
+    },
+    {
+      "name": "proposal: every local_control segment swept at radius 16",
+      "passed": true
+    },
+    {
+      "name": "proposal: shaft and east shortcut reject radius 16",
+      "passed": true
+    },
+    {
+      "name": "proposal: every progression segment swept at radius 28",
+      "passed": true
+    },
+    {
+      "name": "proposal: every full_c segment swept at radius 28",
+      "passed": true
+    },
+    {
+      "name": "proposal: every local_control segment swept at radius 28",
+      "passed": true
+    },
+    {
+      "name": "proposal: shaft and east shortcut reject radius 28",
+      "passed": true
+    },
+    {
+      "name": "proposal: every progression segment swept at radius 30",
+      "passed": true
+    },
+    {
+      "name": "proposal: every full_c segment swept at radius 30",
+      "passed": true
+    },
+    {
+      "name": "proposal: every local_control segment swept at radius 30",
+      "passed": true
+    },
+    {
+      "name": "proposal: shaft and east shortcut reject radius 30",
+      "passed": true
+    },
+    {
+      "name": "Fixtures remain wholly inside the shaft, no walkable overhang",
+      "passed": true
+    },
+    {
+      "name": "production navigation: entry to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: entry to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: exit to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: exit to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-0 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-0 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-0 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-0 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-1 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-1 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-1 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-1 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-2 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-2 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-2 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-2 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-3 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-3 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-3 to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-3 to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: arrival to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: arrival to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: north_turn to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: north_turn to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: far_landing to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: far_landing to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: south_service to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: south_service to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: local_control to 100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: local_control to 100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: entry to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: entry to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: exit to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: exit to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-0 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-0 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-0 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-0 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-1 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-1 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-1 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-1 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-2 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-2 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-2 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-2 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-3 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-3 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-3 to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-3 to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: arrival to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: arrival to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: north_turn to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: north_turn to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: far_landing to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: far_landing to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: south_service to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: south_service to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: local_control to 1100/440 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: local_control to 1100/440 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: entry to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: entry to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: exit to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: exit to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-0 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-0 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-0 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-0 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-1 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-1 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-1 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-1 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-2 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-2 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-2 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-2 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-3 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: breach-3 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-3 to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: spawn-offset-3 to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: arrival to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: arrival to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: north_turn to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: north_turn to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: far_landing to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: far_landing to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: south_service to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: south_service to 760/740 swept pursuit",
+      "passed": true
+    },
+    {
+      "name": "production navigation: local_control to 760/740 reachable",
+      "passed": true
+    },
+    {
+      "name": "production navigation: local_control to 760/740 swept pursuit",
+      "passed": true
+    }
+  ],
+  "connectivity": [
+    {
+      "geometry": "baseline",
+      "radius": 16,
+      "spacing": 20,
+      "legalCells": 1955,
+      "reachedCells": 1955,
+      "occupancyOnly": []
+    },
+    {
+      "geometry": "baseline",
+      "radius": 28,
+      "spacing": 20,
+      "legalCells": 1851,
+      "reachedCells": 1851,
+      "occupancyOnly": [
+        {
+          "x": 560,
+          "y": 160
+        },
+        {
+          "x": 640,
+          "y": 480
+        },
+        {
+          "x": 280,
+          "y": 580
+        },
+        {
+          "x": 500,
+          "y": 580
+        },
+        {
+          "x": 280,
+          "y": 720
+        },
+        {
+          "x": 500,
+          "y": 720
+        },
+        {
+          "x": 640,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "geometry": "baseline",
+      "radius": 30,
+      "spacing": 20,
+      "legalCells": 1809,
+      "reachedCells": 1809,
+      "occupancyOnly": [
+        {
+          "x": 260,
+          "y": 160
+        },
+        {
+          "x": 260,
+          "y": 180
+        },
+        {
+          "x": 260,
+          "y": 200
+        },
+        {
+          "x": 260,
+          "y": 220
+        },
+        {
+          "x": 260,
+          "y": 240
+        },
+        {
+          "x": 260,
+          "y": 260
+        },
+        {
+          "x": 260,
+          "y": 280
+        },
+        {
+          "x": 260,
+          "y": 300
+        },
+        {
+          "x": 260,
+          "y": 320
+        },
+        {
+          "x": 260,
+          "y": 340
+        },
+        {
+          "x": 260,
+          "y": 360
+        },
+        {
+          "x": 260,
+          "y": 380
+        },
+        {
+          "x": 260,
+          "y": 400
+        },
+        {
+          "x": 260,
+          "y": 420
+        },
+        {
+          "x": 280,
+          "y": 420
+        },
+        {
+          "x": 300,
+          "y": 420
+        },
+        {
+          "x": 320,
+          "y": 420
+        },
+        {
+          "x": 340,
+          "y": 420
+        },
+        {
+          "x": 360,
+          "y": 420
+        },
+        {
+          "x": 380,
+          "y": 420
+        },
+        {
+          "x": 400,
+          "y": 420
+        },
+        {
+          "x": 420,
+          "y": 420
+        },
+        {
+          "x": 440,
+          "y": 420
+        },
+        {
+          "x": 460,
+          "y": 420
+        },
+        {
+          "x": 480,
+          "y": 420
+        },
+        {
+          "x": 500,
+          "y": 420
+        },
+        {
+          "x": 520,
+          "y": 420
+        },
+        {
+          "x": 540,
+          "y": 420
+        },
+        {
+          "x": 560,
+          "y": 420
+        },
+        {
+          "x": 940,
+          "y": 480
+        },
+        {
+          "x": 940,
+          "y": 500
+        },
+        {
+          "x": 940,
+          "y": 520
+        },
+        {
+          "x": 940,
+          "y": 540
+        },
+        {
+          "x": 940,
+          "y": 560
+        },
+        {
+          "x": 940,
+          "y": 580
+        },
+        {
+          "x": 940,
+          "y": 600
+        },
+        {
+          "x": 940,
+          "y": 620
+        },
+        {
+          "x": 940,
+          "y": 640
+        },
+        {
+          "x": 940,
+          "y": 660
+        },
+        {
+          "x": 940,
+          "y": 680
+        },
+        {
+          "x": 940,
+          "y": 700
+        },
+        {
+          "x": 940,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "geometry": "proposal",
+      "radius": 16,
+      "spacing": 20,
+      "legalCells": 1650,
+      "reachedCells": 1650,
+      "occupancyOnly": []
+    },
+    {
+      "geometry": "proposal",
+      "radius": 28,
+      "spacing": 20,
+      "legalCells": 1531,
+      "reachedCells": 1531,
+      "occupancyOnly": []
+    },
+    {
+      "geometry": "proposal",
+      "radius": 30,
+      "spacing": 20,
+      "legalCells": 1528,
+      "reachedCells": 1528,
+      "occupancyOnly": []
+    }
+  ],
+  "navTrips": [
+    {
+      "start": "entry",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 0,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "exit",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 404,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-0",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 113,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-0",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 114,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-1",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 379,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-1",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 360,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-2",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 113,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-2",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 114,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-3",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 381,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-3",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 362,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "arrival",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 26,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "north_turn",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 103,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "far_landing",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 369,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "south_service",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 263,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "local_control",
+      "goal": {
+        "x": 100,
+        "y": 440
+      },
+      "steps": 61,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "entry",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 407,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "exit",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 0,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-0",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 386,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-0",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 367,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-1",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 113,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-1",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 114,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-2",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 516,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-2",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 501,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-3",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 724,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-3",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 705,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "arrival",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 387,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "north_turn",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 353,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "far_landing",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 33,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "south_service",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 604,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "local_control",
+      "goal": {
+        "x": 1100,
+        "y": 440
+      },
+      "steps": 364,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "entry",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 258,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "exit",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 600,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-0",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 366,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-0",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 352,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-1",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 572,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-1",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 553,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-2",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 220,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-2",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 201,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "breach-3",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 114,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "spawn-offset-3",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 95,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "arrival",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 237,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "north_turn",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 334,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "far_landing",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 565,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "south_service",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 0,
+      "error": null,
+      "reached": true
+    },
+    {
+      "start": "local_control",
+      "goal": {
+        "x": 760,
+        "y": 740
+      },
+      "steps": 237,
+      "error": null,
+      "reached": true
+    }
+  ],
+  "passed": 123,
+  "failures": 0
+}

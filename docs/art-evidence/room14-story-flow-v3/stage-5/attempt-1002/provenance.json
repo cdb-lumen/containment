@@ -1,0 +1,20 @@
+{
+  "source_commit": "ec7e10550415fcc5f4daa0c5ea7b9460e86e9595",
+  "evidence_class": "controlled-live-simulation",
+  "limitations": "Controlled staged simulation without DOM HUD, not ordinary gameplay. Full browser verifier and mobile/touch checks not run. Human acceptance pending through forthcoming production receipt; no delivery or acceptance claimed.",
+  "capture_staging": "Room14 stage5 capture adaptation: actor start three verified route nodes later than the stage4 midpoint for a distinct north-rim view; northward rather than southward initial movement because the staged midpoint is at the north shaft rim. All original assertions retained. Controlled legal actors on a spawn-to-exit route verified with actual DepthGame.update. Fixed-step production combat and renderer; inactive encounter director, no boss, no campaign progression, no DOM HUD or real touch input. Overview fits room; gameplay retains production camera/composition.",
+  "originals": [
+    {
+      "name": "14-service-shaft-landing-overview.png",
+      "sha256": "364ef561c07cd0507b9510f073c4407db67e6c5705219175b19785018cde30e9",
+      "bytes": 571931
+    },
+    {
+      "name": "14-service-shaft-landing-gameplay.png",
+      "sha256": "c8e71fbc41923e88370bfa75dc43a7728aec9e76506d8e07b59cb446a7fd1548",
+      "bytes": 832439
+    }
+  ],
+  "capture_script_sha256": "71ea3602cfef4138433dc875749752d3cbd701f1c6f76fdd4167498292779f08",
+  "manifest_sha256": "3aaaa98b6c8fbf610d73b208fac55c4b510c654274e447909989d4c59029b94d"
+}
