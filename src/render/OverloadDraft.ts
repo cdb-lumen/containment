@@ -87,7 +87,11 @@ export function createOverloadDraft(){
  pipe([600,20,455],[600,20,489],5,bolts);
  pipe([600,20,490],[600,20,525],9,bronze);
  for(const z of [491,523])pipe([600,20,z-2],[600,20,z+2],12,steel);
- // The vertical clevis bolts the elevated ram to the lower core frame.
+ // A crossbar joins both core uprights; its neck reaches the vertical clevis.
+ // The previous clevis ended short of every core mesh despite its group bounds.
+ box(600,20,440,52,12,8,steel).name='core-frame-crossbar';
+ box(600,20,449,18,12,22,steel).name='clevis-core-link';
+ // The vertical clevis bolts the elevated ram to the connected core bracket.
  box(600,0,458,22,48,8,steel);box(600,24,458,24,6,10,ceramic);
  root.userData.overloadDraftRoles=root.children.slice(0,4).map(o=>o.name);
  return root;

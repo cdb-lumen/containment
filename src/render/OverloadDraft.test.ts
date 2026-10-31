@@ -62,3 +62,22 @@ it('retains canonical empty collision and all four breaches',()=>{
  const t=ROOM_TEMPLATES['overload-floor'];expect(t.obstacles).toEqual([]);expect(t.breaches).toHaveLength(4);
  expect(t.spawn).toEqual({x:140,y:440});expect(t.exit).toEqual({x:1060,y:440});
 });
+it('connects the restraint clevis to both solid core-frame posts through a contained bracket',()=>{
+ const root=createOverloadDraft();root.updateMatrixWorld(true);
+ const core=root.getObjectByName('induction-core')!,ram=root.getObjectByName('restraint-ram')!;
+ const meshes=(parent:T.Object3D)=>{const result:T.Mesh[]=[];parent.traverse(o=>{if(o instanceof T.Mesh)result.push(o);});return result;};
+ const bounds=(o:T.Object3D)=>new T.Box3().setFromObject(o,true);
+ // This first assertion fails on the historical source: even every mesh AABB
+ // is separated, so no possible solid core-to-ram contact exists there.
+ expect(meshes(core).some(a=>meshes(ram).some(b=>bounds(a).intersectsBox(bounds(b))))).toBe(true);
+ const crossbar=ram.getObjectByName('core-frame-crossbar') as T.Mesh,link=ram.getObjectByName('clevis-core-link') as T.Mesh;
+ expect(crossbar.geometry.type).toBe('BoxGeometry');expect(link.geometry.type).toBe('BoxGeometry');
+ const contact=(a:T.Object3D,b:T.Object3D)=>{const overlap=bounds(a).intersect(bounds(b)).getSize(new T.Vector3()).multiplyScalar(32);expect(Math.min(overlap.x,overlap.y,overlap.z)).toBeGreaterThan(1);};
+ const posts=meshes(core).filter(m=>m.geometry.type==='BoxGeometry'&&Math.abs(m.position.z*32-440)<.001&&Math.abs(m.position.y*32-12)<.001);
+ expect(posts).toHaveLength(2);for(const post of posts)contact(post,crossbar);
+ contact(crossbar,link);
+ const clevis=meshes(ram).find(m=>m.geometry.type==='BoxGeometry'&&Math.abs(m.position.z*32-458)<.001&&Math.abs(m.position.y*32)<.001)!;
+ contact(link,clevis);
+ for(const p of vertices(crossbar).concat(vertices(link)))expect(insideVoid(p)).toBe(true);
+ disposeModel(root);
+});
