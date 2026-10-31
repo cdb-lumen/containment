@@ -49,6 +49,23 @@ describe('Room16 room visuals',()=>{
   }
   disposeModel(root);
  });
+ it('keeps the rounded underbody closed with positive volume and the full shot-plane silhouette',()=>{
+  const bed=meshes(model()).find(m=>m.name==='organ-bed')!,p=bed.geometry.getAttribute('position'),indices=Array.from(bed.geometry.index!.array);
+  const edges=new Map<string,{count:number;direction:number}>();let volume=0;
+  for(let i=0;i<indices.length;i+=3){
+   const ids=indices.slice(i,i+3),v=ids.map(j=>new T.Vector3().fromBufferAttribute(p,j));
+   expect(v[1].clone().sub(v[0]).cross(v[2].clone().sub(v[0])).lengthSq()).toBeGreaterThan(1e-12);
+   volume+=v[0].dot(v[1].clone().cross(v[2]))/6;
+   for(let j=0;j<3;j++){const a=ids[j],b=ids[(j+1)%3],key=`${Math.min(a,b)},${Math.max(a,b)}`,e=edges.get(key)??{count:0,direction:0};e.count++;e.direction+=a<b?1:-1;edges.set(key,e);}
+  }
+  for(const edge of edges.values()){expect(edge.count).toBe(2);expect(edge.direction).toBe(0);}expect(volume).toBeGreaterThan(0);
+  // Every original footprint corner has actual shell mass on the fallback shot plane.
+  for(const point of template.voids![0]){
+   const samples=Array.from({length:p.count},(_,i)=>new T.Vector3().fromBufferAttribute(p,i));
+   expect(samples.some(v=>Math.hypot(v.x*32-point.x,v.z*32-point.y)<.001&&v.y*32>=30.399&&v.y*32<=30.401)).toBe(true);
+  }
+  disposeModel(bed.parent as T.Group);
+ });
  it('replaces belt bands with unequal overlapping curved shells and a broad sunken cavity',()=>{
   const root=model(),ms=meshes(root);
   expect(ms.filter(m=>/^root-.*-rib-/.test(m.name))).toHaveLength(0);

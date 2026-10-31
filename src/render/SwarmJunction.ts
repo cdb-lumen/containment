@@ -59,11 +59,33 @@ export function swarmJunctionBlockout(){
   const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(vertices,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(vertices.length/3*2),2));g.setIndex(indices);g.computeVertexNormals();
   return add(name,g,chitin);
  };
- chitin.roughness=.57;rib.color.setHex(0x777d6b);rib.roughness=.88;
+ chitin.color.setHex(0x51443b);chitin.metalness=.08;chitin.roughness=.72;rib.color.setHex(0x777d6b);rib.roughness=.88;
  tendon.color.setHex(0x424b3b);metal.metalness=.72;metal.roughness=.58;
  // Retain the exact sealed shot silhouette at .95m, but bury its planar top
  // beneath charcoal shell lobes. No contrasting pink platform or striped beds.
- slab('organ-bed',SWARM_ORGAN,0,31,chitin);
+ // A continuous rounded underbody replaces the vertical platform walls.
+ // The full sealed polygon remains solid at the .95m shot plane; lower rings
+ // contract toward the hub inside that reservation rather than adding tendrils
+ // across circulation lanes. The .6-unit upper collar preserves exact blocking.
+ const contour=SWARM_ORGAN.map(p=>new T.Vector2(p.x,p.y));
+ const bedVertices:number[]=[],bedIndices:number[]=[],levels=[0,5,10,15,20,25,30.4,31];
+ for(const height of levels){
+  const scale=height>=30.4?1:.88+.12*Math.sin(height/30.4*Math.PI/2);
+  for(const p of SWARM_ORGAN)bedVertices.push((600+(p.x-600)*scale)/U,height/U,(260+(p.y-260)*scale)/U);
+ }
+ const count=contour.length,area=T.ShapeUtils.area(contour);
+ for(let layer=0;layer<levels.length-1;layer++)for(let i=0;i<count;i++){
+  const a=layer*count+i,b=layer*count+(i+1)%count,c=a+count,d=b+count;
+  bedIndices.push(...(area>0?[a,c,b,b,c,d]:[a,b,c,b,d,c]));
+ }
+ for(const triangle of T.ShapeUtils.triangulateShape(contour,[])){
+  const [a,b,c]=triangle,pa=contour[a],pb=contour[b],pc=contour[c];
+  const cross=(pb.x-pa.x)*(pc.y-pa.y)-(pb.y-pa.y)*(pc.x-pa.x);
+  const down=cross>0?[a,b,c]:[a,c,b],up=[down[0],down[2],down[1]];
+  bedIndices.push(...down,...up.map(i=>i+(levels.length-1)*count));
+ }
+ const bed=new T.BufferGeometry();bed.setAttribute('position',new T.Float32BufferAttribute(bedVertices,3));
+ bed.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(bedVertices.length/3*2),2));bed.setIndex(bedIndices);bed.computeVertexNormals();add('organ-bed',bed,chitin);
  const arm=(name:string,a:XY,b:XY,c:XY,d:XY,segments:readonly (readonly [number,number,number])[])=>{
   for(const [i,[start,end,height]] of segments.entries())
    crown(`${name}-plate-${i}`,mix(a,c,start),mix(b,d,start),mix(a,c,end),mix(b,d,end),height);
@@ -94,11 +116,13 @@ export function swarmJunctionBlockout(){
  add('sensory-carapace-lip',lip,chitin);
  const recess:XY[]=Array.from({length:48},(_,i)=>{const a=i/48*Math.PI*2;return [600+32*Math.cos(a),260+25*Math.sin(a)] as XY;});
  poly('sensory-recess',recess,31,.5,dark);
+ const enamel=material('distributor-enamel',0xb9b09b,.35);
+ // Pale fractured human enclosure contrasts with the warm organic underbody.
  // Only a torn corner and folded lid of the captured distributor remain exposed.
  // Shell shoulders overlap its straight edges; it no longer frames a neat box.
- box('severed-distributor',619,226,8,40,31,11.5,metal);
- box('distributor-front-right',614,267,13,7,31,6.5,metal);
- poly('torn-distributor-lid',[[592,225],[586,211],[613,211],[622,230]],31,12.5,metal);
+ box('severed-distributor',619,226,12,40,31,11.5,enamel);
+ box('distributor-front-right',614,267,13,7,31,6.5,enamel);
+ poly('torn-distributor-lid',[[592,225],[586,211],[613,211],[622,230]],31,12.5,enamel);
  for(let i=0;i<3;i++)box('hub-split-conduit',610+i*3,235+i*9,10,3,32,3,tendon);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[400,135],[550,250]],[[870,90],[800,135],[650,250]],[[600,620],[600,370],[600,280]]];
