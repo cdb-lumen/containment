@@ -7,6 +7,7 @@ import {DeathRagdolls,initDeathPhysics} from './DeathRagdolls';
 import {alien,type ActorModel} from './models';
 import {ActorPool} from './ActorPool';
 import {ASSET_NAMES,preloadAssets} from './assets';
+import * as garden from './CommunalGarden';
 function model():ActorModel{const root=new T.Group(),body=new T.Group(),chest=new T.Bone();root.add(body);body.add(chest);chest.name='chest';chest.position.y=.6;for(let i=0;i<2;i++){const leg=new T.Bone();leg.name=`leg${i}_upper`;leg.position.x=i?.3:-.3;chest.add(leg);}return{root,body,height:1,limbs:[],animate(){},freeze(){}};}
 function fixture(){
  const ragdolls=new DeathRagdolls();ragdolls.setRoom({width:640,height:640,obstacles:[]});
@@ -44,6 +45,19 @@ it('builds static contacts after room construction and coalesces current-owner r
  const ready=r.staticLoaded(r.world);ready();ready();r.roomKey=g.node.id;
  const refresh=vi.spyOn(r.ragdolls,'refreshStatic'),update=vi.spyOn(r.ragdolls,'update');r.render(g,1/60);r.render(g,1/60);
  expect(refresh).toHaveBeenCalledTimes(1);expect(refresh).toHaveBeenCalledWith(r.world);expect(refresh.mock.invocationCallOrder[0]).toBeLessThan(update.mock.invocationCallOrder[0]);r.dispose();
+});
+it('waits for the garden and refreshes its static contacts before physics, ignoring retired callbacks',()=>{
+ const owner={state:'loading',error:undefined,notificationError:undefined,ready:Promise.resolve(),dispose:vi.fn()};
+ let loaded=()=>{};
+ vi.spyOn(garden,'attachCommunalGarden').mockImplementation((_room,_template,onChanged)=>{loaded=onChanged;return owner;});
+ const r=fixture(),g=game();g.node={...g.node,templateId:'communal-atrium'};
+ r.loadRoom(g.node);const refresh=vi.spyOn(r.ragdolls,'refreshStatic'),update=vi.spyOn(r.ragdolls,'update');
+ expect(r.roomLoading).toBe(true);r.render(g,1/60);expect(update).not.toHaveBeenCalled();
+ owner.state='ready';r.shadowsDirty=false;loaded();loaded();expect(r.shadowsDirty).toBe(true);
+ r.render(g,1/60);r.render(g,1/60);expect(refresh).toHaveBeenCalledExactlyOnceWith(r.world);
+ expect(refresh.mock.invocationCallOrder[0]).toBeLessThan(update.mock.invocationCallOrder[0]);
+ r.loadRoom({...g.node,id:'next',templateId:'security-lock'});expect(owner.dispose).toHaveBeenCalledTimes(1);
+ r.shadowsDirty=false;loaded();expect(r.staticDirty).toBe(false);expect(r.shadowsDirty).toBe(false);r.dispose();
 });
 it('forwards elite metadata and preserves authoritative kills, credits and duplicate-death behavior',()=>{
  const r=fixture(),events:GameEffect[]=[],g=new DepthGame(e=>{events.push(e);r.effect(e);});
