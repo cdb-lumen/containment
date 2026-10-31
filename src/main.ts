@@ -3,8 +3,8 @@ import {familyCount} from './game/roguelike/builds';
 import {boonHint,pathFor} from './game/roguelike/boonPaths';
 import './style.css';
 import {HitConfirmation} from './render/HitConfirmation';
-import {positionWeaponHud,captureWeaponPointer} from './WeaponHud';
-import {positionStatusHud,positionVitalsHud} from './StatusHud';
+import {captureWeaponPointer} from './WeaponHud';
+import {positionHudPanels} from './HudLayout';
 import {DepthGame,type GameEffect} from './DepthGame';
 import {preloadAssets} from './render/assets';
 import {DepthRenderer} from './render/DepthRenderer';
@@ -30,10 +30,7 @@ app.innerHTML=`<canvas id="world" aria-label="Containment 3D game world"></canva
 <div class="desktop-hint">WASD <span>MOVE</span> &nbsp; R <span>RELOAD</span> &nbsp; G <span>GRENADE</span> &nbsp; E <span>HEAL</span></div></div>
 <div id="room-loading" role="status" aria-live="polite" hidden><b>Preparing room…</b><span>Combat is on hold.</span></div><div id="overlay"></div><div id="signature">CONTAINMENT <span>/</span> DEPTH</div>`;
 const el=(id:string)=>document.getElementById(id)!;
-const weaponHud=document.querySelector<HTMLElement>('.weapon-hud')!;
-const statusHud=el('status-hud');
-const vitalsHud=document.querySelector<HTMLElement>('.vitals')!;
-function positionHud(){const bounds=renderer.playerScreenBounds(game.player.radius);positionWeaponHud(weaponHud,bounds,innerWidth);positionStatusHud(statusHud,bounds,innerWidth);positionVitalsHud(vitalsHud,bounds,innerHeight);}
+function positionHud(){positionHudPanels(renderer.playerScreenBounds(game.player.radius),innerWidth,innerHeight);}
 el('overlay').innerHTML='<div class="asset-loading"><span>CONTAINMENT / DEPTH</span><div><i id="asset-progress"></i></div></div>';
 try{await preloadAssets(fraction=>{el('asset-progress').style.width=`${fraction*100}%`;});}catch(error){app.innerHTML='<div class="unsupported"><h1>Download interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
 let renderer:DepthRenderer;
@@ -49,6 +46,7 @@ game.aimVisible=(x,y)=>renderer.visible(x,y);
 try{await renderer.prepare(game.node);}catch(error){el('overlay').innerHTML='<div class="unsupported"><h1>Graphics interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
 const input=new InputController(game,renderer,(toggle)=>{if(game.status==='playing'||toggle&&game.status==='paused')pause();},()=>!graphicsLost&&!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading);let roomRecovering=true;let graphicsLost=false;let lastStatus='',lastRoom=-1,screenKey='',settingsOpen=false;let quality:'high'|'low'='high';
 const start=(resume=false)=>{void audio.unlock();audio.resumeAll();input.reset();settingsOpen=false;if(resume){if(!game.continueRun())return;}else game.newRun();syncScreen(true);};
+captureWeaponPointer(el('pause') as HTMLButtonElement);captureWeaponPointer(el('skip-story') as HTMLButtonElement);
 el('pause').addEventListener('click',pause);document.querySelectorAll<HTMLButtonElement>('[data-weapon]').forEach(b=>{captureWeaponPointer(b);b.addEventListener('click',()=>{if(!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading&&!graphicsLost)game.switchWeapon(b.dataset.weapon as WeaponId);b.blur();});});
 el('skip-story').addEventListener('click',()=>{game.skipStory();hud();});
 const routeCopy={combat:'Hostiles · boon',elite:'Elite hostiles · rare boon',medical:'Health + armor · recovery shop',armory:'Ammunition + grenade · recovery shop',boss:'Survive the armor cycle. Strike when exposed.'};
