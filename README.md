@@ -29,7 +29,7 @@ The production output is `dist/`. Relative bundle and runtime asset URLs support
 
 The browser smoke serves the production build beneath `/containment/`, checks local asset responses, enters gameplay, fires, switches weapons, pauses and resumes, and checks desktop controls and resized settings. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation. Set `SMOKE_SCREENSHOTS=1` to refresh committed evidence in `docs/pr-screenshots/`.
 
-The required local, PR and Pages gates also run authored-room smoke on the desktop viewport. It seeds validated checkpoints and exercises Continue, route selection, final-room consent, firing and pause/resume in the opening, breached loading bay and overload rooms. This is short interaction coverage, not a full playthrough or desktop performance certification. Captures and manifests go to ignored `artifacts/authored-smoke/`. CI bounds each authored viewport to 8 minutes (10-minute step budget), and retains diagnostic artifacts for seven days.
+The required local, PR and Pages gates also run authored-room smoke on the desktop viewport. It seeds validated checkpoints and exercises Continue, route selection, final-room consent, firing and pause/resume in the opening, breached loading bay and overload rooms. This is short interaction coverage, not a full playthrough or desktop performance certification. Captures and manifests go to ignored `artifacts/authored-smoke/`. CI bounds each authored viewport to 12 minutes (14-minute step budget), and retains diagnostic artifacts for seven days.
 
 ## Source and credits
 
