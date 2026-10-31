@@ -1,0 +1,2526 @@
+{
+  "scope": "Real CPU calls on proposed geometry. No runtime integration, combat, pickup simulation, pursuit or camera claims.",
+  "radii": {
+    "16": "DepthGame player radius",
+    "28": "storyRoomTemplates lane contract",
+    "30": "FacilityNavigation clearance"
+  },
+  "tests": 224,
+  "failures": 0,
+  "checks": [
+    {
+      "name": "canonical envelope",
+      "pass": true,
+      "details": {
+        "x": 0,
+        "y": 0,
+        "width": 1200,
+        "height": 880
+      }
+    },
+    {
+      "name": "canonical entry and exit",
+      "pass": true,
+      "details": {
+        "entry": {
+          "x": 100,
+          "y": 440
+        },
+        "exit": {
+          "x": 1100,
+          "y": 440
+        }
+      }
+    },
+    {
+      "name": "canonical breach anchors",
+      "pass": true,
+      "details": [
+        {
+          "x": 100,
+          "y": 100
+        },
+        {
+          "x": 1100,
+          "y": 100
+        },
+        {
+          "x": 100,
+          "y": 780
+        },
+        {
+          "x": 1100,
+          "y": 780
+        }
+      ]
+    },
+    {
+      "name": "baseline is five rectangles without topology override",
+      "pass": true,
+      "details": [
+        {
+          "x": 470,
+          "y": 310,
+          "width": 260,
+          "height": 260
+        },
+        {
+          "x": 280,
+          "y": 180,
+          "width": 120,
+          "height": 100
+        },
+        {
+          "x": 800,
+          "y": 180,
+          "width": 120,
+          "height": 100
+        },
+        {
+          "x": 280,
+          "y": 620,
+          "width": 120,
+          "height": 100
+        },
+        {
+          "x": 800,
+          "y": 620,
+          "width": 120,
+          "height": 100
+        }
+      ]
+    },
+    {
+      "name": "r16 anchor entry",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r16 anchor exit",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r16 anchor breach-0",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 anchor breach-1",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 anchor breach-2",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 anchor breach-3",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 anchor inward-spawn-0",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 anchor inward-spawn-1",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 anchor inward-spawn-2",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 anchor inward-spawn-3",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 anchor N",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 160
+      }
+    },
+    {
+      "name": "r16 anchor S",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 720
+      }
+    },
+    {
+      "name": "r16 anchor V",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 350
+      }
+    },
+    {
+      "name": "r16 anchor A",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 490
+      }
+    },
+    {
+      "name": "r16 clockwise segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 8",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r16 clockwise segment 9",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 8",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r16 counterclockwise segment 9",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_north segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_north segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_north segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_north segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_north segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_north segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_north segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_south segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_south segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_south segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_south segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_south segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_south segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 entry_to_exit_south segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r16 approach-N segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 600,
+          "y": 140
+        },
+        {
+          "x": 600,
+          "y": 160
+        }
+      ]
+    },
+    {
+      "name": "r16 approach-S segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 600,
+          "y": 740
+        },
+        {
+          "x": 600,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "name": "r16 approach-V segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 350
+        },
+        {
+          "x": 930,
+          "y": 350
+        }
+      ]
+    },
+    {
+      "name": "r16 approach-A segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 490
+        },
+        {
+          "x": 930,
+          "y": 490
+        }
+      ]
+    },
+    {
+      "name": "r16 center inaccessible",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 440
+      }
+    },
+    {
+      "name": "r16 center crossing rejected",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "r16 sampled connected floor",
+      "pass": true,
+      "details": {
+        "sample_spacing": 20,
+        "nodes": 1620,
+        "component_sizes": [
+          1620
+        ],
+        "occupancy_sweep_disagreement": []
+      }
+    },
+    {
+      "name": "r16 entry joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r16 exit joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r16 breach-0 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 breach-1 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 breach-2 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 breach-3 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 inward-spawn-0 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 inward-spawn-1 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 100
+      }
+    },
+    {
+      "name": "r16 inward-spawn-2 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 inward-spawn-3 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 780
+      }
+    },
+    {
+      "name": "r16 N joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 160
+      }
+    },
+    {
+      "name": "r16 S joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 720
+      }
+    },
+    {
+      "name": "r16 V joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 350
+      }
+    },
+    {
+      "name": "r16 A joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 490
+      }
+    },
+    {
+      "name": "r28 anchor entry",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r28 anchor exit",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r28 anchor breach-0",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 anchor breach-1",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 anchor breach-2",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 anchor breach-3",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 anchor inward-spawn-0",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 anchor inward-spawn-1",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 anchor inward-spawn-2",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 anchor inward-spawn-3",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 anchor N",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 160
+      }
+    },
+    {
+      "name": "r28 anchor S",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 720
+      }
+    },
+    {
+      "name": "r28 anchor V",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 350
+      }
+    },
+    {
+      "name": "r28 anchor A",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 490
+      }
+    },
+    {
+      "name": "r28 clockwise segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 8",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r28 clockwise segment 9",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 8",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r28 counterclockwise segment 9",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_north segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_north segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_north segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_north segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_north segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_north segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_north segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_south segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_south segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_south segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_south segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_south segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_south segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 entry_to_exit_south segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r28 approach-N segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 600,
+          "y": 140
+        },
+        {
+          "x": 600,
+          "y": 160
+        }
+      ]
+    },
+    {
+      "name": "r28 approach-S segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 600,
+          "y": 740
+        },
+        {
+          "x": 600,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "name": "r28 approach-V segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 350
+        },
+        {
+          "x": 930,
+          "y": 350
+        }
+      ]
+    },
+    {
+      "name": "r28 approach-A segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 490
+        },
+        {
+          "x": 930,
+          "y": 490
+        }
+      ]
+    },
+    {
+      "name": "r28 center inaccessible",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 440
+      }
+    },
+    {
+      "name": "r28 center crossing rejected",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "r28 sampled connected floor",
+      "pass": true,
+      "details": {
+        "sample_spacing": 20,
+        "nodes": 1380,
+        "component_sizes": [
+          1380
+        ],
+        "occupancy_sweep_disagreement": []
+      }
+    },
+    {
+      "name": "r28 entry joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r28 exit joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r28 breach-0 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 breach-1 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 breach-2 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 breach-3 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 inward-spawn-0 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 inward-spawn-1 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 100
+      }
+    },
+    {
+      "name": "r28 inward-spawn-2 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 inward-spawn-3 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 780
+      }
+    },
+    {
+      "name": "r28 N joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 160
+      }
+    },
+    {
+      "name": "r28 S joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 720
+      }
+    },
+    {
+      "name": "r28 V joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 350
+      }
+    },
+    {
+      "name": "r28 A joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 490
+      }
+    },
+    {
+      "name": "r30 anchor entry",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r30 anchor exit",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r30 anchor breach-0",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 anchor breach-1",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 anchor breach-2",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 anchor breach-3",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 anchor inward-spawn-0",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 anchor inward-spawn-1",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 anchor inward-spawn-2",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 anchor inward-spawn-3",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 anchor N",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 160
+      }
+    },
+    {
+      "name": "r30 anchor S",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 720
+      }
+    },
+    {
+      "name": "r30 anchor V",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 350
+      }
+    },
+    {
+      "name": "r30 anchor A",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 490
+      }
+    },
+    {
+      "name": "r30 clockwise segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 8",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r30 clockwise segment 9",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 8",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r30 counterclockwise segment 9",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_north segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_north segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_north segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_north segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_north segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_north segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_north segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_south segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_south segment 2",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_south segment 3",
+      "pass": true,
+      "details": [
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_south segment 4",
+      "pass": true,
+      "details": [
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_south segment 5",
+      "pass": true,
+      "details": [
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_south segment 6",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 entry_to_exit_south segment 7",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "name": "r30 approach-N segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 600,
+          "y": 140
+        },
+        {
+          "x": 600,
+          "y": 160
+        }
+      ]
+    },
+    {
+      "name": "r30 approach-S segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 600,
+          "y": 740
+        },
+        {
+          "x": 600,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "name": "r30 approach-V segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 350
+        },
+        {
+          "x": 930,
+          "y": 350
+        }
+      ]
+    },
+    {
+      "name": "r30 approach-A segment 1",
+      "pass": true,
+      "details": [
+        {
+          "x": 960,
+          "y": 490
+        },
+        {
+          "x": 930,
+          "y": 490
+        }
+      ]
+    },
+    {
+      "name": "r30 center inaccessible",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 440
+      }
+    },
+    {
+      "name": "r30 center crossing rejected",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "r30 sampled connected floor",
+      "pass": true,
+      "details": {
+        "sample_spacing": 20,
+        "nodes": 1360,
+        "component_sizes": [
+          1360
+        ],
+        "occupancy_sweep_disagreement": []
+      }
+    },
+    {
+      "name": "r30 entry joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r30 exit joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "name": "r30 breach-0 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 breach-1 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 breach-2 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 breach-3 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 inward-spawn-0 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 inward-spawn-1 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 100
+      }
+    },
+    {
+      "name": "r30 inward-spawn-2 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 inward-spawn-3 joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 780
+      }
+    },
+    {
+      "name": "r30 N joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 160
+      }
+    },
+    {
+      "name": "r30 S joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 720
+      }
+    },
+    {
+      "name": "r30 V joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 350
+      }
+    },
+    {
+      "name": "r30 A joins sampled floor",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 490
+      }
+    },
+    {
+      "name": "center blocks line of sight",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "center blocks swept proxy r0",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "center blocks swept proxy r4",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "center blocks swept proxy r7",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "center blocks swept proxy r12",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "production navigation sampled reach entry",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 440
+      }
+    },
+    {
+      "name": "production navigation sampled reach exit",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "name": "production navigation sampled reach breach-0",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "name": "production navigation sampled reach breach-1",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "name": "production navigation sampled reach breach-2",
+      "pass": true,
+      "details": {
+        "x": 100,
+        "y": 780
+      }
+    },
+    {
+      "name": "production navigation sampled reach breach-3",
+      "pass": true,
+      "details": {
+        "x": 1100,
+        "y": 780
+      }
+    },
+    {
+      "name": "production navigation sampled reach inward-spawn-0",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 100
+      }
+    },
+    {
+      "name": "production navigation sampled reach inward-spawn-1",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 100
+      }
+    },
+    {
+      "name": "production navigation sampled reach inward-spawn-2",
+      "pass": true,
+      "details": {
+        "x": 156,
+        "y": 780
+      }
+    },
+    {
+      "name": "production navigation sampled reach inward-spawn-3",
+      "pass": true,
+      "details": {
+        "x": 1044,
+        "y": 780
+      }
+    },
+    {
+      "name": "production navigation sampled reach N",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 160
+      }
+    },
+    {
+      "name": "production navigation sampled reach S",
+      "pass": true,
+      "details": {
+        "x": 600,
+        "y": 720
+      }
+    },
+    {
+      "name": "production navigation sampled reach V",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 350
+      }
+    },
+    {
+      "name": "production navigation sampled reach A",
+      "pass": true,
+      "details": {
+        "x": 930,
+        "y": 490
+      }
+    }
+  ],
+  "diagnostics": {
+    "r16": {
+      "sample_spacing": 20,
+      "nodes": 1620,
+      "component_sizes": [
+        1620
+      ],
+      "occupancy_sweep_disagreement": []
+    },
+    "r28": {
+      "sample_spacing": 20,
+      "nodes": 1380,
+      "component_sizes": [
+        1380
+      ],
+      "occupancy_sweep_disagreement": []
+    },
+    "r30": {
+      "sample_spacing": 20,
+      "nodes": 1360,
+      "component_sizes": [
+        1360
+      ],
+      "occupancy_sweep_disagreement": []
+    }
+  },
+  "source_sha256": {
+    "src/game/roguelike/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "src/game/roguelike/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+    "src/game/roguelike/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "src/game/roguelike/authoredRoomTopologies.ts": "933296fee8d6a456a518f25ca796c759a4ffa09f9386353af7cca961115630ac",
+    "src/game/world/expeditionGeometry.ts": "61592cc4e947e8d6873488407235e1ab117585e59d10141916de3efe00ef316b",
+    "src/game/world/polygonGeometry.ts": "f041fae2658b2de86bf8281d72b605fcb402ec18ebd8c7f11c0f57c9086cb18a",
+    "src/game/world/FacilityNavigation.ts": "4f625bf353690320ca2fd9ad6281cec8199bde430145131a48b2434f41a0c1e4",
+    "src/DepthGame.ts": "2fec8a0b55b66a697f3bed6cbdd576a043170464e8187c627366b44fb7e0bb82"
+  }
+}

@@ -10,6 +10,7 @@ import {ActorPool} from './ActorPool';
 import type {GraphicsTier} from './FrameBudget';
 import {EnvironmentMaterials} from './EnvironmentMaterials';
 import {shipEnvironment,environmentObstacle,environmentArchitecture,appendEnvironment,type ShipEnvironment} from './ShipEnvironments';
+import {serviceShaftLanding} from './ServiceShaftLanding';
 import * as T from 'three';
 import {EnemyHealthBars} from './EnemyHealthBars';
 import {AttackEffects} from './AttackEffects';
@@ -163,12 +164,12 @@ export class DepthRenderer {
   const atrium=node.templateId==='communal-atrium';
   this.corpseIds?.clear();this.staticDirty=false;const staticLoaded=this.staticLoaded(this.world);
   this.muzzle.intensity=0;this.contacts.begin();this.contacts.end();
-  const bespoke=authoredRoom(node.templateId,t);
+  const bespoke=node.templateId==='service-shaft-landing'?serviceShaftLanding(t):authoredRoom(node.templateId,t);
   const act=Math.min(2,Math.floor(node.depth/4));this.surfaces.theme(act);if(environment)this.surfaces.shipTheme(environment);
   // Room-local habitation finish; theme() resets it on every subsequent room.
   if(node.templateId==='residential-gallery'){this.surfaces.floor.color.setHex(0x747976);this.surfaces.wall.color.setHex(0x788687);}
   if(atrium){this.surfaces.floor.color.setHex(0x77766c);this.surfaces.wall.color.setHex(0x777a6e);this.surfaces.cover.color.setHex(0x64695e);}
-  if(bespoke){this.world.add(bespoke);if(node.templateId==='passenger-vault')this.passengerVault=attachPassengerVault(bespoke,staticLoaded);if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,staticLoaded);this.releasedBerth=attachReleasedBerth(bespoke,staticLoaded);this.recoveryKit=attachRecoveryKit(bespoke,staticLoaded);}}else{
+  if(bespoke){if(node.templateId==='service-shaft-landing'){appendEnvironment(this.world,bespoke);this.bakeWorld();}else this.world.add(bespoke);if(node.templateId==='passenger-vault')this.passengerVault=attachPassengerVault(bespoke,staticLoaded);if(node.templateId==='awakening-bay'){this.sealedBank=attachSealedBank(bespoke,staticLoaded);this.releasedBerth=attachReleasedBerth(bespoke,staticLoaded);this.recoveryKit=attachRecoveryKit(bespoke,staticLoaded);}}else{
   // Atrium's straight physical enclosure follows its shared boundary; the
   // template dimensions below remain the unchanged camera/lighting envelope.
   const shellH=atrium?Math.max(...t.boundary!.map(p=>p.y))/UNIT:h;

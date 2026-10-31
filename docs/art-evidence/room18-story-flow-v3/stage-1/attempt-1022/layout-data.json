@@ -1,0 +1,600 @@
+{
+  "task": "room18-story-flow-v3",
+  "stage": 1,
+  "attempt": 1022,
+  "units": "game units, not metres",
+  "evidence": "authored draft only; not implemented",
+  "source_template": {
+    "id": "containment-annulus",
+    "name": "Containment annulus",
+    "width": 1200,
+    "height": 880,
+    "spawn": {
+      "x": 100,
+      "y": 440
+    },
+    "exit": {
+      "x": 1100,
+      "y": 440
+    },
+    "obstacles": [
+      {
+        "x": 470,
+        "y": 310,
+        "width": 260,
+        "height": 260
+      },
+      {
+        "x": 280,
+        "y": 180,
+        "width": 120,
+        "height": 100
+      },
+      {
+        "x": 800,
+        "y": 180,
+        "width": 120,
+        "height": 100
+      },
+      {
+        "x": 280,
+        "y": 620,
+        "width": 120,
+        "height": 100
+      },
+      {
+        "x": 800,
+        "y": 620,
+        "width": 120,
+        "height": 100
+      }
+    ],
+    "breaches": [
+      {
+        "x": 100,
+        "y": 100
+      },
+      {
+        "x": 1100,
+        "y": 100
+      },
+      {
+        "x": 100,
+        "y": 780
+      },
+      {
+        "x": 1100,
+        "y": 780
+      }
+    ]
+  },
+  "baseline": {
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 880
+    },
+    "boundary": null,
+    "voids": [],
+    "obstacles": [
+      {
+        "x": 470,
+        "y": 310,
+        "width": 260,
+        "height": 260
+      },
+      {
+        "x": 280,
+        "y": 180,
+        "width": 120,
+        "height": 100
+      },
+      {
+        "x": 800,
+        "y": 180,
+        "width": 120,
+        "height": 100
+      },
+      {
+        "x": 280,
+        "y": 620,
+        "width": 120,
+        "height": 100
+      },
+      {
+        "x": 800,
+        "y": 620,
+        "width": 120,
+        "height": 100
+      }
+    ]
+  },
+  "proposal": {
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 880
+    },
+    "boundary": [
+      {
+        "x": 80,
+        "y": 40
+      },
+      {
+        "x": 1120,
+        "y": 40
+      },
+      {
+        "x": 1160,
+        "y": 80
+      },
+      {
+        "x": 1160,
+        "y": 800
+      },
+      {
+        "x": 1120,
+        "y": 840
+      },
+      {
+        "x": 80,
+        "y": 840
+      },
+      {
+        "x": 40,
+        "y": 800
+      },
+      {
+        "x": 40,
+        "y": 80
+      }
+    ],
+    "voids": [
+      [
+        {
+          "x": 420,
+          "y": 240
+        },
+        {
+          "x": 780,
+          "y": 240
+        },
+        {
+          "x": 840,
+          "y": 300
+        },
+        {
+          "x": 840,
+          "y": 580
+        },
+        {
+          "x": 780,
+          "y": 640
+        },
+        {
+          "x": 420,
+          "y": 640
+        },
+        {
+          "x": 360,
+          "y": 580
+        },
+        {
+          "x": 360,
+          "y": 300
+        }
+      ]
+    ],
+    "obstacles": [],
+    "center": {
+      "x": 600,
+      "y": 440
+    },
+    "activities": [
+      {
+        "id": "N",
+        "name": "North inspection",
+        "point": {
+          "x": 600,
+          "y": 160
+        },
+        "approach": [
+          {
+            "x": 600,
+            "y": 140
+          },
+          {
+            "x": 600,
+            "y": 160
+          }
+        ]
+      },
+      {
+        "id": "S",
+        "name": "South inspection",
+        "point": {
+          "x": 600,
+          "y": 720
+        },
+        "approach": [
+          {
+            "x": 600,
+            "y": 740
+          },
+          {
+            "x": 600,
+            "y": 720
+          }
+        ]
+      },
+      {
+        "id": "V",
+        "name": "Passenger vitals",
+        "point": {
+          "x": 930,
+          "y": 350
+        },
+        "approach": [
+          {
+            "x": 960,
+            "y": 350
+          },
+          {
+            "x": 930,
+            "y": 350
+          }
+        ]
+      },
+      {
+        "id": "A",
+        "name": "Authorization state",
+        "point": {
+          "x": 930,
+          "y": 490
+        },
+        "approach": [
+          {
+            "x": 960,
+            "y": 490
+          },
+          {
+            "x": 930,
+            "y": 490
+          }
+        ]
+      }
+    ],
+    "routes": {
+      "clockwise": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ],
+      "counterclockwise": [
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 240,
+          "y": 440
+        }
+      ],
+      "entry_to_exit_north": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 220
+        },
+        {
+          "x": 340,
+          "y": 140
+        },
+        {
+          "x": 860,
+          "y": 140
+        },
+        {
+          "x": 960,
+          "y": 220
+        },
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ],
+      "entry_to_exit_south": [
+        {
+          "x": 100,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 660
+        },
+        {
+          "x": 340,
+          "y": 740
+        },
+        {
+          "x": 860,
+          "y": 740
+        },
+        {
+          "x": 960,
+          "y": 660
+        },
+        {
+          "x": 960,
+          "y": 440
+        },
+        {
+          "x": 1100,
+          "y": 440
+        }
+      ]
+    },
+    "anchors": [
+      {
+        "id": "entry",
+        "point": {
+          "x": 100,
+          "y": 440
+        }
+      },
+      {
+        "id": "exit",
+        "point": {
+          "x": 1100,
+          "y": 440
+        }
+      },
+      {
+        "id": "breach-0",
+        "point": {
+          "x": 100,
+          "y": 100
+        }
+      },
+      {
+        "id": "breach-1",
+        "point": {
+          "x": 1100,
+          "y": 100
+        }
+      },
+      {
+        "id": "breach-2",
+        "point": {
+          "x": 100,
+          "y": 780
+        }
+      },
+      {
+        "id": "breach-3",
+        "point": {
+          "x": 1100,
+          "y": 780
+        }
+      },
+      {
+        "id": "inward-spawn-0",
+        "point": {
+          "x": 156,
+          "y": 100
+        }
+      },
+      {
+        "id": "inward-spawn-1",
+        "point": {
+          "x": 1044,
+          "y": 100
+        }
+      },
+      {
+        "id": "inward-spawn-2",
+        "point": {
+          "x": 156,
+          "y": 780
+        }
+      },
+      {
+        "id": "inward-spawn-3",
+        "point": {
+          "x": 1044,
+          "y": 780
+        }
+      },
+      {
+        "id": "N",
+        "name": "North inspection",
+        "point": {
+          "x": 600,
+          "y": 160
+        },
+        "approach": [
+          {
+            "x": 600,
+            "y": 140
+          },
+          {
+            "x": 600,
+            "y": 160
+          }
+        ]
+      },
+      {
+        "id": "S",
+        "name": "South inspection",
+        "point": {
+          "x": 600,
+          "y": 720
+        },
+        "approach": [
+          {
+            "x": 600,
+            "y": 740
+          },
+          {
+            "x": 600,
+            "y": 720
+          }
+        ]
+      },
+      {
+        "id": "V",
+        "name": "Passenger vitals",
+        "point": {
+          "x": 930,
+          "y": 350
+        },
+        "approach": [
+          {
+            "x": 960,
+            "y": 350
+          },
+          {
+            "x": 930,
+            "y": 350
+          }
+        ]
+      },
+      {
+        "id": "A",
+        "name": "Authorization state",
+        "point": {
+          "x": 930,
+          "y": 490
+        },
+        "approach": [
+          {
+            "x": 960,
+            "y": 490
+          },
+          {
+            "x": 930,
+            "y": 490
+          }
+        ]
+      }
+    ],
+    "status_panels": [
+      {
+        "id": "V",
+        "label": "PASSENGERS ALIVE",
+        "point": {
+          "x": 815,
+          "y": 350
+        }
+      },
+      {
+        "id": "A",
+        "label": "OVERLOAD IS NOT ARMED",
+        "point": {
+          "x": 815,
+          "y": 490
+        }
+      }
+    ]
+  },
+  "design_dimensions": {
+    "outer_envelope": [
+      1200,
+      880
+    ],
+    "inner_core_envelope": [
+      480,
+      400
+    ],
+    "north_south_cardinal_floor_width": 200,
+    "east_west_cardinal_floor_width": 320,
+    "diagonal_corner_floor_width": 56.568542494923804,
+    "note": "Last value is canonical corner anchor distance to proposed outer diagonal, not a whole lane width. Cardinal lane widths exclude no added props. Proposed offsets are not canonical."
+  }
+}

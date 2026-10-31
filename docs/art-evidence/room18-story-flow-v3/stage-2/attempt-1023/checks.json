@@ -1,0 +1,33 @@
+{
+  "focused-final": {
+    "command": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "tests/ContainmentAnnulusBlockout.test.ts",
+      "tests/ShipEnvironments.test.ts",
+      "tests/unit/expeditionGeometry.test.ts"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-02T00:09:49.791611+00:00",
+    "finished_at": "2026-10-02T00:09:51.313035+00:00"
+  },
+  "npm-test": {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-02T00:09:51.313297+00:00",
+    "finished_at": "2026-10-02T00:10:15.987369+00:00"
+  },
+  "build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-02T00:10:15.987692+00:00",
+    "finished_at": "2026-10-02T00:10:20.743712+00:00"
+  }
+}
