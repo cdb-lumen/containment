@@ -1,5 +1,5 @@
 {
-  "README.md": "c8030267fc6bdf984c2c462ce930fcb73067c7cbbbd6b3d5d1cee5dfc84b84d7",
+  "README.md": "12212c6a2b9c1199a22d1f0cb2683570fd4cb01ae32022f365a106c3a13144a9",
   "baseline/ai-approach-native.png": "c3b6553919063e762f6d9b4f61998473dda813e915f59726012bff576ccefb64",
   "baseline/center-native.png": "5749ca64aa04d3641a293c91dc36d1b466ee05c55fcf791bfd67c51c121ca70d",
   "baseline/manifest.json": "79d84def8d3518efd51583cb11532d3e62446fd31c47ec03b6f4bf527e499dfb",
@@ -55,5 +55,10 @@
   "north-viewport-failure/manifest.json": "89a367a44e71b57a817923b594dbfcf6baa31ca2f7174075f0aa7ebc4ff03a49",
   "north-viewport-failure/room12-hud-full-final.log": "7189acb5ff8308d0b47a87056a2dd7b300eba84ba74fc2f95c78ea30883e4d1f",
   "north-viewport-failure/room12-north-framing-final.log": "7c2ec283c74ed6bdd76adff548c82ebeeb13f5b74e952456b6550f8887e2a18f",
-  "north-viewport-failure/room12-north-framing-red.log": "4955f3c3fd192edd671cd65ac6acab7da0ba503dcd56ef6eda283fff897faa51"
+  "north-viewport-failure/room12-north-framing-red.log": "4955f3c3fd192edd671cd65ac6acab7da0ba503dcd56ef6eda283fff897faa51",
+  "room-label-failure/00366.png": "72a99b815391ed33c0ec2dcfd8a35e3cf691ef5a6e993295e6292d2ea49060d8",
+  "room-label-failure/campaign-desktop-hud-clearance.mjs": "8e94f376f026dc269362f41c0ccfedc54a2520fa0dca29a4729286d8d1d33fb8",
+  "room-label-failure/manifest.json": "0037255291348be22bf2c493c77778130ca581d8cb2e319171aaf830dc238ea6",
+  "room-label-failure/room-heading-hud-exact-red.log": "d3c728e5d07fd88f90c9ae68a1e24c5b157ad57fc264ea4d8f0ad679cf01f1aa",
+  "room-label-failure/room12-shared-headroom-final.log": "8e0bf1e40067893f37d59cd4251ef4c582f2d95b975a385455e57dda750279b7"
 }

@@ -1,0 +1,30 @@
+{"frame":0,"elapsed":0.06666666666666667,"status":"playing","kills":0,"remaining":20}
+{"frame":50,"elapsed":2.566666666666666,"status":"playing","kills":1,"remaining":22}
+{"frame":100,"elapsed":5.0666666666666575,"status":"playing","kills":2,"remaining":21}
+{"frame":150,"elapsed":7.566666666666649,"status":"playing","kills":3,"remaining":20}
+{"frame":200,"elapsed":10.066666666666677,"status":"playing","kills":4,"remaining":19}
+{"frame":250,"elapsed":12.566666666666713,"status":"playing","kills":6,"remaining":20}
+{"frame":300,"elapsed":15.066666666666748,"status":"playing","kills":12,"remaining":14}
+{"frame":350,"elapsed":17.566666666666784,"status":"playing","kills":14,"remaining":12}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Visible HUD must not cover marine
++ actual - expected
+
++ [
++   '.room-label'
++ ]
+- []
+
+    at file:///workspace/campaign-desktop-hud-clearance.mjs:42:51 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ '.room-label' ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

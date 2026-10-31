@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /workspace/containment-camera-headroom
+
+ ❯ tests/StoryHudLayout.test.ts (5 tests | 1 failed) 3029ms
+   × keeps the room heading and Pause clear of the recorded north-east marine 395ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/StoryHudLayout.test.ts > keeps the room heading and Pause clear of the recorded north-east marine
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/StoryHudLayout.test.ts:139:57
+    137|   const body={left:1018.6609690645946,top:49.77284403710499,right:1059…
+    138|   await position(page,body);
+    139|   expect(overlaps(await rect(page,'.room-label'),body)).toBe(false);
+       |                                                         ^
+    140|   await page.evaluate(()=>document.getElementById('pause')!.addEventLi…
+    141|   for(const pose of [body,{left:1200,top:25,right:1250,bottom:108}]){
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  16:37:01
+   Duration  3.54s (transform 47ms, setup 0ms, import 392ms, tests 3.03s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
