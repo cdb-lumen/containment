@@ -1,0 +1,37 @@
+{"frame":0,"elapsed":0.06666666666666667,"status":"playing","kills":0,"remaining":21}
+{"frame":50,"elapsed":2.566666666666666,"status":"playing","kills":0,"remaining":24}
+{"frame":100,"elapsed":5.0666666666666575,"status":"playing","kills":1,"remaining":26}
+{"frame":150,"elapsed":7.566666666666649,"status":"playing","kills":1,"remaining":26}
+{"frame":200,"elapsed":10.066666666666677,"status":"playing","kills":4,"remaining":23}
+{"frame":250,"elapsed":12.566666666666713,"status":"playing","kills":8,"remaining":19}
+{"frame":300,"elapsed":15.066666666666748,"status":"playing","kills":13,"remaining":17}
+{"frame":350,"elapsed":17.566666666666784,"status":"playing","kills":13,"remaining":17}
+{"frame":400,"elapsed":20.06666666666682,"status":"playing","kills":15,"remaining":15}
+{"frame":450,"elapsed":22.566666666666855,"status":"playing","kills":18,"remaining":15}
+{"frame":500,"elapsed":25.06666666666689,"status":"playing","kills":20,"remaining":13}
+{"frame":550,"elapsed":27.566666666666926,"status":"playing","kills":21,"remaining":12}
+{"frame":600,"elapsed":30.06666666666696,"status":"playing","kills":23,"remaining":13}
+{"frame":650,"elapsed":32.566666666666954,"status":"playing","kills":24,"remaining":12}
+{"frame":700,"elapsed":35.06666666666681,"status":"playing","kills":26,"remaining":10}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Visible HUD must not cover marine
++ actual - expected
+
++ [
++   '#weapon-picker'
++ ]
+- []
+
+    at file:///workspace/campaign-desktop-hud-clearance.mjs:42:51 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ '#weapon-picker' ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

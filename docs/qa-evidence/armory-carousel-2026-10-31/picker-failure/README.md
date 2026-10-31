@@ -1,0 +1,1 @@
+Failed native encounter at frame 746 on d2a87bff0917b85ad1441fe1271c29b82d57bb6d. The ammunition panel moved but the fixed weapon picker covered the marine. This is preserved failure evidence, not encounter acceptance. No assertions were waived.
