@@ -1,0 +1,8 @@
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3
+
+
+ Test Files  3 passed (3)
+      Tests  11 passed (11)
+   Start at  21:05:41
+   Duration  1.85s (transform 536ms, setup 0ms, import 780ms, tests 2.60s, environment 0ms)

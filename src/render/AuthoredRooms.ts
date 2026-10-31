@@ -447,42 +447,110 @@ function passengerVault(room:Fabricator,t:RoomPlan){
  wall(34,12,440,12,24,800);wall(1166,12,440,12,24,800);
 }
 function breachedBay(f:Fabricator,t:RoomPlan){
+ // Stage4: connected growth, torn repair edges and supported freight assemblies.
+ // All apron relief is flush. Raised details remain inside existing solid cover.
+ f.deck.color.setHex(0x354246);
+ f.chitin.color.setHex(0x293c30);f.ribs.color.setHex(0x788167);
+ const apron=f.paint.clone();apron.name='room8-freight-apron';apron.color.setHex(0x485357);apron.roughness=.91;
+ const markings=f.stencil.clone();markings.name='room8-apron-markings';markings.color.setHex(0xbaa16a);
+ const rubber=f.dark.clone();rubber.name='room8-docking-channels';rubber.roughness=.96;
+ const flush=(x:number,z:number,w:number,d:number,m:T.Material,y=.005)=>f.box(x/U,y,z/U,w/U,.008,d/U,m,0);
+ // Low-contrast modular loading plates give the empty fighting apron a purpose.
+ for(const [x,z,w,d]of [[280,470,210,160],[630,645,370,96],[900,690,170,80],[300,310,160,80]]){
+  flush(x,z,w,d,apron);
+  for(const side of [-1,1]){
+   flush(x+side*(w/2-5),z,2,d-12,f.edge,.013);
+   for(const end of [-1,1])flush(x+side*(w/2-17),z+end*(d/2-6),22,3,markings,.016);
+  }
+ }
+ // Recessed freight guide channels stop before the turning space and scar.
+ for(const x of [245,430]){
+  flush(x,585,7,110,rubber,.016);flush(x+2,585,1.5,110,f.edge,.022);
+  for(let z=540;z<=630;z+=18)flush(x,z,11,2,f.bronze,.025);
+ }
+ for(const x of [610,790]){
+  flush(x,738,7,96,rubber,.016);flush(x+2,738,1.5,96,f.edge,.022);
+ }
+ // A dashed freight boundary reads as paint, not an invisible barrier.
+ for(let x=470;x<990;x+=34)flush(x,710,19,3,markings,.017);
+ for(let z=355;z<570;z+=30)flush(182,z,3,16,markings,.017);
+ // Rear wall reinforcement stays on the existing perimeter. No new lane solids.
+ const perimeter=outline(t);
+ for(let i=0;i<2;i++){
+  const a=perimeter[i],b=perimeter[i+1],angle=-Math.atan2(b.y-a.y,b.x-a.x),length=Math.hypot(b.x-a.x,b.y-a.y),n=Math.ceil(length/100);
+  for(let j=0;j<n;j++){
+   const s=(j+.5)/n,x=(a.x+(b.x-a.x)*s)/U,z=(a.y+(b.y-a.y)*s)/U;
+   f.box(x,.45,z,.28,1.55,.62,f.dark,.035,angle);
+   f.box(x,.49,z,.11,1.43,.67,f.edge,.02,angle);
+   f.box(x,1.22,z,.46,.1,.7,f.bronze,.025,angle);
+  }
+ }
+ // The collision polygon is solid cover, never an exposed opening to space.
+ const seal=f.paint.clone();seal.name='room8-hull-seal';seal.color.setHex(0x4f6165);
  for(const hole of t.voids??[]){const b=bounds(hole);
-  // Cross-section loft: a narrow dorsal keel, high shoulders and rolled-under
-  // flanks. Both shell and ribs use this SAME profile, so ribs cannot sink into it.
-  const axis=v(.81,0,.586).normalize(),across=v(-axis.z,0,axis.x),origin=v(b.x,0,b.z);
-  const inset=hole.map(p=>({x:b.x*U+(p.x-b.x*U)*.86,y:b.z*U+(p.y-b.z*U)*.86}));
-  const projection=inset.map(p=>v(p.x/U,0,p.y/U).sub(origin).dot(axis));
-  const lo=Math.min(...projection)+.35,hi=Math.max(...projection)-.35;
-  const sections:T.Vector3[][]=[];
-  for(let along=lo;along<=hi;along+=.72){
-   const center=origin.clone().addScaledVector(axis,along);if(!contains(inset,center.x,center.z))continue;
-   const widths=[-1,1].map(side=>{let w=0;while(w<8&&contains(inset,center.x+across.x*(w+.05)*side,center.z+across.z*(w+.05)*side))w+=.05;return Math.max(.02,w-.16);});
-   const taper=Math.sin(Math.PI*(along-lo+.3)/(hi-lo+.6)),crown=.35+2.15*Math.pow(Math.max(0,taper),.55);
-   const section:T.Vector3[]=[];
-   for(let j=0;j<=12;j++){const s=(j-6)/6,width=widths[s<0?0:1];section.push(center.clone().addScaledVector(across,s*width*.9*(.12+.88*Math.pow(Math.max(0,taper),.7))).setY(-.35+(crown+.35)*Math.pow(Math.max(0,1-s*s),.65)));}
-   sections.push(section);
+  f.slab(hole,-.04,.28,seal);
+  // Overlapping repair welds and captive bolts read as a closed steel patch.
+  for(let z=b.z0+.25;z<b.z1;z+=.78)for(let x=b.x0+.25;x<b.x1;x+=.3){
+   if(!contains(hole,x-.15,z)||!contains(hole,x+.15,z))continue;
+   f.box(x,.247,z,.27,.014,.025,f.seam,0);
   }
-  const vertices:number[]=[];
-  for(let k=0;k<sections.length-1;k++)for(let j=0;j<12;j++){
-   const a=sections[k][j],b=sections[k+1][j],c=sections[k][j+1],d=sections[k+1][j+1];
-   for(const p of [a,c,b,c,d,b])vertices.push(p.x,p.y,p.z);
-  }
-  for(const [index,direction]of [[0,-1],[sections.length-1,1]]){const section=sections[index];if(!section)continue;const tip=section[6].clone().addScaledVector(axis,direction*.22).setY(-.32);for(let j=0;j<12;j++)for(const p of direction<0?[tip,section[j+1],section[j]]:[tip,section[j],section[j+1]])vertices.push(p.x,p.y,p.z);}
-  const carapace=new T.BufferGeometry();carapace.setAttribute('position',new T.Float32BufferAttribute(vertices,3));carapace.setAttribute('uv',new T.Float32BufferAttribute(new Array(vertices.length/3*2).fill(0),2));carapace.computeVertexNormals();f.add(carapace,f.chitin);
-  for(let k=1;k<sections.length-1;k++){
-   const section=sections[k];for(let j=0;j<12;j++)f.pipe(section[j].clone().add(v(0,.11,0)),section[j+1].clone().add(v(0,.11,0)),.095,f.ribs);
-   const crown=section[6];f.box(crown.x,crown.y+.15,crown.z,.4,.2,.27,f.rust,.035,-Math.atan2(axis.z,axis.x));
-   if(k<sections.length-2)f.pipe(crown.clone().add(v(0,.08,0)),sections[k+1][6].clone().add(v(0,.08,0)),.12,f.dark);
-  }
-  // Ruptured, angled hull petals are local to the scar, not route obstacles.
-  for(let i=0;i<hole.length;i++){const a=hole[i],q=hole[(i+1)%hole.length],x=(a.x+q.x)/2/U,z=(a.y+q.y)/2/U,angle=-Math.atan2(q.y-a.y,q.x-a.x),len=Math.hypot(q.x-a.x,q.y-a.y)/U;
-   const tangent=v(Math.cos(-angle),0,Math.sin(-angle)),inward=v(b.x-x,0,b.z-z).normalize();
-   // Short folded plates expose bright torn metal, interrupted by hydraulic shoes.
-   for(let s=-len/2+.5;s<len/2-.2;s+=.85){const p=v(x,0,z).addScaledVector(tangent,s).addScaledVector(inward,.18);
-    const fold=Math.abs(Math.round(s*13))%4;
-    f.add(new T.BoxGeometry(.52+fold*.065,.075,.29+fold*.09),fold===0?f.rust:f.edge,p.clone().setY(.13+fold*.055),new T.Euler(.2+fold*.13,angle,.07*(fold-1)));
+  for(let i=0;i<hole.length;i++){
+   const a=hole[i],q=hole[(i+1)%hole.length],length=Math.hypot(q.x-a.x,q.y-a.y)/U;
+   for(let j=.35;j<length;j+=.65){
+    const s=j/length,x=(a.x+(q.x-a.x)*s)/U,z=(a.y+(q.y-a.y)*s)/U;
+    const p=v(x,.26,z).lerp(v(b.x,.26,b.z),.065);
+    f.pipe(p,p.clone().setY(.3),.045,f.bolts);
    }
+  }
+  const growth=f.chitin.clone();growth.name='room8-seam-growth';growth.color.setHex(0x46523a);
+  // One continuous rooted tissue sheet. Lobes and branching folds are height
+  // variations in the same surface, never plates carried on cylinder supports.
+  growth.metalness=.08;growth.roughness=.93;
+  const axis=v(.81,0,.586).normalize(),across=v(-axis.z,0,axis.x),origin=v(b.x,0,b.z);
+  const gaussian=(x:number)=>Math.exp(-(x*x));
+  const positions:number[]=[],uvs:number[]=[],indices:number[]=[],longSteps=112,crossSteps=48;
+  for(let i=0;i<=longSteps;i++){
+   const s=i/longSteps,along=-6.5+s*12.4,envelope=Math.sin(Math.PI*s)**.55;
+   const drift=.25*Math.sin(s*11)-.13;
+   // Unequal fingers spread sideways into the weld bed. A narrow living seam
+   // joins the large colonies without making a regular capsule outline.
+   const left=(.58+1.1*gaussian((s-.27)/.12)+.7*gaussian((s-.69)/.095))*envelope;
+   const right=(.52+1.25*gaussian((s-.48)/.105)+.86*gaussian((s-.82)/.09))*envelope;
+   for(let j=0;j<=crossSteps;j++){
+    const q=j/crossSteps,w=-left+(left+right)*q;
+    const foot=Math.sin(Math.PI*q),end=Math.sin(Math.PI*s);
+    const center=.17*Math.sin(s*17),ridge=gaussian((w-center)/.52);
+    const colonies=.66+1.15*gaussian((s-.3)/.10)+.83*gaussian((s-.64)/.075);
+    const folds=.13*(1+Math.sin(s*61+w*6+Math.sin(s*19)))*Math.exp(-Math.abs(w)*.75);
+    const height=.25+end**.6*foot**.72*(.18+colonies*ridge+folds);
+    const p=origin.clone().addScaledVector(axis,along).addScaledVector(across,w+drift).setY(height);
+    positions.push(p.x,p.y,p.z);uvs.push(s,q);
+   }
+  }
+  for(let i=0;i<longSteps;i++)for(let j=0;j<crossSteps;j++){
+   const a=i*(crossSteps+1)+j,b=a+crossSteps+1;
+   indices.push(a,a+1,b,a+1,b+1,b);
+  }
+  const tissue=new T.BufferGeometry();tissue.setAttribute('position',new T.Float32BufferAttribute(positions,3));
+  tissue.setAttribute('uv',new T.Float32BufferAttribute(uvs,2));tissue.setIndex(indices);tissue.computeVertexNormals();f.add(tissue,growth);
+  const torn=f.edge.clone();torn.name='room8-torn-metal';torn.color.setHex(0x687773);torn.roughness=.88;
+  // Six unequal folded remnants, each with an embedded root and closed thickness.
+  const remnants=[[0,.27,1.75,.95,.62],[1,.62,1.15,.74,1.12],[2,.3,.82,.68,.43],[3,.24,1.4,1.05,.9],[3,.72,.92,.78,.52],[4,.55,1.65,.87,1.22]];
+  for(const [edge,s,width,depth,rise]of remnants){
+   const a=hole[edge],q=hole[(edge+1)%hole.length],tangent=v(q.x-a.x,0,q.y-a.y).normalize();
+   const p=v((a.x+(q.x-a.x)*s)/U,.25,(a.y+(q.y-a.y)*s)/U);
+   const inward=v(b.x-p.x,0,b.z-p.z).normalize();p.addScaledVector(inward,.18);
+   const profile=[[-.5,0,0],[.5,0,0],[.43,.5,.88],[.24,.9,1],[-.19,.78,.82],[-.46,.42,.74]];
+   const top=profile.map(([u,d,h])=>p.clone().addScaledVector(tangent,u*width).addScaledVector(inward,d*depth).add(v(0,h*rise,0)));
+   const bottom=top.map(p=>p.clone().add(v(0,-.12,0))),points=[...top,...bottom];
+   const faces=[[0,1,2],[0,2,5],[5,2,3],[5,3,4],[6,8,7],[6,11,8],[11,9,8],[11,10,9]];
+   for(let j=0;j<6;j++){const k=(j+1)%6;faces.push([j,j+6,k],[k,j+6,k+6]);}
+   const positions:number[]=[];for(const face of faces)for(const i of [...face].reverse()){const p=points[i];positions.push(p.x,p.y,p.z);}
+   const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Array(positions.length/3*2).fill(0),2));g.computeVertexNormals();f.add(g,torn);
+   for(const j of [2,3,4])f.pipe(top[j],top[j+1],.025,f.rust);
+  }
+  for(let i=0;i<hole.length;i++){const a=hole[i],q=hole[(i+1)%hole.length],x=(a.x+q.x)/2/U,z=(a.y+q.y)/2/U,angle=-Math.atan2(q.y-a.y,q.x-a.x);
+   const tangent=v(Math.cos(-angle),0,Math.sin(-angle)),inward=v(b.x-x,0,b.z-z).normalize();
    const anchor=v(x,0,z).addScaledVector(inward,.25),toe=anchor.clone().addScaledVector(inward,.8);
    f.box(anchor.x,.32,anchor.z,.7,.5,.66,f.paint,.035,angle);f.box(anchor.x,.6,anchor.z,.58,.06,.5,f.bronze,.02,angle);
    f.pipe(anchor.clone().setY(.56),toe.clone().setY(.26),.12,f.edge);f.box(toe.x,.23,toe.z,.58,.25,.38,f.dark,.025,angle);
@@ -491,7 +559,50 @@ function breachedBay(f:Fabricator,t:RoomPlan){
   }
  }
  const b=bounds(outline(t));f.sign('EMERGENCY HULL SEAL / HOLD',b.x,1.35,b.z0+.35,8);
- equipment(f,t,'cargo');
+ equipment(f,{...t,obstacles:t.obstacles.slice(0,1)},'cargo');
+ const supports=f.edge.clone();supports.name='room8-freight-supports';supports.color.setHex(0x71817b);
+ // Fork sockets, corner castings and a ribbed load-bearing skirt stay within
+ // the pressure container's existing collision rectangle.
+ for(const r of t.obstacles.slice(0,1)){
+  const x=(r.x+r.width/2)/U,z=(r.y+r.height/2)/U,w=r.width/U,d=r.height/U;
+  for(const side of [-1,1]){
+   const zz=z+side*(d/2-.05);
+   for(const dx of [-w*.29,w*.29]){
+    f.box(x+dx,.16,zz,.62,.27,.09,supports,.02);
+    f.box(x+dx,.17,zz+side*.048,.39,.11,.015,f.dark,.005);
+   }
+   for(const dx of [-w/2+.14,w/2-.14]){
+    f.box(x+dx,.48,zz,.23,.63,.1,supports,.02);
+    f.box(x+dx,.81,zz,.28,.16,.1,f.bronze,.025);
+   }
+  }
+ }
+ // Outbound pallet has visible skids, fork gaps, slatted deck and strapped loads.
+ for(const r of t.obstacles.slice(1)){
+  const x=(r.x+r.width/2)/U,z=(r.y+r.height/2)/U,w=r.width/U,d=r.height/U;
+  for(const side of [-1,0,1])f.box(x+side*w*.36,.09,z,.22,.18,d-.05,supports,.025);
+  for(let i=0;i<5;i++)f.box(x,.21,z-d*.4+i*d*.2,w,.1,.21,supports,.015);
+  for(const side of [-1,1]){
+   const cx=x+side*w*.235;
+   f.box(cx,.55,z,w*.43,.58,d-.12,f.ivory,.07);
+   f.box(cx,.85,z,w*.43,.04,.13,f.bronze,.01);
+   for(const edge of [-1,1]){
+    f.box(cx,.56,z+edge*(d/2-.075),.14,.6,.05,f.bronze,.01);
+    f.box(cx,.53,z+edge*(d/2-.045),.25,.17,.04,f.dark,.015);
+    f.box(cx,.53,z+edge*(d/2-.021),.16,.1,.02,supports,.008);
+   }
+  }
+ }
+ // Local cladding on the existing east exit fixture. The shared exit behavior
+ // and opening are untouched; pale post sleeves make its dark frame readable.
+ const exitTrim=f.edge.clone();exitTrim.name='room8-east-fixture';exitTrim.color.setHex(0x8a9995);
+ const exit=AUTHORED_ROOM_TOPOLOGIES['breached-loading-bay']!.exit,ex=exit.x/U,ez=exit.y/U;
+ for(const side of [-1,1]){
+  f.box(ex-.069,.7,ez+side*.7,.018,1.36,.18,exitTrim,.005);
+  f.box(ex,.1,ez+side*.7,.18,.16,.21,f.bronze,.018);
+  f.box(ex-.115,1.5,ez+side*.49,.03,.17,.43,exitTrim,.01);
+ }
+ for(const side of [-1,1])f.box(ex+side*.68,.051,ez,.1,.008,1.35,exitTrim,0);
 }
 function reactorFloor(f:Fabricator,t:RoomPlan){
  for(const hole of t.voids??[]){const b=bounds(hole),radius=Math.min(b.w,b.d)*.42;
