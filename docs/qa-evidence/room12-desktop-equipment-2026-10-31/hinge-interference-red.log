@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /workspace/containment-room12-review
+
+ ❯ tests/SafetyInterlockSecondRevision.test.ts (4 tests | 1 failed) 94ms
+     × keeps the open cover hinges clear of the exposed cooling and capacitor hardware 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/SafetyInterlockSecondRevision.test.ts > Room12 second service revision > keeps the open cover hinges clear of the exposed cooling and capacitor hardware
+AssertionError: panel-hinge must clear cooling-fin: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/SafetyInterlockSecondRevision.test.ts:22:163
+     20|   r.traverse(o=>{if(o.name==='panel-hinge')hinges.push(o);if(o.name===…
+     21|   expect(hinges).toHaveLength(2);expect(components.length).toBeGreater…
+     22|   for(const hinge of hinges)for(const component of components)expect(b…
+       |                                                                                                                                                                   ^
+     23|   disposeModel(r);
+     24|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  14:17:48
+   Duration  477ms (transform 129ms, setup 0ms, import 262ms, tests 94ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

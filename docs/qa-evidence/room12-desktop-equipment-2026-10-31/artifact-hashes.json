@@ -1,0 +1,16 @@
+{
+  "README.md": "5a5c480812f45ce0cb92735d6fe7186660a09685323b96a189ed45af322f63a3",
+  "baseline/ai-approach-native.png": "c3b6553919063e762f6d9b4f61998473dda813e915f59726012bff576ccefb64",
+  "baseline/center-native.png": "5749ca64aa04d3641a293c91dc36d1b466ee05c55fcf791bfd67c51c121ca70d",
+  "baseline/manifest.json": "79d84def8d3518efd51583cb11532d3e62446fd31c47ec03b6f4bf527e499dfb",
+  "baseline/room-overview.png": "d7a03252f1e545a0c63259fe7473ca11faa8a2be5cd17a06e22d5ec26097700a",
+  "capture.mjs": "dfb818263f605daf8c5fd3c377e50a7db196528144564a1b92944715148bb73f",
+  "corrected-clearance-review.md": "36cf6ebaec450a0728549b0e655cc5c1bf3f6183f75a398735efc24dcf25c466",
+  "cover-hardware-red.log": "62d9ed7bbc607520715a8b8f54e939c18638dedb442a2ac244c923f18455e234",
+  "failed-cover-clearance/ai-approach-native.png": "22eff4a3ca46b021453bfa2850f0594b6f9764f5f808972967c522bf63e33971",
+  "failed-cover-clearance/center-native.png": "3a7d19e6d5bd1eb9e411c0c6decbdd89a15b66c596e894e41be10847dff680cb",
+  "failed-cover-clearance/manifest.json": "c651e30817ebef240398b048bca47e526e6e05438ed68fc627233e4248fd9951",
+  "failed-cover-clearance/room-overview.png": "ca7a66d182c95384163244e790e2b36b3f7a63e4bb7755363a56d723d8a841cd",
+  "hinge-interference-red.log": "543723ce3aff7814088f30ca3bbbf7b00a0bd9883e437a65fa70ce1f7cb46c8b",
+  "initial-code-review.md": "20751ad267fe3cb06e40044504d5d964a9f07c5a66059769e371b5d89fb6e57a"
+}
