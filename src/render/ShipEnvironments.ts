@@ -3,6 +3,9 @@ import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
 import {freightHoldBlockout,freightBayMarkings} from './FreightHoldBlockout';
 import {armoryBlockout} from './ArmoryBlockout';
+import {shieldingGateBlockout} from './ShieldingGateBlockout';
+import {infestedWorkshop} from './InfestedWorkshop';
+import {infestedWorkshopArchitecture} from './InfestedWorkshopArchitecture';
 import {crewCheckpointBlockout} from './CrewCheckpointBlockout';
 
 export const SHIP_ENVIRONMENTS=['cryogenics','habitation','security','cargo','communications','engineering','maintenance','infested','containment','reactor'] as const;
@@ -17,6 +20,8 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
  if(environment==='cargo'&&templateId==='freight-hold')return freightHoldBlockout(footprint,index);
  if(environment==='security'&&templateId==='armory')return armoryBlockout(footprint,index);
+ if(environment==='containment'&&templateId==='shielding-gate')return shieldingGateBlockout(footprint,index);
+ if(environment==='infested'&&templateId==='infested-workshop')return infestedWorkshop(footprint,index);
  if(environment==='security'&&templateId==='crew-checkpoint')return crewCheckpointBlockout(footprint,index);
  if(environment==='habitation'&&templateId==='residential-gallery')return residentialGalleryBlockout(footprint,index);
  const root=new T.Group();root.name=`${environment}-obstacle-${index}`;
@@ -169,6 +174,7 @@ export function appendEnvironment(parent:T.Group,model:T.Group){
 
 /** Flush deck inlays and outboard rear architecture never occupy a walkable tile. */
 export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:number,h:number,templateId=''){
+ if(env==='infested'&&templateId==='infested-workshop')return infestedWorkshopArchitecture(parent,w,h);
  const residential=env==='habitation'&&templateId==='residential-gallery';
  const accent=env==='habitation'?MAT.bone:env==='infested'?MAT.acid:['security','engineering','containment','maintenance'].includes(env)?MAT.amber:MAT.cyan;
  const inlay=(x:number,z:number,width:number,depth:number,mat:T.Material)=>{const m=box(parent,x,-.007,z,width,.018,depth,mat,0);m.castShadow=false;return m;};
