@@ -1,0 +1,871 @@
+From ab1ed9ba04372dbd40ef8366a2beaaaa11f352e5 Mon Sep 17 00:00:00 2001
+From: Viktor Chernodub <chernodubv@gmail.com>
+Date: Sat, 31 Oct 2026 22:05:10 +0000
+Subject: [PATCH] Prototype joint sectioned organ and embedded Room16
+ distributor
+
+---
+ .../room16-structural-prototype/README.md     |  53 +++++++
+ .../construction-timing.json                  |  47 +++++++
+ .../fastener-green.log                        |  14 ++
+ .../float32-support-red.log                   |  26 ++++
+ .../focused-green.log                         |  14 ++
+ .../original-tests-red.log                    | 132 ++++++++++++++++++
+ .../replacement-exposure-red.log              |  35 +++++
+ .../support-budget-red.log                    |  27 ++++
+ .../room16-structural-prototype/typecheck.log |   5 +
+ src/render/SwarmEmbeddedDistributor.test.ts   |  46 ++++++
+ src/render/SwarmJunction.test.ts              |  86 ++----------
+ src/render/SwarmJunction.ts                   |  62 ++++----
+ src/render/sectionedOrganicShell.test.ts      |  50 +++++++
+ src/render/sectionedOrganicShell.ts           |  59 ++++++++
+ 14 files changed, 548 insertions(+), 108 deletions(-)
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/README.md
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/construction-timing.json
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/fastener-green.log
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/float32-support-red.log
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/focused-green.log
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/original-tests-red.log
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/replacement-exposure-red.log
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/support-budget-red.log
+ create mode 100644 docs/qa-evidence/room16-structural-prototype/typecheck.log
+ create mode 100644 src/render/SwarmEmbeddedDistributor.test.ts
+ create mode 100644 src/render/sectionedOrganicShell.test.ts
+ create mode 100644 src/render/sectionedOrganicShell.ts
+
+diff --git a/docs/qa-evidence/room16-structural-prototype/README.md b/docs/qa-evidence/room16-structural-prototype/README.md
+new file mode 100644
+index 0000000..01dedaf
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/README.md
+@@ -0,0 +1,53 @@
++# Room16 joint structural prototype — CPU handoff
++
++This is a local, unaccepted prototype based on `df33589715e11cdec881d00f69a7ca01cf66a1bf`. The existing PR81 worktree/branch is unchanged. No renderer, native capture, publication or merge was performed. Earlier Room16 visual rejections remain valid evidence; these tests do not establish a biological appearance or readable consumed cabinet.
++
++## Concrete change
++
++The closed organ body now has seven corresponding 150-point rings: original outline at heights 0 and 2; inset 3 at 8; inset 7 at 18; inset 3 at 26; original outline at 30.2 and 31. Its top uses the production height function. Two global shared-edge midpoint refinements keep cap/wall seams indexed together. The previously proposed return at 30.8 was rejected: it would leave a physical inset at the 30.4 shot plane. The actual implementation returns at 30.2, and 450 short boundary rays test the complete 30.4 silhouette both before and after production bake.
++
++The cabinet is jointly rebuilt, centered at (684,234), rotated −30 degrees, with an 80×30 enclosure extending from ground to height 39, a connected front, three actual sockets/cores, roof service panel and three buses, two fasteners and a connected jagged lid. One broad organic corner intersects the bed, housing and roof region. The three earlier applied fold/wrap/shoulder pieces are removed. Their count is not an acceptance invariant. Vent slots are deliberately removed in this enclosure redesign; the ports, exposed panel, roof buses and fasteners are the replacement readable hardware roles. The rotated scute clearance mask includes a shallow front apron to expose the actual front faces along the native camera direction.
++
++The exact 150-point gameplay contour, routes, anchors, navigation, camera, input, resources, materials, terminal shapes and cavity geometry are unchanged. The root height cap remains 44.8. All existing non-cabinet terminal/cavity exposure witnesses remain, including the 25-point west tissue patch, three cut crests and east/south tissue. There are still seven materials and the original production bake/disposal checks.
++
++## Explicit old → new assertion map
++
++| Old construction-specific assertion | Replacement / retained invariant |
++| --- | --- |
++| 20 layered meshes: 8 scutes + 9 terminal parts + 3 cabinet folds | 18: the same 8+9 plus one substantial consuming corner; closed manifold, opposite edges and positive volumes remain checked for all pieces. |
++| Organ bottom/top are the first/second half of its vertex buffer | Sectioned body top/bottom classified by actual heights and checked for outward normals; all-edge pairing, nonzero faces, positive volume and corruption controls retained. Other shell half-layout checks unchanged. |
++| Shoulder first hits at (706,230), (710,236), (714,242), old housing overlap at x700 | Nine distributed local points u15/20/25 × v−4/0/4 require actual bed, housing and corner intersections, corner above housing and native first-hit corner. Corner extends to ground. |
++| Old side-wrap and old three port coordinates | 27 first-hit core samples across all three new ports; nine inter-port panel samples. Original east/south tissue rays retained verbatim. |
++| Axis-aligned old housing/front/lid AABB contacts | Inverse-rotated local bounds of actual vertices require positive housing/front and housing/lid overlap, exact front/panel contact, three socket/core overlaps, roof/housing contact and two fastener/housing contact patches. No rotated world-AABB proxy. |
++| Old vent/fastener contact loop | Vent slots deliberately absent; two retained fasteners receive explicit local-space contact assertions. Three sockets, three cores and three roof buses preserve substantive hardware roles. |
++| Single old housing/lid/roof visible coordinates and panel center fallback accepting a port | Distributed direct native first hits: nine roof samples, three lid samples, nine inter-port panel samples and 27 core samples. The panel checks require the panel itself. |
++| Roof area >500 and old fold above housing; old roof bus contacts | New actual local roof area >559, exact roof/housing and bus/roof contacts; nine broad consuming-corner native hits plus actual bed/housing/corner overlap. |
++| Old terminal top, side and attachment rays in mixed cabinet tests | All terminal coordinates, directions, named first hits and actual bed attachment checks retained; only cabinet-specific branches replaced above. |
++| Existing five sampled scute support points | Retained, plus every scute bottom vertex is now ray-checked against the actual refined body. Five probes per vertex retain a 0.0001-game-unit Float32 boundary tolerance. |
++
++The unchanged dense 10-unit ray grids, all solid-vertex/triangle containment, routes at radii 16/28/38, historical topology changes, other-room template identity, fallback-height shots, height/material budgets, gantry gap and three retirement cycles remain in `SwarmJunction.test.ts`.
++
++## Preserved failures and corrections
++
++- `original-tests-red.log`: 7 failures / 34 passes immediately after the joint construction change, preserving obsolete old cabinet coordinates/names and body indexing expectations before replacement.
++- `replacement-exposure-red.log`: the new front patch genuinely hit `carapace-scute-east-inner` instead of core −19/34.5. The rotated front apron was widened in geometry; the exposure assertions were retained and then passed.
++- `float32-support-red.log`: exact shared-boundary ray missed at (397.2766418457,121.4704742432). Support probes now retain the center plus four offsets of only 0.0001 game units, explicitly bounding Float32 rounding tolerance rather than dropping the vertex.
++- `support-budget-red.log`: every-vertex support case took 38 seconds and exceeded the unchanged 5-second test timeout; 46 other cases passed. It is partitioned into 8 scutes × 4 disjoint vertex-index residues. Every original vertex and all five original probes remain. The aggregate >100 support-vertex guard remains. No timeout increase or coverage reduction.
++
++## Verification and timing
++
++Commands run in this worktree:
++
++```
++npx vitest run src/render/sectionedOrganicShell.test.ts src/render/SwarmEmbeddedDistributor.test.ts src/render/SwarmJunction.test.ts src/render/organicShell.test.ts
++npx vitest run src/render/SwarmEmbeddedDistributor.test.ts
++npx tsc --noEmit
++```
++
++The four-file run passed 78 cases (`focused-green.log`, 34.47 seconds total). The subsequent three-case cabinet run passed after adding explicit retained fastener contacts (`fastener-green.log`); typecheck passed. No other source changes followed those checks.
++
++`construction-timing.json` records 12 full model constructions per root (first two excluded from warm summary), with dispose after each. Old df335 warm median 122.64ms, max 203.62ms; prototype warm median 105.68ms, max 234.57ms. These are noisy shared-host CPU observations, not a speedup or frame-time claim. The new body has 16,770 vertices / 33,536 triangles versus 10,674 / 21,344 previously. Input validation and ring correspondence are repeated at construction, not per frame; no caching is introduced. Native loading/readiness, draw cost and visual quality remain unverified. Reproducible timing runner is `/workspace/room16-structural-construction-timing.mjs`.
++
++## Remaining gates and risks
++
++Parent independent diff/test review and a matched native preview are required before acceptance. The concave undercut must read as grounded tissue, not a walkable void or floating slab, and the larger enclosure must read as consumed machinery rather than a perched cap. CPU geometry alone cannot answer either question. Full repository/browser `npm run verify` has not run for this prototype because this task explicitly forbids GPU/renderer execution; focused CPU/typecheck results are not a substitute. The helper validates its supported rings and rejects sharp/invalid inset configurations; it is not a general arbitrary-polygon offset engine.
+diff --git a/docs/qa-evidence/room16-structural-prototype/construction-timing.json b/docs/qa-evidence/room16-structural-prototype/construction-timing.json
+new file mode 100644
+index 0000000..311e20c
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/construction-timing.json
+@@ -0,0 +1,47 @@
++{
++  "disclosure": "CPU model construction only; no rendering, frame-rate or loading-readiness claim. Shared host load can affect times.",
++  "runs": [
++    {
++      "root": "/workspace/containment-room16-remodel",
++      "timesMs": [
++        296.31396400000006,
++        118.09584399999994,
++        127.9167470000001,
++        122.19428400000015,
++        97.8438819999999,
++        107.77459799999997,
++        93.06454199999985,
++        147.17923199999996,
++        203.51379499999985,
++        203.61860999999976,
++        97.29282999999987,
++        123.08427299999994
++      ],
++      "warmMedianMs": 122.63927850000005,
++      "warmMaxMs": 203.61860999999976,
++      "bodyVertices": 10674,
++      "bodyTriangles": 21344
++    },
++    {
++      "root": "/workspace/containment-room16-volume-prototype",
++      "timesMs": [
++        197.2432389999999,
++        184.60773800000015,
++        234.56785600000012,
++        177.5500360000001,
++        111.00172599999996,
++        101.48744599999964,
++        105.63064800000029,
++        90.27507500000002,
++        90.58701700000029,
++        101.30149100000017,
++        105.73049600000013,
++        113.54413999999997
++      ],
++      "warmMedianMs": 105.68057200000021,
++      "warmMaxMs": 234.56785600000012,
++      "bodyVertices": 16770,
++      "bodyTriangles": 33536
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/docs/qa-evidence/room16-structural-prototype/fastener-green.log b/docs/qa-evidence/room16-structural-prototype/fastener-green.log
+new file mode 100644
+index 0000000..04cc447
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/fastener-green.log
+@@ -0,0 +1,14 @@
++
++ RUN  v4.1.10 /workspace/containment-room16-volume-prototype
++
++
++ Test Files  1 passed (1)
++      Tests  3 passed (3)
++   Start at  22:03:52
++   Duration  1.11s (transform 185ms, setup 0ms, import 273ms, tests 640ms, environment 0ms)
++
++npm notice
++npm notice New major version of npm available! 11.9.0 -> 12.2.1
++npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
++npm notice To update run: npm install -g npm@12.2.1
++npm notice
+diff --git a/docs/qa-evidence/room16-structural-prototype/float32-support-red.log b/docs/qa-evidence/room16-structural-prototype/float32-support-red.log
+new file mode 100644
+index 0000000..9f8b55b
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/float32-support-red.log
+@@ -0,0 +1,26 @@
++
++ RUN  v4.1.10 /workspace/containment-room16-volume-prototype
++
++ ❯ src/render/sectionedOrganicShell.test.ts (5 tests | 1 failed | 4 skipped) 189ms
++     × supports every scute bottom vertex on the actual refined body 188ms
++
++⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++
++ FAIL  src/render/sectionedOrganicShell.test.ts > sectioned grounded organic body > supports every scute bottom vertex on the actual refined body
++AssertionError: carapace-scute-west-outer vertex11 at 397.2766418457031,121.47047424316406: expected 0 to be greater than 0
++ ❯ src/render/sectionedOrganicShell.test.ts:31:457
++
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
++
++
++ Test Files  1 failed (1)
++      Tests  1 failed | 4 skipped (5)
++   Start at  21:50:26
++   Duration  870ms (transform 437ms, setup 0ms, import 578ms, tests 189ms, environment 0ms)
++
++npm notice
++npm notice New major version of npm available! 11.9.0 -> 12.2.1
++npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
++npm notice To update run: npm install -g npm@12.2.1
++npm notice
+diff --git a/docs/qa-evidence/room16-structural-prototype/focused-green.log b/docs/qa-evidence/room16-structural-prototype/focused-green.log
+new file mode 100644
+index 0000000..2dd73a5
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/focused-green.log
+@@ -0,0 +1,14 @@
++
++ RUN  v4.1.10 /workspace/containment-room16-volume-prototype
++
++
++ Test Files  4 passed (4)
++      Tests  78 passed (78)
++   Start at  22:03:04
++   Duration  34.47s (transform 2.93s, setup 0ms, import 4.59s, tests 53.02s, environment 0ms)
++
++npm notice
++npm notice New major version of npm available! 11.9.0 -> 12.2.1
++npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
++npm notice To update run: npm install -g npm@12.2.1
++npm notice
+diff --git a/docs/qa-evidence/room16-structural-prototype/original-tests-red.log b/docs/qa-evidence/room16-structural-prototype/original-tests-red.log
+new file mode 100644
+index 0000000..22af4e7
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/original-tests-red.log
+@@ -0,0 +1,132 @@
++
++ RUN  v4.1.10 /workspace/containment-room16-volume-prototype
++
++ ❯ src/render/SwarmJunction.test.ts (34 tests | 7 failed) 17292ms
++     × closes the continuous curved body and cavity lip with opposite directed edges and outward faces 310ms
++     × joins a broad cabinet shoulder to the root and housing while exposing a native visible patch 116ms
++     × exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports 114ms
++     × keeps recognizable cabinet components mechanically connected and exposed 92ms
++     × exposes the three severed terminal tops and the cabinet connector face to the shipping camera 113ms
++     × attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold 104ms
++     × opens the terminal borders and crosses the cabinet roof while retaining exposed hardware 97ms
++
++⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
++
++ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > closes the continuous curved body and cavity lip with opposite directed edges and outward faces
++AssertionError: expected [ …(18) ] to have a length of 20 but got 18
++
++- Expected
+++ Received
++
++- 20
+++ 18
++
++ ❯ src/render/SwarmJunction.test.ts:25:19
++
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
++
++ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > joins a broad cabinet shoulder to the root and housing while exposing a native visible patch
++AssertionError: expected false to be true // Object.is equality
++
++- Expected
+++ Received
++
++- true
+++ false
++
++ ❯ src/render/SwarmJunction.test.ts:112:81
++    110|    ray.set(new T.Vector3(x/32,4,y/32),new T.Vector3(0,-1,0));
++    111|    const hits=ray.intersectObject(root,true);
++    112|    expect(hits.some(h=>h.object.name==='consuming-distributor-right-sh…
++       |                                                                                 ^
++    113|    expect(hits.some(h=>h.object.name==='organ-bed')).toBe(true);
++    114|    const target=new T.Vector3(x/32,40/32,y/32);
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
++
++ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports
++AssertionError: expected 'distributor-roof-service-panel' to be 'consuming-distributor-side-wrap' // Object.is equality
++
++Expected: "consuming-distributor-side-wrap"
++Received: "distributor-roof-service-panel"
++
++ ❯ src/render/SwarmJunction.test.ts:139:322
++
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
++
++ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > keeps recognizable cabinet components mechanically connected and exposed
++AssertionError: expected 'distributor-roof-service-panel' to be 'severed-distributor' // Object.is equality
++
++Expected: "severed-distributor"
++Received: "distributor-roof-service-panel"
++
++ ❯ src/render/SwarmJunction.test.ts:158:59
++    156|    const target=new T.Vector3(x/32,43.5/32,z/32),direction=new T.Vecto…
++    157|    const ray=new T.Raycaster(target.clone().addScaledVector(direction,…
++    158|    expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);
++       |                                                           ^
++    159|   }
++    160|   disposeModel(root);
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
++
++ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > exposes the three severed terminal tops and the cabinet connector face to the shipping camera
++AssertionError: distributor-front-panel: expected 'distributor-front-right' to be 'distributor-front-panel' // Object.is equality
++
++Expected: "distributor-front-panel"
++Received: "distributor-front-right"
++
++ ❯ src/render/SwarmJunction.test.ts:174:64
++    172|     ray.set(center.clone().addScaledVector(direction,10),direction.clo…
++    173|    }
++    174|    expect(ray.intersectObject(root,true)[0]?.object.name,name).toBe(na…
++       |                                                                ^
++    175|    if(name!=='distributor-front-panel'){
++    176|     ray.set(new T.Vector3(center.x,5,center.z),new T.Vector3(0,-1,0));
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
++
++ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold
++TypeError: Cannot read properties of undefined (reading 'updateWorldMatrix')
++ ❯ Box3.expandByObject ../containment-ci/node_modules/three/build/three.core.js:16025:10
++ ❯ Box3.setFromObject ../containment-ci/node_modules/three/build/three.core.js:15876:15
++ ❯ box src/render/SwarmJunction.test.ts:183:93
++    181|  });
++    182|  it('attaches the thick terminal sections and leaves the roof service …
++    183|   const root=model(),bed=root.getObjectByName('organ-bed')!,box=(name:…
++       |                                                                                             ^
++    184|   const ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normali…
++    185|   for(const end of ['west','east','south']){
++ ❯ src/render/SwarmJunction.test.ts:193:93
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
++
++ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > opens the terminal borders and crosses the cabinet roof while retaining exposed hardware
++AssertionError: 679,228: expected 'severed-distributor' to be 'distributor-engulfing-fold' // Object.is equality
++
++Expected: "distributor-engulfing-fold"
++Received: "severed-distributor"
++
++ ❯ src/render/SwarmJunction.test.ts:211:45
++    209|    ray.set(new T.Vector3(x/32,5,z/32),new T.Vector3(0,-1,0));
++    210|    const hits=ray.intersectObject(root,true);
++    211|    expect(hits[0]?.object.name,`${x},${z}`).toBe(name);
++       |                                             ^
++    212|    if(name==='distributor-engulfing-fold'){
++    213|     const support=hits.find(h=>h.object.name==='severed-distributor');
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
++
++
++ Test Files  1 failed | 1 passed (2)
++      Tests  7 failed | 34 passed (41)
++   Start at  21:46:27
++   Duration  18.53s (transform 988ms, setup 0ms, import 1.34s, tests 17.77s, environment 0ms)
++
++npm notice
++npm notice New major version of npm available! 11.9.0 -> 12.2.1
++npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
++npm notice To update run: npm install -g npm@12.2.1
++npm notice
+diff --git a/docs/qa-evidence/room16-structural-prototype/replacement-exposure-red.log b/docs/qa-evidence/room16-structural-prototype/replacement-exposure-red.log
+new file mode 100644
+index 0000000..74647ea
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/replacement-exposure-red.log
+@@ -0,0 +1,35 @@
++
++ RUN  v4.1.10 /workspace/containment-room16-volume-prototype
++
++ ❯ src/render/SwarmEmbeddedDistributor.test.ts (3 tests | 1 failed) 894ms
++     × keeps distributed front ports, inter-port face, roof and torn lid visible in native direction 196ms
++
++⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++
++ FAIL  src/render/SwarmEmbeddedDistributor.test.ts > embedded Room16 human distributor > keeps distributed front ports, inter-port face, roof and torn lid visible in native direction
++AssertionError: core -19/34.5: expected 'carapace-scute-east-inner' to be 'distributor-terminal-core' // Object.is equality
++
++Expected: "distributor-terminal-core"
++Received: "carapace-scute-east-inner"
++
++ ❯ src/render/SwarmEmbeddedDistributor.test.ts:29:147
++     27|  it('keeps distributed front ports, inter-port face, roof and torn lid…
++     28|   const r=model();
++     29|   for(const u of [-31,-18,-5])for(const du of [-1,0,1])for(const h of …
++       |                                                                                                                                                   ^
++     30|   for(const u of [-26,-25,-24])for(const h of [33,34,35])expect(native…
++     31|   for(const u of [-26,-25,-24])for(const v of [-4,0,4])expect(native(r…
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
++
++
++ Test Files  1 failed | 1 passed (2)
++      Tests  1 failed | 34 passed (35)
++   Start at  21:47:58
++   Duration  18.12s (transform 1.11s, setup 0ms, import 1.48s, tests 17.62s, environment 0ms)
++
++npm notice
++npm notice New major version of npm available! 11.9.0 -> 12.2.1
++npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
++npm notice To update run: npm install -g npm@12.2.1
++npm notice
+diff --git a/docs/qa-evidence/room16-structural-prototype/support-budget-red.log b/docs/qa-evidence/room16-structural-prototype/support-budget-red.log
+new file mode 100644
+index 0000000..9210a27
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/support-budget-red.log
+@@ -0,0 +1,27 @@
++
++ RUN  v4.1.10 /workspace/containment-room16-volume-prototype
++
++ ❯ src/render/sectionedOrganicShell.test.ts (5 tests | 1 failed) 41234ms
++     × supports every scute bottom vertex on the actual refined body 38037ms
++
++⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++
++ FAIL  src/render/sectionedOrganicShell.test.ts > sectioned grounded organic body > supports every scute bottom vertex on the actual refined body
++Error: Test timed out in 5000ms.
++If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
++ ❯ src/render/sectionedOrganicShell.test.ts:31:2
++
++
++⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
++
++
++ Test Files  1 failed | 3 passed (4)
++      Tests  1 failed | 46 passed (47)
++   Start at  21:50:53
++   Duration  43.79s (transform 2.66s, setup 0ms, import 4.06s, tests 77.32s, environment 0ms)
++
++npm notice
++npm notice New major version of npm available! 11.9.0 -> 12.2.1
++npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
++npm notice To update run: npm install -g npm@12.2.1
++npm notice
+diff --git a/docs/qa-evidence/room16-structural-prototype/typecheck.log b/docs/qa-evidence/room16-structural-prototype/typecheck.log
+new file mode 100644
+index 0000000..89696f4
+--- /dev/null
++++ b/docs/qa-evidence/room16-structural-prototype/typecheck.log
+@@ -0,0 +1,5 @@
++npm notice
++npm notice New major version of npm available! 11.9.0 -> 12.2.1
++npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
++npm notice To update run: npm install -g npm@12.2.1
++npm notice
+diff --git a/src/render/SwarmEmbeddedDistributor.test.ts b/src/render/SwarmEmbeddedDistributor.test.ts
+new file mode 100644
+index 0000000..30c8706
+--- /dev/null
++++ b/src/render/SwarmEmbeddedDistributor.test.ts
+@@ -0,0 +1,46 @@
++import {describe,it,expect} from 'vitest';
++import * as T from 'three';
++import {swarmJunctionBlockout} from './SwarmJunction';
++import {disposeModel} from './meshParts';
++const c=Math.cos(-Math.PI/6),s=Math.sin(-Math.PI/6);
++const world=(u:number,v:number,h:number)=>new T.Vector3((684+u*c-v*s)/32,h/32,(234+u*s+v*c)/32);
++const local=(p:T.Vector3)=>{const x=p.x*32-684,y=p.z*32-234;return new T.Vector3(x*c+y*s,p.y*32,-x*s+y*c);};
++const model=()=>{const r=swarmJunctionBlockout();r.updateMatrixWorld(true);return r;};
++const named=(r:T.Group,n:string)=>r.children.filter(o=>o.name===n) as T.Mesh[];
++const bounds=(m:T.Mesh)=>{const b=new T.Box3(),p=m.geometry.getAttribute('position');for(let i=0;i<p.count;i++)b.expandByPoint(local(new T.Vector3().fromBufferAttribute(p,i).applyMatrix4(m.matrixWorld)));return b;};
++const native=(r:T.Group,u:number,v:number,h:number)=>{const dir=new T.Vector3(0,26,19).normalize(),p=world(u,v,h);return new T.Raycaster(p.clone().addScaledVector(dir,10),dir.negate()).intersectObject(r,true)[0];};
++describe('embedded Room16 human distributor',()=>{
++ it('replaces the perched enclosure with one rotated connected full-height assembly',()=>{
++  const r=model(),one=(n:string)=>named(r,n)[0];const housing=bounds(one('severed-distributor')),front=bounds(one('distributor-front-right')),panel=bounds(one('distributor-front-panel')),roof=bounds(one('distributor-roof-service-panel')),lid=bounds(one('torn-distributor-lid'));
++  expect(housing.min.distanceTo(new T.Vector3(-40,0,-15))).toBeLessThan(.001);expect(housing.max.distanceTo(new T.Vector3(40,39,15))).toBeLessThan(.001);
++  // Local-space boxes are exact for these rotated boxes, unlike world AABBs.
++  const overlap=(a:T.Box3,b:T.Box3)=>new T.Box3().copy(a).intersect(b).getSize(new T.Vector3());
++  expect(overlap(housing,front).z).toBeGreaterThan(.99);expect(overlap(housing,lid).z).toBeGreaterThan(.99);expect(overlap(housing,lid).y).toBeGreaterThan(2.99);
++  expect(Math.abs(front.max.z-panel.min.z)).toBeLessThan(.001);expect(Math.abs(housing.max.y-roof.min.y)).toBeLessThan(.001);
++  const sockets=named(r,'distributor-terminal-socket'),cores=named(r,'distributor-terminal-core');expect(sockets).toHaveLength(3);expect(cores).toHaveLength(3);
++  for(let i=0;i<3;i++){expect(overlap(panel,bounds(sockets[i])).z).toBeGreaterThan(.49);expect(overlap(bounds(sockets[i]),bounds(cores[i])).z).toBeGreaterThan(.49);}
++  for(const bus of named(r,'distributor-roof-bus')){const b=bounds(bus);expect(Math.abs(b.min.y-roof.max.y)).toBeLessThan(.001);expect(overlap(roof.clone().expandByScalar(.001),b).x).toBeGreaterThan(2.99);}
++  const fasteners=named(r,'distributor-housing-fastener');expect(fasteners).toHaveLength(2);
++  for(const fastener of fasteners){const b=bounds(fastener);expect(Math.abs(b.min.y-housing.max.y)).toBeLessThan(.001);const contact=overlap(housing.clone().expandByScalar(.001),b);expect(contact.x).toBeGreaterThan(1.99);expect(contact.z).toBeGreaterThan(1.99);}
++  expect(roof.getSize(new T.Vector3()).x*roof.getSize(new T.Vector3()).z).toBeGreaterThan(559);
++  expect(named(r,'consuming-distributor-corner')).toHaveLength(1);expect(r.children.some(o=>/engulfing-fold|side-wrap|right-shoulder/.test(o.name))).toBe(false);
++  disposeModel(r);
++ });
++ it('keeps distributed front ports, inter-port face, roof and torn lid visible in native direction',()=>{
++  const r=model();
++  for(const u of [-31,-18,-5])for(const du of [-1,0,1])for(const h of [34.5,35,35.5])expect(native(r,u+du,19,h)?.object.name,`core ${u+du}/${h}`).toBe('distributor-terminal-core');
++  for(const u of [-26,-25,-24])for(const h of [33,34,35])expect(native(r,u,17,h)?.object.name,`panel ${u}/${h}`).toBe('distributor-front-panel');
++  for(const u of [-26,-25,-24])for(const v of [-4,0,4])expect(native(r,u,v,39.4)?.object.name,`roof ${u}/${v}`).toBe('distributor-roof-service-panel');
++  for(const u of [-35,-33,-31])expect(native(r,u,-16,40)?.object.name,`lid ${u}`).toBe('torn-distributor-lid');
++  disposeModel(r);
++ });
++ it('joins a finite body-to-housing-to-roof organic volume and exposes its broad corner',()=>{
++  const r=model(),corner=named(r,'consuming-distributor-corner')[0],bed=named(r,'organ-bed')[0],housing=named(r,'severed-distributor')[0];expect(bounds(corner).min.y).toBe(0);
++  const ray=new T.Raycaster();
++  for(const u of [15,20,25])for(const v of [-4,0,4]){
++   ray.set(world(u,v,100),new T.Vector3(0,-1,0));const a=ray.intersectObject(corner)[0],b=ray.intersectObject(housing)[0],d=ray.intersectObject(bed)[0];expect(a).toBeDefined();expect(b).toBeDefined();expect(d).toBeDefined();expect(a.point.y*32).toBeGreaterThan(43);expect(b.point.y*32).toBeCloseTo(39,3);expect(d.point.y*32).toBeGreaterThanOrEqual(31-1e-4);
++   expect(native(r,u,v,44.2)?.object.name,`corner ${u}/${v}`).toBe('consuming-distributor-corner');
++  }
++  disposeModel(r);
++ });
++});
+diff --git a/src/render/SwarmJunction.test.ts b/src/render/SwarmJunction.test.ts
+index a749d68..dd9062c 100644
+--- a/src/render/SwarmJunction.test.ts
++++ b/src/render/SwarmJunction.test.ts
+@@ -22,7 +22,7 @@ describe('Room16 room visuals',()=>{
+   const root=model(),plates=meshes(root).filter(m=>m.name==='organ-bed');expect(plates).toHaveLength(1);
+   const lip=meshes(root).find(m=>m.name==='sensory-carapace-lip')!;expect(lip).toBeDefined();
+   const layered=meshes(root).filter(m=>m.name.startsWith('carapace-scute-')||m.name.startsWith('carapace-overlap-')||/^root-.*-(cut|sheath|tissue)$/.test(m.name)||m.name==='distributor-engulfing-fold'||m.name.startsWith('consuming-distributor-'));
+-  expect(layered).toHaveLength(20); // Eight scutes, nine cut/sheath/tissue sections and three cabinet folds.
++  expect(layered).toHaveLength(18); // Eight scutes, nine terminal sections and one structural cabinet corner.
+   expect(meshes(root).some(m=>m.name.startsWith('carapace-overlap-'))).toBe(false);
+   const badEdges=(indices:number[])=>{
+    const edges=new Map<string,number[]>();
+@@ -41,7 +41,10 @@ describe('Room16 room visuals',()=>{
+     const ids=indices.slice(i,i+3),v=ids.map(j=>new T.Vector3().fromBufferAttribute(p,j));
+     const cross=v[1].clone().sub(v[0]).cross(v[2].clone().sub(v[0]));expect(cross.lengthSq()).toBeGreaterThan(1e-12);
+     volume+=v[0].dot(v[1].clone().cross(v[2]))/6;
+-    if(plate!==lip){
++    if(plate.name==='organ-bed'){
++     if(v.every(q=>q.y*32>=31-1e-5))expect(cross.y,'sectioned top').toBeGreaterThan(0);
++     if(v.every(q=>Math.abs(q.y)<1e-8))expect(cross.y,'sectioned floor').toBeLessThan(0);
++    }else if(plate!==lip){
+      if(ids.every(j=>j>=p.count/2))expect(cross.y,plate.name).toBeGreaterThan(0);
+      if(ids.every(j=>j<p.count/2))expect(cross.y,plate.name).toBeLessThan(0);
+     }else{
+@@ -104,25 +107,6 @@ describe('Room16 room visuals',()=>{
+   for(const x of [588,600,612]){const target=new T.Vector3(x/32,31.5/32,285/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe('sensory-recess');}
+   disposeModel(root);
+  });
+- it('joins a broad cabinet shoulder to the root and housing while exposing a native visible patch',()=>{
+-  const root=model(),ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+-  for(const [x,y] of [[706,230],[710,236],[714,242]]){
+-   ray.set(new T.Vector3(x/32,4,y/32),new T.Vector3(0,-1,0));
+-   const hits=ray.intersectObject(root,true);
+-   expect(hits.some(h=>h.object.name==='consuming-distributor-right-shoulder')).toBe(true);
+-   expect(hits.some(h=>h.object.name==='organ-bed')).toBe(true);
+-   const target=new T.Vector3(x/32,40/32,y/32);
+-   ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());
+-   expect(ray.intersectObject(root,true)[0]?.object.name).toBe('consuming-distributor-right-shoulder');
+-  }
+-  for(const y of [232,238,244]){
+-   ray.set(new T.Vector3(700/32,4,y/32),new T.Vector3(0,-1,0));
+-   const hits=ray.intersectObject(root,true);
+-   expect(hits.some(h=>h.object.name==='consuming-distributor-right-shoulder'&&h.point.y*32>42.5)).toBe(true);
+-   expect(hits.some(h=>h.object.name==='severed-distributor'&&Math.abs(h.point.y*32-42.5)<1e-4)).toBe(true);
+-  }
+-  disposeModel(root);
+- });
+  it('exposes a connected west-terminal tissue area while retaining its cut crest',()=>{
+   const root=model(),ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+   for(let y=132;y<=136;y++)for(let x=385;x<=389;x++){
+@@ -134,43 +118,16 @@ describe('Room16 room visuals',()=>{
+   expect(ray.intersectObject(root,true)[0]?.object.name).toBe('root-west-cut');
+   disposeModel(root);
+  });
+- it('exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports',()=>{
+-  const root=model(),ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+-  for(const [x,y,name] of [[802,152,'root-east-tissue'],[602,380,'root-south-tissue'],[658,252,'consuming-distributor-side-wrap']] as const){const target=new T.Vector3(x/32,40/32,y/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);}
+-  ray.set(new T.Vector3(666.5/32,4,245/32),new T.Vector3(0,-1,0));const hits=ray.intersectObject(root,true);expect(hits[0]?.object.name).toBe('consuming-distributor-side-wrap');expect(hits.some(h=>h.object.name==='distributor-roof-service-panel')).toBe(true);
+-  for(const x of [668.5,679.5,690.5]){const target=new T.Vector3(x/32,35.5/32,265/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-terminal-core');}
+-  disposeModel(root);
+- });
+- it('keeps recognizable cabinet components mechanically connected and exposed',()=>{
+-  const root=model(),ms=meshes(root),part=(name:string)=>ms.find(m=>m.name===name)!;
+-  const box=(m:T.Mesh)=>new T.Box3().setFromObject(m).expandByScalar(1e-6);
+-  const housing=part('severed-distributor'),front=part('distributor-front-right'),lid=part('torn-distributor-lid');
+-  expect(box(housing).intersectsBox(box(front))).toBe(true);
+-  expect(box(housing).intersectsBox(box(lid))).toBe(true);
+-  const sockets=ms.filter(m=>m.name==='distributor-terminal-socket'),cores=ms.filter(m=>m.name==='distributor-terminal-core');
+-  expect(sockets).toHaveLength(3);expect(cores).toHaveLength(3);
+-  for(let i=0;i<3;i++){expect(box(front).intersectsBox(box(sockets[i]))).toBe(true);expect(box(sockets[i]).intersectsBox(box(cores[i]))).toBe(true);}
+-  for(const m of ms.filter(m=>m.name==='distributor-vent-slot'||m.name==='distributor-housing-fastener'))expect(box(housing).intersectsBox(box(m)),m.name).toBe(true);
+-  // Visible upper housing and torn lid must remain above the surrounding shell.
+-  for(const [x,z,name] of [[661,250,'severed-distributor'],[666,220,'torn-distributor-lid']] as const){
+-   const target=new T.Vector3(x/32,43.5/32,z/32),direction=new T.Vector3(0,26,19).normalize();
+-   const ray=new T.Raycaster(target.clone().addScaledVector(direction,10),direction.clone().negate());
+-   expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);
+-  }
++ it('retains the exposed east and south internal terminal tissue',()=>{
++  const root=model(),direction=new T.Vector3(0,26,19).normalize();
++  for(const [x,y,name] of [[802,152,'root-east-tissue'],[602,380,'root-south-tissue']] as const){const target=new T.Vector3(x/32,40/32,y/32),ray=new T.Raycaster(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);}
+   disposeModel(root);
+  });
+- it('exposes the three severed terminal tops and the cabinet connector face to the shipping camera',()=>{
++ it('exposes the three severed terminal tops to the shipping camera',()=>{
+   const root=model(),direction=new T.Vector3(0,26,19).normalize();
+-  for(const name of ['root-west-cut','root-east-cut','root-south-cut','distributor-front-panel']){
++  for(const name of ['root-west-cut','root-east-cut','root-south-cut']){
+    const part=root.getObjectByName(name)!,bounds=new T.Box3().setFromObject(part),center=bounds.getCenter(new T.Vector3());
+    const ray=new T.Raycaster(center.clone().addScaledVector(direction,10),direction.clone().negate());
+-   if(name==='distributor-front-panel'){
+-    // The middle port belongs on the panel center. It may cover the panel,
+-    // but neither the organ nor its sensory lip may hide that hardware.
+-    expect(['distributor-front-panel','distributor-terminal-socket','distributor-terminal-core']).toContain(ray.intersectObject(root,true)[0]?.object.name);
+-    center.x=bounds.min.x+10/32; // Exposed face between the first two ports.
+-    ray.set(center.clone().addScaledVector(direction,10),direction.clone().negate());
+-   }
+    expect(ray.intersectObject(root,true)[0]?.object.name,name).toBe(name);
+    if(name!=='distributor-front-panel'){
+     ray.set(new T.Vector3(center.x,5,center.z),new T.Vector3(0,-1,0));
+@@ -179,7 +136,7 @@ describe('Room16 room visuals',()=>{
+   }
+   disposeModel(root);
+  });
+- it('attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold',()=>{
++ it('attaches the thick terminal sections to the supporting body',()=>{
+   const root=model(),bed=root.getObjectByName('organ-bed')!,box=(name:string)=>new T.Box3().setFromObject(root.getObjectByName(name)!);
+   const ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+   for(const end of ['west','east','south']){
+@@ -190,30 +147,17 @@ describe('Room16 room visuals',()=>{
+    const attachedTop=ray.intersectObject(bed)[0].point.y;
+    expect(attachedTop).toBeGreaterThan(cut.min.y);expect(attachedTop).toBeLessThan(cut.max.y);
+   }
+-  const panel=box('distributor-roof-service-panel'),housing=box('severed-distributor'),fold=box('distributor-engulfing-fold');
+-  expect(panel.getSize(new T.Vector3()).x*panel.getSize(new T.Vector3()).z*32*32).toBeGreaterThan(500);
+-  expect(Math.abs(panel.min.y-housing.max.y)).toBeLessThan(1e-6);
+-  expect(housing.intersectsBox(fold)).toBe(true);expect(fold.max.y).toBeGreaterThan(housing.max.y);
+-  for(const name of ['distributor-roof-bus'])for(const mesh of meshes(root).filter(m=>m.name===name))expect(panel.intersectsBox(new T.Box3().setFromObject(mesh))).toBe(true);
+-  const target=new T.Vector3(675/32,42.9/32,237/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());
+-  expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-roof-service-panel');
+-  ray.set(new T.Vector3(700/32,5,234/32),new T.Vector3(0,-1,0));
+-  expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-engulfing-fold');
+   disposeModel(root);
+  });
+- it('opens the terminal borders and crosses the cabinet roof while retaining exposed hardware',()=>{
++ it('opens the terminal borders while retaining exposed tissue',()=>{
+   const root=model(),ray=new T.Raycaster();
+-  // Preserve named tissue/hardware exposure while the south cut and cabinet move
++  // Preserve named terminal tissue exposure independently of the cabinet replacement
+   // with the explicit major-form proposal. These are not generic any-mesh rays.
+-  for(const [x,z,name] of [[397,146,'root-west-cut'],[800,143,'root-east-cut'],[616,388,'root-south-cut'],[679,228,'distributor-engulfing-fold'],[700,234,'distributor-engulfing-fold'],[675,237,'distributor-roof-service-panel']] as const){
++  for(const [x,z,name] of [[397,146,'root-west-cut'],[800,143,'root-east-cut'],[616,388,'root-south-cut']] as const){
+    ray.set(new T.Vector3(x/32,5,z/32),new T.Vector3(0,-1,0));
+    const hits=ray.intersectObject(root,true);
+    expect(hits[0]?.object.name,`${x},${z}`).toBe(name);
+-   if(name==='distributor-engulfing-fold'){
+-    const support=hits.find(h=>h.object.name==='severed-distributor');
+-    expect(support).toBeDefined();expect(hits[0].point.y).toBeGreaterThan(support!.point.y);
+-    expect(hits[0].point.y-support!.point.y).toBeLessThan(2.3/32);
+-   }
++
+   }
+   disposeModel(root);
+  });
+diff --git a/src/render/SwarmJunction.ts b/src/render/SwarmJunction.ts
+index e216a9a..d1bc7d2 100644
+--- a/src/render/SwarmJunction.ts
++++ b/src/render/SwarmJunction.ts
+@@ -1,5 +1,6 @@
+ import * as T from 'three';
+ import {organicShell} from './organicShell';
++import {sectionedOrganicShell} from './sectionedOrganicShell';
+ import {SWARM_SCUTES} from './swarmScuteContours';
+ import {SWARM_ORGAN} from '../game/world/swarmJunctionLayout';
+ import type {Point} from '../game/roguelike/types';
+@@ -34,6 +35,7 @@ export function swarmJunctionBlockout(){
+  tendon.color.setHex(0x424b3b);metal.metalness=.72;metal.roughness=.58;
+  // The silhouette and heightfield are one sealed body. Every top triangle is
+  // constrained to the shared concave contour; no contracted ring crosses a bay.
++ const cabinetLocal=(p:Point)=>{const dx=p.x-684,dy=p.y-234,c=Math.cos(-Math.PI/6),s=Math.sin(-Math.PI/6);return {x:dx*c+dy*s,y:-dx*s+dy*c};};
+  const shellHeight=(p:Point)=>{
+   const cavity=Math.hypot((p.x-600)/44,(p.y-285)/34);
+   // Three bent, unequal volumes continue all the way to the contour. Avoid a
+@@ -49,7 +51,7 @@ export function swarmJunctionBlockout(){
+   const southT=Math.max(0,Math.min(1,(378-p.y)/79));
+   const southAxis=610-18*Math.sin(southT*Math.PI);
+   const south=Math.exp(-1*((p.x-southAxis)/(15+14*southT))**2)*Math.exp(-1*((p.y-344)/57)**4);
+-  const cabinet=Math.max(0,1-Math.hypot((p.x-681)/40,(p.y-241)/36));
++  const cp=cabinetLocal(p),cabinet=Math.max(0,1-Math.max(Math.abs(cp.x)/44,Math.abs(cp.y)/23));
+   const tipDistance=Math.min(...[[378,141],[815,150],[610,378]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)));
+   const tipRelief=.25+.75*Math.min(1,tipDistance/30);
+   const hub=Math.exp(-1*(((p.x-602)/88)**2+((p.y-285)/76)**2));
+@@ -58,7 +60,7 @@ export function swarmJunctionBlockout(){
+   for(let i=0;i<SWARM_ORGAN.length;i++){const a=SWARM_ORGAN[i],b=SWARM_ORGAN[(i+1)%SWARM_ORGAN.length],dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy)));edge=Math.min(edge,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));}
+   return 31+3.4*crown*Math.min(1,edge/5)*Math.max(0,Math.min(1,(cavity-1)*2))*(1-.9*cabinet);
+  };
+- add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),tendon);
++ add('organ-bed',sectionedOrganicShell(SWARM_ORGAN,shellHeight),tendon);
+  // Broad overlapping shell volumes grow out of a low continuous tendon bed.
+  // Relief preserves the cavity, exposed severed tissue and surviving cabinet.
+  for(const [index,scute] of SWARM_SCUTES.entries()){
+@@ -68,7 +70,9 @@ export function swarmJunctionBlockout(){
+    const v=(-dx*Math.sin(scute.angle)+dy*Math.cos(scute.angle))/scute.width;
+    const arch=Math.max(0,1-3.2*v*v)*(.45+.55*Math.sin(Math.PI*Math.max(0,Math.min(1,u+.5))));
+    const cavity=Math.max(0,Math.min(1,(Math.hypot((p.x-600)/53,(p.y-285)/44)-1)*3));
+-   const cabinet=Math.max(0,Math.min(1,Math.max(Math.abs(p.x-682)-24,Math.abs(p.y-240)-30)/10));
++   // Keep a shallow front apron along the native viewing direction, while
++   // preserving the east-inner scute outside the rotated enclosure.
++   const cp=cabinetLocal(p),cabinet=Math.max(0,Math.min(1,Math.max(Math.abs(cp.x)-42,-21-cp.y,cp.y-32)/10));
+    const tip=Math.max(0,Math.min(1,(Math.min(...[[378,141],[815,150],[610,378]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)))-13)/28));
+    return 31.05+index*.025+(3.8+9.5*arch)*Math.min(cavity,cabinet,tip);
+   },U,2);
+@@ -127,41 +131,25 @@ export function swarmJunctionBlockout(){
+  const recess:XY[]=Array.from({length:48},(_,i)=>{const a=i/48*Math.PI*2;return [600+32*Math.cos(a),285+25*Math.sin(a)] as XY;});
+  poly('sensory-recess',recess,31,.5,dark);
+  const enamel=material('distributor-enamel',0xb9b09b,.35);
+- // A recognizable torn distribution cabinet survives on the organ's east
+- // shoulder: two connected walls, torn lid and connector bank, engulfed below.
+- box('severed-distributor',634,222,42,32,31,11.5,enamel);
+- box('distributor-front-right',634,252,42,8,31,11.5,enamel);
+- poly('torn-distributor-lid',[[634,224],[634,214],[648,218],[658,213],[676,224]],31,12.5,enamel);
+- // One broad dark connector panel interrupts a coherent enclosure face.
+- box('distributor-front-panel',638,260,30,1,33,7,dark);
+- for(const x of [640,651,662]){
+-  box('distributor-terminal-socket',x,260,5,4,33,6,dark);
+-  box('distributor-terminal-core',x+1,263,3,2,34,3,metal);
++ // Broad low distributor extends through the root rather than perching on it.
++ const cabinetPoint=([u,v]:XY):Point=>({x:684+u*Math.cos(-Math.PI/6)-v*Math.sin(-Math.PI/6),y:234+u*Math.sin(-Math.PI/6)+v*Math.cos(-Math.PI/6)});
++ const cabinetPoly=(name:string,points:readonly XY[],bottom:number,height:number,m:T.Material)=>slab(name,points.map(cabinetPoint),bottom,height,m);
++ const cabinetBox=(name:string,u:number,v:number,w:number,d:number,bottom:number,height:number,m:T.Material)=>cabinetPoly(name,[[u,v],[u+w,v],[u+w,v+d],[u,v+d]],bottom,height,m);
++ cabinetBox('severed-distributor',-40,-15,80,30,0,39,enamel);
++ cabinetBox('distributor-front-right',-40,14,50,2,0,39,enamel);
++ cabinetBox('distributor-front-panel',-36,16,37,1,32,6,dark);
++ for(const u of [-31,-18,-5]){
++  cabinetBox('distributor-terminal-socket',u-3.5,16.5,7,1.5,33,4,dark);
++  cabinetBox('distributor-terminal-core',u-2.5,17.5,5,1.5,34,2,metal);
+  }
+- for(const y of [226,235,244])box('distributor-vent-slot',676,y,1.5,5,34,5,dark);
+- box('distributor-roof-service-panel',640,228,29,20,42.5,.4,dark);
+- for(const x of [643,653,663])box('distributor-roof-bus',x,231,3,13,42.9,1.2,metal);
+- for(const x of [640,670])box('distributor-housing-fastener',x,225,2,2,42.5,1.1,metal);
+- const engulf=[[654,218],[667,219],[680,228],[676,245],[665,245],[660,237],[643,231],[641,225]].map(([x,y])=>({x,y}));
+- add('distributor-engulfing-fold',organicShell(engulf,p=>42+2.4*Math.exp(-1*(((p.y-233)/12)**2))),tendon);
+- for(let i=0;i<3;i++)box('hub-split-conduit',628+i*3,235+i*9,10,3,32,3,tendon);
+- // Deliberate cabinet relocation leaves its hardware east of the larger cavity.
+- for(const child of root.children)if(child instanceof T.Mesh&&(child.name==='severed-distributor'||child.name==='torn-distributor-lid'||child.name.startsWith('distributor-')||child.name==='hub-split-conduit'))child.geometry.translate(26/U,0,0);
+- // A connected side-to-roof tongue consumes the cabinet's left corner while
+- // preserving the three front ports, torn lid and roof-service witness.
+- const sideWrap=[[648,246],[656,232],[662,228],[666,241],[670,252],[664,260],[657,260]].map(([x,y])=>({x,y}));
+- const wrap=organicShell(sideWrap,p=>34+10.4*Math.max(0,Math.min(1,(p.x-653)/13)));
+- const wrapPositions=wrap.getAttribute('position');for(let i=0;i<wrapPositions.count/2;i++)wrapPositions.setY(i,31/U);wrap.computeVertexNormals();
+- add('consuming-distributor-side-wrap',wrap,tendon);
+- // A broad shoulder grows from the east root over the cabinet side, retaining
+- // the front connector bank as a recognizable remnant of the human enclosure.
+- const shoulderOutline=[[690,225],[706,220],[723,229],[720,240],[715,256],[704,258],[694,249],[689,239]].map(([x,y])=>({x,y}));
+- const shoulder=organicShell(shoulderOutline,p=>{
+-  const side=Math.max(0,Math.min(1,(730-p.x)/28));
+-  return 34+10.3*side*Math.exp(-1*((p.y-237)/22)**4);
+- });
+- const shoulderPositions=shoulder.getAttribute('position');for(let i=0;i<shoulderPositions.count/2;i++)shoulderPositions.setY(i,31/U);shoulder.computeVertexNormals();
+- add('consuming-distributor-right-shoulder',shoulder,tendon);
++ cabinetBox('distributor-roof-service-panel',-34,-10,28,20,39,.4,dark);
++ for(const u of [-31,-21,-11])cabinetBox('distributor-roof-bus',u,-7,3,14,39.4,.9,metal);
++ for(const u of [-36,-3])cabinetBox('distributor-housing-fastener',u,-12,2,2,39,1.1,metal);
++ cabinetPoly('torn-distributor-lid',[[-40,-19],[-25,-17],[-16,-19],[0,-16],[0,-14],[-40,-14]],36,4,enamel);
++ const consuming=[[-5,-18],[15,-19],[39,-14],[40,3],[33,18],[15,17],[0,5],[-8,-4]] as const;
++ const corner=organicShell(consuming.map(cabinetPoint),p=>{const u=cabinetLocal(p).x;return 34+10.2*Math.max(0,Math.min(1,(u+8)/25));});
++ add('consuming-distributor-corner',corner,tendon);
++ for(const u of [-37,-31,-25])cabinetBox('hub-split-conduit',u,10,3,5,31,3,tendon);
+ 
+  // Six flush segments reproduce the layout's service paths. They do not add solids.
+  const runs:readonly (readonly XY[])[]=[[[330,90],[378,141],[550,275]],[[870,90],[815,150],[676,250]],[[600,620],[610,378],[600,305]]];
+diff --git a/src/render/sectionedOrganicShell.test.ts b/src/render/sectionedOrganicShell.test.ts
+new file mode 100644
+index 0000000..544031f
+--- /dev/null
++++ b/src/render/sectionedOrganicShell.test.ts
+@@ -0,0 +1,50 @@
++import {describe,it,expect,beforeAll,afterAll} from 'vitest';
++import {SWARM_SCUTES} from './swarmScuteContours';
++import * as T from 'three';
++import {sectionedOrganicShell} from './sectionedOrganicShell';
++import {swarmJunctionBlockout} from './SwarmJunction';
++import {SWARM_ORGAN} from '../game/world/swarmJunctionLayout';
++import {DepthRenderer} from './DepthRenderer';
++import {disposeModel} from './meshParts';
++const concave=[{x:0,y:0},{x:100,y:0},{x:100,y:100},{x:70,y:100},{x:70,y:40},{x:30,y:40},{x:30,y:100},{x:0,y:100}];
++describe('sectioned grounded organic body',()=>{
++ it('closes a concave notch with paired opposite edges and positive volume',()=>{
++  const g=sectionedOrganicShell(concave,()=>31),p=g.getAttribute('position'),ix=g.index!,edges=new Map<string,number[]>();let volume=0;
++  for(let i=0;i<ix.count;i+=3){const ids=[ix.getX(i),ix.getX(i+1),ix.getX(i+2)],v=ids.map(id=>new T.Vector3().fromBufferAttribute(p,id));expect(v.every(a=>[a.x,a.y,a.z].every(Number.isFinite))).toBe(true);expect(new T.Vector3().crossVectors(v[1].clone().sub(v[0]),v[2].clone().sub(v[0])).length()).toBeGreaterThan(1e-8);volume+=v[0].dot(new T.Vector3().crossVectors(v[1],v[2]))/6;
++   for(let j=0;j<3;j++){const a=ids[j],b=ids[(j+1)%3],key=[Math.min(a,b),Math.max(a,b)].join(':');edges.set(key,[...(edges.get(key)??[]),a<b?1:-1]);}}
++  for(const e of edges.values())expect(e).toEqual(expect.arrayContaining([-1,1]));expect([...edges.values()].every(e=>e.length===2)).toBe(true);expect(volume).toBeGreaterThan(0);
++  const mesh=new T.Mesh(g,new T.MeshBasicMaterial());expect(new T.Raycaster(new T.Vector3(50/32,2,75/32),new T.Vector3(0,-1,0)).intersectObject(mesh)).toHaveLength(0);g.dispose();(mesh.material as T.Material).dispose();
++ });
++ it('rejects invalid callbacks and self-touching contours instead of making unsafe shells',()=>{
++  expect(()=>sectionedOrganicShell(concave,()=>NaN)).toThrow();expect(()=>sectionedOrganicShell(concave,()=>32)).toThrow();expect(()=>sectionedOrganicShell([...concave,concave[1]],()=>31)).toThrow();
++ });
++ it.each(['pre','post'])('physically seals all 150 boundary edges at height30.4 (%s bake)',phase=>{
++  const root=swarmJunctionBlockout(),body=root.getObjectByName('organ-bed')!;
++  // Isolate the actual body: unrelated cabinet/scutes cannot rescue a missing boundary wall.
++  root.remove(body);const isolated=new T.Group();isolated.add(body);if(phase==='post')(DepthRenderer.prototype as unknown as {bakeWorld:()=>void}).bakeWorld.call({world:isolated});isolated.updateMatrixWorld(true);
++  for(let i=0;i<SWARM_ORGAN.length;i++){const a=SWARM_ORGAN[i],b=SWARM_ORGAN[(i+1)%SWARM_ORGAN.length],dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len;
++   for(const t of [.25,.5,.75]){const x=a.x+t*dx,y=a.y+t*dy,origin=new T.Vector3((x-nx*.5)/32,30.4/32,(y-ny*.5)/32),dir=new T.Vector3(nx,0,ny);const hits=new T.Raycaster(origin,dir,0,1/32).intersectObject(isolated,true);
++    expect(hits.length,`${phase} edge${i} t${t}`).toBeGreaterThan(0);expect(hits[0].distance*32).toBeCloseTo(.5,3);}}
++  disposeModel(isolated);disposeModel(root);
++ });
++ // Float32-scaled meshes can round shared boundary points onto opposite sides;
++ // the 0.0001-game-unit footprint is a conservative tolerance for Float32 coordinate rounding.
++ describe('actual refined body supports every scute bottom vertex',()=>{
++  let root:T.Group,body:T.Object3D;
++  beforeAll(()=>{root=swarmJunctionBlockout();root.updateMatrixWorld(true);body=root.getObjectByName('organ-bed')!;
++   const count=root.children.filter(o=>o.name.startsWith('carapace-scute-')).reduce((total,o)=>{const p=(o as T.Mesh).geometry.getAttribute('position');let n=0;for(let i=0;i<p.count;i++)if(Math.abs(p.getY(i)*32-31)<=.001)n++;return total+n;},0);
++   expect(count).toBeGreaterThan(100);
++  });
++  afterAll(()=>disposeModel(root));
++  // Disjoint index residues cover every original vertex and all five original
++  // Float32-boundary probes; only the test budget is partitioned, not coverage.
++  it.each(SWARM_SCUTES.flatMap(scute=>[0,1,2,3].map(part=>({name:scute.name,part}))))('$name vertex partition $part',({name,part})=>{
++   const scute=root.getObjectByName(`carapace-scute-${name}`) as T.Mesh,p=scute.geometry.getAttribute('position');let count=0;
++   for(let i=part;i<p.count;i+=4){const v=new T.Vector3().fromBufferAttribute(p,i).applyMatrix4(scute.matrixWorld);if(Math.abs(v.y*32-31)>.001)continue;
++    const hits=[[0,0],[.0001,0],[-.0001,0],[0,.0001],[0,-.0001]].flatMap(([dx,dz])=>new T.Raycaster(new T.Vector3(v.x+dx/32,2,v.z+dz/32),new T.Vector3(0,-1,0)).intersectObject(body));
++    expect(hits.length,`${scute.name} vertex${i} at ${v.x*32},${v.z*32}`).toBeGreaterThan(0);expect(hits[0].point.y*32).toBeGreaterThanOrEqual(30.999);count++;
++   }
++   expect(count).toBeGreaterThan(0);
++  });
++ });
++});
+diff --git a/src/render/sectionedOrganicShell.ts b/src/render/sectionedOrganicShell.ts
+new file mode 100644
+index 0000000..92d340f
+--- /dev/null
++++ b/src/render/sectionedOrganicShell.ts
+@@ -0,0 +1,59 @@
++import * as T from 'three';
++import type {Point} from '../game/roguelike/types';
++const assert:(ok:unknown,message?:string)=>asserts ok=(ok,message)=>{if(!ok)throw new Error(message??'Invalid sectioned organ');};
++const EPS=1e-8;
++const cross=(a:Point,b:Point,c:Point)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);
++const area=(p:readonly Point[])=>p.reduce((s,a,i)=>{const b=p[(i+1)%p.length];return s+a.x*b.y-a.y*b.x;},0)/2;
++const distance=(p:Point,a:Point,b:Point)=>{const x=b.x-a.x,y=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*x+(p.y-a.y)*y)/(x*x+y*y)));return Math.hypot(p.x-a.x-t*x,p.y-a.y-t*y);};
++const on=(p:Point,a:Point,b:Point)=>distance(p,a,b)<EPS;
++function intersects(a:Point,b:Point,c:Point,d:Point){const x=cross(a,b,c),y=cross(a,b,d),z=cross(c,d,a),w=cross(c,d,b);return (x*y<0&&z*w<0)||on(c,a,b)||on(d,a,b)||on(a,c,d)||on(b,c,d);}
++function inside(p:Point,poly:readonly Point[]){if(poly.some((a,i)=>on(p,a,poly[(i+1)%poly.length])))return true;let yes=false;for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length];if((a.y>p.y)!==(b.y>p.y)&&p.x<(b.x-a.x)*(p.y-a.y)/(b.y-a.y)+a.x)yes=!yes;}return yes;}
++function checkSimple(p:readonly Point[]){assert(p.length>=3&&p.every(a=>Number.isFinite(a.x)&&Number.isFinite(a.y)));assert(Math.abs(area(p))>EPS);for(let i=0;i<p.length;i++){assert(Math.hypot(p[i].x-p[(i+1)%p.length].x,p[i].y-p[(i+1)%p.length].y)>EPS);for(let j=i+1;j<p.length;j++)if(j!==i+1&&!(i===0&&j===p.length-1))assert(!intersects(p[i],p[(i+1)%p.length],p[j],p[(j+1)%p.length]),'Nonadjacent polygon intersection/touch');}}
++function edgeContained(a:Point,b:Point,poly:readonly Point[]){
++ // Split the test segment at every polygon-boundary intersection parameter,
++ // including collinear overlap ends, then classify every open subinterval.
++ const dx=b.x-a.x,dy=b.y-a.y,len2=dx*dx+dy*dy;if(len2<EPS*EPS)return inside(a,poly);
++ const cuts=[0,1];for(let i=0;i<poly.length;i++){const c=poly[i],d=poly[(i+1)%poly.length],ex=d.x-c.x,ey=d.y-c.y,den=dx*ey-dy*ex,cx=c.x-a.x,cy=c.y-a.y;
++  if(Math.abs(den)>EPS){const t=(cx*ey-cy*ex)/den,u=(cx*dy-cy*dx)/den;if(t>=-EPS&&t<=1+EPS&&u>=-EPS&&u<=1+EPS)cuts.push(Math.max(0,Math.min(1,t)));}
++  else if(Math.abs(cx*dy-cy*dx)<=EPS){for(const p of [c,d]){const t=((p.x-a.x)*dx+(p.y-a.y)*dy)/len2;if(t>=0&&t<=1)cuts.push(t);}}
++ }
++ cuts.sort((x,y)=>x-y);return cuts.every(t=>inside({x:a.x+t*dx,y:a.y+t*dy},poly))&&cuts.slice(1).every((t,i)=>inside({x:a.x+(t+cuts[i])/2*dx,y:a.y+(t+cuts[i])/2*dy},poly));
++}
++function contained(inner:readonly Point[],outer:readonly Point[]){return inner.every((p,i)=>edgeContained(p,inner[(i+1)%inner.length],outer));}
++function insetRing(poly:readonly Point[],d:number){checkSimple(poly);const sign=Math.sign(area(poly));return poly.map((p,i)=>{const prev=poly[(i+poly.length-1)%poly.length],next=poly[(i+1)%poly.length];const norm=(a:Point,b:Point)=>{const dx=b.x-a.x,dy=b.y-a.y,n=Math.hypot(dx,dy);return {x:-sign*dy/n,y:sign*dx/n};};const a=norm(prev,p),b=norm(p,next),den=1+a.x*b.x+a.y*b.y;assert(den>.05,'Unsupported sharp offset miter');return {x:p.x+d*(a.x+b.x)/den,y:p.y+d*(a.y+b.y)/den};});}
++function checkCorrespondence(outer:readonly Point[],inner:readonly Point[]){
++ assert(Math.abs(area(inner))<Math.abs(area(outer)),'Inset must have strictly smaller area');const n=outer.length,sign=Math.sign(area(outer));
++ for(let i=0;i<n;i++){
++  const j=(i+1)%n;assert(cross(outer[i],outer[j],inner[j])*sign>EPS&&cross(outer[i],inner[j],inner[i])*sign>EPS,'Folded correspondence strip');
++  for(let k=0;k<n;k++){
++   const next=(k+1)%n;assert(!intersects(outer[i],outer[j],inner[k],inner[next]),'Nested rings must not touch');
++   if(k!==i&&next!==i){assert(!intersects(outer[i],inner[i],outer[k],outer[next]),'Connector crosses outer boundary');assert(!intersects(outer[i],inner[i],inner[k],inner[next]),'Connector crosses inner boundary');}
++   if(k>i)assert(!intersects(outer[i],inner[i],outer[k],inner[k]),'Crossed ring correspondence');
++  }
++ }
++}
++/** Explicit verified rings; this is NOT a general polygon-offset algorithm. */
++function buildSectionedOrgan(contour:readonly Point[],ring3:readonly Point[],ring7:readonly Point[],height:(p:Point)=>number,{refinements=2,expansionHeight=30.2}={}){
++ assert(Number.isInteger(refinements)&&refinements>=0&&refinements<=2);assert(expansionHeight<30.4&&expansionHeight>26,'Expansion must complete below shot plane');
++ for(const p of [contour,ring3,ring7]){checkSimple(p);assert(p.length===contour.length&&Math.sign(area(p))===Math.sign(area(contour)));}assert(contained(ring3,contour)&&contained(ring7,ring3),'Offset rings not nested');checkCorrespondence(contour,ring3);checkCorrespondence(ring3,ring7);
++ const n=contour.length,levels:readonly (readonly [readonly Point[],number])[]=[[contour,0],[contour,2],[ring3,8],[ring7,18],[ring3,26],[contour,expansionHeight],[contour,31]];const vertices:number[][]=[],faces:{ids:number[];kind:string}[]=[];
++ for(const [ring,h] of levels)for(const p of ring)vertices.push([p.x,h,p.y]);
++ const add=(ids:number[],kind:string)=>faces.push({ids,kind}),ccw=area(contour)>0;
++ for(let level=0;level<levels.length-1;level++)for(let i=0;i<n;i++){const j=(i+1)%n,a=level*n+i,b=level*n+j,c=(level+1)*n+i,d=(level+1)*n+j;for(const ids of ccw?[[a,c,b],[b,c,d]]:[[a,b,c],[b,d,c]])add(ids,'side');}
++ const caps=T.ShapeUtils.triangulateShape(contour.map(p=>new T.Vector2(p.x,p.y)),[]);assert(caps.length===n-2,'Constrained cap triangulation failed');
++ for(const ids of caps){const [a,b,c]=ids,down=cross(contour[a],contour[b],contour[c])>0?[a,b,c]:[a,c,b];add(down,'bottom');add([down[0]+6*n,down[2]+6*n,down[1]+6*n],'top');}
++ const evalHeight=(p:Point)=>{const value=height(p);assert(Number.isFinite(value)&&value>=31&&value<=44.8,'Invalid top height');if(contour.some((a,i)=>on(p,a,contour[(i+1)%n])))assert(Math.abs(value-31)<1e-6,'Top boundary must meet31 side seam');return value;};for(const p of contour)evalHeight(p);
++ let refined=faces;const edgeKey=(a:number,b:number)=>a<b?`${a}:${b}`:`${b}:${a}`;
++ for(let pass=0;pass<refinements;pass++){
++  const topEdges=new Set();for(const f of refined)if(f.kind==='top')for(let i=0;i<3;i++)topEdges.add(edgeKey(f.ids[i],f.ids[(i+1)%3]));const mids=new Map<string,number>();
++  const midpoint=(a:number,b:number)=>{const key=edgeKey(a,b);if(mids.has(key))return mids.get(key)!;const av=vertices[a],bv=vertices[b],p=av.map((v,i)=>(v+bv[i])/2);if(topEdges.has(key))p[1]=evalHeight({x:p[0],y:p[2]});const id=vertices.length;vertices.push(p);mids.set(key,id);return id;};
++  refined=refined.flatMap(({ids:[a,b,c],kind})=>{const ab=midpoint(a,b),bc=midpoint(b,c),ca=midpoint(c,a);return [[a,ab,ca],[ab,b,bc],[ca,bc,c],[ab,bc,ca]].map(ids=>({ids,kind}));});
++ }
++ const geometry=new T.BufferGeometry();geometry.setAttribute('position',new T.Float32BufferAttribute(vertices.flat(),3));geometry.setIndex(refined.flatMap(f=>f.ids));geometry.computeVertexNormals();geometry.userData.environmentUV=true;geometry.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(vertices.length*2),2));
++ return {geometry,vertices,faces:refined,contour,levels:levels.map(([,height])=>height)};
++}
++
++/** Room16 closed grounded body. Units are game coordinates; no renderer/state access. */
++export function sectionedOrganicShell(contour:readonly Point[],height:(p:Point)=>number,unit=32){
++ assert(Number.isFinite(unit)&&unit>0);const {geometry}=buildSectionedOrgan(contour,insetRing(contour,3),insetRing(contour,7),height);geometry.scale(1/unit,1/unit,1/unit);return geometry;
++}
+-- 
+2.52.0
+

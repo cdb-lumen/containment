@@ -1,0 +1,14 @@
+# Room16 joint structural prototype — visual rejection retained
+
+Reviewed all six full images: baseline `/workspace/room16-shoulder-native` (`df33589715e11cdec881d00f69a7ca01cf66a1bf`) and prototype `/workspace/room16-structural-native` (`ab1ed9ba04372dbd40ef8366a2beaaaa11f352e5`). The prototype does not meet the requested biological organ/consumed human distributor reading. Preserve this local candidate and rejected evidence; stop further small surface adjustments.
+
+Concrete visual findings:
+
+- In center and north native views the continuous perimeter still dominates as a raised platform or layered tray. The changed curved cross-section softens the earlier vertical wall but does not establish irregular grounded organic mass. I do not see proof of an actually walkable opening; the failure is the manufactured-platform reading, not a demonstrated collision defect.
+- The rebuilt cabinet is larger and its dark port slots are more readable. Nevertheless, the pale rectangle reads as a panel placed on the organ's upper face, with a dark cover behind it. The connected contact geometry does not visibly establish a substantial cabinet volume being engulfed. This fails the still-perched/indistinct cabinet stop condition despite successful physical-contact tests.
+- Three roots and central cavity remain readily identifiable. Three-root organization itself is appropriate to the brief and is not grounds for rejection. The pale terminal patches still read as small inserts/endcaps rather than convincing exposed biological cut sections; broad smooth gray masses continue to dominate over the shell/tissue hierarchy.
+- The fitted overview reinforces these readings rather than resolving them. It is explicitly an overview, not shipping projection. Neither the marine nor required HUD is newly obscured in these two static native poses; these are not traversal or combat observations.
+
+Both manifests are terminal passed with empty errors and clean identical before/after source records. I independently checked every recorded source-file hash against each captured Git commit and all six PNG hashes. Checkpoint, viewport, native staged positions, player state, camera position, projection, zoom and recorded native metrics match exactly between captures. The overview does not store a matrix, so exact overview-matrix equality is not asserted; the previously reviewed matched fit procedure and explicit overview label remain the scope. Center is (600,440), north is (600,100), viewport1280×720, native zoom1.
+
+This rejects visual qualification, not the independently verified manifold, attachment, shot-plane, route or disposal improvements. No acceptance follows from CPU success. No full ordinary encounter, device performance, listening, historical approval or human art approval is inferred. No GPU or source modifications were performed for this review.
