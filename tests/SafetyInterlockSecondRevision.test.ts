@@ -1,0 +1,53 @@
+import {describe,it,expect} from 'vitest';
+import * as T from 'three';
+import {safetyInterlockBlockout} from '../src/render/SafetyInterlockBlockout';
+import {disposeModel} from '../src/render/meshParts';
+const model=(i:number)=>safetyInterlockBlockout({x:0,y:0,width:i===2?7.5:5,height:i===2?3.75:4.375},i);
+const part=(r:T.Object3D,n:string)=>{const p=r.getObjectByName(n);expect(p,`missing ${n}`).toBeDefined();return p!;};
+const bounds=(o:T.Object3D)=>new T.Box3().setFromObject(o,true);
+describe('Room12 second service revision',()=>{
+ it('attaches a substantial tilted service door to hinges behind an exposed recessed board',()=>{
+  const r=model(1),door=part(r,'open-ai-service-panel'),b=bounds(door);
+  expect(b.getSize(new T.Vector3()).x).toBeGreaterThan(3);
+  expect(b.getSize(new T.Vector3()).y).toBeGreaterThan(.6);
+  expect(b.min.y).toBeGreaterThan(bounds(part(r,'exposed-circuit-board')).max.y);
+  expect(bounds(part(r,'panel-hinge')).intersectsBox(b)).toBe(true);
+  for(const n of ['panel-inner-recess','panel-stay','ai-protective-cheek-left','ai-protective-cheek-right','socket-recess-bed','service-edge-wear'])part(r,n);
+  disposeModel(r);
+ });
+ it('keeps the open cover hinges clear of the exposed cooling and capacitor hardware',()=>{
+  const r=model(1),hinges:T.Object3D[]=[],components:T.Object3D[]=[];
+  r.traverse(o=>{if(o.name==='panel-hinge')hinges.push(o);if(o.name==='cooling-fin'||o.name==='capacitor-can')components.push(o);});
+  expect(hinges).toHaveLength(2);expect(components.length).toBeGreaterThan(0);
+  for(const hinge of hinges)for(const component of components)expect(bounds(hinge).intersectsBox(bounds(component)),`${hinge.name} must clear ${component.name}`).toBe(false);
+  disposeModel(r);
+ });
+ it('does not pass the open service cover through exposed capacitors or cooling fins',()=>{
+  const r=model(1),panel=part(r,'open-ai-service-panel'),components:T.Object3D[]=[];
+  r.updateMatrixWorld(true);r.traverse(o=>{if(o.name==='cooling-fin'||o.name==='capacitor-can')components.push(o);});
+  for(const component of components){
+   const b=bounds(component),size=b.getSize(new T.Vector3());
+   for(const fx of [.2,.5,.8])for(const fz of [.2,.5,.8]){
+    const start=new T.Vector3(b.min.x+size.x*fx,b.min.y+.001,b.min.z+size.z*fz);
+    const ray=new T.Raycaster(start,new T.Vector3(0,1,0),0,size.y-.002);
+    expect(ray.intersectObject(panel,true).length,`cover penetrates ${component.name}`).toBe(0);
+   }
+  }
+  disposeModel(r);
+ });
+ it('keeps the pulled lead attached at both ends with a supported route and a visible isolation gap',()=>{
+  const r=model(1);r.updateMatrixWorld(true);
+  const lead=part(r,'disconnected-lead') as T.Mesh,g=lead.geometry as T.TubeGeometry;
+  for(const [t,n] of [[0,'plug-sleeve'],[1,'ai-cable-gland']] as const){const p=lead.localToWorld(g.parameters.path.getPointAt(t));expect(bounds(part(r,n)).expandByScalar(.02).containsPoint(p)).toBe(true);}
+  for(const n of ['lead-support-front','lead-support-rear'])expect(bounds(part(r,n)).intersectsBox(bounds(lead))).toBe(true);
+  expect(bounds(part(r,'disconnected-plug')).min.x-bounds(part(r,'disconnect-receptacle')).max.x).toBeGreaterThan(.3);
+  disposeModel(r);
+ });
+ it('protects the sealed recorder and lower contactor with recessed layered housings',()=>{
+  const r=model(0),lower=model(2);
+  for(const n of ['recorder-impact-shoulder-left','recorder-impact-shoulder-right','recorder-side-recess','control-thumb-wear'])part(r,n);
+  expect(bounds(part(r,'sealed-inspection-pane')).min.y).toBeGreaterThan(bounds(part(r,'record-tape-span')).max.y);
+  for(const n of ['contactor-cradle-left','contactor-cradle-right','battery-protective-saddle'])part(lower,n);
+  disposeModel(r);disposeModel(lower);
+ });
+});
