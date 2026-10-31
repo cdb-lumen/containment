@@ -19,3 +19,7 @@ A separate read-only reviewer inspected the runtime fix and semantic Gallery reg
 ## Unresolved acceptance
 
 Fresh ordinary-encounter CPU probes with default resources and no boons reached16 kills in Room15 and37 in Room17, then the automated player died at56.75s and108.45s respectively. They are retained as unsuccessful qualification attempts, not gameplay passes or proof of a game defect. Full rendered combat, reward/onward progression and small-enemy visibility still need appropriate fixtures and evidence. Historical replay bytes remain unavailable. Do not close #108/#109/#96/#97 from the bounded regression suite alone.
+
+## Expanded current-main matrix
+
+At integrated source9304500ec77a1718fa21fe93cae0505a22b751f1, six starts times a5x5 stationary-target grid across both rooms produces193 legal cases and107 explicitly rejected setups (actual radius18 spitter, radius16 player, minimum80 separation). All193 reach projectile-only damage within45seconds with legal movement. Exact inputs, every final enemy state, rejected setups and executable probe are retained. This expands fresh coverage; it does not recover the historical matrix or replace ordinary rendered multi-enemy qualification.
