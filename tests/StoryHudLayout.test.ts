@@ -151,5 +151,9 @@ test('keeps the room heading and Pause clear of the recorded north-east marine',
    expect(heading.right).toBeLessThanOrEqual(pause.left);expect(Math.max(heading.bottom,pause.bottom)).toBeLessThanOrEqual(build.top);
    expect(await page.locator('#room-name').textContent()).toBe('Safety-interlock station');await page.locator('#pause').click();
   }
+  for(const state of ['paused','route','dead','menu']){
+   await page.evaluate(state=>document.body.dataset.state=state,state);
+   expect(await page.locator('#pause').evaluate(el=>getComputedStyle(el).pointerEvents)).toBe('none');
+  }
  }finally{await page.close();}
 });

@@ -82,4 +82,4 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 #status-hud .room-heading{display:flex;align-items:flex-start;gap:16px}
 #status-hud .room-label{margin:0;min-width:0;flex:1;text-align:left}
 #status-hud .room-label b{max-width:none;overflow-wrap:anywhere}
-#status-hud #pause{pointer-events:auto;flex-shrink:0}
+#status-hud #pause{flex-shrink:0}
