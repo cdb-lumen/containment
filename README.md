@@ -42,3 +42,5 @@ Graphics offers High and Low, with High selected on every new page load. Quality
 ## Supported platform
 
 As requested on 2026-10-31, development, CI and release acceptance target desktop browsers with keyboard and mouse. Phone controls, mobile compatibility and phone/touch test requirements are removed. Existing historical mobile evidence is retained as history; it is not a future release gate. Desktop resizing, keyboard accessibility, graphics recovery, checkpoint feedback and authored-room checks remain required.
+
+Freeze onset, ice-shatter and reactor-boon cues are synthesized locally and share the effects volume, mute, pause and bounded voice lifecycle. The reactor cue marks a boon discharge, not a new room alarm or hazard.
