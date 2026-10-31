@@ -1,0 +1,56 @@
+[
+  {
+    "viewport": "desktop",
+    "frames": 120,
+    "source": "0b1a971598d629f2093e62992e989538c7a44ce8",
+    "mp4Sha256": "f53aafe4781827e0e0e44fddf12aa4b32397549d4243802b1a91261bd75f5008",
+    "maxJointError": 0.00032252735148233225,
+    "targets": [
+      {
+        "id": 1,
+        "family": "crawler",
+        "weapon": "shotgun",
+        "maxRootHorizontalDisplacement": 1.226518268331357
+      },
+      {
+        "id": 2,
+        "family": "brute",
+        "weapon": "rocket",
+        "maxRootHorizontalDisplacement": 1.2377879101466587
+      }
+    ],
+    "finalMeasuredState": {
+      "active": 0,
+      "falling": 0,
+      "settled": 2,
+      "bodies": 0
+    }
+  },
+  {
+    "viewport": "portrait",
+    "frames": 120,
+    "source": "0b1a971598d629f2093e62992e989538c7a44ce8",
+    "mp4Sha256": "08ec07724c65f141160dae358eb0bb2072680d6b67a036005152260591ae878d",
+    "maxJointError": 0.00032252735148233225,
+    "targets": [
+      {
+        "id": 1,
+        "family": "crawler",
+        "weapon": "shotgun",
+        "maxRootHorizontalDisplacement": 1.226518268331357
+      },
+      {
+        "id": 2,
+        "family": "brute",
+        "weapon": "rocket",
+        "maxRootHorizontalDisplacement": 1.2377879101466587
+      }
+    ],
+    "finalMeasuredState": {
+      "active": 0,
+      "falling": 0,
+      "settled": 2,
+      "bodies": 0
+    }
+  }
+]
