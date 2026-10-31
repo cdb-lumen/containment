@@ -9,7 +9,7 @@ import {FacilityNavigation} from '../game/world/FacilityNavigation';
 const template=ROOM_TEMPLATES['relay-racks'];
 const node=generateRun(1729,3).nodes.find(n=>n.templateId==='relay-racks')!;
 const geometry=createExpeditionGeometry(node);
-const expected=[[300,160,100,170],[300,550,100,170],[800,160,100,170],[800,550,100,170],[550,360,100,160]];
+const expected=[[300,160,100,170],[300,550,100,170],[800,160,100,170],[800,550,100,170],[550,360,100,150]];
 const owned:T.Group[]=[];
 const make=()=>{const g=authoredRoom('relay-racks',template);expect(g).not.toBeNull();owned.push(g!);g!.updateMatrixWorld(true);return g!;};
 afterEach(()=>{for(const g of owned)disposeModel(g);owned.length=0;});
@@ -41,7 +41,7 @@ describe('Room9 room visuals and retained placement',()=>{
    expect(b.min.z*32).toBeGreaterThanOrEqual(expected[i][1]);expect(b.max.z*32).toBeLessThanOrEqual(expected[i][1]+expected[i][3]);
   }
  });
- it('uses the reviewed five footprints without changing envelope or anchors',()=>{
+ it('retains the five reservations with the repaired central south edge and unchanged room anchors',()=>{
   expect(template.obstacles.map(r=>[r.x,r.y,r.width,r.height])).toEqual(expected);
   expect([template.width,template.height]).toEqual([1200,880]);
   expect(template.spawn).toEqual({x:100,y:440});expect(template.exit).toEqual({x:1100,y:440});

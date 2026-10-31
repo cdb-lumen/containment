@@ -123,7 +123,7 @@ export function relayRacksRoom():T.Group{
     for(const dz of [40,68])box(jaw,x+side*36,43,z+dz,8,6,6,rail);
    }
    // A low broken cable end below the open jaws continues the severed spur.
-   pipe(coupler,[x,8,z+78],[x-5,14,z+67],3,damage);
+   pipe(coupler,[x,8,z+71],[x-5,14,z+60],3,damage);
    const lever=group('relay-manual-lever');coupler.add(lever);
    pipe(lever,[x+32,37,z+42],[x+32,62,z+58],3,rail);
    pipe(lever,[x+23,62,z+58],[x+41,62,z+58],4,amber);
