@@ -1,5 +1,5 @@
 {
-  "README.md": "0209b2aebdc54ca2f21639b3f0ca03c4099ca33af0441f4470d2bd4300178bb1",
+  "README.md": "c8030267fc6bdf984c2c462ce930fcb73067c7cbbbd6b3d5d1cee5dfc84b84d7",
   "baseline/ai-approach-native.png": "c3b6553919063e762f6d9b4f61998473dda813e915f59726012bff576ccefb64",
   "baseline/center-native.png": "5749ca64aa04d3641a293c91dc36d1b466ee05c55fcf791bfd67c51c121ca70d",
   "baseline/manifest.json": "79d84def8d3518efd51583cb11532d3e62446fd31c47ec03b6f4bf527e499dfb",
@@ -48,5 +48,12 @@
   "failed-cover-clearance/manifest.json": "c651e30817ebef240398b048bca47e526e6e05438ed68fc627233e4248fd9951",
   "failed-cover-clearance/room-overview.png": "ca7a66d182c95384163244e790e2b36b3f7a63e4bb7755363a56d723d8a841cd",
   "hinge-interference-red.log": "543723ce3aff7814088f30ca3bbbf7b00a0bd9883e437a65fa70ce1f7cb46c8b",
-  "initial-code-review.md": "20751ad267fe3cb06e40044504d5d964a9f07c5a66059769e371b5d89fb6e57a"
+  "initial-code-review.md": "20751ad267fe3cb06e40044504d5d964a9f07c5a66059769e371b5d89fb6e57a",
+  "north-viewport-failure/00147.png": "9f00f5d84e40b90d52050aa05a160fd99688d3edca16da2305da9e12c4bf8f09",
+  "north-viewport-failure/campaign-desktop-hud-clearance.mjs": "8e94f376f026dc269362f41c0ccfedc54a2520fa0dca29a4729286d8d1d33fb8",
+  "north-viewport-failure/campaign-hud-clearance-review.md": "9be92512ab4ca67a5d4a878896c2b095d73d74f86728081974b0598aab9926c8",
+  "north-viewport-failure/manifest.json": "89a367a44e71b57a817923b594dbfcf6baa31ca2f7174075f0aa7ebc4ff03a49",
+  "north-viewport-failure/room12-hud-full-final.log": "7189acb5ff8308d0b47a87056a2dd7b300eba84ba74fc2f95c78ea30883e4d1f",
+  "north-viewport-failure/room12-north-framing-final.log": "7c2ec283c74ed6bdd76adff548c82ebeeb13f5b74e952456b6550f8887e2a18f",
+  "north-viewport-failure/room12-north-framing-red.log": "4955f3c3fd192edd671cd65ac6acab7da0ba503dcd56ef6eda283fff897faa51"
 }

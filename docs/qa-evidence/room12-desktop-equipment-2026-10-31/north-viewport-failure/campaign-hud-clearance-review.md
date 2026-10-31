@@ -1,0 +1,11 @@
+# Expanded campaign HUD-clearance harness — independent review
+
+No blocking false-pass or gameplay-policy change found in `/workspace/campaign-desktop-hud-clearance.mjs` relative to retained `/workspace/campaign-desktop-visibility.mjs`.
+
+The diff only expands disclosure, records eight additional HUD DOM rectangles, asserts those are disjoint from the rendered marine envelope during playing frames, and moves frame/PNG retention before assertions. The checkpoint/default resources, native key/mouse policy, automatic approach behavior, production main-frame stepping, dialogue/Skip requirements, encounter/reward/onward assertions, ammo/viewport checks, source hashes and successful-video decode/count checks are unchanged. It does not move HUD or actor positions to obtain a pass.
+
+`getClientRects().length` correctly excludes elements hidden by the current display:none/hidden rules. Each listed panel's bounding rectangle is retained, permitting independent raw rechecking rather than trusting only `marineHudOverlaps`. On assertion failure, the frame is already appended and PNG captured; the finally block saves the failed manifest. This is a useful preservation improvement. As before, an early failed run has no guaranteed finalized video/sourceAfter because those steps are in the success path; preserve it as a failure, not a fully source-qualified successful capture.
+
+Limits: these are layout-box checks, not pixel-perfect visible-ink tests. CSS shadows/backplates outside border boxes are not included. Visibility:hidden/opacity-zero elements would not be excluded by this method, although the current relevant production visibility uses hidden/display; that would cause conservative false failures rather than hiding actual overlaps. The selector list does not include boss HUD, hit-confirmation or every possible overlay. The intended Room12/7/carousel captures are not boss encounters, but do not rename the result universal all-HUD certification. Enemy/environment occlusion remains excluded, as disclosed. Dynamic movement between fixed50ms sample frames and actual device FPS are not certified.
+
+No renderer, source edit or capture was performed in this review. Future results require their own terminal manifest, exact-source provenance, actual pixel inspection and independent movement review. Earlier harness/capture provenance remains unchanged.

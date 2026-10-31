@@ -1,0 +1,109 @@
+
+ RUN  v4.1.10 /workspace/containment-room12-hud-final
+
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts (9 tests | 7 failed) 33ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 5ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 13ms
+     × retains body visibility during native camera following at dt0.05 4ms
+     × retains body visibility during native camera following at dt0.1 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/SafetyInterlockDesktopFraming.test.ts > Safety Interlock desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+AssertionError: expected -10.912825898551294 to be greater than or equal to 8
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[16/…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  tests/SafetyInterlockDesktopFraming.test.ts > Safety Interlock desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+AssertionError: expected -8.730260718841034 to be greater than or equal to 8
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[16/…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  tests/SafetyInterlockDesktopFraming.test.ts > Safety Interlock desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+AssertionError: expected -6.547695539130776 to be greater than or equal to 8
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[16/…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/SafetyInterlockDesktopFraming.test.ts > Safety Interlock desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+AssertionError: expected -7.275217265700862 to be greater than or equal to 8
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[16/…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  tests/SafetyInterlockDesktopFraming.test.ts > Safety Interlock desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+AssertionError: expected 6.489304672123125 to be greater than or equal to 8
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  tests/SafetyInterlockDesktopFraming.test.ts > Safety Interlock desktop actor framing > retains body visibility during native camera following at dt0.05
+AssertionError: expected -1.07993870015628 to be greater than or equal to 8
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  tests/SafetyInterlockDesktopFraming.test.ts > Safety Interlock desktop actor framing > retains body visibility during native camera following at dt0.1
+AssertionError: expected -1.0799226558825703 to be greater than or equal to 8
+ ❯ tests/SafetyInterlockDesktopFraming.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed | 2 passed (9)
+   Start at  16:08:27
+   Duration  675ms (transform 384ms, setup 0ms, import 532ms, tests 33ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
