@@ -1,0 +1,306 @@
+{
+  "template": {
+    "id": "manual-control-chamber",
+    "name": "Manual-control chamber",
+    "width": 1200,
+    "height": 880,
+    "spawn": {
+      "x": 100,
+      "y": 440
+    },
+    "exit": {
+      "x": 1100,
+      "y": 440
+    },
+    "obstacles": [
+      {
+        "x": 340,
+        "y": 230,
+        "width": 160,
+        "height": 180
+      },
+      {
+        "x": 700,
+        "y": 230,
+        "width": 160,
+        "height": 180
+      },
+      {
+        "x": 470,
+        "y": 610,
+        "width": 260,
+        "height": 100
+      }
+    ],
+    "breaches": [
+      {
+        "x": 100,
+        "y": 100
+      },
+      {
+        "x": 1100,
+        "y": 100
+      },
+      {
+        "x": 100,
+        "y": 780
+      },
+      {
+        "x": 1100,
+        "y": 780
+      }
+    ]
+  },
+  "geometry": {
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 880
+    },
+    "boundaryWalls": [
+      {
+        "x": -32,
+        "y": -32,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 880,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      },
+      {
+        "x": 1200,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      }
+    ],
+    "blockers": [
+      {
+        "x": -32,
+        "y": -32,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 880,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      },
+      {
+        "x": 1200,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      },
+      {
+        "x": 340,
+        "y": 230,
+        "width": 160,
+        "height": 180
+      },
+      {
+        "x": 700,
+        "y": 230,
+        "width": 160,
+        "height": 180
+      },
+      {
+        "x": 470,
+        "y": 610,
+        "width": 260,
+        "height": 100
+      }
+    ],
+    "breaches": [
+      {
+        "x": 100,
+        "y": 100,
+        "id": "room19-layout-check:breach-0",
+        "unlockWave": 0,
+        "facing": "east"
+      },
+      {
+        "x": 1100,
+        "y": 100,
+        "id": "room19-layout-check:breach-1",
+        "unlockWave": 0,
+        "facing": "west"
+      },
+      {
+        "x": 100,
+        "y": 780,
+        "id": "room19-layout-check:breach-2",
+        "unlockWave": 0,
+        "facing": "east"
+      },
+      {
+        "x": 1100,
+        "y": 780,
+        "id": "room19-layout-check:breach-3",
+        "unlockWave": 0,
+        "facing": "west"
+      }
+    ],
+    "playerSpawn": {
+      "x": 100,
+      "y": 440
+    },
+    "exitPoint": {
+      "x": 1100,
+      "y": 440
+    },
+    "bossSpawn": {
+      "x": 600,
+      "y": 440
+    },
+    "queenArena": {
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 880,
+      "roomId": "room19-layout-check",
+      "safeCenter": {
+        "x": 600,
+        "y": 440
+      },
+      "safeRadius": 180
+    }
+  },
+  "routes": {
+    "main": [
+      {
+        "x": 100,
+        "y": 440
+      },
+      {
+        "x": 220,
+        "y": 480
+      },
+      {
+        "x": 980,
+        "y": 480
+      },
+      {
+        "x": 1100,
+        "y": 440
+      }
+    ],
+    "console": [
+      {
+        "x": 600,
+        "y": 480
+      },
+      {
+        "x": 600,
+        "y": 550
+      }
+    ],
+    "northLoop": [
+      {
+        "x": 220,
+        "y": 480
+      },
+      {
+        "x": 220,
+        "y": 140
+      },
+      {
+        "x": 980,
+        "y": 140
+      },
+      {
+        "x": 980,
+        "y": 480
+      }
+    ],
+    "southLoop": [
+      {
+        "x": 220,
+        "y": 480
+      },
+      {
+        "x": 220,
+        "y": 780
+      },
+      {
+        "x": 980,
+        "y": 780
+      },
+      {
+        "x": 980,
+        "y": 480
+      }
+    ]
+  },
+  "activities": {
+    "entry": {
+      "x": 100,
+      "y": 440
+    },
+    "exit": {
+      "x": 1100,
+      "y": 440
+    },
+    "combatWest": {
+      "x": 330,
+      "y": 520
+    },
+    "combatEast": {
+      "x": 880,
+      "y": 520
+    },
+    "warningRead": {
+      "x": 600,
+      "y": 550
+    },
+    "northService": {
+      "x": 600,
+      "y": 140
+    },
+    "southService": {
+      "x": 600,
+      "y": 780
+    }
+  },
+  "results": [
+    {
+      "radius": 16,
+      "gridStep": 20,
+      "components": [
+        2034
+      ],
+      "sampledUsablePoints": 2034,
+      "occupancySweepDiscrepancies": []
+    },
+    {
+      "radius": 28,
+      "gridStep": 20,
+      "components": [
+        1990
+      ],
+      "sampledUsablePoints": 1990,
+      "occupancySweepDiscrepancies": []
+    }
+  ],
+  "checks": 70,
+  "failures": 0,
+  "errors": 0,
+  "limitations": "Sampled CPU geometry and swept routes only. No live gameplay, model readability, human acceptance or continuous-space proof."
+}
