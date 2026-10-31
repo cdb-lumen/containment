@@ -1,0 +1,118 @@
+{
+  "head": "5d26cbc10b6ed8f279896a56dbadfb11b1b2b792",
+  "stableSourceFiles": 613,
+  "sourceChanges": [],
+  "sourceSha256": {
+    "src/render/SafetyInterlockBlockout.ts": "61b70c72fa92d70c4373d6a8aefc0e4f7ddcc5172ba062f883dcd4590ad6a179",
+    "src/render/SafetyInterlockArchitecture.ts": "e9ef517178e3a528d74d1d152cb08431a42c85debac2825c202820365f4aad17",
+    "tests/SafetyInterlockBlockout.test.ts": "38db245122aec1a0f28631b026934b0825fb708863ee5ab146765f0cb00bdeeb",
+    "tests/SafetyInterlockArchitecture.test.ts": "7320335c887cadc4b781fa12500374dc54d4fb30c207cd86b415e5d5d189eedd",
+    "src/game/roguelike/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+    "src/game/roguelike/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "src/game/roguelike/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629"
+  },
+  "images": [
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/safety-interlock-station/story-flow-v3/stage-5/attempt-979/12-safety-interlock-station-overview.png",
+      "sha256": "eda32cf58b2ea5129938b7a5e9934642fc39780310d85d2afc086b141ab4b206",
+      "bytes": 721258,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "mode": "overview",
+      "drawCalls": 78,
+      "triangles": 90655,
+      "errors": [],
+      "abortedDuplicateModules": 43,
+      "player": {
+        "x": 530,
+        "y": 395
+      },
+      "camera": {
+        "position": [
+          18.75,
+          48,
+          31.75
+        ],
+        "left": -22.83145066584358,
+        "right": 22.83145066584358,
+        "top": 16.75561063259807,
+        "bottom": -15.35111686624446
+      },
+      "newAgainstHistoricalRoomPngHashes": 32,
+      "changedScenePixelsExcludingBottomCaptionVs978": 877428,
+      "comparison": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/safety-interlock-station/story-flow-v3/stage-4/attempt-978/after/12-safety-interlock-station-overview.png"
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/safety-interlock-station/story-flow-v3/stage-5/attempt-979/12-safety-interlock-station-desktop-static.png",
+      "sha256": "390db3fba5d927b523d5c05da55f707566d2908ad6b7a15bdc811059dc6f9831",
+      "bytes": 924530,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "mode": "desktop-static",
+      "drawCalls": 74,
+      "triangles": 90019,
+      "errors": [],
+      "abortedDuplicateModules": 43,
+      "player": {
+        "x": 530,
+        "y": 395
+      },
+      "camera": {
+        "position": [
+          16.5624999987731,
+          26,
+          31.924128005945512
+        ],
+        "left": -15.644444444444444,
+        "right": 15.644444444444444,
+        "top": 11,
+        "bottom": -11
+      },
+      "newAgainstHistoricalRoomPngHashes": 32,
+      "changedScenePixelsExcludingBottomCaptionVs978": 1049003,
+      "comparison": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/safety-interlock-station/story-flow-v3/stage-4/attempt-978/after/12-safety-interlock-station-gameplay.png"
+    }
+  ],
+  "tests": {
+    "focusedVitest": 27,
+    "fullVitestPassed": 777,
+    "fullVitestSkipped": 1,
+    "nodePassed": 2,
+    "pythonPassed": 29,
+    "npmTestExit": 0,
+    "buildExit": 0,
+    "overallProbePassed": true,
+    "actualMovementRoutes": 12,
+    "failures": 0,
+    "errors": 0
+  },
+  "buildWarning": "chunk larger than 500 kB",
+  "captureClass": "static-staged-production-renderer",
+  "traversal": {
+    "steps": 291,
+    "distance": 1000,
+    "exitDistance": 0,
+    "legalChecks": 291
+  },
+  "cleanup": {
+    "activeCaptureOrBrowserProcesses": [],
+    "temporaryEntries": [],
+    "capturePort5173Open": false,
+    "worktreeStatus": "",
+    "head": "5d26cbc10b6ed8f279896a56dbadfb11b1b2b792",
+    "unrelatedVitePreserved": [
+      "1074861 node /home/chernodubv/dev/.worktrees/containment-boons/node_modules/.bin/vite --host 127.0.0.1 --port 5193"
+    ]
+  },
+  "pixelReview": "Independent review pending; no overall visual pass claimed",
+  "policyAndCanonicalPins": {
+    "map-model-production.md": "6ebacbcca24a9c5ea0fc9a753cf9c9504d383ae5cb491b8920d40ebe03953562",
+    "production-guard.md": "6a482d10fd16ef77947cdd393dc91f06ac132612c55d4ad745181db31355e259",
+    "async-rollout-worker-prompt.md": "7a9a23b75d6bee421656d75eaca78ec70f6f0f4cebe812e1e4380df46a766f1f",
+    "rollout-sources/room12-brief.json": "03c666e700c327e536f6b1d5366843607bb4384750ff2bc738372476d47c3053"
+  }
+}

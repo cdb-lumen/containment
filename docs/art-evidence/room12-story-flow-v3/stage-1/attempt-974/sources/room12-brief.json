@@ -1,0 +1,37 @@
+{
+  "authority": "Canonical queue and pinned game sources; obsolete predecessor and release checklists do not apply. Follow map-model-production.md. No implicit acceptance, merge or deploy.",
+  "room": {
+    "acceptance": [
+      "In a native gameplay capture the recorder, physical isolation and contactor gap are distinguishable; they cannot read as another generic server rack.",
+      "Muted, fully skipped progression still presents AI knowledge before awakening and fatal purge cost before leaving. Confirm no Destroy ship control or armed-overload state appears here."
+    ],
+    "blocker": null,
+    "branch": null,
+    "brief_status": "historical_revalidate_story_and_function_before_use",
+    "campaign_room": 12,
+    "combat_contract": "Canonical room 12: Safety-interlock station. Existing objective: Clear the interlock station. Review the pre-awakening safety record. This reveal stays after warning and before coolant descent. Record review is skippable presentation with persistent essential status; no new lock puzzle or irreversible choice here.",
+    "demo_path": null,
+    "evidence_path": null,
+    "issue_number": 33,
+    "issue_url": "https://github.com/cdb-lumen/containment/issues/33",
+    "landmark": "Independent interlock. A compact isolated safety island with a sealed archival recorder physically separate from AI-linked equipment.",
+    "materials_lighting": "Ivory ceramic contacts, dark copper bus and faded safety orange. Steady local battery light differs from intermittent AI-side light; no blinking text needed for comprehension.",
+    "merged_sha": null,
+    "models": [
+      "Author a tamper-evident mechanical recorder with layered record spools, sealed timestamp plate, inspection window and manual test lever.",
+      "Build a split safety contactor assembly with ceramic switch jaws, insulated bus supports and an isolated battery cylinder. Expose disconnected network sockets on the AI-side housing."
+    ],
+    "name": "Safety-interlock station",
+    "pr": null,
+    "production_order": 12,
+    "stage": "queued",
+    "status": "pending",
+    "story_dressing": "Preserve LOCAL RECORD, BEFORE AWAKENING: Rescue impossible. AI acknowledged. Survival promise issued afterward. The time ordering proves deception, not merely a rescue failure.",
+    "template_id": "safety-interlock-station",
+    "topology_brief": "Offset double chamber around isolated hardwired interlock machinery, joined by multiple broad crossings. Physical evidence of the AI knowing before awakening. Preserve reveal timing after warning and before descent.",
+    "topology_previously_upgraded": false,
+    "verification": null,
+    "worktree": null
+  },
+  "source_commit": "7a3f262886104fb024de9684958b3f85a8859f34"
+}

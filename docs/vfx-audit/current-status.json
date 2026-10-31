@@ -1,0 +1,777 @@
+{
+  "schema_version": 1,
+  "baseline_revision": "73a055adf03d33d87641b81593cc03e863e9c7af",
+  "source_revision": "9c9e8ea99f02e3edbf7163b0d6655a3f21b125f5",
+  "reviewed_at": "2026-10-31",
+  "scope": "Source/status reconciliation only. No new native videos, blanket approval, all-room readability or 74-component completion. Desktop only. Historical catalog remains unchanged.",
+  "entries": [
+    {
+      "id": "weapon-muzzle",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "weapon-casings",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "weapon-muzzle-light",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "weapon-recoil-reload",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "projectile-bodies",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "projectile-tracers",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "projectile-energy-trails",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "grenade-flight",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "contact-sparks",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "actor-hit-flash",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "wall-impact-generic",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "wall-impact-shotgun-metal",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "acid-contact",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Untargeted spitter impact uses liquid droplets; the small targeted acid hit is unchanged.",
+      "source_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "test_files": [
+        "tests/AcidSplash.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "enemy-melee-slash",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "enemy-attack-animation",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "spitter-launch",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "enemy-spawn-warning",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "enemy-aim-warning",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "queen-area-warning",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "queen-acid-blast",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Liquid radial splash on supported legacy queen route",
+      "source_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "test_files": [
+        "tests/AcidSplash.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "queen-acid-pool",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Wet pool surface on supported legacy queen route",
+      "source_files": [
+        "src/render/DepthRenderer.ts",
+        "src/render/acidPool.ts"
+      ],
+      "test_files": [
+        "tests/acid-pool-surface.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "blast-neutral",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "blast-ice",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "blast-poison",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "blast-fire",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "blast-mixed-elements",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "blast-light",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-impact",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "body-launch",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "breacher-wall-slam",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Separate Breacher/Seismic wall-slam workstream; not part of this VFX slice and not an ordinary pellet impact."
+    },
+    {
+      "id": "seismic-wall-slam",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Separate Breacher/Seismic wall-slam workstream; not part of this VFX slice and not an ordinary pellet impact."
+    },
+    {
+      "id": "chain-body-impact",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-fragmentation",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Twelve physical gravity-driven shards",
+      "source_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "test_files": [
+        "tests/RadialBoonEffects.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "boon-frost-onset",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-burn-onset",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-poison-onset-spread",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Radius-bearing Toxic Bloom uses transient wisps. Radius-free onset and actor-local persistent poison remain separate review paths.",
+      "source_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "test_files": [
+        "tests/ToxicBloomRendering.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "boon-electric-link",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-ricochet-link",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Distinct straight endpoint link",
+      "source_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "test_files": [
+        "tests/BoonLinks.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "boon-ice-lance-link",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Distinct straight icy endpoint link",
+      "source_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "test_files": [
+        "tests/BoonLinks.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "boon-shatter",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-frost-field",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Four-instance broken frost coverage with gameplay radius/lifetime",
+      "source_files": [
+        "src/render/AttackEffects.ts"
+      ],
+      "test_files": [
+        "tests/FrostField.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "boon-charge",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-aftershock-detonation",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-ball-lightning-detonation",
+      "baseline_state": "active",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Irregular radial electrical discharge",
+      "source_files": [
+        "src/render/AttackEffects.ts",
+        "src/render/ballLightning.ts"
+      ],
+      "test_files": [
+        "tests/RadialBoonEffects.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "boon-overload",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "implemented-and-source-confirmed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-located-in-current-workspace",
+      "next_action": "Do not reimplement the obsolete baseline recommendation. Establish current native coverage and any separate outstanding variant before proposing another change.",
+      "implementation_summary": "Small rising readiness particles when radius-free; damaging overload retains blast",
+      "source_files": [
+        "src/render/AttackEffects.ts",
+        "src/render/DepthRenderer.ts"
+      ],
+      "test_files": [
+        "tests/ReloadPrime.test.ts"
+      ],
+      "landed_pr": "https://github.com/cdb-lumen/containment/pull/53",
+      "historical_approval_record": "PR53 records approval for its shipped batch; historical videos were not independently replayed in this audit."
+    },
+    {
+      "id": "boon-combustion",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-shield",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "boon-leech",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "status-fire",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "status-poison",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "status-chill",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "status-frozen",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "status-combinations",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "status-queen-exposed",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "enemy-death-burst",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "enemy-corpse",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "corpse-sync",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "legacy-collapse-corpse",
+      "baseline_state": "inactive-export",
+      "baseline_recommendation": "replace",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "not-applicable-inactive",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Do not activate this legacy export merely to satisfy the baseline register."
+    },
+    {
+      "id": "nest-life-death",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "queen-death",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "player-death",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "story-destruction",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "pickup-idle",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "pickup-collect",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "environment-fog",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "environment-fixtures",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "environment-signage",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "environment-contact-shadows",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "environment-infestation-stains",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "player-flashlight",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "screen-hit-x",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "screen-hurt-vignette",
+      "baseline_state": "active",
+      "baseline_recommendation": "refine",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "screen-bloom-tonemap",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "screen-state-shade",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    },
+    {
+      "id": "screen-health-resource-feedback",
+      "baseline_state": "active",
+      "baseline_recommendation": "keep",
+      "current_source_assessment": "not-reassessed",
+      "current_native_review": "pending",
+      "historical_media_availability": "not-assessed",
+      "next_action": "Review individually against genuine-trigger native evidence; baseline recommendation is not a demonstrated current defect."
+    }
+  ]
+}
