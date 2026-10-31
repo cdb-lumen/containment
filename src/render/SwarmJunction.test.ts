@@ -92,10 +92,30 @@ describe('Room16 room visuals',()=>{
   for(let i=0;i<3;i++){expect(box(front).intersectsBox(box(sockets[i]))).toBe(true);expect(box(sockets[i]).intersectsBox(box(cores[i]))).toBe(true);}
   for(const m of ms.filter(m=>m.name==='distributor-vent-slot'||m.name==='distributor-housing-fastener'))expect(box(housing).intersectsBox(box(m)),m.name).toBe(true);
   // Visible upper housing and torn lid must remain above the surrounding shell.
-  for(const [x,z,name] of [[635,250,'severed-distributor'],[640,225,'torn-distributor-lid']] as const){
+  for(const [x,z,name] of [[635,250,'severed-distributor'],[640,220,'torn-distributor-lid']] as const){
    const target=new T.Vector3(x/32,43.5/32,z/32),direction=new T.Vector3(0,26,19).normalize();
    const ray=new T.Raycaster(target.clone().addScaledVector(direction,10),direction.clone().negate());
    expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);
+  }
+  disposeModel(root);
+ });
+ it('exposes the three severed terminal tops and the cabinet connector face to the shipping camera',()=>{
+  const root=model(),direction=new T.Vector3(0,26,19).normalize();
+  for(const name of ['root-west-cut','root-east-cut','root-south-cut','distributor-front-panel']){
+   const part=root.getObjectByName(name)!,bounds=new T.Box3().setFromObject(part),center=bounds.getCenter(new T.Vector3());
+   const ray=new T.Raycaster(center.clone().addScaledVector(direction,10),direction.clone().negate());
+   if(name==='distributor-front-panel'){
+    // The middle port belongs on the panel center. It may cover the panel,
+    // but neither the organ nor its sensory lip may hide that hardware.
+    expect(['distributor-front-panel','distributor-terminal-socket','distributor-terminal-core']).toContain(ray.intersectObject(root,true)[0]?.object.name);
+    center.x=bounds.min.x+10/32; // Exposed face between the first two ports.
+    ray.set(center.clone().addScaledVector(direction,10),direction.clone().negate());
+   }
+   expect(ray.intersectObject(root,true)[0]?.object.name,name).toBe(name);
+   if(name!=='distributor-front-panel'){
+    ray.set(new T.Vector3(center.x,5,center.z),new T.Vector3(0,-1,0));
+    expect(ray.intersectObject(root,true)[0]?.object.name,name+' top').toBe(name);
+   }
   }
   disposeModel(root);
  });

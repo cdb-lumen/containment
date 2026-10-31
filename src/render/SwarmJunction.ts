@@ -41,7 +41,9 @@ export function swarmJunctionBlockout(){
    distance=Math.min(distance,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));
   }
   const cavity=Math.hypot((p.x-600)/44,(p.y-260)/34);
-  return 31+12*Math.tanh(distance/12)*Math.max(0,Math.min(1,(cavity-1)*2));
+  const tipDistance=Math.min(...[[392,135],[799,134],[606,359]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)));
+  const tipRise=Math.max(0,Math.min(1,(tipDistance-17)/15));
+  return 31+12*Math.tanh(distance/12)*Math.max(0,Math.min(1,(cavity-1)*2))*tipRise;
  };
  add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),chitin);
  // Three small exposed terminal cuts sit inside the new curved root ends.
@@ -67,18 +69,18 @@ export function swarmJunctionBlockout(){
  const enamel=material('distributor-enamel',0xb9b09b,.35);
  // A recognizable torn distribution cabinet survives on the organ's east
  // shoulder: two connected walls, torn lid and connector bank, engulfed below.
- box('severed-distributor',612,230,42,42,31,11.5,enamel);
- box('distributor-front-right',612,270,42,8,31,11.5,enamel);
- poly('torn-distributor-lid',[[612,230],[612,219],[626,223],[636,218],[654,230]],31,12.5,enamel);
+ box('severed-distributor',634,222,42,32,31,11.5,enamel);
+ box('distributor-front-right',634,252,42,8,31,11.5,enamel);
+ poly('torn-distributor-lid',[[634,224],[634,214],[648,218],[658,213],[676,224]],31,12.5,enamel);
  // One broad dark connector panel interrupts a coherent enclosure face.
- box('distributor-front-panel',618,278,30,1,33,7,dark);
- for(const x of [620,631,642]){
-  box('distributor-terminal-socket',x,278,5,4,33,6,dark);
-  box('distributor-terminal-core',x+1,281,3,2,34,3,metal);
+ box('distributor-front-panel',638,260,30,1,33,7,dark);
+ for(const x of [640,651,662]){
+  box('distributor-terminal-socket',x,260,5,4,33,6,dark);
+  box('distributor-terminal-core',x+1,263,3,2,34,3,metal);
  }
- for(const y of [238,247,256])box('distributor-vent-slot',654,y,1.5,5,34,5,dark);
- for(const x of [618,648])box('distributor-housing-fastener',x,233,2,2,42.5,1.1,metal);
- for(let i=0;i<3;i++)box('hub-split-conduit',610+i*3,235+i*9,10,3,32,3,tendon);
+ for(const y of [226,235,244])box('distributor-vent-slot',676,y,1.5,5,34,5,dark);
+ for(const x of [640,670])box('distributor-housing-fastener',x,225,2,2,42.5,1.1,metal);
+ for(let i=0;i<3;i++)box('hub-split-conduit',628+i*3,235+i*9,10,3,32,3,tendon);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[400,135],[550,250]],[[870,90],[800,135],[650,250]],[[600,620],[600,370],[600,280]]];
  for(const [i,run] of runs.entries())for(let j=1;j<run.length;j++){
