@@ -1,0 +1,1 @@
+Final integration source f2daf3034302f8e0a344f450391140da526fb8ea stacks Room18c130b1f, Room1478d95ea and navigation main4c3a200. Native recordings retain sourcec27fe463. Independent fidelity review and74focused tests plus TypeScript pass. CI41243476565 pending at publication; no new-head recording or release success claim. Merge79 then83 before70.
