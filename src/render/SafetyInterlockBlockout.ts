@@ -169,15 +169,20 @@ export function safetyInterlockBlockout(footprint:Footprint,index:number):T.Grou
   // Hinged back access door, deliberately held open. Its layered underside
   // faces the player; the recorder remains the only pale, sealed assembly.
   ivory.color.setHex(0x9caa9e);
-  const panel=new T.Group();panel.name='open-ai-service-panel';panel.position.set(0,1.40,-1.40);panel.rotation.x=1.20;cell.add(panel);
+  const panel=new T.Group();panel.name='open-ai-service-panel';panel.position.set(0,1.10,-1.20);panel.rotation.x=1.00;cell.add(panel);
   const doorPart=(name:string,x:number,y:number,z:number,w:number,h:number,d:number,m:T.Material)=>{const p=b(name,x,y,z,w,h,d,m);panel.add(p);return p;};
-  doorPart('panel-outer-shell',0,0,-.43,3.86,.18,.94,steel);
-  doorPart('panel-inner-recess',0,.105,-.43,3.28,.04,.66,dark);
-  for(const x of [-1.72,1.72])doorPart('panel-edge-return',x,.18,-.43,.19,.22,.89,orange);
-  for(const x of [-.95,.95])doorPart('panel-stiffener',x,.16,-.43,.16,.13,.65,steel);
+  doorPart('panel-outer-shell',0,0,-.65,3.86,.18,1.40,steel);
+  doorPart('panel-inner-recess',0,.105,-.65,3.28,.04,1.12,steel);
+  for(const x of [-1.72,1.72])doorPart('panel-edge-return',x,.18,-.65,.19,.22,1.35,orange);
+  for(const x of [-.95,.95])doorPart('panel-stiffener',x,.16,-.65,.16,.13,1.10,steel);
+  // A broad solid underside and pressed ribs distinguish the opened cover from
+  // the rear chassis rim. It stays inside the same island and height envelope.
+  for(const x of [-.55,.55]){
+   const rib=rod(panel,v(x-.35,.155,-1.10),v(x+.35,.155,-.20),.035,.035,ivory);rib.name='panel-pressed-rib';
+  }
   for(const x of [-1.5,1.5]){
-   b('panel-hinge',x,1.40,-1.40,.48,.22,.30,copper);
-   const stay=rod(cell,v(x,1.02,-.75),v(x,2.16,-1.65),.065,.065,orange);stay.name='panel-stay';
+   b('panel-hinge',x,1.10,-1.20,.48,.22,.30,copper);
+   const stay=rod(cell,v(x,1.02,-.75),v(x,1.86,-1.69),.065,.065,orange);stay.name='panel-stay';
   }
   for(const [side,x] of [['left',-2.12],['right',2.12]] as const){
    plate(`ai-protective-cheek-${side}`,outline([[x-.15,-1.82],[x+.15,-1.82],[x+.15,.65],[x-.15,.96]]),.30,1.28,steel);
