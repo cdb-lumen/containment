@@ -19,6 +19,8 @@ describe('Room16 room visuals',()=>{
  it('closes the continuous curved body and cavity lip with opposite directed edges and outward faces',()=>{
   const root=model(),plates=meshes(root).filter(m=>m.name==='organ-bed');expect(plates).toHaveLength(1);
   const lip=meshes(root).find(m=>m.name==='sensory-carapace-lip')!;expect(lip).toBeDefined();
+  const layered=meshes(root).filter(m=>m.name.startsWith('carapace-overlap-')||/^root-.*-(cut|sheath)$/.test(m.name)||m.name==='distributor-engulfing-fold');
+  expect(layered).toHaveLength(11);
   const badEdges=(indices:number[])=>{
    const edges=new Map<string,number[]>();
    for(let i=0;i<indices.length;i+=3)for(let j=0;j<3;j++){
@@ -27,7 +29,7 @@ describe('Room16 room visuals',()=>{
    }
    return [...edges.values()].filter(([count,direction])=>count!==2||direction!==0).length;
   };
-  for(const plate of [...plates,lip]){
+  for(const plate of [...plates,...layered,lip]){
    const p=plate.geometry.getAttribute('position'),indices=Array.from(plate.geometry.index!.array);
    expect(badEdges(indices),plate.name).toBe(0);
    const corrupted=[...indices];[corrupted[1],corrupted[2]]=[corrupted[2],corrupted[1]];expect(badEdges(corrupted)).toBeGreaterThan(0);
@@ -117,6 +119,28 @@ describe('Room16 room visuals',()=>{
     expect(ray.intersectObject(root,true)[0]?.object.name,name+' top').toBe(name);
    }
   }
+  disposeModel(root);
+ });
+ it('attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold',()=>{
+  const root=model(),bed=root.getObjectByName('organ-bed')!,box=(name:string)=>new T.Box3().setFromObject(root.getObjectByName(name)!);
+  const ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+  for(const end of ['west','east','south']){
+   const cut=box(`root-${end}-cut`),sheath=box(`root-${end}-sheath`),center=cut.getCenter(new T.Vector3());
+   expect(cut.min.y*32).toBeCloseTo(30,4);expect(cut.max.y-cut.min.y).toBeGreaterThan(6/32);
+   expect(sheath.containsPoint(new T.Vector3(center.x,sheath.min.y,center.z))).toBe(true);
+   ray.set(new T.Vector3(center.x,5,center.z),new T.Vector3(0,-1,0));
+   const attachedTop=ray.intersectObject(bed)[0].point.y;
+   expect(attachedTop).toBeGreaterThan(cut.min.y);expect(attachedTop).toBeLessThan(cut.max.y);
+  }
+  const panel=box('distributor-roof-service-panel'),housing=box('severed-distributor'),fold=box('distributor-engulfing-fold');
+  expect(panel.getSize(new T.Vector3()).x*panel.getSize(new T.Vector3()).z*32*32).toBeGreaterThan(500);
+  expect(Math.abs(panel.min.y-housing.max.y)).toBeLessThan(1e-6);
+  expect(housing.intersectsBox(fold)).toBe(true);expect(fold.max.y).toBeGreaterThan(housing.max.y);
+  for(const name of ['distributor-roof-bus'])for(const mesh of meshes(root).filter(m=>m.name===name))expect(panel.intersectsBox(new T.Box3().setFromObject(mesh))).toBe(true);
+  const target=new T.Vector3(649/32,42.9/32,237/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());
+  expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-roof-service-panel');
+  ray.set(new T.Vector3(674/32,5,234/32),new T.Vector3(0,-1,0));
+  expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-engulfing-fold');
   disposeModel(root);
  });
  it('uses a varying organic heightfield, differentiated materials and recessed wall bays',()=>{

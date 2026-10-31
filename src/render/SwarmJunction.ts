@@ -43,13 +43,45 @@ export function swarmJunctionBlockout(){
   const cavity=Math.hypot((p.x-600)/44,(p.y-260)/34);
   const tipDistance=Math.min(...[[392,135],[799,134],[606,359]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)));
   const tipRise=Math.max(0,Math.min(1,(tipDistance-17)/15));
-  return 31+12*Math.tanh(distance/12)*Math.max(0,Math.min(1,(cavity-1)*2))*tipRise;
+  // Unequal longitudinal crowns make the roots swell into the hub instead of
+  // sharing one uniform molded rim. Keep the sealed shot-plane mass intact.
+  const west=Math.exp(-(((p.x-488)/78)**2+((p.y-205)/55)**2));
+  const east=Math.exp(-(((p.x-724)/58)**2+((p.y-197)/42)**2));
+  const south=Math.exp(-(((p.x-596)/24)**2+((p.y-322)/34)**2));
+  const crown=Math.min(1,.42+.58*west+.36*east+.49*south);
+  const cabinet=Math.max(0,1-Math.hypot((p.x-655)/40,(p.y-241)/36));
+  return 31+12*Math.tanh(distance/12)*Math.max(0,Math.min(1,(cavity-1)*2))*tipRise*crown*(1-.85*cabinet);
  };
  add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),chitin);
- // Three small exposed terminal cuts sit inside the new curved root ends.
- poly('root-west-cut',[[383,133],[394,128],[402,136],[391,142]],31,4,rib);
- poly('root-east-cut',[[790,128],[802,128],[807,134],[795,139]],31,4,rib);
- poly('root-south-cut',[[599,354],[612,354],[612,364],[601,363]],31,4,rib);
+ // A few large, unequal overlapping shields follow the roots. They use the
+ // same heightfield at their edges and remain wholly inside the sealed body.
+ for(const [name,points] of [
+  ['west-shoulder',[[431,153],[463,177],[505,207],[488,222],[460,198],[438,181]]],
+  ['west-hub',[[493,205],[531,226],[554,243],[545,268],[523,253],[505,230]]],
+  ['east-root',[[742,167],[773,142],[796,139],[780,162],[752,184],[727,207],[714,211]]],
+  ['south-root',[[587,301],[610,301],[619,322],[611,345],[600,352],[592,334]]],
+ ] as const){
+  const contour=points.map(([x,y])=>({x,y}));
+  add(`carapace-overlap-${name}`,organicShell(contour,p=>Math.min(44.4,shellHeight(p)+1.6)),name==='east-root'?rib:chitin);
+ }
+ // Broad irregular exposed cross-sections with a dark retained outer sheath.
+ for(const [name,points] of [
+  ['west',[[380,130],[391,123],[401,127],[408,138],[397,148],[387,142]]],
+  ['east',[[788,123],[803,125],[814,132],[802,145],[789,138]]],
+  ['south',[[594,350],[608,348],[616,355],[612,365],[601,363]]],
+ ] as const){
+  const contour=points.map(([x,y])=>({x,y}));
+  const cx=contour.reduce((n,p)=>n+p.x,0)/contour.length,cy=contour.reduce((n,p)=>n+p.y,0)/contour.length;
+  const cutShell=(outline:Point[],height:(p:Point)=>number)=>{
+   const g=organicShell(outline,height),positions=g.getAttribute('position');
+   // Thick section attached to the retained root, not a column down to the deck.
+   for(let i=0;i<positions.count;i++)if(positions.getY(i)<1e-8)positions.setY(i,30/U);
+   g.computeVertexNormals();return g;
+  };
+  add(`root-${name}-sheath`,cutShell(contour,p=>36+.1*(p.y-cy)),dark);
+  const inner=contour.map(p=>({x:cx+(p.x-cx)*.78,y:cy+(p.y-cy)*.78}));
+  add(`root-${name}-cut`,cutShell(inner,p=>37+.1*(p.y-cy)),rib);
+ }
  // A dished organic lip encloses an actual low, broad sensory cavity. Four
  // closed rings give an outward shell, steep inner wall and sealed underside.
  const lipVertices:number[]=[],lipIndices:number[]=[],steps=48;
@@ -79,7 +111,11 @@ export function swarmJunctionBlockout(){
   box('distributor-terminal-core',x+1,263,3,2,34,3,metal);
  }
  for(const y of [226,235,244])box('distributor-vent-slot',676,y,1.5,5,34,5,dark);
+ box('distributor-roof-service-panel',640,228,29,20,42.5,.4,dark);
+ for(const x of [643,653,663])box('distributor-roof-bus',x,231,3,13,42.9,1.2,metal);
  for(const x of [640,670])box('distributor-housing-fastener',x,225,2,2,42.5,1.1,metal);
+ const engulf=[[666,219],[674,220],[680,227],[676,241],[670,250],[664,244],[670,232]].map(([x,y])=>({x,y}));
+ add('distributor-engulfing-fold',organicShell(engulf,p=>42+2.4*Math.exp(-(((p.y-233)/12)**2))),tendon);
  for(let i=0;i<3;i++)box('hub-split-conduit',628+i*3,235+i*9,10,3,32,3,tendon);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[400,135],[550,250]],[[870,90],[800,135],[650,250]],[[600,620],[600,370],[600,280]]];
