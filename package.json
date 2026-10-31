@@ -11,7 +11,8 @@
     "test:authored-smoke": "node scripts/authored-room-smoke.mjs",
     "test:room-evidence": "node --test scripts/room-evidence-check.mjs scripts/room-evidence-network-check.mjs scripts/room-demo-check.mjs scripts/vfx-audit-demo-check.mjs && node scripts/ragdoll-demo.mjs --self-test",
     "test:vfx": "node tests/render-afflictions.mjs",
-    "verify": "npm test && npm run test:room-evidence && npm run build && npm run test:smoke"
+    "verify": "npm test && npm run test:room-evidence && npm run build && npm run test:smoke && npm run test:authored-smoke:all",
+    "test:authored-smoke:all": "npm run test:authored-smoke -- --viewport=desktop --out=artifacts/authored-smoke/desktop && npm run test:authored-smoke -- --viewport=phone --out=artifacts/authored-smoke/phone"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.20.0",
