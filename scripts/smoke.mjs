@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {checkCheckpointFeedback} from './checkpoint-feedback-check.mjs';
 import {observeAudio,checkMenuSound,checkPausedSound} from './sound-controls-check.mjs';
 import {createServer} from 'node:http';
 import {readFile, mkdir} from 'node:fs/promises';
@@ -150,6 +151,9 @@ try {
     await chooseStartingBoon();
     assert.deepEqual(errors,[]);
     console.log(JSON.stringify({viewport:mobile?'touch 390x844':'desktop 1280x720',startingBoon,restart:'fresh boon selected',state:'playing',assets:assets.size,errors,performance:await page.evaluate(()=>window.__containmentPerformance)}));
+    timing.start('checkpoint-feedback');
+    await checkCheckpointFeedback(page);
+    assert.deepEqual(errors,[]);
     timing.start('context-close');
     await context.close();
     timing.finish('passed');

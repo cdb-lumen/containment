@@ -68,7 +68,8 @@ describe('death-only articulated physics',()=>{
  it('uses connected rigid bodies, killing direction, gravity and independent limb rotations',()=>{
   const p=new DeathRagdolls();p.setRoom(room);const m=actor();expect(p.snapshot().bodies).toBe(0);
   expect(p.add(1,m,'crawler',{x:6,z:0})).toBe(true);expect(p.snapshot().joints).toBe(4);
-  const initial=p.inspect(1)!;for(let i=0;i<30;i++)p.update(1/60);
+  // With a gentler launch, wait for floor contact to articulate the limbs.
+  const initial=p.inspect(1)!;for(let i=0;i<60;i++)p.update(1/60);
   const after=p.inspect(1)!;expect(after[0].position.x).toBeGreaterThan(initial[0].position.x+.3);
   expect(after[0].position.y).toBeLessThan(initial[0].position.y+.4);
   expect(after.some((b,i)=>Math.abs(b.rotation.x-after[0].rotation.x)+Math.abs(b.rotation.z-after[0].rotation.z)>.03&&i>0)).toBe(true);
