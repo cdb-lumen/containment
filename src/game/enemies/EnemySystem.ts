@@ -601,7 +601,14 @@ export class EnemySystem {
       direction = normalized(targetX - enemy.x, targetY - enemy.y);
     }
 
-    const route=this.#route?.(enemy,{x:targetX,y:targetY});
+    let route=this.#route?.(enemy,{x:targetX,y:targetY});
+    // Navigation returns the current position when the flank has no route.
+    // The flank is optional; retry the real player goal rather than stand still.
+    if(enemy.type==='stalker' && route?.x===enemy.x && route.y===enemy.y){
+      targetX=player.x;targetY=player.y;
+      direction=normalized(targetX-enemy.x,targetY-enemy.y);
+      route=this.#route?.(enemy,player);
+    }
     if(route){targetX=route.x;targetY=route.y;direction=normalized(targetX-enemy.x,targetY-enemy.y);}
 
     const separation = this.#separation(enemy);
