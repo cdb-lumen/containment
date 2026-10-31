@@ -71,3 +71,9 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 #status-hud #story-hud{max-height:calc(100dvh - 260px);overflow:auto;pointer-events:none}
 @media(max-width:700px){#status-hud{top:86px;left:18px;width:calc(50vw - 54px)}#status-hud[data-side=right]{right:18px}}
 @media(max-height:520px) and (orientation:landscape){#status-hud{top:78px;left:22px}#status-hud[data-side=right]{right:22px}#status-hud #story-hud{max-height:calc(100dvh - 220px)}}
+
+/* The upper-left marine must remain visible behind health/armor as well. */
+.hud-top{--vitals-left:max(28px,env(safe-area-inset-left));--vitals-bottom:106px}
+.vitals[data-anchor=bottom]{position:fixed;left:var(--vitals-left);top:auto;bottom:var(--vitals-bottom)}
+@media(max-width:700px){.hud-top{--vitals-left:max(18px,env(safe-area-inset-left))}}
+@media(max-height:520px) and (orientation:landscape){.hud-top{--vitals-left:max(22px,env(safe-area-inset-left))}}
