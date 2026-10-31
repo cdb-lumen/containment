@@ -1,0 +1,10 @@
+{
+  "source": "bfc0126838187bb4820dca5d3f17d47579690cf4",
+  "room": "safety-interlock-station",
+  "frames": 662,
+  "encounterState": "reward",
+  "enemyPositions": 4521,
+  "enemySweeps": 4495,
+  "playerSweeps": 661,
+  "errors": []
+}
