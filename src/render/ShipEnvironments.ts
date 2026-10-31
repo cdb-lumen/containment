@@ -3,6 +3,7 @@ import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
 import {diagnosticGalleryModels} from './DiagnosticGalleryModels';
 import {diagnosticGalleryArchitecture} from './DiagnosticGalleryArchitecture';
+import {armoryCarousel} from './ArmoryCarousel';
 import {safetyInterlockBlockout} from './SafetyInterlockBlockout';
 import {safetyInterlockArchitecture} from './SafetyInterlockArchitecture';
 import {armoryBlockout} from './ArmoryBlockout';
@@ -184,6 +185,7 @@ export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:num
   appendEnvironment(parent,diagnosticGalleryArchitecture());
   return;
  }
+ if(env==='security'&&templateId==='armory'){appendEnvironment(parent,armoryCarousel());return;}
  if(env==='engineering'&&templateId==='safety-interlock-station'){const shell=new T.Group();safetyInterlockArchitecture(shell,w,h);appendEnvironment(parent,shell);return;}
  if(env==='reactor'&&templateId==='manual-control-chamber'){manualControlArchitecture(parent,w);return;}
  if(env==='infested'&&templateId==='infested-workshop')return infestedWorkshopArchitecture(parent,w,h);
