@@ -3,7 +3,7 @@ import {familyCount} from './game/roguelike/builds';
 import {boonHint,pathFor} from './game/roguelike/boonPaths';
 import './style.css';
 import {HitConfirmation} from './render/HitConfirmation';
-import {positionWeaponHud} from './WeaponHud';
+import {positionWeaponHud,captureWeaponPointer} from './WeaponHud';
 import {positionStatusHud,positionVitalsHud} from './StatusHud';
 import {DepthGame,type GameEffect} from './DepthGame';
 import {preloadAssets} from './render/assets';
@@ -49,7 +49,7 @@ game.aimVisible=(x,y)=>renderer.visible(x,y);
 try{await renderer.prepare(game.node);}catch(error){el('overlay').innerHTML='<div class="unsupported"><h1>Graphics interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
 const input=new InputController(game,renderer,(toggle)=>{if(game.status==='playing'||toggle&&game.status==='paused')pause();},()=>!graphicsLost&&!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading);let roomRecovering=true;let graphicsLost=false;let lastStatus='',lastRoom=-1,screenKey='',settingsOpen=false;let quality:'high'|'low'='high';
 const start=(resume=false)=>{void audio.unlock();audio.resumeAll();input.reset();settingsOpen=false;if(resume){if(!game.continueRun())return;}else game.newRun();syncScreen(true);};
-el('pause').addEventListener('click',pause);document.querySelectorAll<HTMLButtonElement>('[data-weapon]').forEach(b=>b.addEventListener('click',()=>{if(!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading&&!graphicsLost)game.switchWeapon(b.dataset.weapon as WeaponId);b.blur();}));
+el('pause').addEventListener('click',pause);document.querySelectorAll<HTMLButtonElement>('[data-weapon]').forEach(b=>{captureWeaponPointer(b);b.addEventListener('click',()=>{if(!roomRecovering&&lastRoom===game.roomRevision&&!renderer.roomLoading&&!graphicsLost)game.switchWeapon(b.dataset.weapon as WeaponId);b.blur();});});
 el('skip-story').addEventListener('click',()=>{game.skipStory();hud();});
 const routeCopy={combat:'Hostiles · boon',elite:'Elite hostiles · rare boon',medical:'Health + armor · recovery shop',armory:'Ammunition + grenade · recovery shop',boss:'Survive the armor cycle. Strike when exposed.'};
 const depthTotal=()=>runLength(game.expedition.run.version);

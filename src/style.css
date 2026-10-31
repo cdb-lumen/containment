@@ -83,3 +83,9 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 #status-hud .room-label{margin:0;min-width:0;flex:1;text-align:left}
 #status-hud .room-label b{max-width:none;overflow-wrap:anywhere}
 #status-hud #pause{flex-shrink:0}
+
+/* Keep every lower control off the actor, including narrow desktop windows. */
+#weapon-picker{right:30px;bottom:38px;max-width:calc(50vw - 80px);flex-wrap:wrap;justify-content:flex-end}
+.desktop-hint{left:auto;right:30px;bottom:12px;width:max-content;max-width:calc(50vw - 80px);font-size:9px;text-align:right}
+#weapon-picker[data-side=left],.desktop-hint[data-side=left]{right:auto;left:30px;justify-content:flex-start;text-align:left}
+@media(max-width:700px){#weapon-picker button{padding:6px 8px;gap:5px;min-height:34px}.desktop-hint{font-size:8px}.desktop-hint span{font-size:7px;margin-left:2px}}
