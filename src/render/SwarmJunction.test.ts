@@ -160,10 +160,11 @@ describe('Room16 room visuals',()=>{
   expect([template.width,template.height,template.spawn,template.exit,template.breaches]).toEqual([1200,880,{x:100,y:440},{x:1100,y:440},[{x:100,y:100},{x:1100,y:100},{x:100,y:780},{x:1100,y:780}]]);
   for(const o of [template,template.voids,template.voids?.[0],...(template.voids?.[0]??[])])expect(Object.isFrozen(o)).toBe(true);
  });
- // Reference: main-equivalent HUD51610c6 tree; Room16 is the sole template delta.
+ // Reference: merged main76b4a23 (verified identical to captured Armory ed13a96).
+ // Room16 is the sole template delta; the current Armory is intentionally retained.
  it('leaves every other room template byte-equivalent',()=>{
   const others=Object.fromEntries(Object.entries(ROOM_TEMPLATES).filter(([id])=>id!=='swarm-junction'));
-  expect(createHash('sha256').update(JSON.stringify(others)).digest('hex')).toBe('ebf41d99facd54ba19514602b1c3c6821d70533e9ad79feddb9d0d94db81fc8d');
+  expect(createHash('sha256').update(JSON.stringify(others)).digest('hex')).toBe('341bcc775e848414f93dc7d3e1d86d4f45c096e55bf435aa4ac548fab1262053');
  });
  for(const radius of [16,28,38])it(`retains all planned routes, breaches and connected usable space for radius ${radius}`,()=>{
   const g=createExpeditionGeometry(node);
