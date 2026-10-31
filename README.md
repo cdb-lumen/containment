@@ -8,7 +8,7 @@ Containment is a standalone browser action roguelike with its own setting and st
 
 - Desktop: WASD / arrows move; mouse aims and fires. Hold Space for aim-assisted fire. R reloads, G throws a grenade, E uses a medkit, 1–5 select weapons, Escape pauses.
 - Touch: left movement stick and right fire control. Hold fire for aim assist; drag to aim manually. Reload, grenade and healing are right-thumb actions.
-- Progress saves between rooms, including unresolved rewards. Death deletes the checkpoint.
+- Progress saves between rooms, including unresolved rewards, when browser storage is available. Death clears the checkpoint. Storage failures are shown in the reward, pause, result and title screens; a failed deletion can leave an old checkpoint available after reloading.
 
 ## Development
 
