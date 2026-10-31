@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ❯ src/render/SwarmJunction.test.ts (32 tests | 1 failed) 13313ms
+     × keeps every solid vertex in collision and preserves bounds through production bake 352ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > keeps every solid vertex in collision and preserves bounds through production bake
+AssertionError: consuming-distributor-right-shoulder 22.546875,0.96875,7.765625: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/render/SwarmJunction.test.ts:286:270
+    288|    expect(canOccupyExpedition(before,p,16)).toBe(added);
+    289|    expect(canOccupyExpedition(after,p,16)).toBe(!added);
+    290|    expect(canTraverseExpedition(before,a,b,16)).toBe(added);
+       |                                           ^
+    291|    expect(canTraverseExpedition(after,a,b,16)).toBe(!added);
+    292|    expect(hasClearExpeditionShot(before,a,b)).toBe(added);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 31 passed (32)
+   Start at  20:40:02
+   Duration  14.48s (transform 806ms, setup 0ms, import 1.04s, tests 13.31s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

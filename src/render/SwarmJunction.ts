@@ -92,8 +92,12 @@ export function swarmJunctionBlockout(){
   const outward=new T.Vector2(cx-600,cy-285).normalize();
   const cutHeight=(p:Point)=>{
    const transverse=-(p.x-cx)*outward.y+(p.y-cy)*outward.x;
-   const split=5*(Math.exp(-1*((transverse-10)/3)**2)+Math.exp(-1*((transverse+10)/3)**2));
-   return Math.max(32,39+3*Math.tanh(((p.x-cx)*outward.x+(p.y-cy)*outward.y)/9)
+   const along=(p.x-cx)*outward.x+(p.y-cy)*outward.y;
+   const phase=name==='west'?2.4:name==='east'?1.8:2.7;
+   const channel=10+2.5*Math.sin(along/12+phase),width=4.5+1.5*Math.sin(along/18+phase)**2;
+   const branch=-10+1.5*Math.sin(along/9-phase);
+   const split=7.5*Math.exp(-1*((transverse-channel)/width)**2)+6.2*Math.exp(-1*((transverse-branch)/3.5)**2);
+   return Math.max(32,(name==='west'?40:39)+3*Math.tanh(along/9)
     +1.2*Math.sin((p.x-cx)*.19+(p.y-cy)*.27)-split);
   };
   add(`root-${name}-sheath`,cutShell(contour,p=>35+.7*Math.sin((p.x-cx)*.2)),dark);
@@ -149,6 +153,16 @@ export function swarmJunctionBlockout(){
  const wrap=organicShell(sideWrap,p=>34+10.4*Math.max(0,Math.min(1,(p.x-653)/13)));
  const wrapPositions=wrap.getAttribute('position');for(let i=0;i<wrapPositions.count/2;i++)wrapPositions.setY(i,31/U);wrap.computeVertexNormals();
  add('consuming-distributor-side-wrap',wrap,tendon);
+ // A broad shoulder grows from the east root over the cabinet side, retaining
+ // the front connector bank as a recognizable remnant of the human enclosure.
+ const shoulderOutline=[[690,225],[706,220],[723,229],[720,240],[715,256],[704,258],[694,249],[689,239]].map(([x,y])=>({x,y}));
+ const shoulder=organicShell(shoulderOutline,p=>{
+  const side=Math.max(0,Math.min(1,(730-p.x)/28));
+  return 34+10.3*side*Math.exp(-1*((p.y-237)/22)**4);
+ });
+ const shoulderPositions=shoulder.getAttribute('position');for(let i=0;i<shoulderPositions.count/2;i++)shoulderPositions.setY(i,31/U);shoulder.computeVertexNormals();
+ add('consuming-distributor-right-shoulder',shoulder,tendon);
+
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[378,141],[550,275]],[[870,90],[815,150],[676,250]],[[600,620],[610,378],[600,305]]];
  for(const [i,run] of runs.entries())for(let j=1;j<run.length;j++){

@@ -21,8 +21,8 @@ describe('Room16 room visuals',()=>{
  it('closes the continuous curved body and cavity lip with opposite directed edges and outward faces',()=>{
   const root=model(),plates=meshes(root).filter(m=>m.name==='organ-bed');expect(plates).toHaveLength(1);
   const lip=meshes(root).find(m=>m.name==='sensory-carapace-lip')!;expect(lip).toBeDefined();
-  const layered=meshes(root).filter(m=>m.name.startsWith('carapace-scute-')||m.name.startsWith('carapace-overlap-')||/^root-.*-(cut|sheath|tissue)$/.test(m.name)||m.name==='distributor-engulfing-fold'||m.name==='consuming-distributor-side-wrap');
-  expect(layered).toHaveLength(19); // Eight scutes, nine cut/sheath/tissue sections and two cabinet folds.
+  const layered=meshes(root).filter(m=>m.name.startsWith('carapace-scute-')||m.name.startsWith('carapace-overlap-')||/^root-.*-(cut|sheath|tissue)$/.test(m.name)||m.name==='distributor-engulfing-fold'||m.name.startsWith('consuming-distributor-'));
+  expect(layered).toHaveLength(20); // Eight scutes, nine cut/sheath/tissue sections and three cabinet folds.
   expect(meshes(root).some(m=>m.name.startsWith('carapace-overlap-'))).toBe(false);
   const badEdges=(indices:number[])=>{
    const edges=new Map<string,number[]>();
@@ -102,6 +102,25 @@ describe('Room16 room visuals',()=>{
    const target=new T.Vector3(x/32,40/32,y/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe(`carapace-scute-${name}`);
   }
   for(const x of [588,600,612]){const target=new T.Vector3(x/32,31.5/32,285/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe('sensory-recess');}
+  disposeModel(root);
+ });
+ it('joins a broad cabinet shoulder to the root and housing while exposing a native visible patch',()=>{
+  const root=model(),ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+  for(const [x,y] of [[706,230],[710,236],[714,242]]){
+   ray.set(new T.Vector3(x/32,4,y/32),new T.Vector3(0,-1,0));
+   const hits=ray.intersectObject(root,true);
+   expect(hits.some(h=>h.object.name==='consuming-distributor-right-shoulder')).toBe(true);
+   expect(hits.some(h=>h.object.name==='organ-bed')).toBe(true);
+   const target=new T.Vector3(x/32,40/32,y/32);
+   ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());
+   expect(ray.intersectObject(root,true)[0]?.object.name).toBe('consuming-distributor-right-shoulder');
+  }
+  for(const y of [232,238,244]){
+   ray.set(new T.Vector3(700/32,4,y/32),new T.Vector3(0,-1,0));
+   const hits=ray.intersectObject(root,true);
+   expect(hits.some(h=>h.object.name==='consuming-distributor-right-shoulder'&&h.point.y*32>42.5)).toBe(true);
+   expect(hits.some(h=>h.object.name==='severed-distributor'&&Math.abs(h.point.y*32-42.5)<1e-4)).toBe(true);
+  }
   disposeModel(root);
  });
  it('exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports',()=>{

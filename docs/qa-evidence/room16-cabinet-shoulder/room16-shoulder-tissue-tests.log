@@ -1,0 +1,35 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ❯ src/render/SwarmJunction.test.ts (33 tests | 1 failed) 13252ms
+     × opens the terminal borders and crosses the cabinet roof while retaining exposed hardware 95ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > opens the terminal borders and crosses the cabinet roof while retaining exposed hardware
+AssertionError: 397,146: expected 'root-west-sheath' to be 'root-west-cut' // Object.is equality
+
+Expected: "root-west-cut"
+Received: "root-west-sheath"
+
+ ❯ src/render/SwarmJunction.test.ts:200:45
+    198|    ray.set(new T.Vector3(x/32,5,z/32),new T.Vector3(0,-1,0));
+    199|    const hits=ray.intersectObject(root,true);
+    200|    expect(hits[0]?.object.name,`${x},${z}`).toBe(name);
+       |                                             ^
+    201|    if(name==='distributor-engulfing-fold'){
+    202|     const support=hits.find(h=>h.object.name==='severed-distributor');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 passed (33)
+   Start at  20:40:38
+   Duration  14.62s (transform 945ms, setup 0ms, import 1.23s, tests 13.25s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
