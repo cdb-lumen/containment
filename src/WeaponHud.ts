@@ -4,7 +4,7 @@ const overlaps=(a:ScreenBox,b:ScreenBox,padding=0)=>a.left-padding<b.right&&a.ri
 
 /** Keep the read-only ammo panel opposite the marine, with room to avoid flicker. */
 export function weaponHudSide(normal:ScreenBox,player:ScreenBox,width:number,previous:HudSide):HudSide{
- const left={...normal,left:width-normal.right,right:width-normal.left};
+ const left={top:normal.top,bottom:normal.bottom,left:width-normal.right,right:width-normal.left};
  if(previous==='left'){
   if(overlaps(left,player,24)||!overlaps(normal,player,64))return 'right';
   return 'left';
