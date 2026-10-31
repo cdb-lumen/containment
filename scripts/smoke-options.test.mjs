@@ -7,13 +7,13 @@ const helper = new URL('./smoke-options.mjs', import.meta.url);
 const options = existsSync(helper) ? await import(helper.href) : {};
 
 describe('smoke viewport selection without a browser', () => {
-  it.each([[undefined, ['desktop', 'touch']], ['both', ['desktop', 'touch']], ['desktop', ['desktop']], ['touch', ['touch']]])('selects %s exactly and in order', (value, expected) => {
+  it.each([[undefined, ['desktop']], ['desktop', ['desktop']]])('selects %s exactly and in order', (value, expected) => {
     expect(options.selectSmokeViewports, 'selector must exist independently of browser startup').toBeTypeOf('function');
     expect(options.selectSmokeViewports(value)).toEqual(expected);
   });
-  it.each(['', 'Desktop', 'TOUCH', ' desktop', 'touch ', 'mobile', 'all', 'desktop,touch', 'false', '0', null, false, 0])('rejects invalid selector %j', value => {
+  it.each(['touch', 'both', '', 'Desktop', 'TOUCH', ' desktop', 'touch ', 'mobile', 'all', 'desktop,touch', 'false', '0', null, false, 0])('rejects invalid selector %j', value => {
     expect(options.selectSmokeViewports).toBeTypeOf('function');
-    expect(() => options.selectSmokeViewports(value)).toThrow(/SMOKE_VIEWPORT.*desktop.*touch.*both/);
+    expect(() => options.selectSmokeViewports(value)).toThrow(/SMOKE_VIEWPORT.*desktop/);
   });
   it('rejects invalid environment before server or browser startup', () => {
     const source = readFileSync(new URL('./smoke.mjs', import.meta.url), 'utf8');
@@ -24,24 +24,28 @@ describe('smoke viewport selection without a browser', () => {
       encoding: 'utf8', timeout: 5000,
     });
     expect(result.status).toBe(1);
-    expect(result.stderr).toMatch(/SMOKE_VIEWPORT.*desktop.*touch.*both/);
+    expect(result.stderr).toMatch(/SMOKE_VIEWPORT.*desktop/);
     expect(result.stderr).not.toContain('browserType.launch');
   });
 });
 
 describe('serial CI smoke budgets', () => {
-  it.each(['verify', 'pages'])('%s preserves non-browser gates and separates both viewports', name => {
+  it.each(['verify', 'pages'])('%s preserves non-browser and desktop gates', name => {
     const workflow = readFileSync(new URL(`../.github/workflows/${name}.yml`, import.meta.url), 'utf8');
-    expect(workflow).toContain('timeout-minutes: 100');
+    expect(workflow).toContain('timeout-minutes: 65');
     expect(workflow).toContain('npm test && npm run test:room-evidence && npm run build');
     expect(workflow).toContain('SMOKE_VIEWPORT: desktop');
-    expect(workflow).toContain('SMOKE_VIEWPORT: touch');
-    expect(workflow.match(/timeout --kill-after=30s 33m npm run test:smoke/g)).toHaveLength(2);
-    expect(workflow.indexOf('SMOKE_VIEWPORT: desktop')).toBeLessThan(workflow.indexOf('SMOKE_VIEWPORT: touch'));
+    expect(workflow).not.toContain('SMOKE_VIEWPORT: touch');
+    expect(workflow.match(/timeout --kill-after=30s 33m npm run test:smoke/g)).toHaveLength(1);
     expect(workflow).not.toContain('continue-on-error');
+    expect(workflow.match(/timeout --kill-after=30s 8m npm run test:authored-smoke/g)).toHaveLength(1);
+    expect(workflow).toContain('--viewport=desktop --out=artifacts/authored-smoke/desktop');
+    expect(workflow).not.toContain('--viewport=phone');
+    expect(workflow).toContain('if: ${{ always() }}');
+    expect(workflow).toContain('path: artifacts/authored-smoke/');
+    expect(workflow).toContain('retention-days: 7');
     if (name === 'verify') {
       expect(workflow).toContain('id: smoke-desktop');
-      expect(workflow).toContain("!cancelled() && steps.smoke-desktop.outcome != 'skipped'");
     }
   });
 });
@@ -51,7 +55,7 @@ describe('smoke phase timing', () => {
     expect(options.createSmokePhaseTimer).toBeTypeOf('function');
     let now = 100;
     const events = [];
-    const timer = options.createSmokePhaseTimer('touch', event => events.push(event), () => now);
+    const timer = options.createSmokePhaseTimer('desktop', event => events.push(event), () => now);
     timer.start('graphics');
     now = 350;
     timer.start('menu-audio');
@@ -59,10 +63,10 @@ describe('smoke phase timing', () => {
     timer.finish('failed');
     timer.finish('failed');
     expect(events).toEqual([
-      {viewport: 'touch', phase: 'graphics', status: 'started'},
-      {viewport: 'touch', phase: 'graphics', status: 'passed', elapsedMs: 250},
-      {viewport: 'touch', phase: 'menu-audio', status: 'started'},
-      {viewport: 'touch', phase: 'menu-audio', status: 'failed', elapsedMs: 550},
+      {viewport: 'desktop', phase: 'graphics', status: 'started'},
+      {viewport: 'desktop', phase: 'graphics', status: 'passed', elapsedMs: 250},
+      {viewport: 'desktop', phase: 'menu-audio', status: 'started'},
+      {viewport: 'desktop', phase: 'menu-audio', status: 'failed', elapsedMs: 550},
     ]);
   });
   it('finishes the final successful phase', () => {
@@ -72,5 +76,15 @@ describe('smoke phase timing', () => {
     timer.start('close');
     timer.finish('passed');
     expect(events.at(-1)).toEqual({viewport: 'desktop', phase: 'close', status: 'passed', elapsedMs: 0});
+  });
+});
+
+describe('local authored-room gate', () => {
+  it('requires desktop coverage after the production build', () => {
+    const {scripts} = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+    expect(scripts.verify).toContain('npm run test:authored-smoke:all');
+    expect(scripts.verify.indexOf('npm run build')).toBeLessThan(scripts.verify.indexOf('npm run test:authored-smoke:all'));
+    expect(scripts['test:authored-smoke:all']).toContain('--viewport=desktop --out=artifacts/authored-smoke/desktop');
+    expect(scripts['test:authored-smoke:all']).not.toContain('--viewport=phone');
   });
 });
