@@ -1,0 +1,7 @@
+{
+  "fullEncounterSource": "bf720e6bcec7b838510b84d1b1fa29e0c1c2ab6c",
+  "supplementalSource": "55d2f1672241013877114c3d70712990883bd763",
+  "correction": "Recorder wording successful full encounter at the same source is inaccurate. Full encounter and supplemental traversal have different source pins. Independent Git comparison proves unchanged room/model/collision/camera/HUD files, with intended main.ts audio observer additions. This is not a new full encounter at the supplemental source and does not qualify audio listening. Original manifest and recorder are preserved unchanged.",
+  "manifestSha256": "57324fa750aa797dd98a5048d34637cceb2cbca1431e6a4ef6d616e6cd3017e4",
+  "recorderSha256": "d56af39d1bea8514a39944211a9d7c3595ebb37daf40291fbbcc9c984e1d621d"
+}

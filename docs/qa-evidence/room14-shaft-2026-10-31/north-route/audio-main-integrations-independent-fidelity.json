@@ -1,0 +1,88 @@
+{
+  "main": "eafb441ee8e01f3488c75f948dfc65be1154923c",
+  "allowedChangedFiles": [
+    "README.md",
+    "docs/qa-evidence/elemental-audio/README.md",
+    "docs/qa-evidence/elemental-audio/browser-focused.log",
+    "docs/qa-evidence/elemental-audio/freeze.wav",
+    "docs/qa-evidence/elemental-audio/full-verification.log",
+    "docs/qa-evidence/elemental-audio/independent-review.md",
+    "docs/qa-evidence/elemental-audio/initial-adapter-failure.log",
+    "docs/qa-evidence/elemental-audio/loading-adapter-repair.log",
+    "docs/qa-evidence/elemental-audio/manifest.json",
+    "docs/qa-evidence/elemental-audio/reactor.wav",
+    "docs/qa-evidence/elemental-audio/shatter.wav",
+    "public/audio-credits.html",
+    "src/game/audio/AudioSystem.ts",
+    "src/game/audio/elementalCues.ts",
+    "src/main.ts",
+    "tests/ElementalAudio.test.ts",
+    "tests/ElementalAudioBrowser.test.ts",
+    "tests/SafeRoomLoading.test.ts"
+  ],
+  "rows": [
+    {
+      "root": "/workspace/containment-large-actor-navigation",
+      "before": "006d6faf597fd8fd5c2a0d6e5553a4f9e0136c82",
+      "after": "2db3402f4ce6013b0cf3820040976b019681255b",
+      "changedFiles": 18,
+      "allChangedExactMain": true,
+      "unchangedOtherFiles": 1855,
+      "trackedScopeClean": true
+    },
+    {
+      "root": "/workspace/containment-room7",
+      "before": "ffc53b4a4c0376010350e64334981444cd7a9d0c",
+      "after": "c27fe4633dfc2641c7f009a053e05de454647cc5",
+      "changedFiles": 18,
+      "allChangedExactMain": true,
+      "unchangedOtherFiles": 1919,
+      "trackedScopeClean": true
+    },
+    {
+      "root": "/workspace/containment-room10-review",
+      "before": "c936070232268b7051fd8899e1ed5dfa06c840bd",
+      "after": "9ffcb83f92c282946c7e94222382b6ee217940ce",
+      "changedFiles": 18,
+      "allChangedExactMain": true,
+      "unchangedOtherFiles": 1931,
+      "trackedScopeClean": true
+    },
+    {
+      "root": "/workspace/containment-room11-review",
+      "before": "1bcfbc0d8d6eb7b61a79e95ee319f460701f0e8e",
+      "after": "ccba2b327e64e6c17984a7f69331f352bb66f7cc",
+      "changedFiles": 18,
+      "allChangedExactMain": true,
+      "unchangedOtherFiles": 1907,
+      "trackedScopeClean": true
+    },
+    {
+      "root": "/workspace/containment-room13-review",
+      "before": "35c206859538717c6b047fadcb0932012e33aad7",
+      "after": "b4375f0aa8832d187643257c149e90edc62d9f97",
+      "changedFiles": 18,
+      "allChangedExactMain": true,
+      "unchangedOtherFiles": 1936,
+      "trackedScopeClean": true
+    },
+    {
+      "root": "/workspace/containment-room14-review",
+      "before": "bf720e6bcec7b838510b84d1b1fa29e0c1c2ab6c",
+      "after": "55d2f1672241013877114c3d70712990883bd763",
+      "changedFiles": 18,
+      "allChangedExactMain": true,
+      "unchangedOtherFiles": 1904,
+      "trackedScopeClean": true
+    },
+    {
+      "root": "/workspace/containment-room20-review",
+      "before": "864df2088548a73410ac299009543666808e555d",
+      "after": "c3c1d1cad3dbbe40ec708c6aad2ad43c45dcb3fd",
+      "changedFiles": 18,
+      "allChangedExactMain": true,
+      "unchangedOtherFiles": 1934,
+      "trackedScopeClean": true
+    }
+  ]
+}
