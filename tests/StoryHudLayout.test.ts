@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import {afterAll, beforeAll, expect, test} from 'vitest';
 import {chromium, type Browser, type Page} from 'playwright';
-import {positionStatusHud} from '../src/StatusHud';
+import {positionStatusHud,positionVitalsHud} from '../src/StatusHud';
 
 // CPU-only DOM regression. This does not render the game or prove actor visibility.
 const css=readFileSync(new URL('../src/style.css',import.meta.url),'utf8').replace(/@import[^;]+;/g,'');
@@ -24,7 +24,7 @@ async function mount(width:number,height=900){
     const values={...copy,health:'100',armor:'50','depth-label':'SECURITY · 05 / 20','room-name':'Crew checkpoint',credits:'0 CR','encounter-count':'15 remaining','build-strip':'Kinetic 1', 'weapon-name':'SHOTGUN',magazine:'08',reserve:'/ 21'};
     for(const [id,text] of Object.entries(values)) document.getElementById(id)!.textContent=text;
   },copy);
-  await page.addScriptTag({content:`window.positionStatusHud=${positionStatusHud.toString()}`});
+  await page.addScriptTag({content:`window.positionStatusHud=${positionStatusHud.toString()};window.positionVitalsHud=${positionVitalsHud.toString()}`});
   return page;
 }
 async function rect(page:Page,selector:string){return page.locator(selector).evaluate(el=>el.getBoundingClientRect().toJSON());}
@@ -96,6 +96,35 @@ test('status copy preserves canvas mouse aim and fire while Skip remains clickab
    expect(await page.locator('body').getAttribute('data-aimed')).toBe('yes');
    expect(await page.locator('body').getAttribute('data-fired')).toBe('yes');
    await page.evaluate(()=>{delete document.body.dataset.aimed;delete document.body.dataset.fired;});
+  }
+ }finally{await page.close();}
+});
+
+test('moves vitals clear of Room12 frame495 and restores them safely as the marine moves',async()=>{
+ const page=await mount(1280);
+ const body={left:136.76889616257478,right:177.6779870716657,top:32.91517519581806,bottom:115.42574871257571};
+ const place=async(box:typeof body)=>page.evaluate(box=>(window as any).positionVitalsHud(document.querySelector('.vitals'),box,innerHeight),box);
+ try{
+  expect(overlaps(await rect(page,'.vitals'),body)).toBe(true);
+  await place(body);
+  expect(await page.locator('.vitals').getAttribute('data-anchor')).toBe('bottom');
+  expect(overlaps(await rect(page,'.vitals'),body)).toBe(false);
+  expect(await page.locator('#health').textContent()).toBe('100');
+  expect(await page.locator('#armor').textContent()).toBe('50');
+  // Keep the alternative placement through its hysteresis band.
+  await place({...body,top:100,bottom:180});
+  expect(await page.locator('.vitals').getAttribute('data-anchor')).toBe('bottom');
+  await place({...body,top:160,bottom:240});
+  expect(await page.locator('.vitals').getAttribute('data-anchor')).toBe('top');
+  for(const [width,height] of [[1280,900],[640,900],[960,480]]){
+   await page.setViewportSize({width,height});await place(body);
+   const vital=await rect(page,'.vitals');
+   expect(overlaps(vital,body)).toBe(false);expect(vital.left).toBeGreaterThanOrEqual(0);expect(vital.right).toBeLessThan(width);expect(vital.bottom).toBeLessThan(height-76);
+   await page.evaluate(()=>{document.getElementById('world')!.addEventListener('mousedown',()=>document.body.dataset.fired='yes');});
+   await page.mouse.click(vital.left+10,vital.top+10);
+   expect(await page.locator('body').getAttribute('data-fired')).toBe('yes');
+   await place({left:vital.left,right:vital.right,top:vital.top,bottom:vital.bottom});
+   expect(await page.locator('.vitals').getAttribute('data-anchor')).toBe('top');
   }
  }finally{await page.close();}
 });

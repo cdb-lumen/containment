@@ -4,7 +4,7 @@ import {boonHint,pathFor} from './game/roguelike/boonPaths';
 import './style.css';
 import {HitConfirmation} from './render/HitConfirmation';
 import {positionWeaponHud} from './WeaponHud';
-import {positionStatusHud} from './StatusHud';
+import {positionStatusHud,positionVitalsHud} from './StatusHud';
 import {DepthGame,type GameEffect} from './DepthGame';
 import {preloadAssets} from './render/assets';
 import {DepthRenderer} from './render/DepthRenderer';
@@ -32,7 +32,8 @@ app.innerHTML=`<canvas id="world" aria-label="Containment 3D game world"></canva
 const el=(id:string)=>document.getElementById(id)!;
 const weaponHud=document.querySelector<HTMLElement>('.weapon-hud')!;
 const statusHud=el('status-hud');
-function positionHud(){const bounds=renderer.playerScreenBounds(game.player.radius);positionWeaponHud(weaponHud,bounds,innerWidth);positionStatusHud(statusHud,bounds,innerWidth);}
+const vitalsHud=document.querySelector<HTMLElement>('.vitals')!;
+function positionHud(){const bounds=renderer.playerScreenBounds(game.player.radius);positionWeaponHud(weaponHud,bounds,innerWidth);positionStatusHud(statusHud,bounds,innerWidth);positionVitalsHud(vitalsHud,bounds,innerHeight);}
 el('overlay').innerHTML='<div class="asset-loading"><span>CONTAINMENT / DEPTH</span><div><i id="asset-progress"></i></div></div>';
 try{await preloadAssets(fraction=>{el('asset-progress').style.width=`${fraction*100}%`;});}catch(error){app.innerHTML='<div class="unsupported"><h1>Download interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
 let renderer:DepthRenderer;

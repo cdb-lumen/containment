@@ -12,3 +12,17 @@ export function positionStatusHud(panel:HTMLElement,player:ScreenBox,width:numbe
   :overlaps(left,24)&&!overlaps(right,24)?'right':'left';
  if(next!==previous)panel.dataset.side=next;
 }
+
+/** Preserve the familiar top-left vitals except when they cover the marine. */
+export function positionVitalsHud(panel:HTMLElement,player:ScreenBox,height:number):void{
+ const rect=panel.getBoundingClientRect(),top=panel.parentElement!.getBoundingClientRect().top;
+ const inset=Number.parseFloat(getComputedStyle(panel).getPropertyValue('--vitals-bottom'));
+ const upper={left:rect.left,right:rect.right,top,bottom:top+rect.height};
+ const lower={...upper,top:height-inset-rect.height,bottom:height-inset};
+ const overlaps=(box:ScreenBox,padding:number)=>box.left-padding<player.right&&box.right+padding>player.left&&box.top-padding<player.bottom&&box.bottom+padding>player.top;
+ const previous=panel.dataset.anchor==='bottom'?'bottom':'top';
+ const next=previous==='bottom'
+  ?overlaps(lower,24)||!overlaps(upper,64)?'top':'bottom'
+  :overlaps(upper,24)&&!overlaps(lower,24)?'bottom':'top';
+ if(next!==previous)panel.dataset.anchor=next;
+}
