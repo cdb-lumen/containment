@@ -1,0 +1,32 @@
+{
+  "images": [
+    {
+      "file": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/containment-annulus/story-flow-v3/stage-5/attempt-1026/native/18-containment-annulus-overview.png",
+      "sha256": "af957e903f9077152631c32d797a401ec05e0b8d09d29aafdfaf9fded2d67a29",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 332104,
+      "previous_stage_same_bytes": true,
+      "errors": [],
+      "webglError": 0,
+      "contextLost": false
+    },
+    {
+      "file": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/containment-annulus/story-flow-v3/stage-5/attempt-1026/native/18-containment-annulus-gameplay.png",
+      "sha256": "e6780e28706dff4a8496cb9c0f806f1a56ca7fdf4b84bab88546ec9b36a6054e",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 501867,
+      "previous_stage_same_bytes": false,
+      "errors": [],
+      "webglError": 0,
+      "contextLost": false
+    }
+  ],
+  "source_head": "605c93d504a6384502889fa6974df5fd19fa520d",
+  "capture_class": "Static controlled staged simulation. Production desktop camera/composer with no DOM HUD. Fitted overview camera. Not ordinary gameplay or live campaign evidence."
+}

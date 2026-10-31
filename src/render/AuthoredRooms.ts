@@ -4,6 +4,7 @@ import {relayRacksRoom} from './RelayRacksRoom';
 import {PASSENGER_FINISHES} from './RoomEquipmentPalette';
 import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
 import {AWAKENING_BLOCKOUT,PASSENGER_BLOCKOUT,AUTHORED_ROOM_TOPOLOGIES} from '../game/roguelike/authoredRoomTopologies';
+import {containmentAnnulusBlockout} from './ContainmentAnnulusBlockout';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -666,6 +667,7 @@ function deckServices(f:Fabricator,t:RoomPlan){
 }
 export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
  if(id==='transmission-chamber')return transmissionChamberRoom();
+ if(id==='containment-annulus')return containmentAnnulusBlockout(t);
  if(id==='relay-racks')return relayRacksRoom();
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;
  const f=new Fabricator();f.root.name=`authored-${id}`;

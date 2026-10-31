@@ -1,0 +1,84 @@
+[
+  {
+    "file": "before-gameplay.png",
+    "source": "before/native/18-containment-annulus-gameplay.png",
+    "sha256": "70f4d6b226a411b37b6ff0496c899a4ea97d22803dd8202ca4ef85e04cafa772",
+    "size": [
+      1280,
+      900
+    ],
+    "repository_path": "docs/art-evidence/room18-story-flow-v3/stage-4/attempt-1025/before-gameplay.png"
+  },
+  {
+    "file": "before-overview.png",
+    "source": "before/native/18-containment-annulus-overview.png",
+    "sha256": "db039c4f3b839abb1893a65ff36c8e937af66fbc59ba66e3e46085bbc5a10c12",
+    "size": [
+      1280,
+      900
+    ],
+    "repository_path": "docs/art-evidence/room18-story-flow-v3/stage-4/attempt-1025/before-overview.png"
+  },
+  {
+    "file": "after-gameplay.png",
+    "source": "after/native/18-containment-annulus-gameplay.png",
+    "sha256": "c5212caf00681eb25cf3957d5a83b24e460785d551aaaf3ba63e2addfe54b2e6",
+    "size": [
+      1280,
+      900
+    ],
+    "repository_path": "docs/art-evidence/room18-story-flow-v3/stage-4/attempt-1025/after-gameplay.png"
+  },
+  {
+    "file": "after-overview.png",
+    "source": "after/native/18-containment-annulus-overview.png",
+    "sha256": "af957e903f9077152631c32d797a401ec05e0b8d09d29aafdfaf9fded2d67a29",
+    "size": [
+      1280,
+      900
+    ],
+    "repository_path": "docs/art-evidence/room18-story-flow-v3/stage-4/attempt-1025/after-overview.png"
+  },
+  {
+    "file": "model-contact-sheet.png",
+    "sha256": "1fa92fa27ae38c17ba60b01aad365def04c6923ed3a31ca37307a2809c35a680",
+    "size": [
+      1280,
+      1280
+    ],
+    "regions": [
+      [
+        "Radial load-bearing shoes and paired webs",
+        [
+          365,
+          370,
+          625,
+          615
+        ]
+      ],
+      [
+        "Recessed instruments and protective frames",
+        [
+          850,
+          250,
+          990,
+          555
+        ]
+      ],
+      [
+        "Roof lifting saddles and sealed inspection cartridge",
+        [
+          530,
+          445,
+          820,
+          620
+        ]
+      ]
+    ],
+    "derived_from": [
+      "before-gameplay.png",
+      "after-gameplay.png"
+    ],
+    "repository_path": "docs/art-evidence/room18-story-flow-v3/stage-4/attempt-1025/model-contact-sheet.png"
+  }
+]

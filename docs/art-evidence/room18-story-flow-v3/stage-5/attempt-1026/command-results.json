@@ -1,0 +1,79 @@
+[
+  {
+    "name": "focused",
+    "command": [
+      "npx",
+      "vitest",
+      "run",
+      "tests/ContainmentAnnulusBlockout.test.ts",
+      "tests/unit/authoredTopology.test.ts"
+    ],
+    "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/containment-annulus-v3",
+    "started_at": "2026-10-02T01:43:05.941229+00:00",
+    "finished_at": "2026-10-02T01:43:09.941934+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "npm-test",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/containment-annulus-v3",
+    "started_at": "2026-10-02T01:43:09.942283+00:00",
+    "finished_at": "2026-10-02T01:43:35.948741+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/containment-annulus-v3",
+    "started_at": "2026-10-02T01:43:35.949115+00:00",
+    "finished_at": "2026-10-02T01:43:41.950202+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "room-evidence-tests",
+    "command": [
+      "npm",
+      "run",
+      "test:room-evidence"
+    ],
+    "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/containment-annulus-v3",
+    "started_at": "2026-10-02T01:43:41.950631+00:00",
+    "finished_at": "2026-10-02T01:43:43.951513+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/containment-annulus-v3",
+    "started_at": "2026-10-02T01:43:43.951964+00:00",
+    "finished_at": "2026-10-02T01:43:45.952758+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "capture",
+    "command": [
+      "node",
+      "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/containment-annulus/story-flow-v3/stage-5/attempt-1026/room-evidence.mjs",
+      "--rooms=containment-annulus",
+      "--gameplay-all",
+      "--viewport=desktop",
+      "--verify-all",
+      "--out=/home/chernodubv/.hermes/workspaces/containment-art-roadmap/containment-annulus/story-flow-v3/stage-5/attempt-1026/native"
+    ],
+    "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/containment-annulus-v3",
+    "started_at": "2026-10-02T01:43:45.953148+00:00",
+    "finished_at": "2026-10-02T01:44:18.077452+00:00",
+    "exit_code": 0
+  }
+]

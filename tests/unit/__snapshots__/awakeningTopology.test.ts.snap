@@ -1655,6 +1655,24 @@ exports[`awakening cradle > preserves the other nineteen complete templates exac
     "width": 1200,
   },
   {
+    "boundary": [
+      {
+        "x": 0,
+        "y": 0,
+      },
+      {
+        "x": 1200,
+        "y": 0,
+      },
+      {
+        "x": 1200,
+        "y": 880,
+      },
+      {
+        "x": 0,
+        "y": 880,
+      },
+    ],
     "breaches": [
       {
         "x": 100,
@@ -1680,30 +1698,39 @@ exports[`awakening cradle > preserves the other nineteen complete templates exac
     "height": 880,
     "id": "service-shaft-landing",
     "name": "Service shaft landing",
-    "obstacles": [
-      {
-        "height": 210,
-        "width": 250,
-        "x": 290,
-        "y": 180,
-      },
-      {
-        "height": 200,
-        "width": 250,
-        "x": 660,
-        "y": 500,
-      },
-      {
-        "height": 100,
-        "width": 180,
-        "x": 300,
-        "y": 600,
-      },
-    ],
+    "obstacles": [],
     "spawn": {
       "x": 100,
       "y": 440,
     },
+    "voids": [
+      [
+        {
+          "x": 340,
+          "y": 240,
+        },
+        {
+          "x": 900,
+          "y": 240,
+        },
+        {
+          "x": 900,
+          "y": 540,
+        },
+        {
+          "x": 1200,
+          "y": 540,
+        },
+        {
+          "x": 1200,
+          "y": 640,
+        },
+        {
+          "x": 340,
+          "y": 640,
+        },
+      ],
+    ],
     "width": 1200,
   },
   {
@@ -1869,6 +1896,40 @@ exports[`awakening cradle > preserves the other nineteen complete templates exac
     "width": 1200,
   },
   {
+    "boundary": [
+      {
+        "x": 80,
+        "y": 40,
+      },
+      {
+        "x": 1120,
+        "y": 40,
+      },
+      {
+        "x": 1160,
+        "y": 80,
+      },
+      {
+        "x": 1160,
+        "y": 800,
+      },
+      {
+        "x": 1120,
+        "y": 840,
+      },
+      {
+        "x": 80,
+        "y": 840,
+      },
+      {
+        "x": 40,
+        "y": 800,
+      },
+      {
+        "x": 40,
+        "y": 80,
+      },
+    ],
     "breaches": [
       {
         "x": 100,
@@ -1894,42 +1955,47 @@ exports[`awakening cradle > preserves the other nineteen complete templates exac
     "height": 880,
     "id": "containment-annulus",
     "name": "Containment annulus",
-    "obstacles": [
-      {
-        "height": 260,
-        "width": 260,
-        "x": 470,
-        "y": 310,
-      },
-      {
-        "height": 100,
-        "width": 120,
-        "x": 280,
-        "y": 180,
-      },
-      {
-        "height": 100,
-        "width": 120,
-        "x": 800,
-        "y": 180,
-      },
-      {
-        "height": 100,
-        "width": 120,
-        "x": 280,
-        "y": 620,
-      },
-      {
-        "height": 100,
-        "width": 120,
-        "x": 800,
-        "y": 620,
-      },
-    ],
+    "obstacles": [],
     "spawn": {
       "x": 100,
       "y": 440,
     },
+    "voids": [
+      [
+        {
+          "x": 420,
+          "y": 240,
+        },
+        {
+          "x": 780,
+          "y": 240,
+        },
+        {
+          "x": 840,
+          "y": 300,
+        },
+        {
+          "x": 840,
+          "y": 580,
+        },
+        {
+          "x": 780,
+          "y": 640,
+        },
+        {
+          "x": 420,
+          "y": 640,
+        },
+        {
+          "x": 360,
+          "y": 580,
+        },
+        {
+          "x": 360,
+          "y": 300,
+        },
+      ],
+    ],
     "width": 1200,
   },
   {

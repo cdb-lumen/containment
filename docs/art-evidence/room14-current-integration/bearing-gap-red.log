@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /workspace/containment-room14-review
+
+ ❯ tests/unit/ServiceShaftLanding.test.ts (15 tests | 1 failed) 781ms
+     × supports both sheave bearings on their pads without floating gaps 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/ServiceShaftLanding.test.ts > Room14 accepted C balcony rough placement > supports both sheave bearings on their pads without floating gaps
+AssertionError: 478 bearing-rear: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/ServiceShaftLanding.test.ts:119:127
+    117|    const wheel=root.getObjectByName('sheave-'+x)!,bearing=wheel.getObj…
+    118|    const pad=wheel.children.find(o=>Math.abs(o.position.y*32-80)<.001&…
+    119|    expect(new T.Box3().setFromObject(pad).expandByScalar(1e-6).interse…
+       |                                                                                                                               ^
+    120|   }
+    121|   disposeModel(root);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 passed (15)
+   Start at  17:22:38
+   Duration  2.77s (transform 1.38s, setup 0ms, import 1.72s, tests 781ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
