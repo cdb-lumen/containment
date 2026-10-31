@@ -109,8 +109,8 @@ const budgets={blockoutPart:{meshes:128,triangles:100000,materials:8},world:{mes
 const manifest={sha,script,budgets,evidenceClass:'Production-built app with local-only deterministic room-3 canonical progression staging and inactive encounter director. Actual DepthGame.update player traversal; production HUD, high composer and shipping gameplay camera, settled through 24 production 50ms render calls per gameplay view. Fitted overview is diagnostic, not gameplay framing.',limitations:['Layout fixture, not a campaign playthrough or release acceptance. Prior rooms are cleared programmatically.','No enemy navigation, combat, shot, pickup, touch-input or objective-completion proof. Only recorded player route segments are exercised.','Three actor-height ray samples and HUD bounding rectangles are diagnostics, not complete painted-pixel occlusion proof; independent PNG review remains pending.','Source blockout part counts are observed before production material batching. World budgets describe actual post-batch room meshes, not isolated equipment draw calls. These are bounded blockout ceilings, not final equipment budgets.','Google Fonts CSS is intercepted with an empty response; production HUD DOM/CSS is retained but fallback font metrics may differ.','SwiftShader-enabled Chromium counters do not prove real-device FPS. No camera, light, HUD or geometry changes in production source.'],results};
 try{
  browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
- for(const [name,viewport,mobile] of [['desktop',{width:1280,height:900},false],['portrait',{width:390,height:844},true]]){
-  const context=await browser.newContext({viewport,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1}),page=await context.newPage(),errors=[];
+ for(const [name,viewport] of [['desktop',{width:1280,height:900}]]){
+  const context=await browser.newContext({viewport,deviceScaleFactor:1}),page=await context.newPage(),errors=[];
   page.setDefaultTimeout(180000);page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:''}));
   try{
@@ -134,7 +134,7 @@ try{
   }catch(error){await page.screenshot({path:resolve(out,`${name}-FAILED.png`)}).catch(()=>{});await writeFile(resolve(out,'failure.json'),JSON.stringify({sha,name,error:String(error),errors},null,2));throw error;}finally{await context.close();}
  }
  const expected=2*(views.length+1);assert.equal(results.length,expected);assert.equal(new Set(results.map(r=>r.file)).size,expected);
- for(const name of ['desktop','portrait'])assert.deepEqual(results.filter(r=>r.name===name).map(r=>r.view),[...views.map(v=>v[0]),'full-room']);
+ for(const name of ['desktop'])assert.deepEqual(results.filter(r=>r.name===name).map(r=>r.view),[...views.map(v=>v[0]),'full-room']);
  for(const r of results)assert.equal(createHash('sha256').update(await readFile(resolve(out,r.file))).digest('hex'),r.sha256);
  console.log(`Verified ${expected} unique captures and hashes`);
 }finally{await browser?.close();await new Promise((res,rej)=>server.httpServer.close(e=>e?rej(e):res()));}

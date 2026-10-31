@@ -10,7 +10,7 @@ const server=await preview({build:{outDir},preview:{host:'127.0.0.1',port:0}});l
 try{
  browser=await chromium.launch({args:['--no-sandbox','--enable-unsafe-swiftshader']});
  for(const mode of ['ready','fallback']){
-  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});const page=await context.newPage();page.setDefaultTimeout(90000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const context=await browser.newContext({viewport:{width:1280,height:720}});const page=await context.newPage();page.setDefaultTimeout(90000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:''}));
   let hold=false;const held=[];await page.route('**/*.glb',r=>{if(hold&&r.request().url().includes('/awakening/'))held.push(r);else return r.continue();});
   await page.goto(server.resolvedUrls.local[0]);await page.waitForFunction(()=>window.__safeLoading&&document.body.dataset.state==='menu');hold=true;

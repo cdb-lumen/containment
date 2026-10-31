@@ -10,9 +10,9 @@ export function evidenceOptions(args) {
   const option=(name,fallback)=>args.find(a=>a.startsWith(`--${name}=`))?.slice(name.length+3)??fallback;
   const start=Number(option('start','0')),limit=Number(option('limit','1000'));
   assert.ok(Number.isInteger(start)&&start>=0&&Number.isInteger(limit)&&limit>0,'Invalid start/limit');
-  const named={desktop:'1280x900',phone:'390x844'};
+  const named={desktop:'1280x900'};
   const size=option('viewport','desktop'), match=/^(\d+)x(\d+)$/.exec(named[size]??size);
-  assert.ok(match,'Viewport must be desktop, phone or WIDTHxHEIGHT');
+  assert.ok(match,'Viewport must be desktop or WIDTHxHEIGHT');
   const viewport={width:Number(option('width',match[1])),height:Number(option('height',match[2]))};
   assert.ok(Object.values(viewport).every(n=>Number.isInteger(n)&&n>0&&n<=8192),'Invalid viewport dimensions');
   const ids=option('rooms',null)?.split(',')??null;

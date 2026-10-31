@@ -14,12 +14,12 @@ export function demoOptions(argv) {
  if(a.help||a['self-test']){assert.equal(Object.keys(a).length,1,'help/self-test must be used alone');return {help:!!a.help,selfTest:!!a['self-test']};}
  const provisional=a.provisional===true,seconds=Number(a.seconds??(provisional?2:6));
  assert(seconds===(provisional?2:6),'Use exactly 2 provisional seconds or 6 final seconds');
- const viewportName=a.viewport??'desktop';assert(['desktop','portrait'].includes(viewportName),'viewport must be desktop or portrait');
+ const viewportName=a.viewport??'desktop';assert.equal(viewportName,'desktop','Only the desktop viewport is supported');
  const quality=a.quality??'high';assert(['high','low'].includes(quality),'quality must be high or low');
  if(!provisional)assert.match(a['source-sha']??'',/^[a-f0-9]{40}$/,'Final mode needs exact --source-sha');
  if(a['source-sha'])assert.match(a['source-sha'],/^[a-f0-9]{40}$/);
  const measureFrames=Number(a['measure-frames']??180);assert(Number.isInteger(measureFrames)&&measureFrames>=0&&measureFrames<=600,'measure-frames must be 0..600');
- return {provisional,seconds,fps:20,frames:seconds*20,viewportName,viewport:viewportName==='desktop'?{width:1280,height:720}:{width:390,height:844},quality,sourceSha:a['source-sha'],measureFrames,out:resolve(a.out??`artifacts/ragdoll-${viewportName}${provisional?'-provisional':''}`)};
+ return {provisional,seconds,fps:20,frames:seconds*20,viewportName,viewport:{width:1280,height:720},quality,sourceSha:a['source-sha'],measureFrames,out:resolve(a.out??`artifacts/ragdoll-${viewportName}${provisional?'-provisional':''}`)};
 }
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export function verifyStats(s){
@@ -49,7 +49,7 @@ export function verifyBehavior(manifest){
 export function verifyProbe(p,o){assert.equal(p.streams.length,1,'Expected silent single-stream video');const s=p.streams[0];assert.equal(s.codec_name,'h264');assert.equal(s.pix_fmt,'yuv420p');assert.equal(s.width,o.viewport.width);assert.equal(s.height,o.viewport.height);assert.equal(Number(s.nb_read_frames),o.frames);assert.equal(Number(s.nb_frames),o.frames);assert.equal(s.avg_frame_rate,'20/1');assert(Math.abs(Number(p.format.duration)-o.seconds)<.025);}
 export function selfTest(){
  let checks=0;const ok=fn=>{fn();checks++;},bad=fn=>{assert.throws(fn);checks++;};
- ok(()=>assert.equal(demoOptions(['--provisional']).frames,40));ok(()=>assert.deepEqual(demoOptions(['--provisional','--viewport=desktop']).viewport,{width:1280,height:720}));ok(()=>assert.deepEqual(demoOptions(['--provisional','--viewport=portrait']).viewport,{width:390,height:844}));
+ ok(()=>assert.equal(demoOptions(['--provisional']).frames,40));ok(()=>assert.deepEqual(demoOptions(['--provisional','--viewport=desktop']).viewport,{width:1280,height:720}));bad(()=>demoOptions(['--provisional','--viewport=portrait']));
  for(const a of [[],['--provisional=false'],['--provisional','--viewport=phone'],['--provisional','--seconds=6'],['--provisional','--fps=20'],['--provisional','--provisional'],['--self-test','--out=x'],['--provisional','--measure-frames=601']])bad(()=>demoOptions(a));
  const stats={active:1,settled:0,bodies:3,joints:2,budget:3,stepMs:.1};ok(()=>verifyStats(stats));for(const patch of [{active:4},{bodies:61},{joints:4},{stepMs:NaN},{bodies:0},{settled:-1}])bad(()=>verifyStats({...stats,...patch}));
  const rotation={x:0,y:0,z:0,w:1};const frames=Array.from({length:5},(_,i)=>({ragdolls:[{id:7,parts:[{name:'root',position:{x:i,y:1,z:0},rotation},{name:'limb',position:{x:i+1,y:1,z:0},rotation:{x:Math.sin(i*.1),y:0,z:0,w:Math.cos(i*.1)}}]}]}));
@@ -77,7 +77,7 @@ async function record(options){
   server=await createServer({root,configFile:join(root,'vite.config.ts'),base:'/',cacheDir:join(out,'.vite-cache'),optimizeDeps:{noDiscovery:true,include:[]},server:{host:'127.0.0.1',port:0,hmr:false,preTransformRequests:false},logLevel:'error'});await server.listen();
   m.origin=`http://127.0.0.1:${server.httpServer.address().port}/`;
   browserServer=await chromium.launchServer({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader'],timeout:120000});m.browserPid=browserServer.process()?.pid;browser=await chromium.connect(browserServer.wsEndpoint());
-  const context=await browser.newContext({viewport:options.viewport,deviceScaleFactor:1,isMobile:options.viewportName==='portrait',hasTouch:options.viewportName==='portrait'}),page=await context.newPage();page.setDefaultTimeout(120000);
+  const context=await browser.newContext({viewport:options.viewport,deviceScaleFactor:1,isMobile:false,hasTouch:false}),page=await context.newPage();page.setDefaultTimeout(120000);
   page.on('pageerror',e=>m.errors.push(e.message));page.on('console',e=>{if(e.type()==='error')m.errors.push(e.text());});page.on('requestfailed',r=>m.errors.push(`${r.url()} ${r.failure()?.errorText}`));page.on('response',r=>{if(r.status()>=400)m.errors.push(`${r.status()} ${r.url()}`);});
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:''}));
   await page.addInitScript(()=>{const raf=requestAnimationFrame.bind(window);window.requestAnimationFrame=cb=>raf(t=>{if(!window.__ragHold)cb(t);});});
@@ -114,4 +114,4 @@ async function record(options){
   m.mp4={path:mp4,sha256:hash(await readFile(mp4))};m.sourceAfter=await source();assert.equal(m.sourceBefore.sha,m.sourceAfter.sha,'HEAD changed');assert.equal(m.sourceBefore.treeSha256,m.sourceAfter.treeSha256,'Source/assets/tooling changed');if(!options.provisional)assert.equal(m.sourceAfter.status,'','Worktree became dirty');assert.deepEqual(m.errors,[]);m.state='verified';m.finalEvidence=!options.provisional;await save();console.log(JSON.stringify({state:m.state,manifest,mp4,frames:m.frames.length,provisional:options.provisional,pixelReview:m.pixelReview}));
  }catch(e){m.state='failed';m.failure=e.stack??String(e);await save();throw e;}finally{clearTimeout(watchdog);process.removeListener('SIGINT',signal);process.removeListener('SIGTERM',signal);await cleanup();}
 }
-if(process.argv[1]&&pathToFileURL(resolve(process.argv[1])).href===import.meta.url){const o=demoOptions(process.argv.slice(2));if(o.selfTest)selfTest();else if(o.help)console.log('node scripts/ragdoll-demo.mjs --provisional --viewport=desktop|portrait --out=/new/absolute/path\nFinal: --source-sha=<full HEAD> [--viewport=desktop|portrait] [--quality=high|low] [--measure-frames=180]\nFinal 6s/20fps/120 frames; provisional 2s/20fps/40 frames. --self-test runs CPU validator checks only.');else await record(o);}
+if(process.argv[1]&&pathToFileURL(resolve(process.argv[1])).href===import.meta.url){const o=demoOptions(process.argv.slice(2));if(o.selfTest)selfTest();else if(o.help)console.log('node scripts/ragdoll-demo.mjs --provisional --viewport=desktop --out=/new/absolute/path\nFinal: --source-sha=<full HEAD> [--viewport=desktop] [--quality=high|low] [--measure-frames=180]\nFinal 6s/20fps/120 frames; provisional 2s/20fps/40 frames. --self-test runs CPU validator checks only.');else await record(o);}
