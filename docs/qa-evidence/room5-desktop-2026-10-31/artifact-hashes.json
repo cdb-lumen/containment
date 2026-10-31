@@ -1,122 +1,47 @@
-[
-  {
-    "path": "failed-no-boon-a1ff3d6/capture.mjs",
-    "sha256": "caf38e07fd478d652c9cb075099c603aa33b02fb6f804f60363af2a36b3723e1",
-    "bytes": 11164
-  },
-  {
-    "path": "failed-no-boon-a1ff3d6/failed-combat.mp4",
-    "sha256": "5d67da24e29605fe88d0335de3f77e320126eccd1a22e24f0eb10c60a0763f55",
-    "bytes": 2344832
-  },
-  {
-    "path": "failed-no-boon-a1ff3d6/failure-verification.json",
-    "sha256": "a530f584b80944ff64f861927e5cbc77993ca214ff2339e062488207b6e42648",
-    "bytes": 2846
-  },
-  {
-    "path": "failed-no-boon-a1ff3d6/manifest.json",
-    "sha256": "c119b9a2740075691fe0c61bd123ad9b85198fcc0b9feccb18138fcf71a439e0",
-    "bytes": 3619848
-  },
-  {
-    "path": "failed-no-boon-a1ff3d6/trace-verification.json",
-    "sha256": "c843389f856bb30f323f4d855ea886ccdd13c5fce54a45a26bee549cf0a5a413",
-    "bytes": 221
-  },
-  {
-    "path": "pre-cleanup-4dd5905/capture.mjs",
-    "sha256": "06b43b5262955a61d7c07f6c2473f4b9592f4dcf1e6c01b6645e385e9fd7cd4c",
-    "bytes": 12635
-  },
-  {
-    "path": "pre-cleanup-4dd5905/combat.mp4",
-    "sha256": "64d4158b4bd028a2b89fe40bcef34575c2b7c52903e7878657a6ae1925e747a6",
-    "bytes": 2392948
-  },
-  {
-    "path": "pre-cleanup-4dd5905/manifest.json",
-    "sha256": "bd86194370a384525628a7aab4c029fe02d58120b4af19275a7cbad200fabcd6",
-    "bytes": 2687791
-  },
-  {
-    "path": "pre-cleanup-4dd5905/onward.png",
-    "sha256": "95c91cb8d081a150f728781f0e781247a460b1e0d87ddbf21327d401ce83f600",
-    "bytes": 756088
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0000.jpg",
-    "sha256": "75a97e43ceb9b50281d3753b160cca860dc1d157d22430bc9551d593627ccf07",
-    "bytes": 359647
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0040.jpg",
-    "sha256": "9e8f4be84564a21e74ac23ac08c55b29a0aef853457ec56333cb794c0f677f27",
-    "bytes": 383621
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0080.jpg",
-    "sha256": "e40e99ef2fcf6ce5ca52640e38aa7db28ef740b7bd7cbd61093f23c8ec271aec",
-    "bytes": 390728
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0120.jpg",
-    "sha256": "3303b589f878d52de698898dbc901b1ffa5955daddffea1d87bcc25e38cca09e",
-    "bytes": 400056
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0160.jpg",
-    "sha256": "3b8122c2688b113da10fd0ca49d82692736954f8f4faec028012f7bd6571ec8c",
-    "bytes": 407385
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0200.jpg",
-    "sha256": "af857f2ed1ca1108265a04b4079e1af0845904286378780762948783ffa08cb8",
-    "bytes": 405482
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0240.jpg",
-    "sha256": "3cf475eaa7258eb94a0151707ff6ac725652301d80a1f67af193224c11f075fb",
-    "bytes": 398160
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0280.jpg",
-    "sha256": "604ef6a19a1a5c7be04c88d5151894baca4bc50d4b3e1cf87f1daf2bc5e69094",
-    "bytes": 393053
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0320.jpg",
-    "sha256": "79da9138177323b82a4e064d59098b23d861c9f76a66309506da58d108a5ea8a",
-    "bytes": 391905
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0360.jpg",
-    "sha256": "89bfa251cc8947fd28fcd54c072be0940dcca4d4f59f6b021cf62b13c623ab42",
-    "bytes": 387800
-  },
-  {
-    "path": "pre-cleanup-4dd5905/review-sheets/frames-0400.jpg",
-    "sha256": "ddf7908413beac99f53de4d51435dd4e7a967f6a6c89c46beed14c2f3e6a9534",
-    "bytes": 41845
-  },
-  {
-    "path": "pre-cleanup-4dd5905/reward.png",
-    "sha256": "08e93a870823fb8a0528427e90bbc55615b0367761163898621f46e99672c586",
-    "bytes": 285216
-  },
-  {
-    "path": "pre-cleanup-4dd5905/route.png",
-    "sha256": "67c65cc3d2ab03a43c487ade97e85a93c2d94726371131ccd473697362088211",
-    "bytes": 249121
-  },
-  {
-    "path": "pre-cleanup-4dd5905/trace-verification.json",
-    "sha256": "c5c2a96839a19e66cbdeb406a4e56ced07ac1090b809c30f0f38362d8bce03e5",
-    "bytes": 223
-  },
-  {
-    "path": "verify-campaign-traces.mjs",
-    "sha256": "5239b4c0d5b52908d3413d7cdce534dc96917460d0fd264f76f4d2056906fef1",
-    "bytes": 1869
-  }
-]
+{
+  "README.md": "a33deb9383a9c541952761b9553a795d2cc9f97e437553fb7cea09b36a1bacb1",
+  "desktop-route-8dc10c9/capture.mjs": "9ac7e1ffd214d72a48799c6c059460c27302b53361ec6deae55c5877664df34a",
+  "desktop-route-8dc10c9/combat.mp4": "f32820a4470de59d13b0380df46dc1aa0fa7aa044127d461c6c1491e5134eb90",
+  "desktop-route-8dc10c9/manifest.json": "36e9c5c6aa2e2a537827f21bc1630b373133017e85778b780746e3232ed04cdc",
+  "desktop-route-8dc10c9/onward.png": "6741186b94077d62226abc1353ef967ae30b3d441cf8e6928d2c304245608e23",
+  "desktop-route-8dc10c9/review-sheets/frames-0000.jpg": "d3a458eb21065144e7100f5f86cda843e2fc31da337c512fb900aaa0a6cfc447",
+  "desktop-route-8dc10c9/review-sheets/frames-0040.jpg": "6e570ce439037bef78d935874d83d43e67c5a870e46cf86662ee7c3a5d236636",
+  "desktop-route-8dc10c9/review-sheets/frames-0080.jpg": "c314ac1b5b7cecc60510ee2174a45e086c6ad0aecedd6ef4986ae12feb1128a8",
+  "desktop-route-8dc10c9/review-sheets/frames-0120.jpg": "bf94f74dd778fde9270a909a80180cedd8ac43488ca873ab0fbdc12314f51b5d",
+  "desktop-route-8dc10c9/review-sheets/frames-0160.jpg": "6de1653c078cf161d2fe58b5d56d49d186ac8f835911e8cedffb71c1ce02791a",
+  "desktop-route-8dc10c9/review-sheets/frames-0200.jpg": "81cd03c402289cdbb36facb256f7a54b2e2f58ff03e7b61ac455e001a716e594",
+  "desktop-route-8dc10c9/review-sheets/frames-0240.jpg": "132685b8d23ff651d98c5632e6c6776f1c84a08b4c0d7a22f3c9fabac79e3b39",
+  "desktop-route-8dc10c9/review-sheets/frames-0280.jpg": "f6671e6e1c6dbdcfc496d13202572aa814180a2993e690d84a33e88da05f95b0",
+  "desktop-route-8dc10c9/review-sheets/frames-0320.jpg": "47aea2a908dbdd25e24d96bded584ddabf55243ba703869726dd951bf0139c99",
+  "desktop-route-8dc10c9/review-sheets/frames-0360.jpg": "40412537423870dfb3f9d6961333c816e4c006b0058e7f65872fe2f7aafe7157",
+  "desktop-route-8dc10c9/review-sheets/frames-0400.jpg": "bb0c1541abaa983887ae9a44338909a6baceaea1e67878fb375605149245c944",
+  "desktop-route-8dc10c9/review-sheets/frames-0440.jpg": "1da219a180144bd45948a109ffeb333511f8ea15ac7d003455ca731f56f62842",
+  "desktop-route-8dc10c9/review-sheets/frames-0480.jpg": "30a61e2fe49e9fb0635b850a89564cc7e91fe9ed45f65b08f7cd3fc1c61c75f4",
+  "desktop-route-8dc10c9/reward.png": "c3393e6319239338fa774fad07afc7d145faff86e7d729a567e9a4a85a46d92b",
+  "desktop-route-8dc10c9/route.png": "a90cf4bc18fd8921d5db59162a828dd1566baf6672e23a31429e92af60c3446e",
+  "desktop-route-8dc10c9/trace-verification.json": "fc97aba92b17c47a970e96b9e50ed4904fb8b33bfe58a692e20ccc6c28dae2fe",
+  "failed-no-boon-a1ff3d6/capture.mjs": "caf38e07fd478d652c9cb075099c603aa33b02fb6f804f60363af2a36b3723e1",
+  "failed-no-boon-a1ff3d6/failed-combat.mp4": "5d67da24e29605fe88d0335de3f77e320126eccd1a22e24f0eb10c60a0763f55",
+  "failed-no-boon-a1ff3d6/failure-verification.json": "a530f584b80944ff64f861927e5cbc77993ca214ff2339e062488207b6e42648",
+  "failed-no-boon-a1ff3d6/manifest.json": "c119b9a2740075691fe0c61bd123ad9b85198fcc0b9feccb18138fcf71a439e0",
+  "failed-no-boon-a1ff3d6/trace-verification.json": "c843389f856bb30f323f4d855ea886ccdd13c5fce54a45a26bee549cf0a5a413",
+  "pre-cleanup-4dd5905/capture.mjs": "06b43b5262955a61d7c07f6c2473f4b9592f4dcf1e6c01b6645e385e9fd7cd4c",
+  "pre-cleanup-4dd5905/combat.mp4": "64d4158b4bd028a2b89fe40bcef34575c2b7c52903e7878657a6ae1925e747a6",
+  "pre-cleanup-4dd5905/manifest.json": "bd86194370a384525628a7aab4c029fe02d58120b4af19275a7cbad200fabcd6",
+  "pre-cleanup-4dd5905/onward.png": "95c91cb8d081a150f728781f0e781247a460b1e0d87ddbf21327d401ce83f600",
+  "pre-cleanup-4dd5905/review-sheets/frames-0000.jpg": "75a97e43ceb9b50281d3753b160cca860dc1d157d22430bc9551d593627ccf07",
+  "pre-cleanup-4dd5905/review-sheets/frames-0040.jpg": "9e8f4be84564a21e74ac23ac08c55b29a0aef853457ec56333cb794c0f677f27",
+  "pre-cleanup-4dd5905/review-sheets/frames-0080.jpg": "e40e99ef2fcf6ce5ca52640e38aa7db28ef740b7bd7cbd61093f23c8ec271aec",
+  "pre-cleanup-4dd5905/review-sheets/frames-0120.jpg": "3303b589f878d52de698898dbc901b1ffa5955daddffea1d87bcc25e38cca09e",
+  "pre-cleanup-4dd5905/review-sheets/frames-0160.jpg": "3b8122c2688b113da10fd0ca49d82692736954f8f4faec028012f7bd6571ec8c",
+  "pre-cleanup-4dd5905/review-sheets/frames-0200.jpg": "af857f2ed1ca1108265a04b4079e1af0845904286378780762948783ffa08cb8",
+  "pre-cleanup-4dd5905/review-sheets/frames-0240.jpg": "3cf475eaa7258eb94a0151707ff6ac725652301d80a1f67af193224c11f075fb",
+  "pre-cleanup-4dd5905/review-sheets/frames-0280.jpg": "604ef6a19a1a5c7be04c88d5151894baca4bc50d4b3e1cf87f1daf2bc5e69094",
+  "pre-cleanup-4dd5905/review-sheets/frames-0320.jpg": "79da9138177323b82a4e064d59098b23d861c9f76a66309506da58d108a5ea8a",
+  "pre-cleanup-4dd5905/review-sheets/frames-0360.jpg": "89bfa251cc8947fd28fcd54c072be0940dcca4d4f59f6b021cf62b13c623ab42",
+  "pre-cleanup-4dd5905/review-sheets/frames-0400.jpg": "ddf7908413beac99f53de4d51435dd4e7a967f6a6c89c46beed14c2f3e6a9534",
+  "pre-cleanup-4dd5905/reward.png": "08e93a870823fb8a0528427e90bbc55615b0367761163898621f46e99672c586",
+  "pre-cleanup-4dd5905/route.png": "67c65cc3d2ab03a43c487ade97e85a93c2d94726371131ccd473697362088211",
+  "pre-cleanup-4dd5905/trace-verification.json": "c5c2a96839a19e66cbdeb406a4e56ced07ac1090b809c30f0f38362d8bce03e5",
+  "verify-campaign-traces.mjs": "5239b4c0d5b52908d3413d7cdce534dc96917460d0fd264f76f4d2056906fef1"
+}
