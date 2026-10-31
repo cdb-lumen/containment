@@ -15,6 +15,13 @@ describe('Room12 second service revision',()=>{
   for(const n of ['panel-inner-recess','panel-stay','ai-protective-cheek-left','ai-protective-cheek-right','socket-recess-bed','service-edge-wear'])part(r,n);
   disposeModel(r);
  });
+ it('keeps the open cover hinges clear of the exposed cooling and capacitor hardware',()=>{
+  const r=model(1),hinges:T.Object3D[]=[],components:T.Object3D[]=[];
+  r.traverse(o=>{if(o.name==='panel-hinge')hinges.push(o);if(o.name==='cooling-fin'||o.name==='capacitor-can')components.push(o);});
+  expect(hinges).toHaveLength(2);expect(components.length).toBeGreaterThan(0);
+  for(const hinge of hinges)for(const component of components)expect(bounds(hinge).intersectsBox(bounds(component)),`${hinge.name} must clear ${component.name}`).toBe(false);
+  disposeModel(r);
+ });
  it('keeps the pulled lead attached at both ends with a supported route and a visible isolation gap',()=>{
   const r=model(1);r.updateMatrixWorld(true);
   const lead=part(r,'disconnected-lead') as T.Mesh,g=lead.geometry as T.TubeGeometry;
