@@ -1,0 +1,11 @@
+# Room12 model iteration, attempt1003
+
+Verdict: failed. Stage incomplete. Independent final reviewer and parent agree that the opened AI panel and pulled connector remain ambiguous at the unchanged gameplay camera. The orange cable is clearer, but the connector resembles a fitted control and the open panel resembles a rear housing rim. Local wear reads as clean fittings rather than serviced edges. No further art correction is attempted within this dispatch.
+
+The recorder remains sealed and is the strongest equipment focal point. Layered housings improve depth, while the contactor gap, battery and separate service routes remain distinct. These bounded improvements do not satisfy the full authorized revision.
+
+Parent inspected both final original PNGs. Independent reviews are preserved in independent-review.md and independent-final-review.md. The first failed image/source mismatch remains recorded. A subsequent unchanged-source capture resolves the final source provenance gap: every src file was hashed before capture and verified afterward; both pinned PNGs are byte-identical to the independently reviewed final PNGs. See source-before-capture.json and source-capture-verification.json. No art verdict changed through that provenance repair.
+
+Parent final capture, npm test and npm run build returned exit0. Independent focused rerun passed35 tests across five files. Earlier room-evidence and CPU route/story checks passed before the final presentation adjustment; they are not claimed as fresh final runs. Full local browser smoke, live combat and release verification were not run. Build retains its large-chunk warning. Baseline images are exact attempt999 originals. Production-camera images are static staged simulation without DOM HUD; overview uses a fitted camera. The inherited OVERALL caption names the capture tool, not a stage5 pass.
+
+Runtime changes are restricted to SafetyInterlockBlockout.ts, with focused room tests. Camera, HUD, gameplay, topology and unrelated room source remain unchanged. Earlier failures, canonical inputs and counters are preserved. Publish this failed candidate in draft PR77 and its existing gallery, then submit the failed receipt for the installed exhausted-stage review workflow. No human acceptance, retry reset, merge or deployment.

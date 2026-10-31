@@ -1,0 +1,151 @@
+{
+  "method": "Exact rectangular cell decomposition of square-inflated obstacles and inset room. Positive-area shared-edge adjacency. Continuous axis-aligned route sweeps. No sampled-grid pass.",
+  "bound": "Conservative center domain excludes circular corner slivers. Static source geometry only, not runtime navigation or combat. No added solids.",
+  "results": [
+    {
+      "radius": 16,
+      "free_cells": 28,
+      "connected_components": 1,
+      "component_cell_counts": [
+        28
+      ],
+      "anchors_clear": {
+        "spawn": true,
+        "exit": true,
+        "breach 1": true,
+        "breach 2": true,
+        "breach 3": true,
+        "breach 4": true,
+        "record viewing point": true,
+        "AI-side viewing point": true,
+        "contactor viewing point": true
+      },
+      "routes": {
+        "direct": {
+          "minimum_euclidean_clearance": 90.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "north bypass": {
+          "minimum_euclidean_clearance": 70.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "south bypass": {
+          "minimum_euclidean_clearance": 60.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "record approach": {
+          "minimum_euclidean_clearance": 45.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "AI-side approach": {
+          "minimum_euclidean_clearance": 45.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "contactor approach": {
+          "minimum_euclidean_clearance": 45.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 1 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 2 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 3 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 4 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "radius": 28,
+      "free_cells": 28,
+      "connected_components": 1,
+      "component_cell_counts": [
+        28
+      ],
+      "anchors_clear": {
+        "spawn": true,
+        "exit": true,
+        "breach 1": true,
+        "breach 2": true,
+        "breach 3": true,
+        "breach 4": true,
+        "record viewing point": true,
+        "AI-side viewing point": true,
+        "contactor viewing point": true
+      },
+      "routes": {
+        "direct": {
+          "minimum_euclidean_clearance": 90.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "north bypass": {
+          "minimum_euclidean_clearance": 70.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "south bypass": {
+          "minimum_euclidean_clearance": 60.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "record approach": {
+          "minimum_euclidean_clearance": 45.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "AI-side approach": {
+          "minimum_euclidean_clearance": 45.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "contactor approach": {
+          "minimum_euclidean_clearance": 45.0,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 1 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 2 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 3 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        },
+        "breach 4 ingress": {
+          "minimum_euclidean_clearance": 100,
+          "square_sweep_clear": true,
+          "passed": true
+        }
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}
