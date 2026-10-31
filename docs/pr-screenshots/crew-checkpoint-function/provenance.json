@@ -1,0 +1,1157 @@
+{
+  "before_source": "fa414c712c9987288c3f5c910d374970fac447e9",
+  "reviewed_source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+  "current_source_equivalent": "b5a8fe06034e109d36472623cb2b5f97c8b9a031",
+  "class": "staged native app art, actual Skip HUD and unchanged shipping camera; not combat or release evidence",
+  "functional_layout": "bounded independent visual acceptance",
+  "breach_legibility": "rejected; DM535120 not fully fixed",
+  "phone_HUD_dependency": "open",
+  "rows": [
+    {
+      "file": "before/desktop-skip-approach.png",
+      "sha256": "620aac4900f843504f713055d7dd37b3557b9a7cf498633b1574cb8891aad7ef",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "desktop",
+      "pose": "approach",
+      "player": {
+        "x": 400,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          14.944444444444445,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before/desktop-skip-crew-side.png",
+      "sha256": "7db3e37e9d185b1aec6d67747776ead2da57a64ae99c357be8a537e5200a03f3",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "desktop",
+      "pose": "crew-side",
+      "player": {
+        "x": 820,
+        "y": 360,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          22.555345972579953,
+          26,
+          31.924150746901642
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before/phone-skip-approach.png",
+      "sha256": "465019fc0f8ad364672a3dca846353954bb1b50c662c6895c4e5c1d984239f9f",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "phone",
+      "pose": "approach",
+      "player": {
+        "x": 400,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          12.499833743793133,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before/phone-skip-crew-side.png",
+      "sha256": "0bae34946c57268198428054de94e9bd28225e834d7aa499e2290e9037edeeb8",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "phone",
+      "pose": "crew-side",
+      "player": {
+        "x": 820,
+        "y": 360,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          25.62463857952418,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before-supplement-retry/desktop-skip-gate.png",
+      "sha256": "b9418d11efa948f7dd4ccfae268f96a261ccf420a291ede337acc85f454ccb71",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "desktop",
+      "pose": "gate",
+      "player": {
+        "x": 650,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.312352182810088,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before-supplement-retry/desktop-skip-north-join.png",
+      "sha256": "757566d50b0d463201c9e36ad978687e10fdf1a317253dff9c98c7cf43db06b7",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "desktop",
+      "pose": "north-join",
+      "player": {
+        "x": 650,
+        "y": 150,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.31249999592964,
+          26,
+          31.924150746901642
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before-supplement-retry/desktop-skip-south-join.png",
+      "sha256": "a919e0f9dc2691dbe998dfd41522357f9b3b3d0ab8a97f487d1449e91e6dcc47",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "desktop",
+      "pose": "south-join",
+      "player": {
+        "x": 650,
+        "y": 720,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.31249999999989,
+          26,
+          33.57582651214223
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before-supplement-retry/phone-skip-gate.png",
+      "sha256": "ad08731af64432885b13e979fc4e1d1fa058ff3b1e249b6a2a69443b7619e429",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "phone",
+      "pose": "gate",
+      "player": {
+        "x": 650,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.31211861528259,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before-supplement-retry/phone-skip-north-join.png",
+      "sha256": "75eb85132e2f5df794af80f3b63f9f0926d856975def308e70c592ddea8fd563",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "phone",
+      "pose": "north-join",
+      "player": {
+        "x": 650,
+        "y": 150,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.31249998949802,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "before-supplement-retry/phone-skip-south-join.png",
+      "sha256": "ac993079c9f7ab330a7529785e19e46ef33aac51eba990cd03e34c81845b0313",
+      "source": "fa414c712c9987288c3f5c910d374970fac447e9",
+      "viewport": "phone",
+      "pose": "south-join",
+      "player": {
+        "x": 650,
+        "y": 720,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.31249999999971,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/desktop-skip-approach.png",
+      "sha256": "a614cf06c2a01288d2523644994e709604ecff601fadca413a6f46b194be7c50",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "desktop",
+      "pose": "approach",
+      "player": {
+        "x": 400,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          14.944444444444445,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/desktop-skip-crew-side.png",
+      "sha256": "81a762d22a7d29a0cfe343ddee68e6f8f3b7b72bf92d8e1a7db0ab13e82564db",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "desktop",
+      "pose": "crew-side",
+      "player": {
+        "x": 820,
+        "y": 360,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          22.555345972579953,
+          26,
+          31.924150746901642
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/desktop-skip-gate.png",
+      "sha256": "8a25c274f4f6417f69d56cf05e923cd8e826965f815dc62f4a32576338baf781",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "desktop",
+      "pose": "gate",
+      "player": {
+        "x": 650,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.312561760014525,
+          26,
+          32.749977259043874
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/desktop-skip-north-join.png",
+      "sha256": "fbc40cfa9a9e4a5d9efdc9657b7b7ae7b382819a3134628babe1516e936fd520",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "desktop",
+      "pose": "north-join",
+      "player": {
+        "x": 650,
+        "y": 150,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.312500001700652,
+          26,
+          31.924150746275437
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/desktop-skip-south-join.png",
+      "sha256": "fcbd41810beeba97aea31fd5037175c5ef3a69942c255b755e24c31ae7051beb",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "desktop",
+      "pose": "south-join",
+      "player": {
+        "x": 650,
+        "y": 720,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.312500000000046,
+          26,
+          33.575826512142214
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/desktop-skip-operator.png",
+      "sha256": "164d72990001357b04ab093bbdf2e9deefb8828a6734cae56a61a32c13c6db28",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "desktop",
+      "pose": "operator",
+      "player": {
+        "x": 730,
+        "y": 320,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          22.555493789769866,
+          26,
+          31.924173487231563
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.06392045454545454,
+          0,
+          0,
+          0,
+          0,
+          0.09090909090909091,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/phone-skip-approach.png",
+      "sha256": "65ac280f2749301bff15b893aa2b68f6bf8cae02f0a2bd811c93271fdf72d064",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "phone",
+      "pose": "approach",
+      "player": {
+        "x": 400,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          12.499833743793133,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/phone-skip-crew-side.png",
+      "sha256": "08358465e3706b0dac70afd66210092e1263883cb7f5330bac6b6cbfa90de518",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "phone",
+      "pose": "crew-side",
+      "player": {
+        "x": 820,
+        "y": 360,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          25.62463857952418,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/phone-skip-gate.png",
+      "sha256": "e4ecb6bc4df0fe1669de7639b86c486508c9612934ad549f5ff2ee38fe36417f",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "phone",
+      "pose": "gate",
+      "player": {
+        "x": 650,
+        "y": 440,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.312646277434933,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/phone-skip-north-join.png",
+      "sha256": "6c6586ae910cab6b6067321abb5ca6780a2235c4908800fc87a02f59ff1a6a3e",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "phone",
+      "pose": "north-join",
+      "player": {
+        "x": 650,
+        "y": 150,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.312500004027964,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/phone-skip-south-join.png",
+      "sha256": "a701719836fa4645bb232960202b3f645a3de2568c60ae2e18430a1296ab39d8",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "phone",
+      "pose": "south-join",
+      "player": {
+        "x": 650,
+        "y": 720,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          20.31250000000011,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    },
+    {
+      "file": "final/phone-skip-operator.png",
+      "sha256": "881e1e375a9cf8e252b5a501365e865de65cd5a7ade14e6e49bde4f2c6d95899",
+      "source": "6e0143d3038b4b67e79810cebdd86cd60059f26c",
+      "viewport": "phone",
+      "pose": "operator",
+      "player": {
+        "x": 730,
+        "y": 320,
+        "radius": 16,
+        "angle": 0,
+        "moving": false,
+        "vx": 0,
+        "vy": 0
+      },
+      "camera": {
+        "position": [
+          22.812431158876624,
+          26,
+          32.75
+        ],
+        "quaternion": [
+          -0.4527600968822728,
+          0,
+          0,
+          0.8916323764148287
+        ],
+        "projection": [
+          0.13961952026468155,
+          0,
+          0,
+          0,
+          0,
+          0.06451612903225806,
+          0,
+          0,
+          0,
+          0,
+          -0.016680567139282735,
+          0,
+          0,
+          0,
+          -1.0016680567139282,
+          1
+        ],
+        "zoom": 1
+      },
+      "state": "playing",
+      "quality": "high",
+      "legal": true,
+      "frozen_screenshot_pair_equal": true
+    }
+  ],
+  "runtime_pins_equal_to_reviewed_source": true,
+  "comparison_limits": "Approach/crew-side pairs have exact snapshot equality except drawCalls. Six supplemental pairs retain tiny camera-position settling differences, maximum0.0005276621523435665 renderer units; orientation/projection and all remaining fields match. Operator730,320 has no baseline pair because old geometry blocked it."
+}

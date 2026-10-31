@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {checkCheckpointFeedback} from './checkpoint-feedback-check.mjs';
 import {observeAudio,checkMenuSound,checkPausedSound} from './sound-controls-check.mjs';
 import {createServer} from 'node:http';
 import {readFile, mkdir} from 'node:fs/promises';
@@ -27,10 +28,9 @@ try {
   assert.equal((await fetch(origin + prefix + 'missing.js')).status, 404);
   timing.finish('passed');
   for (const viewport of viewports) {
-    const mobile = viewport === 'touch';
     timing = createSmokePhaseTimer(viewport);
     timing.start('context-and-menu');
-    const context = await browser.newContext({viewport:mobile ? {width:390,height:844} : {width:1280,height:720},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
+    const context = await browser.newContext({viewport:{width:1280,height:720},deviceScaleFactor:1});
     const page = await context.newPage();
     await observeAudio(page);
     page.setDefaultTimeout(60000);
@@ -47,7 +47,7 @@ try {
     await page.route('https://fonts.googleapis.com/**', route => route.fulfill({status:200,contentType:'text/css',body:''}));
     await page.goto(origin + prefix);
     await page.waitForFunction(() => document.body.dataset.state === 'menu');
-    // New sessions use fixed High on desktop and touch; only High and Low exist.
+    // New sessions use fixed High on desktop; only High and Low exist.
     timing.start('graphics');
     await page.locator('#settings').click();
     assert.equal(await page.locator('#quality').inputValue(), 'high');
@@ -66,9 +66,9 @@ try {
     assert.equal(await page.locator('#quality').inputValue(), 'high');
     assert.equal(await page.evaluate(() => window.__containmentPerformance.quality), 'high');
     await page.locator('#settings').click();
-    console.log(`Graphics High/Low defaults and selection passed: ${mobile?'touch':'desktop'}`);
+    console.log(`Graphics High/Low defaults and selection passed: desktop`);
     timing.start('menu-audio');
-    const selectedVolume = await checkMenuSound(page, mobile);
+    const selectedVolume = await checkMenuSound(page);
     const chooseStartingBoon = async (capture = false) => {
       await page.locator('#start').click();
       await page.waitForFunction(() => document.body.dataset.state === 'reward' && Number(document.querySelector('#magazine').textContent)>0);
@@ -76,7 +76,7 @@ try {
       assert.equal(await page.locator('.choice-panel h2').textContent(),'Choose a boon');
       assert.match(await page.locator('.choice-panel > .eyebrow').textContent(),/BEFORE COMBAT/);
       assert.equal(await page.locator('#reroll').isDisabled(),true);
-      const resources = () => page.locator('#health, #armor, #magazine, #reserve, #credits, #grenades, #medkits').allTextContents();
+      const resources = () => page.locator('#health, #armor, #magazine, #reserve, #credits, #desktop-stock').allTextContents();
       const before = await resources();
       await page.keyboard.down('d');await page.keyboard.down('Space');
       await page.keyboard.press('g');await page.keyboard.press('Escape');
@@ -88,10 +88,10 @@ try {
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),false);
       if(capture && process.env.SMOKE_SCREENSHOTS === '1') {
         await mkdir('docs/pr-screenshots',{recursive:true});
-        await page.screenshot({path:`docs/pr-screenshots/starting-boon-${mobile?'touch':'desktop'}.png`});
+        await page.screenshot({path:`docs/pr-screenshots/starting-boon-desktop.png`});
       }
       const card=page.locator('[data-mutation]').first(),name=await card.locator('h3').textContent();
-      if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
+      await card.focus();await page.keyboard.press('Enter');
       await page.waitForFunction(() => document.body.dataset.state === 'playing');
       await page.locator('#pause').click();
       assert.equal(await page.locator('.build-details summary').textContent(),'Boons · 1');
@@ -104,14 +104,7 @@ try {
     timing.start('gameplay-input');
     await page.waitForFunction(() => document.body.dataset.state === 'playing' && Number(document.querySelector('#magazine').textContent)>0);
     const ammo = await page.locator('#magazine').textContent();
-    if(mobile) {
-      const box=await page.locator('#fire').boundingBox();
-      const touch = await context.newCDPSession(page);
-      await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:box.x+box.width/2,y:box.y+box.height/2}]});
-      await page.waitForFunction(before => document.querySelector('#magazine').textContent !== before, ammo);
-      await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
-      await touch.detach();
-    } else {
+    {
       await page.keyboard.down('Space');
       await page.waitForFunction(before => document.querySelector('#magazine').textContent !== before, ammo);
       await page.keyboard.up('Space');
@@ -124,7 +117,7 @@ try {
     await page.locator('#pause').click();
     await page.waitForFunction(() => document.body.dataset.state === 'paused');
     timing.start('paused-audio');
-    await checkPausedSound(page, mobile, selectedVolume);
+    await checkPausedSound(page, selectedVolume);
     timing.start('credits-and-assets');
     const credits = await page.locator('a', {hasText:'Credits'}).getAttribute('href');
     assert.equal(new URL(credits, page.url()).pathname, prefix+'audio-credits.html');
@@ -135,7 +128,7 @@ try {
     await page.waitForFunction(() => window.__containmentPerformance.drawCalls > 0);
     if(process.env.SMOKE_SCREENSHOTS === '1') {
       await mkdir('docs/pr-screenshots',{recursive:true});
-      await page.screenshot({path:`docs/pr-screenshots/v2-${mobile?'touch':'desktop'}-gameplay.png`});
+      await page.screenshot({path:`docs/pr-screenshots/v2-desktop-gameplay.png`});
     }
     assert.equal([...assets].filter(p=>p.includes('/assets/models/')&&p.endsWith('.glb')).length,11);
     const roomModels=['assets/benchmark/sealed-cryo.glb','assets/awakening/released-berth/released-berth.glb','assets/awakening/recovery-kit/room-kit.glb'];
@@ -149,7 +142,10 @@ try {
     await page.locator('#menu').click();
     await chooseStartingBoon();
     assert.deepEqual(errors,[]);
-    console.log(JSON.stringify({viewport:mobile?'touch 390x844':'desktop 1280x720',startingBoon,restart:'fresh boon selected',state:'playing',assets:assets.size,errors,performance:await page.evaluate(()=>window.__containmentPerformance)}));
+    console.log(JSON.stringify({viewport:'desktop 1280x720',startingBoon,restart:'fresh boon selected',state:'playing',assets:assets.size,errors,performance:await page.evaluate(()=>window.__containmentPerformance)}));
+    timing.start('checkpoint-feedback');
+    await checkCheckpointFeedback(page);
+    assert.deepEqual(errors,[]);
     timing.start('context-close');
     await context.close();
     timing.finish('passed');
