@@ -12,7 +12,7 @@ const copy={
   'story-line':'The crew held this line. Their weapons remain.',
 };
 let browser:Browser;
-beforeAll(async()=>{browser=await chromium.launch({args:['--no-sandbox','--disable-gpu','--disable-webgl']});});
+beforeAll(async()=>{browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--disable-gpu','--disable-webgl']});});
 afterAll(async()=>{await browser?.close();});
 async function mount(width:number,height=844){
   const page=await browser.newPage({viewport:{width,height},hasTouch:width<701});
