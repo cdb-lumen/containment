@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "scripts/room-evidence.mjs",
+    "--rooms=containment-annulus",
+    "--gameplay-all",
+    "--viewport=desktop",
+    "--verify-all",
+    "--out=/home/chernodubv/.hermes/workspaces/containment-art-roadmap/containment-annulus/story-flow-v3/stage-4/attempt-1025/before/native"
+  ],
+  "started_at": "2026-10-02T01:09:26.596657+00:00",
+  "finished_at": "2026-10-02T01:09:58.732662+00:00",
+  "exit_code": 0,
+  "source_unchanged_during_capture": true
+}

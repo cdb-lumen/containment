@@ -1,0 +1,71 @@
+{
+  "head": "798753f86523611501493ff2a1a2ad4f2d8a1a7e",
+  "origin_main": "7a3f262886104fb024de9684958b3f85a8859f34",
+  "branch": "art/service-shaft-landing-v3",
+  "files": [
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/async-rollout-worker-prompt.md",
+      "sha256": "7a9a23b75d6bee421656d75eaca78ec70f6f0f4cebe812e1e4380df46a766f1f"
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/map-model-production.md",
+      "sha256": "6ebacbcca24a9c5ea0fc9a753cf9c9504d383ae5cb491b8920d40ebe03953562"
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/production-guard.md",
+      "sha256": "6a482d10fd16ef77947cdd393dc91f06ac132612c55d4ad745181db31355e259"
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/rollout-sources/room14-brief.json",
+      "sha256": "39b7ddf24a81d8200e3f2ff5d324976a1fddede18e6ceda3ccb827008df1440e"
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/service-shaft-landing/story-flow-v3/stage-0/attempt-989/story-intent.png",
+      "sha256": "548823ab4e11ffe4abb4894cf29900523d6aab9a67d07f6462377ca8ef3328eb"
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/service-shaft-landing/story-flow-v3/stage-0/attempt-989/brief.md",
+      "sha256": "5d8fe59c8f2dd1aea0069fb9e1f771c759be32a5b0dcbb0bc6f31bbad310fafc"
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/service-shaft-landing/story-flow-v3/stage-0/attempt-989/independent-review.md",
+      "sha256": "190044b75991dc16fc702641dec32575407f3b35d5e10886dd02ac0a64bd14ba"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/roguelike/storyRooms.ts",
+      "sha256": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/roguelike/storyRoomTemplates.ts",
+      "sha256": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/roguelike/authoredRoomTopologies.ts",
+      "sha256": "933296fee8d6a456a518f25ca796c759a4ffa09f9386353af7cca961115630ac"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/roguelike/roomTemplates.ts",
+      "sha256": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/world/expeditionGeometry.ts",
+      "sha256": "61592cc4e947e8d6873488407235e1ab117585e59d10141916de3efe00ef316b"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/world/polygonGeometry.ts",
+      "sha256": "f041fae2658b2de86bf8281d72b605fcb402ec18ebd8c7f11c0f57c9086cb18a"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/world/FacilityNavigation.ts",
+      "sha256": "4f625bf353690320ca2fd9ad6281cec8199bde430145131a48b2434f41a0c1e4"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/input/aimAssist.ts",
+      "sha256": "0db9fe4f64c5914d10f34776342ba1c048a8f65430f03e26aa5f9772015e53e7"
+    },
+    {
+      "path": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/service-shaft-landing-v3/src/game/enemies/catalog.ts",
+      "sha256": "f42acc96608cc251ac955f45439ebe082a124a120b6ce0da364037866df0a0f1"
+    }
+  ]
+}
