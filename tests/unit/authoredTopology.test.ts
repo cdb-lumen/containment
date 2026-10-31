@@ -6,11 +6,11 @@ import {FacilityNavigation} from '../../src/game/world/FacilityNavigation';
 import {ProjectileHitTracker} from '../../src/game/combat/CombatSystem';
 import {DepthGame} from '../../src/DepthGame';
 import {TRANSMISSION_TOPOLOGY} from '../../src/game/roguelike/transmissionChamberLayout';
-const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay'];
+const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay','communal-atrium'];
 const nodes=generateRun(3,3).nodes;
-const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280}];
+const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280},{x:584,y:336}];
 describe('authored walkable topologies',()=>{
- it('retains four earlier authored footprints and registers the Room10 crown',()=>{
+ it('retains five authored footprints and registers the Room10 crown',()=>{
   expect(nodes).toHaveLength(20);
   for(const n of nodes){const t=ROOM_TEMPLATES[n.templateId];if(ids.includes(n.templateId)){
    expect(t).toHaveProperty('boundary');expect(t).toHaveProperty('voids');
@@ -25,7 +25,9 @@ describe('authored walkable topologies',()=>{
   }else{expect(t).not.toHaveProperty('boundary');expect(t).not.toHaveProperty('voids');}}
  });
  it('connects spawn, exit and inward-offset breaches for larger actors',()=>{
-  for(const n of nodes.filter(n=>ids.includes(n.templateId))){const g=createExpeditionGeometry(n),nav=new FacilityNavigation(g);nav.prepare(g.playerSpawn,1);
+  // South32 uses human-scale furniture: its production radii, inward-spawn
+  // fallback and explicit radius38 limitation are covered in communalSouth32Gameplay.
+  for(const n of nodes.filter(n=>ids.includes(n.templateId)&&n.templateId!=='communal-atrium')){const g=createExpeditionGeometry(n),nav=new FacilityNavigation(g);nav.prepare(g.playerSpawn,1);
    for(const p of [g.playerSpawn,g.exitPoint,...g.breaches,...g.breaches.map(b=>({x:b.x+(b.facing==='east'?56:-56),y:b.y}))]){
     expect(canOccupyExpedition(g,p,38),`${n.templateId} ${JSON.stringify(p)}`).toBe(true);
     expect(nav.reachable(p),`${n.templateId} navigation ${JSON.stringify(p)}`).toBe(true);

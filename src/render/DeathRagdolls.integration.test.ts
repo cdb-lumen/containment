@@ -3,10 +3,13 @@ import * as T from 'three';
 import {GLTFLoader,type GLTF} from 'three/addons/loaders/GLTFLoader.js';
 import {DepthRenderer} from './DepthRenderer';
 import {DepthGame,type GameEffect} from '../DepthGame';
+import {ProjectileHitTracker} from '../game/combat/CombatSystem';
+import RAPIER from '@dimforge/rapier3d-compat';
 import {DeathRagdolls,initDeathPhysics} from './DeathRagdolls';
 import {alien,type ActorModel} from './models';
 import {ActorPool} from './ActorPool';
 import {ASSET_NAMES,preloadAssets} from './assets';
+import * as garden from './CommunalGarden';
 function model():ActorModel{const root=new T.Group(),body=new T.Group(),chest=new T.Bone();root.add(body);body.add(chest);chest.name='chest';chest.position.y=.6;for(let i=0;i<2;i++){const leg=new T.Bone();leg.name=`leg${i}_upper`;leg.position.x=i?.3:-.3;chest.add(leg);}return{root,body,height:1,limbs:[],animate(){},freeze(){}};}
 function fixture(){
  const ragdolls=new DeathRagdolls();ragdolls.setRoom({width:640,height:640,obstacles:[]});
@@ -16,6 +19,33 @@ function fixture(){
 }
 function game(){const g=new DepthGame();g.node={...g.node,id:'test'};g.status='playing';return g;}
 beforeAll(initDeathPhysics);
+// Real lethal projectile -> corpse event -> renderer -> Rapier transfer. These
+// numeric bounds are regression limits, not substitutes for gameplay-camera review.
+it('reduces native shotgun launch and spin without erasing the stronger rocket throw',()=>{
+ const launch=(weapon:'shotgun'|'rocket')=>{
+  const r=fixture(),events:GameEffect[]=[],g=new DepthGame(e=>{events.push(e);if(e.type==='corpse')r.effect(e);});
+  const internals=g as unknown as {makeEnemies():typeof g.enemies;updateBullets(dt:number):void};
+  g.geometry={...g.geometry,bounds:{x:0,y:0,width:1200,height:880},blockers:[],voids:undefined,boundary:[{x:0,y:0},{x:1200,y:0},{x:1200,y:880},{x:0,y:880}]};
+  g.enemies=internals.makeEnemies();g.status='playing';Object.assign(g.player,{x:300,y:440,angle:0});
+  const spawn=g.enemies.spawn('crawler',470,440,false);expect(spawn.spawned).toBe(true);if(!spawn.spawned)throw Error('spawn');
+  const id=spawn.enemy.id;g.enemies.applyDamage(id,spawn.enemy.health+spawn.enemy.armor-1);r.actors.set(id,model());
+  g.combat.switchWeapon(weapon);const requests=g.combat.fire(0);expect(requests.length).toBeGreaterThan(0);
+  g.bullets=requests.map(request=>({x:300,y:440,life:3,kind:'player',request,tracker:new ProjectileHitTracker(request.penetration)}));
+  try{
+   for(let i=0;i<100&&!events.some(e=>e.type==='corpse');i++)internals.updateBullets(.01);
+   expect(events.filter(e=>e.type==='corpse')).toHaveLength(1);expect(g.enemies.getSnapshot(id)).toBeNull();
+   const world=(r.ragdolls as unknown as {world:RAPIER.World}).world;
+   const rows:{linear:number;angular:number;vertical:number}[]=[];
+   world.forEachRigidBody(b=>{const v=b.linvel(),w=b.angvel();rows.push({linear:Math.hypot(v.x,v.z),angular:Math.hypot(w.x,w.z),vertical:v.y});});
+   expect(rows.length).toBeGreaterThanOrEqual(3);return rows[0];
+  }finally{r.dispose();}
+ };
+ const shotgun=launch('shotgun'),rocket=launch('rocket');
+ expect(rocket.linear).toBeGreaterThan(shotgun.linear*1.5);
+ expect(shotgun.linear).toBeLessThan(4);expect(rocket.linear).toBeLessThanOrEqual(8.001);
+ expect(shotgun.angular).toBeLessThan(.5);expect(rocket.angular).toBeLessThan(1);
+ expect(shotgun.vertical).toBeLessThan(1.5);
+});
 afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();});
 it('transfers a living skin at authoritative death coordinates once and syncs joints',()=>{
  const r=fixture(),m=model();m.root.position.set(1,0,2);r.actors.set(7,m);
@@ -44,6 +74,19 @@ it('builds static contacts after room construction and coalesces current-owner r
  const ready=r.staticLoaded(r.world);ready();ready();r.roomKey=g.node.id;
  const refresh=vi.spyOn(r.ragdolls,'refreshStatic'),update=vi.spyOn(r.ragdolls,'update');r.render(g,1/60);r.render(g,1/60);
  expect(refresh).toHaveBeenCalledTimes(1);expect(refresh).toHaveBeenCalledWith(r.world);expect(refresh.mock.invocationCallOrder[0]).toBeLessThan(update.mock.invocationCallOrder[0]);r.dispose();
+});
+it('waits for the garden and refreshes its static contacts before physics, ignoring retired callbacks',()=>{
+ const owner={state:'loading',error:undefined,notificationError:undefined,ready:Promise.resolve(),dispose:vi.fn()};
+ let loaded=()=>{};
+ vi.spyOn(garden,'attachCommunalGarden').mockImplementation((_room,_template,onChanged)=>{loaded=onChanged;return owner;});
+ const r=fixture(),g=game();g.node={...g.node,templateId:'communal-atrium'};
+ r.loadRoom(g.node);const refresh=vi.spyOn(r.ragdolls,'refreshStatic'),update=vi.spyOn(r.ragdolls,'update');
+ expect(r.roomLoading).toBe(true);r.render(g,1/60);expect(update).not.toHaveBeenCalled();
+ owner.state='ready';r.shadowsDirty=false;loaded();loaded();expect(r.shadowsDirty).toBe(true);
+ r.render(g,1/60);r.render(g,1/60);expect(refresh).toHaveBeenCalledExactlyOnceWith(r.world);
+ expect(refresh.mock.invocationCallOrder[0]).toBeLessThan(update.mock.invocationCallOrder[0]);
+ r.loadRoom({...g.node,id:'next',templateId:'security-lock'});expect(owner.dispose).toHaveBeenCalledTimes(1);
+ r.shadowsDirty=false;loaded();expect(r.staticDirty).toBe(false);expect(r.shadowsDirty).toBe(false);r.dispose();
 });
 it('forwards elite metadata and preserves authoritative kills, credits and duplicate-death behavior',()=>{
  const r=fixture(),events:GameEffect[]=[],g=new DepthGame(e=>{events.push(e);r.effect(e);});

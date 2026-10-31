@@ -1,6 +1,7 @@
 import type {Point, RoomTemplate} from './types';
 import type {StoryTemplateId} from './storyRooms';
 import {TRANSMISSION_TOPOLOGY} from './transmissionChamberLayout';
+import {RELAY_RACKS_FOOTPRINTS} from './relayRacksLayout';
 
 const polygon=(vertices:readonly (readonly [number,number])[]):readonly Point[]=>Object.freeze(vertices.map(([x,y])=>Object.freeze({x,y})));
 /** Stable story roles; these same footprints drive solids and neutral meshes. */
@@ -46,6 +47,11 @@ export const PASSENGER_BLOCKOUT=Object.freeze([
  {id:'MN',x:1040,y:240,w:120,h:80,height:40,row:false},
  {id:'MS',x:1002.55,y:479.35,w:87.45,h:38.63,height:58.34,row:false},
 ].map(({x,y,w,h,...role})=>Object.freeze({...role,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
+/** Room 4 social-frontage rough hypothesis, not visual acceptance.
+ * A low shared back connects seating, small shared surfaces and planting.
+ * Circulation goes around both ends, never through the solid frontage.
+ * These footprints drive both rendering and collision. */
+export const COMMUNAL_ATRIUM_BLOCKOUT=Object.freeze([{"id":"shared-table","kind":"table","x":940,"y":384,"w":48,"h":60,"top":24},{"id":"north-seat-0","kind":"seat-west","x":924,"y":388,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"north-seat-1","kind":"seat-west","x":924,"y":420,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"south-seat-0","kind":"seat-east","x":996,"y":388,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"south-seat-1","kind":"seat-east","x":996,"y":420,"w":16,"h":20,"seatTop":14.4,"table":"shared-table"},{"id":"shared-garden","kind":"garden","x":480,"y":310,"w":218,"h":90},{"id":"shared-water","kind":"water","x":777,"y":448,"w":60,"h":40},{"id":"entry-welcome","kind":"welcome","x":320,"y":300,"w":64,"h":16},{"id":"garden-seat-0","kind":"seat-south","x":516,"y":400,"w":28,"h":16,"seatTop":14.4,"table":"shared-garden"},{"id":"garden-seat-1","kind":"seat-south","x":572,"y":400,"w":28,"h":16,"seatTop":14.4,"table":"shared-garden"},{"id":"corridor-garden","kind":"garden","x":678,"y":294,"w":20,"h":16}].map(({x,y,w,h,...role})=>Object.freeze({...role,x,y,w,h,footprint:polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])})));
 type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'obstacles'>;
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
  * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */
@@ -66,6 +72,15 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   breaches:polygon([[260,180],[960,180],[260,700],[960,700]]),
   obstacles:Object.freeze([]),
  }),
+ 'communal-atrium':Object.freeze({
+  // Shallow visible court with a shared garden and dining group. Keep the horizontal
+  // bulkhead first: CommunalAtrium owns it; DepthRenderer owns every other edge.
+  boundary:polygon([[192, 216], [782, 216], [1200, 288], [1200, 556], [932, 556], [882, 580], [192, 580]]),
+  voids:Object.freeze(COMMUNAL_ATRIUM_BLOCKOUT.map(f=>f.footprint)),
+  spawn:Object.freeze({x:436,y:440}),exit:Object.freeze({x:1100,y:440}),
+  breaches:polygon([[320,256],[736,256],[436,500],[1100,500]]),
+  obstacles:Object.freeze([]),
+ }),
  'breached-loading-bay':Object.freeze({
   boundary:polygon([[40,200],[760,40],[1160,160],[1160,640],[860,840],[280,840],[40,600]]),
   // Diagonal lodged hull penetrator divides unequal lobes. Both ends admit
@@ -73,7 +88,12 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   voids:Object.freeze([polygon([[440,300],[610,220],[940,460],[820,570],[560,470]])]),
   spawn:Object.freeze({x:140,y:440}),exit:Object.freeze({x:1080,y:520}),
   breaches:polygon([[220,260],[1000,240],[300,740],[860,720]]),
-  obstacles:Object.freeze([{x:300,y:600,width:100,height:70}].map(rect=>Object.freeze(rect))),
+  obstacles:Object.freeze([{x:300,y:600,width:100,height:70},{x:640,y:740,width:120,height:50}].map(rect=>Object.freeze(rect))),
+ }),
+ 'relay-racks':Object.freeze({
+  spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
+  breaches:polygon([[100,100],[1100,100],[100,780],[1100,780]]),
+  obstacles:RELAY_RACKS_FOOTPRINTS,
  }),
  'overload-floor':Object.freeze({
   boundary:polygon([[40,320],[180,200],[360,200],[420,40],[780,40],[840,200],[1020,200],[1160,320],[1160,680],[1000,820],[800,820],[720,720],[480,720],[400,820],[200,820],[40,680]]),

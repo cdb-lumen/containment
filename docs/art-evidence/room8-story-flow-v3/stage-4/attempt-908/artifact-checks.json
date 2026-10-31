@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "images": [
+    {
+      "file": "before-desktop-in-scene.png",
+      "sha256": "718ac12f8a8db7ee18f1af6c4788d8ddfc7b1da21b896b8f59029ede856933e0",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 799963
+    },
+    {
+      "file": "desktop-in-scene.png",
+      "sha256": "6414f9965567ebdaf76ddafcc72cd60c900b10cd46791d30add79b996dddd90f",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 764674
+    },
+    {
+      "file": "before-overview.png",
+      "sha256": "d47d9bde3c8dad3fcd3af58ba98a20819001724694b6fa4522348bfc622e7892",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 490698
+    },
+    {
+      "file": "overview.png",
+      "sha256": "7e6de508970ec5b251811ced9329b23d360e2667bb12d2241e23a6f72c9b30f6",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 472896
+    },
+    {
+      "file": "model-comparison.png",
+      "sha256": "3b90c08a7ff07618b4512e0ca877a85ec6988bd57bd6bacc43711c9bbea2cbef",
+      "dimensions": [
+        1600,
+        1080
+      ],
+      "bytes": 708231
+    }
+  ],
+  "runtime_source": {
+    "src/render/AuthoredRooms.ts": "7a048c2a7173342d04a16920508bdec113f13387fc5e761d39b1c827005f38de",
+    "src/game/roguelike/authoredRoomTopologies.ts": "6e23f62996875cf1e8e2389b22ac9d268fd0157cd8fa936a3ab4c311065937d8"
+  },
+  "source_outside_breachedBay_unchanged": true,
+  "topology_story_templates_unchanged": true,
+  "before_source_matches_head": true,
+  "paired_cameras_and_players": true,
+  "capture_passed": true,
+  "limitations": "Static checkpoint-staged runtime; no full gameplay, network lifecycle or release acceptance."
+}
