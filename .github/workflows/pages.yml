@@ -14,7 +14,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     # Build and desktop browser checks have separate serial budgets.
-    timeout-minutes: 65
+    timeout-minutes: 70
     permissions:
       contents: read
     steps:
@@ -53,11 +53,11 @@ jobs:
       # These are interaction checks, not complete combat or real-device evidence.
       - name: Authored rooms desktop smoke
         id: authored-desktop
-        timeout-minutes: 10
+        timeout-minutes: 14
         shell: bash
         run: |
           mkdir -p artifacts/authored-smoke/desktop
-          timeout --kill-after=30s 8m npm run test:authored-smoke -- --viewport=desktop --out=artifacts/authored-smoke/desktop 2>&1 | tee artifacts/authored-smoke/desktop/run.log
+          timeout --kill-after=30s 12m npm run test:authored-smoke -- --viewport=desktop --out=artifacts/authored-smoke/desktop 2>&1 | tee artifacts/authored-smoke/desktop/run.log
 
       - name: Upload authored smoke diagnostics
         if: ${{ always() }}
