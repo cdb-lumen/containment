@@ -171,16 +171,29 @@ describe('Room16 room visuals',()=>{
   for(const m of ms)expect((m.material as T.MeshStandardMaterial).emissiveIntensity).toBe(0);
   disposeModel(root);
  });
- it('matches solid model vertices and sampled top surface with actual occupancy, before and after production bake',()=>{
-  const root=model(),g=createExpeditionGeometry(node);
+ it('keeps every solid vertex in collision and preserves bounds through production bake',()=>{
+  const root=model();
   expect(meshes(root).some(m=>m.userData.swarmSolid)).toBe(true);
   // All raised solid vertices must lie on or inside the actual collision polygon.
   const polygon=template.voids![0];
   const inside=(x:number,y:number)=>{let yes=false;for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){const a=polygon[i],b=polygon[j];const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((x-a.x)*dx+(y-a.y)*dy)/(dx*dx+dy*dy)));if(Math.hypot(x-a.x-t*dx,y-a.y-t*dy)<.002)return true;if((a.y>y)!==(b.y>y)&&x<(b.x-a.x)*(y-a.y)/(b.y-a.y)+a.x)yes=!yes;}return yes;};
   for(const m of meshes(root).filter(m=>m.userData.swarmSolid)){const p=m.geometry.getAttribute('position');for(let i=0;i<p.count;i++){const v=new T.Vector3().fromBufferAttribute(p,i).applyMatrix4(m.matrixWorld);expect(inside(v.x*32,v.z*32),`${m.name} ${v.toArray()}`).toBe(true);}}
   const before=new T.Box3().setFromObject(root,true);const preCount=meshes(root).length;expect(preCount).toBeLessThan(100);expect(root.children.every(o=>o instanceof T.Mesh)).toBe(true);
-  for(const phase of ['pre','post']){if(phase==='post')bake(root);root.updateMatrixWorld(true);const ray=new T.Raycaster();for(let y=105;y<=380;y+=10)for(let x=360;x<=840;x+=10){ray.set(new T.Vector3(x/32,4,y/32),new T.Vector3(0,-1,0));const raised=ray.intersectObject(root,true).some(h=>h.point.y*32>.5);expect(raised,`${phase} ${x}/${y}`).toBe(!canOccupyExpedition(g,{x,y},0));}}
+  bake(root);
   expect(meshes(root).length).toBeLessThanOrEqual(7);expect(meshes(root).length).toBeLessThan(preCount);const after=new T.Box3().setFromObject(root,true);expect(after.min.distanceTo(before.min)).toBeLessThan(1e-5);expect(after.max.distanceTo(before.max)).toBeLessThan(1e-5);disposeModel(root);
+ });
+ // The denser conforming shell retains the complete 10-unit grid in each
+ // representation. Separate cases keep each CPU ray workload under the runner's
+ // ordinary per-test budget without loosening any geometry assertion or timeout.
+ it.each(['pre','post'])('matches every sampled top-surface ray to actual occupancy (%s bake)',phase=>{
+  const root=model(),g=createExpeditionGeometry(node);if(phase==='post')bake(root);root.updateMatrixWorld(true);
+  const ray=new T.Raycaster();
+  for(let y=105;y<=380;y+=10)for(let x=360;x<=840;x+=10){
+   ray.set(new T.Vector3(x/32,4,y/32),new T.Vector3(0,-1,0));
+   const raised=ray.intersectObject(root,true).some(h=>h.point.y*32>.5);
+   expect(raised,`${phase} ${x}/${y}`).toBe(!canOccupyExpedition(g,{x,y},0));
+  }
+  disposeModel(root);
  });
  it('disposes every owned geometry and material once across repeated room visits without disposing shared materials',()=>{
   const shared=vi.spyOn(MAT.steel,'dispose');
