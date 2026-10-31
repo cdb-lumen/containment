@@ -1,0 +1,13 @@
+{
+  "armory-parity.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "capture.mjs": "d01a4fad3ed6335675e582b641e62f5a6718cb8c61bfb89fc699991084c81cbf",
+  "review.md": "c1515b1d8b1b20bf490d8b38c24f421e702c24a4ec8c69536880ae8772453b08",
+  "shared-parity.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "README.md": "df86d30f02f725624e68e765c8a8c5b44db8b57584f206f54dde8356ae1ea6dd",
+  "after/left-control.png": "f1bbc1a690f70963ca4f1c2fe5a02d9ba6cb8df9e84f907880e5019a955d9422",
+  "after/manifest.json": "12633fe5f3ed28b9d680e4d823370401657808967bdf426f0e14e17bee55b67d",
+  "after/right-witness.png": "49c24eabfd0b2f2246334f7b1a38badf737f0b53f57132301d994e00bc16b1f1",
+  "before/left-control.png": "9c878b5504fd3a310e4bd129bbc5f591861ca8c10f122f0ee58f0402164bb975",
+  "before/manifest.json": "36c77bcae5e08097ed3d7d463682ec31ca70bea4d78c18dc52e48ab66a9599c6",
+  "before/right-witness.png": "ba54263ddefd3f5f778ec908b844e84db340b2a475feb7a2127df05cfc1be692"
+}
