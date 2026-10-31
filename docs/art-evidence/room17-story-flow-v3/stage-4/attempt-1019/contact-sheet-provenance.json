@@ -1,0 +1,54 @@
+{
+  "script": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/shielding-gate/story-flow-v3/stage-4/attempt-1019/make-contact-sheet.py",
+  "crops": [
+    {
+      "source": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/shielding-gate/story-flow-v3/stage-4/attempt-1019/before/17-shielding-gate-gameplay.png",
+      "sha256": "f0a2e303602828a7af55f90e8551857f575f8333ec88a3c28948fbe2b5b478ce",
+      "crop_xyxy": [
+        140,
+        235,
+        280,
+        435
+      ],
+      "scale": 1.8,
+      "resampling": "nearest"
+    },
+    {
+      "source": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/shielding-gate/story-flow-v3/stage-4/attempt-1019/before/17-shielding-gate-gameplay.png",
+      "sha256": "f0a2e303602828a7af55f90e8551857f575f8333ec88a3c28948fbe2b5b478ce",
+      "crop_xyxy": [
+        785,
+        235,
+        925,
+        435
+      ],
+      "scale": 1.8,
+      "resampling": "nearest"
+    },
+    {
+      "source": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/shielding-gate/story-flow-v3/stage-4/attempt-1019/after/17-shielding-gate-gameplay.png",
+      "sha256": "74248a7a0fcaae89a3dda113145445b9f6f68c183ecf8ff94a383a213916773a",
+      "crop_xyxy": [
+        140,
+        235,
+        280,
+        435
+      ],
+      "scale": 1.8,
+      "resampling": "nearest"
+    },
+    {
+      "source": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/shielding-gate/story-flow-v3/stage-4/attempt-1019/after/17-shielding-gate-gameplay.png",
+      "sha256": "74248a7a0fcaae89a3dda113145445b9f6f68c183ecf8ff94a383a213916773a",
+      "crop_xyxy": [
+        785,
+        235,
+        925,
+        435
+      ],
+      "scale": 1.8,
+      "resampling": "nearest"
+    }
+  ],
+  "output_sha256": "4be0723caacf440ce2a92968c1c5b9ae875983d95d3017bda2f82943a2a00d32"
+}

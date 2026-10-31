@@ -47,11 +47,19 @@ describe('ship environments',()=>{
    if(env==='infested'){expect(ownedGeometry).toHaveLength(4);for(const g of ownedGeometry)expect(g.userData.environmentUV).toBe(true);}
    const sharedGeometry=new Set(originals.map(m=>m.geometry).filter(g=>!ownedGeometry.includes(g)));
    const originalOwnedSpies=ownedGeometry.map(g=>vi.spyOn(g,'dispose'));
-   const ownedMaterials=new Set(originals.map(m=>m.material as T.MeshStandardMaterial).filter(m=>!sharedMaterials.includes(m)));
+   const localMaterials=new Set(originals.map(m=>m.material as T.MeshStandardMaterial).filter(m=>!sharedMaterials.includes(m)));
+   const roomShared=new Set([...localMaterials].filter(m=>m.name.startsWith('shielding-gate-')));
+   const ownedMaterials=new Set([...localMaterials].filter(m=>!roomShared.has(m)));
+   if(env==='containment'){
+    expect(roomShared.size).toBe(5);
+    const next=environmentObstacle(env,{x:5,y:5,width:4,height:8},0,'shielding-gate');
+    const nextMaterials=new Set(meshes(next).map(m=>m.material));
+    for(const m of roomShared)expect(nextMaterials.has(m)).toBe(true);
+   }else expect(roomShared.size).toBe(0);
    if(env==='habitation'){expect(ownedMaterials.size).toBe(4);for(const m of ownedMaterials)expect(m.userData.actorMaterial).toBe(true);}else expect(ownedMaterials.size).toBe(0);
    expect([...sharedGeometry].every(g=>[...geometries.values()].includes(g))).toBe(true);
    const geometrySpies=[...sharedGeometry].map(g=>vi.spyOn(g,'dispose'));
-   const materialSpies=sharedMaterials.map(m=>vi.spyOn(m,'dispose'));
+   const materialSpies=[...sharedMaterials,...roomShared].map(m=>vi.spyOn(m,'dispose'));
    const ownedMaterialSpies=[...ownedMaterials].map(m=>vi.spyOn(m,'dispose'));
    try{
     // Exercise the real material batching path without constructing a WebGL context.
