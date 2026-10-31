@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
+import {crewCheckpointBlockout} from './CrewCheckpointBlockout';
 
 export const SHIP_ENVIRONMENTS=['cryogenics','habitation','security','cargo','communications','engineering','maintenance','infested','containment','reactor'] as const;
 export type ShipEnvironment=typeof SHIP_ENVIRONMENTS[number];
@@ -12,6 +13,7 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 
 /** All models are authored in a local cell, then fitted inside the authoritative collision rectangle. */
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
+ if(environment==='security'&&templateId==='crew-checkpoint')return crewCheckpointBlockout(footprint,index);
  if(environment==='habitation'&&templateId==='residential-gallery')return residentialGalleryBlockout(footprint,index);
  const root=new T.Group();root.name=`${environment}-obstacle-${index}`;
  const long=Math.max(footprint.width,footprint.height),short=Math.min(footprint.width,footprint.height);
