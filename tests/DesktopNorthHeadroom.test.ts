@@ -3,7 +3,7 @@ import * as T from 'three';
 import {roomFocus} from '../src/render/roomFraming';
 import {ROOM_TEMPLATES} from '../src/game/roguelike/roomTemplates';
 import {DepthRenderer} from '../src/render/DepthRenderer';
-function forRoom(room:typeof ROOM_TEMPLATES[string]){return function projection(width:number,height:number,x:number,z:number,focusZ?:number){
+function forRoom(room:(typeof ROOM_TEMPLATES)[keyof typeof ROOM_TEMPLATES]){return function projection(width:number,height:number,x:number,z:number,focusZ?:number){
  const view=height>width?31:22,viewWidth=view*width/height;
  const focus=roomFocus(x,z,room.width/32,room.height/32,viewWidth,view,room.id);
  const camera=new T.OrthographicCamera(-viewWidth/2,viewWidth/2,view/2,-view/2,.1,120);
