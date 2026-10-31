@@ -1,0 +1,48 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ❯ src/render/SwarmJunction.test.ts (26 tests | 2 failed) 13563ms
+     × keeps recognizable cabinet components mechanically connected and exposed 220ms
+     × attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold 153ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > keeps recognizable cabinet components mechanically connected and exposed
+AssertionError: expected 'consuming-distributor-side-wrap' to be 'severed-distributor' // Object.is equality
+
+Expected: "severed-distributor"
+Received: "consuming-distributor-side-wrap"
+
+ ❯ src/render/SwarmJunction.test.ts:104:59
+    102|    const target=new T.Vector3(x/32,43.5/32,z/32),direction=new T.Vecto…
+    103|    const ray=new T.Raycaster(target.clone().addScaledVector(direction,…
+    104|    expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);
+       |                                                           ^
+    105|   }
+    106|   disposeModel(root);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold
+AssertionError: expected 29.936952590942383 to be close to 30, received difference is 0.06304740905761719, but expected 0.00005
+ ❯ src/render/SwarmJunction.test.ts:133:25
+    131|   for(const end of ['west','east','south']){
+    132|    const cut=box(`root-${end}-cut`),sheath=box(`root-${end}-sheath`),c…
+    133|    expect(cut.min.y*32).toBeCloseTo(30,4);expect(cut.max.y-cut.min.y).…
+       |                         ^
+    134|    expect(sheath.containsPoint(new T.Vector3(center.x,sheath.min.y,cen…
+    135|    ray.set(new T.Vector3(center.x,5,center.z),new T.Vector3(0,-1,0));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 31 passed (33)
+   Start at  20:17:17
+   Duration  15.05s (transform 1.06s, setup 0ms, import 1.48s, tests 14.11s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

@@ -21,8 +21,8 @@ describe('Room16 room visuals',()=>{
  it('closes the continuous curved body and cavity lip with opposite directed edges and outward faces',()=>{
   const root=model(),plates=meshes(root).filter(m=>m.name==='organ-bed');expect(plates).toHaveLength(1);
   const lip=meshes(root).find(m=>m.name==='sensory-carapace-lip')!;expect(lip).toBeDefined();
-  const layered=meshes(root).filter(m=>m.name.startsWith('carapace-overlap-')||/^root-.*-(cut|sheath)$/.test(m.name)||m.name==='distributor-engulfing-fold');
-  expect(layered).toHaveLength(7); // Four rejected applied plates were removed.
+  const layered=meshes(root).filter(m=>m.name.startsWith('carapace-scute-')||m.name.startsWith('carapace-overlap-')||/^root-.*-(cut|sheath|tissue)$/.test(m.name)||m.name==='distributor-engulfing-fold'||m.name==='consuming-distributor-side-wrap');
+  expect(layered).toHaveLength(19); // Eight scutes, nine cut/sheath/tissue sections and two cabinet folds.
   expect(meshes(root).some(m=>m.name.startsWith('carapace-overlap-'))).toBe(false);
   const badEdges=(indices:number[])=>{
    const edges=new Map<string,number[]>();
@@ -72,10 +72,11 @@ describe('Room16 room visuals',()=>{
   }
   disposeModel(bed.parent as T.Group);
  });
- it('uses one curved charcoal mass rather than repeated plate belts around its sunken cavity',()=>{
+ it('supports charcoal scutes on a connected tendon bed around an open sensory cavity',()=>{
   const root=model(),ms=meshes(root);
   expect(ms.filter(m=>m.name.includes('-plate-'))).toHaveLength(0);
-  expect((ms.find(m=>m.name==='organ-bed')!.material as T.Material).name).toBe('swarm-charcoal');
+  expect((ms.find(m=>m.name==='organ-bed')!.material as T.Material).name).toBe('swarm-tendon');
+  const scutes=ms.filter(m=>m.name.startsWith('carapace-scute-'));expect(scutes).toHaveLength(8);for(const scute of scutes)expect((scute.material as T.Material).name).toBe('swarm-charcoal');
   expect(template.voids![0]).toHaveLength(150);
   const cavity=ms.find(m=>m.name==='sensory-recess')!,lip=ms.find(m=>m.name==='sensory-carapace-lip')!;
   const cb=new T.Box3().setFromObject(cavity),lb=new T.Box3().setFromObject(lip);
@@ -84,6 +85,30 @@ describe('Room16 room visuals',()=>{
   const ray=new T.Raycaster(new T.Vector3(600/32,4,285/32),new T.Vector3(0,-1,0));
   expect(ray.intersectObject(root,true)[0].object.name).toBe('sensory-recess');
   expect(ms.some(m=>m.name==='severed-distributor')).toBe(true);
+  disposeModel(root);
+ });
+ it('builds overlapping supported scutes above connected tissue rather than isolated inserts',()=>{
+  const root=model(),ray=new T.Raycaster(),bed=root.getObjectByName('organ-bed')!;
+  for(const [x,y,a,b] of [[440,198,'west-middle','west-outer'],[500,235,'west-middle','west-inner'],[765,190,'east-outer','east-middle'],[708,230,'east-middle','east-inner'],[604,350,'south-lower','south-upper']] as const){
+   ray.set(new T.Vector3(x/32,4,y/32),new T.Vector3(0,-1,0));
+   const one=root.getObjectByName(`carapace-scute-${a}`)!,two=root.getObjectByName(`carapace-scute-${b}`)!;
+   const hits=[ray.intersectObject(one)[0],ray.intersectObject(two)[0]];expect(hits.every(Boolean)).toBe(true);
+   const base=ray.intersectObject(bed)[0];expect(base).toBeDefined();expect(base.point.y*32).toBeGreaterThanOrEqual(31-1e-5);
+   for(const piece of [one,two])expect(new T.Box3().setFromObject(piece).min.y*32).toBeCloseTo(31,4);
+  }
+  ray.set(new T.Vector3(600/32,4,220/32),new T.Vector3(0,-1,0));expect(ray.intersectObject(root,true)[0]?.object).toBe(bed);
+  const direction=new T.Vector3(0,26,19).normalize();
+  for(const [x,y,name] of [[406,180,'west-outer'],[462,220,'west-middle'],[502,256,'west-inner'],[794,164,'east-outer'],[758,204,'east-middle'],[642,264,'east-inner'],[554,336,'south-upper'],[582,360,'south-lower']] as const){
+   const target=new T.Vector3(x/32,40/32,y/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe(`carapace-scute-${name}`);
+  }
+  for(const x of [588,600,612]){const target=new T.Vector3(x/32,31.5/32,285/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe('sensory-recess');}
+  disposeModel(root);
+ });
+ it('exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports',()=>{
+  const root=model(),ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+  for(const [x,y,name] of [[802,152,'root-east-tissue'],[602,380,'root-south-tissue'],[658,252,'consuming-distributor-side-wrap']] as const){const target=new T.Vector3(x/32,40/32,y/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);}
+  ray.set(new T.Vector3(666.5/32,4,245/32),new T.Vector3(0,-1,0));const hits=ray.intersectObject(root,true);expect(hits[0]?.object.name).toBe('consuming-distributor-side-wrap');expect(hits.some(h=>h.object.name==='distributor-roof-service-panel')).toBe(true);
+  for(const x of [668.5,679.5,690.5]){const target=new T.Vector3(x/32,35.5/32,265/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe('distributor-terminal-core');}
   disposeModel(root);
  });
  it('keeps recognizable cabinet components mechanically connected and exposed',()=>{

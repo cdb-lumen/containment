@@ -1,0 +1,183 @@
+{
+  "triangles": 44332,
+  "scuteTriangles": [
+    [
+      "carapace-scute-west-outer",
+      1736
+    ],
+    [
+      "carapace-scute-west-middle",
+      1856
+    ],
+    [
+      "carapace-scute-west-inner",
+      2016
+    ],
+    [
+      "carapace-scute-east-outer",
+      1656
+    ],
+    [
+      "carapace-scute-east-middle",
+      1856
+    ],
+    [
+      "carapace-scute-east-inner",
+      1896
+    ],
+    [
+      "carapace-scute-south-upper",
+      1896
+    ],
+    [
+      "carapace-scute-south-lower",
+      1616
+    ]
+  ],
+  "witnesses": {
+    "carapace-scute-east-outer": {
+      "count": 329,
+      "sample": {
+        "x": 794,
+        "y": 164,
+        "hit": [
+          24.8125,
+          1.152436437579313,
+          5.053703550538729
+        ]
+      }
+    },
+    "organ-bed": {
+      "count": 1139,
+      "sample": {
+        "x": 442,
+        "y": 248,
+        "hit": [
+          13.8125,
+          0.7359505016139476,
+          7.374348443487116
+        ]
+      }
+    },
+    "carapace-scute-west-outer": {
+      "count": 288,
+      "sample": {
+        "x": 406,
+        "y": 180,
+        "hit": [
+          12.6875,
+          1.3737593745859593,
+          5.715439542966663
+        ]
+      }
+    },
+    "root-east-tissue": {
+      "count": 2,
+      "sample": {
+        "x": 802,
+        "y": 152,
+        "hit": [
+          25.0625,
+          1.0750000476837158,
+          4.622115419461177
+        ]
+      }
+    },
+    "carapace-scute-east-middle": {
+      "count": 303,
+      "sample": {
+        "x": 758,
+        "y": 204,
+        "hit": [
+          23.6875,
+          1.355615707313766,
+          6.452180709190829
+        ]
+      }
+    },
+    "carapace-scute-west-middle": {
+      "count": 336,
+      "sample": {
+        "x": 462,
+        "y": 220,
+        "hit": [
+          14.4375,
+          1.374067819658653,
+          6.9656649451351695
+        ]
+      }
+    },
+    "carapace-scute-east-inner": {
+      "count": 326,
+      "sample": {
+        "x": 642,
+        "y": 264,
+        "hit": [
+          20.0625,
+          1.013781226639571,
+          8.07737858869815
+        ]
+      }
+    },
+    "carapace-scute-west-inner": {
+      "count": 434,
+      "sample": {
+        "x": 502,
+        "y": 256,
+        "hit": [
+          15.6875,
+          1.3282722148868533,
+          8.05719892626347
+        ]
+      }
+    },
+    "consuming-distributor-side-wrap": {
+      "count": 15,
+      "sample": {
+        "x": 658,
+        "y": 252,
+        "hit": [
+          20.5625,
+          1.1874999834031552,
+          7.829326910948459
+        ]
+      }
+    },
+    "carapace-scute-south-upper": {
+      "count": 196,
+      "sample": {
+        "x": 554,
+        "y": 336,
+        "hit": [
+          17.3125,
+          1.28029941809403,
+          10.52214188245333
+        ]
+      }
+    },
+    "carapace-scute-south-lower": {
+      "count": 188,
+      "sample": {
+        "x": 582,
+        "y": 360,
+        "hit": [
+          18.1875,
+          1.222174071234285,
+          11.22966566744044
+        ]
+      }
+    },
+    "root-south-tissue": {
+      "count": 2,
+      "sample": {
+        "x": 602,
+        "y": 380,
+        "hit": [
+          18.8125,
+          1.0750000476837158,
+          11.747115419461178
+        ]
+      }
+    }
+  }
+}

@@ -4,8 +4,8 @@ import proposed from '../../tests/fixtures/swarm-organ-proposed-contour.json';
 import {organicShell} from './organicShell';
 // U-shaped counterexample: contraction toward its centroid crosses empty space.
 const contour=[{x:0,y:0},{x:10,y:0},{x:10,y:10},{x:7,y:10},{x:7,y:3},{x:3,y:3},{x:3,y:10},{x:0,y:10}];
-it.each([[contour],[[...contour].reverse()]])('seals a concave footprint without bridging its cavity',points=>{
- const g=organicShell(points,()=>4,1),p=g.getAttribute('position'),ids=Array.from(g.index!.array);
+it.each([2,3].flatMap(refinements=>[[contour,refinements],[[...contour].reverse(),refinements]] as const))('seals a concave footprint without bridging its cavity',(points,refinements)=>{
+ const g=organicShell(points,()=>4,1,refinements),p=g.getAttribute('position'),ids=Array.from(g.index!.array);
  const edges=new Map<string,number[]>();let volume=0;
  for(let i=0;i<ids.length;i+=3){
   const v=ids.slice(i,i+3).map(k=>new T.Vector3().fromBufferAttribute(p,k));
@@ -26,6 +26,7 @@ it.each([[contour],[[...contour].reverse()]])('seals a concave footprint without
 
 it('rejects missing coordinates, invalid scales and collapsed heights',()=>{
  for(const points of [[],[{x:0,y:0},{x:1,y:0},{x:2,y:0}],[{x:NaN,y:0},...contour]])expect(()=>organicShell(points,()=>4)).toThrow();
+ for(const refinements of [-1,4,1.5,NaN])expect(()=>organicShell(contour,()=>4,1,refinements)).toThrow();
  for(const unit of [0,-1,NaN])expect(()=>organicShell(contour,()=>4,unit)).toThrow();
  for(const h of [0,-1,NaN,Infinity])expect(()=>organicShell(contour,()=>h)).toThrow();
 });

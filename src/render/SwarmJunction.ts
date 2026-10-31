@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {organicShell} from './organicShell';
+import {SWARM_SCUTES} from './swarmScuteContours';
 import {SWARM_ORGAN} from '../game/world/swarmJunctionLayout';
 import type {Point} from '../game/roguelike/types';
 
@@ -53,9 +54,27 @@ export function swarmJunctionBlockout(){
   const tipRelief=.25+.75*Math.min(1,tipDistance/30);
   const hub=Math.exp(-1*(((p.x-602)/88)**2+((p.y-285)/76)**2));
   const crown=Math.max(west,east,south,hub)*tipRelief;
-  return 31+13.4*crown*Math.max(0,Math.min(1,(cavity-1)*2))*(1-.9*cabinet);
+  let edge=Infinity;
+  for(let i=0;i<SWARM_ORGAN.length;i++){const a=SWARM_ORGAN[i],b=SWARM_ORGAN[(i+1)%SWARM_ORGAN.length],dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy)));edge=Math.min(edge,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));}
+  return 31+3.4*crown*Math.min(1,edge/5)*Math.max(0,Math.min(1,(cavity-1)*2))*(1-.9*cabinet);
  };
- add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),chitin);
+ add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),tendon);
+ // Broad overlapping shell volumes grow out of a low continuous tendon bed.
+ // Relief preserves the cavity, exposed severed tissue and surviving cabinet.
+ for(const [index,scute] of SWARM_SCUTES.entries()){
+  const g=organicShell(scute.contour,p=>{
+   const dx=p.x-scute.center.x,dy=p.y-scute.center.y;
+   const u=(dx*Math.cos(scute.angle)+dy*Math.sin(scute.angle))/scute.length;
+   const v=(-dx*Math.sin(scute.angle)+dy*Math.cos(scute.angle))/scute.width;
+   const arch=Math.max(0,1-3.2*v*v)*(.45+.55*Math.sin(Math.PI*Math.max(0,Math.min(1,u+.5))));
+   const cavity=Math.max(0,Math.min(1,(Math.hypot((p.x-600)/53,(p.y-285)/44)-1)*3));
+   const cabinet=Math.max(0,Math.min(1,Math.max(Math.abs(p.x-682)-24,Math.abs(p.y-240)-30)/10));
+   const tip=Math.max(0,Math.min(1,(Math.min(...[[378,141],[815,150],[610,378]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)))-13)/28));
+   return 31.05+index*.025+(3.8+9.5*arch)*Math.min(cavity,cabinet,tip);
+  },U,2);
+  const positions=g.getAttribute('position');for(let i=0;i<positions.count/2;i++)positions.setY(i,31/U);g.computeVertexNormals();
+  add(`carapace-scute-${scute.name}`,g,chitin);
+ }
  // Broad irregular exposed cross-sections with a dark retained outer sheath.
  for(const [name,points] of [
   ['west',[[358,143],[366,124],[388,121],[406,135],[408,147],[393,167],[374,163]]],
@@ -71,8 +90,12 @@ export function swarmJunctionBlockout(){
    g.computeVertexNormals();return g;
   };
   const outward=new T.Vector2(cx-600,cy-285).normalize();
-  const cutHeight=(p:Point)=>39+3*Math.tanh(((p.x-cx)*outward.x+(p.y-cy)*outward.y)/9)
-   +1.2*Math.sin((p.x-cx)*.19+(p.y-cy)*.27);
+  const cutHeight=(p:Point)=>{
+   const transverse=-(p.x-cx)*outward.y+(p.y-cy)*outward.x;
+   const split=5*(Math.exp(-1*((transverse-10)/3)**2)+Math.exp(-1*((transverse+10)/3)**2));
+   return Math.max(32,39+3*Math.tanh(((p.x-cx)*outward.x+(p.y-cy)*outward.y)/9)
+    +1.2*Math.sin((p.x-cx)*.19+(p.y-cy)*.27)-split);
+  };
   add(`root-${name}-sheath`,cutShell(contour,p=>35+.7*Math.sin((p.x-cx)*.2)),dark);
   // The ragged tissue reaches the front edge in several places: the retained
   // sheath is interrupted, rather than a closed border around a small cap.
@@ -80,6 +103,7 @@ export function swarmJunctionBlockout(){
    const exposed=p.y>=cy||i===0,scale=exposed?1:.72;
    return {x:cx+(p.x-cx)*scale,y:cy+(p.y-cy)*scale};
   });
+  add(`root-${name}-tissue`,cutShell(inner,()=>34.4),tendon);
   add(`root-${name}-cut`,cutShell(inner,cutHeight),rib);
  }
  // A dished organic lip encloses an actual low, broad sensory cavity. Four
@@ -119,6 +143,12 @@ export function swarmJunctionBlockout(){
  for(let i=0;i<3;i++)box('hub-split-conduit',628+i*3,235+i*9,10,3,32,3,tendon);
  // Deliberate cabinet relocation leaves its hardware east of the larger cavity.
  for(const child of root.children)if(child instanceof T.Mesh&&(child.name==='severed-distributor'||child.name==='torn-distributor-lid'||child.name.startsWith('distributor-')||child.name==='hub-split-conduit'))child.geometry.translate(26/U,0,0);
+ // A connected side-to-roof tongue consumes the cabinet's left corner while
+ // preserving the three front ports, torn lid and roof-service witness.
+ const sideWrap=[[648,246],[656,232],[662,228],[666,241],[670,252],[664,260],[657,260]].map(([x,y])=>({x,y}));
+ const wrap=organicShell(sideWrap,p=>34+10.4*Math.max(0,Math.min(1,(p.x-653)/13)));
+ const wrapPositions=wrap.getAttribute('position');for(let i=0;i<wrapPositions.count/2;i++)wrapPositions.setY(i,31/U);wrap.computeVertexNormals();
+ add('consuming-distributor-side-wrap',wrap,tendon);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[378,141],[550,275]],[[870,90],[815,150],[676,250]],[[600,620],[610,378],[600,305]]];
  for(const [i,run] of runs.entries())for(let j=1;j<run.length;j++){

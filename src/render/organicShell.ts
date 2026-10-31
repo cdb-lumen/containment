@@ -5,7 +5,8 @@ import type {Point} from '../game/roguelike/types';
  * refined triangle remains inside an original constrained triangulation face.
  * Caller must establish a simple contour with no self-intersections; reject
  * missing/degenerate coordinates, invalid scale and nonpositive heights here. */
-export function organicShell(contour:readonly Point[],height:(p:Point)=>number,unit=32){
+export function organicShell(contour:readonly Point[],height:(p:Point)=>number,unit=32,refinements=3){
+ if(!Number.isInteger(refinements)||refinements<0||refinements>3)throw new Error('Invalid shell refinement');
  if(contour.length<3||!Number.isFinite(unit)||unit<=0||contour.some(p=>!Number.isFinite(p.x)||!Number.isFinite(p.y)))throw new Error('Invalid shell contour or scale');
  const points=contour.map(p=>({...p}));
  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p.x,p.y)),[]);
@@ -15,7 +16,7 @@ export function organicShell(contour:readonly Point[],height:(p:Point)=>number,u
  // centroid-only split leaves long interior edges at their endpoint heights,
  // producing false valleys across an otherwise smooth heightfield.
  let boundary=contour.map((_,i)=>i);
- for(let depth=0;depth<3;depth++){
+ for(let depth=0;depth<refinements;depth++){
   const mids=new Map<string,number>();
   const midpoint=(a:number,b:number)=>{
    const key=`${Math.min(a,b)},${Math.max(a,b)}`;let k=mids.get(key);
