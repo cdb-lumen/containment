@@ -1,0 +1,9 @@
+{
+  "state": "failed-harness",
+  "reason": "Recorder attempted Skip in a room with no authored dialogue; native locator timed out at frame200. Not a completed encounter or game defect.",
+  "sourceCommit": "8c9f8c50986d7971d84d8e70e09e7ccacaee7f7e",
+  "sourceFilesStillMatch": true,
+  "capturedFrames": 200,
+  "manifestFrames": 200,
+  "harnessHashMatches": true
+}
