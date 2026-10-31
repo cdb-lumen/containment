@@ -1,0 +1,14 @@
+{
+  "room16-layered-native-inspect.mjs": "c96e95d2182d91c08fd35c969aa2d280cb2a8b11db98e94e9b966860d85863d7",
+  "room16-midpoint-native-inspect.mjs": "ca127652f926ecbb89e83f08fe414bd036f2232a307d6b31f0d681ea605b286c",
+  "room16-layered-native-independent-review.md": "c3b9c9344a0f8fd5e3cd6116055d677007f9305e894cbaf045ebb1d1bb6361e2",
+  "README.md": "9067356a86ed85375899ad5db67272db69830e4d5489795523fa725dd950b137",
+  "after/room-overview.png": "ce03de6822eeffdf159ac69d32b71e41bdff3a1b74d037130810bdbcdc28552f",
+  "after/manifest.json": "9b0e137c444975efeaac9ddde7375c4292100cf0e73a6d240fbbaec0ea2f1385",
+  "after/center-native.png": "f77d3de488e71211ba76764cd873392102a9d2de94cb4b1e0c5136c31a5f8d3d",
+  "after/north-approach-native.png": "6ef0a0de9c174e7873b607994f94a872672d1a7e39b59745acaa7e393789e251",
+  "before/room-overview.png": "9b91a6144e2e77690189f7a408dfd32a47192667f6607fbcd48e4633b466a683",
+  "before/manifest.json": "f9131feb0cd9352ad96139e94ea8e4dcb3013ba6719c1fe0fc9391bee8e578b9",
+  "before/center-native.png": "c2693c61830f781a42ef0d0b1740fcc0797ced96e5a1e343fa64a363197547b4",
+  "before/north-approach-native.png": "5149a7754beade26f3453d45687ce51bb7e08ca0b71037d55088b3782c7c42b9"
+}

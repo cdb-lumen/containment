@@ -1,0 +1,1 @@
+Room16 layered candidate 2e7e97c compared with midpoint baseline 3e9b48e. Static captures pass technical checks, but independent visual review rejects full art acceptance: manufactured Y volume, capped terminals, weak organic consumption. Cabinet readability improved. All prior rejected stages retained. No combat, human approval or deployment claim.
