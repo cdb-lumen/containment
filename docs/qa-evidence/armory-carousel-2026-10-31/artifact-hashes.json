@@ -1,5 +1,5 @@
 {
-  "README.md": "faa42a679720db046481a0aad688d58399a2c3d44a8b51700757ca84ad22c4ef",
+  "README.md": "ea3b787a2639d6532c9f9c8b7b6c1097a61c0447f3107be18000dc148f7e3e2a",
   "armory-carousel-code-review.md": "ffe874f306cdce1652d370ee5096e665a33f1ecb7753a9f856f5d1b91d570598",
   "armory-carousel-corrected-visual-review.md": "30f26dd9dc34b9bb474d7e26de3e618a2a9e61f73a4a58535717df69aae9e6ef",
   "armory-carousel-detail-build.log": "77ebdd904b1df4d13369cbfade5f9c3df90dd75ccd07767e1ca85115c90b3f20",
@@ -22,5 +22,9 @@
   "first-candidate-rejected/mouth-native.png": "86abc8a7188fee1c9ea7104564185f20abf883db996b37f302828fdce3d4b6c6",
   "first-candidate-rejected/room-overview.png": "0bb092b06034fa571f353267dca7b7f685e84bee6370d5ff87c4050b7e0f673b",
   "first-candidate-rejected/west-flank-native.png": "30aab171d417a4e3fe05f586af949b1960c331a2310fb8e30791d7f078042571",
+  "north-viewport-failure/00178.png": "1b3976d6586e2fb8944f8ea73c2c906fdea40175b1848adc60c9af0d3daa3e1b",
+  "north-viewport-failure/armory-carousel-full-capture.log": "4d13b926100e016c6bdaece94aab1db0ad4d6a580ac4128563f4a4b5314c14fc",
+  "north-viewport-failure/campaign-desktop-hud-clearance.mjs": "8e94f376f026dc269362f41c0ccfedc54a2520fa0dca29a4729286d8d1d33fb8",
+  "north-viewport-failure/manifest.json": "4edb6b1d3ce1e5861c03b7304c80eefc6ecedd8be975a46f3241617b0fe153c4",
   "room6-carousel-implementation-review.md": "460c8eae2edaa482f1c9f73eb44005779dec584c9bdd331e8183cdb0972c11e2"
 }
