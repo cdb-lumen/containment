@@ -1,0 +1,7 @@
+# Room9 south pistol corridor
+
+Static matched native/overview comparison: original-geometry baseline `dfaa671c619b572c211a33050127cb60ca3b63c2` and repaired `5182d2de042940816c7182cd1b584ed073a73397`. Both captures use identical legal y514 poses, shipping native projection/zoom/HUD and clean source pins. Independent review verified285 source hashes per capture, all6 PNGs and the harness; only the central assembly/shadow changes. The center footprint south edge moves520→510, and the broken cable stays inside the adjusted model. Four outer fixtures are unchanged.
+
+Production-pistol regressions prove radius4 shots pass both directions along y514 while actors remain blocked across that gap. The entire raised central mesh stays north of510; this is actual geometry alignment, not a projectile-only exemption. Clearance is tangent, not extra margin. The original geometry fails3 new assertions while the actor control passes; original regressions and baseline patch remain preserved.
+
+Static staging does not fire a projectile or prove full encounter, live traversal, all-HUD visibility, performance, historical dispatch or human art approval. Full native encounter is pending. Current integration `493c45c2081d6e2dde74645d0de746e37d61f797` adds main's Room19 without changing the reviewed Room9 geometry/tests; it requires its own exact-head CI. Phone support is out of scope. Paths in reproduction scripts are executor-local and must be adapted without changing source pins or acceptance.

@@ -1,0 +1,29 @@
+diff --git a/src/game/roguelike/relayRacksLayout.ts b/src/game/roguelike/relayRacksLayout.ts
+index fa30aad..d462ba6 100644
+--- a/src/game/roguelike/relayRacksLayout.ts
++++ b/src/game/roguelike/relayRacksLayout.ts
+@@ -1,9 +1,9 @@
+ import type {Rect} from './types';
+-/** Room9 reservations, in game units. The central south edge is inset for the y514 pistol lane. */
++/** Room9 stage1 approved reservations, in game units. No new interaction. */
+ export const RELAY_RACKS_FOOTPRINTS:readonly Rect[]=Object.freeze([
+  {x:300,y:160,width:100,height:170},
+  {x:300,y:550,width:100,height:170},
+  {x:800,y:160,width:100,height:170},
+  {x:800,y:550,width:100,height:170},
+- {x:550,y:360,width:100,height:150},
++ {x:550,y:360,width:100,height:160},
+ ].map(r=>Object.freeze(r)));
+diff --git a/src/render/RelayRacksRoom.ts b/src/render/RelayRacksRoom.ts
+index 2a1a0c4..8a5ce11 100644
+--- a/src/render/RelayRacksRoom.ts
++++ b/src/render/RelayRacksRoom.ts
+@@ -123,7 +123,7 @@ export function relayRacksRoom():T.Group{
+     for(const dz of [40,68])box(jaw,x+side*36,43,z+dz,8,6,6,rail);
+    }
+    // A low broken cable end below the open jaws continues the severed spur.
+-   pipe(coupler,[x,8,z+71],[x-5,14,z+60],3,damage);
++   pipe(coupler,[x,8,z+78],[x-5,14,z+67],3,damage);
+    const lever=group('relay-manual-lever');coupler.add(lever);
+    pipe(lever,[x+32,37,z+42],[x+32,62,z+58],3,rail);
+    pipe(lever,[x+23,62,z+58],[x+41,62,z+58],4,amber);

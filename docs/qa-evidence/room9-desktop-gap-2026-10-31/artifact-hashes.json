@@ -1,0 +1,16 @@
+{
+  "README.md": "308635af425d011e9c8d10933929d4210c7343e2339686b6794ab6d796ba7064",
+  "after/left-gap-native.png": "952e3d9ae451dd7d0967451eb5a5500ce9a9f25a90a94ca5fdb2d080372f1149",
+  "after/manifest.json": "fe735e32f70013d3e7ee2438bc44561edfe0961aafba686e3c5015b83c9d386a",
+  "after/right-gap-native.png": "e6894d4239dbb087c777d95b268606331f2a88face9867d813c35709f1665991",
+  "after/room-overview.png": "540a85fa00c10909eb2465767bb1038ebb78e80f72e4ab1d0ee0bbf0fd34ebdf",
+  "before/left-gap-native.png": "32cd0bcb5198788602f65f77b0474b8013bcdeab90138be4d8c83c89a7bb8391",
+  "before/manifest.json": "4ab6d07078241e6c9c6538782012e8a66d4e938e8299b7fc4ea77a914087ed24",
+  "before/right-gap-native.png": "3007b8a0d56e30ca3bb5f7754f81371c7d4b9d2005fb24d1a69ffda601c0fc96",
+  "before/room-overview.png": "74521144a3b68dd06f08e21fec64fb32c459c6e0e5cb2a6dce57d63b1747752b",
+  "capture.mjs": "6661d4a10160a97a04daca2e95becfbdd7d16f1c0957e668913de475ca2c7d79",
+  "code-review.md": "bb8ca113ecc4b438efa0973cbcabaecbe8ca32f2582577cea9c47aaab6078c2a",
+  "original-geometry-baseline.patch": "5bfcadbba9768484f4e22a860b4c744fad05a83a9e4348bfca5aca369ed630e1",
+  "original-regression-red.log": "38662bcccd2b683c9aa31547420bc53680b3e72f1f92437e84f004b712bca778",
+  "visual-review.md": "742bce8a74c60575ec98489e980f5bc29a0a1e18796b4c6cffb83fd4819d6180"
+}
