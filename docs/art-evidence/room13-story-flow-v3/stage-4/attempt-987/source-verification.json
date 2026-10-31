@@ -1,0 +1,8 @@
+{
+  "sourceFrozen": true,
+  "head": "dd9c86cbab93a5f24416a76844c135ac2286c0c6",
+  "changedFiles": [
+    "src/render/CoolantPlantBlockout.ts",
+    "tests/CoolantPlantBlockout.test.ts"
+  ]
+}

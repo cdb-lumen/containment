@@ -2,9 +2,10 @@ import {describe,expect,it,vi} from 'vitest';
 import * as T from 'three';
 import {SHIP_ENVIRONMENTS,appendEnvironment,environmentArchitecture,environmentObstacle,shipEnvironment,type ShipEnvironment} from '../src/render/ShipEnvironments';
 import {MAT,disposeModel,geometries} from '../src/render/meshParts';
+import {COOLANT_MAT} from '../src/render/CoolantPlantBlockout';
 import {DepthRenderer} from '../src/render/DepthRenderer';
 import {WORKSHOP_MAT} from '../src/render/InfestedWorkshopMaterials';
-const sharedMaterials=[...Object.values(MAT),...new Set(Object.values(WORKSHOP_MAT))];
+const sharedMaterials=[...Object.values(MAT),...Object.values(COOLANT_MAT),...new Set(Object.values(WORKSHOP_MAT))];
 
 // Independent route contract: do not derive expected IDs from the renderer table.
 const rooms:Record<ShipEnvironment,string[]>={
@@ -47,6 +48,8 @@ describe('ship environments',()=>{
    if(env==='infested'){expect(ownedGeometry).toHaveLength(4);for(const g of ownedGeometry)expect(g.userData.environmentUV).toBe(true);}
    const sharedGeometry=new Set(originals.map(m=>m.geometry).filter(g=>!ownedGeometry.includes(g)));
    const originalOwnedSpies=ownedGeometry.map(g=>vi.spyOn(g,'dispose'));
+   const coolantMaterials=new Set(originals.map(m=>m.material).filter(m=>Object.values(COOLANT_MAT).includes(m as T.MeshStandardMaterial)));
+   expect(coolantMaterials.size).toBe(env==='maintenance'?7:0);
    const localMaterials=new Set(originals.map(m=>m.material as T.MeshStandardMaterial).filter(m=>!sharedMaterials.includes(m)));
    const roomShared=new Set([...localMaterials].filter(m=>m.name.startsWith('shielding-gate-')));
    const ownedMaterials=new Set([...localMaterials].filter(m=>!roomShared.has(m)));

@@ -1,0 +1,428 @@
+{
+  "template_id": "coolant-plant",
+  "campaign_room": 13,
+  "stage": 1,
+  "attempt": 981,
+  "kind": "top-down layout proposal, not gameplay",
+  "source_head": "dff12bbc91359e1588efd3a28ae9aef1298b95f7",
+  "source_sha256": {
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/authoredRoomTopologies.ts": "933296fee8d6a456a518f25ca796c759a4ffa09f9386353af7cca961115630ac",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/roguelike/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/game/world/expeditionGeometry.ts": "61592cc4e947e8d6873488407235e1ab117585e59d10141916de3efe00ef316b",
+    "/home/chernodubv/dev/.cron-worktrees/containment-rooms/coolant-plant-v3/src/render/AuthoredRooms.ts": "e7dbcaf948fe5ab6d6dd9b5e1e255cf1fd32da2fbc27a108990088fde07e8da4",
+    "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/rollout-sources/room13-brief.json": "885ad49b154b8c07f5ac133b3c7b6579c92f01d99c8b7f16263a51f477c08383",
+    "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-0/attempt-980/brief.md": "a573b0a933e29365e9095a95472eee26238e0a0584e3e1b3910e6140a8c91b05",
+    "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-0/attempt-980/draw_story.py": "3dc5cd103f42318a6e9cbe13c8060051206f51d024d23d272f31dc6c916ccebf"
+  },
+  "units": "game units; x right, y down; 1 PNG map pixel per unit",
+  "room": {
+    "width": 1200,
+    "height": 880,
+    "boundary": [
+      [
+        0,
+        0
+      ],
+      [
+        1200,
+        0
+      ],
+      [
+        1200,
+        880
+      ],
+      [
+        0,
+        880
+      ]
+    ],
+    "polygon_voids": [],
+    "obstacles": [
+      [
+        300,
+        210,
+        150,
+        150
+      ],
+      [
+        750,
+        210,
+        150,
+        150
+      ],
+      [
+        300,
+        540,
+        150,
+        150
+      ],
+      [
+        750,
+        540,
+        150,
+        150
+      ],
+      [
+        550,
+        390,
+        100,
+        100
+      ]
+    ],
+    "spawn": [
+      100,
+      440
+    ],
+    "exit": [
+      1100,
+      440
+    ],
+    "breaches": [
+      [
+        100,
+        100
+      ],
+      [
+        1100,
+        100
+      ],
+      [
+        100,
+        780
+      ],
+      [
+        1100,
+        780
+      ]
+    ]
+  },
+  "topology_changes": [],
+  "equipment": [
+    {
+      "role": "A1 heat exchanger",
+      "collision_footprint": [
+        300,
+        210,
+        150,
+        150
+      ],
+      "symbol_bounds": [
+        308,
+        218,
+        134,
+        134
+      ]
+    },
+    {
+      "role": "B1 heat exchanger",
+      "collision_footprint": [
+        750,
+        210,
+        150,
+        150
+      ],
+      "symbol_bounds": [
+        758,
+        218,
+        134,
+        134
+      ]
+    },
+    {
+      "role": "A2 pump / return",
+      "collision_footprint": [
+        300,
+        540,
+        150,
+        150
+      ],
+      "symbol_bounds": [
+        308,
+        548,
+        134,
+        134
+      ]
+    },
+    {
+      "role": "B2 pump / return",
+      "collision_footprint": [
+        750,
+        540,
+        150,
+        150
+      ],
+      "symbol_bounds": [
+        758,
+        548,
+        134,
+        134
+      ]
+    },
+    {
+      "role": "S low service saddle",
+      "collision_footprint": [
+        550,
+        390,
+        100,
+        100
+      ],
+      "symbol_bounds": [
+        558,
+        398,
+        84,
+        84
+      ]
+    }
+  ],
+  "routes": {
+    "west circuit": [
+      [
+        500,
+        440
+      ],
+      [
+        500,
+        150
+      ],
+      [
+        200,
+        150
+      ],
+      [
+        200,
+        750
+      ],
+      [
+        500,
+        750
+      ],
+      [
+        500,
+        440
+      ]
+    ],
+    "east circuit": [
+      [
+        700,
+        440
+      ],
+      [
+        700,
+        750
+      ],
+      [
+        1000,
+        750
+      ],
+      [
+        1000,
+        150
+      ],
+      [
+        700,
+        150
+      ],
+      [
+        700,
+        440
+      ]
+    ],
+    "central north bypass": [
+      [
+        500,
+        440
+      ],
+      [
+        500,
+        330
+      ],
+      [
+        700,
+        330
+      ],
+      [
+        700,
+        440
+      ]
+    ],
+    "central south bypass": [
+      [
+        500,
+        440
+      ],
+      [
+        500,
+        550
+      ],
+      [
+        700,
+        550
+      ],
+      [
+        700,
+        440
+      ]
+    ],
+    "spawn to exit north": [
+      [
+        100,
+        440
+      ],
+      [
+        500,
+        440
+      ],
+      [
+        500,
+        330
+      ],
+      [
+        700,
+        330
+      ],
+      [
+        700,
+        440
+      ],
+      [
+        1100,
+        440
+      ]
+    ],
+    "spawn to exit south": [
+      [
+        100,
+        440
+      ],
+      [
+        500,
+        440
+      ],
+      [
+        500,
+        550
+      ],
+      [
+        700,
+        550
+      ],
+      [
+        700,
+        440
+      ],
+      [
+        1100,
+        440
+      ]
+    ],
+    "complete figure eight": [
+      [
+        500,
+        440
+      ],
+      [
+        500,
+        150
+      ],
+      [
+        200,
+        150
+      ],
+      [
+        200,
+        750
+      ],
+      [
+        500,
+        750
+      ],
+      [
+        500,
+        440
+      ],
+      [
+        500,
+        330
+      ],
+      [
+        700,
+        330
+      ],
+      [
+        700,
+        440
+      ],
+      [
+        700,
+        750
+      ],
+      [
+        1000,
+        750
+      ],
+      [
+        1000,
+        150
+      ],
+      [
+        700,
+        150
+      ],
+      [
+        700,
+        440
+      ],
+      [
+        700,
+        550
+      ],
+      [
+        500,
+        550
+      ],
+      [
+        500,
+        440
+      ]
+    ]
+  },
+  "activity_centers": {
+    "west service": [
+      500,
+      285
+    ],
+    "east service": [
+      700,
+      285
+    ],
+    "west return service": [
+      500,
+      615
+    ],
+    "east return service": [
+      700,
+      615
+    ],
+    "saddle north": [
+      600,
+      330
+    ],
+    "saddle south": [
+      600,
+      550
+    ]
+  },
+  "focal_point": {
+    "center": [
+      600,
+      440
+    ],
+    "role": "low service saddle",
+    "solid": true,
+    "walkable": false
+  },
+  "connections": "Supply and return pair each west/east exchanger with its pump. Recessed connections beneath flush deck only. No new floor solids.",
+  "constraint": "Current central saddle stays collision-solid. Cross above or below it, never through it. No new hazard, interaction, camera or gameplay change."
+}

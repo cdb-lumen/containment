@@ -1,0 +1,47 @@
+[
+  {
+    "file": "before-in-scene.png",
+    "sha256": "8ee74aabecadb67cfd41bbcdafafc567e4da3b6d39411dbd7591a5b17e290a8c",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 856933
+  },
+  {
+    "file": "after-in-scene.png",
+    "sha256": "5f956c88274c3d15b711c80f94ae27bdaa68e2ec3e3e6d8280600ed7398730fc",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 870618
+  },
+  {
+    "file": "before-overview.png",
+    "sha256": "6399e6accbe8be9ad847051785c02b4ded794e359dde526287ee59902ab22bf3",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 456627
+  },
+  {
+    "file": "after-overview.png",
+    "sha256": "b982af57a2692c55998db4c6b3dfeaff408b0e21f2c9adc6a805e190e0224fa7",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 466145
+  },
+  {
+    "file": "model-contact-sheet.png",
+    "sha256": "13a5a67463e2f64e95a3f9adf629d466ac3fbba48c9fc7592fadaa36235a2452",
+    "dimensions": [
+      1120,
+      1120
+    ],
+    "bytes": 172213
+  }
+]

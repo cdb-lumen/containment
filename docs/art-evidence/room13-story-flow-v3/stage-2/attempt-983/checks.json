@@ -1,0 +1,33 @@
+{
+  "focusedTests": 30,
+  "npmTestExit": 0,
+  "buildExit": 0,
+  "roomEvidenceTestsExit": 0,
+  "captureExit": 0,
+  "images": [
+    {
+      "file": "13-coolant-plant-overview.png",
+      "sha256": "a29d4f8bd93d822ab8d1ced722ad8ab0cb86008a9cde831528d30e30849b39b8",
+      "dimensions": [
+        1280,
+        900
+      ]
+    },
+    {
+      "file": "13-coolant-plant-gameplay.png",
+      "sha256": "bc32d10afc9e26a4a7d06e16f6df4aefc504ebc52c0a8f30a60201bc0a4a4458",
+      "dimensions": [
+        1280,
+        900
+      ]
+    }
+  ],
+  "sourcePinRechecked": true,
+  "unresolvedTechnicalFailures": 0,
+  "preservedFailures": [
+    "logs/red.log: dependencies absent",
+    "logs/red-module.log: expected missing module RED",
+    "logs/focused.log and logs/npm-test.log: exchanger outlet exceeded footprint; repaired"
+  ],
+  "limits": "No full verifier or built-app smoke, no live gameplay claim, independent review pending"
+}

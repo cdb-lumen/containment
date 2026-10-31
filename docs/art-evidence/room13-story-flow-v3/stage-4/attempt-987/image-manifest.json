@@ -1,0 +1,52 @@
+[
+  {
+    "file": "before-in-scene.png",
+    "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-4/attempt-987/before-in-scene.png",
+    "sha256": "5231c429a3eac840effd66f800a36e9341e92bec0144e149cf1f0e00e13b7614",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 870898
+  },
+  {
+    "file": "before-overview.png",
+    "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-4/attempt-987/before-overview.png",
+    "sha256": "b982af57a2692c55998db4c6b3dfeaff408b0e21f2c9adc6a805e190e0224fa7",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 466145
+  },
+  {
+    "file": "after-in-scene.png",
+    "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-4/attempt-987/after-in-scene.png",
+    "sha256": "bf1f0eddb97cb1e8f5a54e0d4b02393a76032811b4c90ee182b5d69ee5e19fca",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 880239
+  },
+  {
+    "file": "after-overview.png",
+    "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-4/attempt-987/after-overview.png",
+    "sha256": "a7078d4475eeb15be8850964a4b2a122a1e1535bc578675f52542769cbfd9874",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "bytes": 472460
+  },
+  {
+    "file": "model-contact-sheet.png",
+    "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/coolant-plant/story-flow-v3/stage-4/attempt-987/model-contact-sheet.png",
+    "sha256": "7b986679003143a5f48d4ddbe44d3441975257fb07d214114fec37c3012b31a3",
+    "dimensions": [
+      1120,
+      1050
+    ],
+    "bytes": 148401
+  }
+]

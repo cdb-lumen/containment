@@ -1,0 +1,15 @@
+{
+  "failures": 0,
+  "errors": 0,
+  "checks": [
+    "canonical manifest hashes match",
+    "PNG decodes at 1600x1040 within receipt bounds"
+  ],
+  "source_hashes": {
+    "rollout-sources/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "rollout-sources/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "rollout-sources/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+    "rollout-sources/room13-brief.json": "885ad49b154b8c07f5ac133b3c7b6579c92f01d99c8b7f16263a51f477c08383"
+  },
+  "gameplay_tests": "not run; concept-only stage0"
+}
