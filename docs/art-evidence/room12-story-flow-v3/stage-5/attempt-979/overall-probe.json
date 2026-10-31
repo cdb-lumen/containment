@@ -1,0 +1,153 @@
+{
+  "scope": "CPU production game state, geometry and movement. No browser HUD/audio or ordinary gameplay claim.",
+  "checks": [
+    "Canonical Room11 -> Room12 -> Room13 ordering",
+    "Skipped optional story through Room12, essential status persists during playing/reward/route; authorization denied; advances to coolant",
+    "Source inspection confirms Destroy ship UI branch is manual-control-chamber only, not a live DOM test",
+    "All three reservations block occupancy; real player movement stops at recorder collision"
+  ],
+  "routes": [
+    {
+      "radius": 16,
+      "index": 0,
+      "steps": 273,
+      "distance": 1000,
+      "end": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "radius": 16,
+      "index": 1,
+      "steps": 437,
+      "distance": 1600.000000000001,
+      "end": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "radius": 16,
+      "index": 2,
+      "steps": 449,
+      "distance": 1639.999999999989,
+      "end": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "radius": 16,
+      "index": 3,
+      "steps": 12,
+      "distance": 44.00000000000023,
+      "end": {
+        "x": 410,
+        "y": 395.9999999999998
+      }
+    },
+    {
+      "radius": 16,
+      "index": 4,
+      "steps": 12,
+      "distance": 44.00000000000023,
+      "end": {
+        "x": 780,
+        "y": 395.9999999999998
+      }
+    },
+    {
+      "radius": 16,
+      "index": 5,
+      "steps": 26,
+      "distance": 95,
+      "end": {
+        "x": 600,
+        "y": 535
+      }
+    },
+    {
+      "radius": 28,
+      "index": 0,
+      "steps": 273,
+      "distance": 1000,
+      "end": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "radius": 28,
+      "index": 1,
+      "steps": 437,
+      "distance": 1600.000000000001,
+      "end": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "radius": 28,
+      "index": 2,
+      "steps": 449,
+      "distance": 1639.999999999989,
+      "end": {
+        "x": 1100,
+        "y": 440
+      }
+    },
+    {
+      "radius": 28,
+      "index": 3,
+      "steps": 12,
+      "distance": 44.00000000000023,
+      "end": {
+        "x": 410,
+        "y": 395.9999999999998
+      }
+    },
+    {
+      "radius": 28,
+      "index": 4,
+      "steps": 12,
+      "distance": 44.00000000000023,
+      "end": {
+        "x": 780,
+        "y": 395.9999999999998
+      }
+    },
+    {
+      "radius": 28,
+      "index": 5,
+      "steps": 26,
+      "distance": 95,
+      "end": {
+        "x": 600,
+        "y": 535
+      }
+    }
+  ],
+  "story": [
+    {
+      "phase": "playing",
+      "status": "NEW EARTH WARNED / PASSENGERS ALIVE / AI LIED. THE PURGE KILLS EVERYONE. LOCAL RECORD: AI KNEW BEFORE AWAKENING.",
+      "concise": "New Earth warned · Passengers alive · Purge kills everyone · AI knew before awakening",
+      "authorization": false
+    },
+    {
+      "phase": "reward",
+      "status": "NEW EARTH WARNED / PASSENGERS ALIVE / AI LIED. THE PURGE KILLS EVERYONE. LOCAL RECORD: AI KNEW BEFORE AWAKENING.",
+      "concise": "New Earth warned · Passengers alive · Purge kills everyone · AI knew before awakening",
+      "authorization": false
+    },
+    {
+      "phase": "route",
+      "status": "NEW EARTH WARNED / PASSENGERS ALIVE / AI LIED. THE PURGE KILLS EVERYONE. LOCAL RECORD: AI KNEW BEFORE AWAKENING.",
+      "concise": "New Earth warned · Passengers alive · Purge kills everyone · AI knew before awakening",
+      "authorization": false
+    }
+  ],
+  "passed": true,
+  "cleanup": "CPU Vite closed"
+}
