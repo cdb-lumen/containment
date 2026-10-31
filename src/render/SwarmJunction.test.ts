@@ -123,6 +123,17 @@ describe('Room16 room visuals',()=>{
   }
   disposeModel(root);
  });
+ it('exposes a connected west-terminal tissue area while retaining its cut crest',()=>{
+  const root=model(),ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
+  for(let y=132;y<=136;y++)for(let x=385;x<=389;x++){
+   const target=new T.Vector3(x/32,40/32,y/32);
+   ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());
+   expect(ray.intersectObject(root,true)[0]?.object.name,`${x}/${y}`).toBe('root-west-tissue');
+  }
+  ray.set(new T.Vector3(397/32,5,146/32),new T.Vector3(0,-1,0));
+  expect(ray.intersectObject(root,true)[0]?.object.name).toBe('root-west-cut');
+  disposeModel(root);
+ });
  it('exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports',()=>{
   const root=model(),ray=new T.Raycaster(),direction=new T.Vector3(0,26,19).normalize();
   for(const [x,y,name] of [[802,152,'root-east-tissue'],[602,380,'root-south-tissue'],[658,252,'consuming-distributor-side-wrap']] as const){const target=new T.Vector3(x/32,40/32,y/32);ray.set(target.clone().addScaledVector(direction,10),direction.clone().negate());expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);}

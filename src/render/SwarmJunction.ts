@@ -107,7 +107,7 @@ export function swarmJunctionBlockout(){
    const exposed=p.y>=cy||i===0,scale=exposed?1:.72;
    return {x:cx+(p.x-cx)*scale,y:cy+(p.y-cy)*scale};
   });
-  add(`root-${name}-tissue`,cutShell(inner,()=>34.4),tendon);
+  add(`root-${name}-tissue`,cutShell(inner,p=>34.4+(name==='west'?2.1*Math.exp(-1*((p.y-134)/9)**2):0)),tendon);
   add(`root-${name}-cut`,cutShell(inner,cutHeight),rib);
  }
  // A dished organic lip encloses an actual low, broad sensory cavity. Four

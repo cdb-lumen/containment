@@ -1,0 +1,19 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+
+ Test Files  1 passed (1)
+      Tests  34 passed (34)
+   Start at  20:46:48
+   Duration  15.69s (transform 881ms, setup 0ms, import 1.14s, tests 14.42s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
