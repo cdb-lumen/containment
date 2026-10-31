@@ -8,5 +8,18 @@
   "before/manifest.json": "5e19f06be11a683bb4d17dce4ae2af66edfdb61d0764ffc053207114c9d45652",
   "before/north-native.png": "a33535932b492f6071467e5bff43a499e5b45b17580d8e168d81cb9de98fa0a4",
   "before/north-overview.png": "36bb562c2624fa1d5be1047005326a20a2fd4e6242d4ce33f7450ea491888733",
-  "capture.mjs": "32768875637ef8106a1580ff1bcecfa57bcf06a55f9b990a5ccbd77ac7708e1a"
+  "capture.mjs": "32768875637ef8106a1580ff1bcecfa57bcf06a55f9b990a5ccbd77ac7708e1a",
+  "final-hood-comparison/README.md": "63971b8afc49bc5676f13abce78d998463aef2b9bf6e270218b5e3ab3a7c552e",
+  "final-hood-comparison/capture.mjs": "50b9c233336c6e0ef768db4af40a4f34eef201b6af4b0158020654f00d896620",
+  "final-hood-comparison/independent-review.md": "5c240bc7300cba067a2eee01e6320b8fc7fd11162a743cee5e59e658ccd4dfd1",
+  "final-hood-comparison/original-hood/center-native.png": "73b59ba9195e232fdb4c50195e384db513f08cbb5d67e876d45f2f7b2886f0f9",
+  "final-hood-comparison/original-hood/manifest.json": "491b09779c7fc721005e7284240ba2d34f570abe09a0d986c41a31c6414c9c0a",
+  "final-hood-comparison/original-hood/north-native.png": "328e6007bd837add614ac0449343a6df2b98b5b84bef9e7ba85a98dc9b42a8ec",
+  "final-hood-comparison/original-hood/north-overview.png": "26b2c0bfc787b5adc5987fe25c671a24bd903b10a63cfae2e7ff49b7f94b36ee",
+  "final-hood-comparison/original-hood-baseline.patch": "ed3fff7ddc2144a68d3fe587044e6a314795c44f1d741fdc689953dd21492a35",
+  "final-hood-comparison/original-hood-regressions.log": "765e469e68397c68073fabb8a0d456c3eef4b73729ced19ff1e5cc9d5cc47357",
+  "final-hood-comparison/repaired-hood/center-native.png": "73b59ba9195e232fdb4c50195e384db513f08cbb5d67e876d45f2f7b2886f0f9",
+  "final-hood-comparison/repaired-hood/manifest.json": "4ab35e2fa3943fa67d17fecedc954b5db949409007a39781ee56c5ef5854de69",
+  "final-hood-comparison/repaired-hood/north-native.png": "653ccc3d13ff77f835b1a134b93d8ce2161a99841f9173f5750f0a3d6206c45c",
+  "final-hood-comparison/repaired-hood/north-overview.png": "36bb562c2624fa1d5be1047005326a20a2fd4e6242d4ce33f7450ea491888733"
 }

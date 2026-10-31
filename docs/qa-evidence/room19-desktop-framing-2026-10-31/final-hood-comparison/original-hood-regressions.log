@@ -1,0 +1,226 @@
+
+ RUN  v4.1.10 /workspace/containment-room19-hood-baseline
+
+ ❯ tests/ManualControlBlockout.test.ts (11 tests | 2 failed) 108ms
+     × keeps the dark slit visible through its hood from the overview viewing angle 34ms
+     × retains a framed deep cavity visible across native and overview camera sightlines 20ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ManualControlBlockout.test.ts > Room19 placed rough authorization equipment > keeps the dark slit visible through its hood from the overview viewing angle
+AssertionError: expected { Object (isObject3D, uuid, ...) } to be { Object (isObject3D, uuid, ...) } // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,47 +1,50 @@
+  {
+    "geometries": [
+      {
+-       "depth": 0.1,
++       "depth": 0.86,
+        "depthSegments": 1,
+-       "height": 1.06,
++       "height": 0.26,
+        "heightSegments": 1,
+        "type": "BoxGeometry",
+-       "uuid": "c18a5fde-4399-42e2-ac85-538aa29f63b9",
+-       "width": 7.2,
++       "uuid": "a5dfa0c2-2dd8-4fab-87a7-06ed83635587",
++       "width": 7.86,
+        "widthSegments": 1,
+      },
+    ],
+    "materials": [
+      {
+        "blendColor": 0,
+-       "color": 725783,
++       "color": 13880247,
+        "emissive": 0,
+        "emissiveIntensity": 0,
+        "envMapIntensity": 1,
+        "envMapRotation": [
+          0,
+          0,
+          0,
+          "XYZ",
+        ],
+-       "metalness": 0.55,
+-       "roughness": 0.57,
++       "metalness": 0.18,
++       "roughness": 0.48,
+        "type": "MeshStandardMaterial",
+-       "uuid": "f16b2251-7c7a-4212-b99d-ff9ea58855df",
++       "userData": {
++         "actorMaterial": true,
++       },
++       "uuid": "62580ea5-d692-4284-a45b-19f302701b76",
+      },
+    ],
+    "metadata": {
+      "generator": "Object3D.toJSON",
+      "type": "Object",
+      "version": 4.7,
+    },
+    "object": {
+      "castShadow": true,
+-     "geometry": "c18a5fde-4399-42e2-ac85-538aa29f63b9",
++     "geometry": "a5dfa0c2-2dd8-4fab-87a7-06ed83635587",
+      "layers": 1,
+-     "material": "f16b2251-7c7a-4212-b99d-ff9ea58855df",
++     "material": "62580ea5-d692-4284-a45b-19f302701b76",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+@@ -52,20 +55,20 @@
+        0,
+        0,
+        1,
+        0,
+        25.874999999999996,
+-       3.46,
+-       -0.89,
++       4.06,
++       -0.46,
+        1,
+      ],
+-     "name": "armored-observation-recess",
++     "name": "observation-hood",
+      "receiveShadow": true,
+      "type": "Mesh",
+      "up": [
+        0,
+        1,
+        0,
+      ],
+-     "uuid": "d6e52ddc-75ab-4553-b5cf-a9545ea47b28",
++     "uuid": "699063fa-cbd7-4604-8363-687f0ffc6e7c",
+    },
+  }
+
+ ❯ tests/ManualControlBlockout.test.ts:53:55
+     51|    const target=new T.Vector3(37.5*.69+x,3.55,face);
+     52|    const ray=new T.Raycaster(target.clone().addScaledVector(direction,…
+     53|    expect(ray.intersectObject(world,true)[0]?.object).toBe(recess);
+       |                                                       ^
+     54|   }
+     55|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/ManualControlBlockout.test.ts > Room19 placed rough authorization equipment > retains a framed deep cavity visible across native and overview camera sightlines
+AssertionError: expected { Object (isObject3D, uuid, ...) } to be { Object (isObject3D, uuid, ...) } // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,47 +1,50 @@
+  {
+    "geometries": [
+      {
+-       "depth": 0.1,
++       "depth": 0.86,
+        "depthSegments": 1,
+-       "height": 1.06,
++       "height": 0.26,
+        "heightSegments": 1,
+        "type": "BoxGeometry",
+-       "uuid": "c18a5fde-4399-42e2-ac85-538aa29f63b9",
+-       "width": 7.2,
++       "uuid": "a5dfa0c2-2dd8-4fab-87a7-06ed83635587",
++       "width": 7.86,
+        "widthSegments": 1,
+      },
+    ],
+    "materials": [
+      {
+        "blendColor": 0,
+-       "color": 725783,
++       "color": 13880247,
+        "emissive": 0,
+        "emissiveIntensity": 0,
+        "envMapIntensity": 1,
+        "envMapRotation": [
+          0,
+          0,
+          0,
+          "XYZ",
+        ],
+-       "metalness": 0.55,
+-       "roughness": 0.57,
++       "metalness": 0.18,
++       "roughness": 0.48,
+        "type": "MeshStandardMaterial",
+-       "uuid": "f16b2251-7c7a-4212-b99d-ff9ea58855df",
++       "userData": {
++         "actorMaterial": true,
++       },
++       "uuid": "4c298a3e-d81b-4fda-803f-fc640ab9833b",
+      },
+    ],
+    "metadata": {
+      "generator": "Object3D.toJSON",
+      "type": "Object",
+      "version": 4.7,
+    },
+    "object": {
+      "castShadow": true,
+-     "geometry": "c18a5fde-4399-42e2-ac85-538aa29f63b9",
++     "geometry": "a5dfa0c2-2dd8-4fab-87a7-06ed83635587",
+      "layers": 1,
+-     "material": "f16b2251-7c7a-4212-b99d-ff9ea58855df",
++     "material": "4c298a3e-d81b-4fda-803f-fc640ab9833b",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+@@ -52,20 +55,20 @@
+        0,
+        0,
+        1,
+        0,
+        25.874999999999996,
+-       3.46,
+-       -0.89,
++       4.06,
++       -0.46,
+        1,
+      ],
+-     "name": "armored-observation-recess",
++     "name": "observation-hood",
+      "receiveShadow": true,
+      "type": "Mesh",
+      "up": [
+        0,
+        1,
+        0,
+      ],
+-     "uuid": "f0574139-e1e0-4168-8aa1-8cb407e48fd8",
++     "uuid": "cd2056cb-91c8-4149-8ca7-ee240e47a6ea",
+    },
+  }
+
+ ❯ tests/ManualControlBlockout.test.ts:69:56
+     67|     const target=new T.Vector3(37.5*.69+x,y,face);
+     68|     const ray=new T.Raycaster(target.clone().addScaledVector(direction…
+     69|     expect(ray.intersectObject(world,true)[0]?.object).toBe(recess);
+       |                                                        ^
+     70|    }
+     71|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 9 passed (11)
+   Start at  13:02:14
+   Duration  1.06s (transform 619ms, setup 0ms, import 807ms, tests 108ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
