@@ -80,7 +80,10 @@ export class DepthRenderer {
  }
  /** Load shaders, textures, GPU buffers and common animation actions before combat. */
  async prepare(node:RunNode){
-  this.loadRoom(node);await Promise.all([this.surfaces.ready,this.passengerVault?.ready,this.residentialGalleryEquipment?.ready,this.communalGarden?.ready]);
+  this.loadRoom(node);
+  // Settle every room owner before GPU work competes with image decoding.
+  // Each optional owner already bounds its load and resolves on fallback.
+  await Promise.all([this.surfaces.ready,this.passengerVault?.ready,this.residentialGalleryEquipment?.ready,this.communalGarden?.ready,this.sealedBank?.ready,this.releasedBerth?.ready,this.recoveryKit?.ready]);
   const warm:T.Group=new T.Group(),models:ActorModel[]=[];this.scene.add(warm);
   const yieldTask=()=>new Promise<void>(resolve=>setTimeout(resolve,0));
   const shadowEnabled=this.renderer.shadowMap.enabled;
