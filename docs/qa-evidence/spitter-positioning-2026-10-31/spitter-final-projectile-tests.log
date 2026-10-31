@@ -1,0 +1,530 @@
+
+> containment-depth@2.0.0 test
+> vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs && python3 tools/assets/passenger-vault/test_artifacts.py && python3 tools/assets/passenger-vault/test_room_fit_artifacts.py && python3 tools/assets/passenger-vault/test_distribution_artifacts.py && python3 tools/assets/passenger-vault/test_monitor_artifacts.py && python3 tools/assets/passenger-vault/test_service_finish_artifacts.py && python3 tools/assets/passenger-vault/test_materials.py && python3 tools/assets/passenger-vault/test_material_budget.py && python3 tools/assets/passenger-vault/test_bundle_runtime.py
+
+
+ RUN  v4.1.10 /workspace/containment-spitter
+
+
+ Test Files  95 passed | 1 skipped (96)
+      Tests  1010 passed | 1 skipped (1011)
+   Start at  10:32:22
+   Duration  30.46s (transform 2.84s, setup 0ms, import 13.40s, tests 60.88s, environment 8ms)
+
+✔ preview hooks replace only shell loop and local branches, not saddles or production source (9.717163ms)
+{
+  "bounds": {
+    "min": [
+      465.5200004577637,
+      16,
+      253.72000122070312
+    ],
+    "max": [
+      514.4799995422363,
+      38.207999765872955,
+      336.2799987792969
+    ]
+  },
+  "feet": [
+    {
+      "min": [
+        465.5200004577637,
+        16,
+        261.1599998474121
+      ],
+      "max": [
+        473.5200004577637,
+        17.919999957084656,
+        273.1599998474121
+      ],
+      "vertices": 216
+    },
+    {
+      "min": [
+        465.5200004577637,
+        16,
+        316.8400001525879
+      ],
+      "max": [
+        473.5200004577637,
+        17.919999957084656,
+        328.8400001525879
+      ],
+      "vertices": 216
+    },
+    {
+      "min": [
+        506.4799995422363,
+        16,
+        261.1599998474121
+      ],
+      "max": [
+        514.4799995422363,
+        17.919999957084656,
+        273.1599998474121
+      ],
+      "vertices": 216
+    },
+    {
+      "min": [
+        506.4799995422363,
+        16,
+        316.8400001525879
+      ],
+      "max": [
+        514.4799995422363,
+        17.919999957084656,
+        328.8400001525879
+      ],
+      "vertices": 216
+    }
+  ],
+  "adapterBounds": {
+    "min": [
+      477.679999768734,
+      11.199999988079062,
+      246.19999998807907
+    ],
+    "max": [
+      526.8000000119209,
+      24.419999319314957,
+      343.80000001192093
+    ]
+  },
+  "segments": [
+    {
+      "min": [
+        478.4799996614456,
+        11.19999998807907,
+        246.19999998807907
+      ],
+      "max": [
+        490.0000001192093,
+        12.80000001192093,
+        247.80000001192093
+      ]
+    },
+    {
+      "min": [
+        477.679999768734,
+        11.19999998807907,
+        247
+      ],
+      "max": [
+        479.27999979257584,
+        12.80000001192093,
+        257.99217224121094
+      ]
+    },
+    {
+      "min": [
+        477.679999768734,
+        12.000000196695328,
+        257.19217222929
+      ],
+      "max": [
+        479.27999979257584,
+        24.419999319314957,
+        258.79217225313187
+      ]
+    },
+    {
+      "min": [
+        490,
+        11.199999988079067,
+        342.19999998807907
+      ],
+      "max": [
+        526,
+        12.800000011920933,
+        343.80000001192093
+      ]
+    },
+    {
+      "min": [
+        525.1999999880791,
+        11.199999988079062,
+        255
+      ],
+      "max": [
+        526.8000000119209,
+        12.800000011920938,
+        343
+      ]
+    },
+    {
+      "min": [
+        493.8400001525879,
+        11.199999988079067,
+        254.19999998807907
+      ],
+      "max": [
+        526,
+        12.800000011920933,
+        255.80000001192093
+      ]
+    },
+    {
+      "min": [
+        493.04000014066696,
+        11.199999988079071,
+        255
+      ],
+      "max": [
+        494.6400001645088,
+        12.800000011920929,
+        257.99217224121094
+      ]
+    },
+    {
+      "min": [
+        493.04000014066696,
+        12.000000196695328,
+        257.19217222929
+      ],
+      "max": [
+        494.6400001645088,
+        24.419999319314957,
+        258.79217225313187
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "circuit": "SUPPLY",
+      "points": [
+        [
+          490,
+          12,
+          247
+        ],
+        [
+          478.4799997806549,
+          12,
+          247
+        ],
+        [
+          478.4799997806549,
+          12,
+          257.99217224121094
+        ],
+        [
+          478.4799997806549,
+          24.419999516010286,
+          257.99217224121094
+        ]
+      ],
+      "unionBounds": {
+        "min": [
+          477.0389332771301,
+          24.319999516010284,
+          255.50379943847656
+        ],
+        "max": [
+          479.9210662841797,
+          25.92740136384964,
+          260.4805450439453
+        ],
+        "vertices": 315
+      },
+      "endpoint": [
+        478.4799997806549,
+        24.419999516010286,
+        257.99217224121094
+      ],
+      "connection": "header axis to underside manifold feed and actual union bottom"
+    },
+    {
+      "circuit": "RETURN",
+      "points": [
+        [
+          490,
+          12,
+          343
+        ],
+        [
+          526,
+          12,
+          343
+        ],
+        [
+          526,
+          12,
+          255
+        ],
+        [
+          493.8400001525879,
+          12,
+          255
+        ],
+        [
+          493.8400001525879,
+          12,
+          257.99217224121094
+        ],
+        [
+          493.8400001525879,
+          24.419999516010286,
+          257.99217224121094
+        ]
+      ],
+      "unionBounds": {
+        "min": [
+          492.39893341064453,
+          24.319999516010284,
+          255.50379943847656
+        ],
+        "max": [
+          495.28106689453125,
+          25.92740136384964,
+          260.4805450439453
+        ],
+        "vertices": 315
+      },
+      "endpoint": [
+        493.8400001525879,
+        24.419999516010286,
+        257.99217224121094
+      ],
+      "connection": "header axis to underside manifold feed and actual union bottom"
+    }
+  ],
+  "scale": 1,
+  "supportTop": 16,
+  "interiorFit": "not established"
+}
+✔ actual GLB native bounds, all feet supported, actual unions connected, contained adapters (77.849005ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 623.911425
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+OK
+.
+----------------------------------------------------------------------
+Ran 1 test in 6.699s
+
+OK
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+OK
+..
+----------------------------------------------------------------------
+Ran 2 tests in 4.440s
+
+OK
+test_cut_connection (__main__.Contract.test_cut_connection) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+test_editable_source (__main__.Contract.test_editable_source) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+test_imported_contract (__main__.Contract.test_imported_contract) ... SERVICE_FINISH_SOURCE {"context_meshes": 10, "editable_quads": true, "kit_meshes": 13, "objects": 23, "semantic_sha256": "9f84cc341124d2cadacdfa013c228ee666380a69bfaa62fe43324ce58d49c114"}
+10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.03s
+ok
+test_internal_hole (__main__.Contract.test_internal_hole) ... SERVICE_FINISH_GEOMETRY {"connected_parts": 13, "console_connections": 2, "flush_height_m": 0, "mesh_objects": 13, "row_feeds": 4, "surface_ray_probes": 325, "triangles": 1026, "wall_channel_game_x": [1162, 1166]}
+10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+test_missing_each_feed_and_console (__main__.Contract.test_missing_each_feed_and_console) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+test_missing_surface (__main__.Contract.test_missing_surface) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+test_raised_route_obstacle (__main__.Contract.test_raised_route_obstacle) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+test_recess_hole (__main__.Contract.test_recess_hole) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.03s
+ok
+test_route_footprint_intrusion (__main__.Contract.test_route_footprint_intrusion) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+test_wall_channel_on_floor_rejected (__main__.Contract.test_wall_channel_on_floor_rejected) ... 10:33:07 | INFO: Data are loaded, start creating Blender stuff
+10:33:07 | INFO: Blender create Mesh node feed_A
+10:33:07 | INFO: Blender create Mesh node neck_A
+10:33:07 | INFO: Blender create Mesh node feed_B
+10:33:07 | INFO: Blender create Mesh node neck_B
+10:33:07 | INFO: Blender create Mesh node feed_C
+10:33:07 | INFO: Blender create Mesh node neck_C
+10:33:07 | INFO: Blender create Mesh node feed_D4
+10:33:07 | INFO: Blender create Mesh node neck_D4
+10:33:07 | INFO: Blender create Mesh node header_north
+10:33:07 | INFO: Blender create Mesh node header_south
+10:33:07 | INFO: Blender create Mesh node console_north
+10:33:07 | INFO: Blender create Mesh node console_south
+10:33:07 | INFO: Blender create Mesh node wall_channel
+10:33:07 | INFO: glTF import finished in 0.01s
+ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.405s
+
+OK
+Blender 4.3.2
+Read blend: "/workspace/containment-spitter/tools/assets/passenger-vault/service-finish/service-finish.blend"
+
+Blender quit
+..
+----------------------------------------------------------------------
+Ran 2 tests in 2.035s
+
+OK
+
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.054s
+
+OK
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.083s
+
+OK
+test_actual_gltfloader_world_triangles_and_batches (__main__.BundleAudit.test_actual_gltfloader_world_triangles_and_batches) ... ok
+test_all_resources_including_unused_survive_dedup (__main__.BundleAudit.test_all_resources_including_unused_survive_dedup) ... ok
+test_all_seven_source_graphs_and_resource_bindings (__main__.BundleAudit.test_all_seven_source_graphs_and_resource_bindings) ... ok
+test_corruption_controls (__main__.BundleAudit.test_corruption_controls) ... ok
+test_determinism_and_existing_runtime_manifest (__main__.BundleAudit.test_determinism_and_existing_runtime_manifest) ... ok
+test_png_decode_and_resource_dedup (__main__.BundleAudit.test_png_decode_and_resource_dedup) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.605s
+
+OK
+GLTFLoader CPU: {"batches":[{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_shell","primitives":3},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_matte_gasket","primitives":36},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_carrier","primitives":14},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_live_cyan","primitives":12},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_metal","primitives":94},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_ancillary_recess","primitives":2},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_shared_enclosure_monitor_atlas","primitives":188},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array,uv:2:false:Float32Array","material":"PV_ancillary_mechanism","primitives":172},{"attributes":"normal:3:false:Float32Array,position:3:false:Float32Array","material":"PV_ancillary_recess","primitives":13}],"compatibleAttributeBatches":9,"families":[{"family":"chamber","primitives":55,"triangles":3796},{"family":"distribution-north","primitives":151,"triangles":4932},{"family":"distribution-south","primitives":151,"triangles":4932},{"family":"monitor-north","primitives":31,"triangles":756},{"family":"monitor-south","primitives":100,"triangles":9308},{"family":"row-carrier","primitives":20,"triangles":1504},{"family":"service-finish","primitives":26,"triangles":1026}],"imageBitmapAdapter":"dimensions only; Pillow validates PNG decoding separately","loadedTextureRgbaMipBytes":14680056,"textureObjects":9,"textures":[{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-shell-basecolor","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-shell-orm","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-carrier-basecolor","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-carrier-orm","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-metal-basecolor","rgbaMipBytes":349524,"width":256},{"generateMipmaps":true,"height":256,"minFilter":1008,"name":"wear-metal-orm","rgbaMipBytes":349524,"width":256},{"generateMipmaps":false,"height":512,"minFilter":1006,"name":"monitor-atlas-basecolor","rgbaMipBytes":4194304,"width":2048},{"generateMipmaps":false,"height":512,"minFilter":1006,"name":"monitor-atlas-emission","rgbaMipBytes":4194304,"width":2048},{"generateMipmaps":false,"height":512,"minFilter":1006,"name":"monitor-atlas-orm","rgbaMipBytes":4194304,"width":2048}],"uniqueMaterials":8}
+PASS: 8 negative controls: transform, position, uv, indices, material, texture, sampler, image
+PASS: 12 real PNG decodes; RGBA8 full mip bytes=24816312, MiB=23.666679
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

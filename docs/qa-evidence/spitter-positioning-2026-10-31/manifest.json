@@ -1,0 +1,30 @@
+{
+  "source": "d2cccf94e4a456445fd2ca93ca20a44a4d614efc",
+  "baseline": "2d4ed1081660124474598b50bdc2e32537bc4f23",
+  "files": [
+    {
+      "file": "spitter-gallery-original-baseline.log",
+      "sha256": "00e370f7923a4ed6a73afbb1e139c35b71135fdf23cdf1ba03d2e37816d420f5"
+    },
+    {
+      "file": "spitter-gallery-new-expectation-red.log",
+      "sha256": "ed4930696f8eecc2f710338a36e8fecca9394b60876ca84316e2339ef9fa9862"
+    },
+    {
+      "file": "spitter-projectile-baseline-red.log",
+      "sha256": "767904dd218e676c0977739434fbf1aba833e88beb59907d4058850b6d0ba2a6"
+    },
+    {
+      "file": "spitter-projectile-witness.log",
+      "sha256": "ae29189c839ae94a0398da9d29ae2127ecde2d2d66b9de5a80635e98d44e6db1"
+    },
+    {
+      "file": "spitter-final-projectile-tests.log",
+      "sha256": "f1c31803a2fa261975d5022b2f1af121a9bb417d9871b55c4a521f81a40bbe2a"
+    },
+    {
+      "file": "spitter-full-encounter-probe.log",
+      "sha256": "9de5f6aa839d62dbd431cff9843f19031d875bfe8dcb4fe7e2cd596285e3854d"
+    }
+  ]
+}

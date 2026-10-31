@@ -1,0 +1,161 @@
+
+ RUN  v4.1.10 /workspace/containment-spitter
+
+ ❯ tests/unit/spitterRetreat.test.ts (38 tests | 15 failed) 1141ms
+     × escapes an illegal west retreat, specials=true elite=false 116ms
+     × escapes an illegal west retreat, specials=true elite=true 59ms
+     × escapes an illegal west retreat, specials=false elite=false 68ms
+     × escapes an illegal west retreat, specials=false elite=true 50ms
+     × finds a firing position beside another boundary ({"x":1100,"y":440}) 80ms
+     × finds a firing position beside another boundary ({"x":600,"y":100}) 65ms
+     × finds a firing position beside another boundary ({"x":600,"y":780}) 45ms
+     × keeps a reachable alternate goal stable while approaching firing range 5ms
+     × reaches actual damage in Room17 from {"x":600,"y":200} toward {"x":600,"y":300} 61ms
+     × reaches actual damage in Room17 from {"x":600,"y":200} toward {"x":240,"y":395} 73ms
+     × reaches actual damage in Room17 from {"x":600,"y":550} toward {"x":240,"y":395} 70ms
+     × reaches actual damage in Room17 from {"x":1044,"y":780} toward {"x":480,"y":665} 38ms
+     × reaches actual damage in Room17 from {"x":156,"y":780} toward {"x":720,"y":665} 78ms
+     × recovers after legal knockback changes the approach 127ms
+     × reaches actual damage in Room15 from {"x":1044,"y":100} toward {"x":600,"y":780} 42ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > escapes an illegal west retreat, specials=true elite=false
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > escapes an illegal west retreat, specials=true elite=true
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > escapes an illegal west retreat, specials=false elite=false
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > escapes an illegal west retreat, specials=false elite=true
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ reachesDamage tests/unit/spitterRetreat.test.ts:38:20
+     36|   expect(canTraverseExpedition(game.geometry,previous,current,current.…
+     37|  }
+     38|  expect(sawHazard).toBe(true);expect(projectileDamage).toBeGreaterThan…
+       |                    ^
+     39| }
+     40| describe('spitter reachable firing positions',()=>{
+ ❯ tests/unit/spitterRetreat.test.ts:42:69
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > finds a firing position beside another boundary ({"x":1100,"y":440})
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > finds a firing position beside another boundary ({"x":600,"y":100})
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > finds a firing position beside another boundary ({"x":600,"y":780})
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ reachesDamage tests/unit/spitterRetreat.test.ts:38:20
+     36|   expect(canTraverseExpedition(game.geometry,previous,current,current.…
+     37|  }
+     38|  expect(sawHazard).toBe(true);expect(projectileDamage).toBeGreaterThan…
+       |                    ^
+     39| }
+     40| describe('spitter reachable firing positions',()=>{
+ ❯ tests/unit/spitterRetreat.test.ts:48:113
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > keeps a reachable alternate goal stable while approaching firing range
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/spitterRetreat.test.ts:56:71
+     54|   expect(route.mock.calls.length).toBeGreaterThan(1);
+     55|   const goals=route.mock.calls.map(([,goal])=>({x:goal.x,y:goal.y}));
+     56|   expect(goals.every(goal=>goal.x===goals[0].x&&goal.y===goals[0].y)).…
+       |                                                                       ^
+     57|   expect(game.enemies.getSnapshot(id)).not.toBeNull();
+     58|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > reaches actual damage in Room17 from {"x":600,"y":200} toward {"x":600,"y":300}
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > reaches actual damage in Room17 from {"x":600,"y":200} toward {"x":240,"y":395}
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > reaches actual damage in Room17 from {"x":600,"y":550} toward {"x":240,"y":395}
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > reaches actual damage in Room17 from {"x":1044,"y":780} toward {"x":480,"y":665}
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > reaches actual damage in Room17 from {"x":156,"y":780} toward {"x":720,"y":665}
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ reachesDamage tests/unit/spitterRetreat.test.ts:38:20
+     36|   expect(canTraverseExpedition(game.geometry,previous,current,current.…
+     37|  }
+     38|  expect(sawHazard).toBe(true);expect(projectileDamage).toBeGreaterThan…
+       |                    ^
+     39| }
+     40| describe('spitter reachable firing positions',()=>{
+ ❯ tests/unit/spitterRetreat.test.ts:76:67
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > recovers after legal knockback changes the approach
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ reachesDamage tests/unit/spitterRetreat.test.ts:38:20
+     36|   expect(canTraverseExpedition(game.geometry,previous,current,current.…
+     37|  }
+     38|  expect(sawHazard).toBe(true);expect(projectileDamage).toBeGreaterThan…
+       |                    ^
+     39| }
+     40| describe('spitter reachable firing positions',()=>{
+ ❯ tests/unit/spitterRetreat.test.ts:87:61
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  tests/unit/spitterRetreat.test.ts > spitter reachable firing positions > reaches actual damage in Room15 from {"x":1044,"y":100} toward {"x":600,"y":780}
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ reachesDamage tests/unit/spitterRetreat.test.ts:38:20
+     36|   expect(canTraverseExpedition(game.geometry,previous,current,current.…
+     37|  }
+     38|  expect(sawHazard).toBe(true);expect(projectileDamage).toBeGreaterThan…
+       |                    ^
+     39| }
+     40| describe('spitter reachable firing positions',()=>{
+ ❯ tests/unit/spitterRetreat.test.ts:94:70
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  15 failed | 23 passed (38)
+   Start at  10:32:20
+   Duration  1.62s (transform 309ms, setup 0ms, import 354ms, tests 1.14s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

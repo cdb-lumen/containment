@@ -1,0 +1,14 @@
+
+ RUN  v4.1.10 /workspace/containment-spitter-baseline
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 12 skipped (13)
+   Start at  10:34:05
+   Duration  782ms (transform 351ms, setup 0ms, import 477ms, tests 100ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
