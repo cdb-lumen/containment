@@ -1,0 +1,15 @@
+{
+  "head": "605c93d504a6384502889fa6974df5fd19fa520d",
+  "status": "",
+  "source_unchanged": true,
+  "source_mismatches": [],
+  "processes": [
+    {
+      "pid": 1074861,
+      "command": "node /home/chernodubv/dev/.worktrees/containment-boons/node_modules/.bin/vite --host 127.0.0.1 --port 5193 ",
+      "cwd": "/home/chernodubv/dev/.worktrees/containment-boons",
+      "stat": "1074861 (node) S 1039 1074838 1074838 0 -1 4194304 89637 0 257 0 792 193 0 0 20 0 25 0 59514670 25012625408 33912 18446744073709551615 14905344 54527057 140736185864992 0 0 0 0 4096 1937829431 0 0 0 17 4 0 0 0 0 0 112281824 112462704 1129287680 140736185870725 140736185870832 140736185870832 140736185876439 0\n"
+    }
+  ],
+  "finished_at": "2026-10-02T01:44:18.188195+00:00"
+}
