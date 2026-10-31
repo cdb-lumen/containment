@@ -61,3 +61,13 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 @media(max-width:700px){.choice-panel .choice-card{padding:16px 32px 18px 16px}.choice-panel .choice-card h3{margin:6px 0;font-size:24px}.choice-panel .boon-condition,.boon-hint{margin-top:8px}.boon-path{font-size:11px}.choice-panel .choice-card p{font-size:13px}.choice-panel .panel-intro{margin-bottom:14px}}
 /* Move only the read-only ammunition panel when it would cover the marine. */
 .weapon-hud[data-side=left]{right:auto;left:var(--weapon-hud-inset);text-align:left}
+
+/* Keep status copy together and leave the marine's side of the room visible. */
+#status-hud{position:fixed;top:94px;left:24px;width:min(360px,calc(50vw - 72px));display:flex;flex-direction:column;gap:10px;pointer-events:none}
+#status-hud[data-side=right]{left:auto;right:24px}
+#status-hud #build-strip,#status-hud #run-stock,#status-hud #story-hud{position:static;width:100%;max-width:none}
+#status-hud #build-strip:empty{display:none}
+#status-hud #run-stock{flex-wrap:wrap;gap:6px 16px}
+#status-hud #story-hud{max-height:calc(100dvh - 260px);overflow:auto;pointer-events:auto}
+@media(max-width:700px){#status-hud{top:86px;left:18px;width:calc(50vw - 54px)}#status-hud[data-side=right]{right:18px}}
+@media(max-height:520px) and (orientation:landscape){#status-hud{top:78px;left:22px}#status-hud[data-side=right]{right:22px}#status-hud #story-hud{max-height:calc(100dvh - 220px)}}
