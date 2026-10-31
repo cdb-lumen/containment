@@ -1,0 +1,31 @@
+
+> containment-depth@2.0.0 test
+> vitest run --exclude scripts/cryo-model-preview.test.mjs && node --test scripts/cryo-model-preview.test.mjs && python3 tools/assets/passenger-vault/test_artifacts.py && python3 tools/assets/passenger-vault/test_room_fit_artifacts.py && python3 tools/assets/passenger-vault/test_distribution_artifacts.py && python3 tools/assets/passenger-vault/test_monitor_artifacts.py && python3 tools/assets/passenger-vault/test_service_finish_artifacts.py && python3 tools/assets/passenger-vault/test_materials.py && python3 tools/assets/passenger-vault/test_material_budget.py && python3 tools/assets/passenger-vault/test_bundle_runtime.py
+
+
+ RUN  v4.1.10 /workspace/containment-elemental-audio
+
+ ❯ tests/SafeRoomLoading.test.ts (2 tests | 1 failed) 83ms
+   × actual RAF freezes all combat/progression while pending and discards held movement/fire 69ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/SafeRoomLoading.test.ts > actual RAF freezes all combat/progression while pending and discards held movement/fire
+TypeError: audio.syncFrozen is not a function
+ ❯ Object.frame tests/SafeRoomLoading.test.ts:15:16
+
+ ❯ tests/SafeRoomLoading.test.ts:24:4
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 117 passed | 1 skipped (119)
+      Tests  1 failed | 1532 passed | 1 skipped (1534)
+   Start at  19:28:03
+   Duration  50.34s (transform 3.22s, setup 0ms, import 18.86s, tests 113.94s, environment 10ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
