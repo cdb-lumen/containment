@@ -68,6 +68,6 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 #status-hud #build-strip,#status-hud #run-stock,#status-hud #story-hud{position:static;width:100%;max-width:none}
 #status-hud #build-strip:empty{display:none}
 #status-hud #run-stock{flex-wrap:wrap;gap:6px 16px}
-#status-hud #story-hud{max-height:calc(100dvh - 260px);overflow:auto;pointer-events:auto}
+#status-hud #story-hud{max-height:calc(100dvh - 260px);overflow:auto;pointer-events:none}
 @media(max-width:700px){#status-hud{top:86px;left:18px;width:calc(50vw - 54px)}#status-hud[data-side=right]{right:18px}}
 @media(max-height:520px) and (orientation:landscape){#status-hud{top:78px;left:22px}#status-hud[data-side=right]{right:22px}#status-hud #story-hud{max-height:calc(100dvh - 220px)}}

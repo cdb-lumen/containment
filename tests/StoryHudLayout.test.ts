@@ -17,7 +17,7 @@ beforeAll(async()=>{browser=await chromium.launch({executablePath:process.env.PL
 afterAll(async()=>{await browser?.close();});
 async function mount(width:number,height=900){
   const page=await browser.newPage({viewport:{width,height}});
-  await page.setContent(`<style>${css}</style><div id="app">${markup}</div>`);
+  await page.setContent(`<style>${css}</style><canvas id="world"></canvas><div id="app">${markup}</div>`);
   await page.evaluate(copy=>{
     document.body.dataset.state='playing';
     for(const id of ['hud','story-hud']) document.getElementById(id)!.hidden=false;
@@ -77,6 +77,25 @@ test('uses hysteresis and responds to resized desktop windows without overlappin
    await position(page,{left:40,right:80,top:120,bottom:200});
    expect(overlaps(await rect(page,'#status-hud'),{left:40,right:80,top:120,bottom:200})).toBe(false);
    await page.locator('#story-presentation').evaluate(el=>(el as HTMLElement).hidden=false);
+  }
+ }finally{await page.close();}
+});
+
+test('status copy preserves canvas mouse aim and fire while Skip remains clickable',async()=>{
+ const page=await mount(1280);
+ try{
+  await position(page);
+  await page.evaluate(()=>{
+   const canvas=document.getElementById('world')!;
+   canvas.addEventListener('mousemove',()=>document.body.dataset.aimed='yes');
+   canvas.addEventListener('mousedown',()=>document.body.dataset.fired='yes');
+  });
+  for(const selector of ['#story-status','#room-objective','#story-line']){
+   const box=await rect(page,selector);
+   await page.mouse.click(box.x+2,box.y+2);
+   expect(await page.locator('body').getAttribute('data-aimed')).toBe('yes');
+   expect(await page.locator('body').getAttribute('data-fired')).toBe('yes');
+   await page.evaluate(()=>{delete document.body.dataset.aimed;delete document.body.dataset.fired;});
   }
  }finally{await page.close();}
 });
