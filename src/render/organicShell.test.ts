@@ -39,3 +39,13 @@ it('keeps the proposed 132-point contour closed under varying positive heights',
  }
  expect([...edges.values()].every(([count,direction])=>count===2&&direction===0)).toBe(true);expect(volume).toBeGreaterThan(0);g.dispose();
 });
+it('samples the curved height along original interior edges instead of leaving a sunken diagonal',()=>{
+ const square=[{x:0,y:0},{x:10,y:0},{x:10,y:10},{x:0,y:10}];
+ const height=(p:{x:number;y:number})=>1+4*Math.sin(Math.PI*p.x/10)*Math.sin(Math.PI*p.y/10);
+ const g=organicShell(square,height,1),material=new T.MeshBasicMaterial(),mesh=new T.Mesh(g,material);mesh.updateMatrixWorld(true);
+ for(const [x,z] of [[5,5],[2.5,2.5],[7.5,7.5]]){
+  const hit=new T.Raycaster(new T.Vector3(x,10,z),new T.Vector3(0,-1,0)).intersectObject(mesh)[0];
+  expect(hit.point.y).toBeCloseTo(height({x,y:z}),5);
+ }
+ g.dispose();material.dispose();
+});

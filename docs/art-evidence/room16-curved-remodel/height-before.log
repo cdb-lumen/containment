@@ -1,0 +1,31 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ❯ src/render/organicShell.test.ts (5 tests | 1 failed) 98ms
+   × samples the curved height along original interior edges instead of leaving a sunken diagonal 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/organicShell.test.ts > samples the curved height along original interior edges instead of leaving a sunken diagonal
+AssertionError: expected 1 to be close to 5, received difference is 4, but expected 0.000005
+ ❯ src/render/organicShell.test.ts:48:23
+     46|  for(const [x,z] of [[5,5],[2.5,2.5],[7.5,7.5]]){
+     47|   const hit=new T.Raycaster(new T.Vector3(x,10,z),new T.Vector3(0,-1,0…
+     48|   expect(hit.point.y).toBeCloseTo(height({x,y:z}),5);
+       |                       ^
+     49|  }
+     50|  g.dispose();material.dispose();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  17:41:45
+   Duration  274ms (transform 35ms, setup 0ms, import 70ms, tests 98ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
