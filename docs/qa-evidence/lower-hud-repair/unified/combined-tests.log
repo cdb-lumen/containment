@@ -1,0 +1,14 @@
+
+ RUN  v4.1.10 /workspace/containment-lower-hud
+
+
+ Test Files  3 passed (3)
+      Tests  35 passed (35)
+   Start at  17:51:25
+   Duration  12.35s (transform 1.07s, setup 0ms, import 2.97s, tests 21.04s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

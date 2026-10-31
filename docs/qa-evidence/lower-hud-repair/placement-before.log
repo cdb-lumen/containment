@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /workspace/containment-lower-hud
+
+ ❯ tests/WeaponHud.test.ts (8 tests | 1 failed) 3149ms
+   × clears all lower controls at the recorded armory frame746 and mirrored/narrow desktop poses 371ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/WeaponHud.test.ts > clears all lower controls at the recorded armory frame746 and mirrored/narrow desktop poses
+AssertionError: 1280 #weapon-picker: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/WeaponHud.test.ts:84:60
+     82|     for(const selector of ['.weapon-hud','#weapon-picker','.desktop-hi…
+     83|      const box=await page.locator(selector).evaluate(el=>el.getBoundin…
+     84|      expect(intersects(box,player),`${width} ${selector}`).toBe(false);
+       |                                                            ^
+     85|      expect(box.left).toBeGreaterThanOrEqual(0);expect(box.right).toBe…
+     86|      expect(box.top).toBeGreaterThanOrEqual(0);expect(box.bottom).toBe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  17:35:25
+   Duration  5.32s (transform 909ms, setup 0ms, import 1.92s, tests 3.15s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
