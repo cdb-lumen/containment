@@ -304,10 +304,10 @@ describe('Room16 room visuals',()=>{
  // The denser conforming shell retains the complete 10-unit grid in each
  // representation. Separate cases keep each CPU ray workload under the runner's
  // ordinary per-test budget without loosening any geometry assertion or timeout.
- it.each(['pre','post'])('matches every sampled top-surface ray to actual occupancy (%s bake)',phase=>{
+ it.each(['pre','post'].flatMap(phase=>[[phase,105,195],[phase,205,295],[phase,305,405]] as const))('matches every sampled top-surface ray to actual occupancy (%s bake, rows %i–%i)',(phase,startY,endY)=>{
   const root=model(),g=createExpeditionGeometry(node);if(phase==='post')bake(root);root.updateMatrixWorld(true);
   const ray=new T.Raycaster();
-  for(let y=105;y<=405;y+=10)for(let x=340;x<=860;x+=10){
+  for(let y=startY;y<=endY;y+=10)for(let x=340;x<=860;x+=10){
    ray.set(new T.Vector3(x/32,4,y/32),new T.Vector3(0,-1,0));
    const raised=ray.intersectObject(root,true).some(h=>h.point.y*32>.5);
    expect(raised,`${phase} ${x}/${y}`).toBe(!canOccupyExpedition(g,{x,y},0));
