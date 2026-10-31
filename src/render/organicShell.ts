@@ -11,23 +11,12 @@ export function organicShell(contour:readonly Point[],height:(p:Point)=>number,u
  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p.x,p.y)),[]);
  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x,p.y))));
  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell requires a simple nondegenerate contour');
- // Split shared edges once per level, including the side-wall boundary. A
- // centroid-only split leaves long interior edges at their endpoint heights,
- // producing false valleys across an otherwise smooth heightfield.
- let boundary=contour.map((_,i)=>i);
- for(let depth=0;depth<3;depth++){
-  const mids=new Map<string,number>();
-  const midpoint=(a:number,b:number)=>{
-   const key=`${Math.min(a,b)},${Math.max(a,b)}`;let k=mids.get(key);
-   if(k===undefined){k=points.length;points.push({x:(points[a].x+points[b].x)/2,y:(points[a].y+points[b].y)/2});mids.set(key,k);}
-   return k;
-  };
-  faces=faces.flatMap(([a,b,c])=>{
-   const ab=midpoint(a,b),bc=midpoint(b,c),ca=midpoint(c,a);
-   return [[a,ab,ca],[ab,b,bc],[ca,bc,c],[ab,bc,ca]];
-  });
-  boundary=boundary.flatMap((a,i)=>[a,midpoint(a,boundary[(i+1)%boundary.length])]);
- }
+ // Centroid refinement leaves boundary edges intact and shares every original
+ // edge. Unlike independently split edges this cannot introduce T junctions.
+ for(let depth=0;depth<3;depth++)faces=faces.flatMap(([a,b,c])=>{
+  const k=points.length;points.push({x:(points[a].x+points[b].x+points[c].x)/3,y:(points[a].y+points[b].y+points[c].y)/3});
+  return [[a,b,k],[b,c,k],[c,a,k]];
+ });
  const vertices:number[]=[],indices:number[]=[],n=points.length;
  const heights=points.map(height);
  if(heights.some(h=>!Number.isFinite(h)||h<=0))throw new Error('Shell heights must be finite and positive');
@@ -37,8 +26,8 @@ export function organicShell(contour:readonly Point[],height:(p:Point)=>number,u
   const down=cross>0?[a,b,c]:[a,c,b];indices.push(...down,down[0]+n,down[2]+n,down[1]+n);
  }
  const ccw=T.ShapeUtils.area(contour.map(p=>new T.Vector2(p.x,p.y)))>0;
- for(let i=0;i<boundary.length;i++){
-  const a=boundary[i],b=boundary[(i+1)%boundary.length];
+ for(let a=0;a<contour.length;a++){
+  const b=(a+1)%contour.length;
   indices.push(...(ccw?[a,a+n,b,b,a+n,b+n]:[a,b,a+n,b,b+n,a+n]));
  }
  const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(vertices,3));
