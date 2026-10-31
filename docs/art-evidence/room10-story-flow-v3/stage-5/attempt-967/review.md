@@ -1,0 +1,11 @@
+# Room10 overall review, attempt967
+
+Failed overall art review. Return only north antenna model placement and proportions to stage2 within its retained budget. The shipping north view cuts off the reflector, while the overview alone shows the complete dish. This is viewport truncation, not HUD overlap or a renewed convexity defect. Preserve the crown, feed, desk, concave reflector construction, camera, layout reservation and prior failures. No runtime correction was attempted in this overall-validation permit.
+
+Parent inspected all four original PNGs independently and agrees with the independent visual review. Entry and south may show partial props, but the native evidence needs at least one recognizable reflector and support together. No mobile visibility gate was added. Machine and human acceptance are not granted.
+
+Source HEAD is bd1fd1ecba0a706c7c62c6828039b8305956056f. Fresh origin/main 7a3f262886104fb024de9684958b3f85a8859f34 is an ancestor. The worktree started clean. Four new static PNGs use source-hashed runtime files, unchanged shipping desktop camera and HUD, and labeled capture-only overview framing. Capture exited0 with no page, console, request, aborted-request or WebGL errors. Owned browser and Vite closed. These are checkpoint-staged stills, not combat or warning-completion evidence.
+
+Parent focused Vitest command passed16 tests across the Room10 and authored-topology suites. Parent npm run build passed with the existing large-chunk warning. Parent replayed the independent CPU enemy/resource probe. It is sampled enemy-system movement, not a live encounter or contact-attack proof. Independent review reports additional77 shared regression and4 HUD tests plus typecheck, with their limits documented separately. Room resources remain73 meshes and8692 triangles under unchanged ceilings below90 and15000. No runtime, collision, shared systems or other-room source changed in this attempt.
+
+Full npm run verify, phone smoke, continuous combat, actual muted/skipped warning completion and release gates were not run or passed. The art failure remains separate from zero failures in the focused technical checks. No human approval, budget reset, merge or deployment. Next correction requires a newly emitted stage2 permit; this receipt is a reroute request, not permission to work ahead.

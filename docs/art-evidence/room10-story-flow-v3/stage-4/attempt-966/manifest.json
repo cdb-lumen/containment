@@ -1,0 +1,105 @@
+{
+  "head": "3efb66afcbe59aa752d36ee33917b0d8453d2041",
+  "beforeSource": {
+    "src/render/AuthoredRooms.ts": "4e1bdf8a3346fca24d71215bc8a697fe9d57cfe4a580383d7520d4192f5e640e",
+    "src/render/TransmissionChamberRoom.ts": "a5e3e0d0e136845682e440c954e5863cfbcf8e5caa08c97f9bc8bc2ecbdc2c92",
+    "src/render/TransmissionChamberRoom.test.ts": "7a5f0ad64027532f28a21bcc2fc02e56759a0f3307defd60c58b2aa8367dbaa5",
+    "src/game/roguelike/transmissionChamberLayout.ts": "badfe1449e147cc70335a2a3e5f02a9ae92108e8a9a180d431842086619f0978",
+    "src/game/roguelike/authoredRoomTopologies.ts": "44153ee1776fbcccc668972954478734a475ed29ded50154335f5be7a1c55670"
+  },
+  "afterSource": {
+    "src/render/AuthoredRooms.ts": "4e1bdf8a3346fca24d71215bc8a697fe9d57cfe4a580383d7520d4192f5e640e",
+    "src/render/TransmissionChamberRoom.ts": "8401a25a96388fd7467502a0c3b05f67495d2011d265349f2522b9eab7e290c0",
+    "src/render/TransmissionChamberRoom.test.ts": "7aa3001069be61437873b6d69035529a38d2a0731e3585f88b48edc3e2c04228",
+    "src/game/roguelike/transmissionChamberLayout.ts": "badfe1449e147cc70335a2a3e5f02a9ae92108e8a9a180d431842086619f0978",
+    "src/game/roguelike/authoredRoomTopologies.ts": "44153ee1776fbcccc668972954478734a475ed29ded50154335f5be7a1c55670"
+  },
+  "pairs": [
+    {
+      "file": "desktop-entry-static.png",
+      "cameraAndPlayerEqual": true,
+      "beforeSha256": "264809bbf948a4b2201248546b0a2a5051f298efc2f3ce2ee15484fb8c47c6e6",
+      "afterSha256": "c8c79cf5294cb7628c95b382c7dd456afd3e0f0e2c0905fe442dc0d4ea30a0e6",
+      "differenceBounds": [
+        713,
+        0,
+        889,
+        43
+      ],
+      "beforeResources": {
+        "meshes": 73,
+        "triangles": 8692
+      },
+      "afterResources": {
+        "meshes": 73,
+        "triangles": 8692
+      }
+    },
+    {
+      "file": "desktop-north-static.png",
+      "cameraAndPlayerEqual": true,
+      "beforeSha256": "2c1c0abd6f8ff27dc2e84431f4033fc87e3560b2e233bdf9166be408bd8706df",
+      "afterSha256": "84a865f9e864fc25a5924822dca3165555b7fc2d1cddf8271fa2f1834619d87d",
+      "differenceBounds": [
+        539,
+        0,
+        742,
+        70
+      ],
+      "beforeResources": {
+        "meshes": 73,
+        "triangles": 8692
+      },
+      "afterResources": {
+        "meshes": 73,
+        "triangles": 8692
+      }
+    },
+    {
+      "file": "desktop-south-static.png",
+      "cameraAndPlayerEqual": true,
+      "beforeSha256": "47233a962d80b53874dc9cd19352e62b89f29c8c0cfd773e7258dafadc805730",
+      "afterSha256": "c3c83083e9e97e0732b4ac0828ee1deca729cbd03f28db0f9298a63232d99333",
+      "differenceBounds": [
+        576,
+        0,
+        734,
+        15
+      ],
+      "beforeResources": {
+        "meshes": 73,
+        "triangles": 8692
+      },
+      "afterResources": {
+        "meshes": 73,
+        "triangles": 8692
+      }
+    },
+    {
+      "file": "overview-static.png",
+      "cameraAndPlayerEqual": true,
+      "beforeSha256": "7880acd3f163b1cec0f4b998be1712f17328c0d369eda9b6774d812a945e15e4",
+      "afterSha256": "bce39e8cb05f50d28ee79c80bb3c5021a1078b004bceb6184dcf62b7c319dce9",
+      "differenceBounds": [
+        571,
+        89,
+        806,
+        156
+      ],
+      "beforeResources": {
+        "meshes": 73,
+        "triangles": 8692
+      },
+      "afterResources": {
+        "meshes": 73,
+        "triangles": 8692
+      }
+    }
+  ],
+  "evidenceClass": "Room10 stage4 model iteration, static checkpoint runtime, NOT gameplay",
+  "cleanup": [
+    "owned Chromium and Vite closed",
+    "owned Chromium and Vite closed"
+  ],
+  "contactSheetSha256": "319bdc108e6b84e31805fe8586c317f3fe5dc33b4ed9a17e85df3e07becebe29"
+}

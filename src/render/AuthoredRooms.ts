@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {transmissionChamberRoom} from './TransmissionChamberRoom';
 import {relayRacksRoom} from './RelayRacksRoom';
 import {PASSENGER_FINISHES} from './RoomEquipmentPalette';
 import {createAwakeningServiceFinish} from './AwakeningServiceFinish';
@@ -665,6 +666,7 @@ function deckServices(f:Fabricator,t:RoomPlan){
  }
 }
 export function authoredRoom(id:string,t:RoomPlan):T.Group|null{
+ if(id==='transmission-chamber')return transmissionChamberRoom();
  if(id==='containment-annulus')return containmentAnnulusBlockout(t);
  if(id==='relay-racks')return relayRacksRoom();
  if(!(AUTHORED_ROOMS as readonly string[]).includes(id))return null;

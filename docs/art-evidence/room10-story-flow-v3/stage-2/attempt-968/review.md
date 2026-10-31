@@ -1,0 +1,11 @@
+# Room10 attempt968 parent review
+
+PASS for the bounded stage2 antenna placement repair. Parent inspected all four original PNGs. The complete dish and braced feet now fit entry, north and south shipping desktop views. Feet meet the retained plinth. The bowl remains identifiable, though the reduced hardware leaves an oversized empty base and loses fine detail. These weaknesses remain for overall review, not a claim of finished-room acceptance.
+
+Independent read-only reviewer also passed bounded placement and reran 25 tests across the Room10 and AuthoredRooms suites. Parent reran the Room10 suite, 11 tests passed. The command also named a nonexistent storyRoomTopology test path, so it does not establish an additional focused topology suite. Parent npm test and npm run build both exited zero. Build retains its existing large-chunk warning. No full npm run verify, phone smoke, actual combat or warning-completion claim.
+
+Only TransmissionChamberRoom.ts and its test changed. Existing antenna hardware is uniformly scaled to 0.32 and translated south atop its unchanged plinth. Concavity and front/back checks use the hardware-local frame. The new projection regression checks three fixed shipping-camera samples. No camera, HUD, collision/layout, shared gameplay or other-room changes. Actual source hashes match the capture manifest. The capture HEAD is the preceding commit, not a claim the dirty runtime had already been committed.
+
+Capture manifest records four unique original PNGs, no browser/network errors, and no WebGL/context loss. Resources are 74 meshes and 8692 triangles, within unchanged limits below90 and15000. Captures are static checkpoint-staged software-WebGL evidence. Overview framing is capture-only. Native desktop uses unchanged shipping camera and HUD. Do not treat static legal player positions as live traversal or combat evidence.
+
+The implementation delegate timed out after creating the diff, tests and complete capture output. Parent recovered the files and independently reviewed and tested the final source. Original red.log and capture records remain local. No failed history or budget is reset. Overall stage5 review requires its next scheduler permit. No human acceptance, merge or deployment.

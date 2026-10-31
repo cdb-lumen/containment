@@ -1,0 +1,505 @@
+{
+  "evidenceClass": "Room10 stage5 overall attempt969, static checkpoint runtime, NOT gameplay",
+  "limitations": [
+    "Checkpoint stages Room10. Simulation paused for reproducible art capture. Player legally staged. Desktop retains shipping camera and HUD. Overview fits camera in capture only. HUD inside the canvas parent remains visible. No combat or campaign acceptance. Chromium software WebGL."
+  ],
+  "rows": [
+    {
+      "file": "desktop-entry-static.png",
+      "sha256": "b5bc8f5d97649c986aea543d8439d08160fb4d5bfdbfa41026d0753657638567",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 220,
+          "y": 440,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 215,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "quaternion": [
+            -0.4527600968822728,
+            0,
+            0,
+            0.8916323764148287
+          ],
+          "projection": [
+            0.06392045454545454,
+            0,
+            0,
+            0,
+            0,
+            0.09090909090909091,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            0,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      },
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 214640
+    },
+    {
+      "file": "desktop-north-static.png",
+      "sha256": "d90628b192b2894eb5902a748824caff6c10eb7b24d7451ee7c429e9b7b784bf",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 600,
+          "y": 175,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 221,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            18.749895208512196,
+            26,
+            31.924150746901642
+          ],
+          "quaternion": [
+            -0.4527600968822728,
+            0,
+            0,
+            0.8916323764148287
+          ],
+          "projection": [
+            0.06392045454545454,
+            0,
+            0,
+            0,
+            0,
+            0.09090909090909091,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            0,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      },
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 244895
+    },
+    {
+      "file": "desktop-south-static.png",
+      "sha256": "3a92af9659656421e66549102e607da8aa87304f6d82f090c49971904f751e1e",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 600,
+          "y": 705,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 221,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            18.74999999711441,
+            26,
+            33.57582651214223
+          ],
+          "quaternion": [
+            -0.4527600968822728,
+            0,
+            0,
+            0.8916323764148287
+          ],
+          "projection": [
+            0.06392045454545454,
+            0,
+            0,
+            0,
+            0,
+            0.09090909090909091,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            0,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      },
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 245056
+    },
+    {
+      "file": "overview-static.png",
+      "sha256": "d3372d3a5f150c2ca790740e3584974141e631dcefe670a463b1b6b7b9d43039",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 1030,
+          "y": 440,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 339,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            18.75,
+            48,
+            31.75
+          ],
+          "quaternion": [
+            -0.5695948377626014,
+            0,
+            0,
+            0.8219256175556251
+          ],
+          "projection": [
+            0.04379923179809266,
+            0,
+            0,
+            0,
+            0,
+            0.06229224077950957,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            -0.043744531933509676,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      },
+      "dimensions": [
+        1280,
+        900
+      ],
+      "bytes": 187155
+    }
+  ],
+  "errors": [],
+  "aborted": [],
+  "completed": [
+    "http://127.0.0.1:5173/",
+    "http://127.0.0.1:5173/src/main.ts",
+    "http://127.0.0.1:5173/@vite/client",
+    "http://127.0.0.1:5173/src/render/FrameBudget.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/builds.ts",
+    "http://127.0.0.1:5173/src/render/assets.ts",
+    "http://127.0.0.1:5173/src/render/DepthRenderer.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/boonPaths.ts",
+    "http://127.0.0.1:5173/src/InputController.ts",
+    "http://127.0.0.1:5173/src/style.css",
+    "http://127.0.0.1:5173/src/game/audio/preferences.ts",
+    "http://127.0.0.1:5173/src/render/HitConfirmation.ts",
+    "http://127.0.0.1:5173/src/game/audio/AudioSystem.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/roomTemplates.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/run.ts",
+    "http://127.0.0.1:5173/src/DepthGame.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/mutationCatalog.ts",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three.js?v=fbf9fbec",
+    "http://127.0.0.1:5173/src/game/roguelike/progression.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/expedition.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/storyRooms.ts",
+    "http://127.0.0.1:5173/src/render/DeathRagdolls.ts",
+    "http://127.0.0.1:5173/src/render/roomFraming.ts",
+    "http://127.0.0.1:5173/src/render/SealedChamberBank.ts",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_utils_SkeletonUtils__js.js?v=3c3f0e5d",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_loaders_GLTFLoader__js.js?v=1add88e4",
+    "http://127.0.0.1:5173/src/render/RecoveryKit.ts",
+    "http://127.0.0.1:5173/src/render/ReleasedBerth.ts",
+    "http://127.0.0.1:5173/node_modules/vite/dist/client/env.mjs",
+    "http://127.0.0.1:5173/src/render/EnvironmentMaterials.ts",
+    "http://127.0.0.1:5173/src/render/ShipEnvironments.ts",
+    "http://127.0.0.1:5173/src/render/SceneLighting.ts",
+    "http://127.0.0.1:5173/src/render/ActorPool.ts",
+    "http://127.0.0.1:5173/src/render/AuthoredRooms.ts",
+    "http://127.0.0.1:5173/src/render/AttackEffects.ts",
+    "http://127.0.0.1:5173/src/render/acidPool.ts",
+    "http://127.0.0.1:5173/src/render/afflictions.ts",
+    "http://127.0.0.1:5173/src/render/EnemyHealthBars.ts",
+    "http://127.0.0.1:5173/src/render/weapons.ts",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_environments_RoomEnvironment__js.js?v=f19fa274",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_utils_BufferGeometryUtils__js.js?v=c88a4265",
+    "http://127.0.0.1:5173/src/render/PassengerVault.ts",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_postprocessing_EffectComposer__js.js?v=a1441ba0",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_postprocessing_RenderPass__js.js?v=c145a562",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_postprocessing_OutputPass__js.js?v=c46901de",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_postprocessing_UnrealBloomPass__js.js?v=6cbbf56c",
+    "http://127.0.0.1:5173/src/render/ResidentialGalleryEquipment.ts",
+    "http://127.0.0.1:5173/src/game/combat/enemyContact.ts",
+    "http://127.0.0.1:5173/src/render/models.ts",
+    "http://127.0.0.1:5173/src/game/world/expeditionGeometry.ts",
+    "http://127.0.0.1:5173/src/game/world/wallContact.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/storyRoomTemplates.ts",
+    "http://127.0.0.1:5173/src/game/combat/CombatSystem.ts",
+    "http://127.0.0.1:5173/src/game/enemies/QueenBossSystem.ts",
+    "http://127.0.0.1:5173/src/game/enemies/catalog.ts",
+    "http://127.0.0.1:5173/src/game/enemies/EnemySystem.ts",
+    "http://127.0.0.1:5173/src/game/pickups/PickupSystem.ts",
+    "http://127.0.0.1:5173/src/game/waves/EncounterDirector.ts",
+    "http://127.0.0.1:5173/src/game/world/FacilityNavigation.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/MutationRuntime.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/checkpoints.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/elementalCatalog.ts",
+    "http://127.0.0.1:5173/src/render/TransmissionChamberRoom.ts",
+    "http://127.0.0.1:5173/src/render/meshParts.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/authoredRoomTopologies.ts",
+    "http://127.0.0.1:5173/src/render/ResidentialGalleryBlockout.ts",
+    "http://127.0.0.1:5173/src/render/RoomEquipmentPalette.ts",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three_addons_geometries_RoundedBoxGeometry__js.js?v=21eaa6f7",
+    "http://127.0.0.1:5173/src/render/AwakeningServiceFinish.ts",
+    "http://127.0.0.1:5173/src/render/electricArc.ts",
+    "http://127.0.0.1:5173/src/render/ballLightning.ts",
+    "http://127.0.0.1:5173/src/render/wallSurface.ts",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/CopyShader-Djd0Zn4R.js?v=77eeca06",
+    "http://127.0.0.1:5173/src/render/passengerFloor.json?import",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/Pass-KhXCJlKh.js?v=77eeca06",
+    "http://127.0.0.1:5173/src/game/input/aimAssist.ts",
+    "http://127.0.0.1:5173/src/game/world/polygonGeometry.ts",
+    "http://127.0.0.1:5173/src/game/combat/catalog.ts",
+    "http://127.0.0.1:5173/src/game/constants.ts",
+    "http://127.0.0.1:5173/src/game/enemies/SpatialHash.ts",
+    "http://127.0.0.1:5173/src/game/world/facilityGeometry.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/transmissionChamberLayout.ts",
+    "http://127.0.0.1:5173/src/game/roguelike/ElementalRuntime.ts",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/three.module-CRdS4pSh.js?v=77eeca06",
+    "http://127.0.0.1:5173/src/game/world/facilityLayout.ts",
+    "http://127.0.0.1:5173/src/game/world/propGeometry.json?import",
+    "http://127.0.0.1:5173/@fs/home/chernodubv/.hermes/workspaces/containment-art-roadmap/transmission-chamber/story-flow-v3/stage-5/attempt-969/.vite/deps/@dimforge_rapier3d-compat.js?v=e368282c",
+    "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap",
+    "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7EPCw.ttf",
+    "https://fonts.gstatic.com/s/barlowcondensed/v13/HTx3L3I-JCGChYJ8VI-L6OO_au7B2xY.ttf",
+    "http://127.0.0.1:5173/assets/models/dretch.glb",
+    "http://127.0.0.1:5173/assets/models/marauder.glb",
+    "http://127.0.0.1:5173/assets/models/basilisk.glb",
+    "http://127.0.0.1:5173/assets/models/marine.glb",
+    "http://127.0.0.1:5173/assets/models/dragoon.glb",
+    "http://127.0.0.1:5173/assets/models/tyrant.glb",
+    "http://127.0.0.1:5173/assets/models/pistol.glb",
+    "http://127.0.0.1:5173/assets/models/rifle.glb",
+    "http://127.0.0.1:5173/assets/models/shotgun.glb",
+    "http://127.0.0.1:5173/assets/models/plasma.glb",
+    "http://127.0.0.1:5173/assets/models/rocket.glb",
+    "http://127.0.0.1:5173/assets/environment/metal_plate_02_diff.jpg",
+    "http://127.0.0.1:5173/assets/environment/metal_plate_02_nor_gl.jpg",
+    "http://127.0.0.1:5173/assets/environment/metal_plate_02_arm.jpg",
+    "http://127.0.0.1:5173/assets/environment/concrete_diff.jpg",
+    "http://127.0.0.1:5173/assets/environment/concrete_nor_gl.jpg",
+    "http://127.0.0.1:5173/assets/environment/concrete_arm.jpg",
+    "http://127.0.0.1:5173/assets/environment/metal_plate_diff.jpg",
+    "http://127.0.0.1:5173/assets/environment/metal_plate_arm.jpg",
+    "http://127.0.0.1:5173/assets/environment/metal_plate_nor_gl.jpg",
+    "http://127.0.0.1:5173/assets/vfx/Flame02.png",
+    "http://127.0.0.1:5173/assets/vfx/WispySmoke02.png",
+    "http://127.0.0.1:5173/assets/vfx/Explosion01.png",
+    "http://127.0.0.1:5173/assets/audio/pistol-1.wav",
+    "http://127.0.0.1:5173/assets/audio/pistol-2.wav",
+    "http://127.0.0.1:5173/assets/audio/rifle-1.wav",
+    "http://127.0.0.1:5173/assets/audio/rifle-2.wav",
+    "http://127.0.0.1:5173/assets/audio/pistol-3.wav",
+    "http://127.0.0.1:5173/assets/audio/rifle-3.wav",
+    "http://127.0.0.1:5173/assets/audio/shotgun-1.wav",
+    "http://127.0.0.1:5173/assets/audio/shotgun-2.wav",
+    "http://127.0.0.1:5173/assets/audio/shotgun-3.wav",
+    "http://127.0.0.1:5173/assets/audio/rocket.wav",
+    "http://127.0.0.1:5173/assets/audio/plasma.wav",
+    "http://127.0.0.1:5173/assets/audio/explosion.wav",
+    "http://127.0.0.1:5173/assets/audio/alien-impact.wav",
+    "http://127.0.0.1:5173/assets/audio/switch.wav",
+    "http://127.0.0.1:5173/assets/audio/click.wav",
+    "http://127.0.0.1:5173/assets/audio/reload.wav",
+    "http://127.0.0.1:5173/assets/audio/ambient.mp3",
+    "http://127.0.0.1:5173/assets/benchmark/sealed-cryo.glb",
+    "http://127.0.0.1:5173/assets/audio/tension.mp3",
+    "http://127.0.0.1:5173/assets/awakening/released-berth/released-berth.glb",
+    "http://127.0.0.1:5173/assets/awakening/recovery-kit/room-kit.glb",
+    "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E30-8c4A.ttf",
+    "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B4873_3E.ttf",
+    "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2_3E.ttf",
+    "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B4-Lw_3E.ttf",
+    "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3_-gc4A.ttf",
+    "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3t-4c4A.ttf",
+    "http://127.0.0.1:5173/node_modules/three/build/three.module.js",
+    "http://127.0.0.1:5173/node_modules/three/build/three.core.js?v=77eeca06"
+  ],
+  "source": {
+    "src/render/AuthoredRooms.ts": "4e1bdf8a3346fca24d71215bc8a697fe9d57cfe4a580383d7520d4192f5e640e",
+    "src/render/TransmissionChamberRoom.ts": "14ff0ac451dac1d42606c3c15bb81d43f4f6d7f110f5ebc948ff6676ab9c7a8e",
+    "src/render/TransmissionChamberRoom.test.ts": "35559bd6343815f19a8f678d811de53fa49b5d5938b29d09266ceb273404d265",
+    "src/game/roguelike/transmissionChamberLayout.ts": "badfe1449e147cc70335a2a3e5f02a9ae92108e8a9a180d431842086619f0978",
+    "src/game/roguelike/authoredRoomTopologies.ts": "44153ee1776fbcccc668972954478734a475ed29ded50154335f5be7a1c55670"
+  },
+  "head": "337d7c257b44f27f1b7cc2a8a2ff5e1ce05b2d15",
+  "origin": "http://127.0.0.1:5173/",
+  "pid": 514982,
+  "startedAt": "2026-09-30T19:01:04.822Z",
+  "passed": true,
+  "cleanup": "owned Chromium and Vite closed",
+  "finishedAt": "2026-09-30T19:02:16.093Z",
+  "canonicalPins": {
+    "rollout-sources/room10-brief.json": "86fa59f5b5e491599ddf9d999db4740ebd2ca368df0e4212411a1a9d2fbbe5e2",
+    "rollout-sources/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "rollout-sources/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "rollout-sources/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715"
+  },
+  "technicalSummary": {
+    "tests": 98,
+    "testFiles": 8,
+    "typecheckExit": 0,
+    "routes": {
+      "crawler": {
+        "cases": 24,
+        "invalidSnapshots": 0,
+        "maxFinalDistance": 7.494934470714402,
+        "allFinalLOS": true
+      },
+      "brute": {
+        "cases": 24,
+        "invalidSnapshots": 0,
+        "maxFinalDistance": 2.674125354214582,
+        "allFinalLOS": true
+      },
+      "spitter": {
+        "cases": 24,
+        "invalidSnapshots": 0,
+        "maxFinalDistance": 359.9024115826299,
+        "allFinalLOS": true
+      }
+    },
+    "meshes": 74,
+    "triangles": 8692,
+    "resources": 82,
+    "disposalFailures": 0
+  },
+  "verification": {
+    "decodedOriginals": 4,
+    "novelVersus967And968": true,
+    "sourceUnchanged": true,
+    "worktreeClean": true,
+    "ownedPIDExited": true,
+    "ownedPortClosed": 5173,
+    "noChromiumRemaining": true
+  },
+  "verdicts": {
+    "visual": "failed",
+    "technical": "bounded pass",
+    "humanAcceptance": "not inferred"
+  }
+}

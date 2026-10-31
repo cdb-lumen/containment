@@ -1,0 +1,285 @@
+{
+  "evidenceClass": "Room10 stage2 antenna placement repair attempt968, static checkpoint runtime, NOT gameplay",
+  "limitations": [
+    "Checkpoint stages Room10. Simulation paused for reproducible art capture. Player legally staged. Desktop retains shipping camera and HUD. Overview fits camera in capture only. HUD inside the canvas parent remains visible. No combat or campaign acceptance. Chromium software WebGL."
+  ],
+  "rows": [
+    {
+      "file": "desktop-entry-static.png",
+      "sha256": "edac9c9007cb1601eaace3dd8fe6d9072e6ef8991af807c60c5b2b9fafbca8f6",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 220,
+          "y": 440,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 215,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            14.944444444444445,
+            26,
+            32.75
+          ],
+          "quaternion": [
+            -0.4527600968822728,
+            0,
+            0,
+            0.8916323764148287
+          ],
+          "projection": [
+            0.06392045454545454,
+            0,
+            0,
+            0,
+            0,
+            0.09090909090909091,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            0,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      }
+    },
+    {
+      "file": "desktop-north-static.png",
+      "sha256": "d0714e012127ce01445d28c36c6678cb295b9b9a29554e43265b39e420ca1a7a",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 600,
+          "y": 175,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 221,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            18.749895208512196,
+            26,
+            31.924150746901642
+          ],
+          "quaternion": [
+            -0.4527600968822728,
+            0,
+            0,
+            0.8916323764148287
+          ],
+          "projection": [
+            0.06392045454545454,
+            0,
+            0,
+            0,
+            0,
+            0.09090909090909091,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            0,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      }
+    },
+    {
+      "file": "desktop-south-static.png",
+      "sha256": "46809e0ba451354570acbdac0eebe3bc011b06500032b421ed6b56dc9eb1b725",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 600,
+          "y": 705,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 221,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            18.74999999711441,
+            26,
+            33.57582651214223
+          ],
+          "quaternion": [
+            -0.4527600968822728,
+            0,
+            0,
+            0.8916323764148287
+          ],
+          "projection": [
+            0.06392045454545454,
+            0,
+            0,
+            0,
+            0,
+            0.09090909090909091,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            0,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      }
+    },
+    {
+      "file": "overview-static.png",
+      "sha256": "d3255385d05a529ec41545126768b87ec94b95652eeecdd4d14e0457bd79c081",
+      "metrics": {
+        "roomResources": {
+          "meshes": 74,
+          "triangles": 8692
+        },
+        "fixtureIds": [
+          "waveguide--150",
+          "waveguide--90",
+          "waveguide--30",
+          "waveguide-30",
+          "waveguide-90",
+          "waveguide-150",
+          "exposed-feed",
+          "antenna-truss",
+          "southeast-desk"
+        ],
+        "node": "transmission-chamber",
+        "legal": true,
+        "player": {
+          "x": 1030,
+          "y": 440,
+          "radius": 16
+        },
+        "captureClass": "static checkpoint, not gameplay",
+        "loading": false,
+        "quality": "high",
+        "drawCalls": 339,
+        "webglError": 0,
+        "contextLost": false,
+        "camera": {
+          "position": [
+            18.75,
+            48,
+            31.75
+          ],
+          "quaternion": [
+            -0.5695948377626014,
+            0,
+            0,
+            0.8219256175556251
+          ],
+          "projection": [
+            0.04379923179809266,
+            0,
+            0,
+            0,
+            0,
+            0.06229224077950957,
+            0,
+            0,
+            0,
+            0,
+            -0.016680567139282735,
+            0,
+            0,
+            -0.043744531933509676,
+            -1.0016680567139282,
+            1
+          ],
+          "zoom": 1
+        },
+        "state": "playing"
+      }
+    }
+  ],
+  "source": {
+    "src/render/AuthoredRooms.ts": "4e1bdf8a3346fca24d71215bc8a697fe9d57cfe4a580383d7520d4192f5e640e",
+    "src/render/TransmissionChamberRoom.ts": "14ff0ac451dac1d42606c3c15bb81d43f4f6d7f110f5ebc948ff6676ab9c7a8e",
+    "src/render/TransmissionChamberRoom.test.ts": "35559bd6343815f19a8f678d811de53fa49b5d5938b29d09266ceb273404d265",
+    "src/game/roguelike/transmissionChamberLayout.ts": "badfe1449e147cc70335a2a3e5f02a9ae92108e8a9a180d431842086619f0978",
+    "src/game/roguelike/authoredRoomTopologies.ts": "44153ee1776fbcccc668972954478734a475ed29ded50154335f5be7a1c55670"
+  },
+  "head": "5be6396a7e4bda9c030eae749091658e81275eaa",
+  "passed": true
+}
