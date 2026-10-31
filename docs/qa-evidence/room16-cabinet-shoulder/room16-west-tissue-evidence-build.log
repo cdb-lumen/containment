@@ -1,0 +1,70 @@
+
+> containment-depth@2.0.0 test:room-evidence
+> node --test scripts/room-evidence-check.mjs scripts/room-evidence-network-check.mjs scripts/room-demo-check.mjs scripts/vfx-audit-demo-check.mjs && node scripts/ragdoll-demo.mjs --self-test
+
+✔ reusable room recorder exists (0.703874ms)
+✔ combat requires repeated live shots, damage and legal movement (2.549129ms)
+✔ final capture requires exact SHA and 6–10 seconds (1.627392ms)
+✔ probe rejects wrong codec, duration and actual decoded count (0.778865ms)
+✔ motion validation rejects still or truncated decoded actor crops (1.253108ms)
+✔ selection, viewport and expected modes are explicit and reject mistakes (3.117752ms)
+✔ three rooms: production update traverses spawn to exit and fires into live enemies legally (1464.597603ms)
+✔ accepts the exact completed Vite JSON import (0.913174ms)
+✔ retains JS and TS module extensions (0.16877ms)
+✔ requires exact completed URL without query or port normalization (2.746712ms)
+✔ does not accept plain JSON or binary assets even when completed (0.929738ms)
+✔ rejects malformed URLs (3.984657ms)
+✔ capture keeps HTTP and non-abort failures fatal before duplicate classification (10.404253ms)
+✔ catalog keeps each effect in a separate clip (3.512957ms)
+✔ options enforce exact arguments, SHA, quality and final length (5.687741ms)
+✔ event validators accept appropriate runtime-shaped records (0.481434ms)
+✔ targeted weapon acid is never hazard evidence (0.520611ms)
+✔ impact requires spitter output, hazard projectile and real damage (0.392291ms)
+✔ pool requires queen output, radius, pool lifetime and damage (0.650034ms)
+✔ player firing and camera changes invalidate evidence (0.267086ms)
+✔ links require real shots, secondary damage and chilled lance targets (0.626659ms)
+✔ radial demos reject links, missing kills and missing delayed discharges (0.599608ms)
+✔ final Ball Lightning evidence rejects an end-of-clip discharge (0.317801ms)
+✔ reload evidence rejects a damaging cascade, missing reload completion or player damage (0.397389ms)
+✔ Toxic Bloom requires poisoned death, spread, no area hazard and expired vapor (0.52567ms)
+✔ staging waits for current room assets before accepting gameplay camera (0.58696ms)
+✔ recording requires recovered production loading UI, not only camera readiness (0.159397ms)
+✔ recorder bytes retain numeric RNG and contain no redaction tokens (0.179937ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1722.500712
+{"passed":true,"cpuOnly":true,"checks":33}
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+> containment-depth@2.0.0 build
+> tsc --noEmit && vite build
+
+vite v8.1.4 building client environment for production...
+[2K
+transforming...✓ 113 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.60 kB │ gzip:     0.39 kB
+dist/assets/index-BWjo2pTS.css     21.28 kB │ gzip:     5.78 kB
+dist/assets/index-FRx1oGea.js   4,248.19 kB │ gzip: 1,454.85 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 525ms
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

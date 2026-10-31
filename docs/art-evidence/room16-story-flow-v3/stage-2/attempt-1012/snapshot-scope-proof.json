@@ -1,0 +1,23 @@
+{
+  "changedTemplateIds": [
+    "swarm-junction"
+  ],
+  "snapshots": [
+    {
+      "file": "tests/unit/__snapshots__/awakeningTopology.test.ts.snap",
+      "key": "awakening cradle > preserves the other nineteen complete templates exactly 1",
+      "changedIds": [
+        "swarm-junction"
+      ],
+      "unchanged": 18
+    },
+    {
+      "file": "tests/unit/__snapshots__/passengerBlockout.test.ts.snap",
+      "key": "reviewed Passenger Vault whole-room blockout > preserves all nineteen other templates 1",
+      "changedIds": [
+        "swarm-junction"
+      ],
+      "unchanged": 18
+    }
+  ]
+}

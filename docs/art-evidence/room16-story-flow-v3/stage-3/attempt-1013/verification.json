@@ -1,0 +1,44 @@
+{
+  "verdict": "failed",
+  "art_defect": "Three uniform striped branches on a broad triangular base still read as conveyors, not organic growth seizing a human distribution hub.",
+  "technical_checks": {
+    "focused_tests": 12,
+    "vitest_passed": 771,
+    "vitest_skipped": 1,
+    "npm_test_exit": 0,
+    "build_exit": 0,
+    "room_evidence_exit": 0,
+    "room_evidence_tests": 22,
+    "ragdoll_cpu_checks": 33,
+    "repaired_geometry_exit": 0
+  },
+  "capture": {
+    "command": [
+      "node",
+      "scripts/room-evidence.mjs",
+      "--rooms=swarm-junction",
+      "--gameplay-all",
+      "--viewport=desktop",
+      "--verify-all",
+      "--out=/home/chernodubv/.hermes/workspaces/containment-art-roadmap/swarm-junction/story-flow-v3/stage-3/attempt-1013/repaired/capture"
+    ],
+    "started_at": "2026-10-01T18:57:16.576061+00:00",
+    "ended_at": "2026-10-01T18:58:03.196903+00:00",
+    "exit_code": 0,
+    "source_pins_unchanged": true,
+    "survivors": [],
+    "head": "8185b11b0a11e1d7916c5ea4e371edc5fec6bea3"
+  },
+  "limitations": [
+    "Controlled simulation, staged actors, no DOM HUD",
+    "No ordinary gameplay or three-arm encounter stress",
+    "No full browser verifier or mobile/touch checks",
+    "No human acceptance, merge or deployment"
+  ],
+  "original_pngs": {
+    "room-visuals-desktop.png": "093b005c2b012862caca13ec1f169a18eee87047ef9736a11d8b176c96b75015",
+    "room-visuals-overview.png": "0e75c7fa3247680b2c4c03d3b84ec1c45da74f096c834f85652a5fbb97ac3ad0",
+    "rejected/first-desktop.png": "620c64fb3e85c36c7f1ea55352de5fba7d2b8ef036e82237c46edc97c57eaccc",
+    "rejected/first-overview.png": "d8d6df566c096404fd1aaf21e04260b5d07997cb2c6f2cc649df86335042b715"
+  }
+}

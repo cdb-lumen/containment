@@ -1,0 +1,22 @@
+{
+  "algorithm": "SHA256",
+  "files": {
+    "fonts/DejaVuSans-Bold.ttf": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895",
+    "fonts/DejaVuSans.ttf": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+    "fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "generate_board.py": "90e3071e0294d7f5bb2c52eadc6ecee20e61164edf755680d1ec25625ee4a879",
+    "generate_board_v2.py": "85bb78197c8cc5123136036ec75a03ea445b7360d47b7a9b3777c0e0401150db",
+    "room16-sourced-brief.md": "f4535a0178d8dd11c37b9bd7be3f25dd011776b6640f507be44240ea2728c266",
+    "room16-story-intent-original.png": "aa362252721782d5f03b7c9c1b7f89edcae6d2f129bc41cc9db5d78f7a37289a",
+    "room16-story-intent-v2-replay.png": "fe7e5fef32e9a7c8a4b9ff7c72e623cbbaecd1b3e212f825ef942a5a387df644",
+    "room16-story-intent-v2.png": "fe7e5fef32e9a7c8a4b9ff7c72e623cbbaecd1b3e212f825ef942a5a387df644",
+    "source-manifest.json": "f637f7881629f82fa07d3f666b0a9d2a6b28ac693bd1895c1d8e476436a6cd66",
+    "sources/issue37-live.json": "42e2cdc9212a6c12604b3778caa8658239e086c3e2f59b8727a8821f01a55079",
+    "sources/manifest.json": "c3ec52f79d2253c414faffc325920e7dbe29901fc728186281474b16a2fc7409",
+    "sources/room16-brief.json": "5f7f95fb433d4b813978394aaef0a9a7a43d5f7b4b00c70e23a93dbfe9d5c837",
+    "sources/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "sources/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "sources/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715",
+    "verification.json": "6422cd85951a6912bc7cc9f5ab57ebc6ae5027cff5adc9b4fec56e86d584915a"
+  }
+}

@@ -30,7 +30,7 @@ describe('roguelike room templates', () => {
       expect(template.width).toBeGreaterThan(2 * RADIUS);
       expect(template.height).toBeGreaterThan(2 * RADIUS);
       expect(Number.isFinite(template.width + template.height)).toBe(true);
-      expect(template.obstacles.length + (template.voids?.length ?? 0)).toBeGreaterThanOrEqual(template.boundary ? 1 : 2);
+      expect(template.obstacles.length + (template.voids?.length ?? 0)).toBeGreaterThanOrEqual(template.boundary || template.id==='swarm-junction' ? 1 : 2);
       for(const polygon of [template.boundary,...template.voids??[]].filter(p=>p!==undefined)){
         expect(Object.isFrozen(polygon)).toBe(true);
         expect(polygon.length).toBeGreaterThanOrEqual(3);

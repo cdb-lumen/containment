@@ -1,0 +1,347 @@
+{
+  "stage": 1,
+  "runtimeChanged": false,
+  "coordinateSystem": "game XY, origin upper left; camera envelope unchanged",
+  "focal": [
+    600,
+    260
+  ],
+  "organPolygon": [
+    [
+      370,
+      130
+    ],
+    [
+      415,
+      115
+    ],
+    [
+      550,
+      210
+    ],
+    [
+      575,
+      220
+    ],
+    [
+      585,
+      205
+    ],
+    [
+      615,
+      205
+    ],
+    [
+      625,
+      220
+    ],
+    [
+      650,
+      210
+    ],
+    [
+      785,
+      115
+    ],
+    [
+      830,
+      130
+    ],
+    [
+      685,
+      255
+    ],
+    [
+      650,
+      285
+    ],
+    [
+      625,
+      310
+    ],
+    [
+      625,
+      370
+    ],
+    [
+      575,
+      370
+    ],
+    [
+      575,
+      310
+    ],
+    [
+      550,
+      285
+    ],
+    [
+      515,
+      255
+    ]
+  ],
+  "arms": {
+    "west": [
+      260,
+      440
+    ],
+    "east": [
+      940,
+      440
+    ],
+    "south": [
+      600,
+      740
+    ]
+  },
+  "activities": {
+    "west-escape": [
+      350,
+      440
+    ],
+    "east-escape": [
+      850,
+      440
+    ],
+    "swarm-engagement": [
+      600,
+      480
+    ],
+    "south-turn": [
+      600,
+      650
+    ],
+    "north-service-access": [
+      600,
+      100
+    ]
+  },
+  "routes": {
+    "entry-exit": [
+      [
+        100,
+        440
+      ],
+      [
+        350,
+        440
+      ],
+      [
+        600,
+        440
+      ],
+      [
+        850,
+        440
+      ],
+      [
+        1100,
+        440
+      ]
+    ],
+    "west-south": [
+      [
+        260,
+        440
+      ],
+      [
+        350,
+        530
+      ],
+      [
+        450,
+        650
+      ],
+      [
+        600,
+        740
+      ]
+    ],
+    "south-east": [
+      [
+        600,
+        740
+      ],
+      [
+        750,
+        650
+      ],
+      [
+        850,
+        530
+      ],
+      [
+        940,
+        440
+      ]
+    ],
+    "east-west": [
+      [
+        940,
+        440
+      ],
+      [
+        850,
+        440
+      ],
+      [
+        600,
+        440
+      ],
+      [
+        350,
+        440
+      ],
+      [
+        260,
+        440
+      ]
+    ],
+    "northwest-approach": [
+      [
+        156,
+        100
+      ],
+      [
+        260,
+        100
+      ],
+      [
+        260,
+        440
+      ]
+    ],
+    "northeast-approach": [
+      [
+        1044,
+        100
+      ],
+      [
+        940,
+        100
+      ],
+      [
+        940,
+        440
+      ]
+    ],
+    "southwest-approach": [
+      [
+        156,
+        780
+      ],
+      [
+        350,
+        780
+      ],
+      [
+        600,
+        740
+      ]
+    ],
+    "southeast-approach": [
+      [
+        1044,
+        780
+      ],
+      [
+        850,
+        780
+      ],
+      [
+        600,
+        740
+      ]
+    ],
+    "outer-north-service": [
+      [
+        260,
+        440
+      ],
+      [
+        260,
+        60
+      ],
+      [
+        600,
+        60
+      ],
+      [
+        940,
+        60
+      ],
+      [
+        940,
+        440
+      ]
+    ],
+    "service-access": [
+      [
+        600,
+        60
+      ],
+      [
+        600,
+        100
+      ]
+    ]
+  },
+  "shipServiceRuns": [
+    [
+      [
+        330,
+        90
+      ],
+      [
+        400,
+        135
+      ],
+      [
+        550,
+        250
+      ]
+    ],
+    [
+      [
+        870,
+        90
+      ],
+      [
+        800,
+        135
+      ],
+      [
+        650,
+        250
+      ]
+    ],
+    [
+      [
+        600,
+        620
+      ],
+      [
+        600,
+        370
+      ],
+      [
+        600,
+        280
+      ]
+    ]
+  ],
+  "gantry": {
+    "x": 450,
+    "y": 12,
+    "width": 300,
+    "height": 20,
+    "collision": "wall dressing only"
+  },
+  "notes": [
+    "Replace the three baseline rectangles with one proposed sealed organ polygon.",
+    "Floor service marks are flush and walkable, never added solids.",
+    "Root C ends at y370 to keep center compatibility anchor 600/440 usable.",
+    "All four breach anchors stay fixed; approaches start at production inward offset 56.",
+    "Low visual envelope required in later stages. No gameplay visibility claim."
+  ]
+}

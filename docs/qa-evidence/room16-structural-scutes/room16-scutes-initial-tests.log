@@ -1,0 +1,275 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ❯ src/render/SwarmJunction.test.ts (26 tests | 16 failed) 2453ms
+     × closes the continuous curved body and cavity lip with opposite directed edges and outward faces 52ms
+     × keeps the rounded underbody closed with positive volume and the full shot-plane silhouette 14ms
+     × uses one curved charcoal mass rather than repeated plate belts around its sunken cavity 16ms
+     × keeps recognizable cabinet components mechanically connected and exposed 14ms
+     × exposes the three severed terminal tops and the cabinet connector face to the shipping camera 13ms
+     × attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold 14ms
+     × opens the terminal borders and crosses the cabinet roof while retaining exposed hardware 18ms
+     × uses a varying organic heightfield, differentiated materials and recessed wall bays 28ms
+     × places a low organ, three separate cut ends, severed hub, gantry and flush service paths 29ms
+     × matches added and freed local pockets to movement, short shots and rendered mass 32ms
+     × keeps every solid vertex in collision and preserves bounds through production bake 12ms
+     × matches every sampled top-surface ray to actual occupancy (pre bake) 11ms
+     × matches every sampled top-surface ray to actual occupancy (post bake) 10ms
+     × disposes every owned geometry and material once across repeated room visits without disposing shared materials 13ms
+     × covers the sealed shot silhouette at the renderer fallback height, before and after production bake 11ms
+     × has a physical gap at the gantry break with an attached lowered end 14ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > closes the continuous curved body and cavity lip with opposite directed edges and outward faces
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:22:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > keeps the rounded underbody closed with positive volume and the full shot-plane silhouette
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:59:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > uses one curved charcoal mass rather than repeated plate belts around its sunken cavity
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:76:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > keeps recognizable cabinet components mechanically connected and exposed
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:91:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > exposes the three severed terminal tops and the cabinet connector face to the shipping camera
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:109:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > attaches the thick terminal sections and leaves the roof service panel readable beside the engulfing fold
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:129:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > opens the terminal borders and crosses the cabinet roof while retaining exposed hardware
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:151:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > uses a varying organic heightfield, differentiated materials and recessed wall bays
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:167:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > places a low organ, three separate cut ends, severed hub, gantry and flush service paths
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:230:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > matches added and freed local pockets to movement, short shots and rendered mass
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:241:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > keeps every solid vertex in collision and preserves bounds through production bake
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:257:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > matches every sampled top-surface ray to actual occupancy (pre bake)
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > matches every sampled top-surface ray to actual occupancy (post bake)
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:284:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > disposes every owned geometry and material once across repeated room visits without disposing shared materials
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:295:47
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > covers the sealed shot silhouette at the renderer fallback height, before and after production bake
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:301:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/16]⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > has a physical gap at the gantry break with an attached lowered end
+Error: Shell requires a simple nondegenerate contour
+ ❯ organicShell src/render/organicShell.ts:13:53
+     11|  let faces=T.ShapeUtils.triangulateShape(points.map(p=>new T.Vector2(p…
+     12|  const area=Math.abs(T.ShapeUtils.area(points.map(p=>new T.Vector2(p.x…
+     13|  if(area<1e-8||faces.length!==points.length-2)throw new Error('Shell r…
+       |                                                     ^
+     14|  // Split shared edges once per level, including the side-wall boundar…
+     15|  // centroid-only split leaves long interior edges at their endpoint h…
+ ❯ swarmJunctionBlockout src/render/SwarmJunction.ts:63:11
+ ❯ environmentArchitecture src/render/ShipEnvironments.ts:182:79
+ ❯ model src/render/SwarmJunction.test.ts:17:43
+ ❯ src/render/SwarmJunction.test.ts:313:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/16]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  16 failed | 10 passed (26)
+   Start at  20:14:36
+   Duration  3.79s (transform 988ms, setup 0ms, import 1.22s, tests 2.45s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

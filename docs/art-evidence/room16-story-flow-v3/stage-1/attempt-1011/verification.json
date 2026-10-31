@@ -1,0 +1,31 @@
+{
+  "pass": true,
+  "deterministicPngReplay": true,
+  "imageSize": [
+    2800,
+    1780
+  ],
+  "sourceCommit": "04aab8d63ab3e37de9bdc9c808496de0fb263432",
+  "sourceFileCount": 11,
+  "proposedChecks": [
+    {
+      "radius": 16,
+      "anchorCount": 19,
+      "routeCount": 16,
+      "segmentCount": 34,
+      "components": [
+        2300
+      ]
+    },
+    {
+      "radius": 28,
+      "anchorCount": 19,
+      "routeCount": 16,
+      "segmentCount": 34,
+      "components": [
+        2168
+      ]
+    }
+  ],
+  "scope": "Documents only. No runtime, git commit, publication, combat or native view claim."
+}

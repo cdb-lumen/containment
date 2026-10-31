@@ -9,7 +9,7 @@ const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-
 const nodes=generateRun(3,3).nodes;
 const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280},{x:584,y:336},{x:600,y:450}];
 describe('authored walkable topologies',()=>{
- it('uses five shaped room boundaries and a sealed Armory horseshoe/carousel',()=>{
+ it('preserves five shaped rooms, the sealed Armory and Room16 organ',()=>{
   expect(nodes).toHaveLength(20);
   for(const n of nodes){const t=ROOM_TEMPLATES[n.templateId];if(ids.includes(n.templateId)){
    expect(t).toHaveProperty('boundary');expect(t).toHaveProperty('voids');
@@ -18,7 +18,7 @@ describe('authored walkable topologies',()=>{
     expect(canOccupyExpedition(g,n.templateId==='armory'?{x:-1,y:50}:n.templateId==='passenger-vault'?{x:30,y:50}:{x:50,y:50},radius)).toBe(false);
     expect(canOccupyExpedition(g,probes[ids.indexOf(n.templateId)],radius)).toBe(false);
    }
-  }else{expect(t).not.toHaveProperty('boundary');expect(t).not.toHaveProperty('voids');}}
+  }else{expect(t).not.toHaveProperty('boundary');if(n.templateId==='swarm-junction'){expect(t.voids).toHaveLength(1);expect(t.obstacles).toEqual([]);}else expect(t).not.toHaveProperty('voids');}}
  });
  it('connects spawn, exit and inward-offset breaches for larger actors',()=>{
   // South32 uses human-scale furniture: its production radii, inward-spawn

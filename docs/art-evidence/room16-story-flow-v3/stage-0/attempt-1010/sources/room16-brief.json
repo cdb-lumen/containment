@@ -1,0 +1,37 @@
+{
+  "authority": "Canonical queue and pinned game sources; obsolete predecessor and release checklists do not apply. Follow map-model-production.md. No implicit acceptance, merge or deploy.",
+  "room": {
+    "acceptance": [
+      "All three root directions read in overview and native gameplay; the room differs from the workshop by radial organization and one routing organ.",
+      "Stress a legal encounter with enemies approaching each arm. No carapace lobe hides spawn emergence, and telegraphs remain distinct from any decorative pulse."
+    ],
+    "blocker": null,
+    "branch": null,
+    "brief_status": "historical_revalidate_story_and_function_before_use",
+    "campaign_room": 16,
+    "combat_contract": "Canonical room 16: Swarm junction. Existing objective: Break the concentrated swarm guarding reactor access. Keep concentrated swarm combat and the three-way convergence plan. Maintain escape turns between all routes and readable incoming threats; central growth must not become an unapproved boss or spawn emitter.",
+    "demo_path": null,
+    "evidence_path": null,
+    "issue_number": 37,
+    "issue_url": "https://github.com/cdb-lumen/containment/issues/37",
+    "landmark": "Swarm convergence. Three routes meet around an alien routing organ built into a severed ship distribution hub.",
+    "materials_lighting": "Charcoal chitin, bone-grey exposed ribs and quiet dark metal lanes. A restrained internal pulse may add atmosphere but must not resemble an attack windup or introduce flashing hazard cues.",
+    "merged_sha": null,
+    "models": [
+      "Sculpt a low three-root carapace manifold with layered plates, tendon anchor sockets and a recessed central sensory cavity. Give each root a distinct cut end tied to a corridor direction.",
+      "Build torn cable saddles and peeled bulkhead ribs pulled into the organ, plus a damaged human directional gantry kept on the far wall. Growth uses long directional forms rather than scattered nodules."
+    ],
+    "name": "Swarm junction",
+    "pr": null,
+    "production_order": 16,
+    "stage": "queued",
+    "status": "pending",
+    "story_dressing": "Three invasion paths converge on reactor access, suggesting coordinated intent. No claim of hive explanation or new synchronized enemy AI.",
+    "template_id": "swarm-junction",
+    "topology_brief": "Three-way broad junction with unequal connected sectors around a substantial alien coordination installation. Imply intelligent collective behaviour without exposition. Keep alternate exits per fighting sector.",
+    "topology_previously_upgraded": false,
+    "verification": null,
+    "worktree": null
+  },
+  "source_commit": "7a3f262886104fb024de9684958b3f85a8859f34"
+}

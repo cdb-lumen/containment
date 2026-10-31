@@ -1,0 +1,39 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ✓ src/render/organicShell.test.ts > seals a concave footprint without bridging its cavity 46ms
+ ✓ src/render/organicShell.test.ts > seals a concave footprint without bridging its cavity 26ms
+ ✓ src/render/organicShell.test.ts > rejects missing coordinates, invalid scales and collapsed heights 23ms
+ ✓ src/render/organicShell.test.ts > keeps the proposed 132-point contour closed under varying positive heights 418ms
+ ✓ src/render/organicShell.test.ts > samples the curved height along original interior edges instead of leaving a sunken diagonal 1ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > closes the continuous curved body and cavity lip with opposite directed edges and outward faces 774ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > keeps the rounded underbody closed with positive volume and the full shot-plane silhouette 862ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > uses one curved charcoal mass rather than repeated plate belts around its sunken cavity 71ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > keeps recognizable cabinet components mechanically connected and exposed 106ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > exposes the three severed terminal tops and the cabinet connector face to the shipping camera 86ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > uses a varying organic heightfield, differentiated materials and recessed wall bays 74ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > uses the explicit revised curved contour while preserving the historical baseline and all anchors 3ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > leaves every other room template byte-equivalent 1ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > retains all planned routes, breaches and connected usable space for radius 16 177ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > retains all planned routes, breaches and connected usable space for radius 28 194ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > retains all planned routes, breaches and connected usable space for radius 38 126ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > documents removed and added sealed regions against the preserved original contour 300ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > places a low organ, three separate cut ends, severed hub, gantry and flush service paths 70ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > keeps every solid vertex in collision and preserves bounds through production bake 268ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > matches every sampled top-surface ray to actual occupancy (pre bake) 1583ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > matches every sampled top-surface ray to actual occupancy (post bake) 1643ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > disposes every owned geometry and material once across repeated room visits without disposing shared materials 274ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > covers the sealed shot silhouette at the renderer fallback height, before and after production bake 189ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > has a physical gap at the gantry break with an attached lowered end 75ms
+ ✓ src/render/SwarmJunction.test.ts > Room16 room visuals > does not select Room16 models for the preceding room or a near-match ID 8ms
+
+ Test Files  2 passed (2)
+      Tests  25 passed (25)
+   Start at  18:10:09
+   Duration  8.22s (transform 953ms, setup 0ms, import 1.28s, tests 7.40s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

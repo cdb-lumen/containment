@@ -1,0 +1,299 @@
+{
+  "patches": [
+    {
+      "x": 706,
+      "y": 230,
+      "expected": "consuming-distributor-right-shoulder",
+      "counts": {
+        "distributor-engulfing-fold": 7,
+        "consuming-distributor-right-shoulder": 18
+      }
+    },
+    {
+      "x": 710,
+      "y": 236,
+      "expected": "consuming-distributor-right-shoulder",
+      "counts": {
+        "consuming-distributor-right-shoulder": 25
+      }
+    },
+    {
+      "x": 714,
+      "y": 242,
+      "expected": "consuming-distributor-right-shoulder",
+      "counts": {
+        "consuming-distributor-right-shoulder": 24,
+        "carapace-scute-east-middle": 1
+      }
+    },
+    {
+      "x": 802,
+      "y": 152,
+      "expected": "root-east-tissue",
+      "counts": {
+        "root-east-tissue": 13,
+        "root-east-cut": 11,
+        "root-east-sheath": 1
+      }
+    },
+    {
+      "x": 602,
+      "y": 380,
+      "expected": "root-south-tissue",
+      "counts": {
+        "root-south-sheath": 10,
+        "root-south-tissue": 15
+      }
+    }
+  ],
+  "tissue": {
+    "west": {
+      "exposed": 144,
+      "total": 2397
+    },
+    "east": {
+      "exposed": 23,
+      "total": 2550
+    },
+    "south": {
+      "exposed": 47,
+      "total": 1564
+    }
+  },
+  "overlaps": [
+    {
+      "x": 699,
+      "y": 232,
+      "shoulderTop": 44.27216634062148,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 232,
+      "shoulderTop": 44.182687621755704,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 232,
+      "shoulderTop": 44.062862710854446,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 233,
+      "shoulderTop": 44.28182483948383,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 233,
+      "shoulderTop": 44.20931255694518,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 233,
+      "shoulderTop": 44.08561411592149,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 234,
+      "shoulderTop": 44.290880458871115,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 234,
+      "shoulderTop": 44.23884263972646,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 234,
+      "shoulderTop": 44.11514419870278,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 235,
+      "shoulderTop": 44.29916200932769,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 235,
+      "shoulderTop": 44.25838588439312,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 235,
+      "shoulderTop": 44.09474009091092,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 236,
+      "shoulderTop": 44.29955091181489,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 236,
+      "shoulderTop": 44.28530400069718,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 236,
+      "shoulderTop": 44.114744245391535,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 237,
+      "shoulderTop": 44.29977700144974,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 237,
+      "shoulderTop": 44.299740348894574,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 237,
+      "shoulderTop": 44.143390852151455,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 238,
+      "shoulderTop": 44.29962929007934,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 238,
+      "shoulderTop": 44.299891678328365,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 238,
+      "shoulderTop": 44.14349329840276,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 239,
+      "shoulderTop": 44.297197951483966,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 239,
+      "shoulderTop": 44.2965086317554,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 239,
+      "shoulderTop": 44.170372481198655,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 240,
+      "shoulderTop": 44.2935769779166,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 240,
+      "shoulderTop": 44.29288765818802,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 240,
+      "shoulderTop": 44.202593459296466,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 241,
+      "shoulderTop": 44.285598204307945,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 241,
+      "shoulderTop": 44.28739905603153,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 241,
+      "shoulderTop": 44.22508853243798,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 242,
+      "shoulderTop": 44.261433316260266,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 242,
+      "shoulderTop": 44.260032024580184,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 242,
+      "shoulderTop": 44.23590449696964,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 243,
+      "shoulderTop": 44.23200776404941,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 243,
+      "shoulderTop": 44.229234125196314,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 243,
+      "shoulderTop": 44.22646048634323,
+      "housingTop": 42.5
+    },
+    {
+      "x": 699,
+      "y": 244,
+      "shoulderTop": 44.18450845148145,
+      "housingTop": 42.5
+    },
+    {
+      "x": 700,
+      "y": 244,
+      "shoulderTop": 44.1891576629324,
+      "housingTop": 42.5
+    },
+    {
+      "x": 701,
+      "y": 244,
+      "shoulderTop": 44.193806874383355,
+      "housingTop": 42.5
+    }
+  ]
+}

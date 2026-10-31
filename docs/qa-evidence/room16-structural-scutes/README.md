@@ -1,0 +1,7 @@
+# Room16 structural shell/tissue prototype
+
+Preserves rejected20c5790 shape/collision and all prior rejected images. Eight broad clipped overlapping scutes now span the roots over a connected tendon bed; split cut sections expose lower tissue and a supported side-to-roof tongue crosses one cabinet corner. Existing named cut, cabinet/lid/panel/port and cavity exposure checks remain. No new lights, gameplay, camera, collision, anchor or route change. Same44.8height/sevenmaterial/fewer-than100mesh limits. Includes merged main elemental audio, whose new-head mix is not certified by the old static views.
+
+Full1573tests+1skip, assets/evidence checks and build pass. Retained focused33tests plus2new structural witnesses pass. Default three-level shell refinement is unchanged; smaller scutes use two levels, with both winding orientations/concavity/manifold tests preserved and expanded. The initially offset contour invalidity, groove below its bottom and cabinet-wrap occlusion were caught and fixed without weakening those assertions. Text logs normalize trailing whitespace only; raw originals remain in execution workspace.
+
+Fresh matched static capture, independent final code/pixel review and current-head desktop CI remain pending. Structural intent and geometric samples do not establish biological identity, visual acceptance, full encounter/arm emergence or performance. No merge, deployment, human approval, external delivery or issue closure is claimed.

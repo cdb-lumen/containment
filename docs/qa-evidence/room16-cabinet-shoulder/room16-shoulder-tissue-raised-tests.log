@@ -1,0 +1,30 @@
+
+ RUN  v4.1.10 /workspace/containment-room16-remodel
+
+ ❯ src/render/SwarmJunction.test.ts (33 tests | 1 failed) 15891ms
+     × exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports 306ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/SwarmJunction.test.ts > Room16 room visuals > exposes internal cut tissue and a connected cabinet side-to-roof fold without hiding its ports
+AssertionError: expected 'root-east-cut' to be 'root-east-tissue' // Object.is equality
+
+Expected: "root-east-tissue"
+Received: "root-east-cut"
+
+ ❯ src/render/SwarmJunction.test.ts:128:322
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 passed (33)
+   Start at  20:41:47
+   Duration  17.53s (transform 1.27s, setup 0ms, import 1.53s, tests 15.89s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

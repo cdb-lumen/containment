@@ -1,0 +1,54 @@
+{
+  "source_checks": [
+    {
+      "snapshot": "sources/room16-brief.json",
+      "snapshot_hash_verified": true,
+      "original_unchanged": true
+    },
+    {
+      "snapshot": "sources/storyRooms.ts",
+      "snapshot_hash_verified": true,
+      "original_unchanged": true
+    },
+    {
+      "snapshot": "sources/storyRoomTemplates.ts",
+      "snapshot_hash_verified": true,
+      "original_unchanged": true
+    },
+    {
+      "snapshot": "sources/roomTemplates.ts",
+      "snapshot_hash_verified": true,
+      "original_unchanged": true
+    },
+    {
+      "snapshot": "sources/manifest.json",
+      "snapshot_hash_verified": true,
+      "original_unchanged": true
+    },
+    {
+      "snapshot": "sources/issue37-live.json",
+      "snapshot_hash_verified": true
+    }
+  ],
+  "source_entry_count": 6,
+  "canonical_hash_matches": 3,
+  "cpu_only": true,
+  "python": "3.11.16",
+  "pillow": "12.3.0",
+  "png_dimensions": [
+    2400,
+    1680
+  ],
+  "mode": "RGB",
+  "replay_byte_identical": true,
+  "candidate_sha256": "fe7e5fef32e9a7c8a4b9ff7c72e623cbbaecd1b3e212f825ef942a5a387df644",
+  "vision_inspected": [
+    "room16-story-intent-original.png",
+    "room16-story-intent-v2.png"
+  ],
+  "original_preserved": true,
+  "inspection_result": "Original framing overflow corrected in separately preserved v2. Both PNGs inspected. Concept only; no independent approval or gameplay verification.",
+  "runtime_edits": false,
+  "external_writes": false,
+  "earlier_room_assets_used": false
+}

@@ -1,0 +1,72 @@
+{
+  "task_id": "room16-story-flow-v3",
+  "attempt": 1012,
+  "stage_index": 2,
+  "runtime_base": "7a3f262886104fb024de9684958b3f85a8859f34",
+  "parent_head_before_publication": "ff4f76f0736aa4c33721e3d637dd7cedd6088f53",
+  "final_verdict": "passed",
+  "scope": "rough model placement only",
+  "final_checks": {
+    "focused_tests": 10,
+    "independent_tests": 81,
+    "vitest_passed": 769,
+    "vitest_skipped": 1,
+    "required_node_python_asset_checks": "passed",
+    "build": "passed, large-chunk warning",
+    "room_evidence_checks": "passed before two-file model correction",
+    "capture": "corrected source exit0, two original PNGs, no owned survivors",
+    "full_browser_verifier": "not run"
+  },
+  "preserved_failures": [
+    "first focused test missing rear bulkhead",
+    "first aggregate stale template contracts and snapshots",
+    "implementation child interrupted aggregate after Vitest",
+    "first independent review failed fallback-height shot coherence",
+    "new horizontal-ray and gantry gap RED failures",
+    "first candidate 34-unit height assertion failed on corrected geometry"
+  ],
+  "limits": [
+    "controlled simulation, not ordinary live gameplay",
+    "shot coherence at fallback height .95 only",
+    "materials and organic detail unfinished",
+    "no human acceptance, merge or deployment"
+  ],
+  "pngs": [
+    {
+      "path": "rejected/first-gameplay.png",
+      "sha256": "85431a534df4fa998dd137c629894fd899ac0cdb90b881d9433d54d50ed86384",
+      "bytes": 805504,
+      "dimensions": [
+        1280,
+        900
+      ]
+    },
+    {
+      "path": "rejected/first-overview.png",
+      "sha256": "6962b03525d170cbd91840dfd375fe1b24438b76e5a577f6664b9f76e1de5827",
+      "bytes": 382805,
+      "dimensions": [
+        1280,
+        900
+      ]
+    },
+    {
+      "path": "rough-gameplay.png",
+      "sha256": "318c4e1ad260b0cb4655aa4af4301377beb261ce14f8a89e8ff9a96e4025233d",
+      "bytes": 803702,
+      "dimensions": [
+        1280,
+        900
+      ]
+    },
+    {
+      "path": "rough-overview.png",
+      "sha256": "d203dc4bc5fa840454e7548af3d283a645d45685d6ddf971ef26f75e7e41ad74",
+      "bytes": 384430,
+      "dimensions": [
+        1280,
+        900
+      ]
+    }
+  ]
+}
