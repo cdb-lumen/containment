@@ -15,6 +15,7 @@ const out=resolve(option('out','docs/pr-screenshots/authored/hud-'+(mobile?'phon
 const prefix='/containment/',root=resolve('dist'),types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.jpg':'image/jpeg','.png':'image/png','.glb':'model/gltf-binary','.ogg':'audio/ogg','.mp3':'audio/mpeg','.wav':'audio/wav'};
 let ssr,server,browser;const results=[];
 try{
+ await mkdir(out,{recursive:true});
  ssr=await viteServer({configFile:false,server:{middlewareMode:true},logLevel:'error'});
  const {generateRun}=await ssr.ssrLoadModule('/src/game/roguelike/run.ts');
  const {serializeCheckpoint,CHECKPOINT_STORAGE_KEY}=await ssr.ssrLoadModule('/src/game/roguelike/checkpoints.ts');
@@ -53,7 +54,16 @@ try{
    const file=`${id}-${mobile?'phone':'desktop'}-hud.png`,bytes=await page.screenshot({path:resolve(out,file)});
    results.push({id,file,viewport,quality:'low',state:await page.evaluate(()=>document.body.dataset.state),room:await page.locator('#room-name').textContent(),input:mobile?'real touch fire':'real keyboard move/fire',explicitFatalAuthorization:id==='overload-floor',errors,sha256:createHash('sha256').update(bytes).digest('hex')});
    await writeFile(resolve(out,'manifest.json'),JSON.stringify({commit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),evidence:'Built production app, seeded validated prior-room checkpoint, real Continue/route/authorization/fire/pause/resume. Short interaction smoke, not full playthrough or balance proof.',results},null,2)+'\n');console.log(JSON.stringify(results.at(-1)));
+  }catch(error){
+   const failure={id,viewport,errors,error:String(error),completedResults:results};
+   await writeFile(resolve(out,`${id}-failure.json`),JSON.stringify(failure,null,2)+'\n');
+   // Best-effort capture must not mask the failing assertion or hang cleanup.
+   await page.screenshot({path:resolve(out,`${id}-failure.png`),timeout:10000}).catch(()=>{});
+   throw error;
   }finally{await context.close();}
  }
  assert.equal(results.length,ids.length);
+}catch(error){
+ await writeFile(resolve(out,'failure.json'),JSON.stringify({error:String(error),results},null,2)+'\n');
+ throw error;
 }finally{await browser?.close();await ssr?.close();if(server)await new Promise(r=>server.close(r));}
