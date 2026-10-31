@@ -25,10 +25,10 @@ export function demoOptions(args) {
  assert((seconds>=6&&seconds<=10)||(provisional&&seconds===2),'seconds must be 6–10, or 2 with --provisional');
  assert(Number.isInteger(fps)&&fps>=20&&fps<=60&&Number.isInteger(seconds*fps),'fps must be integer 20–60 with integral frame count');
  const viewportName=values.viewport??'desktop',quality=values.quality??'high',room=values.room??'awakening-bay';
- assert(['desktop','phone'].includes(viewportName),'viewport must be desktop or phone');
+ assert.equal(viewportName,'desktop','Only the desktop viewport is supported');
  assert(['high','low'].includes(quality),'quality must be high or low');
  assert(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(room),'Invalid room identifier');
- return {room,provisional,seconds,fps,frames:seconds*fps,quality,viewportName,viewport:viewportName==='phone'?{width:390,height:844}:{width:1280,height:900},sourceSha:values['source-sha'],out:resolve(values.out??`docs/pr-screenshots/room-demo/${room}${provisional?'-provisional':''}`)};
+ return {room,provisional,seconds,fps,frames:seconds*fps,quality,viewportName,viewport:{width:1280,height:900},sourceSha:values['source-sha'],out:resolve(values.out??`docs/pr-screenshots/room-demo/${room}${provisional?'-provisional':''}`)};
 }
 export function verifyProbe(probe,options) {
  const stream=probe.streams[0];assert(stream,'Missing video stream');
@@ -143,7 +143,7 @@ window.demo={
 };
 `);
   browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
-  const context=await browser.newContext({viewport:options.viewport,deviceScaleFactor:1,isMobile:options.viewportName==='phone',hasTouch:options.viewportName==='phone'});
+  const context=await browser.newContext({viewport:options.viewport,deviceScaleFactor:1,isMobile:false,hasTouch:false});
   const page=await context.newPage();page.setDefaultTimeout(120000);const cdp=await context.newCDPSession(page);
   const aborted=[],finishedUrls=new Set();
   page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
