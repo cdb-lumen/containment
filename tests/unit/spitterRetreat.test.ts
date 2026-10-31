@@ -16,15 +16,26 @@ function scene(start:{x:number;y:number},player:{x:number;y:number},specials=tru
  return {game,id:spawn.enemy.id};
 }
 function reachesDamage(game:DepthGame,id:number){
- const before=game.combat.snapshot.health+game.combat.snapshot.armor;
- for(let i=0;i<900&&game.combat.snapshot.health+game.combat.snapshot.armor===before;i++){
+ let projectileDamage=0,sawHazard=false;
+ // Keep the single-spitter encounter controlled, but run the actual game frame,
+ // including hurt cooldowns. Contact damage cannot satisfy this projectile witness.
+ game['director'].update=()=>[];
+ const enemiesUpdate=game.enemies.update.bind(game.enemies);
+ game.enemies.update=(...args)=>{const events=enemiesUpdate(...args);sawHazard ||= events.some(e=>e.type==='hazard-attack');return events;};
+ const projectileUpdate=game['updateBullets'].bind(game);
+ game['updateBullets']=(...args)=>{
+  const before=game.combat.snapshot.health+game.combat.snapshot.armor;
+  projectileUpdate(...args);
+  projectileDamage+=before-(game.combat.snapshot.health+game.combat.snapshot.armor);
+ };
+ for(let i=0;i<900&&projectileDamage===0;i++){
   const previous=game.enemies.getSnapshot(id)!;
-  game.navigation.prepare(game.player,1);game['enemyEvents'](game.enemies.update(50,game.player));game['updateBullets'](.05);
+  game.update(50);
   const current=game.enemies.getSnapshot(id)!;
   expect(canOccupyExpedition(game.geometry,current,current.radius)).toBe(true);
   expect(canTraverseExpedition(game.geometry,previous,current,current.radius)).toBe(true);
  }
- expect(game.combat.snapshot.health+game.combat.snapshot.armor).toBeLessThan(before);
+ expect(sawHazard).toBe(true);expect(projectileDamage).toBeGreaterThan(0);
 }
 describe('spitter reachable firing positions',()=>{
  it.each([[true,false],[true,true],[false,false],[false,true]])('escapes an illegal west retreat, specials=%s elite=%s',(specials,elite)=>{
