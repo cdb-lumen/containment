@@ -6,17 +6,17 @@ import {FacilityNavigation} from '../../src/game/world/FacilityNavigation';
 import {ProjectileHitTracker} from '../../src/game/combat/CombatSystem';
 import {DepthGame} from '../../src/DepthGame';
 import {TRANSMISSION_TOPOLOGY} from '../../src/game/roguelike/transmissionChamberLayout';
-const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay','communal-atrium'];
+const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay','communal-atrium','armory'];
 const nodes=generateRun(3,3).nodes;
-const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280},{x:584,y:336}];
+const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280},{x:584,y:336},{x:600,y:450}];
 describe('authored walkable topologies',()=>{
- it('retains five authored footprints and registers the Room10 crown',()=>{
+ it('retains shaped rooms, the Room10 crown and the Armory horseshoe/carousel',()=>{
   expect(nodes).toHaveLength(20);
   for(const n of nodes){const t=ROOM_TEMPLATES[n.templateId];if(ids.includes(n.templateId)){
    expect(t).toHaveProperty('boundary');expect(t).toHaveProperty('voids');
    const g=createExpeditionGeometry(n);
    for(const radius of [0,9,28,38]){
-    expect(canOccupyExpedition(g,n.templateId==='passenger-vault'?{x:30,y:50}:{x:50,y:50},radius)).toBe(false);
+    expect(canOccupyExpedition(g,n.templateId==='armory'?{x:-1,y:50}:n.templateId==='passenger-vault'?{x:30,y:50}:{x:50,y:50},radius)).toBe(false);
     expect(canOccupyExpedition(g,probes[ids.indexOf(n.templateId)],radius)).toBe(false);
    }
   }else if(n.templateId==='transmission-chamber'){
