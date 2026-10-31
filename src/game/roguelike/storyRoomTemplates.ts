@@ -1,6 +1,7 @@
 import {ROOM_STORY_ROUTE,type StoryTemplateId} from './storyRooms';
 import type {Rect,RoomTemplate} from './types';
 import {AUTHORED_ROOM_TOPOLOGIES} from './authoredRoomTopologies';
+import {DIAGNOSTIC_TOPOLOGY} from './diagnosticGalleryLayout';
 
 /** Authored collision silhouettes, not recolors of a single room. All lanes support radius 28. */
 const footprints:Readonly<Record<StoryTemplateId,readonly (readonly [number,number,number,number])[]>>={
@@ -32,5 +33,6 @@ export const STORY_ROOM_TEMPLATES:Readonly<Record<StoryTemplateId,RoomTemplate>>
   spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),obstacles,
   breaches:Object.freeze([{x:100,y:100},{x:1100,y:100},{x:100,y:780},{x:1100,y:780}].map(p=>Object.freeze(p))),
   ...AUTHORED_ROOM_TOPOLOGIES[room.templateId],
+  ...(room.templateId==='diagnostic-gallery'?DIAGNOSTIC_TOPOLOGY:{}),
  })];
 })) as Record<StoryTemplateId,RoomTemplate>);

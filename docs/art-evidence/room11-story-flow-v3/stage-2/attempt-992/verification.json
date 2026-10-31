@@ -1,0 +1,45 @@
+[
+  {
+    "name": "full-test",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit_code": 0,
+    "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-2/attempt-992/logs/full-test.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-2/attempt-992/logs/build.log"
+  },
+  {
+    "name": "evidence-tests",
+    "command": [
+      "npm",
+      "run",
+      "test:room-evidence"
+    ],
+    "exit_code": 0,
+    "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-2/attempt-992/logs/evidence-tests.log"
+  },
+  {
+    "name": "capture",
+    "command": [
+      "node",
+      "scripts/room-evidence.mjs",
+      "--rooms=diagnostic-gallery",
+      "--gameplay-all",
+      "--viewport=desktop",
+      "--verify-all",
+      "--out=/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-2/attempt-992/capture"
+    ],
+    "exit_code": 0,
+    "log": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-2/attempt-992/logs/capture.log"
+  }
+]

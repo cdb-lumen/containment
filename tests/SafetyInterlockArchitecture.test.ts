@@ -1,6 +1,8 @@
 import {describe,expect,it,vi} from 'vitest';
 import * as T from 'three';
-import {environmentArchitecture} from '../src/render/ShipEnvironments';
+import {environmentArchitecture,appendEnvironment} from '../src/render/ShipEnvironments';
+import {diagnosticGalleryModels} from '../src/render/DiagnosticGalleryModels';
+import {diagnosticGalleryArchitecture} from '../src/render/DiagnosticGalleryArchitecture';
 import {DepthRenderer} from '../src/render/DepthRenderer';
 import {disposeModel,MAT} from '../src/render/meshParts';
 
@@ -32,9 +34,22 @@ describe('Room12 insulated shell',()=>{
   for(const axis of ['x','y','z'] as const){expect(after.min[axis]).toBeCloseTo(before.min[axis],5);expect(after.max[axis]).toBeCloseTo(before.max[axis],5);}
   disposeModel(root);renderer.floorMaterial.dispose();
  });
- it('leaves generic engineering and Room11 unchanged',()=>{
-  const signature=(id:string)=>{const items:unknown[]=[];make(id).traverse(o=>{if(o instanceof T.Mesh)items.push([o.position.toArray(),o.scale.toArray(),(o.material as T.MeshStandardMaterial).color.getHex()]);});return items;};
-  expect(signature('diagnostic-gallery')).toEqual(signature(''));
-  expect(make('diagnostic-gallery').getObjectByName('room12-insulated-shell')).toBeUndefined();
+ it('keeps the generic engineering fallback separate from the Room12 shell',()=>{
+  const generic=make(''),unknown=make('unregistered-engineering-room');
+  const signature=(root:T.Group)=>{const items:unknown[]=[];root.traverse(o=>{if(o instanceof T.Mesh)items.push([o.position.toArray(),o.scale.toArray(),(o.material as T.MeshStandardMaterial).color.getHex()]);});return items;};
+  expect(signature(unknown)).toEqual(signature(generic));
+  expect(generic.getObjectByName('room12-insulated-shell')).toBeUndefined();
+  disposeModel(generic);disposeModel(unknown);
+ });
+ it('preserves Room11 authored equipment and architecture without adding the Room12 shell',()=>{
+  // Room11 now intentionally owns an authored model; it must no longer equal
+  // generic engineering. Compare actual dispatch against both owned builders.
+  const actual=make('diagnostic-gallery'),expected=new T.Group();
+  appendEnvironment(expected,diagnosticGalleryModels());appendEnvironment(expected,diagnosticGalleryArchitecture());
+  const signature=(root:T.Group)=>{root.updateMatrixWorld(true);const items:unknown[]=[];root.traverse(o=>{if(o instanceof T.Mesh)items.push([o.name,o.matrixWorld.toArray(),Array.from(o.geometry.getAttribute('position').array),o.geometry.index?Array.from(o.geometry.index.array):null,(o.material as T.MeshStandardMaterial).color.getHex()]);});return items;};
+  expect(signature(actual)).toEqual(signature(expected));
+  expect(actual.getObjectByName('diagnostic-physical-ship-cutaway')).toBeDefined();
+  expect(actual.getObjectByName('room12-insulated-shell')).toBeUndefined();
+  disposeModel(actual);disposeModel(expected);
  });
 });

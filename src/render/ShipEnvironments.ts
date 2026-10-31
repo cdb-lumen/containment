@@ -1,6 +1,8 @@
 import * as T from 'three';
 import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
+import {diagnosticGalleryModels} from './DiagnosticGalleryModels';
+import {diagnosticGalleryArchitecture} from './DiagnosticGalleryArchitecture';
 import {armoryCarousel} from './ArmoryCarousel';
 import {safetyInterlockBlockout} from './SafetyInterlockBlockout';
 import {safetyInterlockArchitecture} from './SafetyInterlockArchitecture';
@@ -178,6 +180,11 @@ export function appendEnvironment(parent:T.Group,model:T.Group){
 
 /** Flush deck inlays and outboard rear architecture never occupy a walkable tile. */
 export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:number,h:number,templateId=''){
+ if(templateId==='diagnostic-gallery'){
+  appendEnvironment(parent,diagnosticGalleryModels());
+  appendEnvironment(parent,diagnosticGalleryArchitecture());
+  return;
+ }
  if(env==='security'&&templateId==='armory'){appendEnvironment(parent,armoryCarousel());return;}
  if(env==='engineering'&&templateId==='safety-interlock-station'){const shell=new T.Group();safetyInterlockArchitecture(shell,w,h);appendEnvironment(parent,shell);return;}
  if(env==='reactor'&&templateId==='manual-control-chamber'){manualControlArchitecture(parent,w);return;}

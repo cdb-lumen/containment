@@ -1,0 +1,16 @@
+{
+  "original": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/diagnostic-gallery-v3/scripts/room-evidence.mjs",
+  "original_sha256": "a5214bfa0da825f7b1c0d992baba62f19566b74fd2521193bf82ec187ef668fa",
+  "capture_sha256": "e17a741e497abc5ac1c52327b6805c1cd8e18f88115c2c3a92e6912c36fad500",
+  "replacements": {
+    "from 'vite'": "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/diagnostic-gallery-v3/node_modules/vite/dist/node/index.js'",
+    "from 'playwright'": "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/diagnostic-gallery-v3/node_modules/playwright/index.mjs'",
+    "from './room-evidence-options.mjs'": "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/diagnostic-gallery-v3/scripts/room-evidence-options.mjs'",
+    "configFile:false, base:'/'": "configFile:false, cacheDir:\"/home/chernodubv/.hermes/workspaces/containment-art-roadmap/diagnostic-gallery/story-flow-v3/stage-5/attempt-995/vite-cache\", base:'/'",
+    "preTransformRequests:false": "preTransformRequests:false,fs:{allow:[root,out]}",
+    "mkdtemp(resolve(root,'.room-evidence-'))": "mkdtemp(resolve(out,'.room-evidence-'))",
+    "import * as T from 'three';": "import * as T from '/node_modules/three/build/three.module.js';",
+    "server.resolvedUrls.local[0]+relative(root,temp)+'/index.html'": "server.resolvedUrls.local[0]+'@fs'+temp+'/index.html'"
+  },
+  "reason": "External capture entry and cache only. No render, fixture, camera or image edits."
+}
