@@ -1,0 +1,15 @@
+diff --git a/src/render/ManualControlBlockout.ts b/src/render/ManualControlBlockout.ts
+index d848f14..d56dc80 100644
+--- a/src/render/ManualControlBlockout.ts
++++ b/src/render/ManualControlBlockout.ts
+@@ -110,9 +110,7 @@ export function manualControlArchitecture(parent:T.Group,w:number):void{
+  }
+  b('armored-observation-recess',center,3.46,-.89,opening,1.06,.10,MAT.black);
+  b('observation-sill',center,2.88,-.46,opening+.66,.22,.86,MAT.edge);
+- // Keep the lintel behind the steep overview sightline. The previous full-depth
+- // canopy hid the dark cavity; the projecting sill and jambs still frame its depth.
+- b('observation-hood',center,4.06,-.84,opening+.66,.26,.22,MAT.bone);
++ b('observation-hood',center,4.06,-.46,opening+.66,.26,.86,MAT.bone);
+  for(const x of [left-.15,right+.15])b('observation-jamb',x,3.46,-.46,.30,1.04,.86,MAT.bone);
+  for(const x of [-1.8,1.8])b('observation-mullion',center+x,3.46,-.59,.13,1.02,.49,MAT.steel);
+  b('observation-inner-sill',center,2.99,-.68,opening,.055,.24,MAT.bone);

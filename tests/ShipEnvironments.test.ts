@@ -56,7 +56,7 @@ describe('ship environments',()=>{
     const nextMaterials=new Set(meshes(next).map(m=>m.material));
     for(const m of roomShared)expect(nextMaterials.has(m)).toBe(true);
    }else expect(roomShared.size).toBe(0);
-   if(env==='habitation'){expect(ownedMaterials.size).toBe(4);for(const m of ownedMaterials)expect(m.userData.actorMaterial).toBe(true);}else expect(ownedMaterials.size).toBe(0);
+   if(['residential-gallery','manual-control-chamber'].includes(rooms[env][0])){expect(ownedMaterials.size).toBe(4);for(const m of ownedMaterials)expect(m.userData.actorMaterial).toBe(true);}else expect(ownedMaterials.size).toBe(0);
    expect([...sharedGeometry].every(g=>[...geometries.values()].includes(g))).toBe(true);
    const geometrySpies=[...sharedGeometry].map(g=>vi.spyOn(g,'dispose'));
    const materialSpies=[...sharedMaterials,...roomShared].map(m=>vi.spyOn(m,'dispose'));

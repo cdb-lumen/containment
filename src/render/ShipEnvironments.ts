@@ -3,6 +3,7 @@ import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
 import {safetyInterlockBlockout} from './SafetyInterlockBlockout';
 import {safetyInterlockArchitecture} from './SafetyInterlockArchitecture';
+import {manualControlBlockout,manualControlArchitecture} from './ManualControlBlockout';
 import {shieldingGateBlockout} from './ShieldingGateBlockout';
 import {infestedWorkshop} from './InfestedWorkshop';
 import {infestedWorkshopArchitecture} from './InfestedWorkshopArchitecture';
@@ -19,6 +20,7 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 /** All models are authored in a local cell, then fitted inside the authoritative collision rectangle. */
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
  if(environment==='engineering'&&templateId==='safety-interlock-station')return safetyInterlockBlockout(footprint,index);
+ if(environment==='reactor'&&templateId==='manual-control-chamber')return manualControlBlockout(footprint,index);
  if(environment==='containment'&&templateId==='shielding-gate')return shieldingGateBlockout(footprint,index);
  if(environment==='infested'&&templateId==='infested-workshop')return infestedWorkshop(footprint,index);
  if(environment==='security'&&templateId==='crew-checkpoint')return crewCheckpointBlockout(footprint,index);
@@ -174,6 +176,7 @@ export function appendEnvironment(parent:T.Group,model:T.Group){
 /** Flush deck inlays and outboard rear architecture never occupy a walkable tile. */
 export function environmentArchitecture(parent:T.Group,env:ShipEnvironment,w:number,h:number,templateId=''){
  if(env==='engineering'&&templateId==='safety-interlock-station'){const shell=new T.Group();safetyInterlockArchitecture(shell,w,h);appendEnvironment(parent,shell);return;}
+ if(env==='reactor'&&templateId==='manual-control-chamber'){manualControlArchitecture(parent,w);return;}
  if(env==='infested'&&templateId==='infested-workshop')return infestedWorkshopArchitecture(parent,w,h);
  const residential=env==='habitation'&&templateId==='residential-gallery';
  const accent=env==='habitation'?MAT.bone:env==='infested'?MAT.acid:['security','engineering','containment','maintenance'].includes(env)?MAT.amber:MAT.cyan;
