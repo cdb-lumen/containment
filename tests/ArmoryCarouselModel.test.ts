@@ -72,6 +72,18 @@ describe('stationary Armory carousel model',()=>{
    const hanger=original.clone(true);hanger.position.set(0,0,0);hanger.rotation.set(0,0,0);hanger.updateMatrixWorld(true);
    const bounds=(name:string)=>new T.Box3().setFromObject(hanger.getObjectByName(name)!,true);
    for(const [a,b] of [['hanger-post','hanger-hinge'],['hanger-hinge','hanger-pivot-link'],['hanger-pivot-link','hanger-shoulders'],['hanger-shoulders','hung-armor-chest']])expect(bounds(a).intersectsBox(bounds(b)),`${a} -> ${b}`).toBe(true);
+   const chest=original.getObjectByName('hung-armor-chest')!;original.updateWorldMatrix(true,true);const target=chest.getWorldPosition(new T.Vector3());
+   const hit=new T.Raycaster(target.clone().add(new T.Vector3(0,8,10)),new T.Vector3(0,-8,-10).normalize()).intersectObject(root,true)[0];expect(hit?.object).toBe(chest);
+  }
+  disposeModel(root);
+ });
+ it('exposes the geared base teeth above the solid footprint owner',()=>{
+  const root=armoryCarousel();root.updateMatrixWorld(true);
+  const teeth=meshes(root).filter(m=>m.name==='gear-tooth');expect(teeth).toHaveLength(24);
+  for(const tooth of teeth){
+   const target=tooth.getWorldPosition(new T.Vector3());
+   const hit=new T.Raycaster(target.clone().add(new T.Vector3(0,5,0)),new T.Vector3(0,-1,0)).intersectObject(root,true)[0];
+   expect(hit?.object).toBe(tooth);
   }
   disposeModel(root);
  });

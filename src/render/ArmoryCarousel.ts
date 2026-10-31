@@ -19,7 +19,7 @@ export function armoryCarousel():T.Group{
  slab('horseshoe-solid',ARMORY_COUNTER,0,1.04,graphite);
  const a=240*Math.PI/180,b=Math.PI/2-a;
  const viseRecess=[[-.72,-.70],[.72,-.70],[.72,.70],[-.72,.70]].map(([x,z])=>({x:600+255*Math.cos(a)+32*(Math.cos(b)*x+Math.sin(b)*z),y:450+255*Math.sin(a)+32*(-Math.sin(b)*x+Math.cos(b)*z)}));
- slab('horseshoe-worktop',ARMORY_COUNTER,1.04,.10,pale,[viseRecess]);
+ slab('horseshoe-worktop',ARMORY_COUNTER,1.04,.10,graphite,[viseRecess]);
  slab('carousel-solid-geared-foot',ARMORY_CAROUSEL,0,1.02,graphite);
  cylinder('carousel-bearing',2.23,.12,1.08,edge);
  cylinder('carousel-deck',2.12,.09,1.185,graphite);
@@ -27,7 +27,7 @@ export function armoryCarousel():T.Group{
  cylinder('carousel-spindle-cap',.38,.14,3.545,edge);
  for(let i=0;i<24;i++){
   const a=i*Math.PI/12,g=new T.Group();g.position.set(600/32,0,450/32);g.rotation.y=-a;root.add(g);
-  box(g,'gear-tooth',2.38,.55,0,.15,.25,.12,edge);
+  box(g,'gear-tooth',2.38,1.11,0,.15,.18,.35,edge);
  }
  // The front/south sector is genuinely open above the solid geared base.
  for(const degrees of [150,190,230,270,310,350,390]){
@@ -50,7 +50,7 @@ export function armoryCarousel():T.Group{
  box(vise,'vise-lead-screw',0,.10,0,1.18,.08,.08,graphite);
  // Hinged shoulder hangers carry separate rigid chest plates above the counter.
  for(const degrees of [285,310]){
-  const g=station(degrees,'hinged-armor-hanger');
+  const g=station(degrees,'hinged-armor-hanger');g.rotation.y=0;
   box(g,'hanger-post',0,.62,-.38,.12,1.24,.12,graphite);
   box(g,'hanger-hinge',0,1.15,-.35,.30,.16,.24,edge);
   box(g,'hanger-pivot-link',0,1.11,-.22,.12,.10,.35,edge);
