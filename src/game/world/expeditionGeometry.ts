@@ -68,7 +68,20 @@ export function hasClearExpeditionShot(geometry: ExpeditionGeometry, from: Point
 export function canTraverseExpedition(geometry: ExpeditionGeometry, from: Point, to: Point, radius: number): boolean {
   return canOccupyExpedition(geometry,from,radius) && canOccupyExpedition(geometry,to,radius)
     && clearPolygonTopology(geometry,from,to,radius)
-    && geometry.blockers.every(rect=>!segmentIntersectsRect(from,to,{x:rect.x-radius,y:rect.y-radius,width:rect.width+radius*2,height:rect.height+radius*2}));
+    && geometry.blockers.every(rect => {
+      if (segmentIntersectsRect(from, to, rect)) return false;
+      // Endpoints are clear above. For a disjoint segment and rectangle, the
+      // remaining closest pair is a rectangle corner projected onto the segment.
+      // Unlike square AABB expansion, this preserves rounded corners and tangency.
+      const dx = to.x - from.x, dy = to.y - from.y, lengthSquared = dx * dx + dy * dy;
+      for (let corner = 0; corner < 4; corner++) {
+        const x = rect.x + (corner % 2) * rect.width;
+        const y = rect.y + Math.floor(corner / 2) * rect.height;
+        const t = lengthSquared ? Math.max(0, Math.min(1, ((x - from.x) * dx + (y - from.y) * dy) / lengthSquared)) : 0;
+        if ((x - from.x - t * dx) ** 2 + (y - from.y - t * dy) ** 2 < radius * radius) return false;
+      }
+      return true;
+    });
 }
 
 export function expeditionTemplate(node: RunNode): RoomTemplate {
