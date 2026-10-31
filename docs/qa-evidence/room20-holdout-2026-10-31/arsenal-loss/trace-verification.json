@@ -1,0 +1,10 @@
+{
+  "source": "cdccf9f65810652cbd25ca30a43538348e203f7c",
+  "room": "overload-floor",
+  "frames": 753,
+  "encounterState": "dead",
+  "enemyPositions": 6456,
+  "enemySweeps": 6412,
+  "playerSweeps": 752,
+  "errors": []
+}

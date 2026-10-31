@@ -1,0 +1,11 @@
+{
+  "source": "76b4a23aa323f0256c6034af0d57595f0e7139b7",
+  "captureSource": "cdccf9f65810652cbd25ca30a43538348e203f7c",
+  "label": "deployed-main",
+  "framesMatched": 943,
+  "matchedThrough": 942,
+  "errors": [],
+  "acceptedMoves": 7353,
+  "captureManifestSha256": "c6a502d853220c41f4dc0c64948893023c1ad57a77976466164fedb88838d751",
+  "replayScriptSha256": "e169cdd220c6bacb91940cb4e935880f370f13bf6948226bfd9e3dd9b7c37445"
+}

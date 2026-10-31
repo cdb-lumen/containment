@@ -1,10 +1,13 @@
 {
   "postfailure-source-verification.json": "b3eda590e8856c7277603fa4f88ecade792797248b66fb11fb5dc7a13b65e18c",
   "failed-combat.mp4": "7d2f5c610d9230f61008f54abb3bea167123dcf561567275f8dd8538f9dbe6e7",
+  "combat-replay-candidate.json": "f8601d5907dcfbd0273bd48add6fb07a4a0b68b1d26468c2e35864a4c9d4d77e",
+  "replay-overload-combat.mjs": "e169cdd220c6bacb91940cb4e935880f370f13bf6948226bfd9e3dd9b7c37445",
   "before-fatal-authorization.png": "59543d10d44560a7545bba5b61fe48c6380de37f5767c876acbd673e1f61f9d1",
   "room20-original-death-independent-review.md": "e6658e8c64a47bb059aa47e5c2cbf683c35ec21a58e02e580f1dff48a415abee",
   "room20-failed-decode.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "trace-verification.json": "e43ad99142f969843efbfc5f363d31683278feb36271aaa584a1772ad8d46db4",
+  "combat-replay-deployed-main.json": "e04f3cdd0f6f797d2404c32456683ec93095de541f01e1f5b8fae90a85a40d9e",
   "campaign-overload-joint-hud.mjs": "f5d7cdc360a6f5a58a9c9e8d2fe34b4eb00425019adfa8bc4e77fc6f89691257",
   "manifest.json": "c6a502d853220c41f4dc0c64948893023c1ad57a77976466164fedb88838d751",
   "room20-emission-final.log": "5cca328de1d493deb7fa233171324314f3c82496aae676f06c98ddd4dfcee80e",

@@ -1,0 +1,7 @@
+{
+  "kind": "separate postfailure source verification; original failed manifest unchanged",
+  "commit": "cdccf9f65810652cbd25ca30a43538348e203f7c",
+  "trackedStatus": "",
+  "filesChecked": 296,
+  "mismatches": []
+}

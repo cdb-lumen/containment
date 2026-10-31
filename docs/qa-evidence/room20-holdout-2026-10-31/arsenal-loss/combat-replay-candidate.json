@@ -1,0 +1,11 @@
+{
+  "source": "cdccf9f65810652cbd25ca30a43538348e203f7c",
+  "captureSource": "cdccf9f65810652cbd25ca30a43538348e203f7c",
+  "label": "candidate",
+  "framesMatched": 753,
+  "matchedThrough": 752,
+  "errors": [],
+  "acceptedMoves": 7143,
+  "captureManifestSha256": "056a9518f31f90711048ea067e996f9f0959d2f6dab37d563a05792549cc1b70",
+  "replayScriptSha256": "e169cdd220c6bacb91940cb4e935880f370f13bf6948226bfd9e3dd9b7c37445"
+}
