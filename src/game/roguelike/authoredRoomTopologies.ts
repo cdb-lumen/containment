@@ -1,3 +1,4 @@
+import {ARMORY_SOLIDS} from '../world/armoryCarouselLayout';
 import type {Point, RoomTemplate} from './types';
 import type {StoryTemplateId} from './storyRooms';
 
@@ -54,6 +55,7 @@ type Topology=Pick<RoomTemplate,'boundary'|'voids'|'spawn'|'exit'|'breaches'|'ob
 /** Shared floor/collision contract. Voids are sealed solid silhouettes, never jump gaps.
  * Width/height remain the camera envelope. Only explicitly listed rooms opt in. */
 export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,Topology>>>=Object.freeze({
+ 'armory':Object.freeze({boundary:polygon([[0,0],[1200,0],[1200,880],[0,880]]),voids:ARMORY_SOLIDS,spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),breaches:polygon([[100,100],[1100,100],[100,780],[1100,780]]),obstacles:Object.freeze([])}),
  'awakening-bay':Object.freeze({
   boundary:polygon([[80,40],[1120,40],[1160,80],[1160,800],[1120,840],[80,840],[40,800],[40,80]]),
   // Straight banks leave a 180-unit center aisle and connected outer routes.
