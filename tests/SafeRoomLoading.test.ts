@@ -12,7 +12,7 @@ function harness(){
  const node={hidden:true,setAttribute:vi.fn()};
  const source=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
  const body=source.slice(source.indexOf('function frame(now:number)'),source.indexOf('lastRoom=game.roomRevision;syncScreen(true)'));
- const factory=new Function('game','renderer','input','el',`let lastRoom=-1,lastStatus='',graphicsLost=false,roomRecovering=true,hudTime=0;const positionWeaponHud=()=>{},weaponHud={},innerWidth=1280,requestAnimationFrame=()=>{},document={hidden:false},pacer={sample:()=>.05,reset:()=>{}},confirmation={update:()=>{}},performance={now:()=>0},syncScreen=()=>{},hud=()=>{},audio={syncCombat:()=>{},setMusicIntensity:()=>{}},diagnostics={record:()=>{}};${ts.transpile(body)};return frame;`);
+ const factory=new Function('game','renderer','input','el',`let lastRoom=-1,lastStatus='',graphicsLost=false,roomRecovering=true,hudTime=0;const positionHud=()=>{},requestAnimationFrame=()=>{},document={hidden:false},pacer={sample:()=>.05,reset:()=>{}},confirmation={update:()=>{}},performance={now:()=>0},syncScreen=()=>{},hud=()=>{},audio={syncCombat:()=>{},setMusicIntensity:()=>{}},diagnostics={record:()=>{}};${ts.transpile(body)};return frame;`);
  return {game,renderer,input,node,frame:factory(game,renderer,input,()=>node)};
 }
 const snapshot=(g:DepthGame)=>JSON.stringify({player:g.player,combat:g.combat.snapshot,enemies:g.enemies.snapshot,bullets:g.bullets,pools:g.pools,elapsed:g.elapsed,remaining:g.encounterRemaining,expedition:g.expedition,story:g.storyPresentation});
