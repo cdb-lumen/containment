@@ -1,0 +1,14 @@
+# Independent original Room17 recording review
+
+FAILED visual/movement qualification, despite the recorder's internal `passed` state.
+
+Reviewed `/workspace/room17-desktop-hud-final`, source `aa4eaa17b3195fa36f4fe2114fad1f8238f93e24`. The recording completes 897 frames, 41 kills, zero remaining enemies, native reward and onward entry into Containment Annulus. These successes do not override the following defects.
+
+1. P2 — North-edge viewport clipping. Independently recomputed raw body-envelope boundaries: 24 of 896 playing frames extend above the viewport, with minimum top −17.417 px. No left/right/bottom violations occur. Previously inspected frames 498–501 show the actual helmet visibly cut at frame499, at legal player position (266.751,24.664), with a settled camera. The ground-plane north clamp in `src/render/roomFraming.ts` lacks marine-height clearance. Ammo/body overlap is independently zero throughout, which demonstrates why the ammo-only recorder assertion cannot qualify viewport visibility.
+2. P2 — Illegal enemy sweep. The trace verifier records one failure: enemy14, a radius18 spitter, at frame421, among 896 player and 5,421 enemy sweeps. Reviewed actual frames420/421 and the snapshots: position changes from (289.3859237654455,107.50048220650496) to (281.2396715160295,187.0846425293285). Both endpoints are legal but their segment crosses the corner. A separate direct production `game.damage` regression reproduces the endpoint-only callback defect in `DepthGame.makeEnemies`; this establishes a real movement defect without relying solely on a per-frame chord interpretation. The screenshots show the abrupt reposition near the northwest barrier but alone do not establish all intervening events.
+
+Provenance checks passed: before/after source records are identical; all 282 recorded source-file hashes match committed Git blobs; harness SHA-256 matches the preserved capture driver; video hash matches the manifest. There are 897 PNG frames and the recorded video probe reports 897 decoded frames. Independent full ffmpeg decode completed without errors. Manifest runtime errors are empty. Inspected frames420/421, the earlier clipping sequence, late frame850, reward and onward images; reward text is legible and onward is actual Containment Annulus gameplay.
+
+Keep this recording and its internal manifest unchanged as failed qualification evidence. Repair candidates require separate matched camera pixels and a fresh full encounter using both north framing and swept enemy movement. A later success must not relabel this attempt. The checkpoint fixture, fixed 50 ms advancement and suppressed external font CSS remain disclosed limits; no wall-time performance or human art approval is inferred.
+
+No renderer was launched and no shipping source was changed during review.

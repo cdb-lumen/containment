@@ -1,0 +1,16 @@
+{
+  "source": "aa4eaa17b3195fa36f4fe2114fad1f8238f93e24",
+  "room": "shielding-gate",
+  "frames": 897,
+  "encounterState": "reward",
+  "enemyPositions": 5462,
+  "enemySweeps": 5421,
+  "playerSweeps": 896,
+  "errors": [
+    {
+      "frame": 421,
+      "actor": 14,
+      "check": "sweep"
+    }
+  ]
+}

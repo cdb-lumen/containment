@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /workspace/containment-room17-swept
+
+ ❯ tests/EnemyMovementSweep.test.ts (2 tests | 1 failed) 43ms
+     × does not knock a spitter across the recorded Shielding Gate corner into a legal endpoint 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/EnemyMovementSweep.test.ts > production enemy swept movement > does not knock a spitter across the recorded Shielding Gate corner into a legal endpoint
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/EnemyMovementSweep.test.ts:22:75
+     20|   const after=game.enemies.getSnapshot(id)!;
+     21|   expect(result.applied).toBe(true);expect(after.health).toBe(before.h…
+     22|   expect(canTraverseExpedition(game.geometry,before,after,before.radiu…
+       |                                                                           ^
+     23|   expect(Math.hypot(after.x-before.x,after.y-before.y)).toBeGreaterTha…
+     24|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  13:53:23
+   Duration  790ms (transform 483ms, setup 0ms, import 578ms, tests 43ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
