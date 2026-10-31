@@ -1,0 +1,27 @@
+{
+  "pngs": [
+    {
+      "file": "desktop-in-scene.png",
+      "sha256": "eee5b5f7809c014834de51b2b04f2544db0aecab5d730a79e9eeab3306a95a18",
+      "bytes": 647463,
+      "size": [
+        1280,
+        900
+      ]
+    },
+    {
+      "file": "overview.png",
+      "sha256": "a65c0d4f95dbf50c6b18b180f741116286da39da0b64dc600fa90a309df12c74",
+      "bytes": 390081,
+      "size": [
+        1280,
+        900
+      ]
+    }
+  ],
+  "sourcePinsMatch": true,
+  "novelAgainstGuard": true,
+  "repositoryCopiesExact": true,
+  "failures": 0,
+  "errors": 0
+}
