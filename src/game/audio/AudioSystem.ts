@@ -1,3 +1,4 @@
+import {elementalCueSamples,type ElementalCue} from './elementalCues';
 import { DEFAULT_MASTER_VOLUME } from './preferences';
 import type { CombatSnapshot } from '../combat/CombatSystem';
 
@@ -36,6 +37,9 @@ export class AudioSystem {
   private volumes: AudioVolumes;
   private readonly buffers = new Map<Sample, AudioBuffer>();
   private loading: Promise<void> | null = null;
+  private readonly elementalBuffers = new Map<ElementalCue,AudioBuffer>();
+  private frozenIds = new Set<number>();
+  private frozenRoom = -1;
   private readonly voices = new Set<Voice>();
   private readonly variants = new Map<string, number>();
   private readonly lastPlayed = new Map<string, number>();
@@ -156,6 +160,24 @@ export class AudioSystem {
   playBodyImpact(pan = 0, distance = 0): void {
     if (this.rateLimit('body-impact', .10)) this.play('alien-impact.wav', .42 / (1 + Math.max(0,distance) / 450), {pan, rate: .68 + Math.random() * .08});
   }
+  playElemental(kind:ElementalCue):void {
+    if(!this.rateLimit(`elemental-${kind}`,kind==='reactor'?.22:kind==='freeze'?.14:.10))return;
+    let buffer=this.elementalBuffers.get(kind);
+    if(!buffer){
+      const context=this.context!,samples=elementalCueSamples(kind,context.sampleRate);
+      buffer=context.createBuffer(1,samples.length,context.sampleRate);
+      buffer.getChannelData(0).set(samples);this.elementalBuffers.set(kind,buffer);
+    }
+    this.playBuffer(buffer,kind==='reactor'?.60:kind==='shatter'?.70:.65);
+  }
+  /** One onset cue for newly frozen living actors, never each chill stack/frame. */
+  syncFrozen(ids:readonly number[],roomRevision:number):void {
+    if(this.effectsPaused||this.destroyed)return;
+    if(roomRevision!==this.frozenRoom){this.frozenRoom=roomRevision;this.frozenIds.clear();}
+    const current=new Set(ids);
+    if([...current].some(id=>!this.frozenIds.has(id)))this.playElemental('freeze');
+    this.frozenIds=current;
+  }
   playPickup(): void { if (this.rateLimit('pickup', .09)) this.play('switch.wav', .14, { rate: 1.12 }); }
   playAlarm(): void {
     // A restrained facility warning: paired pulses, not a sweeping arcade siren.
@@ -190,7 +212,7 @@ export class AudioSystem {
   destroy(): void {
     if (this.destroyed) return;
     this.pauseAll(); this.destroyed = true;
-    this.buffers.clear(); this.previousCombat = null;
+    this.buffers.clear(); this.elementalBuffers.clear(); this.frozenIds.clear(); this.previousCombat = null;
     for (const node of [this.effectsGain, this.musicGain, this.musicDuck, this.masterGain, this.compressor]) node?.disconnect();
     const context = this.context; this.context = null;
     this.effectsGain = null; this.musicGain = null; this.musicDuck = null; this.masterGain = null; this.compressor = null;
