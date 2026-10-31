@@ -1,0 +1,7 @@
+# Room6 desktop encounter qualification
+
+Source `ad56079fb6895ee6983e5b4e60a6dd789d77be2e` completes 883 video frames,36 kills,zero remaining,reward selection and onward Freight Hold gameplay. Recorded runtime errors are empty. Production-geometry trace checks pass882 player sweeps and4383 enemy sweeps. The fixture uses default resources and validated prior-room first-offered boons,not played prior rooms. Room6 has no authored dialogue; Skip is explicitly inapplicable. Actual keyboard/mouse controls run the production frame in fixed50ms steps.
+
+Exact-head CI41207902668 passed. Merging current main d1d24d3 produces exactly the tested head tree d1e5622dec598d5b8f11ba0228cee7de7e9c3d51. Independent final video/source/visibility review passed these bounded claims: all recorded source hashes/video decoding verified; all882 playing-frame marine viewport/ammo bounds and movement traces pass. Actual frame199 shows the marine obscured by the upper-left status/story HUD, so all-HUD visibility is explicitly not qualified. See independent-review.md and the preserved full-resolution witness.
+
+This is bounded qualification of the current room, not completion of the carousel/horseshoe model brief or human art/delivery approval. Other HUD/actor overlaps, all-window visibility and physical performance are not established. Phone support is out of scope. Original art history is retained; no external permit or Telegram receipt is invented.
