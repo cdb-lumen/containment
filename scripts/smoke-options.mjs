@@ -1,8 +1,7 @@
 // Keep configuration and timing testable without starting a server or GPU.
 export function selectSmokeViewports(value) {
-  if (value === undefined || value === 'both') return ['desktop', 'touch'];
-  if (value === 'desktop' || value === 'touch') return [value];
-  throw new Error('SMOKE_VIEWPORT must be desktop, touch, or both; omit it to run both.');
+  if (value === undefined || value === 'desktop') return ['desktop'];
+  throw new Error('SMOKE_VIEWPORT must be desktop; phone and touch support was removed.');
 }
 
 export function createSmokePhaseTimer(viewport, log = event => console.log(JSON.stringify({smokePhase: event})), now = () => performance.now()) {
