@@ -1,0 +1,17 @@
+{
+  "README.md": "c4a75f0f0e493fbb3e5e4b04cab3b6b63175793441d394e32fbf9e7b9920e360",
+  "after/armory-frame178-native.png": "2a390eacad609a2cf17cd20f6e02fd9badf477eaccda8bdc989330242a60aab2",
+  "after/manifest.json": "d328d9f2626c00ffaf73c9dcd9037915576151e0144f0d07c46693e75281c891",
+  "after/room12-frame147-native.png": "a5fdbf8824383e2f610a542ad04812fadc1c5915e28a1c43b4bdfb60c8aa2d44",
+  "before/armory-frame178-native.png": "6e5f1be7ea094069c7bd5efebc517b97b1f8f8a71fa7fcd20dd7d9818296b856",
+  "before/manifest.json": "4545e0b8b4f181039923c2ef764e2f5f88311280405c0e4feae9716e803db9af",
+  "before/room12-frame147-native.png": "376846a839205a266423ccf51618297711150c5322a301ef199a0b18867fa736",
+  "desktop-headroom-native-inspect.mjs": "c15adb10effdfd5e1cbdf1e76a4795ca2e185f1ffea76cfa0c83a8216b270fef",
+  "desktop-headroom-native-review.md": "8f35b2d32c445b1b50221c1e409ded0381f4f4d7116c3a010f91f0873aa252c1",
+  "desktop-north-headroom-evidence.log": "a53c67b14fd935ff17d2d45f6c75ee2d6d617d2a2e23e11c2b0202d7c754a190",
+  "desktop-north-headroom-final-build.log": "5dc3e4cb4e43318f2f7d681e01fa098a5e95a22c2c220196c9a5f68d8c8443f4",
+  "desktop-north-headroom-final-focused.log": "765615c0d8d451e01824048d98d3914d48404648708886fc69494a4140ea5f47",
+  "desktop-north-headroom-full.log": "22b5fcb9d636a6635bb078cc44f6c0c5c446c842dd7afdb433542cc4c51a12e2",
+  "desktop-north-headroom-red.log": "2c3061c0479db166d4d1453776d7642a183481339d8855c9ae9bf3f335a00c3e",
+  "desktop-north-headroom-review.md": "70eecb86f10bb5c0d10058e20e55180f1cf668414dd47e5425fd18b54bcf5a2a"
+}

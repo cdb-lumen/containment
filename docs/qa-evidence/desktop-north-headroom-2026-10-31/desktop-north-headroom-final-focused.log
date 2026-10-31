@@ -1,0 +1,14 @@
+
+ RUN  v4.1.10 /workspace/containment-camera-headroom
+
+
+ Test Files  4 passed (4)
+      Tests  342 passed (342)
+   Start at  16:15:37
+   Duration  4.16s (transform 2.21s, setup 0ms, import 3.23s, tests 2.95s, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

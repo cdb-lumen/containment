@@ -1,0 +1,604 @@
+
+ RUN  v4.1.10 /workspace/containment-camera-headroom
+
+ ❯ tests/DesktopNorthHeadroom.test.ts (288 tests | 238 failed) 696ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 5ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 1ms
+     × retains body visibility during native camera following at dt0.016666666666666666 15ms
+     × retains body visibility during native camera following at dt0.05 4ms
+     × retains body visibility during native camera following at dt0.1 3ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 14ms
+     × retains body visibility during native camera following at dt0.05 3ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 7ms
+     × retains body visibility during native camera following at dt0.05 7ms
+     × retains body visibility during native camera following at dt0.1 6ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 1ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 1ms
+     × retains body visibility during native camera following at dt0.016666666666666666 20ms
+     × retains body visibility during native camera following at dt0.05 4ms
+     × retains body visibility during native camera following at dt0.1 4ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 2ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 6ms
+     × retains body visibility during native camera following at dt0.05 2ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 10ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 3ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 3ms
+     × retains body visibility during native camera following at dt0.05 3ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 3ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 3ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 2ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 4ms
+     × retains body visibility during native camera following at dt0.05 5ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 8ms
+     × retains body visibility during native camera following at dt0.05 5ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 8ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 5ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 8ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 4ms
+     × retains body visibility during native camera following at dt0.016666666666666666 26ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 5ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 7ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 5ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 7ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 12ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 8ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 5ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 8ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 23ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 7ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 5ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 7ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 7ms
+     × retains body visibility during native camera following at dt0.05 5ms
+     × retains body visibility during native camera following at dt0.1 2ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 7ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 5ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 8ms
+     × retains body visibility during native camera following at dt0.05 1ms
+     × retains body visibility during native camera following at dt0.1 1ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 4ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 3ms
+     × retains body visibility during native camera following at dt0.05 5ms
+     × retains body visibility during native camera following at dt0.1 4ms
+     × keeps legal north-edge body envelopes inside a 1280x900 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 1280x720 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 960x540 desktop window 0ms
+     × keeps legal north-edge body envelopes inside a 600x600 desktop window 0ms
+     × retains body visibility during native camera following at dt0.016666666666666666 25ms
+     × retains body visibility during native camera following at dt0.05 6ms
+     × retains body visibility during native camera following at dt0.1 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 238 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'awakening-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'passenger-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'residential-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'communal-atrium' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'crew-checkpoint' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'armory' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-hold' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'breached-loading-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'relay-racks' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'transmission-chamber' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'diagnostic-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'safety-interlock-station' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'coolant-plant' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'service-shaft-landing' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'infested-workshop' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'swarm-junction' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'containment-annulus' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'overload-floor' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'receiving' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'forklift-loop' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cold-aisle' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-crossing' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'pump-ring' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'specimen-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'security-lock' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'rail-depot' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'quarantine-cross' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cryo-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'filtration' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'turbine-hall' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'waste-processing' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'power-conduits' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'hive-approach' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'reactor-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x900 desktop window
+AssertionError: expected -10.912825898551294 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[479…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'awakening-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'passenger-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'residential-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'communal-atrium' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'crew-checkpoint' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'armory' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-hold' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'breached-loading-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'relay-racks' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'transmission-chamber' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'diagnostic-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'safety-interlock-station' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'coolant-plant' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'service-shaft-landing' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'infested-workshop' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'swarm-junction' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'containment-annulus' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'overload-floor' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'receiving' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'forklift-loop' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cold-aisle' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-crossing' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'pump-ring' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'specimen-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'security-lock' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'rail-depot' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'quarantine-cross' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cryo-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'filtration' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'turbine-hall' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'waste-processing' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'power-conduits' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'hive-approach' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'reactor-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 1280x720 desktop window
+AssertionError: expected -8.730260718841034 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[479…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'awakening-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'passenger-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'residential-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'communal-atrium' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'crew-checkpoint' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'armory' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-hold' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'breached-loading-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'relay-racks' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'transmission-chamber' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'diagnostic-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'safety-interlock-station' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'coolant-plant' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'service-shaft-landing' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'infested-workshop' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'swarm-junction' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'containment-annulus' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'overload-floor' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'receiving' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'forklift-loop' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cold-aisle' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-crossing' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'pump-ring' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'specimen-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'security-lock' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'rail-depot' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'quarantine-cross' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cryo-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'filtration' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'turbine-hall' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'waste-processing' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'power-conduits' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'hive-approach' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'reactor-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 960x540 desktop window
+AssertionError: expected -6.547695539130776 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[479…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'awakening-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'passenger-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'residential-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'communal-atrium' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'crew-checkpoint' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'armory' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-hold' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'breached-loading-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'relay-racks' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'transmission-chamber' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'diagnostic-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'safety-interlock-station' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'coolant-plant' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'service-shaft-landing' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'infested-workshop' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'swarm-junction' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'containment-annulus' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'overload-floor' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'receiving' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'forklift-loop' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cold-aisle' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-crossing' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'pump-ring' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'specimen-bay' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'security-lock' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'rail-depot' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'quarantine-cross' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cryo-gallery' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'filtration' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'turbine-hall' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'waste-processing' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'power-conduits' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'hive-approach' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'reactor-vault' desktop actor framing > keeps legal north-edge body envelopes inside a 600x600 desktop window
+AssertionError: expected -7.275217265700862 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:21:23
+     19|   for(const [x,z] of [[199.38911325811296/32,34.4735147747494/32],[479…
+     20|    const {bounds,camera}=projection(width,height,x,z);
+     21|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(bounds.left).to…
+       |                       ^
+     22|    expect(bounds.right).toBeLessThanOrEqual(width);expect(bounds.botto…
+     23|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'awakening-bay' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'passenger-vault' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'residential-gallery' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'communal-atrium' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'crew-checkpoint' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'armory' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-hold' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'breached-loading-bay' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'relay-racks' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'transmission-chamber' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'diagnostic-gallery' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'safety-interlock-station' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'coolant-plant' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'service-shaft-landing' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'infested-workshop' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'swarm-junction' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'containment-annulus' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'overload-floor' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'receiving' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'forklift-loop' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cold-aisle' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-crossing' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'pump-ring' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'specimen-bay' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'security-lock' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'rail-depot' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'quarantine-cross' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cryo-gallery' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'filtration' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'turbine-hall' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'waste-processing' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'power-conduits' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'hive-approach' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+AssertionError: expected 6.489304672123125 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'awakening-bay' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'passenger-vault' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'residential-gallery' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'communal-atrium' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'crew-checkpoint' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'armory' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-hold' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'breached-loading-bay' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'relay-racks' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'transmission-chamber' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'diagnostic-gallery' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'safety-interlock-station' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'coolant-plant' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'service-shaft-landing' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'infested-workshop' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'swarm-junction' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'containment-annulus' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'overload-floor' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'receiving' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'forklift-loop' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cold-aisle' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-crossing' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'pump-ring' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'specimen-bay' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'security-lock' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'rail-depot' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'quarantine-cross' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cryo-gallery' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'filtration' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'turbine-hall' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'waste-processing' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'power-conduits' desktop actor framing > retains body visibility during native camera following at dt0.05
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'hive-approach' desktop actor framing > retains body visibility during native camera following at dt0.05
+AssertionError: expected -1.07993870015628 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'awakening-bay' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'passenger-vault' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'residential-gallery' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'communal-atrium' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'crew-checkpoint' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'armory' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-hold' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'breached-loading-bay' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'relay-racks' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'transmission-chamber' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'diagnostic-gallery' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'safety-interlock-station' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'coolant-plant' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'service-shaft-landing' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'infested-workshop' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'swarm-junction' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'containment-annulus' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'overload-floor' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'receiving' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'forklift-loop' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cold-aisle' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'freight-crossing' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'pump-ring' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'specimen-bay' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'security-lock' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'rail-depot' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'quarantine-cross' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'cryo-gallery' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'filtration' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'turbine-hall' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'waste-processing' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'power-conduits' desktop actor framing > retains body visibility during native camera following at dt0.1
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'hive-approach' desktop actor framing > retains body visibility during native camera following at dt0.1
+AssertionError: expected -1.0799226558825703 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'reactor-vault' desktop actor framing > retains body visibility during native camera following at dt0.016666666666666666
+AssertionError: expected 7.521346223771063 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'reactor-vault' desktop actor framing > retains body visibility during native camera following at dt0.05
+AssertionError: expected -0.04785700264275938 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/238]⎯
+
+ FAIL  tests/DesktopNorthHeadroom.test.ts > 'reactor-vault' desktop actor framing > retains body visibility during native camera following at dt0.1
+AssertionError: expected -11.401706985195437 to be greater than or equal to 8
+ ❯ tests/DesktopNorthHeadroom.test.ts:32:23
+     30|    focusZ+=(desired-focusZ)*(1-Math.exp(-dt*7));
+     31|    const {bounds,camera}=projection(1280,900,266.751/32,z,focusZ);
+     32|    expect(bounds.top).toBeGreaterThanOrEqual(8);expect(Math.abs(focusZ…
+       |                       ^
+     33|    expect(camera.zoom).toBe(1);previous=focusZ;
+     34|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/238]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  238 failed | 50 passed (288)
+   Start at  16:14:54
+   Duration  1.63s (transform 543ms, setup 0ms, import 715ms, tests 696ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
