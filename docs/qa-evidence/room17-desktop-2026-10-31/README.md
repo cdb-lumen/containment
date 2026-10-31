@@ -11,3 +11,11 @@ The fixture uses default resources and valid prior-room first-offered boons, not
 Camera and swept-movement repairs require independent code review, exact-head CI and fresh native qualification. Harness paths are executor-local and must be adapted for reproduction without changing the source pins or acceptance assertions.
 
 `static-framing-comparison` preserves the matched camera-only repair: baseline `99cdb8788eb1ea045a38d66bda5c8bd5226f4a05`, candidate `b92c84166d43195ac3e61411b66544e6ed7b208a`. Independent review verifies source and image hashes, unchanged center/overview images, and the repaired viewport envelope at five staged legal positions. North-corner health/story HUD overlaps remain visible and outside this bounded repair. This pair predates the swept-movement fix; fresh combined native qualification remains pending.
+
+## Repaired native qualification
+
+`completed-native-repaired` records source `0fd88db6dacb07e6e99eef3104cbf8715a0139a8`: 877 decoded frames, 41 kills, zero remaining, reward selection and onward Containment Annulus gameplay. Independent review verifies 282 source hashes, clean source fidelity, video decoding and all 876 playing-frame viewport/ammo bounds. Zero marine viewport or ammo-panel intersections occurred.
+
+The original frame-chord verifier still reports carrier3 frame235. This is preserved, not marked passed: exact production CPU replay matches every recorded frame and logs the actual movement decisions. Independent verification confirms all 6,847 accepted nonzero movement segments and 5,730 surviving-enemy endpoint chains are legal. The carrier moved around the corner in three legal segments; the failed straight chord was never traversed. Two obstructed knockback attempts were rejected. See the independent review, replay script, raw segment log and preserved chord diagnostic. This does not retroactively qualify the original aa4 spitter defect.
+
+Exact-head CI passed at https://github.com/cdb-lumen/containment/actions/runs/41207785877. Integration with current main caabdfe produces the tested tree unchanged. Broader HUD occlusion, historical replay equivalence, physical performance and human art/delivery approval remain outside these bounded claims.

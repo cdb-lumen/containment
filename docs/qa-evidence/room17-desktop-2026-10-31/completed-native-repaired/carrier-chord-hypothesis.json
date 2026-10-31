@@ -1,0 +1,19 @@
+{
+  "scope": "Geometric hypothesis only; does not prove historical intermediate position",
+  "from": {
+    "x": 507.06103751946597,
+    "y": 567.1647924670038
+  },
+  "to": {
+    "x": 543.2811532583087,
+    "y": 565.1082287384838
+  },
+  "intermediate": {
+    "x": 506.005027416376,
+    "y": 563.425684227131
+  },
+  "radius": 24,
+  "chordLegal": false,
+  "firstSegmentLegal": true,
+  "secondSegmentLegal": true
+}

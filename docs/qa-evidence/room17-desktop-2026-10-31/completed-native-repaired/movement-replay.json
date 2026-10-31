@@ -1,0 +1,64 @@
+{
+  "source": "0fd88db6dacb07e6e99eef3104cbf8715a0139a8",
+  "framesMatched": 877,
+  "matchedThrough": 876,
+  "errors": [],
+  "acceptedMoves": 6847,
+  "witness": [
+    {
+      "frame": 235,
+      "enemyId": 3,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 507.06103751946597,
+      "fromY": 567.1647924670038,
+      "toX": 506.005027416376,
+      "toY": 563.425684227131,
+      "allowed": true
+    },
+    {
+      "frame": 235,
+      "enemyId": 3,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 506.005027416376,
+      "fromY": 563.425684227131,
+      "toX": 538.0170767899417,
+      "toY": 574.8811935961809,
+      "allowed": false
+    },
+    {
+      "frame": 235,
+      "enemyId": 3,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 506.005027416376,
+      "fromY": 563.425684227131,
+      "toX": 538.0170767899417,
+      "toY": 563.425684227131,
+      "allowed": true
+    },
+    {
+      "frame": 235,
+      "enemyId": 3,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 538.0170767899417,
+      "fromY": 563.425684227131,
+      "toX": 543.2811532583087,
+      "toY": 565.1082287384838,
+      "allowed": true
+    },
+    {
+      "frame": 235,
+      "enemyId": 3,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 543.2811532583087,
+      "fromY": 565.1082287384838,
+      "toX": 548.0442866182898,
+      "toY": 566.6306579698669,
+      "allowed": false
+    }
+  ]
+}
