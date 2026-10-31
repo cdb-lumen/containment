@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '326c92171f96b483a65c04a6e1e93bae3814b69425f29b63b8555406ae6725c4'
+- '081568d5c89c3cce109ab2df71e5e7e9e40fc06c98992be391533710c2b7263a'
+
+    at file:///workspace/status-hud-native-inspect.mjs:35:68 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '326c92171f96b483a65c04a6e1e93bae3814b69425f29b63b8555406ae6725c4',
+  expected: '081568d5c89c3cce109ab2df71e5e7e9e40fc06c98992be391533710c2b7263a',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
