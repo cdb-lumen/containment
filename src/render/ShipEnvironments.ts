@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {MAT,box,ball,rod,ring,shell,geometry} from './meshParts';
 import {residentialGalleryBlockout} from './ResidentialGalleryBlockout';
+import {shieldingGateBlockout} from './ShieldingGateBlockout';
 import {infestedWorkshop} from './InfestedWorkshop';
 import {infestedWorkshopArchitecture} from './InfestedWorkshopArchitecture';
 import {crewCheckpointBlockout} from './CrewCheckpointBlockout';
@@ -15,6 +16,7 @@ const v=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
 
 /** All models are authored in a local cell, then fitted inside the authoritative collision rectangle. */
 export function environmentObstacle(environment:ShipEnvironment,footprint:Footprint,index=0,templateId=''):T.Group{
+ if(environment==='containment'&&templateId==='shielding-gate')return shieldingGateBlockout(footprint,index);
  if(environment==='infested'&&templateId==='infested-workshop')return infestedWorkshop(footprint,index);
  if(environment==='security'&&templateId==='crew-checkpoint')return crewCheckpointBlockout(footprint,index);
  if(environment==='habitation'&&templateId==='residential-gallery')return residentialGalleryBlockout(footprint,index);
