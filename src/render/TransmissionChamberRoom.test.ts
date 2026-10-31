@@ -7,10 +7,13 @@ import {clearPolygonTopology} from '../game/world/polygonGeometry';
 import {authoredRoom} from './AuthoredRooms';
 import {disposeModel} from './meshParts';
 const layout=JSON.parse(readFileSync('docs/art-evidence/room10-story-flow-v3/stage-1/attempt-962/layout.json','utf8'));
+// Preserve the historical proposal; only the oversized antenna foundation is revised.
+const priorSolids=structuredClone(layout.solids);
+layout.solids=layout.solids.map((s:any)=>s.id==='antenna-truss'?{...s,points:[{x:560,y:84},{x:640,y:84},{x:640,y:110},{x:560,y:110}]}:s);
 const template=ROOM_TEMPLATES['transmission-chamber'];
 const geometry=()=>createExpeditionGeometry({id:'room10-stage2',templateId:'transmission-chamber'} as Parameters<typeof createExpeditionGeometry>[0]);
 describe('Room10 rough placement',()=>{
- it('implements precisely the reviewed nine solids and retains canonical anchors',()=>{
+ it('implements eight original solids plus a proportionate antenna foundation and retains canonical anchors',()=>{
   expect(template.voids).toEqual(layout.solids.map((s:{points:unknown})=>s.points));
   expect(template.obstacles).toEqual([]);expect(template.boundary).toEqual(layout.boundary);
   for(const key of ['width','height','spawn','exit','breaches'] as const)expect(template[key]).toEqual(layout[key]);
@@ -41,6 +44,16 @@ describe('Room10 rough placement',()=>{
    }});expect(vertices).toBeGreaterThan(20);
    if(solid.id.startsWith('waveguide'))expect(bounds.max.y*32).toBeLessThanOrEqual(44);
   }
+  disposeModel(room);
+ });
+ it('fits the foundation to its complete round hardware and frees the abandoned platform edges',()=>{
+  const room=authoredRoom('transmission-chamber',template)!;room.updateMatrixWorld(true);
+  const base=new T.Box3().setFromObject(room.getObjectByName('antenna-truss')!),hardware=new T.Box3().setFromObject(room.getObjectByName('antenna-hardware')!);
+  expect(base.getSize(new T.Vector3()).x/hardware.getSize(new T.Vector3()).x).toBeLessThan(1.5);
+  expect(room.getObjectByName('antenna-hardware')!.scale.x).toBe(.32);
+  const g=geometry();for(const r of [16,28,38])expect(canTraverseExpedition(g,{x:510,y:50},{x:510,y:150},r)).toBe(true);
+  expect(canOccupyExpedition(g,{x:600,y:97},0)).toBe(false);
+  for(let i=0;i<layout.solids.length;i++)if(layout.solids[i].id!=='antenna-truss')expect(layout.solids[i]).toEqual(priorSolids[i]);
   disposeModel(room);
  });
  it('keeps stage3 shell inside existing wall bands and deck dressing flush',()=>{

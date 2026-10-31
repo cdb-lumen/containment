@@ -3,7 +3,7 @@ import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {TRANSMISSION_BLOCKOUT} from '../game/roguelike/transmissionChamberLayout';
 import type {Point} from '../game/roguelike/types';
 const U=32;
-/** Room10 stage3. Ceramic/alloy transmission hardware on the unchanged stage2 bases.
+/** Room10 stage3. Ceramic/alloy transmission hardware on matching sealed bases.
  * No new interactions, milestone text, arena roof, shield or emissive route ring. */
 export function transmissionChamberRoom():T.Group{
  const room=new T.Group();room.name='authored-transmission-chamber';
@@ -84,7 +84,8 @@ export function transmissionChamberRoom():T.Group{
    }
   }else if(f.id==='antenna-truss'){
    // Compact the complete round dish assembly on the south edge of its existing
-   // plinth. Keep the collision reservation and shipping camera unchanged.
+   // proportionate plinth. Its sealed collision footprint follows the same base;
+   // hardware, concavity and shipping camera remain unchanged.
    const plinth=g;
    const hardware=new T.Group();hardware.name='antenna-hardware';plinth.add(hardware);
    hardware.scale.setScalar(.32);

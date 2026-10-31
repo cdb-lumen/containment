@@ -1,5 +1,5 @@
 import type {Point} from './types';
-/** Exact stage1 attempt962 reservations, promoted for Room10 rough placement.
+/** Stage1 attempt962 reservations, with the antenna foundation fitted to its hardware.
  * These are sealed equipment footprints, not pits, shields or walkable platforms. */
 const footprint=(pairs:readonly (readonly [number,number])[]):readonly Point[]=>Object.freeze(pairs.map(([x,y])=>Object.freeze({x,y})));
 export const TRANSMISSION_BLOCKOUT=Object.freeze([
@@ -10,7 +10,7 @@ export const TRANSMISSION_BLOCKOUT=Object.freeze([
  {id:'waveguide-90',footprint:footprint([[617.857143,588.933282],[625,648.506595],[575,648.506595],[582.142857,588.933282]])},
  {id:'waveguide-150',footprint:footprint([[479.948566,529.93138],[431.927992,565.903932],[406.927992,522.602662],[462.091423,499.001902]])},
  {id:'exposed-feed',footprint:footprint([[660,440],[642.426407,482.426407],[600,500],[557.573593,482.426407],[540,440],[557.573593,397.573593],[600,380],[642.426407,397.573593]])},
- {id:'antenna-truss',footprint:footprint([[500,40],[700,40],[700,110],[500,110]])},
+ {id:'antenna-truss',footprint:footprint([[560,84],[640,84],[640,110],[560,110]])},
  {id:'southeast-desk',footprint:footprint([[850,620],[1000,620],[1000,685],[850,685]])},
 ].map(f=>Object.freeze(f)));
 export const TRANSMISSION_TOPOLOGY=Object.freeze({

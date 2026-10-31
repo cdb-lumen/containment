@@ -1032,19 +1032,19 @@ exports[`reviewed Passenger Vault whole-room blockout > preserves all nineteen o
       ],
       [
         {
-          "x": 500,
-          "y": 40,
+          "x": 560,
+          "y": 84,
         },
         {
-          "x": 700,
-          "y": 40,
+          "x": 640,
+          "y": 84,
         },
         {
-          "x": 700,
+          "x": 640,
           "y": 110,
         },
         {
-          "x": 500,
+          "x": 560,
           "y": 110,
         },
       ],
