@@ -1,0 +1,25 @@
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3
+
+ ❯ src/render/Room8Models.test.ts (5 tests | 1 failed) 2706ms
+     × joins the growth as one welded surface with a seal-contact perimeter 228ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/Room8Models.test.ts > Room8 stage4 connected models > joins the growth as one welded surface with a seal-contact perimeter
+AssertionError: expected 0 to be greater than 0
+ ❯ src/render/Room8Models.test.ts:52:61
+     50|    const along=-2.78,x=21.5625+.81*along-.586*offset,z=12.34375+.586*a…
+     51|    ray.set(new T.Vector3(x,5,z),new T.Vector3(0,-1,0));
+     52|    const hits=ray.intersectObject(mesh);expect(hits.length).toBeGreate…
+       |                                                             ^
+     53|   }
+     54|   disposeModel(room);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 25 passed (26)
+   Start at  22:34:43
+   Duration  3.03s (transform 595ms, setup 0ms, import 971ms, tests 5.39s, environment 0ms)
