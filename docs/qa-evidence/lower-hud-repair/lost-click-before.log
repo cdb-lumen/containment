@@ -1,0 +1,6 @@
+midclick { clicks: 0, side: 'left' }
+keyboard { clicks: 1, focused: 'rifle' }
+600 600 { count: 0, first: [] }
+640 360 { count: 0, first: [] }
+960 540 { count: 0, first: [] }
+1280 900 { count: 0, first: [] }

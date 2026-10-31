@@ -1,0 +1,37 @@
+midclick { clicks: 1, side: 'left' }
+keyboard { clicks: 2, focused: 'rifle' }
+normal {
+  clicks: 3,
+  events: [
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'lostpointercapture', trusted: true },
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'lostpointercapture', trusted: true }
+  ]
+}
+native-drag-cancel {
+  clicks: 3,
+  events: [
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'lostpointercapture', trusted: true },
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'lostpointercapture', trusted: true },
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'pointercancel', trusted: true },
+    { type: 'lostpointercapture', trusted: true }
+  ]
+}
+post-cancel-normal {
+  clicks: 4,
+  events: [
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'lostpointercapture', trusted: true },
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'lostpointercapture', trusted: true },
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'pointercancel', trusted: true },
+    { type: 'lostpointercapture', trusted: true },
+    { type: 'gotpointercapture', trusted: true },
+    { type: 'lostpointercapture', trusted: true }
+  ]
+}
