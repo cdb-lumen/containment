@@ -77,3 +77,9 @@ button:disabled{opacity:.38;cursor:default;transform:none!important}.service-sho
 .vitals[data-anchor=bottom]{position:fixed;left:var(--vitals-left);top:auto;bottom:var(--vitals-bottom)}
 @media(max-width:700px){.hud-top{--vitals-left:max(18px,env(safe-area-inset-left))}}
 @media(max-height:520px) and (orientation:landscape){.hud-top{--vitals-left:max(22px,env(safe-area-inset-left))}}
+
+/* Room identity and Pause share the status column’s actor clearance. */
+#status-hud .room-heading{display:flex;align-items:flex-start;gap:16px}
+#status-hud .room-label{margin:0;min-width:0;flex:1;text-align:left}
+#status-hud .room-label b{max-width:none;overflow-wrap:anywhere}
+#status-hud #pause{flex-shrink:0}

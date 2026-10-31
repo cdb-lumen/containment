@@ -90,7 +90,7 @@ test('status copy preserves canvas mouse aim and fire while Skip remains clickab
    canvas.addEventListener('mousemove',()=>document.body.dataset.aimed='yes');
    canvas.addEventListener('mousedown',()=>document.body.dataset.fired='yes');
   });
-  for(const selector of ['#story-status','#room-objective','#story-line']){
+  for(const selector of ['#story-status','#room-objective','#story-line','.room-label']){
    const box=await rect(page,selector);
    await page.mouse.click(box.x+2,box.y+2);
    expect(await page.locator('body').getAttribute('data-aimed')).toBe('yes');
@@ -125,6 +125,35 @@ test('moves vitals clear of Room12 frame495 and restores them safely as the mari
    expect(await page.locator('body').getAttribute('data-fired')).toBe('yes');
    await place({left:vital.left,right:vital.right,top:vital.top,bottom:vital.bottom});
    expect(await page.locator('.vitals').getAttribute('data-anchor')).toBe('top');
+  }
+ }finally{await page.close();}
+});
+
+test('keeps the room heading and Pause clear of the recorded north-east marine',async()=>{
+ const page=await mount(1280);
+ try{
+  await page.locator('#room-name').evaluate(el=>el.textContent='Safety-interlock station');
+  await page.locator('#depth-label').evaluate(el=>el.textContent='ENGINEERING · 12 / 20');
+  const body={left:1018.6609690645946,top:49.77284403710499,right:1059.5700599736856,bottom:132.2834175538627};
+  await position(page,body);
+  expect(overlaps(await rect(page,'.room-label'),body)).toBe(false);
+  await page.evaluate(()=>document.getElementById('pause')!.addEventListener('click',()=>document.body.dataset.paused='yes'));
+  for(const pose of [body,{left:1200,top:25,right:1250,bottom:108}]){
+   await position(page,pose);
+   for(const selector of ['.room-label','#pause'])expect(overlaps(await rect(page,selector),pose)).toBe(false);
+   await page.locator('#pause').click();expect(await page.locator('body').getAttribute('data-paused')).toBe('yes');
+   await page.evaluate(()=>delete document.body.dataset.paused);await page.locator('#pause').focus();await page.keyboard.press('Enter');
+   expect(await page.locator('body').getAttribute('data-paused')).toBe('yes');await page.evaluate(()=>delete document.body.dataset.paused);
+  }
+  for(const [width,height] of [[640,900],[960,480]]){
+   await page.setViewportSize({width,height});await position(page,{left:width-90,right:width-50,top:30,bottom:115});
+   const heading=await rect(page,'.room-label'),pause=await rect(page,'#pause'),build=await rect(page,'#build-strip');
+   expect(heading.right).toBeLessThanOrEqual(pause.left);expect(Math.max(heading.bottom,pause.bottom)).toBeLessThanOrEqual(build.top);
+   expect(await page.locator('#room-name').textContent()).toBe('Safety-interlock station');await page.locator('#pause').click();
+  }
+  for(const state of ['paused','route','dead','menu']){
+   await page.evaluate(state=>document.body.dataset.state=state,state);
+   expect(await page.locator('#pause').evaluate(el=>getComputedStyle(el).pointerEvents)).toBe('none');
   }
  }finally{await page.close();}
 });
