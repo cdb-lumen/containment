@@ -1,0 +1,28 @@
+{
+  "room": "service-shaft-landing",
+  "status": "Stage 1 proposal only. Not installed in runtime.",
+  "width": 1200,
+  "height": 880,
+  "spawn": [100, 440],
+  "exit": [1100, 440],
+  "breaches": [[100,100],[1100,100],[100,780],[1100,780]],
+  "shaft": [[340,240],[900,240],[900,540],[1200,540],[1200,640],[340,640]],
+  "routes": {
+    "progression": [[100,440],[180,440],[180,140],[1040,140],[1040,440],[1100,440]],
+    "full_c": [[1044,740],[180,740],[180,140],[1040,140],[1040,440],[1100,440]],
+    "local_control": [[180,440],[270,440],[280,405]]
+  },
+  "activity_centers": {
+    "arrival": [180,440],
+    "north_turn": [180,140],
+    "far_landing": [1040,360],
+    "south_service": [760,740],
+    "local_control": [280,405]
+  },
+  "fixtures_inside_shaft": [
+    {"id":"guide_counterweight","rect":[460,310,240,240]},
+    {"id":"junction_pedestal","rect":[340,380,40,50]}
+  ],
+  "story": "LOCAL ACCESS ONLY. AI connection lost below this landing.",
+  "proposal_delta": "Retain the 1200x880 envelope, spawn, exit and all four breach anchors. Replace the three baseline rectangular machine solids with one east-open shaft polygon. The ordinary floor forms a connected C and a northeast exit landing. Baseline is shown separately, not presented as already changed."
+}

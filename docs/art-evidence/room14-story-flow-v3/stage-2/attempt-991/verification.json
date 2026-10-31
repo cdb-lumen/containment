@@ -1,0 +1,29 @@
+{
+  "source_pins_match": true,
+  "snapshot_changes": {
+    "tests/unit/__snapshots__/awakeningTopology.test.ts.snap": [
+      "service-shaft-landing"
+    ],
+    "tests/unit/__snapshots__/passengerBlockout.test.ts.snap": [
+      "service-shaft-landing"
+    ]
+  },
+  "images": {
+    "14-service-shaft-landing-gameplay.png": {
+      "sha256": "39791d9d10e0b8b9cad454cf68b899269707951b9e29454b529f38c72db4bcc1",
+      "size": [
+        1280,
+        900
+      ],
+      "prior_pixel_equal": false
+    },
+    "14-service-shaft-landing-overview.png": {
+      "sha256": "4677c7d1809215b142afdabc09c75fef77579c8829b27df20cb28a36979c56c4",
+      "size": [
+        1280,
+        900
+      ],
+      "prior_pixel_equal": true
+    }
+  }
+}

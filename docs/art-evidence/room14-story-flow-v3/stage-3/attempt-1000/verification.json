@@ -1,0 +1,57 @@
+{
+  "base_head": "bc5dc58fec4ca766274c852b22f34e7cb7f19608",
+  "source_files_verified": 265,
+  "source_pins_sha256": "d07ec645bfd9385b8c855fad8bddefeaeccfd9072537f8dbf55999391801746f",
+  "patch_sha256": "d191ce5c86fc37698beba8c7dd7e6ed26e43d3dd6018a0da160b1dd1855b0da1",
+  "changed_files": {
+    "src/render/ServiceShaftLanding.ts": "432f15b545e32fa56e550da28eba3807245e5801e17eea00538dc4474a80fa94",
+    "tests/unit/ServiceShaftLanding.test.ts": "403dd4f516d5c1678b7ac4de4261871d41664927111f252ac6c8b8d41678029c"
+  },
+  "capture_harness_sha256": "fd7f4192b7b0cac25253c746bebc5c9dee03abab63320e09768b0f85e6efa266",
+  "images": {
+    "14-service-shaft-landing-overview.png": {
+      "sha256": "11bdb91970be013be2efa1c072e4af82db67d90679cd2d6c991851f38caa5196",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 560606,
+      "draw_calls": 58,
+      "novel_from_stage2": true
+    },
+    "14-service-shaft-landing-gameplay.png": {
+      "sha256": "72f6988b992db3a8722f039c62efb65dc3883c84e426f6722f5fad366298a771",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 819670,
+      "draw_calls": 61,
+      "novel_from_stage2": true
+    }
+  },
+  "capture_class": "controlled-live-simulation",
+  "cleanup": {
+    "temporary_entries_remaining": 0,
+    "task_capture_processes_remaining": 0
+  },
+  "checks": {
+    "focused": {
+      "tests_passed": 42,
+      "exit": 0
+    },
+    "npm_test": {
+      "vitest_passed": 767,
+      "vitest_skipped": 1,
+      "exit": 0,
+      "node_python_suites": "passed"
+    },
+    "npm_run_build": {
+      "exit": 0,
+      "warning": "Existing chunk size warning"
+    },
+    "git_diff_check": {
+      "exit": 0
+    }
+  }
+}

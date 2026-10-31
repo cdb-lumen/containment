@@ -1,0 +1,36 @@
+{
+  "baseline_commit": "ec958c9221a300cac796145e06c66dc7aa5ae7f1",
+  "candidate_source_sha256": {
+    "src/render/ServiceShaftLanding.ts": "2d3aa87030202ef8e7257f4f54cb184b74168a27b04a476ea352574e2493bd0e",
+    "tests/unit/ServiceShaftLanding.test.ts": "d8da9174b8e2ad396271f099b7f26ed4f7a16ddc39260ce92abc0180c18fab2e",
+    "src/game/roguelike/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "src/game/roguelike/authoredRoomTopologies.ts": "7a0cb4f8c52cd7c447dc5437749b29f6e901c3e5c7f61046f346096451cc4cfb",
+    "src/render/DepthRenderer.ts": "1d6de0a814c67c8b36c2bc74470f3a5d3144981b3e5384fa5b029d0c425f55bc",
+    "scripts/room-evidence.mjs": "a5214bfa0da825f7b1c0d992baba62f19566b74fd2521193bf82ec187ef668fa"
+  },
+  "capture_script_sha256": "fd7f4192b7b0cac25253c746bebc5c9dee03abab63320e09768b0f85e6efa266",
+  "parent_capture_exit": 0,
+  "recovered_final_comparison": {
+    "gameplay": {
+      "exact_bytes": false,
+      "difference_bounds": [
+        597,
+        130,
+        685,
+        212
+      ]
+    },
+    "overview": {
+      "exact_bytes": true,
+      "difference_bounds": null
+    }
+  },
+  "scope": "Room14 stage4 only. Static review of controlled simulation, not ordinary gameplay or final acceptance.",
+  "images": {
+    "overview.png": "b8c59a84bafee82603d6ed528f86312cb7874567367d18ad093566c9f435c0b9",
+    "rejected-sign-overlap.png": "d8b4f46a4f66b4f67865f725b035903275fac364f1cf8f7f250dd0b575d9d0f0",
+    "after-in-scene.png": "9d85cfcdc96f9e0a8924732007f3c55396abd7c4e61932d3e7c323f2d35ff699",
+    "model-contact-sheet.png": "8a2e2cc06eb8ad78207a70700b167d2ff947ae0978fd972592d5985686a3bdc1",
+    "before-in-scene.png": "61cb987beadd7a01a7abf92ef2afa6c2464c49aa06a59202996e4c0532fc8fb2"
+  }
+}

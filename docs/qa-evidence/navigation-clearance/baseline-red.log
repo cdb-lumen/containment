@@ -1,0 +1,31 @@
+
+ RUN  v4.1.10 /workspace/containment-large-actor-navigation
+
+ ❯ tests/FacilityNavigationClearance.test.ts (5 tests | 1 failed) 268ms
+     × uses legal cells and sweeps for radius38 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/FacilityNavigationClearance.test.ts > navigation clearance > uses legal cells and sweeps for radius38
+AssertionError: {"x":460,"y":340}: expected 137.0109484676316 to be less than or equal to 4
+ ❯ tests/FacilityNavigationClearance.test.ts:23:68
+     21|     expect(canTraverseExpedition(geometry,p,next,radius)).toBe(true);O…
+     22|    }
+     23|    expect(Math.hypot(p.x-goal.x,p.y-goal.y),JSON.stringify(start)).toB…
+       |                                                                    ^
+     24|   }
+     25|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  19:50:26
+   Duration  647ms (transform 201ms, setup 0ms, import 247ms, tests 268ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
