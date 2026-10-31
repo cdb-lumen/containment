@@ -1,0 +1,9 @@
+{
+  "kind": "separate postfailure source verification; original failed manifest unchanged",
+  "time": "2026-10-31T19:13:12.062675+00:00",
+  "commit": "cdccf9f65810652cbd25ca30a43538348e203f7c",
+  "trackedStatus": "",
+  "sourceBeforeCommit": "cdccf9f65810652cbd25ca30a43538348e203f7c",
+  "filesChecked": 296,
+  "mismatches": []
+}

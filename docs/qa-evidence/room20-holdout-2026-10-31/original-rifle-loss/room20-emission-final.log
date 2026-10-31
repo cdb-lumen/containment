@@ -1,0 +1,37 @@
+{"frame":0,"elapsed":0.06666666666666667,"status":"playing","kills":0,"remaining":48}
+{"frame":50,"elapsed":2.566666666666666,"status":"playing","kills":0,"remaining":48}
+{"frame":100,"elapsed":5.0666666666666575,"status":"playing","kills":2,"remaining":46}
+{"frame":150,"elapsed":7.566666666666649,"status":"playing","kills":3,"remaining":45}
+{"frame":200,"elapsed":10.066666666666677,"status":"playing","kills":5,"remaining":43}
+{"frame":250,"elapsed":12.566666666666713,"status":"playing","kills":5,"remaining":43}
+{"frame":300,"elapsed":15.066666666666748,"status":"playing","kills":7,"remaining":44}
+{"frame":350,"elapsed":17.566666666666784,"status":"playing","kills":7,"remaining":47}
+{"frame":400,"elapsed":20.06666666666682,"status":"playing","kills":11,"remaining":43}
+{"frame":450,"elapsed":22.566666666666855,"status":"playing","kills":11,"remaining":43}
+{"frame":500,"elapsed":25.06666666666689,"status":"playing","kills":12,"remaining":42}
+{"frame":550,"elapsed":27.566666666666926,"status":"playing","kills":14,"remaining":40}
+{"frame":600,"elapsed":30.06666666666696,"status":"playing","kills":15,"remaining":39}
+{"frame":650,"elapsed":32.566666666666954,"status":"playing","kills":17,"remaining":37}
+{"frame":700,"elapsed":35.06666666666681,"status":"playing","kills":20,"remaining":34}
+{"frame":750,"elapsed":37.56666666666667,"status":"playing","kills":21,"remaining":33}
+{"frame":800,"elapsed":40.06666666666653,"status":"playing","kills":24,"remaining":30}
+{"frame":850,"elapsed":42.566666666666386,"status":"playing","kills":25,"remaining":32}
+{"frame":900,"elapsed":45.066666666666244,"status":"playing","kills":26,"remaining":31}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'dead' !== 'complete'
+
+    at file:///workspace/campaign-overload-joint-hud.mjs:50:204 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'dead',
+  expected: 'complete',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
