@@ -7,3 +7,5 @@ Corrected source17f5d6d5ad0d884e603518b99e37bde1c20ff4c0 moves the status/build/
 Review found mouse interception in the first implementation80f080a. The final correction restores read-only copy pass-through while preserving Skip. The initial candidate capture was edited during execution and failed source pinning. It is preserved under invalid-source-changed-attempt solely as failed attempt history and must not be used as acceptance evidence. The final corrected capture is clean and source-stable.
 
 No phone compatibility, general art approval, physical performance, live-site byte readback or historical delivery receipts are claimed.
+
+Final integration c745701cf47c5d52f36ae3cd5445f95de56274e4 adds the now-merged Room9 PR74. Independent integration review verifies HUD/Armory runtime fidelity to the captured17f5d6d source and exactly five HUD/test files relative toRoom9. Merge tree with main85ce91c equals finalhead. Combined1116tests+1skip/assets/evidence/buildpass; final-head CI41215920409 is separately required. No final-head native capture is fabricated.
