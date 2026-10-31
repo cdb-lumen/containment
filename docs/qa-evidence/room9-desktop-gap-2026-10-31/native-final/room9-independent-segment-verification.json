@@ -1,0 +1,107 @@
+{
+  "playerSweeps": 555,
+  "segments": 4279,
+  "chains": 3510,
+  "errors": [],
+  "witness": [
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 359.9756030894049,
+      "fromY": 355.60382816326523,
+      "toX": 361.98224800485673,
+      "toY": 358.70371410664467,
+      "allowed": true
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 361.98224800485673,
+      "fromY": 358.70371410664467,
+      "toX": 377.0888948594492,
+      "toY": 328.24408146259213,
+      "allowed": false
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 361.98224800485673,
+      "fromY": 358.70371410664467,
+      "toX": 377.0888948594492,
+      "toY": 358.70371410664467,
+      "allowed": true
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 377.0888948594492,
+      "fromY": 358.70371410664467,
+      "toX": 393.2307892456518,
+      "toY": 328.7798232228595,
+      "allowed": false
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 377.0888948594492,
+      "fromY": 358.70371410664467,
+      "toX": 393.2307892456518,
+      "toY": 358.70371410664467,
+      "allowed": true
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 393.2307892456518,
+      "fromY": 358.70371410664467,
+      "toX": 410.3889580605992,
+      "toY": 329.35073737654506,
+      "allowed": false
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 393.2307892456518,
+      "fromY": 358.70371410664467,
+      "toX": 410.3889580605992,
+      "toY": 358.70371410664467,
+      "allowed": true
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 410.3889580605992,
+      "fromY": 358.70371410664467,
+      "toX": 412.66342088398875,
+      "toY": 353.6670211477164,
+      "allowed": true
+    },
+    {
+      "frame": 443,
+      "enemyId": 13,
+      "enemyType": "carrier",
+      "radius": 24,
+      "fromX": 412.66342088398875,
+      "fromY": 353.6670211477164,
+      "toX": 414.7214399525233,
+      "toY": 349.10963289531986,
+      "allowed": true
+    }
+  ]
+}

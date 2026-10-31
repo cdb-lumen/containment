@@ -1,0 +1,9 @@
+{
+  "source": "5b4a8dff20e76852b6ac12908df81c34b39c8f6f",
+  "framesMatched": 556,
+  "matchedThrough": 555,
+  "errors": [],
+  "acceptedMoves": 4279,
+  "captureManifestSha256": "050b38302f1e60f59f2b3b0fc906978b873e2b988f1c07a05df20ebecf888a9e",
+  "replayScriptSha256": "868d7840ec2731d8a3e9925435e78b99e906f967bc49881336041607186468fe"
+}

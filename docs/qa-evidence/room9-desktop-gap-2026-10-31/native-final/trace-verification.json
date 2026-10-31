@@ -1,0 +1,16 @@
+{
+  "source": "5b4a8dff20e76852b6ac12908df81c34b39c8f6f",
+  "room": "relay-racks",
+  "frames": 556,
+  "encounterState": "reward",
+  "enemyPositions": 3534,
+  "enemySweeps": 3510,
+  "playerSweeps": 555,
+  "errors": [
+    {
+      "frame": 443,
+      "actor": 13,
+      "check": "sweep"
+    }
+  ]
+}
