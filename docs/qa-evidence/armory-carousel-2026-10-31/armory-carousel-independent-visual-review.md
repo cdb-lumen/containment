@@ -1,0 +1,19 @@
+# Armory carousel — independent native visual review
+
+The new candidate establishes a recognizable central carousel inside a continuous horseshoe issue bay. It resolves the previous major-form mismatch of disconnected rectangular racks. It does **not yet meet the full material/equipment-detail brief**, and static success is not full encounter or human art approval.
+
+Inspected all six full-resolution mouth-native, west-flank-native and explicitly fitted overview images in `/workspace/armory-carousel-before` (c745701cf47c5d52f36ae3cd5445f95de56274e4) and `/workspace/armory-carousel-after` (fc97f414bffb189a8fd5737c8c7f6717a4ef64df).
+
+## Remaining findings
+
+- **P2 — material hierarchy misses the brief.** The broad almost-white continuous worktop is by far the dominant visual mass in both native views and overview. Graphite is relegated to the narrow vertical edges and small carousel base; pale serial plates are not distinct accents against the pale field. This reads more like a bright display counter than graphite armory equipment. Make the dominant working/structural surface graphite and reserve pale finish for bounded inspection/serial accents, while preserving tray contrast. No global light change is needed to address this.
+- **P2 — armor hanger payload is not legible.** The two rear-counter fixtures read as small posts with crosspieces, not clearly as hung armor. The thin chest shapes face largely edge-on to the elevated camera and blend into the pale top. They lose the familiar protective-shell reading of the previous armor display. Reorient or articulate the actual armor/hanger assembly toward the native view, preserving believable support and fixed scale; do not merely enlarge a marker or rename the fixture.
+- **P2 — geared base is visually absent and its teeth are buried.** The supplied views show a smooth cylindrical base and brass rim, not an exposed geared mechanism. Source confirms the teeth centered at radius2.38 with radial half-width.075 and y.425..675 lie inside the opaque radius80/32≈2.5 foot extruded to1.02 (including the48-gon apothem≈2.4946). Merely naming those hidden boxes gear teeth does not satisfy the brief. Expose a toothed ledge/annulus within the reserved footprint or reduce the intervening drum locally, retaining a physical owner for the full collision reservation; add visibility/occlusion evidence for actual teeth.
+
+The spindle and radial clamps/rifles are visible as a rotary storage arrangement rather than a pile of boxes. The camera-facing sector is open. The horseshoe mouth and inner aisle read as real open floor. The vise and four trays are visible as separate work stations; fine mechanical detail still needs native scrutiny after changes. Decorative inventory does not show an obvious pickup/reward glow in these static views, but actual reward legibility has not been exercised here.
+
+## Provenance and limits
+
+Independently verified288 before and290 after source-file hashes against their exact commits, stable clean before/after source records, terminal passed state and all six PNG hashes. The common saved harness `/workspace/armory-carousel-native-inspect.mjs` matches SHA-256 `d5cc0bf1abc838b719c6156bc944521956c0282406869f1bd9e64e8c8b6f92d7`. Both native views have exactly matching recorded metrics, including player/camera/projection. The overview remains explicitly non-shipping fitted projection.
+
+These are staged static poses with combat held, not actual mouth/outer-route traversal or elite/reward evidence. Full desktop encounter, movement/path legality, reward prominence, source-pinned final comparison and independent final review remain required. The candidate cannot inherit the old four-island encounter qualification. Passing CPU geometry/resource tests do not waive these visual findings. No renderer launched or source changed during this review; no human approval inferred.

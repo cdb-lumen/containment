@@ -1,0 +1,16 @@
+{
+  "armory-carousel-integration-review.md": "c50d26c374738522a32973b9f68aa65a3f464d3228cc1185da6649ad25dd8848",
+  "room6-carousel-implementation-review.md": "460c8eae2edaa482f1c9f73eb44005779dec584c9bdd331e8183cdb0972c11e2",
+  "armory-carousel-independent-visual-review.md": "82d3d1976dc910b9fae085f105d6bc71e72b501a79af6aaf8772e81c71deb038",
+  "armory-carousel-native-inspect.mjs": "d5cc0bf1abc838b719c6156bc944521956c0282406869f1bd9e64e8c8b6f92d7",
+  "armory-carousel-code-review.md": "ffe874f306cdce1652d370ee5096e665a33f1ecb7753a9f856f5d1b91d570598",
+  "README.md": "e697038c7cc8a97df6f6fc84035c89a8fd0b9949ce6329dba86fcb6e28a92ede",
+  "baseline/room-overview.png": "841f73378be2d8f95e24aa579d33165a8688a34aa7fb9421918244b803073bf1",
+  "baseline/mouth-native.png": "db597dd0c975288a4eeafa3f2063450e0eb66a683c23923434cf77caf89e8bc8",
+  "baseline/west-flank-native.png": "a1331ea50cf244703a48fdee8c2d38b50f19cf615b716e6ef12b9a389ec5fd17",
+  "baseline/manifest.json": "112c05868661fc9cb5cd15330027209dfedb980160213ca3efe1960617867c39",
+  "first-candidate-rejected/room-overview.png": "0bb092b06034fa571f353267dca7b7f685e84bee6370d5ff87c4050b7e0f673b",
+  "first-candidate-rejected/mouth-native.png": "86abc8a7188fee1c9ea7104564185f20abf883db996b37f302828fdce3d4b6c6",
+  "first-candidate-rejected/west-flank-native.png": "30aab171d417a4e3fe05f586af949b1960c331a2310fb8e30791d7f078042571",
+  "first-candidate-rejected/manifest.json": "6802b25b598addd0413e27990e8679310cd08b3688b10d6b08f2e339aa6091b3"
+}
