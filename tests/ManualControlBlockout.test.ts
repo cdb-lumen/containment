@@ -53,6 +53,23 @@ describe('Room19 placed rough authorization equipment',()=>{
    expect(ray.intersectObject(world,true)[0]?.object).toBe(recess);
   }
  });
+ it('retains a framed deep cavity visible across native and overview camera sightlines',()=>{
+  const world=new T.Group();environmentArchitecture(world,'reactor',37.5,27.5,template.id);world.updateMatrixWorld(true);
+  const recess=world.getObjectByName('armored-observation-recess')!,face=bounds(recess).max.z;
+  const hood=bounds(world.getObjectByName('observation-hood')!);
+  const sill=bounds(world.getObjectByName('observation-sill')!);
+  expect(hood.min.y).toBeGreaterThan(bounds(recess).min.y);
+  expect(hood.min.z).toBeLessThan(face); // A solid lintel remains attached behind the cavity face.
+  expect(sill.max.z-face).toBeGreaterThan(.7); // Do not flatten the opening to make it visible.
+  for(const [rise,run] of [[26,19],[36,26],[30,20]]){
+   const direction=new T.Vector3(0,rise,run).normalize();
+   for(const x of [-3,-2.6,0,2.6,3])for(const y of [3.35,3.55,3.65]){
+    const target=new T.Vector3(37.5*.69+x,y,face);
+    const ray=new T.Raycaster(target.clone().addScaledVector(direction,10),direction.clone().negate());
+    expect(ray.intersectObject(world,true)[0]?.object).toBe(recess);
+   }
+  }
+ });
  it('owns ivory enamel and muted amber materials without modifying shared finishes',()=>{
   const root=model(2),desk=root.getObjectByName('sloped-authorization-desk') as T.Mesh;
   const enamel=desk.material as T.MeshStandardMaterial;
