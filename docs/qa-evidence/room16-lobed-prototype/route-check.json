@@ -1,0 +1,41 @@
+{
+  "proposalOnly": true,
+  "routes": [
+    {
+      "radius": 16,
+      "originalRoutes": 10
+    },
+    {
+      "radius": 28,
+      "originalRoutes": 10
+    },
+    {
+      "radius": 38,
+      "originalRoutes": 10
+    }
+  ],
+  "grid": [
+    {
+      "radius": 16,
+      "nodes": 2234,
+      "unreachable": 0
+    },
+    {
+      "radius": 28,
+      "nodes": 2094,
+      "unreachable": 0
+    },
+    {
+      "radius": 38,
+      "nodes": 2051,
+      "unreachable": 0
+    }
+  ],
+  "errors": [],
+  "gridDeltaAgainstRejected": {
+    "addedSolidSamples": 7270,
+    "removedSolidSamples": 469,
+    "step": 2
+  },
+  "selfCrossings": 0
+}

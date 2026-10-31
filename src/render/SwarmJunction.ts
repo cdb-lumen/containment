@@ -34,32 +34,33 @@ export function swarmJunctionBlockout(){
  // The silhouette and heightfield are one sealed body. Every top triangle is
  // constrained to the shared concave contour; no contracted ring crosses a bay.
  const shellHeight=(p:Point)=>{
-  const cavity=Math.hypot((p.x-600)/44,(p.y-260)/34);
+  const cavity=Math.hypot((p.x-600)/44,(p.y-285)/34);
   // Three bent, unequal volumes continue all the way to the contour. Avoid a
   // constant-height manufactured rim and separate decorative plate inserts.
-  const westT=Math.max(0,Math.min(1,(p.x-392)/182));
-  const westAxis=135+westT*119+11*Math.sin(westT*Math.PI);
+  const westT=Math.max(0,Math.min(1,(p.x-378)/190));
+  const westAxis=141+westT*121+16*Math.sin(westT*Math.PI);
   const west=Math.exp(-1*((p.y-westAxis)/(19+20*westT))**2)*
-   Math.exp(-1*((p.x-493)/110)**4)*(.35+.65*Math.sin(westT*Math.PI));
-  const eastT=Math.max(0,Math.min(1,(800-p.x)/161));
-  const eastAxis=134+eastT*114-13*Math.sin(eastT*Math.PI*1.3);
+   Math.exp(-1*((p.x-481)/116)**4)*(.35+.65*Math.sin(westT*Math.PI));
+  const eastT=Math.max(0,Math.min(1,(815-p.x)/155));
+  const eastAxis=150+eastT*117-16*Math.sin(eastT*Math.PI*1.3);
   const east=Math.exp(-1*((p.y-eastAxis)/(17+13*eastT))**2)*
-   Math.exp(-1*((p.x-724)/105)**4)*(.45+.55*Math.sin(eastT*Math.PI*1.7)**2);
-  const southT=Math.max(0,Math.min(1,(355-p.y)/71));
-  const southAxis=606-13*Math.sin(southT*Math.PI);
-  const south=Math.exp(-1*((p.x-southAxis)/(15+14*southT))**2)*Math.exp(-1*((p.y-322)/49)**4);
-  const cabinet=Math.max(0,1-Math.hypot((p.x-655)/40,(p.y-241)/36));
-  const tipDistance=Math.min(...[[392,135],[799,134],[606,359]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)));
+   Math.exp(-1*((p.x-737)/115)**4)*(.45+.55*Math.sin(eastT*Math.PI*1.7)**2);
+  const southT=Math.max(0,Math.min(1,(378-p.y)/79));
+  const southAxis=610-18*Math.sin(southT*Math.PI);
+  const south=Math.exp(-1*((p.x-southAxis)/(15+14*southT))**2)*Math.exp(-1*((p.y-344)/57)**4);
+  const cabinet=Math.max(0,1-Math.hypot((p.x-681)/40,(p.y-241)/36));
+  const tipDistance=Math.min(...[[378,141],[815,150],[610,378]].map(([x,y])=>Math.hypot(p.x-x,p.y-y)));
   const tipRelief=.25+.75*Math.min(1,tipDistance/30);
-  const crown=Math.max(west,east,south)*tipRelief;
+  const hub=Math.exp(-1*(((p.x-602)/88)**2+((p.y-285)/76)**2));
+  const crown=Math.max(west,east,south,hub)*tipRelief;
   return 31+13.4*crown*Math.max(0,Math.min(1,(cavity-1)*2))*(1-.9*cabinet);
  };
  add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),chitin);
  // Broad irregular exposed cross-sections with a dark retained outer sheath.
  for(const [name,points] of [
-  ['west',[[380,130],[391,123],[401,127],[408,138],[397,148],[387,142]]],
-  ['east',[[788,123],[803,125],[814,132],[802,145],[789,138]]],
-  ['south',[[594,350],[608,348],[616,355],[612,365],[601,363]]],
+  ['west',[[358,143],[366,124],[388,121],[406,135],[408,147],[393,167],[374,163]]],
+  ['east',[[789,126],[819,129],[837,148],[824,169],[803,175],[787,160]]],
+  ['south',[[588,366],[606,358],[627,366],[633,381],[616,391],[599,389]]],
  ] as const){
   const contour=points.map(([x,y])=>({x,y}));
   const cx=contour.reduce((n,p)=>n+p.x,0)/contour.length,cy=contour.reduce((n,p)=>n+p.y,0)/contour.length;
@@ -69,7 +70,7 @@ export function swarmJunctionBlockout(){
    for(let i=0;i<positions.count;i++)if(positions.getY(i)<1e-8)positions.setY(i,30/U);
    g.computeVertexNormals();return g;
   };
-  const outward=new T.Vector2(cx-600,cy-260).normalize();
+  const outward=new T.Vector2(cx-600,cy-285).normalize();
   const cutHeight=(p:Point)=>39+3*Math.tanh(((p.x-cx)*outward.x+(p.y-cy)*outward.y)/9)
    +1.2*Math.sin((p.x-cx)*.19+(p.y-cy)*.27);
   add(`root-${name}-sheath`,cutShell(contour,p=>35+.7*Math.sin((p.x-cx)*.2)),dark);
@@ -87,7 +88,7 @@ export function swarmJunctionBlockout(){
  const rings:readonly (readonly [number,number,number])[]=[[49,40,31],[41,32,41],[30,23,32],[30,23,31]];
  for(const [ring,[rx,ry,h]] of rings.entries())for(let i=0;i<steps;i++){
   const a=i/steps*Math.PI*2,warp=1+.10*Math.sin(3*a+.4);
-  lipVertices.push((600+rx*Math.cos(a)*warp)/U,(h+(ring===1?1.5*Math.sin(a+.6):0))/U,(260+ry*Math.sin(a)*warp)/U);
+  lipVertices.push((600+rx*Math.cos(a)*warp)/U,(h+(ring===1?1.5*Math.sin(a+.6):0))/U,(285+ry*Math.sin(a)*warp)/U);
  }
  for(let r=0;r<rings.length;r++)for(let i=0;i<steps;i++){
   const a=r*steps+i,b=r*steps+(i+1)%steps,c=((r+1)%rings.length)*steps+i,d=((r+1)%rings.length)*steps+(i+1)%steps;
@@ -95,7 +96,7 @@ export function swarmJunctionBlockout(){
  }
  const lip=new T.BufferGeometry();lip.setAttribute('position',new T.Float32BufferAttribute(lipVertices,3));lip.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(lipVertices.length/3*2),2));lip.setIndex(lipIndices);lip.computeVertexNormals();
  add('sensory-carapace-lip',lip,chitin);
- const recess:XY[]=Array.from({length:48},(_,i)=>{const a=i/48*Math.PI*2;return [600+32*Math.cos(a),260+25*Math.sin(a)] as XY;});
+ const recess:XY[]=Array.from({length:48},(_,i)=>{const a=i/48*Math.PI*2;return [600+32*Math.cos(a),285+25*Math.sin(a)] as XY;});
  poly('sensory-recess',recess,31,.5,dark);
  const enamel=material('distributor-enamel',0xb9b09b,.35);
  // A recognizable torn distribution cabinet survives on the organ's east
@@ -116,8 +117,10 @@ export function swarmJunctionBlockout(){
  const engulf=[[654,218],[667,219],[680,228],[676,245],[665,245],[660,237],[643,231],[641,225]].map(([x,y])=>({x,y}));
  add('distributor-engulfing-fold',organicShell(engulf,p=>42+2.4*Math.exp(-1*(((p.y-233)/12)**2))),tendon);
  for(let i=0;i<3;i++)box('hub-split-conduit',628+i*3,235+i*9,10,3,32,3,tendon);
+ // Deliberate cabinet relocation leaves its hardware east of the larger cavity.
+ for(const child of root.children)if(child instanceof T.Mesh&&(child.name==='severed-distributor'||child.name==='torn-distributor-lid'||child.name.startsWith('distributor-')||child.name==='hub-split-conduit'))child.geometry.translate(26/U,0,0);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
- const runs:readonly (readonly XY[])[]=[[[330,90],[400,135],[550,250]],[[870,90],[800,135],[650,250]],[[600,620],[600,370],[600,280]]];
+ const runs:readonly (readonly XY[])[]=[[[330,90],[378,141],[550,275]],[[870,90],[815,150],[676,250]],[[600,620],[610,378],[600,305]]];
  for(const [i,run] of runs.entries())for(let j=1;j<run.length;j++){
   const [a,b]=[run[j-1],run[j]],length=Math.hypot(b[0]-a[0],b[1]-a[1]),dx=-(b[1]-a[1])/length*3,dy=(b[0]-a[0])/length*3;
   const m=poly(`flush-service-${i}-${j}`,[[a[0]+dx,a[1]+dy],[b[0]+dx,b[1]+dy],[b[0]-dx,b[1]-dy],[a[0]-dx,a[1]-dy]],.07,.04,metal,false);m.userData.swarmService=true;

@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';import vm from 'node:vm';import {execFileSync} from 'node:child_process';import {readFileSync,writeFileSync} from 'node:fs';
+const root='/workspace/containment-room16-remodel',reports=[];
+for(const f of ['tests/unit/__snapshots__/awakeningTopology.test.ts.snap','tests/unit/__snapshots__/passengerBlockout.test.ts.snap']){
+ const parse=text=>{const ctx={exports:{}};vm.runInNewContext(text,ctx);return Object.fromEntries(Object.entries(ctx.exports).map(([k,v])=>[k,JSON.parse(JSON.stringify(vm.runInNewContext('('+v+')')))]));};
+ const old=parse(execFileSync('git',['-C',root,'show','HEAD:'+f],{encoding:'utf8'})),now=parse(readFileSync(root+'/'+f,'utf8'));assert.deepEqual(Object.keys(old),Object.keys(now));
+ for(const key of Object.keys(old)){const before=old[key],after=now[key];assert.equal(before.length,19);assert.equal(after.length,19);const changed=[];for(let i=0;i<19;i++){assert.equal(before[i].id,after[i].id);if(JSON.stringify(before[i])!==JSON.stringify(after[i])){assert.equal(before[i].id,'swarm-junction');const{voids:bv,...b}=before[i],{voids:av,...a}=after[i];assert.deepEqual(a,b);assert.equal(bv[0].length,132);assert.equal(av[0].length,150);assert.deepEqual(av[0],JSON.parse(readFileSync(root+'/tests/fixtures/swarm-organ-lobed-contour.json','utf8')));changed.push({id:before[i].id,onlyField:'voids',beforePoints:132,afterPoints:150});}}assert.equal(changed.length,1);reports.push({file:f,key,totalTemplates:19,unchangedTemplates:18,changes:changed});}
+}
+writeFileSync('/workspace/room16-snapshot-delta-proof.json',JSON.stringify(reports,null,2)+'\n');console.log(reports);
