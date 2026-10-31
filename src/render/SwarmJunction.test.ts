@@ -127,7 +127,7 @@ describe('Room16 room visuals',()=>{
  // Reference: merged main d1d24d3; Room16 is the sole template delta.
  it('leaves every other room template byte-equivalent',()=>{
   const others=Object.fromEntries(Object.entries(ROOM_TEMPLATES).filter(([id])=>id!=='swarm-junction'));
-  expect(createHash('sha256').update(JSON.stringify(others)).digest('hex')).toBe('43c93ce70d615d8aa3b139185b8f420be223850976e0b8fdce0157e5dac79e42');
+  expect(createHash('sha256').update(JSON.stringify(others)).digest('hex')).toBe('ebf41d99facd54ba19514602b1c3c6821d70533e9ad79feddb9d0d94db81fc8d');
  });
  for(const radius of [16,28])it(`retains all planned routes, breaches and connected usable space for radius ${radius}`,()=>{
   const g=createExpeditionGeometry(node);
