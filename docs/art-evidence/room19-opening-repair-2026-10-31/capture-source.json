@@ -1,0 +1,11 @@
+{
+  "beforeLocalCommit": "51e563ec13fca7f650eb9fc896a06d5d06424020",
+  "afterSourceCommit": "0056f3e5e9fd7069657b80144a038282696f910e",
+  "beforeReproduction": "Apply before-overlay.patch to afterSourceCommit; only hood geometry differs. Local before commit is not published.",
+  "changedRuntimeFiles": [
+    "src/render/ManualControlBlockout.ts"
+  ],
+  "captureScriptSha256": "b5e50649f0165828828c2f7cfe174aa52ff5151f83edd345c57362af55b61401",
+  "command": "Copy north-inspection.mjs into scripts/.room19-north-inspection.mjs, run with --rooms=manual-control-chamber --gameplay-all --viewport=1280x720 or390x844 --quality=high --out=<output>. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH as needed.",
+  "staging": "Static legal player828,110;60 render-only frames settle unchanged production camera; no gameplay updates, no HUD/input, no full-room acceptance."
+}
