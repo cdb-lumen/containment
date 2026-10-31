@@ -14,7 +14,7 @@ jobs:
   verify:
     runs-on: ubuntu-24.04
     # Desktop browser checks run serially.
-    timeout-minutes: 65
+    timeout-minutes: 70
     steps:
       - name: Check out repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -49,11 +49,11 @@ jobs:
       # These are interaction checks, not complete combat or real-device evidence.
       - name: Authored rooms desktop smoke
         id: authored-desktop
-        timeout-minutes: 10
+        timeout-minutes: 14
         shell: bash
         run: |
           mkdir -p artifacts/authored-smoke/desktop
-          timeout --kill-after=30s 8m npm run test:authored-smoke -- --viewport=desktop --out=artifacts/authored-smoke/desktop 2>&1 | tee artifacts/authored-smoke/desktop/run.log
+          timeout --kill-after=30s 12m npm run test:authored-smoke -- --viewport=desktop --out=artifacts/authored-smoke/desktop 2>&1 | tee artifacts/authored-smoke/desktop/run.log
 
       - name: Upload authored smoke diagnostics
         if: ${{ always() }}

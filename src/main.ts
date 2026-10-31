@@ -3,6 +3,7 @@ import {familyCount} from './game/roguelike/builds';
 import {boonHint,pathFor} from './game/roguelike/boonPaths';
 import './style.css';
 import {HitConfirmation} from './render/HitConfirmation';
+import {positionWeaponHud} from './WeaponHud';
 import {DepthGame,type GameEffect} from './DepthGame';
 import {preloadAssets} from './render/assets';
 import {DepthRenderer} from './render/DepthRenderer';
@@ -28,6 +29,7 @@ app.innerHTML=`<canvas id="world" aria-label="Containment 3D game world"></canva
 <div class="desktop-hint">WASD <span>MOVE</span> &nbsp; R <span>RELOAD</span> &nbsp; G <span>GRENADE</span> &nbsp; E <span>HEAL</span></div></div>
 <div id="room-loading" role="status" aria-live="polite" hidden><b>Preparing room…</b><span>Combat is on hold.</span></div><div id="overlay"></div><div id="signature">CONTAINMENT <span>/</span> DEPTH</div>`;
 const el=(id:string)=>document.getElementById(id)!;
+const weaponHud=document.querySelector<HTMLElement>('.weapon-hud')!;
 el('overlay').innerHTML='<div class="asset-loading"><span>CONTAINMENT / DEPTH</span><div><i id="asset-progress"></i></div></div>';
 try{await preloadAssets(fraction=>{el('asset-progress').style.width=`${fraction*100}%`;});}catch(error){app.innerHTML='<div class="unsupported"><h1>Download interrupted</h1><button onclick="location.reload()">Try again</button></div>';throw error;}
 let renderer:DepthRenderer;
@@ -72,7 +74,7 @@ function updateSound(){
  const percent=Math.round(audioPreferences.master*100);el('volume-value').textContent=`${percent}%`;el('master-volume').setAttribute('aria-valuetext',`${percent} percent${audioPreferences.muted?', muted':''}`);
  el('sound').textContent=audioPreferences.muted?'Unmute':'Mute';el('sound').setAttribute('aria-pressed',String(audioPreferences.muted));
 }
-function hud(){const s=game.combat.snapshot;el('story-hud').hidden=!game.storyRoom||game.status!=='playing';el('story-status').textContent=conciseStoryStatus(game.storyStatus);el('room-objective').textContent=game.storyRoom?.objective??'';el('story-presentation').hidden=!game.storyPresentation;el('story-line').textContent=game.storyPresentation??'';el('health').textContent=String(Math.ceil(s.health));el('armor').textContent=String(Math.ceil(s.armor));el('hp-bar').style.width=`${s.health}%`;el('armor-bar').style.width=`${s.armor/s.maxArmor*100}%`;el('weapon-name').textContent=s.weaponId;el('magazine').textContent=String(s.magazine).padStart(2,'0');el('reserve').textContent=`/ ${Number.isFinite(s.reserve)?s.reserve:'∞'}`;el('reload-label').textContent=s.reloading?'RELOADING':s.magazine===0&&s.reserve===0?'EMPTY · SWITCH WEAPON':'';el('reload-bar').style.width=s.reloading?`${(1-s.reloadRemainingMs/s.reloadDurationMs)*100}%`:'0%';el('depth-label').textContent=`${(game.storyRoom?.environment??ACT_NAMES[Math.min(2,Math.floor(game.node.depth/4))]).toUpperCase()} · ${String(game.node.depth+1).padStart(2,'0')} / ${depthTotal()}`;el('room-name').textContent=ROOM_TEMPLATES[game.node.templateId].name;
+function hud(){if(game.status==='playing')positionWeaponHud(weaponHud,renderer.playerScreenBounds(game.player.radius),innerWidth);const s=game.combat.snapshot;el('story-hud').hidden=!game.storyRoom||game.status!=='playing';el('story-status').textContent=conciseStoryStatus(game.storyStatus);el('room-objective').textContent=game.storyRoom?.objective??'';el('story-presentation').hidden=!game.storyPresentation;el('story-line').textContent=game.storyPresentation??'';el('health').textContent=String(Math.ceil(s.health));el('armor').textContent=String(Math.ceil(s.armor));el('hp-bar').style.width=`${s.health}%`;el('armor-bar').style.width=`${s.armor/s.maxArmor*100}%`;el('weapon-name').textContent=s.weaponId;el('magazine').textContent=String(s.magazine).padStart(2,'0');el('reserve').textContent=`/ ${Number.isFinite(s.reserve)?s.reserve:'∞'}`;el('reload-label').textContent=s.reloading?'RELOADING':s.magazine===0&&s.reserve===0?'EMPTY · SWITCH WEAPON':'';el('reload-bar').style.width=s.reloading?`${(1-s.reloadRemainingMs/s.reloadDurationMs)*100}%`:'0%';el('depth-label').textContent=`${(game.storyRoom?.environment??ACT_NAMES[Math.min(2,Math.floor(game.node.depth/4))]).toUpperCase()} · ${String(game.node.depth+1).padStart(2,'0')} / ${depthTotal()}`;el('room-name').textContent=ROOM_TEMPLATES[game.node.templateId].name;
  document.querySelectorAll<HTMLElement>('[data-weapon]').forEach(b=>{b.classList.toggle('selected',b.dataset.weapon===s.weaponId);b.setAttribute('aria-pressed',String(b.dataset.weapon===s.weaponId));});const q=game.boss.snapshot;el('boss-hud').hidden=!q.active;el('boss-phase').textContent=`${q.vulnerable?'EXPOSED':q.phase==='nest-spawn'?'NESTS':'ARMORED'} · ${Math.ceil(q.phaseRemainingMs/1000)}s`;el('boss-bar').style.width=`${q.health/q.maxHealth*100}%`;el('boss-hud').classList.toggle('exposed',q.vulnerable);el('build-strip').textContent=['Kinetic','Cryo','Reactor','Recovery'].filter(f=>familyCount(game.expedition.build,f)>0).map(f=>`${f} ${familyCount(game.expedition.build,f)}${familyCount(game.expedition.build,f)>=3?' ◆':''}`).join(' · ');el('credits').textContent=`${s.credits} CR`;el('desktop-stock').textContent=`E ${s.medkits} medkits · G ${s.grenades} grenades`;el('encounter-count').textContent=game.status==='playing'&&game.node.kind!=='boss'?`${game.encounterRemaining} remaining`:'';
 }
 renderer.canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();graphicsLost=true;game.pause();input.reset();audio.pauseAll();syncScreen(true);});renderer.canvas.addEventListener('webglcontextrestored',()=>{graphicsLost=false;renderer.setQuality(quality);syncScreen(true);});window.addEventListener('resize',()=>renderer.resize());let hudTime=0;const pacer=new FramePacer(),diagnostics=new FrameDiagnostics();document.addEventListener('visibilitychange',()=>pacer.reset());
@@ -85,7 +87,7 @@ function frame(now:number){
  const recovering=roomRecovering;
  if(blocked||recovering)input.reset();else game.update(dt*1000,input.read());
  confirmation.update(blocked||recovering?0:dt,game.status==='playing'&&!blocked&&!recovering);const updated=performance.now();
- if(!blocked){renderer.render(game,recovering?0:dt,game.status==='menu');roomRecovering=false;if(recovering)pacer.reset();}else roomRecovering=true;
+ if(!blocked){renderer.render(game,recovering?0:dt,game.status==='menu');if(game.status==='playing')positionWeaponHud(weaponHud,renderer.playerScreenBounds(game.player.radius),innerWidth);roomRecovering=false;if(recovering)pacer.reset();}else roomRecovering=true;
  el('room-loading').hidden=!blocked||game.status!=='playing';el('world').setAttribute('aria-busy',String(blocked));
  const rendered=performance.now();
  if(lastStatus!==game.status){lastStatus=game.status;syncScreen();}hudTime+=dt;

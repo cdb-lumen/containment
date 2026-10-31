@@ -118,6 +118,16 @@ export class DepthRenderer {
   const result=new T.Vector3();return this.raycaster.ray.intersectPlane(this.ground,result)?{x:result.x*UNIT,y:result.z*UNIT}:null;
  }
  visible(x:number,y:number){const p=new T.Vector3(x/UNIT,.6,y/UNIT).project(this.camera);return Math.abs(p.x)<.9&&Math.abs(p.y)<.8;}
+ playerScreenBounds(radius:number){
+  const rect=this.canvas.getBoundingClientRect(),position=this.player.root.position,point=new T.Vector3();
+  const result={left:Infinity,top:Infinity,right:-Infinity,bottom:-Infinity};
+  for(const dx of [-radius/UNIT,radius/UNIT])for(const dz of [-radius/UNIT,radius/UNIT])for(const height of [0,this.player.height]){
+   point.set(position.x+dx,position.y+height,position.z+dz).project(this.camera);
+   const x=rect.left+(point.x+1)*rect.width/2,y=rect.top+(1-point.y)*rect.height/2;
+   result.left=Math.min(result.left,x);result.right=Math.max(result.right,x);result.top=Math.min(result.top,y);result.bottom=Math.max(result.bottom,y);
+  }
+  return result;
+ }
  private bakeWorld(){
   this.world.updateMatrixWorld(true);const buckets=new Map<T.Material,T.BufferGeometry[]>();
   for(const child of [...this.world.children])if(child instanceof T.Mesh&&child.material!==this.floorMaterial){

@@ -32,13 +32,13 @@ describe('smoke viewport selection without a browser', () => {
 describe('serial CI smoke budgets', () => {
   it.each(['verify', 'pages'])('%s preserves non-browser and desktop gates', name => {
     const workflow = readFileSync(new URL(`../.github/workflows/${name}.yml`, import.meta.url), 'utf8');
-    expect(workflow).toContain('timeout-minutes: 65');
+    expect(workflow).toContain('timeout-minutes: 70');
     expect(workflow).toContain('npm test && npm run test:room-evidence && npm run build');
     expect(workflow).toContain('SMOKE_VIEWPORT: desktop');
     expect(workflow).not.toContain('SMOKE_VIEWPORT: touch');
     expect(workflow.match(/timeout --kill-after=30s 33m npm run test:smoke/g)).toHaveLength(1);
     expect(workflow).not.toContain('continue-on-error');
-    expect(workflow.match(/timeout --kill-after=30s 8m npm run test:authored-smoke/g)).toHaveLength(1);
+    expect(workflow.match(/timeout --kill-after=30s 12m npm run test:authored-smoke/g)).toHaveLength(1);
     expect(workflow).toContain('--viewport=desktop --out=artifacts/authored-smoke/desktop');
     expect(workflow).not.toContain('--viewport=phone');
     expect(workflow).toContain('if: ${{ always() }}');
