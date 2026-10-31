@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {organicShell} from './organicShell';
 import {SWARM_ORGAN} from '../game/world/swarmJunctionLayout';
 import type {Point} from '../game/roguelike/types';
 
@@ -28,78 +29,25 @@ export function swarmJunctionBlockout(){
  };
  const poly=(name:string,p:readonly XY[],bottom:number,height:number,m:T.Material,solid=true)=>slab(name,p.map(([x,y])=>({x,y})),bottom,height,m,solid);
  const box=(name:string,x:number,y:number,w:number,d:number,bottom:number,height:number,m:T.Material,solid=true)=>poly(name,[[x,y],[x+w,y],[x+w,y+d],[x,y+d]],bottom,height,m,solid);
- const mix=(a:XY,b:XY,t:number):XY=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
- // A closed shell with a crowned, tapered back, rather than a stack of slabs.
- const crown=(name:string,a:XY,b:XY,c:XY,d:XY,height:number)=>{
-  const vertices:number[]=[],indices:number[]=[];const n=12;
-  for(let layer=0;layer<2;layer++)for(let j=0;j<=n;j++)for(let k=0;k<=n;k++){
-   const t=j/n,s=k/n;
-   // Inset bowed flanks and swept ends stay inside the supplied collision-safe
-   // quad. The plan silhouette curves as well as the shell's upper surface.
-   const along=.006+.88*t+.11*Math.sin(Math.PI*s);
-   const across=.006+.988*s+.04*Math.sin(Math.PI*t)*(1-2*s);
-   const p=mix(mix(a,c,along),mix(b,d,along),across);
-   const h=layer===0?31:32+height*Math.sin(Math.PI*s)*Math.sin(Math.PI*(.12+.76*t));
-   vertices.push(p[0]/U,h/U,p[1]/U);
-  }
-  const side=(n+1)*(n+1);
-  const tri=(a:number,b:number,c:number)=>indices.push(a,b,c);
-  for(let j=0;j<n;j++)for(let k=0;k<n;k++){
-   const q=j*(n+1)+k,r=q+n+1;
-   tri(q,r,q+1);tri(q+1,r,r+1);
-   tri(q+side,q+1+side,r+side);tri(q+1+side,r+1+side,r+side);
-  }
-  const edge:number[]=[];
-  for(let k=0;k<n;k++)edge.push(k);
-  for(let j=0;j<n;j++)edge.push(j*(n+1)+n);
-  for(let k=n;k>0;k--)edge.push(n*(n+1)+k);
-  for(let j=n;j>0;j--)edge.push(j*(n+1));
-  for(let i=0;i<edge.length;i++){const q=edge[i],r=edge[(i+1)%edge.length];tri(q,r,q+side);tri(r,r+side,q+side);}
-  if((b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])>0)for(let i=0;i<indices.length;i+=3)[indices[i+1],indices[i+2]]=[indices[i+2],indices[i+1]];
-  const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(vertices,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(vertices.length/3*2),2));g.setIndex(indices);g.computeVertexNormals();
-  return add(name,g,chitin);
- };
  chitin.color.setHex(0x39423a);chitin.metalness=.08;chitin.roughness=.72;rib.color.setHex(0x777d6b);rib.roughness=.88;
  tendon.color.setHex(0x424b3b);metal.metalness=.72;metal.roughness=.58;
- // Retain the exact sealed shot silhouette at .95m, but bury its planar top
- // beneath charcoal shell lobes. No contrasting pink platform or striped beds.
- // A continuous rounded underbody replaces the vertical platform walls.
- // The full sealed polygon remains solid at the .95m shot plane; lower rings
- // contract toward the hub inside that reservation rather than adding tendrils
- // across circulation lanes. The .6-unit upper collar preserves exact blocking.
- const contour=SWARM_ORGAN.map(p=>new T.Vector2(p.x,p.y));
- const bedVertices:number[]=[],bedIndices:number[]=[],levels=[0,5,10,15,20,25,30.4,31];
- for(const height of levels){
-  const scale=height>=30.4?1:.88+.12*Math.sin(height/30.4*Math.PI/2);
-  for(const p of SWARM_ORGAN)bedVertices.push((600+(p.x-600)*scale)/U,height/U,(260+(p.y-260)*scale)/U);
- }
- const count=contour.length,area=T.ShapeUtils.area(contour);
- for(let layer=0;layer<levels.length-1;layer++)for(let i=0;i<count;i++){
-  const a=layer*count+i,b=layer*count+(i+1)%count,c=a+count,d=b+count;
-  bedIndices.push(...(area>0?[a,c,b,b,c,d]:[a,b,c,b,d,c]));
- }
- for(const triangle of T.ShapeUtils.triangulateShape(contour,[])){
-  const [a,b,c]=triangle,pa=contour[a],pb=contour[b],pc=contour[c];
-  const cross=(pb.x-pa.x)*(pc.y-pa.y)-(pb.y-pa.y)*(pc.x-pa.x);
-  const down=cross>0?[a,b,c]:[a,c,b],up=[down[0],down[2],down[1]];
-  bedIndices.push(...down,...up.map(i=>i+(levels.length-1)*count));
- }
- const bed=new T.BufferGeometry();bed.setAttribute('position',new T.Float32BufferAttribute(bedVertices,3));
- bed.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(bedVertices.length/3*2),2));bed.setIndex(bedIndices);bed.computeVertexNormals();add('organ-bed',bed,dark);
- const arm=(name:string,a:XY,b:XY,c:XY,d:XY,segments:readonly (readonly [number,number,number])[])=>{
-  for(const [i,[start,end,height]] of segments.entries())
-   crown(`${name}-plate-${i}`,mix(a,c,start),mix(b,d,start),mix(a,c,end),mix(b,d,end),height);
-  // Bone is confined to the ruptured terminal, rather than repeated cross-bars.
-  poly(`${name}-cut`,[a,b,mix(b,d,.03),mix(a,c,.065)],29,5,rib);
-  poly(`${name}-saddle`,[mix(a,c,.09),mix(mix(a,c,.09),mix(b,d,.09),.3),mix(mix(a,c,.18),mix(b,d,.18),.3),mix(a,c,.18)],31,5,metal);
+ // The silhouette and heightfield are one sealed body. Every top triangle is
+ // constrained to the shared concave contour; no contracted ring crosses a bay.
+ const shellHeight=(p:Point)=>{
+  let distance=Infinity;
+  for(let i=0;i<SWARM_ORGAN.length;i++){
+   const a=SWARM_ORGAN[i],b=SWARM_ORGAN[(i+1)%SWARM_ORGAN.length],dx=b.x-a.x,dy=b.y-a.y;
+   const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy)));
+   distance=Math.min(distance,Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy));
+  }
+  const cavity=Math.hypot((p.x-600)/44,(p.y-260)/34);
+  return 31+12*Math.tanh(distance/12)*Math.max(0,Math.min(1,(cavity-1)*2));
  };
- arm('root-west',[370,130],[415,115],[551,283],[575,234],[[0,.48,8],[.32,.79,11],[.65,1,12]]);
- arm('root-east',[785,115],[830,130],[627,234],[649,283],[[0,.62,11],[.43,1,8]]);
- arm('root-south',[575,370],[625,370],[575,300],[625,300],[[0,1,9]]);
- // Broad shoulder scales bridge the roots into one body, not three equal belts.
- crown('hub-west-plate-0',[516,255],[550,214],[556,282],[580,231],11);
- crown('hub-east-plate-0',[627,231],[650,214],[635,291],[684,254],9);
- crown('hub-south-plate-0',[552,282],[647,282],[575,310],[625,310],12);
+ add('organ-bed',organicShell(SWARM_ORGAN,shellHeight),chitin);
+ // Three small exposed terminal cuts sit inside the new curved root ends.
+ poly('root-west-cut',[[383,133],[394,128],[402,136],[391,142]],31,4,rib);
+ poly('root-east-cut',[[790,128],[802,128],[807,134],[795,139]],31,4,rib);
+ poly('root-south-cut',[[599,354],[612,354],[612,364],[601,363]],31,4,rib);
  // A dished organic lip encloses an actual low, broad sensory cavity. Four
  // closed rings give an outward shell, steep inner wall and sealed underside.
  const lipVertices:number[]=[],lipIndices:number[]=[],steps=48;
@@ -119,17 +67,17 @@ export function swarmJunctionBlockout(){
  const enamel=material('distributor-enamel',0xb9b09b,.35);
  // A recognizable torn distribution cabinet survives on the organ's east
  // shoulder: two connected walls, torn lid and connector bank, engulfed below.
- box('severed-distributor',615,229,25,42,31,11.5,enamel);
- box('distributor-front-right',611,269,29,7,31,11.5,enamel);
- poly('torn-distributor-lid',[[610,225],[604,212],[614,212],[640,231]],31,12.5,enamel);
- // Visible dark seams and connected terminal sockets distinguish the cabinet
- // from pale shell fragments. None implies an interactable reward or light.
- for(const x of [617,626,635]){
-  box('distributor-terminal-socket',x,276,5,4,33,6,dark);
-  box('distributor-terminal-core',x+1,279,3,2,34,3,metal);
+ box('severed-distributor',612,230,42,42,31,11.5,enamel);
+ box('distributor-front-right',612,270,42,8,31,11.5,enamel);
+ poly('torn-distributor-lid',[[612,230],[612,219],[626,223],[636,218],[654,230]],31,12.5,enamel);
+ // One broad dark connector panel interrupts a coherent enclosure face.
+ box('distributor-front-panel',618,278,30,1,33,7,dark);
+ for(const x of [620,631,642]){
+  box('distributor-terminal-socket',x,278,5,4,33,6,dark);
+  box('distributor-terminal-core',x+1,281,3,2,34,3,metal);
  }
- for(const y of [238,247,256])box('distributor-vent-slot',640,y,1.5,5,34,5,dark);
- for(const x of [618,636])box('distributor-housing-fastener',x,233,2,2,42.5,1.1,metal);
+ for(const y of [238,247,256])box('distributor-vent-slot',654,y,1.5,5,34,5,dark);
+ for(const x of [618,648])box('distributor-housing-fastener',x,233,2,2,42.5,1.1,metal);
  for(let i=0;i<3;i++)box('hub-split-conduit',610+i*3,235+i*9,10,3,32,3,tendon);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[400,135],[550,250]],[[870,90],[800,135],[650,250]],[[600,620],[600,370],[600,280]]];

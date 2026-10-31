@@ -1,6 +1,7 @@
 import {describe,it,expect,vi} from 'vitest';
 import * as T from 'three';
 import {readFileSync} from 'node:fs';
+import proposedContour from '../../tests/fixtures/swarm-organ-proposed-contour.json';
 import {createHash} from 'node:crypto';
 import {ROOM_TEMPLATES} from '../game/roguelike/roomTemplates';
 import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition,hasClearExpeditionShot} from '../game/world/expeditionGeometry';
@@ -15,8 +16,8 @@ const model=()=>{const root=new T.Group();environmentArchitecture(root,'infested
 const bake=(world:T.Group)=>(DepthRenderer.prototype as unknown as {bakeWorld:()=>void}).bakeWorld.call({world});
 const meshes=(root:T.Group)=>{const out:T.Mesh[]=[];root.traverse(o=>{if(o instanceof T.Mesh)out.push(o);});return out;};
 describe('Room16 room visuals',()=>{
- it('closes every crowned plate and cavity lip with opposite directed edges and outward faces',()=>{
-  const root=model(),plates=meshes(root).filter(m=>m.name.includes('-plate-'));expect(plates).toHaveLength(9);
+ it('closes the continuous curved body and cavity lip with opposite directed edges and outward faces',()=>{
+  const root=model(),plates=meshes(root).filter(m=>m.name==='organ-bed');expect(plates).toHaveLength(1);
   const lip=meshes(root).find(m=>m.name==='sensory-carapace-lip')!;expect(lip).toBeDefined();
   const badEdges=(indices:number[])=>{
    const edges=new Map<string,number[]>();
@@ -59,27 +60,18 @@ describe('Room16 room visuals',()=>{
    for(let j=0;j<3;j++){const a=ids[j],b=ids[(j+1)%3],key=`${Math.min(a,b)},${Math.max(a,b)}`,e=edges.get(key)??{count:0,direction:0};e.count++;e.direction+=a<b?1:-1;edges.set(key,e);}
   }
   for(const edge of edges.values()){expect(edge.count).toBe(2);expect(edge.direction).toBe(0);}expect(volume).toBeGreaterThan(0);
-  // Every original footprint corner has actual shell mass on the fallback shot plane.
+  // Every revised footprint corner has continuous shell mass across the fallback shot plane.
   for(const point of template.voids![0]){
    const samples=Array.from({length:p.count},(_,i)=>new T.Vector3().fromBufferAttribute(p,i));
-   expect(samples.some(v=>Math.hypot(v.x*32-point.x,v.z*32-point.y)<.001&&v.y*32>=30.399&&v.y*32<=30.401)).toBe(true);
+   const column=samples.filter(v=>Math.hypot(v.x*32-point.x,v.z*32-point.y)<.001);expect(Math.min(...column.map(v=>v.y))).toBe(0);expect(Math.max(...column.map(v=>v.y*32))).toBeGreaterThanOrEqual(30.4);
   }
   disposeModel(bed.parent as T.Group);
  });
- it('replaces belt bands with unequal overlapping curved shells and a broad sunken cavity',()=>{
+ it('uses one curved charcoal mass rather than repeated plate belts around its sunken cavity',()=>{
   const root=model(),ms=meshes(root);
-  expect(ms.filter(m=>/^root-.*-rib-/.test(m.name))).toHaveLength(0);
-  expect((ms.find(m=>m.name==='organ-bed')!.material as T.Material).name).toBe('swarm-recess');
-  const counts=['west','east','south'].map(side=>ms.filter(m=>m.name.startsWith(`root-${side}-plate-`)).length);
-  expect(counts).toEqual([3,2,1]);
-  const west=ms.filter(m=>m.name.startsWith('root-west-plate-'));
-  for(let i=1;i<west.length;i++)expect(new T.Box3().setFromObject(west[i-1]).intersectsBox(new T.Box3().setFromObject(west[i]))).toBe(true);
-  // The outer edge must bow in plan, not merely crown a rectangular belt tile.
-  const p=west[0].geometry.getAttribute('position'),n=Math.sqrt(p.count/2)-1;
-  const a=new T.Vector3().fromBufferAttribute(p,0),b=new T.Vector3().fromBufferAttribute(p,n*(n+1));
-  const midpoint=new T.Vector3().fromBufferAttribute(p,Math.floor(n/2)*(n+1));
-  const edge=b.clone().sub(a);edge.y=0;const delta=midpoint.sub(a);delta.y=0;
-  expect(edge.clone().cross(delta).length()/edge.length()).toBeGreaterThan(.05);
+  expect(ms.filter(m=>m.name.includes('-plate-'))).toHaveLength(0);
+  expect((ms.find(m=>m.name==='organ-bed')!.material as T.Material).name).toBe('swarm-charcoal');
+  expect(template.voids![0]).toHaveLength(132);
   const cavity=ms.find(m=>m.name==='sensory-recess')!,lip=ms.find(m=>m.name==='sensory-carapace-lip')!;
   const cb=new T.Box3().setFromObject(cavity),lb=new T.Box3().setFromObject(lip);
   expect(cb.getSize(new T.Vector3()).x*32).toBeGreaterThan(55);
@@ -100,16 +92,16 @@ describe('Room16 room visuals',()=>{
   for(let i=0;i<3;i++){expect(box(front).intersectsBox(box(sockets[i]))).toBe(true);expect(box(sockets[i]).intersectsBox(box(cores[i]))).toBe(true);}
   for(const m of ms.filter(m=>m.name==='distributor-vent-slot'||m.name==='distributor-housing-fastener'))expect(box(housing).intersectsBox(box(m)),m.name).toBe(true);
   // Visible upper housing and torn lid must remain above the surrounding shell.
-  for(const [x,z,name] of [[635,250,'severed-distributor'],[610,216,'torn-distributor-lid']] as const){
+  for(const [x,z,name] of [[635,250,'severed-distributor'],[640,225,'torn-distributor-lid']] as const){
    const target=new T.Vector3(x/32,43.5/32,z/32),direction=new T.Vector3(0,26,19).normalize();
    const ray=new T.Raycaster(target.clone().addScaledVector(direction,10),direction.clone().negate());
    expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);
   }
   disposeModel(root);
  });
- it('uses crowned organic plates, differentiated materials and recessed wall bays',()=>{
+ it('uses a varying organic heightfield, differentiated materials and recessed wall bays',()=>{
   const root=model(),ms=meshes(root);
-  const plate=ms.find(m=>m.name==='root-west-plate-1')!;
+  const plate=ms.find(m=>m.name==='organ-bed')!;
   const ys=new Set(Array.from(plate.geometry.getAttribute('position').array).filter((_,i)=>i%3===1).map(v=>v.toFixed(4)));
   expect(ys.size).toBeGreaterThan(4);
   const material=(name:string)=>ms.map(m=>m.material as T.MeshStandardMaterial).find(m=>m.name===name)!;
@@ -119,17 +111,17 @@ describe('Room16 room visuals',()=>{
   expect(ms.some(m=>m.name==='hub-split-conduit')).toBe(true);
   disposeModel(root);
  });
- it('uses exactly the stage1 sealed three-root footprint and unchanged anchors',()=>{
-  expect(template.voids).toEqual([layout.organPolygon.map(point)]);expect(template.obstacles).toEqual([]);
+ it('uses the explicit revised curved contour while preserving the historical baseline and all anchors',()=>{
+  expect(template.voids).toEqual([proposedContour]);expect(layout.organPolygon).toHaveLength(18);expect(template.voids).not.toEqual([layout.organPolygon.map(point)]);expect(template.obstacles).toEqual([]);
   expect([template.width,template.height,template.spawn,template.exit,template.breaches]).toEqual([1200,880,{x:100,y:440},{x:1100,y:440},[{x:100,y:100},{x:1100,y:100},{x:100,y:780},{x:1100,y:780}]]);
   for(const o of [template,template.voids,template.voids?.[0],...(template.voids?.[0]??[])])expect(Object.isFrozen(o)).toBe(true);
  });
- // Reference: merged main d1d24d3; Room16 is the sole template delta.
+ // Reference: main-equivalent HUD51610c6 tree; Room16 is the sole template delta.
  it('leaves every other room template byte-equivalent',()=>{
   const others=Object.fromEntries(Object.entries(ROOM_TEMPLATES).filter(([id])=>id!=='swarm-junction'));
   expect(createHash('sha256').update(JSON.stringify(others)).digest('hex')).toBe('ebf41d99facd54ba19514602b1c3c6821d70533e9ad79feddb9d0d94db81fc8d');
  });
- for(const radius of [16,28])it(`retains all planned routes, breaches and connected usable space for radius ${radius}`,()=>{
+ for(const radius of [16,28,38])it(`retains all planned routes, breaches and connected usable space for radius ${radius}`,()=>{
   const g=createExpeditionGeometry(node);
   const routes=[...Object.values(layout.routes) as number[][][],...g.breaches.map(b=>[[b.x,b.y],[b.x+(b.facing==='east'?56:-56),b.y]]),[[600,440],[600,480],[600,650],[600,740]]];
   for(const route of routes)for(let i=1;i<route.length;i++)expect(canTraverseExpedition(g,point(route[i-1]),point(route[i]),radius),JSON.stringify(route)).toBe(true);
@@ -138,6 +130,15 @@ describe('Room16 room visuals',()=>{
   const first=nodes.keys().next().value!;const unseen=new Set(nodes.keys());unseen.delete(first);const queue=[first];
   for(let i=0;i<queue.length;i++){const p=nodes.get(queue[i])!;for(const [dx,dy] of [[20,0],[-20,0],[0,20],[0,-20]]){const k=`${p.x+dx},${p.y+dy}`;if(unseen.has(k)&&canTraverseExpedition(g,p,nodes.get(k)!,radius)){unseen.delete(k);queue.push(k);}}}
   expect(unseen.size).toBe(0);
+ });
+ it('documents removed and added sealed regions against the preserved original contour',()=>{
+  const current=createExpeditionGeometry(node),original={...current,voids:[layout.organPolygon.map(point)]};
+  let removed=0,added=0;
+  for(let y=110;y<=380;y+=2)for(let x=360;x<=840;x+=2){
+   const p={x,y},oldFree=canOccupyExpedition(original,p,0),newFree=canOccupyExpedition(current,p,0);
+   if(!oldFree&&newFree)removed++;if(oldFree&&!newFree)added++;
+  }
+  expect(removed).toBe(1068);expect(added).toBe(727);
  });
  it('places a low organ, three separate cut ends, severed hub, gantry and flush service paths',()=>{
   const root=model();const ms=meshes(root);
@@ -154,7 +155,7 @@ describe('Room16 room visuals',()=>{
   const root=model(),g=createExpeditionGeometry(node);
   expect(meshes(root).some(m=>m.userData.swarmSolid)).toBe(true);
   // All raised solid vertices must lie on or inside the actual collision polygon.
-  const polygon=layout.organPolygon.map(point);
+  const polygon=template.voids![0];
   const inside=(x:number,y:number)=>{let yes=false;for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){const a=polygon[i],b=polygon[j];const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((x-a.x)*dx+(y-a.y)*dy)/(dx*dx+dy*dy)));if(Math.hypot(x-a.x-t*dx,y-a.y-t*dy)<.002)return true;if((a.y>y)!==(b.y>y)&&x<(b.x-a.x)*(y-a.y)/(b.y-a.y)+a.x)yes=!yes;}return yes;};
   for(const m of meshes(root).filter(m=>m.userData.swarmSolid)){const p=m.geometry.getAttribute('position');for(let i=0;i<p.count;i++){const v=new T.Vector3().fromBufferAttribute(p,i).applyMatrix4(m.matrixWorld);expect(inside(v.x*32,v.z*32),`${m.name} ${v.toArray()}`).toBe(true);}}
   const before=new T.Box3().setFromObject(root,true);const preCount=meshes(root).length;expect(preCount).toBeLessThan(100);expect(root.children.every(o=>o instanceof T.Mesh)).toBe(true);
