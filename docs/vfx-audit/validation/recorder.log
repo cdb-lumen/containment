@@ -1,0 +1,23 @@
+✔ catalog keeps each effect in a separate clip (1.644498ms)
+✔ options enforce exact arguments, SHA, quality and final length (4.586187ms)
+✔ event validators accept appropriate runtime-shaped records (0.456867ms)
+✔ targeted weapon acid is never hazard evidence (20.032991ms)
+✔ impact requires spitter output, hazard projectile and real damage (0.614721ms)
+✔ pool requires queen output, radius, pool lifetime and damage (0.43178ms)
+✔ player firing and camera changes invalidate evidence (0.366223ms)
+✔ links require real shots, secondary damage and chilled lance targets (0.548643ms)
+✔ radial demos reject links, missing kills and missing delayed discharges (0.710493ms)
+✔ final Ball Lightning evidence rejects an end-of-clip discharge (0.332813ms)
+✔ reload evidence rejects a damaging cascade, missing reload completion or player damage (0.442646ms)
+✔ Toxic Bloom requires poisoned death, spread, no area hazard and expired vapor (0.467232ms)
+✔ staging waits for current room assets before accepting gameplay camera (0.529074ms)
+✔ recording requires recovered production loading UI, not only camera readiness (0.152426ms)
+✔ recorder bytes retain numeric RNG and contain no redaction tokens (0.128641ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.645579

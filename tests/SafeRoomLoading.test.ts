@@ -7,12 +7,12 @@ import {expeditionRewardOffers} from '../src/game/roguelike/expedition';
 // Execute the actual main RAF body, with only GPU/DOM/audio adapters replaced.
 function harness(){
  const game=new DepthGame();game.newRun(137);game.chooseMutation(expeditionRewardOffers(game.expedition)[0].id);
- const renderer={roomLoading:true,loadRoom:vi.fn(),render:vi.fn(),observeFrame:vi.fn()};
+ const renderer={roomLoading:true,loadRoom:vi.fn(),render:vi.fn(),observeFrame:vi.fn(),playerScreenBounds:()=>({left:0,top:0,right:0,bottom:0})};
  let held=true;const input={read:()=>({x:held?1:0,y:0,fire:held,angle:0,autoAim:false}),reset:vi.fn(()=>{held=false;})};
  const node={hidden:true,setAttribute:vi.fn()};
  const source=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
  const body=source.slice(source.indexOf('function frame(now:number)'),source.indexOf('lastRoom=game.roomRevision;syncScreen(true)'));
- const factory=new Function('game','renderer','input','el',`let lastRoom=-1,lastStatus='',graphicsLost=false,roomRecovering=true,hudTime=0;const requestAnimationFrame=()=>{},document={hidden:false},pacer={sample:()=>.05,reset:()=>{}},confirmation={update:()=>{}},performance={now:()=>0},syncScreen=()=>{},hud=()=>{},audio={syncCombat:()=>{},setMusicIntensity:()=>{}},diagnostics={record:()=>{}};${ts.transpile(body)};return frame;`);
+ const factory=new Function('game','renderer','input','el',`let lastRoom=-1,lastStatus='',graphicsLost=false,roomRecovering=true,hudTime=0;const positionHud=()=>{},requestAnimationFrame=()=>{},document={hidden:false},pacer={sample:()=>.05,reset:()=>{}},confirmation={update:()=>{}},performance={now:()=>0},syncScreen=()=>{},hud=()=>{},audio={syncCombat:()=>{},setMusicIntensity:()=>{}},diagnostics={record:()=>{}};${ts.transpile(body)};return frame;`);
  return {game,renderer,input,node,frame:factory(game,renderer,input,()=>node)};
 }
 const snapshot=(g:DepthGame)=>JSON.stringify({player:g.player,combat:g.combat.snapshot,enemies:g.enemies.snapshot,bullets:g.bullets,pools:g.pools,elapsed:g.elapsed,remaining:g.encounterRemaining,expedition:g.expedition,story:g.storyPresentation});

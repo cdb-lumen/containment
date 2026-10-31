@@ -1,0 +1,54 @@
+{
+  "original_sha256": "a5214bfa0da825f7b1c0d992baba62f19566b74fd2521193bf82ec187ef668fa",
+  "adapted_sha256": "7b21cbd745ec954799b73f4d80303e4a5b3517c4793f04f7584cfab1ee3cb4a5",
+  "replacements": [
+    [
+      "from 'vite'",
+      "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3/node_modules/vite/dist/node/index.js'"
+    ],
+    [
+      "from 'playwright'",
+      "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3/node_modules/playwright/index.mjs'"
+    ],
+    [
+      "from './room-evidence-options.mjs'",
+      "from '/home/chernodubv/dev/.cron-worktrees/containment-rooms/infested-workshop-v3/scripts/room-evidence-options.mjs'"
+    ],
+    [
+      "{root, configFile:false,",
+      "{root, cacheDir:resolve(out,'vite-cache'), configFile:false,"
+    ],
+    [
+      "server:{host:",
+      "server:{fs:{allow:[root,out]},host:"
+    ],
+    [
+      "mkdtemp(resolve(root,'.room-evidence-'))",
+      "mkdtemp(resolve(out,'.room-evidence-'))"
+    ],
+    [
+      "import * as T from 'three';",
+      "import * as T from '/node_modules/three/build/three.module.js';"
+    ],
+    [
+      "relative(root,temp)+'/index.html'",
+      "'@fs'+temp+'/index.html'"
+    ],
+    [
+      "for(const mode of captureModes(room,rooms.length,options))",
+      "for(const mode of ['overview','desktop-center','desktop-west','desktop-east','desktop-south'])"
+    ],
+    [
+      "if(mode==='gameplay'&&!combat)combat=fightEvidenceGame(fixture,(g,dt)=>renderer.render(g,dt,false));",
+      "// Static capture-only staging, no simulation or gameplay claim.\n  const positions={'desktop-center':{x:600,y:440},'desktop-west':{x:240,y:420},'desktop-east':{x:930,y:420},'desktop-south':{x:650,y:770}};\n  if(positions[mode]){Object.assign(game.player,positions[mode]);if(!canOccupyExpedition(game.geometry,game.player,game.player.radius))throw Error('Illegal static player position');}\n  for(let i=0;i<90;i++)renderer.render(game,1/60,false);"
+    ],
+    [
+      "evidenceClass:'controlled-live-simulation'",
+      "evidenceClass:'static-controlled-simulation'"
+    ],
+    [
+      "staging:'Controlled legal actors on a spawn-to-exit route verified with actual DepthGame.update. Fixed-step production combat and renderer; inactive encounter director, no boss, no campaign progression, no DOM HUD or real touch input. Overview fits room; gameplay retains production camera/composition.'",
+      "staging:'Static controlled simulation. Legal player positions, staged actors, inactive director, no combat or gameplay claim, no DOM HUD. Four desktop views retain shipping camera and production composer. Overview alone fits room. Separate production movement traversal verifies spawn-to-exit route.'"
+    ]
+  ]
+}

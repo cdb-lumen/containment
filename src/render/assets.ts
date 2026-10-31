@@ -13,7 +13,7 @@ export async function preloadAssets(progress:(fraction:number)=>void=()=>{},init
  // Physics is optional presentation. Asset loading must survive WASM failure.
  try{await initializePhysics();}catch{/* Frozen-pose toss remains available. */}
  const loader=new GLTFLoader();let completed=0;
- // Four concurrent transfers keep startup responsive on mobile connections.
+ // Four concurrent transfers keep startup responsive on slower connections.
  const queue=[...ASSET_NAMES];await Promise.all(Array.from({length:4},async()=>{while(queue.length){const name=queue.shift()!;if(!templates.has(name))registerAsset(name,await loader.loadAsync(`${import.meta.env.BASE_URL}assets/models/${name}.glb`));progress(++completed/ASSET_NAMES.length);}}));
 }
 export function instantiateAsset(name:AssetName){

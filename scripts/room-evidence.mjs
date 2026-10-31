@@ -6,6 +6,7 @@ import {createHash} from 'node:crypto';
 import {createServer} from 'vite';
 import {chromium} from 'playwright';
 import {evidenceOptions,selectRooms,captureModes} from './room-evidence-options.mjs';
+import {isCompletedDuplicateModule} from './room-evidence-network.mjs';
 
 // Run from the repository root. Each invocation owns its server and temporary entry.
 const args = process.argv.slice(2);
@@ -105,7 +106,7 @@ window.evidence = {
     }
 
     for(const room of selected) {
-      const context=await browser.newContext({viewport,deviceScaleFactor:1,isMobile:viewport.width<600,hasTouch:viewport.width<600});
+      const context=await browser.newContext({viewport,deviceScaleFactor:1,isMobile:false,hasTouch:false});
       const watchdog=setTimeout(()=>void context.close().catch(()=>{}),360000);
       await context.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1' ? route.continue() : route.abort('blockedbyclient'));
       const page=await context.newPage(), errors=[], abortedRequests=[], loadedUrls=new Set();
@@ -129,8 +130,8 @@ window.evidence = {
           assert.equal(bytes.readUInt32BE(16),viewport.width);assert.equal(bytes.readUInt32BE(20),viewport.height);
           assert.deepEqual(errors,[]);
           // Chromium can cancel duplicate Vite module preloads. Accept only a
-          // JS/TS module whose exact URL also completed; never normalize queries.
-          assert.ok(abortedRequests.every(url=>/\.(?:[cm]?[jt]sx?)(?:\?|$)/.test(url) && loadedUrls.has(url)), JSON.stringify({abortedRequests,loadedUrls:[...loadedUrls]}));
+          // JS/TS or explicit Vite JSON import with exact-URL completion only.
+          assert.ok(abortedRequests.every(url=>isCompletedDuplicateModule(url,loadedUrls)), JSON.stringify({abortedRequests,loadedUrls:[...loadedUrls]}));
           const row={abortedDuplicateModules:[...abortedRequests],roomId:room.roomId,templateId:room.templateId,environment:room.environment,mode,file,viewport,readiness,metrics,errors:[...errors],sha256:createHash('sha256').update(bytes).digest('hex'),pixelReview:'pending'};
           manifest.results=manifest.results.filter(r=>!(r.roomId===row.roomId && r.mode===mode));manifest.results.push(row);
           await writeFile(manifestPath,JSON.stringify(manifest,null,2)+'\n');

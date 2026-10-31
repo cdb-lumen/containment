@@ -1,0 +1,48 @@
+{
+  "base": "a4ee8a1ca271185a706e727fc8c62682037f7ccc",
+  "changedTrackedFiles": [
+    "src/render/AuthoredRooms.ts"
+  ],
+  "otherRoomProof": {
+    "allCodeOutsideBreachedBayIdentical": true,
+    "outsideFunctionSha256": "920c02fbf5ed96c193c828518aefb24b5973dd9a47e62e791b4492950f997241",
+    "canonicalAndTopologyFilesIdentical": [
+      "src/game/roguelike/storyRooms.ts",
+      "src/game/roguelike/authoredRoomTopologies.ts",
+      "src/game/roguelike/storyRoomTemplates.ts"
+    ],
+    "scope": "Only breachedBay body changed. Fabricator, dispatch, other room builders and all other tracked source files byte-identical to base."
+  },
+  "images": [
+    {
+      "file": "overview.png",
+      "sha256": "16a73ea917ad1b1b382ab314e59e11b2c6df729faedf0fd5613b30af37c74795",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 490178,
+      "changedPixelBoundingBox": [
+        121,
+        159,
+        1159,
+        797
+      ]
+    },
+    {
+      "file": "desktop-in-scene.png",
+      "sha256": "51b525245c200bcd2185d93da66ac7d6685096e8f858f717c02ed267c92ccddf",
+      "size": [
+        1280,
+        900
+      ],
+      "bytes": 787100,
+      "changedPixelBoundingBox": [
+        0,
+        0,
+        1280,
+        846
+      ]
+    }
+  ]
+}
