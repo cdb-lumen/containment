@@ -1,0 +1,11 @@
+# Room10 current-main integration review
+
+No blocking integration finding at `82142bc48022a021e723dfb673d3a54e2d7b26a7`, relative to captured Room10 `9ffcb83` and main `87878c15`. Read-only review; no GPU, code changes or remote publication.
+
+The Transmission model, its test, and exact target layout are byte-identical to captured source. main.ts, joint HUD and roomFraming are also byte-identical to captured source. Incoming shared navigation and DepthRenderer equal current main. The renderer delta from main adds only the Transmission import/dispatch; existing Annulus and other dispatches remain. Topology registration adds only Transmission. Authored topology tests retain main's eight IDs/probes and Shaft exterior (-1,440), adding the original Transmission import and boundary/void/empty-obstacle assertions. No desktop gates or package configuration differ from main.
+
+Independent snapshot parsing confirms both snapshot files preserve ordered IDs and every non-Transmission room from current main; the only differing room is Transmission, equal to the captured parent's entry. Incoming non-union source/test files match main exactly. Proof script and output: `/workspace/check-room10-main-integration.mjs`, `/workspace/room10-main-integration-proof.json`, `/workspace/room10-main-integration-proof.log`. Tracked tree is clean; only untracked node_modules exists.
+
+Both completed CPU replay reports match all 1,589 recorded states through frame1588 and share the verified capture-manifest/replay-script hashes. Both movement-request arrays contain 13,718 records and have identical serialized SHA256 `836738e36369951ac3032b5f7d97d0968d28e8813a8441593a50ed2b16a76a4e`. Thus this recorded input history has no observed production movement/state delta after current navigation integration. This is a bounded deterministic replay conclusion, not proof of every hidden state, every possible route, performance, or a newly recorded full encounter on the integrated source. The prior native evidence remains pinned to 9ffcb83; unchanged Room10 geometry/camera/HUD bytes support retaining its narrowly described visual witness.
+
+Parent reports 74 focused tests and typecheck passing; this review did not rerun those suites. Required exact-head CI and external merge decisions remain outside this report. No human art or release approval is inferred.

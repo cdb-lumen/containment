@@ -1,0 +1,34 @@
+[
+  {
+    "root": "/workspace/containment-room10-current-integration",
+    "head": "82142bc48022a021e723dfb673d3a54e2d7b26a7",
+    "old": "9ffcb83",
+    "exactMainIncomingFiles": [
+      "src/game/world/FacilityNavigation.ts",
+      "src/render/ContainmentAnnulusBlockout.ts",
+      "src/render/DepthRenderer.ts",
+      "src/render/ServiceShaftLanding.ts",
+      "tests/ContainmentAnnulusBlockout.test.ts",
+      "tests/FacilityNavigationClearance.test.ts",
+      "tests/ServiceShaftTextureLifecycle.test.ts",
+      "tests/fixtures/navigation-wide-room16.json",
+      "tests/unit/ServiceShaftLanding.test.ts"
+    ],
+    "snapshots": [
+      {
+        "path": "tests/unit/__snapshots__/awakeningTopology.test.ts.snap",
+        "key": "awakening cradle > preserves the other nineteen complete templates exactly 1",
+        "changedIdsVsMain": [
+          "transmission-chamber"
+        ]
+      },
+      {
+        "path": "tests/unit/__snapshots__/passengerBlockout.test.ts.snap",
+        "key": "reviewed Passenger Vault whole-room blockout > preserves all nineteen other templates 1",
+        "changedIdsVsMain": [
+          "transmission-chamber"
+        ]
+      }
+    ]
+  }
+]

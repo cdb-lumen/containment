@@ -1,0 +1,50 @@
+{
+  "pass": true,
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "frames": 1589,
+  "hashedPngs": 1592,
+  "sourceFiles": 297,
+  "orderedGoalFrames": [
+    16,
+    42,
+    62,
+    71,
+    85,
+    93
+  ],
+  "weaponSelections": [
+    [
+      528,
+      "plasma"
+    ],
+    [
+      1236,
+      "shotgun"
+    ]
+  ],
+  "errors": [],
+  "encounter": {
+    "status": "reward",
+    "room": "transmission-chamber",
+    "kills": 58,
+    "remaining": 0,
+    "elapsed": 79.4666666666643
+  },
+  "warning": {
+    "status": "WARNING RECEIVED / NEW EARTH PREPARING FOR WAR / PASSENGERS ALIVE",
+    "muted": true,
+    "visibleRouteText": "WARNING RECEIVED / NEW EARTH PREPARING FOR WAR / PASSENGERS ALIVE"
+  },
+  "storySkip": {
+    "applicable": false,
+    "reason": "This room has no authored dialogue; no Skip action is claimed."
+  },
+  "onward": {
+    "status": "playing",
+    "room": "diagnostic-gallery"
+  },
+  "note": "Initial review diagnostic incorrectly assumed 720 height and failed; corrected to actual manifest 900 height. Capture unchanged."
+}
