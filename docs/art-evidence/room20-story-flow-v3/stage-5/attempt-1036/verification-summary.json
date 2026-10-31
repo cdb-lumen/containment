@@ -1,0 +1,267 @@
+{
+  "room": 20,
+  "stage_index": 5,
+  "attempt": 1036,
+  "scope": "Local technical verification and original capture only. No art acceptance, publication, receipt or guard call.",
+  "source_head": "4712bd3076a7fe2b8a3542c9cb055549c692d662",
+  "branch": "art/overload-floor-v3",
+  "worktree": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3",
+  "source_before_aggregate": "892f4d053b5eb4906f43e123135a8264518d259105c5a60c16b1e2ef20590a89",
+  "source_after_aggregate": "892f4d053b5eb4906f43e123135a8264518d259105c5a60c16b1e2ef20590a89",
+  "stable_sources": true,
+  "git_status_after": "",
+  "commands": [
+    {
+      "name": "npm-test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3",
+      "started": "2026-10-02T07:05:54.264757+00:00",
+      "finished": "2026-10-02T07:06:19.141864+00:00",
+      "exit_code": 0,
+      "log": "npm-test.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3",
+      "started": "2026-10-02T07:06:19.142117+00:00",
+      "finished": "2026-10-02T07:06:24.027533+00:00",
+      "exit_code": 0,
+      "log": "build.log"
+    },
+    {
+      "name": "room-evidence-tests",
+      "command": [
+        "npm",
+        "run",
+        "test:room-evidence"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3",
+      "started": "2026-10-02T07:06:24.027874+00:00",
+      "finished": "2026-10-02T07:06:25.425970+00:00",
+      "exit_code": 0,
+      "log": "room-evidence-tests.log"
+    },
+    {
+      "name": "routes",
+      "command": [
+        "node",
+        "--experimental-strip-types",
+        "--loader",
+        "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-5/attempt-1036/ts-loader.mjs",
+        "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-5/attempt-1036/check-routes.mjs"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3",
+      "started": "2026-10-02T07:06:25.426294+00:00",
+      "finished": "2026-10-02T07:06:25.616541+00:00",
+      "exit_code": 0,
+      "log": "routes.log"
+    },
+    {
+      "name": "capture",
+      "command": [
+        "node",
+        "scripts/room-evidence.mjs",
+        "--rooms=overload-floor",
+        "--viewport=desktop",
+        "--quality=high",
+        "--gameplay-all",
+        "--verify-all",
+        "--out=/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-5/attempt-1036"
+      ],
+      "cwd": "/home/chernodubv/dev/.cron-worktrees/containment-rooms/overload-floor-v3",
+      "started": "2026-10-02T07:06:25.616877+00:00",
+      "finished": "2026-10-02T07:06:54.974930+00:00",
+      "exit_code": 0,
+      "log": "capture.log"
+    },
+    {
+      "name": "focused",
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "tests/StoryRoute.test.ts",
+        "tests/HudReadability.test.ts",
+        "src/render/OverloadDraft.test.ts",
+        "src/render/OverloadShell.test.ts",
+        "tests/unit/authoredTopology.test.ts",
+        "--reporter=verbose"
+      ],
+      "exit_code": 0,
+      "log": "focused.log",
+      "tests_passed": 26
+    }
+  ],
+  "test_results": {
+    "npm_test": {
+      "vitest_passed": 766,
+      "vitest_skipped": 1,
+      "node_test_passed": 2,
+      "python_suites": 9,
+      "python_tests_passed": 29
+    },
+    "room_evidence": {
+      "node_tests_passed": 22,
+      "ragdoll_cpu_checks": 33
+    },
+    "focused": {
+      "passed": 26
+    },
+    "routes": {
+      "total": 179,
+      "passed": 179,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "images": [
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-5/attempt-1036/20-overload-floor-overview.png",
+      "sha256": "3655049957eeac4d5b04ee20b0b62d8edbbdf3e45d63efd87417b0e60bc988d6",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "fresh_capture": true,
+      "matches_stage4_bytes": true,
+      "camera": {
+        "position": [
+          18.75,
+          36,
+          39.75
+        ],
+        "left": -21.330000000000002,
+        "right": 21.330000000000002,
+        "top": 16.168637357688716,
+        "bottom": -13.826675142311284
+      },
+      "webgl_error": 0,
+      "browser_errors": [],
+      "draw_calls": 72
+    },
+    {
+      "path": "/home/chernodubv/.hermes/workspaces/containment-art-roadmap/overload-floor/story-flow-v3/stage-5/attempt-1036/20-overload-floor-gameplay.png",
+      "sha256": "0ec380068539269c3d0f215e12e8b96265b9f29a0bd3c8bba04a2f081b8113d3",
+      "dimensions": [
+        1280,
+        900
+      ],
+      "fresh_capture": true,
+      "matches_stage4_bytes": false,
+      "camera": {
+        "position": [
+          18.425831277096556,
+          26,
+          33.531180950630585
+        ],
+        "left": -15.644444444444444,
+        "right": 15.644444444444444,
+        "top": 11,
+        "bottom": -11
+      },
+      "webgl_error": 0,
+      "browser_errors": [],
+      "draw_calls": 79
+    }
+  ],
+  "capture_staging": "Controlled legal actors on a spawn-to-exit route verified with actual DepthGame.update. Fixed-step production combat and renderer; inactive encounter director, no boss, no campaign progression, no DOM HUD or real touch input. Overview fits room; gameplay retains production camera/composition.",
+  "traversal": {
+    "steps": 347,
+    "distance": 1191.999999999999,
+    "exitDistance": 0,
+    "legalChecks": 347
+  },
+  "combat": {
+    "steps": 25,
+    "deltaMs": 16.666666666666668,
+    "shots": 4,
+    "damage": 48,
+    "enemyDistance": 67.80086980763458,
+    "playerDistance": 30.799999999999272,
+    "playerDisplacement": 30.799999999999272,
+    "legalChecks": 100,
+    "activeEnemies": 3,
+    "bullets": 1,
+    "player": {
+      "x": 596,
+      "y": 614.7999999999993
+    },
+    "staged": [
+      {
+        "x": 756,
+        "y": 584,
+        "id": 1
+      },
+      {
+        "x": 448.1792747981941,
+        "y": 645.2293491784144,
+        "id": 2
+      },
+      {
+        "x": 799.2534971524831,
+        "y": 668.1903551203197,
+        "id": 3
+      }
+    ],
+    "events": [
+      "shot",
+      "acid",
+      "shot",
+      "acid",
+      "shot",
+      "acid",
+      "shot"
+    ]
+  },
+  "canonical_behavior": "Existing StoryRoute tests execute DepthGame with accelerated damage clearing. Optional Skip preserves status. Separate fatal authorization required before Room20. Final overload kills player, completes twenty rooms, emits explosion, preserves ALL ABOARD LOST / NEW EARTH WARNED, clears continuation and cannot escape or mutate completed expedition. This is CPU integration, not browser ending coverage.",
+  "limitations": [
+    "Existing capture options provide overview and one gameplay position, no near/far placement option. No camera or harness logic changed.",
+    "Overview is a fitted camera; desktop uses production camera without DOM HUD. No browser canonical-ending or full-holdout survival proof.",
+    "Fresh overview is byte-identical to stage4. Desktop differs. No bytes were altered to manufacture novelty.",
+    "Build reports the existing chunk-size warning. One optional performance-profile Vitest test is skipped.",
+    "Harness accepted duplicate aborted module preloads only after exact same URLs completed. No reported browser or WebGL errors.",
+    "Visual inspection confirms readable rendered originals, not comprehensive floating/clipping or art acceptance. Independent overall review remains outside this task."
+  ],
+  "cleanup": {
+    "live_capture_processes": [],
+    "temporary_capture_directories": [],
+    "process_snapshot": "processes-after.log"
+  },
+  "policy_sha256": {
+    "async-rollout-worker-prompt.md": "b9c8318d08066eeb914e75dd7ed71ada00e496e1d067d23b242a85252a7ce86e",
+    "map-model-production.md": "6ebacbcca24a9c5ea0fc9a753cf9c9504d383ae5cb491b8920d40ebe03953562",
+    "production-guard.md": "74e81dea52fa4ff53fe8824312fe1c702f468d4f0d22460aeda5371309696c8e"
+  },
+  "generated_at": "2026-10-02T07:09:27.914168+00:00",
+  "artifact_sha256": {
+    "inventory.json": "aa4d02cb9e279f396991b59160194d366b9c8a3a9825111d57996f0e8f60f35c",
+    "processes-after.log": "eae39441a784ee0f902f36a0a1b913d5b531173a45b1f0a7d0c9aa9e08f2e337",
+    "routes.log": "31e08ee136e2f66ff1c67720d885f3e29f520b03551425fb2b90c0057efae86c",
+    "room-evidence-tests.log": "2feb4750c371217781c8546c7e7e27bd7879053bda98c5b915052a4d7d5b3d5b",
+    "source-before.json": "1861fa6151fb65ba4633f54fd0aa4e81abc9143b5b9ccb47579272e93f1fdb78",
+    "20-overload-floor-overview.png": "3655049957eeac4d5b04ee20b0b62d8edbbdf3e45d63efd87417b0e60bc988d6",
+    "check-routes.mjs": "93efb93e7f560fdf45f3f8db7a8c748d82855ab9336091486a07299cdb5b2825",
+    "20-overload-floor-gameplay.png": "0ec380068539269c3d0f215e12e8b96265b9f29a0bd3c8bba04a2f081b8113d3",
+    "npm-test.log": "2ee290e0833725a99d98910a7a95b1c67d60b730d6411570b0631d02bcf4c58a",
+    "route-results-run-1.json": "b09b3659db1ce141adbdf1fc59a823725bb2ac299169a26a1af267ec3cd67e2f",
+    "route-results.json": "b09b3659db1ce141adbdf1fc59a823725bb2ac299169a26a1af267ec3cd67e2f",
+    "source-after.json": "a79b3e98678ba8a5c559bccb2e05c61f52c547f081438b9a1839d2aa5d01470e",
+    "ts-loader.mjs": "8f76861d58031785e91c053e79147a6c1da82d9728f66964399fb62da34da1e9",
+    "capture.log": "9c02bba72f5ac034792b37c470f33bd14d6bb2759e033b7cda7a58cb6eab2240",
+    "finalize-verification.py": "f73a11d08e751fec06497c5f5539dbec59230b87d24cff66d0bb67599d1620e0",
+    "focused.log": "5c1acb54d10eb7117fac62ac782bf1eebcc666f6a651337bfffe6efcfca3dfa7",
+    "pin-source.py": "125e09f1eee18058cee75219a903124b64a86774e3d1c476f0679dfbead02725",
+    "run-verification.py": "4d97fa7ecd19b5866faa4821023f412bd0cebce8981e4e58ffdad2dbe4fe7f04",
+    "command-results.json": "60d3cfb30263d2ba38d7b562520450725b5b5a76184cd9d261bc7fc1c920297b",
+    "manifest.json": "2c58385916bd62623d48be6b71e1cedfdca0b8b6870f5d74c2f31413d4e5192f",
+    "build.log": "84ec2f44e06b736b0931fb1f555575ec0fc6bda61611d874029de4de942ebcf9"
+  }
+}

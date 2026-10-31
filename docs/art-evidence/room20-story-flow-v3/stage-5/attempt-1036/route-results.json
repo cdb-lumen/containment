@@ -1,0 +1,2012 @@
+{
+  "scope": "CPU stage1 geometry only. No acceptance or runtime implementation.",
+  "heads": [
+    {
+      "id": "coolant",
+      "bounds": [
+        480,
+        340,
+        540,
+        410
+      ]
+    },
+    {
+      "id": "power",
+      "bounds": [
+        660,
+        340,
+        720,
+        410
+      ]
+    },
+    {
+      "id": "restraint",
+      "bounds": [
+        565,
+        480,
+        635,
+        540
+      ]
+    }
+  ],
+  "core": [
+    570,
+    365,
+    630,
+    465
+  ],
+  "anchors": {
+    "spawn": {
+      "x": 140,
+      "y": 440
+    },
+    "compatibility": {
+      "x": 1060,
+      "y": 440
+    },
+    "breach1": {
+      "x": 240,
+      "y": 320
+    },
+    "breach2": {
+      "x": 960,
+      "y": 320
+    },
+    "breach3": {
+      "x": 240,
+      "y": 680
+    },
+    "breach4": {
+      "x": 960,
+      "y": 680
+    },
+    "inward1": {
+      "x": 296,
+      "y": 320
+    },
+    "inward2": {
+      "x": 904,
+      "y": 320
+    },
+    "inward3": {
+      "x": 296,
+      "y": 680
+    },
+    "inward4": {
+      "x": 904,
+      "y": 680
+    },
+    "west": {
+      "x": 340,
+      "y": 440
+    },
+    "north": {
+      "x": 600,
+      "y": 180
+    },
+    "east": {
+      "x": 860,
+      "y": 440
+    },
+    "south": {
+      "x": 600,
+      "y": 640
+    },
+    "coolant-view": {
+      "x": 365,
+      "y": 400
+    },
+    "power-view": {
+      "x": 835,
+      "y": 400
+    },
+    "restraint-view": {
+      "x": 600,
+      "y": 600
+    }
+  },
+  "loop": [
+    {
+      "x": 340,
+      "y": 440
+    },
+    {
+      "x": 400,
+      "y": 240
+    },
+    {
+      "x": 600,
+      "y": 180
+    },
+    {
+      "x": 800,
+      "y": 240
+    },
+    {
+      "x": 860,
+      "y": 440
+    },
+    {
+      "x": 800,
+      "y": 640
+    },
+    {
+      "x": 600,
+      "y": 640
+    },
+    {
+      "x": 400,
+      "y": 640
+    }
+  ],
+  "connectors": [
+    {
+      "id": "spawn",
+      "points": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 340,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "id": "breach1",
+      "points": [
+        {
+          "x": 240,
+          "y": 320
+        },
+        {
+          "x": 340,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "id": "breach2",
+      "points": [
+        {
+          "x": 960,
+          "y": 320
+        },
+        {
+          "x": 860,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "id": "breach3",
+      "points": [
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 400,
+          "y": 640
+        }
+      ]
+    },
+    {
+      "id": "breach4",
+      "points": [
+        {
+          "x": 960,
+          "y": 680
+        },
+        {
+          "x": 800,
+          "y": 640
+        }
+      ]
+    },
+    {
+      "id": "west",
+      "points": [
+        {
+          "x": 340,
+          "y": 440
+        },
+        {
+          "x": 340,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "id": "north",
+      "points": [
+        {
+          "x": 600,
+          "y": 180
+        },
+        {
+          "x": 600,
+          "y": 180
+        }
+      ]
+    },
+    {
+      "id": "east",
+      "points": [
+        {
+          "x": 860,
+          "y": 440
+        },
+        {
+          "x": 860,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "id": "south",
+      "points": [
+        {
+          "x": 600,
+          "y": 640
+        },
+        {
+          "x": 600,
+          "y": 640
+        }
+      ]
+    },
+    {
+      "id": "coolant-view",
+      "points": [
+        {
+          "x": 365,
+          "y": 400
+        },
+        {
+          "x": 340,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "id": "power-view",
+      "points": [
+        {
+          "x": 835,
+          "y": 400
+        },
+        {
+          "x": 860,
+          "y": 440
+        }
+      ]
+    },
+    {
+      "id": "restraint-view",
+      "points": [
+        {
+          "x": 600,
+          "y": 600
+        },
+        {
+          "x": 600,
+          "y": 640
+        }
+      ]
+    }
+  ],
+  "geometry": {
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 880
+    },
+    "boundaryWalls": [
+      {
+        "x": -32,
+        "y": -32,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 880,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      },
+      {
+        "x": 1200,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      }
+    ],
+    "blockers": [
+      {
+        "x": -32,
+        "y": -32,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 880,
+        "width": 1264,
+        "height": 32
+      },
+      {
+        "x": -32,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      },
+      {
+        "x": 1200,
+        "y": 0,
+        "width": 32,
+        "height": 880
+      }
+    ],
+    "boundary": [
+      {
+        "x": 40,
+        "y": 320
+      },
+      {
+        "x": 180,
+        "y": 200
+      },
+      {
+        "x": 360,
+        "y": 200
+      },
+      {
+        "x": 420,
+        "y": 40
+      },
+      {
+        "x": 780,
+        "y": 40
+      },
+      {
+        "x": 840,
+        "y": 200
+      },
+      {
+        "x": 1020,
+        "y": 200
+      },
+      {
+        "x": 1160,
+        "y": 320
+      },
+      {
+        "x": 1160,
+        "y": 680
+      },
+      {
+        "x": 1000,
+        "y": 820
+      },
+      {
+        "x": 800,
+        "y": 820
+      },
+      {
+        "x": 720,
+        "y": 720
+      },
+      {
+        "x": 480,
+        "y": 720
+      },
+      {
+        "x": 400,
+        "y": 820
+      },
+      {
+        "x": 200,
+        "y": 820
+      },
+      {
+        "x": 40,
+        "y": 680
+      }
+    ],
+    "voids": [
+      [
+        {
+          "x": 470,
+          "y": 300
+        },
+        {
+          "x": 730,
+          "y": 300
+        },
+        {
+          "x": 790,
+          "y": 400
+        },
+        {
+          "x": 730,
+          "y": 560
+        },
+        {
+          "x": 470,
+          "y": 560
+        },
+        {
+          "x": 410,
+          "y": 400
+        }
+      ]
+    ],
+    "breaches": [
+      {
+        "x": 240,
+        "y": 320,
+        "id": "room20-layout-check:breach-0",
+        "unlockWave": 0,
+        "facing": "east"
+      },
+      {
+        "x": 960,
+        "y": 320,
+        "id": "room20-layout-check:breach-1",
+        "unlockWave": 0,
+        "facing": "west"
+      },
+      {
+        "x": 240,
+        "y": 680,
+        "id": "room20-layout-check:breach-2",
+        "unlockWave": 0,
+        "facing": "east"
+      },
+      {
+        "x": 960,
+        "y": 680,
+        "id": "room20-layout-check:breach-3",
+        "unlockWave": 0,
+        "facing": "west"
+      }
+    ],
+    "playerSpawn": {
+      "x": 140,
+      "y": 440
+    },
+    "exitPoint": {
+      "x": 1060,
+      "y": 440
+    },
+    "bossSpawn": {
+      "x": 600,
+      "y": 440
+    },
+    "queenArena": {
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "height": 880,
+      "roomId": "room20-layout-check",
+      "safeCenter": {
+        "x": 600,
+        "y": 440
+      },
+      "safeRadius": 180
+    }
+  },
+  "routes": {
+    "16": {
+      "spawn": [
+        {
+          "x": 140,
+          "y": 440
+        }
+      ],
+      "compatibility": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        },
+        {
+          "x": 1060,
+          "y": 440
+        }
+      ],
+      "breach1": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 320
+        }
+      ],
+      "breach2": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        },
+        {
+          "x": 960,
+          "y": 320
+        }
+      ],
+      "breach3": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        }
+      ],
+      "breach4": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 960,
+          "y": 680
+        }
+      ],
+      "inward1": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 296,
+          "y": 320
+        }
+      ],
+      "inward2": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        },
+        {
+          "x": 904,
+          "y": 320
+        }
+      ],
+      "inward3": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 296,
+          "y": 680
+        }
+      ],
+      "inward4": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 904,
+          "y": 680
+        }
+      ],
+      "west": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 340,
+          "y": 440
+        }
+      ],
+      "north": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        }
+      ],
+      "east": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 960,
+          "y": 680
+        },
+        {
+          "x": 860,
+          "y": 440
+        }
+      ],
+      "south": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 640
+        }
+      ],
+      "coolant-view": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 365,
+          "y": 400
+        }
+      ],
+      "power-view": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 960,
+          "y": 680
+        },
+        {
+          "x": 835,
+          "y": 400
+        }
+      ],
+      "restraint-view": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 600,
+          "y": 600
+        }
+      ]
+    },
+    "28": {
+      "spawn": [
+        {
+          "x": 140,
+          "y": 440
+        }
+      ],
+      "compatibility": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        },
+        {
+          "x": 1060,
+          "y": 440
+        }
+      ],
+      "breach1": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 320
+        }
+      ],
+      "breach2": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        },
+        {
+          "x": 960,
+          "y": 320
+        }
+      ],
+      "breach3": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        }
+      ],
+      "breach4": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 960,
+          "y": 680
+        }
+      ],
+      "inward1": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 296,
+          "y": 320
+        }
+      ],
+      "inward2": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        },
+        {
+          "x": 904,
+          "y": 320
+        }
+      ],
+      "inward3": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 296,
+          "y": 680
+        }
+      ],
+      "inward4": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 904,
+          "y": 680
+        }
+      ],
+      "west": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 340,
+          "y": 440
+        }
+      ],
+      "north": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 600,
+          "y": 180
+        }
+      ],
+      "east": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 960,
+          "y": 680
+        },
+        {
+          "x": 860,
+          "y": 440
+        }
+      ],
+      "south": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 600,
+          "y": 640
+        }
+      ],
+      "coolant-view": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 365,
+          "y": 400
+        }
+      ],
+      "power-view": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 960,
+          "y": 680
+        },
+        {
+          "x": 835,
+          "y": 400
+        }
+      ],
+      "restraint-view": [
+        {
+          "x": 140,
+          "y": 440
+        },
+        {
+          "x": 240,
+          "y": 680
+        },
+        {
+          "x": 600,
+          "y": 600
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "name": "canonical empty obstacles",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "four canonical breaches",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "coolant complete rectangle strictly within void",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "power complete rectangle strictly within void",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "restraint complete rectangle strictly within void",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "axial-core complete rectangle strictly within void",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "negative protruding head is rejected",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector spawn",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector breach1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector breach2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector breach3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector breach4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector west",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector north",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector east",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector south",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector coolant-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector power-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 diagram connector restraint-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector spawn",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector breach1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector breach2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector breach3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector breach4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector west",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector north",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector east",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector south",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector coolant-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector power-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 diagram connector restraint-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy spawn",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy compatibility",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy breach1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy breach2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy breach3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy breach4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy inward1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy inward2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy inward3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy inward4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy west",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy north",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy east",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy south",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy coolant-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy power-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 occupy restraint-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 0 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 0 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 1 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 1 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 2 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 2 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 3 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 3 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 4 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 4 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 5 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 5 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 6 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 6 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 7 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 loop segment 7 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to spawn",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to compatibility",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to breach1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to breach2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to breach3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to breach4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to inward1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to inward2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to inward3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to inward4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to west",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to north",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to east",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to south",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to coolant-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to power-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 spawn connected to restraint-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path spawn segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path compatibility segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path breach1 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path breach2 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path breach3 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path breach4 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path inward1 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path inward2 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path inward3 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path inward4 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path west segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path north segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path east segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path south segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path coolant-view segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path power-view segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 stored path restraint-view segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r16 reject void center",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r16 reject outside boundary",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r16 reject lower concave notch",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r16 reject body overlapping void edge",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r16 reject cross-core shortcut",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r16 reject concave-notch shortcut",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r16 injected full-height obstruction breaks connectivity",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy spawn",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy compatibility",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy breach1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy breach2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy breach3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy breach4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy inward1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy inward2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy inward3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy inward4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy west",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy north",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy east",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy south",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy coolant-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy power-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 occupy restraint-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 0 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 0 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 1 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 1 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 2 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 2 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 3 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 3 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 4 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 4 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 5 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 5 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 6 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 6 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 7 forward",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 loop segment 7 reverse",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to spawn",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to compatibility",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to breach1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to breach2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to breach3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to breach4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to inward1",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to inward2",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to inward3",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to inward4",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to west",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to north",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to east",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to south",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to coolant-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to power-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 spawn connected to restraint-view",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path spawn segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path compatibility segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path breach1 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path breach2 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path breach3 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path breach4 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path inward1 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path inward2 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path inward3 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path inward4 segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path west segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path north segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path east segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path south segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path coolant-view segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path power-view segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 stored path restraint-view segment recheck",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "r28 reject void center",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r28 reject outside boundary",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r28 reject lower concave notch",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r28 reject body overlapping void edge",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r28 reject cross-core shortcut",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r28 reject concave-notch shortcut",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "r28 injected full-height obstruction breaks connectivity",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "total": 179,
+    "passed": 179,
+    "failures": 0,
+    "errors": 0
+  }
+}

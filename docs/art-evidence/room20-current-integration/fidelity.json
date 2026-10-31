@@ -1,0 +1,48 @@
+{
+  "old": {
+    "bounds": {
+      "min": [
+        15.0625,
+        -5,
+        10.6265625
+      ],
+      "max": [
+        22.46875,
+        2.5625,
+        16.8125
+      ]
+    },
+    "triangles": 11868,
+    "materials": [
+      "overload-buswork",
+      "overload-ceramic",
+      "overload-column",
+      "overload-recess",
+      "overload-steel",
+      "reactor-fasteners"
+    ]
+  },
+  "current": {
+    "bounds": {
+      "min": [
+        15.0625,
+        -5,
+        10.6265625
+      ],
+      "max": [
+        22.46875,
+        2.5625,
+        16.8125
+      ]
+    },
+    "triangles": 11892,
+    "materials": [
+      "overload-buswork",
+      "overload-ceramic",
+      "overload-column",
+      "overload-recess",
+      "overload-steel",
+      "reactor-fasteners"
+    ]
+  }
+}

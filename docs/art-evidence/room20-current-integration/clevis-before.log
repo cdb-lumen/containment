@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /workspace/containment-room20-review
+
+ ❯ src/render/OverloadDraft.test.ts (6 tests | 1 failed) 316ms
+   × connects the restraint clevis to both solid core-frame posts through a contained bracket 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/OverloadDraft.test.ts > connects the restraint clevis to both solid core-frame posts through a contained bracket
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/render/OverloadDraft.test.ts:72:88
+     70|  // This first assertion fails on the historical source: even every me…
+     71|  // is separated, so no possible solid core-to-ram contact exists ther…
+     72|  expect(meshes(core).some(a=>meshes(ram).some(b=>bounds(a).intersectsB…
+       |                                                                                        ^
+     73|  const crossbar=ram.getObjectByName('core-frame-crossbar') as T.Mesh,l…
+     74|  expect(crossbar.geometry.type).toBe('BoxGeometry');expect(link.geomet…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  17:57:37
+   Duration  1.14s (transform 517ms, setup 0ms, import 708ms, tests 316ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

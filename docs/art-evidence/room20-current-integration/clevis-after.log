@@ -1,0 +1,14 @@
+
+ RUN  v4.1.10 /workspace/containment-room20-review
+
+
+ Test Files  3 passed (3)
+      Tests  17 passed (17)
+   Start at  17:58:23
+   Duration  1.68s (transform 1.55s, setup 0ms, import 2.13s, tests 826ms, environment 0ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
