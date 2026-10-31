@@ -5,8 +5,8 @@ export function roomFocus(x:number,z:number,width:number,depth:number,viewWidth:
  // Room19's elevated north-wall opening sits above the ground-plane envelope.
  // Let the existing camera follow a northward player four world units farther;
  // keep center/south framing, zoom and projection unchanged.
- // The Shielding Gate north lane reaches the wall. Reserve projected headroom
+ // Shielding Gate and Safety Interlock north lanes reach the wall. Reserve headroom
  // for the marine's full body, without changing zoom or the south limit.
- const northLimit=templateId==='manual-control-chamber'?Math.max(0,halfZ-4):templateId==='shielding-gate'?Math.min(depth/2,Math.max(0,viewHeight/2*Math.hypot(26,19)/26-2.2)):halfZ;
+ const northLimit=templateId==='manual-control-chamber'?Math.max(0,halfZ-4):(templateId==='shielding-gate'||templateId==='safety-interlock-station')?Math.min(depth/2,Math.max(0,viewHeight/2*Math.hypot(26,19)/26-2.2)):halfZ;
  return {x:Math.max(halfX,Math.min(width-halfX,x)),z:Math.max(northLimit,Math.min(depth-halfZ,z))};
 }
