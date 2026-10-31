@@ -121,7 +121,10 @@ export class DeathRagdolls {
   if(bones.length<3||bones.length>20)return false;
   model.freeze?.();
   const parts:Part[]=[],joints:RAPIER.ImpulseJoint[]=[],mass=family==='brute'?3.5:family==='carrier'?1.8:1;
-  const speed=Math.hypot(velocity.x,velocity.z),scale=Math.min(1,12/Math.max(speed,.001))/mass,fits=fitSkin(model.root,bones);
+  // Attenuate before capping: native shotgun (12.75) and rocket (33.75)
+  // previously both saturated at 12, erasing weapon strength. Preserve direction
+  // and family weight while bounding even extreme presentation-only impulses.
+  const speed=Math.hypot(velocity.x,velocity.z),scale=Math.min(.25,8/Math.max(speed,.001))/mass,fits=fitSkin(model.root,bones);
   for(const bone of bones){
    bone.matrixAutoUpdate=true;const position=bone.getWorldPosition(new T.Vector3()),rotation=bone.getWorldQuaternion(new T.Quaternion());
    const body=this.world.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setTranslation(position.x,position.y,position.z).setRotation({x:0,y:0,z:0,w:1}).setAdditionalSolverIterations(16).setCanSleep(true).setCcdEnabled(true).setLinearDamping(.6).setAngularDamping(1.8));
@@ -131,10 +134,10 @@ export class DeathRagdolls {
    const half=bounds.getSize(new T.Vector3()).multiplyScalar(.5).addScalar(.003),center=bounds.getCenter(new T.Vector3()).applyQuaternion(rotation);
    const desc=RAPIER.ColliderDesc.cuboid(half.x,half.y,half.z).setTranslation(center.x,center.y,center.z).setRotation(rotation).setMass(mass*(parts.length===0?3:1)).setCollisionGroups(GROUPS).setFriction(.8).setRestitution(.08);
    this.world.createCollider(desc,body);
-   body.setLinvel({x:velocity.x*scale,y:2.3/Math.sqrt(mass),z:velocity.z*scale},true);
+   body.setLinvel({x:velocity.x*scale,y:1.2/Math.sqrt(mass),z:velocity.z*scale},true);
    // Off-center shot torque tips the body. Limbs subsequently respond to joints,
    // gravity and contacts rather than a canned rotation or independent animation.
-   body.setAngvel({x:velocity.z*scale*.24,y:0,z:-velocity.x*scale*.24},true);
+   body.setAngvel({x:velocity.z*scale*.1,y:0,z:-velocity.x*scale*.1},true);
    parts.push({bone,body,bindRotation:rotation});
   }
   for(const part of parts.slice(1)){
