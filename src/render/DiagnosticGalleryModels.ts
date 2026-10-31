@@ -92,6 +92,20 @@ export function diagnosticGalleryModels():T.Group{
    mounted('selector',new T.CylinderGeometry(4/32,5/32,3/32,8),edge,8,-8,2.1);
    mounted('switch-guard',new T.BoxGeometry(9/32,3/32,7/32),ivory,-7,-9,1.8);
    mounted('switch',new T.BoxGeometry(3/32,4/32,5/32),amber,-7,-9,3.4);
+   // Closed maintenance doors sit on the outer cabinet face. Separate edge
+   // recesses, vertical hinge barrels and latches expose how each cover opens.
+   // All hardware remains inside the existing console reservation.
+   if(i===1||i===3){
+    const panel=(suffix:string,g:T.BufferGeometry,m:T.Material,u:number,h:number,r:number)=>{
+     const mesh=add(`${id}-maintenance-${suffix}-${i}`,g,m,600+r*Math.cos(a)+u*Math.cos(angle),h,220+r*Math.sin(a)-u*Math.sin(angle));
+     mesh.rotation.y=angle;return mesh;
+    };
+    panel('rim',new T.BoxGeometry(27/32,17/32,2/32),dark,0,13,343.5);
+    panel('cover',new T.BoxGeometry(24/32,14/32,1.5/32),ivory,0,13,344.5);
+    for(const [name,h] of [['upper',17],['lower',9]] as const)
+     panel(`hinge-${name}`,new T.CylinderGeometry(1.5/32,1.5/32,5/32,10),edge,-11.5,h,345);
+    panel('latch',new T.BoxGeometry(3/32,5/32,2/32),edge,10.5,13,345);
+   }
    // Full-height radial cabinet seams are visible from the normal approach.
    const seam=box(`${id}-cabinet-seam-${i}`,600+343*Math.cos(a),14,220+343*Math.sin(a),2,17,1,dark);seam.rotation.y=angle;
   }

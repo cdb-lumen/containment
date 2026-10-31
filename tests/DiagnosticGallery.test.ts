@@ -51,6 +51,22 @@ describe('Diagnostic gallery rough placement',()=>{
   }
   disposeModel(world);
  });
+ it('adds separate maintenance covers with supported hinges and latches on both cabinet banks',()=>{
+  const world=new T.Group();environmentArchitecture(world,'engineering',37.5,27.5,'diagnostic-gallery');world.updateMatrixWorld(true);
+  for(const side of ['west','east'])for(const i of [1,3]){
+   const prefix=`diagnostic-${side}-low-console-maintenance`,cover=world.getObjectByName(`${prefix}-cover-${i}`) as T.Mesh;
+   expect(cover).toBeInstanceOf(T.Mesh);
+   const bounds=(name:string)=>new T.Box3().setFromObject(world.getObjectByName(name)!).expandByScalar(1e-6);
+   const cb=bounds(cover.name),rim=bounds(`${prefix}-rim-${i}`);
+   expect(cb.intersectsBox(rim)).toBe(true);
+   for(const suffix of ['hinge-upper','hinge-lower','latch'])expect(cb.intersectsBox(bounds(`${prefix}-${suffix}-${i}`)),suffix).toBe(true);
+   const outward=new T.Vector3(cover.position.x-600/32,0,cover.position.z-220/32).normalize();
+   const target=cover.position.clone().addScaledVector(outward,1/32);
+   const hit=new T.Raycaster(target.clone().addScaledVector(outward,2),outward.clone().negate()).intersectObject(world,true)[0];
+   expect(hit?.object).toBe(cover);
+  }
+  disposeModel(world);
+ });
  it('makes four occupied berths with tapered shells and separated human limbs instead of screen markers',()=>{
   const world=new T.Group();environmentArchitecture(world,'engineering',37.5,27.5,'diagnostic-gallery');
   world.updateMatrixWorld(true);
