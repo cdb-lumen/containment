@@ -1,0 +1,7 @@
+# Room16 structural volume reassessment proposal
+
+Current native df33589 remains visually close to the scute version: shoulder/tissue rays improved, but a continuous31-unit vertical body wall dominates the silhouette. Further tiny grooves are unlikely to change this. This proposal is not yet implemented or accepted.
+
+Change the bed and its attached scutes together: taper nonterminal outer body edges from31 down toward4game units across roughly15units of interior distance, retaining full-height interior support beneath the sensory cavity and cabinet. Keep existing terminal attachment zones full-height initially so no cut section floats. Scute undersides must follow and overlap the bed surface, and their upper relief must taper toward edges; lowering the bed alone would float the carapace. Preserve the exact150point collision contour and raisedmass everywhere required by pre/post occupancy rays, all named hardware/cavity/cut witnesses, material/mesh/height budgets and full triangle containment. No camera/light/gameplay/topology change.
+
+Expected visible difference is a rounded/sloping organic cross-section at native center/north views, instead of the dominant extruded vertical slab. Retain the three-root composition required by the brief. CPU checks need actual shared-surface attachment samples across the complete scutes and no inverted/degenerate faces, not AABB contact alone. Actual native pixels decide whether this is enough; no code test can establish an organic appearance.
