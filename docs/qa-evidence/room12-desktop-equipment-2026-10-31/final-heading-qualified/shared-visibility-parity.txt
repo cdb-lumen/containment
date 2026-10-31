@@ -1,0 +1,1 @@
+git diff 9c9e8ea99f02e3edbf7163b0d6655a3f21b125f5 45afdc0c86b55cfe075c3e5983284ab7ec17f66e -- src/main.ts src/style.css src/StatusHud.ts src/render/roomFraming.ts returned no diff. Shared camera/HUD runtime is byte-identical.
