@@ -1,3 +1,4 @@
+import {OverloadEmission} from './OverloadEmission';
 import {roomFocus} from './roomFraming';
 import {communalAtrium} from './CommunalAtrium';
 import {attachCommunalGarden} from './CommunalGarden';
@@ -142,6 +143,7 @@ export class DepthRenderer {
   }
   for(const [mat,list]of buckets){const merged=mergeGeometries(list);list.forEach(g=>g.dispose());if(merged){const mesh=new T.Mesh(merged,mat);mesh.userData.bakedEnvironment=true;mesh.castShadow=true;mesh.receiveShadow=true;this.world.add(mesh);}}
  }
+ private overloadEmission=new OverloadEmission();
  private passengerVault:ReturnType<typeof attachPassengerVault>|undefined;
  private communalGarden:ReturnType<typeof attachCommunalGarden>|undefined;
  private residentialGalleryEquipment:ReturnType<typeof attachResidentialGalleryEquipment>|undefined;
@@ -149,6 +151,7 @@ export class DepthRenderer {
  private recoveryKit:ReturnType<typeof attachRecoveryKit>|undefined;
  private releasedBerth:ReturnType<typeof attachReleasedBerth>|undefined;
  loadRoom(node:RunNode,environment:ShipEnvironment|undefined=shipEnvironment(node.templateId)){
+  this.overloadEmission?.reset();
   this.communalGarden?.dispose();this.communalGarden=undefined;
   this.passengerVault?.dispose();this.passengerVault=undefined;
   this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;
@@ -255,6 +258,7 @@ export class DepthRenderer {
   if(environment&&!atrium)environmentArchitecture(this.world,environment,w,h,node.templateId);
   this.bakeWorld();
   }
+  (this.overloadEmission??=new OverloadEmission()).bind(this.world,node.templateId);
   if(node.templateId==='residential-gallery')this.residentialGalleryEquipment=attachResidentialGalleryEquipment(this.world,staticLoaded);
   if(atrium)this.communalGarden=attachCommunalGarden(this.world,t,staticLoaded);
   this.exit=new T.Group();this.exit.position.set(t.exit.x/UNIT,0,t.exit.y/UNIT);this.world.add(this.exit);
@@ -300,6 +304,7 @@ export class DepthRenderer {
   // Both owners retain their independent 8-second fallback deadlines.
   if(this.roomLoading)return;
   if(game.status!=='playing'){for(const model of this.actors.values())model.hit?.(0);this.queen?.hit?.(0);}
+  this.overloadEmission?.update(game.overloadVisualState,delta);
   const dt=game.status==='paused'||game.status==='reward'||game.status==='route'?0:Math.min(delta,.05);this.time+=dt;const p=game.player;
   const bounds=game.geometry.bounds;
   const framed=roomFocus(p.x/UNIT,p.y/UNIT,bounds.width/UNIT,bounds.height/UNIT,(this.camera.right-this.camera.left)/this.camera.zoom,(this.camera.top-this.camera.bottom)/this.camera.zoom,game.node.templateId);
@@ -368,5 +373,5 @@ export class DepthRenderer {
   for(const[id,mesh]of this.poolMeshes)if(!poolIds.has(id)){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();this.poolMeshes.delete(id);}
  }
  private clearPools(){for(const mesh of this.poolMeshes.values()){mesh.geometry.dispose();mesh.material.dispose();mesh.removeFromParent();}this.poolMeshes.clear();}
- dispose(){this.ragdolls.dispose();for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];this.corpseIds?.clear();for(const model of this.actors.values())this.actorPool.release(model);this.actors.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;this.communalGarden?.dispose();this.communalGarden=undefined;this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;this.passengerVault?.dispose();this.clearPools();this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
+ dispose(){this.overloadEmission?.reset();this.ragdolls.dispose();for(const c of this.corpses)this.actorPool.release(c.model);this.corpses=[];this.corpseIds?.clear();for(const model of this.actors.values())this.actorPool.release(model);this.actors.clear();if(this.queen)this.actorPool.release(this.queen);this.queen=null;this.communalGarden?.dispose();this.communalGarden=undefined;this.residentialGalleryEquipment?.dispose();this.residentialGalleryEquipment=undefined;this.passengerVault?.dispose();this.clearPools();this.recoveryKit?.dispose();this.sealedBank?.dispose();this.releasedBerth?.dispose();disposeModel(this.world);this.temporaryMaterials.forEach(m=>m.dispose());this.lighting.dispose();this.contacts.dispose();this.afflictions.dispose();this.actorPool.dispose();this.healthBars.dispose();this.effects.dispose();this.renderer.dispose();this.composer.dispose();this.surfaces.dispose();}
 }

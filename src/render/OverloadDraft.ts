@@ -1,3 +1,4 @@
+import {OVERLOAD_EMISSION_MIN} from './OverloadEmission';
 import * as T from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -7,8 +8,8 @@ export function createOverloadDraft(){
  const root=new T.Group();root.name='overload-draft';
  const material=(name:string,color:number,metalness=.65)=>{const m=new T.MeshStandardMaterial({color,metalness,roughness:.65});m.name=name;m.userData.actorMaterial=true;return m;};
  const steel=material('overload-steel',0x52656a),dark=material('overload-recess',0x17262d),ceramic=material('overload-ceramic',0xb2bcb1,.12),bronze=material('overload-buswork',0x9b7243),bolts=material('reactor-fasteners',0x8c999a);
- // Quiet static column. Sequence-driven overload emission is not part of this pass.
- const core=material('overload-column',0x8ebfc5,.3);core.emissive.setHex(0x285762);core.emissiveIntensity=.35;
+ // Quiet owned column follows actual authorized holdout dispatch after binding.
+ const core=material('overload-column',0x8ebfc5,.3);core.emissive.setHex(0x285762);core.emissiveIntensity=OVERLOAD_EMISSION_MIN;core.userData.overloadColumn=true;
  let group:T.Group;
  const role=(name:string)=>{group=new T.Group();group.name=name;root.add(group);};
  const add=(g:T.BufferGeometry,m:T.Material,x:number,h:number,z:number)=>{const mesh=new T.Mesh(g,m);mesh.position.set(x/32,h/32,z/32);mesh.castShadow=mesh.receiveShadow=true;group.add(mesh);return mesh;};
