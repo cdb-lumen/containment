@@ -95,6 +95,13 @@ export const AUTHORED_ROOM_TOPOLOGIES:Readonly<Partial<Record<StoryTemplateId,To
   breaches:polygon([[100,100],[1100,100],[100,780],[1100,780]]),
   obstacles:RELAY_RACKS_FOOTPRINTS,
  }),
+ 'service-shaft-landing':Object.freeze({
+  // Accepted stage1 plan. One shared solid shaft leaves a connected C balcony.
+  boundary:polygon([[0,0],[1200,0],[1200,880],[0,880]]),
+  voids:Object.freeze([polygon([[340,240],[900,240],[900,540],[1200,540],[1200,640],[340,640]])]),
+  spawn:Object.freeze({x:100,y:440}),exit:Object.freeze({x:1100,y:440}),
+  breaches:polygon([[100,100],[1100,100],[100,780],[1100,780]]),obstacles:Object.freeze([]),
+ }),
  'containment-annulus':Object.freeze({
   boundary:polygon([[80,40],[1120,40],[1160,80],[1160,800],[1120,840],[80,840],[40,800],[40,80]]),
   // One sealed core, with both continuous circulation directions retained.

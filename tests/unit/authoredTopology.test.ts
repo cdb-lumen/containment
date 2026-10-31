@@ -5,9 +5,9 @@ import {createExpeditionGeometry,canOccupyExpedition,hasClearExpeditionShot} fro
 import {FacilityNavigation} from '../../src/game/world/FacilityNavigation';
 import {ProjectileHitTracker} from '../../src/game/combat/CombatSystem';
 import {DepthGame} from '../../src/DepthGame';
-const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay','communal-atrium','containment-annulus','armory'];
+const ids=['passenger-vault','breached-loading-bay','overload-floor','awakening-bay','communal-atrium','containment-annulus','service-shaft-landing','armory'];
 const nodes=generateRun(3,3).nodes;
-const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280},{x:584,y:336},{x:600,y:440},{x:600,y:450}];
+const probes=[{x:420,y:280},{x:680,y:380},{x:600,y:440},{x:600,y:280},{x:584,y:336},{x:600,y:440},{x:600,y:440},{x:600,y:450}];
 describe('authored walkable topologies',()=>{
  it('uses six shaped room boundaries and a sealed Armory horseshoe/carousel',()=>{
   expect(nodes).toHaveLength(20);
