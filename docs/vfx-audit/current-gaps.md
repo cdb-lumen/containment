@@ -40,6 +40,13 @@ Breacher/Seismic wall-slam work stays separate per issue54. The inactive legacy-
 
 Independent CPU checks at this HEAD: **45/45 tests passed across 12 selected VFX/lighting/feedback/recording suites**, [independent CPU review log](validation/selected-cpu.log); **15/15 recorder-validator checks passed**, [independent recorder review log](validation/recorder.log). These do not compile/render shaders or inspect native pixels. No current runtime bug was demonstrated by these checks, and they do not certify the 74-component audit.
 
+The exact validation commands, run at the pinned source revision, were:
+
+```sh
+npx vitest run tests/AcidSplash.test.ts tests/acid-pool-surface.test.ts tests/BoonLinks.test.ts tests/RadialBoonEffects.test.ts tests/FrostField.test.ts tests/ToxicBloomRendering.test.ts tests/ReloadPrime.test.ts tests/ElectricArc.test.ts tests/ExplosionEffects.test.ts tests/SceneLighting.test.ts tests/HitFeedback.test.ts tests/VfxRecordingStage.test.ts
+node --test scripts/vfx-audit-demo-check.mjs
+```
+
 ## Genuinely missing evidence / approval boundary
 
 The repository contains the baseline catalog, historical source diagnosis and fixture screenshots. The accessible workspace search did not locate the original selected VFX MP4s/manifests under their case names; PR53 explicitly calls the final media local chat deliverables, not GitHub uploads. Example retained references are final Toxic Bloom SHA `2d7caf91508ddca6efded7dea883f950ff35853c576ce54ccccf22339de148d8` in the PR body and subtle frost SHA `cacb229b144867ea1c707ac1641246fac028d515ab7d00fa95a969816418f5f0` in [the frost comment](https://github.com/cdb-lumen/containment/pull/53#issuecomment-5572705237). Those are historical claims/identifiers, not newly verified local artifacts. Their absence here does not prove the original delivery or approval never occurred.
