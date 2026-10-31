@@ -1,0 +1,9 @@
+# Room16 volume native review
+
+Verdict: remains visually unqualified. The agreed stop condition is met: stop further small surface iterations on this silhouette and return to an explicit major-form/topology proposal.
+
+Inspected all three full-resolution 58b2e05e755354d2e5e8b2f95bb4ded5520f54d6 images in /workspace/room16-volume-native against the previously inspected layered2e7e97c center/north/overview images. Removing the plate inserts makes the surface cleaner, and the terminal pale pieces are less enclosed. Nevertheless, the broad raised Y with deep continuous sides still reads as a manufactured fixture in both native views and the overview. The terminal pieces remain small pale attachments on the arm tops rather than convincing severed tissue. The cabinet is recognizable as a small pale equipment box, but the broader tongue does not establish a strong consuming relationship at shipping scale. These are still the substantive art blockers; passing ray/manifold tests does not close them.
+
+No recurrence of the large black fan valleys or new marine/HUD overlap is apparent at these staged poses. This is only static evidence, not traversal, combat, dense-enemy readability, performance or human acceptance.
+
+Provenance: candidate terminal passed, errors[], stable identical clean source-before/source-after. All298 recorded source hashes match exact58b2e05 Git objects; all3 PNG hashes match. Checkpoint and full native camera/pose/projection metrics match layered baseline. Harness comparison changes only disclosure; overview remains explicitly fitted. Preserve both this rejected capture and earlier iterations. Next planning must permit a visibly different mass silhouette or justify why an unchanged sealed outline can achieve it before another detail pass. No renderer or source edits performed.
