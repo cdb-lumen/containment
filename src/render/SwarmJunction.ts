@@ -36,8 +36,8 @@ export function swarmJunctionBlockout(){
    const t=j/n,s=k/n;
    // Inset bowed flanks and swept ends stay inside the supplied collision-safe
    // quad. The plan silhouette curves as well as the shell's upper surface.
-   const along=.015+.88*t+.10*Math.sin(Math.PI*s);
-   const across=.02+.96*s+.16*Math.sin(Math.PI*t)*(1-2*s);
+   const along=.006+.88*t+.11*Math.sin(Math.PI*s);
+   const across=.006+.988*s+.04*Math.sin(Math.PI*t)*(1-2*s);
    const p=mix(mix(a,c,along),mix(b,d,along),across);
    const h=layer===0?31:32+height*Math.sin(Math.PI*s)*Math.sin(Math.PI*(.12+.76*t));
    vertices.push(p[0]/U,h/U,p[1]/U);
@@ -59,7 +59,7 @@ export function swarmJunctionBlockout(){
   const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(vertices,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(vertices.length/3*2),2));g.setIndex(indices);g.computeVertexNormals();
   return add(name,g,chitin);
  };
- chitin.color.setHex(0x51443b);chitin.metalness=.08;chitin.roughness=.72;rib.color.setHex(0x777d6b);rib.roughness=.88;
+ chitin.color.setHex(0x39423a);chitin.metalness=.08;chitin.roughness=.72;rib.color.setHex(0x777d6b);rib.roughness=.88;
  tendon.color.setHex(0x424b3b);metal.metalness=.72;metal.roughness=.58;
  // Retain the exact sealed shot silhouette at .95m, but bury its planar top
  // beneath charcoal shell lobes. No contrasting pink platform or striped beds.
@@ -85,7 +85,7 @@ export function swarmJunctionBlockout(){
   bedIndices.push(...down,...up.map(i=>i+(levels.length-1)*count));
  }
  const bed=new T.BufferGeometry();bed.setAttribute('position',new T.Float32BufferAttribute(bedVertices,3));
- bed.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(bedVertices.length/3*2),2));bed.setIndex(bedIndices);bed.computeVertexNormals();add('organ-bed',bed,chitin);
+ bed.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(bedVertices.length/3*2),2));bed.setIndex(bedIndices);bed.computeVertexNormals();add('organ-bed',bed,dark);
  const arm=(name:string,a:XY,b:XY,c:XY,d:XY,segments:readonly (readonly [number,number,number])[])=>{
   for(const [i,[start,end,height]] of segments.entries())
    crown(`${name}-plate-${i}`,mix(a,c,start),mix(b,d,start),mix(a,c,end),mix(b,d,end),height);
@@ -105,7 +105,7 @@ export function swarmJunctionBlockout(){
  const lipVertices:number[]=[],lipIndices:number[]=[],steps=48;
  const rings:readonly (readonly [number,number,number])[]=[[49,40,31],[41,32,41],[30,23,32],[30,23,31]];
  for(const [ring,[rx,ry,h]] of rings.entries())for(let i=0;i<steps;i++){
-  const a=i/steps*Math.PI*2,warp=1+.045*Math.sin(3*a+.4);
+  const a=i/steps*Math.PI*2,warp=1+.10*Math.sin(3*a+.4);
   lipVertices.push((600+rx*Math.cos(a)*warp)/U,(h+(ring===1?1.5*Math.sin(a+.6):0))/U,(260+ry*Math.sin(a)*warp)/U);
  }
  for(let r=0;r<rings.length;r++)for(let i=0;i<steps;i++){
@@ -117,12 +117,19 @@ export function swarmJunctionBlockout(){
  const recess:XY[]=Array.from({length:48},(_,i)=>{const a=i/48*Math.PI*2;return [600+32*Math.cos(a),260+25*Math.sin(a)] as XY;});
  poly('sensory-recess',recess,31,.5,dark);
  const enamel=material('distributor-enamel',0xb9b09b,.35);
- // Pale fractured human enclosure contrasts with the warm organic underbody.
- // Only a torn corner and folded lid of the captured distributor remain exposed.
- // Shell shoulders overlap its straight edges; it no longer frames a neat box.
- box('severed-distributor',619,226,12,40,31,11.5,enamel);
- box('distributor-front-right',614,267,13,7,31,6.5,enamel);
- poly('torn-distributor-lid',[[592,225],[586,211],[613,211],[622,230]],31,12.5,enamel);
+ // A recognizable torn distribution cabinet survives on the organ's east
+ // shoulder: two connected walls, torn lid and connector bank, engulfed below.
+ box('severed-distributor',615,229,25,42,31,11.5,enamel);
+ box('distributor-front-right',611,269,29,7,31,11.5,enamel);
+ poly('torn-distributor-lid',[[610,225],[604,212],[614,212],[640,231]],31,12.5,enamel);
+ // Visible dark seams and connected terminal sockets distinguish the cabinet
+ // from pale shell fragments. None implies an interactable reward or light.
+ for(const x of [617,626,635]){
+  box('distributor-terminal-socket',x,276,5,4,33,6,dark);
+  box('distributor-terminal-core',x+1,279,3,2,34,3,metal);
+ }
+ for(const y of [238,247,256])box('distributor-vent-slot',640,y,1.5,5,34,5,dark);
+ for(const x of [618,636])box('distributor-housing-fastener',x,233,2,2,42.5,1.1,metal);
  for(let i=0;i<3;i++)box('hub-split-conduit',610+i*3,235+i*9,10,3,32,3,tendon);
  // Six flush segments reproduce the layout's service paths. They do not add solids.
  const runs:readonly (readonly XY[])[]=[[[330,90],[400,135],[550,250]],[[870,90],[800,135],[650,250]],[[600,620],[600,370],[600,280]]];

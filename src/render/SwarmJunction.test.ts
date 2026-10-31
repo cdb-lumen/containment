@@ -69,7 +69,7 @@ describe('Room16 room visuals',()=>{
  it('replaces belt bands with unequal overlapping curved shells and a broad sunken cavity',()=>{
   const root=model(),ms=meshes(root);
   expect(ms.filter(m=>/^root-.*-rib-/.test(m.name))).toHaveLength(0);
-  expect((ms.find(m=>m.name==='organ-bed')!.material as T.Material).name).toBe('swarm-charcoal');
+  expect((ms.find(m=>m.name==='organ-bed')!.material as T.Material).name).toBe('swarm-recess');
   const counts=['west','east','south'].map(side=>ms.filter(m=>m.name.startsWith(`root-${side}-plate-`)).length);
   expect(counts).toEqual([3,2,1]);
   const west=ms.filter(m=>m.name.startsWith('root-west-plate-'));
@@ -87,6 +87,24 @@ describe('Room16 room visuals',()=>{
   const ray=new T.Raycaster(new T.Vector3(600/32,4,260/32),new T.Vector3(0,-1,0));
   expect(ray.intersectObject(root,true)[0].object.name).toBe('sensory-recess');
   expect(ms.some(m=>m.name==='severed-distributor')).toBe(true);
+  disposeModel(root);
+ });
+ it('keeps recognizable cabinet components mechanically connected and exposed',()=>{
+  const root=model(),ms=meshes(root),part=(name:string)=>ms.find(m=>m.name===name)!;
+  const box=(m:T.Mesh)=>new T.Box3().setFromObject(m).expandByScalar(1e-6);
+  const housing=part('severed-distributor'),front=part('distributor-front-right'),lid=part('torn-distributor-lid');
+  expect(box(housing).intersectsBox(box(front))).toBe(true);
+  expect(box(housing).intersectsBox(box(lid))).toBe(true);
+  const sockets=ms.filter(m=>m.name==='distributor-terminal-socket'),cores=ms.filter(m=>m.name==='distributor-terminal-core');
+  expect(sockets).toHaveLength(3);expect(cores).toHaveLength(3);
+  for(let i=0;i<3;i++){expect(box(front).intersectsBox(box(sockets[i]))).toBe(true);expect(box(sockets[i]).intersectsBox(box(cores[i]))).toBe(true);}
+  for(const m of ms.filter(m=>m.name==='distributor-vent-slot'||m.name==='distributor-housing-fastener'))expect(box(housing).intersectsBox(box(m)),m.name).toBe(true);
+  // Visible upper housing and torn lid must remain above the surrounding shell.
+  for(const [x,z,name] of [[635,250,'severed-distributor'],[610,216,'torn-distributor-lid']] as const){
+   const target=new T.Vector3(x/32,43.5/32,z/32),direction=new T.Vector3(0,26,19).normalize();
+   const ray=new T.Raycaster(target.clone().addScaledVector(direction,10),direction.clone().negate());
+   expect(ray.intersectObject(root,true)[0]?.object.name).toBe(name);
+  }
   disposeModel(root);
  });
  it('uses crowned organic plates, differentiated materials and recessed wall bays',()=>{
