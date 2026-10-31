@@ -1,0 +1,34 @@
+{
+  "disclosure": "Original PCM at production cue level, before effects/master volume and compressor. Direct audition assets, not recorded gameplay or human listening acceptance.",
+  "cues": [
+    {
+      "kind": "freeze",
+      "level": 0.65,
+      "duration": 0.32,
+      "peak": 0.2455570101737976,
+      "rms": 0.05130409906916835,
+      "sha256": "9cda829adb5b198e3a1e6ea236a65f9f97a16d523a845a78375ef8d97448ee2f"
+    },
+    {
+      "kind": "shatter",
+      "level": 0.7,
+      "duration": 0.24,
+      "peak": 0.2925567030906677,
+      "rms": 0.034254024193359614,
+      "sha256": "f2625272f503873e0881c8defd21e7a7d64a5ff9fad21dabf0ebebd72d01d845"
+    },
+    {
+      "kind": "reactor",
+      "level": 0.6,
+      "duration": 0.6800208333333333,
+      "peak": 0.22135627269744873,
+      "rms": 0.059771557534287104,
+      "sha256": "b10b4103d0c19845c6ac47c43a3dd08fe76ed3021f02c7f21cdeeb0b433d9847"
+    }
+  ],
+  "sourceFiles": {
+    "src/game/audio/elementalCues.ts": "843d42b8e2aa5f7497cb372db312688b3daabac7a5d44b4b80c5b9665ab0866d",
+    "src/game/audio/AudioSystem.ts": "2adf781feed97767b46e66385abe4a7760e175e40ad072378256d525c97e9334",
+    "src/main.ts": "24e46365c606d8676c1044520999b8a2a0a22bb65e5959ca0a2deedcdebe4f73"
+  }
+}
