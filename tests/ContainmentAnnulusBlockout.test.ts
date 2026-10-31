@@ -13,7 +13,7 @@ it('integrates the approved solid core and ring without detached blockers',()=>{
 });
 it('keeps both complete ring directions and entry/exit open at player and enemy clearance',()=>{
  const g=createExpeditionGeometry({id:'room18-test',templateId:'containment-annulus',depth:17,kind:'combat',reward:'upgrade',next:[]});const ring=[[240,440],[240,220],[340,140],[860,140],[960,220],[960,660],[860,740],[340,740],[240,660],[240,440]].map(([x,y])=>({x,y}));
- for(const r of [16,28,30]){
+ for(const r of [16,28,30,38]){
   for(const path of [ring,[...ring].reverse(),[t.spawn,ring[0]],[{x:960,y:440},t.exit]])for(let i=1;i<path.length;i++)expect(canTraverseExpedition(g,path[i-1],path[i],r)).toBe(true);
   for(const p of [...t.breaches,{x:600,y:160},{x:600,y:720},{x:930,y:350},{x:930,y:490}])expect(canOccupyExpedition(g,p,r)).toBe(true);
   expect(canOccupyExpedition(g,{x:600,y:440},r)).toBe(false);

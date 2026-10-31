@@ -5,8 +5,8 @@ import {createServer} from 'vite';
 test('selection, viewport and expected modes are explicit and reject mistakes', async () => {
   const {evidenceOptions, selectRooms, captureModes} = await import('./room-evidence-options.mjs');
   const rooms = Array.from({length:20}, (_,index)=>({index,roomId:`room-${index}`,templateId:`template-${index}`}));
-  const options = evidenceOptions(['--rooms=template-1,template-7,template-19','--gameplay-all','--viewport=phone']);
-  assert.deepEqual(options.viewport,{width:390,height:844});
+  const options = evidenceOptions(['--rooms=template-1,template-7,template-19','--gameplay-all','--viewport=960x540']);
+  assert.deepEqual(options.viewport,{width:960,height:540});
   assert.deepEqual(selectRooms(rooms,options).selected.map(r=>r.index),[1,7,19]);
   assert.deepEqual(captureModes(rooms[1],20,options),['overview','gameplay']);
   assert.deepEqual(captureModes(rooms[1],20,evidenceOptions([])),['overview']);

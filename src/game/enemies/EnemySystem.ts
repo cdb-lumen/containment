@@ -47,7 +47,7 @@ export type CollisionSteeringContext = Readonly<{
 
 export type EnemySystemOptions = Readonly<{
   balance?: {health:number;damage:number;speed:number;eliteHealth:number;eliteDamage:number;specials:boolean};
-  canAttack?: (from:EnemyPlayerState,to:EnemyPlayerState)=>boolean;
+  canAttack?: (from:EnemyPlayerState & {type:StandardEnemyId},to:EnemyPlayerState)=>boolean;
   route?: (enemy: EnemyPlayerState & {radius:number}, player:EnemyPlayerState) => EnemyPlayerState|null;
   canMove?: (context: CollisionSteeringContext) => boolean;
 }>;
@@ -129,6 +129,8 @@ export type EnemySnapshot = Readonly<{
   camouflageRemainingMs: number;
   alpha: number;
   reservedChildren: number;
+  firingGoal?: {x:number;y:number;playerX:number;playerY:number};
+  firingSearch?: {decision:number;playerX:number;playerY:number};
   baseSpeed:number;champion?:'warden'|'matron';
   windupMs:number;pendingAttack:'spit'|'charge'|null;lockX:number;lockY:number;specialCooldownMs:number;chargeMs:number;
 }>;
@@ -183,6 +185,8 @@ type EnemyState = {
   camouflageRemainingMs: number;
   alpha: number;
   reservedChildren: number;
+  firingGoal?: {x:number;y:number;playerX:number;playerY:number};
+  firingSearch?: {decision:number;playerX:number;playerY:number};
   baseSpeed:number;champion?:'warden'|'matron';
   windupMs:number;pendingAttack:'spit'|'charge'|null;lockX:number;lockY:number;specialCooldownMs:number;chargeMs:number;
 };
@@ -601,7 +605,21 @@ export class EnemySystem {
       direction = normalized(targetX - enemy.x, targetY - enemy.y);
     }
 
-    const route=this.#route?.(enemy,{x:targetX,y:targetY});
+    const goalLegal=enemy.type!=='spitter'||this.#firingPositionLegal(enemy,{x:targetX,y:targetY});
+    const keepFiringGoal=enemy.type==='spitter'&&enemy.firingGoal&&(distanceToPlayer<SPITTER_MIN_RANGE||distanceToPlayer>SPITTER_MAX_RANGE||this.#canAttack?.(enemy,player)===false);
+    let route=goalLegal&&!keepFiringGoal?this.#route?.(enemy,{x:targetX,y:targetY}):enemy;
+    if(enemy.type==='spitter'&&(keepFiringGoal||!goalLegal||(route?.x===enemy.x&&route.y===enemy.y&&(targetX!==enemy.x||targetY!==enemy.y)))){
+      const alternative=this.#alternateFiringPosition(enemy,player);
+      if(alternative){targetX=alternative.goal.x;targetY=alternative.goal.y;direction=normalized(targetX-enemy.x,targetY-enemy.y);route=alternative.route;}
+      else route=enemy;
+    }
+    // Navigation returns the current position when the flank has no route.
+    // The flank is optional; retry the real player goal rather than stand still.
+    if(enemy.type==='stalker' && route?.x===enemy.x && route.y===enemy.y){
+      targetX=player.x;targetY=player.y;
+      direction=normalized(targetX-enemy.x,targetY-enemy.y);
+      route=this.#route?.(enemy,player);
+    }
     if(route){targetX=route.x;targetY=route.y;direction=normalized(targetX-enemy.x,targetY-enemy.y);}
 
     const separation = this.#separation(enemy);
@@ -613,6 +631,33 @@ export class EnemySystem {
     enemy.targetY = clamp(targetY, 0, WORLD_HEIGHT);
     enemy.velocityX = combined.x * enemy.speed;
     enemy.velocityY = combined.y * enemy.speed;
+  }
+
+  #firingPositionLegal(enemy:EnemyState,goal:EnemyPlayerState):boolean {
+    if(goal.x<enemy.radius||goal.y<enemy.radius||goal.x>WORLD_WIDTH-enemy.radius||goal.y>WORLD_HEIGHT-enemy.radius)return false;
+    // A zero-length move checks occupancy without rejecting a navigable indirect route.
+    return this.#movementAllowed({...enemy,x:goal.x,y:goal.y},goal.x,goal.y);
+  }
+
+  #alternateFiringPosition(enemy:EnemyState,player:EnemyPlayerState){
+    const usable=(goal:EnemyPlayerState)=>{
+      const range=Math.hypot(goal.x-player.x,goal.y-player.y);
+      if(range<SPITTER_MIN_RANGE||range>SPITTER_MAX_RANGE||!this.#firingPositionLegal(enemy,goal)||this.#canAttack?.({...goal,type:'spitter'},player)===false)return null;
+      const route=this.#route?.(enemy,goal);
+      if(route?.x===enemy.x&&route.y===enemy.y)return null;
+      return {goal,route};
+    };
+    const cached=enemy.firingGoal;
+    if(cached&&Math.hypot(cached.playerX-player.x,cached.playerY-player.y)<32){const result=usable(cached);if(result)return result;}
+    enemy.firingGoal=undefined;
+    const failed=enemy.firingSearch;
+    if(failed&&enemy.decisionVersion-failed.decision<5&&Math.hypot(failed.playerX-player.x,failed.playerY-player.y)<32)return null;
+    const candidates:EnemyPlayerState[]=[];
+    for(const radius of [280,340])for(let i=0;i<16;i++){const angle=i*Math.PI/8;candidates.push({x:player.x+Math.cos(angle)*radius,y:player.y+Math.sin(angle)*radius});}
+    candidates.sort((a,b)=>Math.hypot(a.x-enemy.x,a.y-enemy.y)-Math.hypot(b.x-enemy.x,b.y-enemy.y));
+    for(const goal of candidates){const result=usable(goal);if(result){enemy.firingGoal={...goal,playerX:player.x,playerY:player.y};enemy.firingSearch=undefined;return result;}}
+    enemy.firingSearch={decision:enemy.decisionVersion,playerX:player.x,playerY:player.y};
+    return null;
   }
 
   #separation(enemy: EnemyState): Vector {

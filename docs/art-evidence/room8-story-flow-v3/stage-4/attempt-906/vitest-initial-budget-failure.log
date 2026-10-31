@@ -1,0 +1,28 @@
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3
+
+ ❯ src/render/AuthoredRooms.test.ts (14 tests | 2 failed) 2444ms
+     × batches breached-loading-bay and releases every owned GPU resource once 279ms
+     × gives breached-loading-bay quiet world-scaled steel textures with owned disposal 187ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/render/AuthoredRooms.test.ts > authored architecture > batches breached-loading-bay and releases every owned GPU resource once
+AssertionError: expected 23 to be less than 22
+ ❯ src/render/AuthoredRooms.test.ts:17:112
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/render/AuthoredRooms.test.ts > authored architecture > gives breached-loading-bay quiet world-scaled steel textures with owned disposal
+AssertionError: expected 23 to be less than 22
+ ❯ src/render/AuthoredRooms.test.ts:46:189
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 82 passed | 1 skipped (84)
+      Tests  2 failed | 768 passed | 1 skipped (771)
+   Start at  21:05:43
+   Duration  12.47s (transform 3.00s, setup 0ms, import 12.88s, tests 57.65s, environment 10ms)

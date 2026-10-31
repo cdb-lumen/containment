@@ -1,0 +1,9 @@
+{
+  "base": "7a3f262886104fb024de9684958b3f85a8859f34",
+  "canonical_inputs": {
+    "rollout-sources/room15-brief.json": "ccc0a363550d88e99893130ce578f6ef4165a1f9c34bd877e9607a190a572e15",
+    "rollout-sources/roomTemplates.ts": "0e3fc4e407a5072ae3370c12311e4f1357cb98712a154af9f7f1c00fdde25629",
+    "rollout-sources/storyRoomTemplates.ts": "d02c5d7c86084f4731c5fed97861e190339664b33fd8863663c1ac7362ba1681",
+    "rollout-sources/storyRooms.ts": "f9f1248316c721c4f5c683eb9661f8ed2f95e34685b931f45b63b508e473c715"
+  }
+}
