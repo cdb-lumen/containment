@@ -1,0 +1,38 @@
+
+ RUN  v4.1.10 /home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3
+
+TAP version 13
+ ❯ scripts/cryo-model-preview.test.mjs (0 test)
+# Subtest: preview hooks replace only shell loop and local branches, not saddles or production source
+ok 1 - preview hooks replace only shell loop and local branches, not saddles or production source
+  ---
+  duration_ms: 21.8448
+  type: 'test'
+  ...
+# Subtest: actual GLB native bounds, all feet supported, actual unions connected, contained adapters
+ok 2 - actual GLB native bounds, all feet supported, actual unions connected, contained adapters
+  ---
+  duration_ms: 114.190098
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 142.999018
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/cryo-model-preview.test.mjs [ scripts/cryo-model-preview.test.mjs ]
+Error: No test suite found in file /home/chernodubv/dev/.cron-worktrees/containment-rooms/breached-loading-bay-v3/scripts/cryo-model-preview.test.mjs
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 83 passed | 1 skipped (85)
+      Tests  770 passed | 1 skipped (771)
+   Start at  21:08:00
+   Duration  12.62s (transform 2.92s, setup 0ms, import 13.21s, tests 58.08s, environment 10ms)

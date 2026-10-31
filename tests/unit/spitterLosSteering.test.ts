@@ -46,7 +46,7 @@ describe('spitter LOS steering contract', () => {
     expect(system.update(0,{x:800,y:440}).some(e=>e.type==='hazard-attack')).toBe(false);
   });
 
-  it('keeps the Gallery wall deadzone nonattacking, then fires at an explicit legal opportunity', () => {
+  it('escapes the Gallery wall deadzone without bypassing attack range or projectile clearance', () => {
     const game=new DepthGame();
     game.node=generateRun(3,3).nodes.find(n=>n.templateId==='residential-gallery')!;
     game.geometry=createExpeditionGeometry(game.node);
@@ -64,13 +64,22 @@ describe('spitter LOS steering contract', () => {
       expect(canTraverseExpedition(game.geometry,before,after,after.radius)).toBe(true);
       return events;
     };
-    for(let frame=0;frame<100;frame++) {
-      const enemy=game.enemies.getSnapshot(id)!;
-      expect(hasClearExpeditionShot(game.geometry,enemy,game.player)).toBe(true);
-      expect(Math.hypot(enemy.x-game.player.x,enemy.y-game.player.y)).toBeLessThan(180);
-      expect(step().some(e=>e.type==='hazard-attack'||e.type==='attack-warning')).toBe(false);
+    const initial=game.enemies.getSnapshot(id)!;
+    expect(Math.hypot(initial.x-game.player.x,initial.y-game.player.y)).toBeLessThan(180);
+    let escaped=false;
+    for(let frame=0;frame<100&&!escaped;frame++) {
+      const events=step(),enemy=game.enemies.getSnapshot(id)!;
+      if(events.some(e=>e.type==='hazard-attack'||e.type==='attack-warning')){
+        // Eligibility is evaluated after movement, never from the prior frame's position.
+        const range=Math.hypot(enemy.x-game.player.x,enemy.y-game.player.y);
+        expect(range).toBeGreaterThanOrEqual(180);expect(range).toBeLessThanOrEqual(420);
+        expect(canTraverseExpedition(game.geometry,enemy,game.player,9)).toBe(true);
+      }
+      escaped=events.some(e=>e.type==='hazard-attack');
     }
-    const legal={x:1000,y:500};
+    expect(escaped).toBe(true);
+    // The escaped enemy is now north of the player; move south for a clear opportunity.
+    const legal={x:1000,y:800};
     expect(canTraverseExpedition(game.geometry,game.player,legal,16)).toBe(true);
     Object.assign(game.player,legal);
     const enemy=game.enemies.getSnapshot(id)!;
