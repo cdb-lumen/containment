@@ -1,0 +1,15 @@
+# Room10 antenna foundation — independent matched visual review
+
+**Bounded foundation-proportion repair visually supported; no new static blocker found.** This does not certify the whole transmission-room art brief, ordinary encounter or traversal through the freed space.
+
+Inspected all six original PNGs in `/workspace/room10-foundation-matched-before` and `...-after`: south native,north native,explicit fitted overview. Baseline `fce0b5075ca0f25f320473fb8bc26a76db59661b`; candidate `9ffcb83f92c282946c7e94222382b6ee217940ce`.
+
+Independently verified each run's297 source-file SHA256 values against the pinned Git objects, all six PNG hashes, common recorder hash and clean identical before/after source inventories. Both manifests are passed/errors[]. Checkpoint,viewport and the complete metrics for both corresponding native poses match exactly: player position/state,camera position/projection,zoom1,room/readiness/GL status. Overview uses the identical explicit fitted-camera code; its camera matrix is not separately recorded. Native measured parity should not be represented as an additional overview matrix measurement.
+
+The original antenna sits on a large mostly empty dark rectangular platform. In the candidate, that base visibly fits the complete dish/support assembly: its left/right and rear excess is gone, while the existing hardware remains at the same place and apparent scale. The north approach is the clearest native witness of the smaller supporting base; the overview corroborates that the large unused plinth footprint has disappeared. South view likewise preserves the dish/support silhouette rather than hiding the proportional repair with a changed camera.
+
+The hardware remains recognizably separate from the central feed and surrounding six fixtures. The marine is visible at both staged poses, HUD text stays readable and no new static obstruction or disconnected support is apparent. Existing light/shadows, eight other fixtures, room boundaries and composition remain visually consistent. The antenna is still a relatively small component of the whole room; this comparison proves a proportionate foundation, not a claim that every broader landmark-scale concern is resolved.
+
+Prior independent code/fidelity review established that the physical base follows the same80×26 footprint used for collision, while hardware transforms remain unchanged; baseline's old base was200×70. These images support that visible shrink. They do not themselves demonstrate actor passage or projectile clearance through the newly freed strips. Preserve the CPU movement/shot controls and acquire ordinary native evidence separately before claiming full gameplay acceptance.
+
+The positions(600,720) and(600,150) are explicitly staged legal inspection poses. Renderer/HUD settling is disclosed, with no native traversal/full combat/performance claim; the overview deliberately fits the room rather than using shipping projection. External font CSS is suppressed. No new audio-listening, hostile visibility, final deployment, historical delivery or human approval claim follows. No source editing or renderer launch occurred in this review.
