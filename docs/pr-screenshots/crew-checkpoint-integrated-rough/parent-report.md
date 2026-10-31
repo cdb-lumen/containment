@@ -1,0 +1,13 @@
+# Room5 integrated rough decision
+
+Accept the bounded whole-room rough at `11ea751aa3063635fc40bd0b76fe5febf5698a8c`. Final Room5 art remains unaccepted. Keep Room5 active and finish one representative shield module next. Preserve the central bay, counter, weapon cradle and current collision reservations.
+
+The paired shield lines and attached counter now read as one fortified station. Parent inspected all four contact sheets plus native desktop and phone guard-bay views and the phone northern approach. The independent reviewer accepted composition from the four sheets and two native phone originals. Neither review certifies unseen pixels or final model quality. Shield faces remain thin and repetitive at shipping scale; give one module readable thickness, supporting frame and grounded feet before propagating it.
+
+24 original High-quality app captures cover six legal poses in desktop and phone, expanded story and actual Skip states. Each original records equal complete before/after capture snapshots, including camera, player, combat, enemy and HUD state. The external fixture stages legal poses and holds RAF, then settles the unchanged renderer. This is static integrated art evidence, not movement or continuous combat. Cached production fonts are explicit. Capture finished with no recorded errors and unchanged source. Earlier strict network failures remain open.
+
+The expanded phone north view hides the marine's head and upper body behind the story panel at 610,200. The ammo panel covers the eastern shield end in some views. Preserve those originals and the Skip comparison. This is an open shared presentation dependency, not a passed visibility gate. No HUD, camera, envelope or layout workaround is authorized. Other views supply composition coverage but do not clear that actor witness.
+
+Parent reran 42 existing focused tests after npm ci restored missing local dependencies. Independent CPU review ran 63 focused tests and ten successful radius16/28 routes, with direct northern crossing retained as a blocked control. The counter requires a northern exterior detour. CPU contact and shot records are separate from AI contact attacks and full visual/collision parity.
+
+No runtime source changed in this batch. The evidence-only PR update preserves source-specific prior decisions and Rooms1-4. Initial missing Playwright/Vite failures and the first visual reviewer's timeout remain in local logs. The second reviewer returned the bounded decision. The qualifying rough-stage decision resets the live no-progress counter from five to zero in a separate receipt, without rewriting historical counters or declaring the room complete. No merge or deployment.

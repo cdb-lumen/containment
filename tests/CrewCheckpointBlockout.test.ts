@@ -1,0 +1,249 @@
+import {describe,expect,it} from 'vitest';
+import * as T from 'three';
+import {environmentObstacle,appendEnvironment} from '../src/render/ShipEnvironments';
+import {STORY_ROOM_TEMPLATES} from '../src/game/roguelike/storyRoomTemplates';
+import {MAT,geometries} from '../src/render/meshParts';
+import {generateRun} from '../src/game/roguelike/run';
+import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition,hasClearExpeditionShot} from '../src/game/world/expeditionGeometry';
+import {DepthGame} from '../src/DepthGame';
+
+const room=STORY_ROOM_TEMPLATES['crew-checkpoint'];
+const footprints=room.obstacles.map(f=>({x:f.x/32,y:f.y/32,width:f.width/32,height:f.height/32}));
+const model=(index:number)=>environmentObstacle('security',footprints[index],index,'crew-checkpoint');
+const named=(root:T.Object3D,name:string)=>{root.updateWorldMatrix(true,true);const result:T.Object3D[]=[];root.traverse(o=>{if(o.name===name)result.push(o);});return result;};
+describe('Room5 checkpoint rough',()=>{
+ it('joins both room walls and leaves one breached passage beside the protected station',()=>{
+  expect([room.width,room.height,room.spawn,room.exit]).toEqual([1200,880,{x:100,y:440},{x:1100,y:440}]);
+  const [north,south,desk]=room.obstacles;
+  expect(north.y).toBe(0);expect(south.y+south.height).toBe(room.height);
+  expect(north.x).toBe(south.x);expect(north.width).toBe(south.width);
+  expect(south.y-north.y-north.height).toBe(128);
+  expect(north.x+north.width).toBe(desk.x);
+  expect(desk.y+desk.height).toBe(north.y+north.height);
+ });
+ it.each([16,28])('keeps radius %s routes and the crew position legal through production movement',radius=>{
+  const geometry=createExpeditionGeometry(generateRun(137).nodes[4]),game=new DepthGame();game.geometry=geometry;
+  const operator={x:730,y:320};
+  for(const point of [room.spawn,room.exit,operator,...room.breaches])expect(canOccupyExpedition(geometry,point,radius)).toBe(true);
+  const routes=[[[100,440],[1100,440]],[[1100,440],[100,440]],[[730,440],[730,320]],[[100,100],[400,100],[400,440],[730,440],[730,320]],[[1100,780],[730,780],[730,440],[730,320]]];
+  for(const route of routes){
+   Object.assign(game.player,{x:route[0][0],y:route[0][1],radius});
+   for(const [x,y] of route.slice(1)){
+    const from={x:game.player.x,y:game.player.y},to={x,y};expect(canTraverseExpedition(geometry,from,to,radius)).toBe(true);
+    const steps=Math.ceil(Math.hypot(x-from.x,y-from.y)/2);
+    for(let i=0;i<steps;i++){const moved=game.moveCorpse(game.player,(x-from.x)/steps,(y-from.y)/steps);expect(moved.blocked).toBe(false);Object.assign(game.player,{x:moved.x,y:moved.y});expect(canOccupyExpedition(geometry,game.player,radius)).toBe(true);}
+    expect(game.player.x).toBeCloseTo(x,5);expect(game.player.y).toBeCloseTo(y,5);
+   }
+  }
+  // Every possible crossing of the partition centre lies in its gate. Closing
+  // that gap disconnects west/east, rather than leaving a walk-around at a wall.
+  const [north,south]=room.obstacles,mid=north.x+north.width/2;
+  const closed={...geometry,blockers:[...geometry.blockers,{x:north.x,y:north.y+north.height,width:north.width,height:south.y-north.y-north.height}]};
+  let open=0;
+  for(let y=radius;y<=room.height-radius;y++){
+   const legal=canOccupyExpedition(geometry,{x:mid,y},radius);
+   if(legal){open++;expect(y).toBeGreaterThanOrEqual(north.y+north.height+radius);expect(y).toBeLessThanOrEqual(south.y-radius);}
+   expect(canOccupyExpedition(closed,{x:mid,y},radius)).toBe(false);
+  }
+  expect(open).toBeGreaterThan(0);
+ });
+ it('blocks west-approach shots at the shield and operator, but leaves the gate open',()=>{
+  const geometry=createExpeditionGeometry(generateRun(137).nodes[4]);
+  expect(hasClearExpeditionShot(geometry,{x:100,y:440},{x:1100,y:440})).toBe(true);
+  for(const y of [100,320,700])expect(hasClearExpeditionShot(geometry,{x:400,y},{x:800,y})).toBe(false);
+  for(const y of [360,400,440])expect(hasClearExpeditionShot(geometry,{x:100,y},{x:730,y:320})).toBe(false);
+ });
+ it.each([0,1])('builds low longitudinal cover with grounded diagonal braces at reservation %s',index=>{
+  const root=model(index),plates=named(root,'ballistic-panel'),braces=named(root,'rear-brace');
+  expect(plates).toHaveLength(4);expect(braces).toHaveLength(8);
+  for(const panel of plates){const b=new T.Box3().setFromObject(panel,true);expect(b.max.z-b.min.z).toBeGreaterThan(2);expect(b.max.x-b.min.x).toBeCloseTo(.48,5);expect(b.max.y).toBeLessThanOrEqual(1.3);}
+  for(const brace of braces){const b=new T.Box3().setFromObject(brace,true);expect(b.min.y).toBeLessThan(.3);expect(b.max.y).toBeGreaterThan(.9);expect(b.max.x-b.min.x).toBeGreaterThan(1);}
+ });
+ it('gives the representative west shield thick armor and a connected frame on exposed grounded skids',()=>{
+  const root=model(0),panel=new T.Box3().setFromObject(named(root,'ballistic-panel')[1],true);
+  expect(panel.max.x-panel.min.x).toBeCloseTo(.48,5);
+  const skids=named(root,'representative-skid').slice(2,4),posts=named(root,'representative-frame-post').slice(2,4);
+  expect(skids).toHaveLength(2);expect(posts).toHaveLength(2);
+  for(let i=0;i<2;i++){
+   const foot=new T.Box3().setFromObject(skids[i],true),post=new T.Box3().setFromObject(posts[i],true);
+   expect(foot.min.y).toBeCloseTo(0,5);expect(foot.max.y).toBeLessThan(panel.min.y);
+   expect(foot.intersectsBox(post)).toBe(true);expect(post.intersectsBox(panel)).toBe(true);
+   expect(foot.max.x-foot.min.x).toBeGreaterThan(2);
+  }
+  const sill=new T.Box3().setFromObject(named(root,'representative-frame-sill')[1],true);
+  expect(sill.intersectsBox(panel)).toBe(true);
+  for(const post of posts)expect(sill.intersectsBox(new T.Box3().setFromObject(post,true))).toBe(true);
+  const toes=named(root,'representative-rear-shoe').slice(2,4);expect(toes).toHaveLength(2);
+  for(let i=0;i<2;i++){
+   const toe=new T.Box3().setFromObject(toes[i],true),foot=new T.Box3().setFromObject(skids[i],true);
+   expect(toe.min.y).toBeCloseTo(0,5);expect(toe.intersectsBox(foot)).toBe(true);
+   expect(toe.max.y-foot.max.y).toBeGreaterThan(.1);
+   expect(toe.max.z-toe.min.z).toBeGreaterThan(.5);
+  }
+  expect(named(model(1),'representative-skid')).toHaveLength(8);
+ });
+ it.each([0,1])('finishes every shield with the accepted grounded construction at reservation %s',index=>{
+  const root=model(index),panels=named(root,'ballistic-panel');
+  expect(panels).toHaveLength(4);
+  const skids=named(root,'representative-skid'),posts=named(root,'representative-frame-post'),shoes=named(root,'representative-rear-shoe');
+  expect(skids).toHaveLength(8);expect(posts).toHaveLength(8);expect(shoes).toHaveLength(8);
+  expect(named(root,'ballast-base')).toHaveLength(0);
+  for(let n=0;n<4;n++){
+   const panel=new T.Box3().setFromObject(panels[n],true);
+   expect(panel.max.x-panel.min.x).toBeCloseTo(.48,5);
+   for(let side=0;side<2;side++){
+    const i=n*2+side,foot=new T.Box3().setFromObject(skids[i],true),post=new T.Box3().setFromObject(posts[i],true),shoe=new T.Box3().setFromObject(shoes[i],true);
+    expect(foot.min.y).toBeCloseTo(0,5);expect(shoe.min.y).toBeCloseTo(0,5);
+    expect(foot.intersectsBox(post)).toBe(true);expect(post.intersectsBox(panel)).toBe(true);expect(shoe.intersectsBox(foot)).toBe(true);
+   }
+  }
+ });
+ it('replaces the northern repeat with one guard counter, tucked seat and mounted terminal',()=>{
+  const root=model(2);
+  for(const name of ['guard-counter','guard-seat','guard-terminal','weapon-cradle-bed'])expect(named(root,name)).toHaveLength(1);
+  expect(named(root,'ballistic-panel')).toHaveLength(0);
+  expect(new T.Box3().setFromObject(root,true).max.y).toBeLessThanOrEqual(1.65);
+ });
+ it('secures an exposed stock, receiver and barrel to a supported cradle instead of a closed case',()=>{
+  const root=model(2),bounds=(name:string)=>{
+   const objects=named(root,name);expect(objects).toHaveLength(1);
+   return new T.Box3().setFromObject(objects[0],true);
+  };
+  expect(named(root,'secured-equipment-case')).toHaveLength(0);
+  const stock=bounds('retained-weapon-stock'),receiver=bounds('retained-weapon-receiver'),barrel=bounds('retained-weapon-barrel'),bed=bounds('weapon-cradle-bed');
+  expect(stock.intersectsBox(receiver)).toBe(true);expect(receiver.intersectsBox(barrel)).toBe(true);
+  expect(stock.max.z).toBeGreaterThan(receiver.max.z);expect(barrel.min.z).toBeLessThan(receiver.min.z);
+  for(const part of [stock,receiver,barrel])expect(bed.containsBox(new T.Box3(new T.Vector3(part.min.x,bed.min.y,part.min.z),new T.Vector3(part.max.x,bed.max.y,part.max.z)))).toBe(true);
+  expect(bed.min.y).toBeCloseTo(bounds('closed-control-cabinet').max.y,5);
+  const locks=named(root,'weapon-retaining-lock');expect(locks).toHaveLength(2);
+  for(const lock of locks){const b=new T.Box3().setFromObject(lock,true);expect(b.intersectsBox(receiver)||b.intersectsBox(barrel)).toBe(true);expect(b.min.y).toBeLessThanOrEqual(bed.max.y);}
+ });
+ it('anchors the partition to walls and shows gate damage without putting hardware in the passage',()=>{
+  for(const index of [0,1]){
+   const root=model(index),f=footprints[index];
+   expect(named(root,'wall-anchor')).toHaveLength(1);expect(named(root,'gate-jamb')).toHaveLength(1);
+   const join=new T.Box3().setFromObject(named(root,'wall-anchor')[0],true);
+   expect(index===0?join.min.z:join.max.z).toBeCloseTo(index===0?0:room.height/32,5);
+   const jamb=new T.Box3().setFromObject(named(root,'gate-jamb')[0],true);
+   expect(jamb.max.y).toBeGreaterThan(1.6);
+   expect(index===0?jamb.max.z:jamb.min.z).toBeCloseTo(index===0?f.y+f.height:f.y,5);
+  }
+  const north=model(0),slats=named(north,'forced-gate-leaf');expect(slats).toHaveLength(1);
+  const straps=named(north,'gate-leaf-strap');expect(straps).toHaveLength(1);
+  const strap=new T.Box3().setFromObject(straps[0],true);
+  // One continuous plate spans the old gaps between horizontal courses.
+  const plate=slats[0] as T.Mesh;
+  const f=footprints[0];
+  for(const y of [.53,.89,1.25]){
+   const ray=new T.Raycaster(new T.Vector3(f.x+1,y,f.y+f.height+1),new T.Vector3(0,0,-1));
+   expect(ray.intersectObject(plate).length).toBeGreaterThan(0);
+  }
+  expect(strap.intersectsBox(new T.Box3().setFromObject(plate,true))).toBe(true);
+  for(const hinge of named(north,'gate-hinge'))expect(strap.intersectsBox(new T.Box3().setFromObject(hinge,true))).toBe(true);
+  expect(named(model(1),'broken-latch')).toHaveLength(2);
+  const station=model(2),seat=new T.Box3().setFromObject(named(station,'guard-seat')[0],true),screen=new T.Box3().setFromObject(named(station,'guard-terminal')[0],true);
+  expect(seat.getCenter(new T.Vector3()).x).toBeGreaterThan(screen.getCenter(new T.Vector3()).x);
+ });
+ it('places the fallen gate beside the crossing with floor support and a clear radius28 passage',()=>{
+  expect(room.obstacles).toHaveLength(4);
+  const f=footprints[3],root=model(3),sheet=named(root,'fallen-gate-infill');
+  expect(sheet).toHaveLength(1);
+  expect(room.obstacles[3]).toEqual({x:610,y:484,width:88,height:112});
+  const infill=new T.Box3().setFromObject(sheet[0],true);
+  expect(infill.max.x-infill.min.x).toBeGreaterThan(2);
+  expect(infill.max.z-infill.min.z).toBeGreaterThan(2.8);
+  expect(named(root,'fallen-gate-strip')).toHaveLength(0);
+  const bounds=new T.Box3().setFromObject(root,true);
+  expect(bounds.min.y).toBeCloseTo(0,5);
+  expect(Math.max(bounds.max.x-bounds.min.x,bounds.max.z-bounds.min.z)).toBeGreaterThan(3);
+  expect(bounds.max.z-bounds.min.z).toBeGreaterThan(.7);
+  expect(bounds.max.y).toBeGreaterThan(1);
+  expect(bounds.max.y).toBeLessThan(1.65);
+  expect(f.y*32-440).toBeGreaterThanOrEqual(28);
+  const geometry=createExpeditionGeometry(generateRun(137).nodes[4]);
+  expect(canTraverseExpedition(geometry,{x:100,y:440},{x:1100,y:440},28)).toBe(true);
+  expect(canOccupyExpedition(geometry,{x:(f.x+f.width/2)*32,y:(f.y+f.height/2)*32},16)).toBe(false);
+  const corner=new T.Box3().setFromObject(named(root,'fallen-gate-displaced-corner')[0],true);
+  expect(corner.max.y).toBeGreaterThan(.45);
+  expect(corner.intersectsBox(infill)).toBe(true);
+ });
+ it('keeps the plate flat before the bend and samples the twisted corner without a diagonal crease',()=>{
+  const root=model(3),leaf=named(root,'fallen-gate-infill')[0],f=footprints[3];
+  const height=(x:number,z:number)=>{
+   const hits=new T.Raycaster(new T.Vector3(f.x+x,3,f.y+z),new T.Vector3(0,-1,0)).intersectObject(leaf);
+   expect(hits.length).toBeGreaterThan(0);return hits[0].point.y;
+  };
+  const flat=height(1,.5);
+  for(const x of [.48,1,1.5,2])for(const z of [.5,1,1.5,2,2.16,2.17,2.18,2.4,2.6]){
+   const lift=.39*Math.max(0,(z-2.17)/.96)*Math.max(0,(2.59-x)/2.13);
+   expect(height(x,z)-flat,`surface at ${x},${z}`).toBeCloseTo(lift,2);
+  }
+  for(const [x,z] of [[.48,2.8],[.48,3],[1,2.8],[1,3],[2.4,3.1]]){
+   const lift=.39*(z-2.17)/.96*(2.59-x)/2.13;
+   expect(height(x,z)-flat,`torn corner at ${x},${z}`).toBeCloseTo(lift,2);
+  }
+  expect(flat).toBeCloseTo(1.17,5);
+  const down=new T.Raycaster(new T.Vector3(f.x+1,3,f.y+1),new T.Vector3(0,-1,0)).intersectObject(leaf)[0];
+  const up=new T.Raycaster(new T.Vector3(f.x+1,0,f.y+1),new T.Vector3(0,1,0)).intersectObject(leaf)[0];
+  expect(down.point.y-up.point.y).toBeCloseTo(.16,5);
+ });
+ it.each([.8,.95])('matches blocked production shots with visible wreck metal at height %s',height=>{
+  const root=model(3),geometry=createExpeditionGeometry(generateRun(137).nodes[4]);root.updateWorldMatrix(true,true);
+  const shots:number[][]=[ [650,440,650,680] ];
+  for(const x of [610.5,614,630,650,675,697.5])shots.push([x,440,x,680],[x,680,x,440]);
+  for(const z of [484.5,490,520,560,590,595.5])shots.push([605,z,710,z],[710,z,605,z]);
+  shots.push([605,475,710,605],[710,605,605,475]);
+  for(const [x,z,tx,tz] of shots){
+   expect(hasClearExpeditionShot(geometry,{x,y:z},{x:tx,y:tz})).toBe(false);
+   const a=new T.Vector3(x/32,height,z/32),b=new T.Vector3(tx/32,height,tz/32);
+   expect(new T.Raycaster(a,b.clone().sub(a).normalize(),0,a.distanceTo(b)).intersectObject(root,true).length,`shot ${x},${z} to ${tx},${tz}`).toBeGreaterThan(0);
+  }
+  expect(new T.Raycaster(new T.Vector3(100/32,height,440/32),new T.Vector3(1,0,0),0,1000/32).intersectObject(root,true)).toHaveLength(0);
+ });
+ it('separates the control face and upholstered seat from the base without a full orange counter',()=>{
+  const root=model(2),mesh=(name:string)=>named(root,name)[0] as T.Mesh<T.BufferGeometry,T.MeshStandardMaterial>;
+  const luminance=(name:string)=>{const c=mesh(name).material.color;return .2126*c.r+.7152*c.g+.0722*c.b;};
+  expect(luminance('guard-seat')-luminance('station-plinth')).toBeGreaterThan(.08);
+  expect(mesh('seat-back').material).toBe(mesh('guard-seat').material);
+  expect(mesh('guard-counter').material).not.toBe(MAT.orange);
+  expect(luminance('unlit-terminal-glass')-luminance('guard-terminal')).toBeGreaterThan(.12);
+  const seat=new T.Box3().setFromObject(mesh('guard-seat'),true),back=new T.Box3().setFromObject(mesh('seat-back'),true);
+  expect(seat.intersectsBox(back)).toBe(true);
+  const counter=new T.Box3().setFromObject(mesh('guard-counter'),true),keyboard=new T.Box3().setFromObject(mesh('terminal-keyboard'),true);
+  expect(keyboard.min.y).toBeCloseTo(counter.max.y,5);
+ });
+ it('exposes the terminal face to shipping camera rays across the screen',()=>{
+  const root=model(2),glass=named(root,'unlit-terminal-glass')[0] as T.Mesh;
+  glass.geometry.computeBoundingBox();const bounds=glass.geometry.boundingBox!;
+  // DepthRenderer uses this fixed orthographic camera offset for every focus.
+  const towardCamera=new T.Vector3(0,26,19).normalize();
+  for(const u of [.1,.5,.9])for(const v of [.1,.5,.9]){
+   const target=glass.localToWorld(new T.Vector3(T.MathUtils.lerp(bounds.min.x,bounds.max.x,u),T.MathUtils.lerp(bounds.min.y,bounds.max.y,v),bounds.max.z));
+   const hit=new T.Raycaster(target.clone().addScaledVector(towardCamera,10),towardCamera.clone().negate()).intersectObject(root,true)[0];
+   expect(hit?.object.name,`screen sample ${u},${v}`).toBe('unlit-terminal-glass');
+   // Hitting the thin top/side of the glass is not seeing its screen face.
+   expect(hit.face!.normal.z,`front face at ${u},${v}`).toBeCloseTo(1,5);
+   expect(hit.point.distanceTo(target)).toBeLessThan(1e-5);
+  }
+  const normal=new T.Vector3(0,0,1).applyNormalMatrix(new T.Matrix3().getNormalMatrix(glass.matrixWorld));
+  expect(normal.dot(towardCamera),'projected face area must not collapse to an edge').toBeGreaterThan(.35);
+ });
+ it('keeps the tilted monitor attached to its stand above the keyboard',()=>{
+  const root=model(2),mesh=(name:string)=>named(root,name)[0] as T.Mesh;
+  const stem=mesh('terminal-stem'),housing=mesh('guard-terminal'),foot=mesh('terminal-foot');
+  stem.geometry.computeBoundingBox();housing.geometry.computeBoundingBox();foot.geometry.computeBoundingBox();
+  for(const [y,support] of [[stem.geometry.boundingBox!.min.y,foot],[stem.geometry.boundingBox!.max.y,housing]] as const){
+   const joint=stem.localToWorld(new T.Vector3(0,y,0));
+   expect(support.geometry.boundingBox!.containsPoint(support.worldToLocal(joint))).toBe(true);
+  }
+  const screenBounds=new T.Box3().setFromObject(housing,true),keyboardBounds=new T.Box3().setFromObject(mesh('terminal-keyboard'),true);
+  expect(screenBounds.min.y).toBeGreaterThan(keyboardBounds.max.y);
+ });
+ it.each([0,1,2,3])('keeps all vertices and flattened geometry inside footprint %s with cached resources',index=>{
+  const root=model(index),f=footprints[index],world=new T.Group();
+  const check=(object:T.Object3D)=>{const b=new T.Box3().setFromObject(object,true);expect(b.min.x).toBeGreaterThanOrEqual(f.x-1e-5);expect(b.max.x).toBeLessThanOrEqual(f.x+f.width+1e-5);expect(b.min.z).toBeGreaterThanOrEqual(f.y-1e-5);expect(b.max.z).toBeLessThanOrEqual(f.y+f.height+1e-5);expect(b.min.y).toBeGreaterThanOrEqual(-1e-5);};
+  check(root);expect(root.userData.footprint).toEqual(f);appendEnvironment(world,root);check(world);
+  expect(world.children.length).toBeLessThan(100);
+  for(const child of world.children){const m=child as T.Mesh;expect([...geometries.values()]).toContain(m.geometry);expect(Object.values(MAT)).toContain(m.material);}
+ });
+});

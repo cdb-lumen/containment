@@ -1,0 +1,134 @@
+diff --git a/src/render/AuthoredRooms.ts b/src/render/AuthoredRooms.ts
+index 0b3554b..274671c 100644
+--- a/src/render/AuthoredRooms.ts
++++ b/src/render/AuthoredRooms.ts
+@@ -447,7 +447,7 @@ function passengerVault(room:Fabricator,t:RoomPlan){
+  wall(34,12,440,12,24,800);wall(1166,12,440,12,24,800);
+ }
+ function breachedBay(f:Fabricator,t:RoomPlan){
+- // Stage3: working freight apron, reinforced hull and a contained boarding scar.
++ // Stage4: connected growth, torn repair edges and supported freight assemblies.
+  // All apron relief is flush. Raised details remain inside existing solid cover.
+  f.deck.color.setHex(0x354246);
+  f.chitin.color.setHex(0x293c30);f.ribs.color.setHex(0x788167);
+@@ -502,12 +502,20 @@ function breachedBay(f:Fabricator,t:RoomPlan){
+     f.pipe(p,p.clone().setY(.3),.045,f.bolts);
+    }
+   }
+-  const growth=f.chitin;
+-  // Rough growth follows the south boarding seam, contained inside solid cover.
++  const growth=f.chitin.clone();growth.name='room8-seam-growth';growth.color.setHex(0x46523a);
++  // Three unequal colonies share a low root along the sealed boarding seam.
++  // Each branches inward into the body instead of repeating isolated beads.
+   const a=hole[3],end=hole[4];
+-  for(let i=0;i<7;i++){
+-   const s=(i+.5)/7,x=(a.x+(end.x-a.x)*s)*.88+b.x*U*.12,z=(a.y+(end.y-a.y)*s)*.88+b.z*U*.12;
+-   f.ellipsoid(x/U,.34,z/U,.33+(i%3)*.08,.18+(i%2)*.1,.32,growth);
++  const seam=(s:number,inset=.12)=>v((a.x+(end.x-a.x)*s)/U,.32,(a.y+(end.y-a.y)*s)/U).lerp(v(b.x,.32,b.z),inset);
++  let previous=seam(.09);
++  for(const s of [.2,.33,.44,.57,.72,.88]){const p=seam(s);f.pipe(previous,p,.09,growth,.13);previous=p;}
++  for(const [s,size,inset]of [[.19,.46,.13],[.47,.64,.17],[.79,.34,.11]]){
++   const p=seam(s,inset),root=seam(s);
++   f.pipe(root,p,.16,growth,.22);f.ellipsoid(p.x,.4,p.z,size,.27,size*.65,growth);
++   for(const side of [-1,1]){
++    const q=seam(s+side*.045,inset+.07);
++    f.pipe(p,q,.13,growth,.055);f.ellipsoid(q.x,.37,q.z,size*.42,.15,size*.3,growth);
++   }
+   }
+   // Cross-section loft: a narrow dorsal keel, high shoulders and rolled-under
+   // flanks. Both shell and ribs use this SAME profile, so ribs cannot sink into it.
+@@ -532,17 +540,30 @@ function breachedBay(f:Fabricator,t:RoomPlan){
+   for(const [index,direction]of [[0,-1],[sections.length-1,1]]){const section=sections[index];if(!section)continue;const tip=section[6].clone().addScaledVector(axis,direction*.22).setY(-.32);for(let j=0;j<12;j++)for(const p of direction<0?[tip,section[j+1],section[j]]:[tip,section[j],section[j+1]])vertices.push(p.x,p.y,p.z);}
+   const carapace=new T.BufferGeometry();carapace.setAttribute('position',new T.Float32BufferAttribute(vertices,3));carapace.setAttribute('uv',new T.Float32BufferAttribute(new Array(vertices.length/3*2).fill(0),2));carapace.computeVertexNormals();f.add(carapace,f.chitin);
+   for(let k=1;k<sections.length-1;k++){
+-   const section=sections[k];for(let j=0;j<12;j++)f.pipe(section[j].clone().add(v(0,.11,0)),section[j+1].clone().add(v(0,.11,0)),.095,f.ribs);
+-   const crown=section[6];f.box(crown.x,crown.y+.15,crown.z,.4,.2,.27,f.rust,.035,-Math.atan2(axis.z,axis.x));
+-   if(k<sections.length-2)f.pipe(crown.clone().add(v(0,.08,0)),sections[k+1][6].clone().add(v(0,.08,0)),.12,f.dark);
++   const section=sections[k],crown=section[6];
++   // Missing bands and short flank ribs interrupt the old cage-like rhythm.
++   // Ribs stay on the loft, with asymmetric terminations and thicker roots.
++   if(k%5!==2)for(let j=k%3===0?2:0;j<(k%4===0?10:12);j++){
++    const lift=v(0,.075,0),radius=.07+(k%3)*.018;
++    f.pipe(section[j].clone().add(lift),section[j+1].clone().add(lift),radius,f.ribs,radius*.85);
++   }
++   if(k%3!==1)f.ellipsoid(crown.x,crown.y+.08,crown.z,.22,.13,.19,f.chitin);
++   if(k<sections.length-2)f.pipe(crown.clone().add(v(0,.04,0)),sections[k+1][6].clone().add(v(0,.04,0)),.09,f.dark);
+   }
+-  // Ruptured, angled hull petals are local to the scar, not route obstacles.
++  const torn=f.edge.clone();torn.name='room8-torn-metal';torn.color.setHex(0x8a9995);torn.roughness=.72;
++  // Torn plates have notched silhouettes and folded inner tips, not square tiles.
+   for(let i=0;i<hole.length;i++){const a=hole[i],q=hole[(i+1)%hole.length],x=(a.x+q.x)/2/U,z=(a.y+q.y)/2/U,angle=-Math.atan2(q.y-a.y,q.x-a.x),len=Math.hypot(q.x-a.x,q.y-a.y)/U;
+    const tangent=v(Math.cos(-angle),0,Math.sin(-angle)),inward=v(b.x-x,0,b.z-z).normalize();
+-   // Short folded plates expose bright torn metal, interrupted by hydraulic shoes.
+-   for(let s=-len/2+.5;s<len/2-.2;s+=.85){const p=v(x,0,z).addScaledVector(tangent,s).addScaledVector(inward,.18);
+-    const fold=Math.abs(Math.round(s*13))%4;
+-    f.add(new T.BoxGeometry(.52+fold*.065,.075,.29+fold*.09),fold===0?f.rust:f.edge,p.clone().setY(.13+fold*.055),new T.Euler(.2+fold*.13,angle,.07*(fold-1)));
++   for(let s=-len/2+.6,n=0;s<len/2-.4;s+=.83+(n++%3)*.16){
++    const p=v(x,.22,z).addScaledVector(tangent,s).addScaledVector(inward,.08),fold=(n+i)%3;
++    const profile=[[-.3,0],[.31,0],[.26,.2],[.09,.16],[-.04,.42+fold*.08],[-.22,.3]];
++    const points=profile.map(([u,d])=>p.clone().addScaledVector(tangent,u).addScaledVector(inward,d).add(v(0,d*(.5+fold*.22),0)));
++    const positions:number[]=[];
++    const faces=T.ShapeUtils.triangulateShape(profile.map(([u,d])=>new T.Vector2(u,d)),[]);
++    for(const face of faces)for(const index of face){const p=points[index];positions.push(p.x,p.y,p.z);}
++    const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(positions,3));g.setAttribute('uv',new T.Float32BufferAttribute(new Array(positions.length/3*2).fill(0),2));g.computeVertexNormals();
++    torn.side=T.DoubleSide;f.add(g,torn);
++    for(let j=1;j<points.length;j++)f.pipe(points[j],points[(j+1)%points.length],.018,f.rust);
+    }
+    const anchor=v(x,0,z).addScaledVector(inward,.25),toe=anchor.clone().addScaledVector(inward,.8);
+    f.box(anchor.x,.32,anchor.z,.7,.5,.66,f.paint,.035,angle);f.box(anchor.x,.6,anchor.z,.58,.06,.5,f.bronze,.02,angle);
+@@ -553,18 +574,49 @@ function breachedBay(f:Fabricator,t:RoomPlan){
+  }
+  const b=bounds(outline(t));f.sign('EMERGENCY HULL SEAL / HOLD',b.x,1.35,b.z0+.35,8);
+  equipment(f,{...t,obstacles:t.obstacles.slice(0,1)},'cargo');
+- // Outbound low pallet: a full-footprint base with two strapped loads.
+- // Dimensions come from the same Room8 rectangles used by collision.
++ const supports=f.edge.clone();supports.name='room8-freight-supports';supports.color.setHex(0x71817b);
++ // Fork sockets, corner castings and a ribbed load-bearing skirt stay within
++ // the pressure container's existing collision rectangle.
++ for(const r of t.obstacles.slice(0,1)){
++  const x=(r.x+r.width/2)/U,z=(r.y+r.height/2)/U,w=r.width/U,d=r.height/U;
++  for(const side of [-1,1]){
++   const zz=z+side*(d/2-.05);
++   for(const dx of [-w*.29,w*.29]){
++    f.box(x+dx,.16,zz,.62,.27,.09,supports,.02);
++    f.box(x+dx,.17,zz+side*.048,.39,.11,.015,f.dark,.005);
++   }
++   for(const dx of [-w/2+.14,w/2-.14]){
++    f.box(x+dx,.48,zz,.23,.63,.1,supports,.02);
++    f.box(x+dx,.81,zz,.28,.16,.1,f.bronze,.025);
++   }
++  }
++ }
++ // Outbound pallet has visible skids, fork gaps, slatted deck and strapped loads.
+  for(const r of t.obstacles.slice(1)){
+   const x=(r.x+r.width/2)/U,z=(r.y+r.height/2)/U,w=r.width/U,d=r.height/U;
+-  f.box(x,.1,z,w,.2,d,f.dark,.03);
++  for(const side of [-1,0,1])f.box(x+side*w*.36,.09,z,.22,.18,d-.05,supports,.025);
++  for(let i=0;i<5;i++)f.box(x,.21,z-d*.4+i*d*.2,w,.1,.21,supports,.015);
+   for(const side of [-1,1]){
+    const cx=x+side*w*.235;
+-   f.box(cx,.39,z,w*.43,.58,d-.12,f.ivory,.07);
+-   f.box(cx,.69,z,w*.43,.04,.13,f.bronze,.01);
+-   for(const edge of [-1,1])f.box(cx,.4,z+edge*(d/2-.075),.14,.6,.05,f.bronze,.01);
++   f.box(cx,.55,z,w*.43,.58,d-.12,f.ivory,.07);
++   f.box(cx,.85,z,w*.43,.04,.13,f.bronze,.01);
++   for(const edge of [-1,1]){
++    f.box(cx,.56,z+edge*(d/2-.075),.14,.6,.05,f.bronze,.01);
++    f.box(cx,.53,z+edge*(d/2-.045),.25,.17,.04,f.dark,.015);
++    f.box(cx,.53,z+edge*(d/2-.021),.16,.1,.02,supports,.008);
++   }
+   }
+  }
++ // Local cladding on the existing east exit fixture. The shared exit behavior
++ // and opening are untouched; pale post sleeves make its dark frame readable.
++ const exitTrim=f.edge.clone();exitTrim.name='room8-east-fixture';exitTrim.color.setHex(0x8a9995);
++ const exit=AUTHORED_ROOM_TOPOLOGIES['breached-loading-bay']!.exit,ex=exit.x/U,ez=exit.y/U;
++ for(const side of [-1,1]){
++  f.box(ex-.069,.7,ez+side*.7,.018,1.36,.18,exitTrim,.005);
++  f.box(ex,.1,ez+side*.7,.18,.16,.21,f.bronze,.018);
++  f.box(ex-.115,1.5,ez+side*.49,.03,.17,.43,exitTrim,.01);
++ }
++ for(const side of [-1,1])f.box(ex+side*.68,.051,ez,.1,.008,1.35,exitTrim,0);
+ }
+ function reactorFloor(f:Fabricator,t:RoomPlan){
+  for(const hole of t.voids??[]){const b=bounds(hole),radius=Math.min(b.w,b.d)*.42;

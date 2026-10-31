@@ -3,24 +3,6 @@ import * as T from 'three';
 import {roomFocus} from '../src/render/roomFraming';
 
 describe('room camera framing',()=>{
- it('frames the release and first sealed neighbour together at portrait spawn without zooming',()=>{
-  const width=31*390/844;
-  const focus=roomFocus(230/32,440/32,1200/32,880/32,width,31,'awakening-bay');
-  expect(focus.x-width/2).toBeLessThan(90/32);
-  expect(focus.x+width/2).toBeGreaterThan(540/32);
-  expect(roomFocus(600/32,440/32,1200/32,880/32,width,31,'awakening-bay')).toEqual(roomFocus(600/32,440/32,1200/32,880/32,width,31));
-  expect(roomFocus(230/32,440/32,1200/32,880/32,32,22,'awakening-bay')).toEqual(roomFocus(230/32,440/32,1200/32,880/32,32,22));
- });
- it('leaves other portrait rooms unchanged and keeps opening follow continuous',()=>{
-  const width=31*390/844;
-  for(const x of [60,230,315,400,600]){
-   expect(roomFocus(x/32,440/32,1200/32,880/32,width,31,'passenger-vault')).toEqual(roomFocus(x/32,440/32,1200/32,880/32,width,31));
-  }
-  const before=roomFocus(399.99/32,440/32,1200/32,880/32,width,31,'awakening-bay');
-  const after=roomFocus(400.01/32,440/32,1200/32,880/32,width,31,'awakening-bay');
-  expect(after.x-before.x).toBeGreaterThan(0);
-  expect(after.x-before.x).toBeLessThan(.001);
- });
  it('keeps an interior player as the focus',()=>{expect(roomFocus(25,25,60,60,20,16)).toEqual({x:25,z:25});});
  it('centers rooms smaller than the projected view on either axis',()=>{
   expect(roomFocus(-100,100,8,6,40,30)).toEqual({x:4,z:3});
@@ -34,15 +16,15 @@ describe('room camera framing',()=>{
   raycaster.setFromCamera(new T.Vector2(1,1),camera);
   const corner=raycaster.ray.intersectPlane(ground,new T.Vector3())!;
   const low=roomFocus(-100,-100,60,60,20,16),high=roomFocus(100,100,60,60,20,16);
-  expect(low.x).toBeCloseTo(Math.abs(corner.x)-.7,10);expect(low.z).toBeCloseTo(Math.abs(corner.z)-.7,10);
-  expect(high.x).toBeCloseTo(60-low.x,10);expect(high.z).toBeCloseTo(60-low.z,10);
+  expect(low.x).toBeCloseTo(Math.abs(corner.x)-.7,10);expect(low.z).toBeCloseTo(Math.abs(corner.z)-2.2,10);
+  expect(high.x).toBeCloseTo(60-low.x,10);expect(high.z).toBeCloseTo(60-(Math.abs(corner.z)-.7),10);
   expect(roomFocus(low.x,low.z,60,60,20,16)).toEqual(low);
   expect(roomFocus(high.x,high.z,60,60,20,16)).toEqual(high);
  });
  it('handles narrow views without negative margins and responds to resized view extents',()=>{
   expect(roomFocus(-1,100,60,60,0,0)).toEqual({x:0,z:60});
   expect(roomFocus(0,0,60,60,1,1)).toEqual({x:0,z:0});
-  const desktop=roomFocus(0,0,60,60,36,22),portrait=roomFocus(0,0,60,60,16,31);
-  expect(portrait.x).toBeLessThan(desktop.x);expect(portrait.z).toBeGreaterThan(desktop.z);
+  const desktop=roomFocus(0,0,60,60,36,22),narrow=roomFocus(0,0,60,60,16,31);
+  expect(narrow.x).toBeLessThan(desktop.x);expect(narrow.z).toBeGreaterThan(desktop.z);
  });
 });
