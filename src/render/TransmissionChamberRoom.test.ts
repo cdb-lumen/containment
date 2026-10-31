@@ -2,7 +2,7 @@ import {describe,it,expect,vi} from 'vitest';
 import {readFileSync} from 'node:fs';
 import * as T from 'three';
 import {ROOM_TEMPLATES} from '../game/roguelike/roomTemplates';
-import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition} from '../game/world/expeditionGeometry';
+import {createExpeditionGeometry,canOccupyExpedition,canTraverseExpedition,hasClearExpeditionShot} from '../game/world/expeditionGeometry';
 import {clearPolygonTopology} from '../game/world/polygonGeometry';
 import {authoredRoom} from './AuthoredRooms';
 import {disposeModel} from './meshParts';
@@ -53,6 +53,8 @@ describe('Room10 rough placement',()=>{
   expect(room.getObjectByName('antenna-hardware')!.scale.x).toBe(.32);
   const g=geometry();for(const r of [16,28,38])expect(canTraverseExpedition(g,{x:510,y:50},{x:510,y:150},r)).toBe(true);
   expect(canOccupyExpedition(g,{x:600,y:97},0)).toBe(false);
+  expect(hasClearExpeditionShot(g,{x:510,y:50},{x:510,y:150})).toBe(true);
+  expect(hasClearExpeditionShot(g,{x:600,y:50},{x:600,y:150})).toBe(false);
   for(let i=0;i<layout.solids.length;i++)if(layout.solids[i].id!=='antenna-truss')expect(layout.solids[i]).toEqual(priorSolids[i]);
   disposeModel(room);
  });
