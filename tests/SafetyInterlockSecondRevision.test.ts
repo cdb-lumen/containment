@@ -22,6 +22,19 @@ describe('Room12 second service revision',()=>{
   for(const hinge of hinges)for(const component of components)expect(bounds(hinge).intersectsBox(bounds(component)),`${hinge.name} must clear ${component.name}`).toBe(false);
   disposeModel(r);
  });
+ it('does not pass the open service cover through exposed capacitors or cooling fins',()=>{
+  const r=model(1),panel=part(r,'open-ai-service-panel'),components:T.Object3D[]=[];
+  r.updateMatrixWorld(true);r.traverse(o=>{if(o.name==='cooling-fin'||o.name==='capacitor-can')components.push(o);});
+  for(const component of components){
+   const b=bounds(component),size=b.getSize(new T.Vector3());
+   for(const fx of [.2,.5,.8])for(const fz of [.2,.5,.8]){
+    const start=new T.Vector3(b.min.x+size.x*fx,b.min.y+.001,b.min.z+size.z*fz);
+    const ray=new T.Raycaster(start,new T.Vector3(0,1,0),0,size.y-.002);
+    expect(ray.intersectObject(panel,true).length,`cover penetrates ${component.name}`).toBe(0);
+   }
+  }
+  disposeModel(r);
+ });
  it('keeps the pulled lead attached at both ends with a supported route and a visible isolation gap',()=>{
   const r=model(1);r.updateMatrixWorld(true);
   const lead=part(r,'disconnected-lead') as T.Mesh,g=lead.geometry as T.TubeGeometry;
