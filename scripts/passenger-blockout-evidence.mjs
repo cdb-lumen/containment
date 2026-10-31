@@ -76,7 +76,7 @@ try{
    }
   }catch(error){await page.screenshot({path:resolve(out,`${name}-FAILED.png`)}).catch(()=>{});await writeFile(resolve(out,'failure.json'),JSON.stringify({sha,name,error:String(error),errors},null,2));throw error;}finally{await context.close();}
  }
- assert.equal(results.length,14);assert.equal(new Set(results.map(r=>r.file)).size,14);
+ const expected=views.length+1;assert.equal(results.length,expected);assert.equal(new Set(results.map(r=>r.file)).size,expected);
  for(const r of results)assert.equal(createHash('sha256').update(await readFile(resolve(out,r.file))).digest('hex'),r.sha256);
- console.log('Verified 14 unique captures and hashes');
+ console.log(`Verified ${expected} unique captures and hashes`);
 }finally{await browser?.close();await new Promise((res,rej)=>server.httpServer.close(e=>e?rej(e):res()));}
