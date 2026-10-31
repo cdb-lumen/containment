@@ -25,7 +25,8 @@ describe('Room19 desktop observation opening',()=>{
  it('keeps center-room framing and other rooms unchanged',()=>{
   const args=[828/32,440/32,room.width/32,room.height/32,39.1111111111,22] as const;
   expect(roomFocus(...args,room.id)).toEqual(roomFocus(...args));
-  for(const id of Object.keys(ROOM_TEMPLATES).filter(id=>id!==room.id)){
+  // Shielding Gate has its own independently tested north-edge actor allowance.
+  for(const id of Object.keys(ROOM_TEMPLATES).filter(id=>id!==room.id&&id!=='shielding-gate')){
    expect(roomFocus(10,2,37.5,27.5,39.1111111111,22,id)).toEqual(roomFocus(10,2,37.5,27.5,39.1111111111,22));
   }
  });
