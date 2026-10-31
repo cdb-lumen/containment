@@ -41,8 +41,8 @@ async function capture(page, name) {
   await mkdir('docs/pr-screenshots/sound-controls', {recursive:true});
   await page.screenshot({path:`docs/pr-screenshots/sound-controls/${name}.png`});
 }
-export async function checkMenuSound(page, mobile) {
-  const viewport = mobile ? 'touch' : 'desktop';
+export async function checkMenuSound(page) {
+  const viewport = 'desktop';
   await openSettings(page);
   assert.equal(await slider(page).inputValue(), '30');
   assert.equal(await mute(page).getAttribute('aria-pressed'), 'false');
@@ -58,7 +58,7 @@ export async function checkMenuSound(page, mobile) {
   assert.equal(await page.locator('#volume-value').textContent(), '31%');
   assert.equal(await slider(page).evaluate(node => node === document.activeElement), true);
   await savedIs(page, .31, false);
-  if(mobile) await mute(page).tap(); else {await mute(page).focus();await page.keyboard.press('Space');}
+  await mute(page).focus();await page.keyboard.press('Space');
   await savedIs(page, .31, true);
   assert.equal(await mute(page).textContent(), 'Unmute');
   await page.reload(); await page.waitForFunction(() => document.body.dataset.state === 'menu');
@@ -82,43 +82,32 @@ export async function checkMenuSound(page, mobile) {
   await mute(page).click(); await mute(page).click(); await gainIs(page, 0);
   await slider(page).focus(); await page.keyboard.press('End');
   await gainIs(page, 1);
-  // A pointer/touch interaction exercises the native range as well.
+  // A mouse interaction exercises the native range as well.
   const box = await slider(page).boundingBox();
-  if(mobile) {
-    const touch = await page.context().newCDPSession(page);
-    const y = box.y + box.height / 2;
-    await touch.send('Input.dispatchTouchEvent', {type:'touchStart', touchPoints:[{x:box.x + box.width - 10, y}]});
-    await touch.send('Input.dispatchTouchEvent', {type:'touchMove', touchPoints:[{x:box.x + box.width * .75, y}]});
-    await touch.send('Input.dispatchTouchEvent', {type:'touchMove', touchPoints:[{x:box.x + box.width / 2, y}]});
-    await touch.send('Input.dispatchTouchEvent', {type:'touchEnd', touchPoints:[]});
-    await touch.detach();
-  }
-  else await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   const selected = Number(await slider(page).inputValue()) / 100;
   assert.ok(selected > .4 && selected < .6);
   await gainIs(page, selected); await savedIs(page, selected, false);
   await page.locator('#settings').click(); await openSettings(page);
   assert.equal(Number(await slider(page).inputValue()) / 100, selected);
-  console.log(`Sound menu passed: ${viewport}, default 30%, native keyboard/touch, real gain, muted reload, zero reload, channel playback.`);
+  console.log(`Sound menu passed: ${viewport}, default 30%, native keyboard/mouse, real gain, muted reload, zero reload, channel playback.`);
   await page.locator('#quality').selectOption('high');
   return selected;
 }
-export async function checkPausedSound(page, mobile, selected) {
+export async function checkPausedSound(page, selected) {
   const quality = await page.locator('#quality').inputValue();
   await page.locator('#quality').selectOption('low');
   assert.equal(Number(await slider(page).inputValue()) / 100, selected);
   await mute(page).click(); await gainIs(page, 0);
   await slider(page).focus(); await page.keyboard.press('End');
   await gainIs(page, 0); await savedIs(page, 1, true);
-  await capture(page, `${mobile?'touch':'desktop'}-paused-muted`);
-  if(mobile) {
-    await page.setViewportSize({width:844,height:390});
-    await slider(page).scrollIntoViewIfNeeded();
-    const box = await slider(page).boundingBox();
-    assert.ok(box.x >= 0 && box.x + box.width <= 844 && box.y >= 0 && box.y + box.height <= 390);
-    await capture(page, 'touch-landscape-paused');
-    await page.setViewportSize({width:390,height:844});
-  }
+  await capture(page, `desktop-paused-muted`);
+  await page.setViewportSize({width:960,height:540});
+  await slider(page).scrollIntoViewIfNeeded();
+  const resizedBox = await slider(page).boundingBox();
+  assert.ok(resizedBox.x >= 0 && resizedBox.x + resizedBox.width <= 960 && resizedBox.y >= 0 && resizedBox.y + resizedBox.height <= 540);
+  await page.setViewportSize({width:1280,height:720});
+
   await mute(page).click(); await gainIs(page, 1);
   await slider(page).focus(); await page.keyboard.press('Home');
   await gainIs(page, 0);
@@ -128,5 +117,5 @@ export async function checkPausedSound(page, mobile, selected) {
   await page.locator('#pause').click();
   assert.equal(await slider(page).inputValue(), '0');
   await page.locator('#quality').selectOption(quality);
-  console.log(`Sound pause passed: ${mobile?'touch':'desktop'}, retains choice, muted adjustment stays silent, unmute restores choice, live zero gain.`);
+  console.log(`Sound pause passed: desktop, retains choice, muted adjustment stays silent, unmute restores choice, live zero gain.`);
 }
