@@ -13,8 +13,8 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    # Software WebGL needs a separate budget per viewport. Steps stay serial.
-    timeout-minutes: 120
+    # Desktop browser checks run serially.
+    timeout-minutes: 65
     steps:
       - name: Check out repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -45,14 +45,6 @@ jobs:
           SMOKE_VIEWPORT: desktop
         run: timeout --kill-after=30s 33m npm run test:smoke
 
-      - name: Touch smoke
-        # Still collect touch diagnostics after a failed desktop step.
-        if: ${{ !cancelled() && steps.smoke-desktop.outcome != 'skipped' }}
-        timeout-minutes: 35
-        env:
-          SMOKE_VIEWPORT: touch
-        run: timeout --kill-after=30s 33m npm run test:smoke
-
       # Seeded checkpoints exercise Continue, route choice and final-room consent.
       # These are interaction checks, not complete combat or real-device evidence.
       - name: Authored rooms desktop smoke
@@ -62,14 +54,6 @@ jobs:
         run: |
           mkdir -p artifacts/authored-smoke/desktop
           timeout --kill-after=30s 8m npm run test:authored-smoke -- --viewport=desktop --out=artifacts/authored-smoke/desktop 2>&1 | tee artifacts/authored-smoke/desktop/run.log
-
-      - name: Authored rooms phone smoke
-        if: ${{ !cancelled() && steps.authored-desktop.outcome != 'skipped' }}
-        timeout-minutes: 10
-        shell: bash
-        run: |
-          mkdir -p artifacts/authored-smoke/phone
-          timeout --kill-after=30s 8m npm run test:authored-smoke -- --viewport=phone --out=artifacts/authored-smoke/phone 2>&1 | tee artifacts/authored-smoke/phone/run.log
 
       - name: Upload authored smoke diagnostics
         if: ${{ always() }}

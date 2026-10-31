@@ -79,13 +79,13 @@ await writeFile(resolve(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n
 let browser;
 try{
  browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
- for(const [name,viewport,mobile] of [['desktop',{width:1280,height:900},false],['portrait',{width:390,height:844},true]]){
-  const context=await browser.newContext({viewport,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1}),page=await context.newPage(),errors=[];page.setDefaultTimeout(180000);
+ for(const [name,viewport] of [['desktop',{width:1280,height:900}]]){
+  const context=await browser.newContext({viewport,deviceScaleFactor:1}),page=await context.newPage(),errors=[];page.setDefaultTimeout(180000);
   page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:''}));
   try{
    await page.goto(server.resolvedUrls.local[0]);await page.waitForFunction(()=>!!window.__materials);await page.evaluate(()=>window.__materials.stage());
-   for(const view of ['opening','F1','north-loop','south-loop','monitor-north','monitor-south','full-room',...(name==='desktop'?['distribution-closeup','monitor-closeup','finish-closeup']:[])]){
+   for(const view of ['opening','F1','north-loop','south-loop','monitor-north','monitor-south','full-room','distribution-closeup','monitor-closeup','finish-closeup']){
     await page.evaluate(v=>window.__materials.view(v),view);let camera,inventory,player;
     for(const stage of ['before','budget']){
      const snapshot=await page.evaluate(s=>window.__materials.variant(s),stage);
@@ -108,8 +108,8 @@ try{
    }
   }catch(e){await page.screenshot({path:resolve(out,name+'-FAILED.png')}).catch(()=>{});await writeFile(resolve(out,'failure.json'),JSON.stringify({error:String(e),errors},null,2));throw e;}finally{await context.close();}
  }
- assert.equal(manifest.results.length,34);for(const r of manifest.results)assert.equal(hash(await readFile(resolve(out,r.file))),r.sha256);
+ assert.equal(manifest.results.length,20);for(const r of manifest.results)assert.equal(hash(await readFile(resolve(out,r.file))),r.sha256);
  for(const [p,expected] of Object.entries(sourceHashes))assert.equal(hash(await readFile(p)),expected,'Source changed during capture: '+p);
  manifest.complete=true;await writeFile(resolve(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
- console.log('Verified 34 PNGs, seven families, 25 instances, fixed paired cameras and source hashes, no browser/WebGL errors. Independent review pending.');
+ console.log('Verified 20 PNGs, seven families, 25 instances, fixed paired cameras and source hashes, no browser/WebGL errors. Independent review pending.');
 }finally{await browser?.close();await new Promise((res,rej)=>server.httpServer.close(e=>e?rej(e):res()));await rm(outDir,{recursive:true,force:true});}

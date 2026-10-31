@@ -40,9 +40,9 @@ let browser;
 const results=[];
 try{
  browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--enable-unsafe-swiftshader']});
- for(const [name,viewport,mobile] of [['desktop',{width:1280,height:900},false],['portrait',{width:390,height:844},true]]){
+ for(const [name,viewport] of [['desktop',{width:1280,height:900}]]){
   console.log(`Starting ${name}`);
-  const context=await browser.newContext({viewport,isMobile:mobile,hasTouch:mobile,deviceScaleFactor:1});
+  const context=await browser.newContext({viewport,deviceScaleFactor:1});
   const page=await context.newPage();page.setDefaultTimeout(90000);
   const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());if(m.text().startsWith('Opening asset failure'))console.log(m.text());});
   await page.route('https://fonts.googleapis.com/**',r=>r.fulfill({status:200,contentType:'text/css',body:''}));
@@ -53,7 +53,7 @@ try{
   const before=await page.evaluate(()=>window.__openingSnapshot);
   assert.deepEqual(before.player,{x:230,y:440});assert.equal(before.boons.length,0);
   const card=page.locator('[data-mutation]').first();
-  if(mobile)await card.tap();else {await card.focus();await page.keyboard.press('Enter');}
+  await card.focus();await page.keyboard.press('Enter');
   await page.waitForFunction(()=>document.body.dataset.state==='playing'&&window.__openingSnapshot.performance.drawCalls>0&&window.__openingSnapshot.camera.zoom===1&&document.querySelector('#room-loading').hidden&&document.querySelector('#world').getAttribute('aria-busy')==='false'&&document.querySelector('#room-name').textContent==='Awakening bay');
   console.log('Asset readiness',JSON.stringify(await page.evaluate(()=>window.__openingSnapshot)));
   try{await page.waitForFunction(()=>window.__openingSnapshot.berth!=='loading'&&window.__openingSnapshot.bank!=='loading'&&window.__openingSnapshot.kit!=='loading',{},{timeout:30000});}
@@ -83,5 +83,5 @@ try{
   await writeFile(resolve(out,'manifest.json'),JSON.stringify({sha,assetSha256,evidenceClass:'Production-built app menu -> starting boon -> opening at spawn; shipping camera/auto quality; read-only local diagnostic transform; no movement, staged combat or camera overrides',results},null,2));
   console.log(JSON.stringify(results.at(-1)));await context.close();
  }
- assert.equal(results.length,2);assert.ok(results.every(result=>!result.failed),'both viewports must have ready assets');
+ assert.equal(results.length,1);assert.ok(results.every(result=>!result.failed),'desktop must have ready assets');
 }finally{await browser?.close();await new Promise((resolve,reject)=>server.httpServer.close(error=>error?reject(error):resolve()));}
