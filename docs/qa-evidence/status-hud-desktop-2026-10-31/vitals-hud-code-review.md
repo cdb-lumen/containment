@@ -1,0 +1,11 @@
+# Vitals relocation — independent code review
+
+No blocking code finding in the reviewed uncommitted extension in `/workspace/containment-status-hud`. The change addresses the actual Room12 frame495 vitals obstruction without changing camera, gameplay, resources or model geometry.
+
+`positionVitalsHud` measures the current panel height, reconstructs its upper position from the fixed hud-top parent, and uses the same CSS bottom inset for the lower alternative. CSS left insets match the normal parent in the desktop width/height breakpoints. Removing vitals from flex flow while relocated leaves room-label's auto margin and pause positioning intact. The node is moved rather than recreated, health/armor content remains live, and inherited pointer-events:none preserves canvas mouse targeting. The wider64px return margin versus24px departure margin reduces oscillation; positioning runs after rendering and after HUD updates through the existing wrapper.
+
+The new DOM regression begins with the recorded overlap, checks the lower placement, content preservation, hysteresis, return when the body reaches the alternative location, and widths1280/640/960 including short desktop height480. It exercises real browser mouse targeting. Minor test-strengthening suggestion: clear `body.dataset.fired` before each loop iteration so a prior successful click cannot mask a later viewport-specific hit-target failure. The first click still meaningfully tests the CSS pass-through property.
+
+No guarantee is made when both placements overlap the body, or against other panels in arbitrarily small windows. Long story text and dynamic placement of other HUD regions remain useful native checks. Additional DOM reads/computed-style access per frame are present, but no measured performance issue is established. Parent reports six focused checks passing and full suite running; I did not launch a browser or rerun those tests during the active capture.
+
+Require source-stable native witnesses for Room12 frame495 and expanded-story obstruction, plus relevant post-integration validation. Do not claim all enemies/environment/HUD are simultaneously unobscured. No source edits or renderer launch performed; no human art or full-encounter approval inferred.

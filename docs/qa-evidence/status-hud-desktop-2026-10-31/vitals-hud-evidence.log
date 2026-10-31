@@ -1,0 +1,46 @@
+
+> containment-depth@2.0.0 test:room-evidence
+> node --test scripts/room-evidence-check.mjs scripts/room-evidence-network-check.mjs scripts/room-demo-check.mjs scripts/vfx-audit-demo-check.mjs && node scripts/ragdoll-demo.mjs --self-test
+
+✔ reusable room recorder exists (0.753998ms)
+✔ combat requires repeated live shots, damage and legal movement (7.664352ms)
+✔ final capture requires exact SHA and 6–10 seconds (1.037388ms)
+✔ probe rejects wrong codec, duration and actual decoded count (3.879632ms)
+✔ motion validation rejects still or truncated decoded actor crops (1.067523ms)
+✔ selection, viewport and expected modes are explicit and reject mistakes (2.855122ms)
+✔ three rooms: production update traverses spawn to exit and fires into live enemies legally (1530.931538ms)
+✔ accepts the exact completed Vite JSON import (21.303702ms)
+✔ retains JS and TS module extensions (0.223461ms)
+✔ requires exact completed URL without query or port normalization (0.154269ms)
+✔ does not accept plain JSON or binary assets even when completed (2.458565ms)
+✔ rejects malformed URLs (0.200517ms)
+✔ capture keeps HTTP and non-abort failures fatal before duplicate classification (19.782436ms)
+✔ catalog keeps each effect in a separate clip (1.278245ms)
+✔ options enforce exact arguments, SHA, quality and final length (4.518448ms)
+✔ event validators accept appropriate runtime-shaped records (0.473582ms)
+✔ targeted weapon acid is never hazard evidence (0.475105ms)
+✔ impact requires spitter output, hazard projectile and real damage (0.449036ms)
+✔ pool requires queen output, radius, pool lifetime and damage (0.571377ms)
+✔ player firing and camera changes invalidate evidence (0.581983ms)
+✔ links require real shots, secondary damage and chilled lance targets (0.672907ms)
+✔ radial demos reject links, missing kills and missing delayed discharges (0.786776ms)
+✔ final Ball Lightning evidence rejects an end-of-clip discharge (4.101901ms)
+✔ reload evidence rejects a damaging cascade, missing reload completion or player damage (0.412211ms)
+✔ Toxic Bloom requires poisoned death, spread, no area hazard and expired vapor (0.47904ms)
+✔ staging waits for current room assets before accepting gameplay camera (0.907475ms)
+✔ recording requires recovered production loading UI, not only camera readiness (0.200978ms)
+✔ recorder bytes retain numeric RNG and contain no redaction tokens (0.179847ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1888.551265
+{"passed":true,"cpuOnly":true,"checks":33}
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
