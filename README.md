@@ -21,12 +21,15 @@ npm test
 npm run build
 npx playwright install chromium
 npm run test:smoke
+npm run test:authored-smoke:all
 npm run verify
 ```
 
 The production output is `dist/`. Relative bundle and runtime asset URLs support both root hosting and the repository's GitHub Pages subpath. PR verification and the main-only Pages deployment run the same test, build and browser smoke gate.
 
 The browser smoke serves the production build beneath `/containment/`, checks local asset responses, enters gameplay, fires, switches weapons, pauses and resumes, and checks a touch viewport. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium installation. Set `SMOKE_SCREENSHOTS=1` to refresh committed evidence in `docs/pr-screenshots/`.
+
+The required local, PR and Pages gates also run authored-room smoke on desktop and phone viewports. It seeds validated checkpoints and exercises Continue, route selection, final-room consent, firing and pause/resume in the opening, breached loading bay and overload rooms. This is short interaction coverage, not a full playthrough or real-device performance certification. Captures and manifests go to ignored `artifacts/authored-smoke/`. CI bounds each authored viewport to 8 minutes (10-minute step budget), and retains diagnostic artifacts for seven days.
 
 ## Source and credits
 

@@ -14,7 +14,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     # Build and both software-WebGL viewports have separate serial budgets.
-    timeout-minutes: 100
+    timeout-minutes: 120
     permissions:
       contents: read
     steps:
@@ -54,6 +54,33 @@ jobs:
         env:
           SMOKE_VIEWPORT: touch
         run: timeout --kill-after=30s 33m npm run test:smoke
+
+      # Seeded checkpoints exercise Continue, route choice and final-room consent.
+      # These are interaction checks, not complete combat or real-device evidence.
+      - name: Authored rooms desktop smoke
+        id: authored-desktop
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          mkdir -p artifacts/authored-smoke/desktop
+          timeout --kill-after=30s 8m npm run test:authored-smoke -- --viewport=desktop --out=artifacts/authored-smoke/desktop 2>&1 | tee artifacts/authored-smoke/desktop/run.log
+
+      - name: Authored rooms phone smoke
+        if: ${{ !cancelled() && steps.authored-desktop.outcome != 'skipped' }}
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          mkdir -p artifacts/authored-smoke/phone
+          timeout --kill-after=30s 8m npm run test:authored-smoke -- --viewport=phone --out=artifacts/authored-smoke/phone 2>&1 | tee artifacts/authored-smoke/phone/run.log
+
+      - name: Upload authored smoke diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: authored-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/authored-smoke/
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

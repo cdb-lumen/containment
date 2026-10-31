@@ -32,13 +32,20 @@ describe('smoke viewport selection without a browser', () => {
 describe('serial CI smoke budgets', () => {
   it.each(['verify', 'pages'])('%s preserves non-browser gates and separates both viewports', name => {
     const workflow = readFileSync(new URL(`../.github/workflows/${name}.yml`, import.meta.url), 'utf8');
-    expect(workflow).toContain('timeout-minutes: 100');
+    expect(workflow).toContain('timeout-minutes: 120');
     expect(workflow).toContain('npm test && npm run test:room-evidence && npm run build');
     expect(workflow).toContain('SMOKE_VIEWPORT: desktop');
     expect(workflow).toContain('SMOKE_VIEWPORT: touch');
     expect(workflow.match(/timeout --kill-after=30s 33m npm run test:smoke/g)).toHaveLength(2);
     expect(workflow.indexOf('SMOKE_VIEWPORT: desktop')).toBeLessThan(workflow.indexOf('SMOKE_VIEWPORT: touch'));
     expect(workflow).not.toContain('continue-on-error');
+    expect(workflow.match(/timeout --kill-after=30s 8m npm run test:authored-smoke/g)).toHaveLength(2);
+    expect(workflow).toContain('--viewport=desktop --out=artifacts/authored-smoke/desktop');
+    expect(workflow).toContain('--viewport=phone --out=artifacts/authored-smoke/phone');
+    expect(workflow).toContain("!cancelled() && steps.authored-desktop.outcome != 'skipped'");
+    expect(workflow).toContain('if: ${{ always() }}');
+    expect(workflow).toContain('path: artifacts/authored-smoke/');
+    expect(workflow).toContain('retention-days: 7');
     if (name === 'verify') {
       expect(workflow).toContain('id: smoke-desktop');
       expect(workflow).toContain("!cancelled() && steps.smoke-desktop.outcome != 'skipped'");
@@ -72,5 +79,15 @@ describe('smoke phase timing', () => {
     timer.start('close');
     timer.finish('passed');
     expect(events.at(-1)).toEqual({viewport: 'desktop', phase: 'close', status: 'passed', elapsedMs: 0});
+  });
+});
+
+describe('local authored-room gate', () => {
+  it('requires both desktop and phone coverage after the production build', () => {
+    const {scripts} = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+    expect(scripts.verify).toContain('npm run test:authored-smoke:all');
+    expect(scripts.verify.indexOf('npm run build')).toBeLessThan(scripts.verify.indexOf('npm run test:authored-smoke:all'));
+    expect(scripts['test:authored-smoke:all']).toContain('--viewport=desktop --out=artifacts/authored-smoke/desktop');
+    expect(scripts['test:authored-smoke:all']).toContain(' && npm run test:authored-smoke -- --viewport=phone');
   });
 });
